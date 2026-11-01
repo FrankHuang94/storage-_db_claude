@@ -8,7 +8,7 @@
 - **With more than one copy, a system must define "the latest write": its consistency model.** Primary storage chooses strong consistency and pays in latency.
 - **Consensus (Paxos, Raft) needs 2f+1 voters to survive f failures.** Two-site clusters therefore need a third vote, a witness, against split brain.
 - **CAP in practice is PACELC.** The everyday trade is latency versus consistency, chosen per feature: sync metro picks consistency, async DR picks latency.
-- **"Eleven nines" of durability is a model output, not a measurement.** Parity, rebuild time and assumed independence drive it; correlated failures actually lose data.
+- **"Eleven nines" of durability is a model output, not a measurement.** Parity, rebuild time and assumed independence drive it; correlated failures are what lose data in practice.
 - **Availability nines are measured; durability nines are modelled.** Ask which is quoted.
 
 ## Why this matters for Everpure strategy
@@ -92,7 +92,7 @@ The standard model is **mean time to data loss (MTTDL)**. A group of n drives to
 *Figure 20.2 — Illustrative model: extra parity moves durability by many nines, AFR and rebuild time by fewer, and correlated failures can erase the gain.*
 Data: `data/ch20_durability.csv`
 
-**Worked example** (10 PB usable, 30 TB drives, Backblaze's 2025 HDD AFR of 1.36%[^12]). RAID 6 (8+2) with a 42-hour single-spare rebuild models at **5.8 nines**. The same code rebuilt declustered in 4 hours reaches **7.8**: RAID 6 and 8+2 EC are identical maths, differing only in rebuild speed. Three-way replication reaches **9.0**; EC 16+4 reaches **15.1**. Device reliability helps less. Backblaze's SSDs ran at 0.9%[^13]; Everpure states 0.15% for DirectFlash Modules[^14] (NetApp disputes it[^15]). Cutting AFR from 1.36% to 0.15% adds 2.9 nines to RAID 6; doubling parity from two strips to four adds 7.3. Rule of thumb: each tenfold cut in AFR is worth m+1 nines, each tenfold cut in rebuild time m.
+**Worked example** (10 PB usable, 30 TB drives, Backblaze's 2025 HDD AFR of 1.36%[^12]). RAID 6 (8+2) with a 42-hour single-spare rebuild models at **5.8 nines**. The same code rebuilt declustered in 4 hours reaches **7.8**: RAID 6 and 8+2 EC are identical maths, differing only in rebuild speed. Three-way replication reaches **9.0**; EC 16+4 reaches **15.1**. Device reliability helps less. Backblaze's SSDs ran at 0.9%[^13]; Everpure states 0.15% for DirectFlash Modules[^14] (NetApp disputes it[^15]). Cutting AFR from 1.36% to 0.15% adds 2.9 nines to RAID 6; moving from 8+2 to 16+4 adds 7.3. Rule of thumb: each tenfold cut in AFR is worth m+1 nines, each tenfold cut in rebuild time m.
 
 ### Correlated failures and failure domains
 
@@ -137,7 +137,7 @@ Read caches add a coherence cost: every client or node cache needs invalidation,
 | System | Agreement mechanism | Partition / PACELC behaviour | Durability or availability claim |
 |---|---|---|---|
 | Everpure ActiveCluster (FlashArray) | Synchronous mirror, Pure1 Cloud Mediator or on-premises mediator; pre-election if mediator lost | PC/EC: up to 11 ms RTT between arrays; loser of mediator race stops serving the pod[^19] | Six nines availability, installed base (company-stated)[^9] |
-| NetApp SnapMirror active sync / MetroCluster | ONTAP Mediator; Cloud Mediator from ONTAP 9.17.1 | PC/EC; automatic unplanned failover via mediator[^20] | See [Chapter 6](../01-storage-fundamentals/06-data-protection-and-resilience.md) |
+| NetApp SnapMirror active sync / MetroCluster | ONTAP Mediator; Cloud Mediator from ONTAP 9.17.1 [VERIFY: search-summary only] | PC/EC; automatic unplanned failover via mediator[^20] | See [Chapter 6](../01-storage-fundamentals/06-data-protection-and-resilience.md) |
 | Ceph | Paxos monitors hold cluster map; CRUSH places data by failure domain | PC/EC inside a cluster; multisite asynchronous | Depends on pool rule and EC profile[^5] |
 | Amazon S3 / DynamoDB | Replicated metadata; DynamoDB Multi-Paxos per partition | Strong within region; cross-region asynchronous | S3: designed for 11 nines[^10][^1] |
 | Dynamo-style (Cassandra) | Leaderless quorums, tunable N/W/R | PA/EL by default; PC with QUORUM settings | Operator-defined |
