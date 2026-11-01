@@ -246,3 +246,57 @@
 
 ---
 
+## 6. 市场规模
+
+### 6.1 IDC 外置企业存储
+- 3Q25：市场同比增长 2.1%。Dell 占 22.7%，Huawei 以 12.0% 位列第 2，NetApp 以 9.4% 位列第 3。— 来源：IDC, "Worldwide External Enterprise Storage Systems Market Revenue Increased 2.1% During the Third Quarter of 2025", 2025-12, https://my.idc.com/getdoc.jsp?containerId=prUS54034425 (retrieved 2026-11-01)
+- 4Q25：$9.7B，同比增长 5.5%，Dell 占 23.7%。— 来源：Remio (citing IDC), "IDC Enterprise Storage Market Surges, but Higher Spending Hides a Cost Squeeze", 2026, https://www.remio.ai/post/idc-enterprise-storage-market-surges-but-higher-spending-hides-a-cost-squeeze (retrieved 2026-11-01) [VERIFY: 需对照 IDC 新闻稿]
+- 1Q26：$9.2B，同比增长 22.7%。Dell 占 31.2%，NetApp 以 9.9% 位列第 2。— 来源：IDC via PressReleasePoint, "Worldwide External Enterprise Storage Systems Market Accelerates to 22.7% Growth in the First Quarter of 2026...", 2026-07-09, https://www.pressreleasepoint.com/worldwide-external-enterprise-storage-systems-market-accelerates-227-growth-first-quarter-2026 (retrieved 2026-11-01) [VERIFY: 与相邻季度相比，Dell 31.2% 显得偏高]
+- 2Q26：$10.3B，同比增长 33.6%。全闪存阵列 $5.4B（+42.9%，占营收 52.1%）。Dell 以 23.8% 位列第 1（+42.5%），Huawei 以 11.3% 位列第 2（+29.4%），NetApp 占 9.6%（+35.7%），Everpure 以 8.1% 位列第 4（增长最快，约 +50%），HPE 以 6.8% 位列第 5（+31.9%）。— 来源：StorageReview, "IDC External Storage Tracker: $10.3 Billion in Q2 2026 as Server Market Tops $166 Billion on AI Demand", 2026-09, https://www.storagereview.com/news/idc-external-storage-tracker-q2-2026-10-3-billion-as-server-market-tops-166-billion (retrieved 2026-11-01); Blocks & Files, "IDC's latest enterprise storage tracker shows booming storage market growth", 2026-09-23, https://www.blocksandfiles.com/flash/2026/09/23/idcs-latest-enterprise-storage-tracker-shows-booming-storage-market-growth/5298577 (retrieved 2026-11-01) [VERIFY: NetApp 排名第 3 系推断；未检索到 IBM/Hitachi 份额]
+
+**IDC 外置企业存储（可直接转为 CSV）**
+
+| 季度,营收_十亿美元,同比,Dell份额,Huawei份额,NetApp份额,Everpure/Pure份额,HPE份额 |
+|---|
+| 3Q25,n/a,+2.1%,22.7%,12.0%,9.4%,n/a,n/a |
+| 4Q25,9.7,+5.5%,23.7%,n/a,n/a,n/a,n/a |
+| 1Q26,9.2,+22.7%,31.2% [VERIFY],n/a,9.9%,n/a,n/a |
+| 2Q26,10.3,+33.6%,23.8%,11.3%,9.6%,8.1%,6.8% |
+
+### 6.2 AI 存储潜在市场规模（TAM）
+- 由于定义不同，分析机构的估算差异很大。Grand View Research：从 $30.57B（2024 年）增至 $118.38B（2030 年），CAGR 25.9%。Lucintel：2030 年 $73.6B（CAGR 21.8%）。GII：2030 年 $141.7B。Allied：2031 年 $162.5B。— 来源：Grand View Research, "AI-Powered Storage Market Report", n.d., https://www.grandviewresearch.com/industry-analysis/ai-powered-storage-market-report (retrieved 2026-11-01); Lucintel, "AI Powered Storage Market", n.d., https://lucintel.com/ai-powered-storage-market.aspx (retrieved 2026-11-01); Allied Market Research, "AI Powered Storage Market Insights, 2031", n.d., https://alliedmarketresearch.com/ai-powered-storage-market-A09518 (retrieved 2026-11-01) [VERIFY: 未找到 IDC 或 Gartner 的 AI 存储 TAM；这些数字应视为低可信度的市场研究数据]
+- Gartner：预测 2026 年数据中心用电量为 565 TWh，较 2025 年的 447 TWh 增长 26%，其中 AI 优化服务器占 31%。— 来源：Gartner, "Gartner Says Data Center Electricity Consumption to Grow 26% in 2026", 2026-06-10, https://www.gartner.com/en/newsroom/press-releases/2026-06-10-gartner-says-data-center-electricity-demand-to-grow-26-percent-in-2026 (retrieved 2026-11-01)
+- 文件与对象存储市场规模：未检索到。[VERIFY: IDC/Gartner 的文件与对象存储数据]
+
+---
+
+## 7. 超大规模云厂商的存储系统
+
+- **Google Colossus** 是 GFS 的集群级继任者，元数据由存放在 Bigtable 中的 "curators"（管理器）持有。Google 的 L4 分布式 SSD 缓存采用机器学习驱动的放置策略，决定哪些文件放在 SSD 上、哪些放在 HDD 上，支持读缓存和回写（writeback）两种模式。— 来源：Google Cloud Blog, "How Colossus optimizes data placement for performance", 2025-03, https://cloud.google.com/blog/products/storage-data-transfer/how-colossus-optimizes-data-placement-for-performance (retrieved 2026-11-01); The Register, "Even Google struggles to balance fast-but-pricey flash and cheap-but-slow hard disks", 2025-03-27, https://www.theregister.com/2025/03/27/google_l4_storage_performance_improvements/ (retrieved 2026-11-01)
+- Google 的 Rapid Storage（可用区级 Cloud Storage）通过 gRPC 流式传输使用 Colossus 有状态协议。它与 Cloud Storage FUSE 集成，Google 给出的目标为每秒 2,000 万（20M）次请求和 6 TB/s。— 来源：Google Cloud Blog, "How the Colossus stateful protocol benefits Rapid Storage", 2025-04, https://cloud.google.com/blog/products/storage-data-transfer/how-the-colossus-stateful-protocol-benefits-rapid-storage (retrieved 2026-11-01) [VERIFY: 20M/6TB/s 来自一次会议演讲]
+- **Meta Tectonic** 是 Meta 的 EB 级多租户分布式文件系统，见论文 "Facebook's Tectonic Filesystem: Efficiency from Exascale"（Pan et al., FAST '21, pp. 217–231）。每个集群服务整个数据中心。— 来源：USENIX, "Facebook's Tectonic Filesystem: Efficiency from Exascale", 2021-02, https://www.usenix.org/conference/fast21/presentation/pan (retrieved 2026-11-01); Meta Engineering, "Tectonic file system: Consolidating Facebook storage infrastructure", 2021-06-21, https://engineering.fb.com/2021/06/21/data-infrastructure/tectonic-file-system/ (retrieved 2026-11-01)
+- **Meta GenAI 存储（2024 年）**：两个 24,576-GPU 集群在针对闪存优化的 Tectonic 上使用 FUSE API，另加一套与 Hammerspace 联合开发的并行 NFS，运行在配备 E1.S SSD 的 YV3 Sierra Point 服务器上。— 来源：Meta Engineering, "Building Meta's GenAI Infrastructure", 2024-03-12 (URL above) (retrieved 2026-11-01)
+- Meta 的演讲材料描述了每机架超过 10 PB 的 QLC 机架。— 来源：FMS 2025 proceedings, "QLCP-201-1 (Gupta)", 2025-08-06, https://files.futurememorystorage.com/proceedings/2025/20250806_QLCP-201-1_Gupta.pdf (retrieved 2026-11-01) [VERIFY: 演讲者是否隶属 Meta]
+- Pure Storage（2024 年末）和 Everpure（2026-08-10）先后赢得前五大超大规模云厂商的 DirectFlash 设计导入（design win）。第一家是 Meta。第二家未披露，结构为一份涵盖软件和非 NAND 部件的主供货协议（master supply agreement），由该超大规模云厂商自行采购 NAND，预计自 FY2028 起贡献营收。— 来源：Everpure, "Everpure Lands New Design Win with Second Top Five Hyperscaler", 2026-08-10, https://www.everpuredata.com/company/newsroom/press-releases/everpure-lands-new-design-win-with-second-top-five-hyperscaler.html (retrieved 2026-11-01)
+- **AWS S3 Express One Zone** 于 re:Invent 2023（2023-11-28）发布，引入目录桶（directory bucket）类型。AWS 声称其访问速度比 S3 Standard 快 10 倍，请求成本低 50%。— 来源：AWS What's New, "Announcing the Amazon S3 Express One Zone storage class", 2023-11, https://aws.amazon.com/about-aws/whats-new/2023/11/amazon-s3-express-one-zone-storage-class (retrieved 2026-11-01)
+- **S3 Tables**（带托管压实/合并的 Apache Iceberg 表桶）于 re:Invent 2024（2024 年 12 月）发布。re:Invent 2025 新增 Intelligent-Tiering 和跨区域/跨账户复制。— 来源：AWS S3 User Guide, "What's New", n.d., https://docs.aws.amazon.com/AmazonS3/latest/userguide/WhatsNew.md (retrieved 2026-11-01); NAND Research, "AWS S3 AI-focused enhancements", 2025-12, https://nand-research.com/research-note-aws-s3-ai-focused-enhancements (retrieved 2026-11-01)
+- **S3 Vectors** 于 2025-07-15 进入预览，并于 re:Invent 2025（2025 年 12 月）正式发布（GA）：每个索引 20 亿（2B）个向量（预览版为 50M），每个桶最多 20 万亿（20T）个向量，覆盖 14 个区域。AWS 声称成本最多降低 90%。— 来源：StorageNewsletter, "AWS re:Invent 2025: Amazon S3 Vectors is Now Generally Available with 40 Times the Scale of Preview", 2025-12-05, https://www.storagenewsletter.com/2025/12/05/aws-reinvent-2025-amazon-s3-vectors-is-now-generally-available-with-40-times-the-scale-of-preview/ (retrieved 2026-11-01)
+- **FSx for Lustre**：未检索到 2025–26 年的具体信息。[VERIFY]
+- **Azure Managed Lustre**：Microsoft 门户文档显示，通过支持请求最多可达 12.5 PiB，吞吐量档位为每 TiB 40/125/250/500 MB/s（档位信息来自一个合作伙伴页面）。它是首个参加 MLPerf Storage（v3.0）的超大规模云服务。— 来源：Microsoft Learn, "Create an Azure Managed Lustre file system by using the Azure portal", n.d., https://learn.microsoft.com/en-us/azure/azure-managed-lustre/create-file-system-portal (retrieved 2026-11-01) [VERIFY: 当前最大容量]
+- **Azure Blob**：Microsoft 表示 Blob 可扩展至 EB 级、数十 Tbps，并向 GPU 提供数百万 IOPS，为 OpenAI 的工作负载提供底层支撑。— 来源：Microsoft Azure Blog (WP JSON feed), post 48707, n.d., https://azure.microsoft.com/en-us/blog/wp-json/wp/v2/posts/48707 (retrieved 2026-11-01) [VERIFY: 标题/日期]
+
+---
+
+## 8. 新兴 GPU 云（neocloud）
+
+- **CoreWeave**：提供 CoreWeave AI Object Storage 及 **LOTA**（Local Object Transport Accelerator，本地对象传输加速器）——部署在每个 GPU 和 CPU 节点上的代理/缓存。CoreWeave 声称每个 GPU 最高可达 7 GB/s，LOTA Cross-Cloud 处于预览阶段。列出的专用存储合作伙伴为 VAST、WEKA（NeuralMesh）、DDN、IBM Storage Scale 和 Pure Storage。— 来源：CoreWeave, "Storage" product page, n.d., https://coreweave.com/products/storage (retrieved 2026-11-01); CoreWeave, "CoreWeave Unveils AI Object Storage...", 2025, https://coreweave.com/news/coreweave-unveils-ai-object-storage-redefining-how-ai-workloads-access-and-scale-data (retrieved 2026-11-01)
+- VAST 与 CoreWeave 签署了一份 $1.17B 的商业协议（2025 年 11 月）。The Next Platform 称 CoreWeave 是 VAST 的"头号客户"。— 来源：Blocks & Files, "VAST Data lands $1.17 billion CoreWeave deal", 2025-11-06, https://www.blocksandfiles.com/ai-ml/2025/11/06/vast-data-lands-117-billion-coreweave-deal/1608868 (retrieved 2026-11-01); The Next Platform, "VAST Data's $1.17 Billion Deal With CoreWeave Is A Leading Indicator", 2025-11-07, https://www.nextplatform.com/2025/11/07/vast-datas-1-17-billion-deal-with-coreweave-is-a-leading-indicator/ (retrieved 2026-11-01)
+- Backblaze 与 CoreWeave 签署了一份为期 5 年、多 EB 级、价值 $335M 的存储协议。— 来源：Blocks & Files, "Backblaze gets $335 million CoreWeave bonanza", 2026-06-23, https://blocksandfiles.com/public-cloud/2026/06/23/backblaze-gets-335-million-coreweave-bonanza/5260288 (retrieved 2026-11-01)
+- **Nebius** 为其 AI Cloud 的高端层选择了 WEKA（2025 年 6 月），为一位客户部署了 2 PB。Nebius 也是 MLPerf Storage v3.0 的首次提交方。— 来源：WEKA, "WEKA and Nebius Partner to Deliver High-Performance AI Data Infrastructure", 2025-06, https://www.weka.io/news/weka-nebius-partner-high-performance-ai-data-infrastructure (retrieved 2026-11-01)
+- **Lambda** 使用 VAST（并对外宣传与 WEKA 的合作）作为其云的后端存储。第三方追踪方对这些合作在多大程度上面向客户说法不一。— 来源：Saturn Cloud, "GPU Cloud Comparison: 17 Neoclouds for AI in 2025", 2025, https://saturncloud.io/blog/gpu-cloud-comparison-neoclouds-2025/ (retrieved 2026-11-01) [VERIFY: Lambda/VAST 的一手公告]
+- **Crusoe** 提供基于 Lightbits 的块存储和由 VAST 支撑的共享磁盘，另有原生对象存储。— 来源：same as above. [VERIFY: 一手来源]
+- **Together AI**：未披露存储厂商。[VERIFY]
+- CoreWeave、Crusoe、IREN、Lambda、Mistral AI、Nebius、OCI 和 Vultr 被列为 NVIDIA STX/CMX 上下文内存存储的早期采用者。— 来源：StorageNewsletter, 2026-03-17 (URL in 1.6) (retrieved 2026-11-01)
+
+---
+
