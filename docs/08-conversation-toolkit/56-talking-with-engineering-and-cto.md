@@ -9,7 +9,7 @@
 - **Good answers are specific and admit limits.** They name the bottleneck, the tested (not theoretical) maximum, and the failure that hurts most. Red flags are the reverse: "it scales linearly", "no single point of failure", benchmarks without configurations.
 - **Your credibility comes from L2, not from faking L3.** Whiteboard the path, do the arithmetic, then ask the engineer to correct you. Engineers forgive "I don't know the on-disk format"; they never forgive a bluff.
 - **Your own reasoning has red flags too:** GiB read as GB, certification read as ranking, a launch claim read as a published result, and architecture assumed to beat execution.
-- **Engage the Office of the CTO with falsifiable 3–5-year theses,** each with a signpost and a date, not with "what's next?". The CTO office trades in bets such as HDD displacement, DPU-resident storage services and FDP-equipped commodity SSDs.
+- **Engage the Office of the CTO with falsifiable 3–5-year theses,** each with a signpost and a date, not with "what's next?".
 
 ## Why this matters for Everpure strategy
 
@@ -43,7 +43,7 @@ flowchart TD
 
 **2. Metadata.** Where does it live (DRAM, NVRAM, SCM, flash)? How is it partitioned, and what happens with a single hot directory? AI checkpointing makes this concrete. If 16,384 ranks each write one shard file into one directory, that is 16,384 creates in a burst. A design that serialises them on one directory lock turns a bandwidth problem into a metadata stall ([Chapter 21](../03-system-architecture/21-metadata.md)).
 
-**3. Failure domains.** What is the largest unit that can fail together: a drive, a node, an enclosure, a rack? How long until full redundancy returns? *Worked example:* a 300 TB DirectFlash Module at 80% full holds 240 TB. At a 2 GB/s rebuild rate, restoring it takes 240,000 GB ÷ 2 GB/s = 120,000 s ≈ 33 hours. Declustered across the array at 10 GB/s, it takes about 6.7 hours. The engineer's answer tells you which world the system is in, and whether that is measured under production load or on an idle system.
+**3. Failure domains.** What is the largest unit that can fail together: a drive, a node, an enclosure, a rack? How long until full redundancy returns? *Worked example:* a 300 TB DirectFlash Module at 80% full holds 240 TB. At a 2 GB/s rebuild rate, restoring it takes 240,000 GB ÷ 2 GB/s = 120,000 s ≈ 33 hours. Declustered across the array at 10 GB/s, it takes about 6.7 hours. Then ask which world the system is in, measured under production load.
 
 **4. Upgrades and NDU.** Non-disruptive upgrade is a Purity signature. Pure Storage reported more than 7,000 non-disruptive controller upgrades for over 2,700 customers between 2015 and mid-2021[^4]. The questions that matter for a target are how long mixed-version clusters are supported, what can be rolled back, and what an upgrade costs in performance while one controller or node is out.
 

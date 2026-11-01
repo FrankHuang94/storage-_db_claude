@@ -69,16 +69,16 @@ Rebuild time ≈ capacity to reconstruct ÷ effective rebuild rate. The exposure
 
 **Worked example (single spare).** A 30 TB HAMR hard drive[^8] rebuilt at 200 MB/s takes 30×10¹² ÷ 2×10⁸ = 150,000 s ≈ **42 hours**. A 245.76 TB QLC SSD[^9] rebuilt to one replacement at 1 GB/s (a throttled rate, because the array is still serving production) takes 245,760 s ≈ **68 hours**. A 300 TB-class module[^10] takes ≈ 83 hours. Capacity grew about eight-fold; single-drive write bandwidth did not.
 
-**Worked example (declustered).** If 100 surviving drives each give 0.5 GB/s of rebuild bandwidth into spare space spread across the pool, the 245 TB drive is restored in 245,760 ÷ 50 ≈ 4,900 s ≈ **1.4 hours**. The price is the read amplification above and a performance dip while it runs.
+**Worked example (declustered).** Rebuilding is limited by reads, not writes: every reconstructed byte needs k bytes read from survivors. Suppose 100 surviving drives each devote 4 GB/s of read bandwidth to the rebuild (400 GB/s in all) and stripes are 8+2. The pool then reconstructs 400 ÷ 8 = 50 GB/s into spare space spread across all drives, and the 245 TB drive is restored in 245,760 ÷ 50 ≈ 4,900 s ≈ **1.4 hours**. With 16+2 stripes the same read budget takes twice as long; with plain Reed–Solomon at 146+4 it would take about 18 times as long, which is why very wide stripes need locally decodable codes. The price is that read load and a performance dip while it runs.
 
 ![Horizontal bar chart on a log scale comparing rebuild hours for six devices from an 8 TB HDD to a 300 TB-class flash module. Single-spare rebuilds take 11 to 83 hours; declustered rebuilds across 100 drives take 10 minutes to 1.7 hours.](../assets/charts/ch06-rebuild.svg)
 
 *Figure 6.2 — Illustrative: QLC-era capacities push classic single-spare rebuilds past three days, which is why large-drive systems decluster, evacuate or add parity.*
 Data: `data/ch06_rebuild.csv`
 
-Two risks grow with the window: further drive failures (drives in a group share age, batch and workload) and unrecoverable read errors. Enterprise HDDs are typically specified at one unrecoverable error per 10¹⁵ bits read. A RAID 5 rebuild that reads seven 30 TB survivors reads 210 TB = 1.7×10¹⁵ bits, so on average it should hit more than one error. This is the 2007 "RAID 5 stops working" argument[^11], and it is why dual parity became the large-drive minimum. Enterprise SSDs are specified about ten times better, but are growing faster.
+Two risks grow with the window: further drive failures (drives in a group share age, batch and workload) and unrecoverable read errors. Enterprise HDDs are typically specified at one unrecoverable error per 10¹⁵ bits read. A RAID 5 rebuild that reads seven 30 TB survivors reads 210 TB = 1.7×10¹⁵ bits, so at the specified rate it should hit more than one error. The specification is a worst-case ceiling and field rates are usually lower, but the arithmetic is the 2007 "RAID 5 stops working" argument[^11], and it is why dual parity became the large-drive minimum. Enterprise SSDs are specified about ten times better, but are growing faster.
 
-Everpure's answer has two parts: dual-parity protection across DirectFlash Modules, with host I/O given priority during a rebuild[^12], and **evacuating a failing module** rather than rebuilding it after it dies. Moving still-readable data off a degrading 150 TB module takes "tens of minutes", which Everpure says cuts time to full protection by 95% or more[^13] [VERIFY: search-summary only]. Managing raw NAND directly ([Chapter 26](../04-everpure/26-purity-and-directflash.md)) gives Purity early sight of a degrading module.
+Everpure's answer has two parts: dual-parity protection across DirectFlash Modules, with host I/O given priority during a rebuild[^12], and **evacuating a failing module** rather than rebuilding it after it dies. Because Purity knows which parts of a degrading module are still good, it copies that data to a new device instead of reconstructing it from parity, which Everpure says cuts time to full protection by 95% or more (*company-stated*, no baseline published)[^13] [VERIFY: rebuild-versus-evacuation hours for a 150 TB DFM; copying 150 TB in under an hour would need ~40 GB/s, above a single module's likely read rate]. Managing raw NAND directly ([Chapter 26](../04-everpure/26-purity-and-directflash.md)) gives Purity early sight of a degrading module.
 
 ### Snapshots and clones
 
@@ -89,7 +89,7 @@ A snapshot is a point-in-time image of a volume. There are two ways to build one
 *Figure 6.3 — Copy-on-write pays one read and two writes on the first overwrite of each block; redirect-on-write pays one write plus a pointer update, which is why flash-native systems take thousands of snapshots without measurable penalty.*
 
 - **Copy-on-write (COW)** keeps live data in place and copies each old block to a reserve area before it is overwritten. Its cost grows with snapshot count and write rate.
-- **Redirect-on-write (ROW)** freezes the metadata map and sends new writes to free space. Log-structured systems such as Purity, NetApp WAFL and ZFS never overwrite in place anyway, so a snapshot is close to free: a copy of a pointer tree plus reference counts. The cost moves to metadata and garbage collection, because space frees only when no snapshot references a block.
+- **Redirect-on-write (ROW)** freezes the metadata map and sends new writes to free space. Write-anywhere designs such as Purity (log-structured), NetApp WAFL and ZFS never overwrite in place anyway, so a snapshot is close to free: a copy of a pointer tree plus reference counts. Terminology trap: ZFS and WAFL documentation call themselves "copy-on-write" file systems, although their snapshots work the redirect-on-write way described here. The cost moves to metadata and garbage collection, because space frees only when no snapshot references a block.
 
 A **clone** is a writable snapshot. Ten copies of a 20 TB database for dev and test consume almost no extra capacity until the copies diverge.
 
@@ -131,7 +131,7 @@ sequenceDiagram
 
 *Figure 6.5 — Asynchronous replication keeps local write latency and works at any distance, at the price of a non-zero RPO set by the interval and the link.*
 
-**Worked example (the physics tax).** Light in fibre travels at about 200,000 km/s, or 5 µs per km. A 100 km separation adds about 1 ms of round trip, before switch and protocol overhead. NetApp's guidance uses the same rule of thumb[^14]. An all-flash write that takes 150–300 µs locally becomes about 1.15–1.3 ms, four to nine times slower: fine for most databases, fatal for latency-sensitive trading.
+**Worked example (the physics tax).** Light in fibre travels at about 200,000 km/s, or 5 µs per km. A 100 km separation adds about 1 ms of round trip, before switch and protocol overhead. NetApp's guidance uses the same rule of thumb[^14]. An all-flash write that takes 150–300 µs locally becomes about 1.15–1.3 ms, roughly four to eight times slower: fine for most databases, fatal for latency-sensitive trading. Protocols that need two round trips per write, such as Fibre Channel without write acceleration, double the adder.
 
 **Near-synchronous** sits between the two. Writes are acknowledged locally and streamed continuously, not in periodic batches, so the RPO is seconds and host latency is untouched. Everpure's ActiveDR (2020) uses this model[^15]. Journal-based continuous data protection (CDP) products such as HPE's Zerto quote RPOs in seconds and can rewind to any point in the journal[^16].
 
@@ -153,9 +153,9 @@ Data: `data/ch06_rpo_rto.csv`
 Modern attackers log in with stolen admin credentials, delete snapshots and backups, then encrypt. Sophos found that 94% of victims in its 2024 survey reported that attackers had tried to compromise their backups[^2]. The storage response is **immutability backed by separation of duties**:
 
 - **Everpure SafeMode.** Deleted snapshots enter an eradication-pending state, and eradication cannot be forced. The default delay is 24 hours, configurable to 30 days on FlashArray[^21][^22]. Changing or disabling SafeMode requires Everpure Support plus pre-registered customer contacts, not just an admin login[^21]. Since Purity//FA 6.4.10 new volumes join a SafeMode-protected group by default ("Auto-on SafeMode")[^23]. 2026 additions include Fusion "Security Presets" that keep it on[^4][^24].
-- **Equivalents elsewhere.** NetApp offers tamperproof snapshots and SnapLock (WORM volumes). Dell offers PowerMax Secure Snaps and an isolated PowerProtect Cyber Recovery vault. HPE offers Virtual Lock on Alletra MP B10000. S3 Object Lock provides the same for object stores.
+- **Equivalents elsewhere.** NetApp offers tamperproof snapshots, locked with the SnapLock Compliance clock so that neither an administrator nor NetApp support can delete them early, plus SnapLock WORM volumes and multi-admin verification for destructive commands[^25]. Dell offers PowerMax Secure Snaps and an isolated PowerProtect Cyber Recovery vault. HPE offers Virtual Lock on Alletra MP B10000. S3 Object Lock provides the same for object stores. The real differences are defaults and who can override a lock: SafeMode can be changed with Everpure Support's help, while a NetApp compliance lock cannot be shortened by anyone.
 
-An array can also help **detect** an attack. Encrypted data does not compress or dedupe, so a sudden collapse in data-reduction ratio, or a spike in overwrite rate, is a strong signal ([Chapter 5](05-data-reduction.md)).
+An array can also help **detect** an attack. Encrypted data does not compress or dedupe, so a sudden collapse in data-reduction ratio, or a spike in overwrite rate, is a strong signal ([Chapter 5](05-data-reduction.md)). Vendors productise this: NetApp's Autonomous Ransomware Protection analyses NAS workloads inside ONTAP and takes snapshots when it suspects an attack[^25], Dell's Cyber Recovery vault offers CyberSense content analytics, and Everpure flags anomalies through Pure1.
 
 ```mermaid
 flowchart TD
@@ -179,21 +179,21 @@ Note "Preserve": investigators often want the attacked array untouched, so you n
 
 ### The 3-2-1(-1-0) rule
 
-The backup rule of thumb, usually credited to photographer Peter Krogh's *The DAM Book*[^25], is **3** copies of data, on **2** different media, with **1** off-site. The ransomware-era extension popularised by Veeam adds **1** copy that is immutable, air-gapped or offline, and **0** errors on automated restore verification[^26]. Array snapshots are the fast first tier of such a design, not a substitute for it.
+The backup rule of thumb, usually credited to photographer Peter Krogh's *The DAM Book*[^26], is **3** copies of data, on **2** different media, with **1** off-site. The ransomware-era extension popularised by Veeam adds **1** copy that is immutable, air-gapped or offline, and **0** errors on automated restore verification[^27]. Array snapshots are the fast first tier of such a design, not a substitute for it.
 
 ## How Everpure approaches it vs. competitors
 
 | Vendor | Metro / sync | Near-sync / async | Immutable copies | Recovery guarantee |
 |---|---|---|---|---|
-| **Everpure** (FlashArray, FlashBlade) | ActiveCluster: active/active, Pure1 Cloud Mediator[^17] | ActiveDR near-sync; snapshot-based async[^15] | SafeMode: 24 h to 30 days on FlashArray, auto-on for new volumes[^21][^23] | Evergreen//One Cyber Recovery and Resilience SLA (add-on): clean arrays shipped, recovery plan in 48 h, 8 TiB/h transfer[^27][^28] [VERIFY: current shipping commitment] |
-| **NetApp** (ONTAP) | MetroCluster; SnapMirror active sync, symmetric active/active since ONTAP 9.15.1[^18] | SnapMirror async | Tamperproof snapshots, SnapLock | Ransomware Recovery Guarantee (2023); requires SnapLock Compliance volumes on eligible new arrays[^29][^30] |
-| **Dell** (PowerMax) | SRDF/Metro, Smart DR to a third array[^19] | SRDF/A; 4-site topologies | Secure Snaps; up to 65 M snapshots per array (company-stated)[^19] | Cyber Recovery Guarantee up to US$10 M, with purchase and services conditions[^31] |
-| **HPE** (Alletra) | Active Peer Persistence, RPO and RTO zero claimed[^20] | Remote Copy; Zerto CDP (seconds)[^16] | Virtual Lock snapshots[^32] [VERIFY: search-summary only] | None verified for primary storage |
-| **Backup software** (Rubrik, Veeam, Cohesity) | n/a | Backup schedules | Immutable backup repositories | Rubrik warranty up to US$5 M for Cloud Vault (2022)[^33] |
+| **Everpure** (FlashArray, FlashBlade) | ActiveCluster: active/active, Pure1 Cloud Mediator[^17] | ActiveDR near-sync; snapshot-based async[^15] | SafeMode: 24 h to 30 days on FlashArray, auto-on for new volumes[^21][^23] | Evergreen//One Cyber Recovery and Resilience SLA (add-on): clean arrays shipped next business day, recovery plan in 48 h, 8 TiB/h transfer; covers ransomware and other disasters[^28][^29] |
+| **NetApp** (ONTAP) | MetroCluster; SnapMirror active sync, symmetric active/active since ONTAP 9.15.1[^18] | SnapMirror async | Tamperproof snapshots, SnapLock | Ransomware Recovery Guarantee (2023); requires SnapLock Compliance volumes on eligible new arrays[^30][^31] |
+| **Dell** (PowerMax) | SRDF/Metro, Smart DR to a third array[^19] | SRDF/A; 4-site topologies | Secure Snaps; up to 65 M snapshots per array (company-stated)[^19] | Cyber Recovery Guarantee up to US$10 M, for PowerProtect Cyber Recovery vaults on DD appliances (not PowerMax itself), with purchase, Retention Lock and services conditions[^32] |
+| **HPE** (Alletra) | Active Peer Persistence, RPO and RTO zero claimed[^20] | Remote Copy; Zerto CDP (seconds)[^16] | Virtual Lock snapshots[^33] [VERIFY: search-summary only] | None verified for primary storage |
+| **Backup software** (Rubrik, Veeam, Cohesity) | n/a | Backup schedules | Immutable backup repositories | Rubrik warranty up to US$5 M for Cloud Vault (2022)[^34] |
 
 *Table 6.3 — On replication and immutability the incumbents are close; the differences are in defaults, in who can override a lock, and in what the vendor contractually commits to after an attack.*
 
-**Where Everpure is differentiated.** The edge is the operating model more than the replication technology: ROW snapshots are nearly free, so SafeMode can default on, and the Evergreen//One SLA turns "you'll get clean hardware" into a contractual commitment within a subscription. It complements a joint Veeam offer[^34] and 1touch-based data discovery for working out what was hit[^35].
+**Where Everpure is differentiated.** The edge is the operating model more than the replication technology. Its ROW snapshots, like NetApp's, are nearly free, which lets SafeMode default on. The Evergreen//One SLA then turns "you'll get clean hardware" into a contractual commitment within a subscription. NetApp's guarantee is narrower (SnapLock Compliance snapshots on new arrays) and Dell's covers a backup vault rather than the primary array, so Everpure is the one that contracts for replacement primary hardware. It complements a joint Veeam offer[^35] and 1touch-based data discovery for working out what was hit[^36].
 
 **Steelman the alternatives.** Dell PowerMax's SRDF has three decades of mainframe and multi-site deployments that ActiveCluster has never targeted. NetApp's SnapLock is a regulator-recognised WORM implementation. Backup vendors argue, credibly, that a copy on a different system with different credentials beats any same-array snapshot. The honest framing: SafeMode shortens RTO in the common case; an isolated backup covers a lost or untrusted array. Options a strategy team might evaluate, based on public information: whether to extend recovery SLAs to FlashBlade//EXA-scale AI datasets, where a 5 PB restore at 8 TiB/h would take about 24 days, and how far to build into the backup layer versus partner with it.
 
@@ -213,7 +213,7 @@ timeline
 
 *Figure 6.8 — The centre of gravity moved from surviving hardware failure (1988–2010) to surviving site loss (2010s) to surviving an adversary (2020s).*
 
-ActiveCluster arrived with Purity//FA 5.0 in 2017[^17] [VERIFY: 2017 launch year from search summary], and ActiveDR followed with Purity 6.0 in June 2020[^15]. The 2023 guarantees from Pure Storage[^27] and NetApp[^29] moved resilience into the contract. Looking forward, 300 TB-plus drives push designs toward declustering and locally repairable codes, and petabyte-scale AI datasets will judge recovery guarantees on restore bandwidth, not just immutability.
+ActiveCluster arrived with Purity//FA 5.0 in 2017[^17], and ActiveDR followed with Purity 6.0 in June 2020[^15]. The 2023 guarantees from Pure Storage[^28] and NetApp[^30] moved resilience into the contract. Looking forward, 300 TB-plus drives push designs toward declustering and locally repairable codes, and petabyte-scale AI datasets will judge recovery guarantees on restore bandwidth, not just immutability.
 
 ## Numbers that matter
 
@@ -223,10 +223,10 @@ ActiveCluster arrived with Purity//FA 5.0 in 2017[^17] [VERIFY: 2017 launch year
 | Single-spare rebuild, 245.76 TB SSD | ≈ 68 h at 1 GB/s | vs ≈ 1.4 h declustered over 100 drives | Worked example; capacity per Micron, 2026-05[^9] |
 | Sync replication latency adder | ≈ 1 ms RTT per 100 km | Physics of light in fibre | NetApp guidance[^14] |
 | SafeMode eradication delay | 24 h default, up to 30 days (FlashArray) | Window to notice and recover | Everpure brief; Ansible docs[^21][^22] |
-| Evergreen//One recovery SLA | Recovery plan in 48 h; 8 TiB/h transfer | Add-on; clean arrays shipped | Pure Storage, 2023[^27] [VERIFY: current terms] |
+| Evergreen//One recovery SLA | Clean arrays shipped next business day; recovery plan in 48 h; 8 TiB/h transfer | Add-on; full contract terms not public | Pure Storage, 2023[^28][^29] |
 | Ransomware victims fully recovered in ≤ 1 week | 51% (US, 2025) | Up from 36% the year before | Sophos, 2025[^1] |
 | Victims reporting attempted backup compromise | 94% | Why immutability matters | Sophos, 2024[^2] |
-| Dell cyber recovery guarantee | Up to US$10 M | Conditional on purchase and services | Dell[^31] |
+| Dell cyber recovery guarantee | Up to US$10 M | PowerProtect Cyber Recovery vaults; conditional on purchase and services | Dell[^32] |
 
 ## Conversation playbook
 
@@ -281,7 +281,7 @@ ActiveCluster arrived with Purity//FA 5.0 in 2017[^17] [VERIFY: 2017 launch year
 [^8]: PetaPixel, "Seagate's new 30TB Hard Drive is the Largest Ever," 2024-01-18. https://petapixel.com/2024/01/18/seagates-new-30tb-hard-drive-is-the-largest-ever/ (retrieved 2026-11-01).
 [^9]: Micron Technology, "Industry-Leading 245TB Micron 6600 ION Data Center SSD Now Shipping," 2026-05-05. https://investors.micron.com/news/press-release/2026/Industry-Leading-245TB-Micron-6600-ION-Data-Center-SSD-Now-Shipping/default.aspx (retrieved 2026-11-01).
 [^10]: Blocks & Files, "Second hyperscaler plumps for Everpure's flash technology," 2026-08-11. https://www.blocksandfiles.com/flash/2026/08/11/second-hyperscaler-plumps-for-everpures-flash-technology/5285903 (retrieved 2026-11-01).
-[^11]: R. Harris, "Why RAID 5 stops working in 2009," ZDNet, 2007-07-18. https://www.zdnet.com/article/why-raid-5-stops-working-in-2009/ (cited from memory; not re-fetched 2026-11-01) [VERIFY: citation details].
+[^11]: R. Harris, "Why RAID 5 stops working in 2009," ZDNet Storage Bits, 2007-07-18. https://www.zdnet.com/article/why-raid-5-stops-working-in-2009/ (not re-fetched 2026-11-01; title and date as widely cited).
 [^12]: Everpure blog, "The Three Rs of Data Storage: Resiliency, Redundancy, and Rebuilds," n.d. https://blog.everpuredata.com/perspectives/the-three-rs-of-data-storage-resiliency-redundancy-and-rebuilds/ (retrieved 2026-11-01).
 [^13]: Pure Storage / Everpure blog post on DFM evacuation versus rebuild, n.d. https://blog.purestorage.com/?p=143164 (seen via search summary, 2026-11-01).
 [^14]: NetApp, "FlexPod MetroCluster IP solutions," blog, n.d. https://www.netapp.com/blog/flexpod-metrocluster-ip-solutions/ (retrieved via search 2026-11-01).
@@ -295,14 +295,15 @@ ActiveCluster arrived with Purity//FA 5.0 in 2017[^17] [VERIFY: 2017 launch year
 [^22]: Ansible documentation, "purestorage.flasharray.purefa_eradication module," n.d. https://docs.ansible.com/projects/ansible/13/collections/purestorage/flasharray/purefa_eradication_module.html (retrieved via search 2026-11-01).
 [^23]: Pure Storage blog, "Auto-on SafeMode: Default Ransomware Protection," n.d. https://blog.purestorage.com/purely-technical/auto-on-safemodetm-now-available-in-purity-6-4-10 (retrieved via search 2026-11-01).
 [^24]: Efficiently Connected, "Pure Accelerate 2026: Storage-Layer Cyber Resilience," 2026. https://www.efficientlyconnected.com/pure-storage-accelerate-2026-storage-layer-cyber-resilience/ (retrieved via search 2026-11-01).
-[^25]: Engadget, "What is the 3-2-1 rule for backing up your data?," n.d. https://engadget.com/2280127/backing-up-data-3-2-1-rule-explained/ (retrieved via search 2026-11-01).
-[^26]: Veeam, "Best Practice Guide: Protect," n.d. https://bp.veeam.com/security/Design-and-implementation/Protect (retrieved via search 2026-11-01).
-[^27]: Pure Storage, "Pure Storage Advances Data Resilience with New SLA Guarantee for Evergreen//One," press release, 2023-06. https://purestorage.com/company/newsroom/press-releases/pure-advances-data-resilience-with-evergreen-one-sla.html (retrieved via search 2026-11-01).
-[^28]: Pure Storage blog, "Evergreen//One STaaS Cyber Recovery and Resilience SLA: Get Clean Arrays after an Attack or Disaster," n.d. https://blog.purestorage.com/?p=123794 (retrieved via search 2026-11-01).
-[^29]: NetApp (Business Wire), "NetApp Delivers Simplicity and Savings to Block Storage with New All Flash SAN Array and Introduces a Ransomware Recovery Guarantee," 2023-05-16. https://www.businesswire.com/news/home/20230516005387/en/ (retrieved via search 2026-11-01).
-[^30]: NetApp, "Ransomware Recovery Guarantee — additional terms," v2.1, 2024-10. https://www.netapp.com/how-to-buy/sales-terms-and-conditions/additional-terms/ransomware-recovery-guarantee/ (retrieved via search 2026-11-01).
-[^31]: Dell Technologies, "Dell Delivers Cyber Recovery Guarantee," blog, n.d. https://www.dell.com/en-us/blog/dell-delivers-cyber-recovery-guarantee (retrieved via search 2026-11-01).
-[^32]: HPE, partner listing describing Virtual Lock immutable snapshots on Alletra Storage MP B10000 with Veeam, n.d. https://buy.hpe.com/us/en/p/R6S04AAE (seen via search summary, 2026-11-01).
-[^33]: Rubrik, "Rubrik Expands Ransomware Recovery Warranty," press release, 2022-02. https://www.rubrik.com/company/newsroom/press-releases/22/rubrik-expands-ransomware-recovery-warranty (retrieved via search 2026-11-01).
-[^34]: Veeam, "Veeam and Everpure: Cyber Resilience Delivered as-a-Service for the Modern Enterprise," blog, 2026. https://www.veeam.com/blog/veeam-everpure-storage-cyber-resilience-as-a-service.html (retrieved via search 2026-11-01).
-[^35]: SecurityBrief Australia, "Everpure adds 1touch data discovery to cyber recovery," 2026-05. https://securitybrief.com.au/story/everpure-adds-1touch-data-discovery-to-cyber-recovery (retrieved via search 2026-11-01).
+[^25]: NetApp, "Ransomware Recovery Guarantee" blog and ONTAP cyber vault terminology documentation (tamperproof snapshots on the SnapLock Compliance clock cannot be deleted by any user or NetApp support; Autonomous Ransomware Protection for NFS/SMB), n.d. https://www.netapp.com/blog/ransomware-recovery-guarantee/ ; https://docs.netapp.com/us-en/netapp-solutions/cyber-vault/ontap-cyber-vault-terminology.html (retrieved via search 2026-11-01).
+[^26]: Engadget, "What is the 3-2-1 rule for backing up your data?," n.d. https://engadget.com/2280127/backing-up-data-3-2-1-rule-explained/ (retrieved via search 2026-11-01).
+[^27]: Veeam, "Best Practice Guide: Protect," n.d. https://bp.veeam.com/security/Design-and-implementation/Protect (retrieved via search 2026-11-01).
+[^28]: Pure Storage, "Pure Storage Advances Data Resilience with New SLA Guarantee for Evergreen//One," press release, 2023-06. https://purestorage.com/company/newsroom/press-releases/pure-advances-data-resilience-with-evergreen-one-sla.html (retrieved via search 2026-11-01).
+[^29]: Pure Storage blog, "Evergreen//One STaaS Cyber Recovery and Resilience SLA: Get Clean Arrays after an Attack or Disaster," n.d. https://blog.purestorage.com/?p=123794 (retrieved via search 2026-11-01).
+[^30]: NetApp (Business Wire), "NetApp Delivers Simplicity and Savings to Block Storage with New All Flash SAN Array and Introduces a Ransomware Recovery Guarantee," 2023-05-16. https://www.businesswire.com/news/home/20230516005387/en/ (retrieved via search 2026-11-01).
+[^31]: NetApp, "Ransomware Recovery Guarantee — additional terms," v2.1, 2024-10. https://www.netapp.com/how-to-buy/sales-terms-and-conditions/additional-terms/ransomware-recovery-guarantee/ (retrieved via search 2026-11-01).
+[^32]: Dell Technologies, "Dell Delivers Cyber Recovery Guarantee," blog, n.d. (2022). https://www.dell.com/en-us/blog/dell-delivers-cyber-recovery-guarantee (retrieved via search 2026-11-01); Dell Technologies, "Cyber Recovery Guarantee FAQ," n.d. https://delltechnologies.com/asset/it-it/products/data-protection/legal-pricing/cyber-recovery-guarantee-faq.pdf (retrieved via search 2026-11-01). Up to US$5 M production plus US$5 M vault recovery; PowerProtect DD9900/DD9400/DD6900/DD6400 vaults; requires DD Retention Lock Compliance and services.
+[^33]: HPE, partner listing describing Virtual Lock immutable snapshots on Alletra Storage MP B10000 with Veeam, n.d. https://buy.hpe.com/us/en/p/R6S04AAE (seen via search summary, 2026-11-01).
+[^34]: Rubrik, "Rubrik Expands Ransomware Recovery Warranty," press release, 2022-02. https://www.rubrik.com/company/newsroom/press-releases/22/rubrik-expands-ransomware-recovery-warranty (retrieved via search 2026-11-01).
+[^35]: Veeam, "Veeam and Everpure: Cyber Resilience Delivered as-a-Service for the Modern Enterprise," blog, 2026. https://www.veeam.com/blog/veeam-everpure-storage-cyber-resilience-as-a-service.html (retrieved via search 2026-11-01).
+[^36]: SecurityBrief Australia, "Everpure adds 1touch data discovery to cyber recovery," 2026-05. https://securitybrief.com.au/story/everpure-adds-1touch-data-discovery-to-cyber-recovery (retrieved via search 2026-11-01).
