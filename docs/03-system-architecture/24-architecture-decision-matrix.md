@@ -5,17 +5,17 @@
 
 ## TL;DR
 
-- **Seven architectures cover almost every deal:** scale-up dual-controller, scale-out shared-nothing, DASE, parallel file systems, object, SDS/HCI and cloud block. Each has a home workload and a wall (Chapters 14–19).
+- **Seven architectures cover almost every deal.** Each has a home workload and a wall (Chapters 14–19).
 - **Five questions decide most deals:** how big, which protocol, latency or throughput, how large a failure domain the customer accepts, and who operates it at what cost. Vendor features come after.
-- **The split is latency-bound versus throughput-bound.** Databases and VMs want sub-millisecond block from a small, strongly consistent system. AI training and HPC want TB/s into one namespace from many nodes.
+- **The deepest split is latency-bound versus throughput-bound.** Databases and VMs want sub-millisecond block; AI training and HPC want TB/s into one namespace.
 - **AI is not one workload.** Data loading, checkpointing, KV-cache serving and RAG land in different cells, so "AI storage" is a portfolio question.
 - **The boundaries are blurring.** Everyone now sells "unified" block, file and object, and Gartner's 2025 Magic Quadrant merged them into one category[^1]. Underneath, the architectures, and their walls, have not converged.
 
 ## Why this matters for Everpure strategy
 
-Everpure sells three architectures: scale-up (FlashArray), a blade scale-out that Everpure calls shared-everything (FlashBlade//S and //E), and a pNFS-style parallel design (FlashBlade//EXA). It also sells container-native SDS (Portworx) and Purity in public clouds. The company deliberately sells no DASE system and no general-purpose HCI. A strategy team needs to know which cells of the matrix Everpure covers natively, where it partners, and where rivals' architectures fit better by design. Those are the cells where discounting won't win.
+Everpure sells three architectures: scale-up (FlashArray), a blade scale-out it calls shared-everything (FlashBlade//S and //E), and a pNFS-style parallel design (FlashBlade//EXA), plus container-native SDS (Portworx) and Purity in public clouds. It sells no DASE system and no general-purpose HCI. A strategy team needs to know which cells Everpure covers natively, where it partners, and where rivals fit better by design, because discounting won't win those cells.
 
-The matrix also guards against category errors. Many enterprises arrive asking for "AI storage" when the request is 90% a capacity and data-governance problem. Some neoclouds arrive asking for "a fast array" when what they need is 2 TB/s into one namespace.
+The matrix also guards against category errors: an enterprise "AI storage" request is often mostly a capacity and governance problem.
 
 ## Core concepts
 
@@ -31,7 +31,7 @@ The matrix also guards against category errors. Many enterprises arrive asking f
 | **SDS / HCI** | ◐ local reads, coupled scaling | ● HCI's original use case | ● container-native data services | ◐ small sites only | ○ coupled nodes, no striping | ○ GPU servers aren't HCI | ○ not built for bursts | ○ not on GPU fabric | ◐ vector DB pods fine | ○ flash HCI costly per TB |
 | **Cloud block (EBS-style)** | ● sub-ms io2, pay per IOPS | ● native boot volumes | ◐ CSI works, AZ-pinned volumes | ◐ snapshots to S3, egress | ○ per-volume throughput caps | ○ single-attach, volume caps | ○ ~4 GB/s per volume | ○ no shared namespace | ◐ vector DB on volumes | ○ use object tiers instead |
 
-**Legend:** ● natural fit, what the architecture was built for · ◐ workable with caveats or vendor-dependent · ○ poor fit, usually the wrong tool. Ratings are the atlas's judgment for a typical 2026 enterprise or neocloud deployment, not benchmarks. A strong product can beat its architecture's rating.
+**Legend:** ● natural fit, what the architecture was built for · ◐ workable with caveats or vendor-dependent · ○ poor fit, usually the wrong tool. Ratings are the atlas's judgment for typical 2026 deployments, not benchmarks; a strong product can beat its row.
 
 *Figure 24.1 — Read the heatmap by row for an architecture's home turf and by column for which architectures compete for a workload. Most columns have two or three credible answers, not one.*
 
@@ -49,7 +49,7 @@ The matrix also guards against category errors. Many enterprises arrive asking f
 
 **Latency versus throughput** is the deepest split, and it is physics. A 4 KB database write on a networked all-flash array completes in roughly 100–250 µs ([Chapter 13](13-storage-stack.md)). Each extra fabric hop or forwarded request adds tens of microseconds, so the latency winner is the design with the fewest hops between host and NVRAM. Throughput is the reverse problem. A 405B-parameter checkpoint is about 405e9 × 16 bytes ≈ 6.5 TB. At 20 GB/s (an illustrative single-array figure) the write takes 6.5e12 ÷ 20e9 ≈ 325 s. At the 877.5 GiB/s that 30 FlashBlade//EXA data nodes posted in MLPerf Storage v3.0[^2] (≈ 942 GB/s), it takes ≈ 7 s. That gap is the whole case for parallel paths. The semiconductor bridge is the HBM-versus-DRAM trade: HBM wins on bandwidth by going wide, DDR wins on cost and capacity, and no single interface wins both.
 
-**Failure domain** is where architectures cost money in ways a spec sheet hides. A dual-controller array loses at most itself. A DASE enclosure or a shared-nothing node failure puts a slice of a giant namespace into rebuild, and the cluster has to be sized to absorb it ([Chapter 20](20-distributed-systems-fundamentals.md)).
+**Failure domain** costs money a spec sheet hides. A dual-controller array loses at most itself; a failed DASE enclosure or shared-nothing node puts a slice of a giant namespace into rebuild ([Chapter 20](20-distributed-systems-fundamentals.md)).
 
 ### The decision tree
 
@@ -76,7 +76,7 @@ flowchart TD
 
 - **Scale-up gets ● for RAG/vector.** A vector database is a database. Its hot index lives in DRAM or on low-latency block, which arrays serve well. The source corpus belongs in object or file, which is why object also gets ●, helped by AWS making S3 Vectors generally available in December 2025 with up to two billion vectors per index[^3].
 - **DASE gets ◐, not ○, for OLTP.** VAST added NVMe/TCP block in 2025[^4], but every I/O still crosses a back-end fabric, and few banks yet run tier-1 databases on it.
-- **Object gets ◐ for training.** Many labs stream shards from S3 with caching data loaders. The rating drops to ○ for small-file, random-access datasets.
+- **Object gets ◐ for training.** Many labs stream shards from S3 through caching loaders; small-file random access drops it to ○.
 - **Parallel FS gets ◐ for KV cache.** The bandwidth is there, and EXA led the v3.0 KV-cache read test[^2], but serving millions of small, latency-sensitive KV blocks is newer ground than streaming checkpoints ([Chapter 32](../05-ai-storage/32-inference-and-kv-cache.md)).
 - **Cloud block gets ● for OLTP despite cost.** io2 Block Express promises under 500 µs average at 16 KiB and 256K IOPS per volume[^5]. The objection is price per IOPS, not fit.
 
@@ -102,13 +102,13 @@ quadrantChart
 
 *Figure 24.4 — Placement is the atlas's judgment: the commercial prize is the top-right quadrant, which is why DASE and pNFS-style designs are where the AI-era competition concentrates.*
 
-Object sits low on simplicity because self-run object at PB scale needs real expertise; a managed S3 service would sit near cloud block. DASE scores well because stateless compute nodes make upgrades routine, offset by a large minimum footprint and a critical back-end fabric.
+Object sits low because self-run PB-scale object needs expertise; managed S3 would sit near cloud block. DASE scores well because stateless compute nodes make upgrades routine.
 
 ### Where the boundaries are blurring
 
 Three forces are blurring the rows. First, **protocol unification**: FlashArray gained S3 in 2025[^6], VAST added block[^4], WEKA's NeuralMesh 6 unified file and object[^7], and HPE markets the X10000 as unifying all three[^8]. Second, **control-plane unification**: Everpure's Enterprise Data Cloud[^9] and DDN's CORE layer over EXAScaler and Infinia[^10] present several architectures as one pool. Third, **hybrids**: FlashBlade//EXA is a parallel file system on a scale-out metadata engine ([Chapter 17](17-parallel-file-systems.md)). NetApp's AFX is shared-media but documented for NAS and object, not block[^11].
 
-The test for any "unified" claim is the matrix itself. Ask which column the protocol was *added* for, and whether its latency and failure domain match a native design.
+Test any "unified" claim against the matrix: which column was the protocol *added* for, and do its latency and failure domain match a native design?
 
 ## How Everpure approaches it vs. competitors
 
@@ -124,11 +124,11 @@ The test for any "unified" claim is the matrix itself. Ask which column the prot
 
 *Table 24.5 — Everpure covers five of the seven rows natively and the HCI row by partnership; DASE is the row it competes against rather than in.*
 
-The steelman for VAST is that one DASE system can occupy most of the heatmap's right half with a single namespace and data-reduction domain, which matters to neoclouds running one platform. The steelman for Dell and NetApp is breadth: a native product in nearly every row, under one support contract. Everpure's counter is one OS family (Purity) and one control plane across its rows, with media economics from DirectFlash ([Chapter 26](../04-everpure/26-purity-and-directflash.md)). Options a strategy team might evaluate, based on public information: closing the KV-cache cell faster (PureKVA shipped on FlashBlade in October 2026[^16]); whether Portworx can turn the Kubernetes VM-migration cell into array pull-through; and whether "unified" messaging should stay subordinate to per-workload proof points.
+The steelman for VAST: one DASE system covers most of the heatmap's right half with one namespace and reduction domain, which suits neoclouds. For Dell and NetApp: a native product in nearly every row under one contract. Everpure's counter is one OS family (Purity) and one control plane across its rows, with media economics from DirectFlash ([Chapter 26](../04-everpure/26-purity-and-directflash.md)). Options a strategy team might evaluate, based on public information: closing the KV-cache cell faster (PureKVA shipped on FlashBlade in October 2026[^16]); using Portworx's Kubernetes VM-migration cell to pull through arrays; and keeping "unified" messaging behind per-workload proof points.
 
 ## History and trajectory
 
-Until about 2010 the matrix had three rows: SAN arrays, NAS filers and tape. Shared-nothing clusters and object stores came with web-scale data. HCI took VMs in the 2010s. VAST's DASE and pNFS revivals came with GPUs. In 2025 the market started folding rows together: Gartner's new Enterprise Storage Platforms category[^1], NetApp AFX in October 2025[^11], and DDN CORE in November 2025[^10]. The signal to watch in 2027 is whether buyers run one platform across columns, as CoreWeave's reported US$1.17B VAST agreement suggests for neoclouds[^17], or keep best-of-breed per column, as most enterprises still do.
+Until about 2010 the matrix had three rows: SAN arrays, NAS filers and tape. Shared-nothing and object came with web-scale data, HCI with 2010s virtualization, DASE and pNFS revivals with GPUs. In 2025 the market started folding rows together: Gartner's new Enterprise Storage Platforms category[^1], NetApp AFX in October 2025[^11], and DDN CORE in November 2025[^10]. The signal to watch in 2027 is whether buyers run one platform across columns, as CoreWeave's reported US$1.17B VAST agreement suggests for neoclouds[^17], or keep best-of-breed per column, as most enterprises still do.
 
 ## Numbers that matter
 
@@ -145,19 +145,19 @@ Until about 2010 the matrix had three rows: SAN arrays, NAS filers and tape. Sha
 ## Conversation playbook
 
 **Questions for a PM**
-1. *"Which cells do we lose on architecture rather than price?"* Strong answer: names cells such as tier-1 HPC with shared-file writes and multi-site geo-EC object, plus the plan for each: partner, roadmap or walk away.
-2. *"Where does 'unified' help a buyer, not just the slide?"* Strong answer: one control plane, one support contract and one reduction domain, with honesty about which protocol is native.
+1. *"Which cells do we lose on architecture rather than price?"* Strong answer: names them (shared-file-write HPC, multi-site geo-EC object) and a plan for each: partner, roadmap or walk away.
+2. *"Where does 'unified' help a buyer?"* Strong answer: one control plane and support contract, with honesty about which protocol is native.
 3. *"What is our AI-inference story by cell?"* Strong answer: separates KV cache (PureKVA) from RAG corpora (FlashBlade S3/NFS) from vector-DB block (FlashArray).
 
 **Questions for an engineer**
-1. *"What is the p99 penalty of serving block through a scale-out design?"* Strong answer: quantifies the extra hop in microseconds and the effect of rebuild on tail latency.
+1. *"What is the p99 penalty of block through a scale-out design?"* Strong answer: the extra hop in microseconds, plus rebuild effects on tail latency.
 2. *"How big is the failure domain in EXA's data tier today?"* Strong answer: states the current data-node protection scheme [VERIFY: current FlashBlade//EXA data-node protection] and rebuild time per node.
-3. *"Where does the decision tree break?"* Strong answer: small-file AI datasets, which look throughput-bound but are metadata-bound ([Chapter 21](21-metadata.md)).
+3. *"Where does the decision tree break?"* Strong answer: small-file AI datasets look throughput-bound but are metadata-bound ([Chapter 21](21-metadata.md)).
 
 **Don't say this:**
 - "One platform for every workload." No architecture rates ● in every column, including Everpure's.
 - "Object is just for archive." It is the default RAG and data-lake substrate.
-- "Parallel file systems are legacy HPC." They are top performers in AI checkpointing benchmarks.
+- "Parallel file systems are legacy HPC." They lead AI checkpointing benchmarks.
 - "DASE can't do block." It can; the question is latency and maturity.
 
 ## Going deeper (optional, L3 pointers)
