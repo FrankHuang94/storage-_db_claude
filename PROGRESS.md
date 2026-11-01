@@ -4,12 +4,12 @@
 
 ## Status
 - **Phase:** 0 — setup and research sweep
-- **Next step:** finish research sweep → write Ch 16 (quality bar) → Part 1 batch
+- **Next step:** QA Ch 16 exemplar → launch Part 1 + Part 2 batches
 
 ## Phase checklist
 - [x] Phase 0.1 — skeleton, CLAUDE.md, style guide, scripts, mkdocs.yml, workflow
-- [ ] Phase 0.2 — research sweep (`meta/research/*.md`)
-- [ ] Phase 0.3 — outline finalized (`meta/outline.md`)
+- [x] Phase 0.2 — research sweep (`meta/research/*.md`: ~170 searches, 3 notes files, ~20.8k words incl. sources; see D13 for fetch limits)
+- [x] Phase 0.3 — outline finalized (`meta/outline.md`, `meta/chapters.yml`, `meta/chapter-scopes.md`)
 - [ ] Phase 0.4 — Ch 16 written + QA'd (quality bar)
 - [ ] Phase 1 — Parts 1 → 8 drafted in batches
 - [ ] Phase 2 — independent reviewer pass for every Part
