@@ -5,9 +5,10 @@ You are drafting chapter(s) of the **Everpure Tech Atlas**, a strategy-level kno
 ## 1. Read first (in this order)
 1. `CLAUDE.md` — reader profile, standing rules (accuracy, sourcing, copyright, voice, visuals).
 2. `meta/style-guide.md` — **the mandatory chapter template**, footnote format, visual conventions, palette, staging formats.
-3. `meta/outline.md` — every chapter's file path (for cross-links) and planned visuals. Your chapter's row lists its required visuals; ★ = signature visual you must deliver.
-4. `meta/research/*.md` — the verified fact base from the research sweep (Everpure, VAST/WEKA/DDN, ecosystem). Reuse its facts **and its sources** (cite the original URL, not the notes file).
-5. If it exists, `docs/03-system-architecture/16-disaggregated-shared-everything.md` is the **quality-bar exemplar**: match its depth, density, tone and structure. Skim it.
+3. `meta/chapter-scopes.md` — the commissioned scope of your chapter (cover everything listed) and of neighbouring chapters (so you don't duplicate them — cross-link instead).
+4. `meta/outline.md` — every chapter's file path (for cross-links) and planned visuals. Your chapter's row lists its required visuals; ★ = signature visual you must deliver.
+5. `meta/research/*.md` — the verified fact base from the research sweep (Everpure, VAST/WEKA/DDN, ecosystem). Reuse its facts **and its sources** (cite the original URL, not the notes file). These are long: grep/skim for what your chapter needs.
+6. If it exists, `docs/03-system-architecture/16-disaggregated-shared-everything.md` is the **quality-bar exemplar**: match its depth, density, tone and structure. Skim it.
 
 ## 2. Research
 - Do your own targeted live research (typically 6–15 WebSearch/WebFetch calls per chapter) for anything time-sensitive or numeric not already in `meta/research/`. Primary sources first (filings, official docs, standards bodies, papers), then reputable trade press. Never cite the notes files; cite the underlying source.
