@@ -12,6 +12,7 @@ You are drafting chapter(s) of the **Everpure Tech Atlas**, a strategy-level kno
 
 ## 2. Research
 - Do your own targeted live research (typically 6–15 WebSearch/WebFetch calls per chapter) for anything time-sensitive or numeric not already in `meta/research/`. Primary sources first (filings, official docs, standards bodies, papers), then reputable trade press. Never cite the notes files; cite the underlying source.
+- Network note: some hosts (e.g., blocksandfiles.com, cnbc.com) refuse page fetches here. Try the primary source or another reputable outlet instead. A critical number you only saw in a search-result summary (not on a fetched page) gets a footnote **and** `[VERIFY: search-summary only]` unless corroborated by a second source.
 - Never invent numbers, product names, dates, customers, funding, valuations or quotes. If you can't verify: `[VERIFY: …]` inline + a VERIFY line in staging (below).
 - Well-established engineering facts and your own worked arithmetic need no footnote (show the arithmetic so it's checkable). Anything vendor-specific, time-sensitive or market-related needs a footnote.
 
