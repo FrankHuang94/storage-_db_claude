@@ -13,7 +13,7 @@
 
 ## Why this matters for Everpure strategy
 
-Strategic conversations inside Everpure carry this history. Product managers defend Evergreen economics because Evergreen built the installed base. Engineers trust Purity and DirectFlash because they have survived 14 years of NAND generations. Corporate development inherits a pattern of small, tuck-in deals that bought capabilities rather than revenue. Knowing which bets paid off, which ran late and which died tells you how the organisation weighs a new one.
+Strategic conversations inside Everpure carry this history. Product managers defend Evergreen economics because Evergreen built the installed base. Engineers trust Purity because it has survived 14 years of NAND generations. Corporate development inherits a pattern of small, tuck-in deals that bought capabilities rather than revenue. Knowing which bets paid off, which ran late and which died tells you how the organisation weighs a new one.
 
 The rebrand, the 1touch acquisition and hyperscaler licensing all move away from "we sell the best flash array". Is that the fifth pivot in a consistent line, or a break? The record suggests the first, with one caveat: past pivots were underwritten by array cash flows, and the newest ones still are.
 
@@ -45,15 +45,15 @@ timeline
 
 The company was incorporated in Delaware in October 2009 as OS76, Inc. and renamed Pure Storage in January 2010[^1]. Its founders, John Colgrove (from Veritas) and John Hayes (from Yahoo), were incubated by Sutter Hill Ventures[^2]. In 2009 enterprise flash meant expensive SLC drives for a few hot databases. Pure bet that consumer MLC flash, managed by software that deduplicated, compressed and spared the cells, could replace disk for primary storage. Illustratively, if a 5:1 data-reduction ratio turns raw flash at five times disk's $/TB into parity per *effective* terabyte, the speed comes almost free ([Chapter 5](../01-storage-fundamentals/05-data-reduction.md)).
 
-The semiconductor analogy is a fabless start-up that wins with design on a mature, cheap process node rather than paying for the leading edge. After a two-year beta, the FlashArray 300 series reached general availability in May 2012, running the Purity operating environment[^3]. It shipped with "All Software Included" licensing[^1].
+Think of a fabless start-up winning with design on a cheap, mature node. After a two-year beta, the FlashArray 300 series reached general availability in May 2012, running the Purity operating environment[^3]. It shipped with "All Software Included" licensing[^1].
 
-The second insight was commercial. Incumbents earned much of their margin from forklift upgrades every three to five years. In February 2014 Pure launched *Forever Flash*, which included a controller refresh with maintenance renewal[^4]. In June 2015 it widened this into the *Evergreen Storage* programme, launched alongside FlashArray//m[^5]. Four months later the IPO priced at $17, raising $425M (25M shares)[^6]. The stock closed its first day at $16.01[^7]. The incumbents fought back in court. Pure settled EMC's patent and trade-secret litigation in October 2016 with a $30M payment to Dell, EMC's new owner[^8].
+The second insight was commercial. Incumbents earned much of their margin from forklift upgrades every three to five years. In February 2014 Pure launched *Forever Flash*, which included a controller refresh with maintenance renewal[^4]. In June 2015 it widened this into the *Evergreen Storage* programme, launched alongside FlashArray//m[^5]. Four months later the IPO priced at $17, raising $425M (25M shares)[^6]. The stock closed its first day at $16.01[^7]. Incumbents fought back in court: Pure settled EMC's patent and trade-secret litigation in October 2016 with a $30M payment to Dell, EMC's new owner[^8].
 
 ### Era 2, 2016–2020: second product, new CEO, first deals
 
-FlashBlade, a scale-out file and object system for unstructured data, was unveiled in March 2016 and reached GA on 25 January 2017[^9]. In August 2017 the board appointed Charles Giancarlo, previously CTO of Cisco, as CEO, succeeding Scott Dietzen[^10]. DirectFlash modules, which put raw NAND under Purity's direct control instead of behind an SSD controller, followed in 2017 [VERIFY: launch date of DirectFlash with FlashArray//X]. Their engineering is covered in [Chapter 26](26-purity-and-directflash.md).
+FlashBlade, a scale-out file and object system for unstructured data, was unveiled in March 2016 and reached GA on 25 January 2017[^9]. In August 2017 the board appointed Charles Giancarlo, previously CTO of Cisco, as CEO, succeeding Scott Dietzen[^10]. DirectFlash modules, which put raw NAND under Purity's direct control instead of behind an SSD controller, followed in 2017 [VERIFY: launch date of DirectFlash with FlashArray//X]. See [Chapter 26](26-purity-and-directflash.md).
 
-Three acquisitions followed in 26 months. Table 25.1 shows how they turned out.
+Three acquisitions followed in 26 months (Table 25.1).
 
 | Target | Announced → closed | Price (disclosed) | Rationale | What became of it |
 |---|---|---|---|---|
@@ -75,7 +75,7 @@ In May 2023 a Pure executive predicted that no new hard drives would be sold aft
 
 ### Era 4, 2024–2025: from array vendor to IP licensor
 
-On 3 December 2024 Pure announced a DirectFlash design win with a "top-four hyperscaler"[^27]. The FY2025 annual report later named the customer as Meta[^28]. The model is new for the company. The hyperscaler sources its own hardware and NAND, and Pure licenses Purity and DirectFlash technology and provides support[^27]. It works like an ARM-style IP licence rather than a fab selling wafers. Pure gives up hardware revenue in exchange for gross margin and reach. Volume deployment began in Q2 FY2026, and the CFO targeted 1–2 EB shipped by the end of that year[^29].
+On 3 December 2024 Pure announced a DirectFlash design win with a "top-four hyperscaler"[^27]. The FY2025 annual report later named the customer as Meta[^28]. The model is new for the company. The hyperscaler sources its own hardware and NAND, and Pure licenses Purity and DirectFlash technology and provides support[^27]. It is an ARM-style IP licence rather than a fab selling wafers: Pure trades hardware revenue for margin and reach. Volume deployment began in Q2 FY2026, and the CFO targeted 1–2 EB shipped by the end of that year[^29].
 
 In 2025 Pure also announced FlashBlade//EXA, a disaggregated system for AI-scale throughput, in March[^30]. In June it launched the *Enterprise Data Cloud*, which uses Pure Fusion to present a whole fleet as one policy-driven pool[^31] ([Chapter 28](28-platform-and-software.md)).
 
