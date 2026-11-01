@@ -89,7 +89,7 @@ sequenceDiagram
 
 *Figure 31.2 — Asynchronous checkpointing cuts the GPU stall to a PCIe copy and moves the storage write off the critical path, at the cost of a window in which the newest checkpoint is not yet durable.*
 
-In an asynchronous save, each GPU copies its shard into pinned host memory (about a second for a few hundred MB over PCIe) and resumes while CPU threads write it out. With PyTorch's 2024 asynchronous mode, IBM measured a 7B model's checkpoint downtime falling from 148.8 to 6.3 seconds[^5]. Tiered variants add an intermediate stop. NVIDIA's NeMo local checkpointing writes each node's part to local SSD or RAM disk and replicates it to peer nodes[^6]. AWS's Gemini research system keeps checkpoints in peer CPU memory and reported over 13× faster recovery[^7].
+In an asynchronous save, each GPU copies its shard into pinned host memory (about a second for a few hundred MB over PCIe) and resumes while CPU threads write it out. With PyTorch's 2024 asynchronous mode, IBM measured a 7B model's checkpoint downtime falling from 148.8 to 6.3 seconds[^5]. Tiered variants add an intermediate stop. NVIDIA's NeMo local checkpointing writes each node's part to local SSD or RAM disk and replicates it to peer nodes[^6]. The Gemini research system (Rice University and AWS) keeps checkpoints in peer CPU memory and reported over 13× faster recovery[^7].
 
 The costs: a node lost mid-drain falls back to the previous checkpoint; host DRAM must hold the shard; the drain must finish before the next save; and background writes compete with training traffic unless they use a separate storage fabric.
 
@@ -99,7 +99,7 @@ The costs: a node lost mid-drain falls back to the previous checkpoint; host DRA
 
 Checkpoint frequency trades time spent saving against work redone after a failure. Young's approximation gives the optimal interval as **τ ≈ √(2 × C × M)**, where *C* is the GPU stall per checkpoint and *M* is the mean time between job-killing failures[^8]. Overhead is then roughly C/τ + τ/(2M), plus restart time per failure.
 
-During a 54-day snapshot of Llama 3 405B pre-training on 16,384 H100s, Meta logged 466 interruptions: 47 planned and **419 unexpected**. About 78% of these were attributed to confirmed or suspected hardware, led by faulty GPUs and HBM3[^4][^9]. That is one unexpected stop every 54 × 24 ÷ 419 ≈ **3.1 hours**. In Meta's research clusters a 1,024-GPU job's mean time to failure was 7.9 hours, against 47.7 days for an 8-GPU job[^10]. Scaling that linearly predicts about 30 minutes at 16K GPUs; mature fleets like Llama 3's do far better.
+During a 54-day snapshot of Llama 3 405B pre-training on 16,384 H100s, Meta logged 466 interruptions: 47 planned and **419 unexpected**. About 78% of these were attributed to confirmed or suspected hardware, led by faulty GPUs and HBM3[^4][^9]. That is one unexpected stop every 54 × 24 ÷ 419 ≈ **3.1 hours**. In Meta's research clusters a 1,024-GPU job's mean time to failure was 7.9 hours, against 47.7 days for an 8-GPU job[^10]. Scaling that linearly predicts about 30 minutes at 16K GPUs; the authors' own model projects about 1.8 hours (as summarized in secondary sources), and Llama 3's production fleet managed 3.1 hours.
 
 | Scenario (405B, 6.48 TB state) | MTBF *M* | Stall per save *C* | Optimal interval τ | Save + rework overhead | Drain bandwidth needed |
 |---|---|---|---|---|---|
@@ -117,11 +117,11 @@ At 16K GPUs, 10.4% overhead idles ~1,700 GPUs, tens of millions of dollars a yea
 
 After a failure, bad nodes are swapped and every rank reads the latest checkpoint at once. Three things make this harder than the save:
 
-1. **Read amplification.** The optimizer state is sharded, but the bf16 weights are replicated across data-parallel groups. In the naive approach every replica reads its own copy. For Llama 3 405B with 128 data-parallel replicas, that is 0.81 TB × 128 + 5.67 TB ≈ **109 TB of reads to recover 6.5 TB of unique data**. Good frameworks read each byte once and broadcast it over the faster GPU fabric.
+1. **Read amplification.** The optimizer state is sharded, but the bf16 weights are replicated across data-parallel groups. In the naive approach every replica reads its own copy. For Llama 3 405B with 128 data-parallel replicas, that is 0.81 TB × 128 of bf16 weights plus 4.86 TB of sharded fp32 master weights and moments ≈ **109 TB of reads to recover ~5.7 TB of unique checkpoint data**. Good frameworks read each byte once and broadcast it over the faster GPU fabric.
 2. **Cold reads and metadata.** Caches may no longer hold the checkpoint, and thousands of ranks open and stat files simultaneously. In Everpure's own MLPerf Storage v3.0 result, checkpoint *read* was 588 GiB/s against 877 GiB/s *write*[^1]. Restore was the slower direction even for the leader.
 3. **Everything else restarts too.** Container images and Python environments hit shared storage at the same moment; Meta cut job-startup time to keep effective training time above 90%[^4].
 
-A useful sizing target is a restore time, not a bandwidth. Reading 6.5 TB of unique data in two minutes needs 54 GB/s. The same restore with naive replica reads needs about 900 GB/s.
+A useful sizing target is a restore time, not a bandwidth. Reading 5.7–6.5 TB of unique data in two minutes needs 47–54 GB/s. The same restore with naive replica reads needs about 900 GB/s.
 
 ### Data loading: tokens are cheap, pixels are not
 
@@ -161,7 +161,7 @@ flowchart LR
 
 *Figure 31.3 — For text LLMs, the performance spec comes from checkpoint save and restore; for multimodal training, data loading can dominate.*
 
-Capacity example: the last 10 checkpoints of a 405B run plus 20 evaluation milestones is 30 × 5.67 TB ≈ 170 TB, modest next to a multimodal corpus but hot data readable at restore speed. NVIDIA's DGX SuperPOD (H100) reference architecture's "best" storage tier asks for 40 GB/s read and 20 GB/s write per node, and 125/62 GB/s read/write per 32-node scalable unit[^12] [VERIFY: search-summary only]. Scaled linearly to 64 units (16,384 GPUs), that is about 4 TB/s of write, the same order as Meta's 7 TB/s peak.
+Capacity example: the last 10 checkpoints of a 405B run plus 20 evaluation milestones is 30 × 5.67 TB ≈ 170 TB, modest next to a multimodal corpus but hot data readable at restore speed. NVIDIA's DGX SuperPOD (H100) reference architecture's "best" storage tier asks for 40 GB/s read and 20 GB/s write per node, and 125/62 GB/s read/write per 32-node scalable unit[^12] [VERIFY: the 125 GB/s per-SU read appears in a search snippet of the RA's Table 6 (good/better/best = 15/40/125 GB/s); per-node and write figures still search-summary only]. Scaled linearly to 64 units (16,384 GPUs), that is about 4 TB/s of write, the same order as Meta's 7 TB/s peak.
 
 ## How Everpure approaches it vs. competitors
 
