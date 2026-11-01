@@ -1,0 +1,9 @@
+design,tier,gigabytes,usd_per_gb,usd,source,as_of
+HNSW fp32 all in DRAM,DRAM,4360,14.5,63220,"Worked example, Everpure Tech Atlas Ch33: 1B vectors x 1024 dims x 4 B = 4096 GB plus HNSW graph (M=32: 64 x 4-byte neighbour IDs at layer 0 + ~8 B upper layers = 264 B/vector); DRAM price ~$14.5/GB (Counterpoint, 64 GB DDR5 RDIMM ~$927, 1Q26)",2026-11-01
+HNSW fp32 all in DRAM,SSD,4096,0.75,3072,"Worked example, Everpure Tech Atlas Ch33: persisted fp32 copy on SSD; enterprise TLC SSD ~$0.75/GB (Hardware Busters index, 30 TB SSD at $22,600, Q3 2026)",2026-11-01
+HNSW int8 in DRAM + fp32 on SSD,DRAM,1288,14.5,18676,"Worked example, Everpure Tech Atlas Ch33: int8 scalar quantization 1024 B/vector + 264 B graph; DRAM ~$14.5/GB (Counterpoint 1Q26)",2026-11-01
+HNSW int8 in DRAM + fp32 on SSD,SSD,4096,0.75,3072,"Worked example, Everpure Tech Atlas Ch33: fp32 vectors on SSD for re-ranking; SSD ~$0.75/GB (Hardware Busters, Q3 2026)",2026-11-01
+IVF-PQ in DRAM + fp32 on SSD,DRAM,72,14.5,1044,"Worked example, Everpure Tech Atlas Ch33: PQ 64 B/vector + 8 B ID + ~0.3 GB centroids (65,536 x 4 KB); DRAM ~$14.5/GB (Counterpoint 1Q26)",2026-11-01
+IVF-PQ in DRAM + fp32 on SSD,SSD,4096,0.75,3072,"Worked example, Everpure Tech Atlas Ch33: fp32 vectors on SSD for re-ranking; SSD ~$0.75/GB (Hardware Busters, Q3 2026)",2026-11-01
+DiskANN: PQ in DRAM + graph on SSD,DRAM,64,14.5,928,"Worked example, Everpure Tech Atlas Ch33: PQ codes 64 B/vector in DRAM (DiskANN design per Subramanya et al., NeurIPS 2019); DRAM ~$14.5/GB (Counterpoint 1Q26)",2026-11-01
+DiskANN: PQ in DRAM + graph on SSD,SSD,4352,0.75,3264,"Worked example, Everpure Tech Atlas Ch33: full vector 4096 B + 64 neighbour IDs x 4 B = 4352 B per node on SSD; SSD ~$0.75/GB (Hardware Busters, Q3 2026)",2026-11-01

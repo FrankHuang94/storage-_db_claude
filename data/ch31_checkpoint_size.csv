@@ -1,0 +1,5 @@
+model,params_billion,weights_bf16_tb,checkpoint_on_disk_tb,full_training_state_tb,write_gbps_full_state_60s,source,as_of
+70B,70,0.14,0.98,1.12,18.7,"Atlas worked example: size = parameters x bytes/param (bf16 weights 2, fp32 master 4, Adam m 4, Adam v 4, bf16 grads 2); write rate = full state / 60 s. Not a measurement.",2026-11-01
+405B,405,0.81,5.67,6.48,108.0,"Atlas worked example: size = parameters x bytes/param (bf16 weights 2, fp32 master 4, Adam m 4, Adam v 4, bf16 grads 2); write rate = full state / 60 s. Not a measurement.",2026-11-01
+1T,1000,2.0,14.0,16.0,266.7,"Atlas worked example: size = parameters x bytes/param (bf16 weights 2, fp32 master 4, Adam m 4, Adam v 4, bf16 grads 2); write rate = full state / 60 s. Not a measurement.",2026-11-01
+2T,2000,4.0,28.0,32.0,533.3,"Atlas worked example: size = parameters x bytes/param (bf16 weights 2, fp32 master 4, Adam m 4, Adam v 4, bf16 grads 2); write rate = full state / 60 s. Not a measurement.",2026-11-01
