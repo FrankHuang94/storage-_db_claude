@@ -1,6 +1,6 @@
 # 59. Self-test: 200 flashcards
 
-> **Depth:** L1–L2 · **Reading time:** ~RT min · **Last verified:** 2026-11-01
+> **Depth:** L1–L2 · **Reading time:** ~53 min · **Last verified:** 2026-11-01
 > **Prerequisites:** None to start, but the deck pays off most after a first pass through Parts 1–7. Begin with [What storage does](../01-storage-fundamentals/01-what-storage-does.md); pair it with the [Question bank](57-question-bank.md) and [Explain it in 30 seconds](58-explain-in-30-seconds.md).
 
 ## TL;DR
@@ -25,6 +25,33 @@ Every card was written from the chapter it links to: its TL;DR, its core-concept
 
 The split is roughly 40% L1 and 60% L2. An L1 card has one right answer, usually a definition or a list. An L2 card asks *why* or *what follows*, and a good answer names a mechanism, a number and a consequence. Score yourself strictly on L2: an answer that gets the mechanism right but not the consequence counts as a miss.
 
+```mermaid
+mindmap
+  root((The deck))
+    Physics and metrics
+      NAND and FTL
+      Latency and TCO
+      Reduction and protection
+    Data paths
+      Block file object
+      RDMA and GPUDirect
+    Architectures
+      Scale-up and scale-out
+      DASE and parallel FS
+      Control and consumption
+    Everpure
+      Purity and DirectFlash
+      Products and financials
+    AI workloads
+      Checkpoints and KV cache
+      NVIDIA and neoclouds
+    Market and history
+      Competitors and NAND cycle
+      Eras and trends
+```
+
+*Figure 59.1 — What the deck tests: six clusters of mental models, each mapped to one or two Parts of the atlas.*
+
 | Set | Cards | L1 | L2 | L2 share | Card numbers |
 |---|---|---|---|---|---|
 | Part 1 — Storage fundamentals | 37 | 17 | 20 | 54% | Q1–Q37 |
@@ -37,7 +64,7 @@ The split is roughly 40% L1 and 60% L2. An L1 card has one right answer, usually
 | Strategy mix | 14 | 1 | 13 | 93% | Q266–Q279 |
 | **Total** | **279** | **111** | **168** | **60%** | Q1–Q279 |
 
-*Figure 59.1 — The deck leans toward the architecture, AI and competition Parts, where conversations with Everpure PMs and engineers spend most of their time.*
+*Figure 59.2 — The deck leans toward the architecture, AI and competition Parts, where conversations with Everpure PMs and engineers spend most of their time.*
 
 ```mermaid
 xychart-beta
@@ -47,7 +74,31 @@ xychart-beta
     bar [37, 37, 52, 31, 50, 42, 16, 14]
 ```
 
-*Figure 59.2 — Card counts follow chapter counts: Part 3 (twelve chapters) and Part 5 (ten) carry the most cards; the strategy set is small but every card in it crosses Parts.*
+*Figure 59.3 — Card counts follow chapter counts: Part 3 (twelve chapters) and Part 5 (ten) carry the most cards; the strategy set is small but every card in it crosses Parts.*
+
+```mermaid
+xychart-beta
+    title "L1 vs L2 cards per set"
+    x-axis ["Part 1", "Part 2", "Part 3", "Part 4", "Part 5", "Part 6", "Part 7", "Strategy"]
+    y-axis "Cards" 0 --> 40
+    bar [20, 20, 30, 17, 31, 26, 11, 13]
+    line [17, 17, 22, 14, 19, 16, 5, 1]
+```
+
+*Figure 59.4 — L2 cards outnumber L1 cards in every set, most of all in the strategy mix, where almost every card is a trade-off.*
+
+### Scoring an L2 answer
+
+L1 cards are right or wrong. L2 cards need a rubric, because a half-right answer is the kind that sounds fine in a meeting and fails under one follow-up question.
+
+| Element | Full credit | Partial credit | Example |
+|---|---|---|---|
+| Mechanism | Names the cause, e.g. "decode rereads the whole cache per token" | Names the topic only, e.g. "KV is big" | Q170 |
+| Number | Gives the chapter's figure with its unit and basis | Right order of magnitude, wrong basis | Q163 |
+| Consequence | Says what it means for a buyer or for Everpure | Stops at the mechanism | Q134 |
+| Qualifier | Keeps "company-stated", "illustrative" or "among entrants" | Drops the caveat | Q143 |
+
+*Figure 59.5 — An L2 card counts as correct only with all four elements; without the consequence or the qualifier, score it as a miss and move it back to box 1.*
 
 ### A two-week review schedule
 
@@ -61,7 +112,7 @@ flowchart TD
     D --> E["Day 5: Parts 6-7 + strategy set"]
     E --> F["Day 6: Box 1 misses, all Parts"]
     F --> G["Days 7-8: Box 2 shaky cards, shuffled"]
-    G --> H["Day 9: reread chapters flagged in Table 59.3"]
+    G --> H["Day 9: reread chapters from the weak-area table"]
     H --> I["Days 10-12: Box 1 daily, Box 2 on day 11"]
     I --> J["Day 13: Box 3 solid cards, shuffled"]
     J --> K{"Day 14: 50 random cards, 20 min: 90% or better?"}
@@ -69,7 +120,7 @@ flowchart TD
     K -->|No| M["Repeat days 9-14 on missed Parts"]
 ```
 
-*Figure 59.3 — A suggested 14-day plan: five days of first passes, nine days of spaced, interleaved retrieval, ending in a timed mixed test.*
+*Figure 59.6 — A suggested 14-day plan: five days of first passes, nine days of spaced, interleaved retrieval, ending in a timed mixed test.*
 
 The box rules are simple enough to run with a pen and the card numbers:
 
@@ -84,7 +135,7 @@ stateDiagram-v2
     Box3 --> Retired: correct twice in a row
 ```
 
-*Figure 59.4 — Leitner-style boxes: a miss always sends a card back to daily review, so effort concentrates where recall is weakest.*
+*Figure 59.7 — Leitner-style boxes: a miss always sends a card back to daily review, so effort concentrates where recall is weakest.*
 
 ### Diagnosing weak areas
 
@@ -104,7 +155,7 @@ Score by Part, not just in total. A miss cluster usually points to one missing m
 | MLPerf AU, hero configs, normalisation | Benchmark literacy | [Ch 37](../05-ai-storage/37-reading-benchmarks.md) | [Ch 45](../06-industry-and-competition/45-head-to-head.md) |
 | Shares, TAM, price vs volume | Market measurement | [Ch 40](../06-industry-and-competition/40-market-structure.md) | [Ch 48](../06-industry-and-competition/48-media-suppliers-and-nand-cycle.md) |
 
-*Table 59.3 — Weak-area triage: each miss pattern maps to the one chapter that builds the underlying model, then the chapter that applies it.*
+*Figure 59.8 — Weak-area triage: each miss pattern maps to the one chapter that builds the underlying model, then the chapter that applies it.*
 
 ### Part 1 — Storage fundamentals
 
@@ -118,6 +169,8 @@ The Part 1 cards cover the physics and arithmetic that every later argument reus
 | [Ch 4](../01-storage-fundamentals/04-performance-and-economics-metrics.md) | 6 (3 / 3) | Q19–Q24 |
 | [Ch 5](../01-storage-fundamentals/05-data-reduction.md) | 6 (2 / 4) | Q25–Q30 |
 | [Ch 6](../01-storage-fundamentals/06-data-protection-and-resilience.md) | 7 (4 / 3) | Q31–Q37 |
+
+*Figure 59.9 — Part 1 — Storage fundamentals: 37 cards over 6 chapters (17 L1, 20 L2), numbered Q1–Q37; use the card numbers to log misses by chapter.*
 
 <details>
 <summary><strong>Q1.</strong> What are the three jobs of any storage system?</summary>
@@ -390,6 +443,8 @@ Part 2 cards test how bytes travel: block, file and object protocols, RDMA fabri
 | [Ch 10](../02-protocols-and-networking/10-datacenter-networking.md) | 6 (3 / 3) | Q58–Q63 |
 | [Ch 11](../02-protocols-and-networking/11-gpu-data-path.md) | 5 (2 / 3) | Q64–Q68 |
 | [Ch 12](../02-protocols-and-networking/12-interfaces-and-emerging-tech.md) | 6 (3 / 3) | Q69–Q74 |
+
+*Figure 59.10 — Part 2 — Protocols and networking: 37 cards over 6 chapters (17 L1, 20 L2), numbered Q38–Q74; use the card numbers to log misses by chapter.*
 
 <details>
 <summary><strong>Q38.</strong> What two layers does every block protocol have?</summary>
@@ -668,6 +723,8 @@ Part 3 is the largest set because architecture is where PM and engineering conve
 | [Ch 22](../03-system-architecture/22-control-planes.md) | 3 (1 / 2) | Q117–Q119 |
 | [Ch 23](../03-system-architecture/23-consumption-models.md) | 4 (2 / 2) | Q120–Q123 |
 | [Ch 24](../03-system-architecture/24-architecture-decision-matrix.md) | 3 (1 / 2) | Q124–Q126 |
+
+*Figure 59.11 — Part 3 — System architecture: 52 cards over 12 chapters (22 L1, 30 L2), numbered Q75–Q126; use the card numbers to log misses by chapter.*
 
 <details>
 <summary><strong>Q75.</strong> Name the eight layers of the storage stack.</summary>
@@ -1045,6 +1102,8 @@ Part 4 cards cover Everpure itself: history, Purity and DirectFlash, the product
 | [Ch 28](../04-everpure/28-platform-and-software.md) | 6 (3 / 3) | Q146–Q151 |
 | [Ch 29](../04-everpure/29-hyperscaler-ecosystem-financials.md) | 6 (2 / 4) | Q152–Q157 |
 
+*Figure 59.12 — Part 4 — Everpure: 31 cards over 5 chapters (14 L1, 17 L2), numbered Q127–Q157; use the card numbers to log misses by chapter.*
+
 <details>
 <summary><strong>Q127.</strong> What was Pure Storage's founding insight in 2009?</summary>
 
@@ -1278,6 +1337,8 @@ Part 5 cards cover the AI workloads (pipeline, training, inference, RAG, agents)
 | [Ch 37](../05-ai-storage/37-reading-benchmarks.md) | 5 (2 / 3) | Q194–Q198 |
 | [Ch 38](../05-ai-storage/38-power-and-density.md) | 5 (1 / 4) | Q199–Q203 |
 | [Ch 39](../05-ai-storage/39-agentic-ai-and-data-intelligence.md) | 4 (2 / 2) | Q204–Q207 |
+
+*Figure 59.13 — Part 5 — AI storage: 50 cards over 10 chapters (19 L1, 31 L2), numbered Q158–Q207; use the card numbers to log misses by chapter.*
 
 <details>
 <summary><strong>Q158.</strong> How many workloads does "AI storage" really cover?</summary>
@@ -1647,6 +1708,8 @@ Part 6 cards cover the market and every major competitor. Most answers carry a *
 | [Ch 49](../06-industry-and-competition/49-competitive-matrices.md) | 2 (1 / 1) | Q245–Q246 |
 | [Ch 50](../06-industry-and-competition/50-diligence-framework.md) | 3 (1 / 2) | Q247–Q249 |
 
+*Figure 59.14 — Part 6 — Industry and competition: 42 cards over 11 chapters (16 L1, 26 L2), numbered Q208–Q249; use the card numbers to log misses by chapter.*
+
 <details>
 <summary><strong>Q208.</strong> What does IDC's external enterprise storage tracker measure?</summary>
 
@@ -1951,6 +2014,8 @@ Part 7 cards cover the long view: how storage and flash economics evolved, and w
 | [Ch 52](../07-history-and-future/52-history-of-flash.md) | 5 (1 / 4) | Q256–Q260 |
 | [Ch 53](../07-history-and-future/53-future-trends.md) | 5 (1 / 4) | Q261–Q265 |
 
+*Figure 59.15 — Part 7 — History and future: 16 cards over 3 chapters (5 L1, 11 L2), numbered Q250–Q265; use the card numbers to log misses by chapter.*
+
 <details>
 <summary><strong>Q250.</strong> Name the six eras of storage history.</summary>
 
@@ -2095,6 +2160,8 @@ The strategy cards join facts from different Parts. They have no single right se
 | [Ch 48](../06-industry-and-competition/48-media-suppliers-and-nand-cycle.md) | 1 | Q266 |
 | [Ch 53](../07-history-and-future/53-future-trends.md) | 1 | Q272 |
 
+*Figure 59.16 — The 14 strategy cards draw on 25 chapters; most combine facts from more than one Part, so they are the best test of whether the models connect.*
+
 <details>
 <summary><strong>Q266.</strong> (L2) Why can Everpure's 2026 revenue growth flatter while its margins understate?</summary>
 
@@ -2199,18 +2266,28 @@ Read this section as an answer key for the comparison cards. The same topic usua
 
 | Topic | Everpure position | Strongest competitor counter | Cards |
 |---|---|---|---|
-| Flash management | One global FTL across raw-NAND DirectFlash Modules | FDP SSDs and hyperscaler DIY designs close the gap on commodity drives | Q18, Q73, Q148–Q149 |
-| AI-scale file | FlashBlade//EXA: metadata core plus pNFS to data nodes, stock client | VAST DASE with 10,000+ GPU references; WEKA proprietary client anywhere; DDN Lustre inside NVIDIA | Q109, Q155, Q257–Q259 |
-| Benchmarks | Top MLPerf Storage v3.0 checkpoint and KV-cache results | The strongest rivals did not enter that round | Q156, Q205 |
-| NVIDIA alignment | FlashBlade//S fully certified; EXA NCP pending; STX partner | NVIDIA holds equity in VAST and WEKA and runs on DDN | Q157, Q192 |
-| Business model | Evergreen subscriptions on stateless controllers since 2015 | Dell, NetApp and HPE match the contract terms | Q87, Q143, Q141 |
-| Data intelligence | 1touch-based Data Intelligence, from 2026 | Catalog and data-security vendors see every vendor's storage | Q162, Q227 |
+| Flash management | One global FTL across raw-NAND DirectFlash Modules | FDP SSDs and hyperscaler DIY designs close the gap on commodity drives | Q18, Q74, Q134, Q137 |
+| AI-scale file | FlashBlade//EXA: metadata core plus pNFS to data nodes, stock client | VAST DASE with 10,000+ GPU references; WEKA's proprietary client anywhere; DDN Lustre inside NVIDIA | Q92, Q142, Q231, Q232 |
+| Benchmarks | Top MLPerf Storage v3.0 checkpoint and KV-cache results | The strongest rivals did not enter that round | Q143, Q198 |
+| NVIDIA alignment | FlashBlade//S fully certified; EXA NCP pending; STX partner | NVIDIA holds equity in VAST and WEKA and runs its own clusters on DDN | Q144, Q183, Q184 |
+| Business model | Evergreen subscriptions on stateless controllers since 2015 | Dell, NetApp and HPE now match the contract terms | Q129, Q81, Q123 |
+| Data intelligence | 1touch-based Data Intelligence, from 2026 | Catalog and data-security vendors see every vendor's storage | Q149, Q206, Q279 |
 
-*Table 59.4 — Everpure's position and the steelman counter on six recurring topics, with the cards that test each.*
+*Figure 59.17 — Everpure's position and the steelman counter on six recurring topics, with the cards that test each.*
 
 ## History and trajectory
 
 This deck reflects the atlas as last verified on 2026-11-01, and its cards age at different rates. Physics and protocol cards (NAND wear, Little's law, pNFS layouts, quorum maths) will hold for years. Product cards (DFM capacity, EXA certification status, WEKA's naming) change with each launch. Financial and market cards (ARR, RPO, IDC shares, NAND contract prices, private valuations) change every quarter, and benchmark cards change with each MLPerf round.
+
+| Card type | Examples | Changes with | Refresh trigger |
+|---|---|---|---|
+| Physics and protocols | NAND wear, Little's law, pNFS layouts, quorums | Almost never | New atlas edition |
+| Architecture walls | DASE minimum size, rebuild windows, metadata limits | Product generations | Major vendor launch |
+| Products and certification | DFM capacity, EXA certification, WEKA naming | Each launch | Vendor launch or NVIDIA programme update |
+| Financials and share | ARR, RPO, gross margin, IDC shares | Every quarter | Earnings release, IDC tracker |
+| Benchmarks and private valuations | MLPerf results, VAST and WEKA rounds | Each round or raise | MLPerf round, funding news |
+
+*Figure 59.18 — Cards age at different rates; the bottom two rows need re-checking every quarter.*
 
 A practical rule: after each Everpure earnings release, each IDC quarterly tracker, and each MLPerf Storage round, re-verify the cards that cite those sources against the updated chapters and retire anything superseded. When the atlas adds or rewrites a chapter, regenerate that Part's cards from the new TL;DR and "Numbers that matter" table rather than editing card by card.
 
@@ -2229,30 +2306,30 @@ A practical rule: after each Everpure earnings release, each IDC quarterly track
 | Part 6 — Industry and competition cards | 42 | 16 L1 / 26 L2, Q208–Q249 | This chapter, 2026-11-01 |
 | Part 7 — History and future cards | 16 | 5 L1 / 11 L2, Q250–Q265 | This chapter, 2026-11-01 |
 | Strategy mix cards | 14 | 1 L1 / 13 L2, Q266–Q279 | This chapter, 2026-11-01 |
-| Chapters with at least one card | 53 | Every chapter in Parts 1–7 | This chapter, 2026-11-01 |
+| Chapters with at least one card | 53 | Every chapter in Parts 1–7 written by 2026-11-01 (Ch 54 pending) | This chapter, 2026-11-01 |
 
 ## Conversation playbook
 
 **Three questions for a PM, using the deck**
 
-1. *"Which Evergreen tier is growing fastest, and how does that show up in ARR versus reported product revenue?"* A strong answer separates //Forever, //Flex and //One, explains that a ratable STaaS mix depresses reported growth while lifting ARR, RPO and TCV, and names the latest figures without prompting (Q143, Q147, Q148).
-2. *"Where does FlashBlade//EXA win today, and what would close the reference gap?"* A strong answer cites audited throughput, the stock client and existing relationships, then admits the missing 10,000-GPU reference, NCP certification and public-cloud EXA (Q155–Q157, Q259).
-3. *"How is Fusion adoption tracking, and does it raise switching costs?"* A strong answer gives the >1,200-customer figure, notes it is under a tenth of the base, and explains why presets and automation outlast a hardware refresh (Q160).
+1. *"Which Evergreen tier is growing fastest, and how does that show up in ARR versus reported product revenue?"* A strong answer separates //Forever, //Flex and //One, explains that a ratable STaaS mix depresses reported growth while lifting ARR, RPO and TCV, and names the latest figures without prompting (Q147, Q122, Q154).
+2. *"Where does FlashBlade//EXA win today, and what would close the reference gap?"* A strong answer cites audited throughput, the stock client and existing relationships, then admits the missing 10,000-GPU reference, NCP certification and public-cloud EXA (Q142, Q144, Q232, Q233).
+3. *"How is Fusion adoption tracking, and does it raise switching costs?"* A strong answer gives the >1,200-customer figure, notes it is under a tenth of the base, and explains why presets and automation outlast a hardware refresh (Q146).
 
 **Three questions for an engineer, using the deck**
 
-1. *"Walk me through what happens to a 4 KB write from host to NAND on FlashArray."* A strong answer passes through NVRAM acknowledgement, the log-structured write, inline reduction and the global FTL, with no per-drive garbage collection (Q73, Q91, Q148).
-2. *"How long does a 300 TB DFM rebuild take, and what keeps the second-failure window acceptable?"* A strong answer computes capacity over rebuild bandwidth, contrasts single-spare with declustered rebuild, and raises the 1 PB module question (Q36, Q279).
-3. *"Where does KV cache sit in the hierarchy, and when does fetching beat recomputing?"* A strong answer names G1–G4 and G3.5, uses the ~2–5 GB/s-per-GPU break-even, and explains why only non-decoding KV can leave HBM (Q193–Q196).
+1. *"Walk me through what happens to a 4 KB write from host to NAND on FlashArray."* A strong answer passes through NVRAM acknowledgement, the log-structured write, inline reduction and the global FTL, with no per-drive garbage collection (Q79, Q133, Q134).
+2. *"How long does a 300 TB DFM rebuild take, and what keeps the second-failure window acceptable?"* A strong answer computes capacity over rebuild bandwidth, contrasts single-spare with declustered rebuild, and raises the 1 PB module question (Q33, Q32, Q265).
+3. *"Where does KV cache sit in the hierarchy, and when does fetching beat recomputing?"* A strong answer names G1–G4 and G3.5, uses the ~2–5 GB/s-per-GPU break-even, and explains why only non-decoding KV can leave HBM (Q170, Q171, Q172).
 
 **Don't say this:**
 
-- "Flash is cheaper than disk now." Not on purchase price in 2026 (Q12, Q275).
-- "We're #1 in MLPerf, full stop." First among entrants, in a round VAST, WEKA and DDN skipped (Q156, Q205).
-- "NVIDIA certification proves we're the fastest." Certification is a floor (Q192).
-- "Durability is eleven nines, so data loss is impossible." Durability nines are modelled (Q125).
-- "DirectFlash is just a big SSD." It removes the drive's FTL and runs one global FTL in Purity (Q148).
-- "AI storage is about feeding training data." Checkpoints, restores and KV cache set the spec (Q181, Q272).
+- "Flash is cheaper than disk now." Not on purchase price in 2026 (Q12, Q274).
+- "We're #1 in MLPerf, full stop." First among entrants, in a round VAST, WEKA and DDN skipped (Q143, Q198).
+- "NVIDIA certification proves we're the fastest." Certification is a floor (Q183).
+- "Durability is eleven nines, so data loss is impossible." Durability nines are modelled (Q111).
+- "DirectFlash is just a big SSD." It removes the drive's FTL and runs one global FTL in Purity (Q134, Q135).
+- "AI storage is about feeding training data." Checkpoints, restores and KV cache set the spec (Q163, Q269).
 
 ## Going deeper (optional, L3 pointers)
 
