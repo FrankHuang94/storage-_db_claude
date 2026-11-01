@@ -5,17 +5,17 @@
 
 ## TL;DR
 
-- **Pure Storage was founded in 2009 on one insight:** cheap consumer-grade flash plus aggressive data reduction could make all-flash arrays cost about the same per usable terabyte as disk. FlashArray became generally available in May 2012, and the company IPO'd on the NYSE in October 2015.
-- **Its durable moat was a business model, not a box.** Forever Flash (2014) and Evergreen (2015) turned controller upgrades into a subscription. Subscription services are now about 46% of revenue, and subscription ARR was $1.92B at FY2026.
-- **Acquisitions were small and capability-driven.** StorReduce, Compuverde, Portworx and 1touch together cost about $0.6B in disclosed consideration, less than one year of free cash flow. One of the four (StorReduce) produced a product that was quietly withdrawn.
-- **The biggest change came from selling IP rather than arrays.** A December 2024 DirectFlash licensing win with Meta, a second top-five hyperscaler win in August 2026 and AI demand moved FY2027 revenue guidance to $5.03–5.07B, about +38%.
-- **The February 2026 rebrand to Everpure (NYSE: P, formerly PSTG) is a claim, not yet a result.** It says the company wants to be valued as a data-management platform. Revenue is still mostly arrays and the subscriptions attached to them.
+- **Pure Storage was founded in 2009 on one insight:** consumer-grade flash plus aggressive data reduction could match disk's cost per usable terabyte. FlashArray reached GA in May 2012; the IPO followed in October 2015.
+- **Its durable moat was a business model, not a box.** Forever Flash (2014) and Evergreen (2015) turned controller upgrades into a subscription; subscription ARR was $1.92B at FY2026.
+- **Acquisitions were small and capability-driven.** StorReduce, Compuverde, Portworx and 1touch together cost about $0.6B in disclosed consideration, less than one year of free cash flow. One (StorReduce) produced a product that was quietly withdrawn.
+- **The newest growth leg is selling IP rather than arrays.** DirectFlash licensing wins with Meta (December 2024) and a second top-five hyperscaler (August 2026) arrived as FY2027 revenue guidance rose to $5.03–5.07B, about +38%.
+- **The February 2026 rebrand to Everpure (NYSE: P, formerly PSTG) is a claim, not yet a result.** It bids for a data-platform valuation while revenue is still mostly arrays and attached subscriptions.
 
 ## Why this matters for Everpure strategy
 
-Every strategic conversation inside Everpure carries this history. Product managers defend Evergreen economics because Evergreen built the installed base. Engineers trust Purity and DirectFlash because they have survived 14 years of NAND generations. Corporate development inherits a pattern of small, tuck-in deals that bought capabilities rather than revenue. Knowing which bets paid off, which took years longer than promised and which died tells you how the organisation weighs a new one.
+Strategic conversations inside Everpure carry this history. Product managers defend Evergreen economics because Evergreen built the installed base. Engineers trust Purity and DirectFlash because they have survived 14 years of NAND generations. Corporate development inherits a pattern of small, tuck-in deals that bought capabilities rather than revenue. Knowing which bets paid off, which ran late and which died tells you how the organisation weighs a new one.
 
-The history also frames the current debate. The rebrand, the 1touch acquisition and the hyperscaler licensing model all move away from "we sell the best flash array". A strategy team needs to know whether that is the fifth pivot in a consistent line or a break from it. The record suggests the first, with one caveat: past pivots were underwritten by array cash flows, and the newest ones still are.
+The rebrand, the 1touch acquisition and hyperscaler licensing all move away from "we sell the best flash array". Is that the fifth pivot in a consistent line, or a break? The record suggests the first, with one caveat: past pivots were underwritten by array cash flows, and the newest ones still are.
 
 ## Core concepts
 

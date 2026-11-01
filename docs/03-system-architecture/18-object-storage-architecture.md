@@ -15,7 +15,7 @@
 
 [Chapter 9](../02-protocols-and-networking/09-object-storage-and-s3.md) showed S3 becoming the default AI data interface. Behind the API, systems differ sharply: a fast endpoint over a slow index still lists a billion keys slowly. When an AI buyer weighs FlashBlade against MinIO AIStor, Cloudian or Dell ObjectScale, deals turn on internals: objects per bucket, LIST rate, the cost of a small PUT, and what happens when a node dies.
 
-Pure Storage built FlashBlade as all-flash file and object while object storage still meant disk archives. Now every rival ships flash object too, so the question is whether FlashBlade's metadata engine remains a differentiator.
+Pure Storage built FlashBlade as all-flash file and object while object storage still meant disk archives. With every rival now on flash, the question is whether FlashBlade's metadata engine still differentiates.
 
 ## Core concepts
 
@@ -69,7 +69,7 @@ sequenceDiagram
 
 *Figure 18.2 — Data becomes durable first and visible second: the index commit is the single point where a new version appears to every reader.*
 
-**Worked example (write amplification).** A 64 MB PUT under 8+4 coding writes twelve 8 MB fragments, 96 MB in all (1.5×). The gateway NIC carries 64 MB in and 96 MB out, about 2.5× the client bandwidth. A 4 KB object under the same code would make 512 B fragments, each padded to a 4 KiB sector: 48 KiB on disk (12×) and 12 drive writes. Systems therefore inline small objects (MinIO, Cloudian) or mirror first and erasure-code later. Dell ObjectScale triple-mirrors until a 128 MB chunk fills, then converts it to 12+4[^13].
+**Worked example (write amplification).** A 64 MB PUT under 8+4 coding writes twelve 8 MB fragments, 96 MB in all (1.5×). Gateway NICs carry 64 MB in and 96 MB out, 2.5× the client bandwidth. A 4 KB object under the same code would make 512 B fragments, each padded to a 4 KiB sector: 48 KiB on disk (12×) and 12 drive writes. So systems inline small objects (MinIO, Cloudian) or mirror first and erasure-code later. Dell ObjectScale triple-mirrors until a 128 MB chunk fills, then converts it to 12+4[^13].
 
 ### ★ Tracing a GET
 
@@ -131,10 +131,10 @@ StorageGRID documents the 1.5× figure for 6+3 over three sites, requires at lea
 
 ### How it scales and where it hits walls
 
-1. **Index and LIST.** Index size grows with object count, not bytes. At an illustrative ~500 bytes per record and 3 replicas, 100 billion objects need ~150 TB of index flash. LIST speed depends on index design and client parallelism. Pure Storage listed a 67-billion-object FlashBlade bucket in ~43 hours with a parallel Go client[^18], which works out to 67e9 ÷ 154,800 s ≈ **433,000 keys/s**. A single thread at 20 ms per 1,000-key page would need ~15.5 days.
-2. **Small objects** multiply records, drive I/Os and per-request overhead (the 12× example above).
+1. **Index and LIST.** Index size grows with object count, not bytes. At an illustrative ~500 bytes per record and 3 replicas, 100 billion objects need ~150 TB of index flash. LIST speed depends on index design and client parallelism: Pure Storage listed a 67-billion-object FlashBlade bucket in ~43 hours with a parallel Go client[^18], which works out to 67e9 ÷ 154,800 s ≈ **433,000 keys/s**. A single thread at 20 ms per 1,000-key page would need ~15.5 days.
+2. **Small objects** multiply records, drive I/Os and request overhead (see the 12× example).
 3. **Hot shards.** Sequential keys such as timestamps pile onto one index range. Ceph briefly blocks a bucket's writes while it reshards[^6].
-4. **Background debt.** Scrubbing, rebuild, lifecycle expiry and garbage collection share drives and network with clients.
+4. **Background debt.** Scrubbing, rebuild, expiry and garbage collection compete with clients.
 
 ### Failure handling
 
@@ -165,7 +165,7 @@ StorageGRID documents the 1.5× figure for 6+3 over three sites, requires at lea
 
 ### From cheap-and-deep to fast
 
-HDD-era object stores were built around a disk's roughly 100–200 random IOPS. They batch data into large chunks, keep metadata on a thin flash slice and accept tens of milliseconds of latency. Flash removes the IOPS-per-TB constraint, so metadata and small objects can share fast media. Three things make that affordable and useful: falling QLC $/TB, AI pipelines that work through S3, and RDMA paths into GPU memory ([Chapter 9](../02-protocols-and-networking/09-object-storage-and-s3.md)).
+HDD-era object stores were built around a disk's ~100–200 random IOPS: big chunks, metadata on a thin flash slice, tens of milliseconds of latency. Flash removes the IOPS-per-TB constraint, so metadata and small objects share fast media. Falling QLC $/TB, S3-native AI pipelines and RDMA into GPU memory make it pay ([Chapter 9](../02-protocols-and-networking/09-object-storage-and-s3.md)).
 
 | Signal (vendor-stated, not comparable) | Claim | Source |
 |---|---|---|
@@ -179,7 +179,7 @@ HDD-era object stores were built around a disk's roughly 100–200 random IOPS. 
 
 ### Cost and operational implications
 
-Software-defined object storage on dense HDD servers is still the lowest $/TB. Its hidden cost is operations: index repair and compaction, rebalancing, scrubbing and multi-site networking. In StorageGRID, the smallest node caps a site's metadata capacity[^5]. Licensing can also shift: MinIO's community edition entered maintenance mode in December 2025[^24]. Appliances cost more per TB but take most of that work away ([Chapter 19](19-software-defined-and-hci.md)).
+Software-defined object storage on dense HDD servers is still the lowest $/TB. Its hidden cost is operations: index repair and compaction, rebalancing, scrubbing and multi-site networking. In StorageGRID, the smallest node caps a site's metadata capacity[^5]. Licensing can also shift: MinIO's community edition entered maintenance mode in December 2025[^24]. Appliances cost more per TB but remove most of it ([Chapter 19](19-software-defined-and-hci.md)).
 
 ## How Everpure approaches it vs. competitors
 
@@ -196,7 +196,7 @@ Software-defined object storage on dense HDD servers is still the lowest $/TB. I
 
 *Table 18.5 — Every vendor now has a flash object story; they differ in where the index lives and how protection crosses failure domains.*
 
-FlashBlade bets that object metadata is a database problem, solved in flash and NVRAM and shared with file. An analyst report describes writes mirrored to NVRAM on two other blades before the acknowledgement[^8] [VERIFY: current Purity//FB write path]. Steelman for software-defined rivals: cheaper capacity, geo-EC and free choice of servers. FlashBlade's multi-site protection appears to be replication between arrays rather than geo-EC [VERIFY: FlashBlade multi-site object options in 2026]. Options a strategy team might evaluate, based on public information: publishing LIST and small-object benchmarks, and testing whether FlashBlade//E with DeepReduce wins capacity deals now lost to Ceph or MinIO on HDD.
+FlashBlade bets that object metadata is a database problem, solved in flash and NVRAM, shared with file. An analyst report describes writes mirrored to NVRAM on two other blades before the acknowledgement[^8] [VERIFY: current Purity//FB write path]. Steelman for software-defined rivals: cheaper capacity, geo-EC and free choice of servers. FlashBlade's multi-site protection appears to be replication between arrays rather than geo-EC [VERIFY: FlashBlade multi-site object options in 2026]. Options a strategy team might evaluate, based on public information: publishing LIST and small-object benchmarks, and testing whether FlashBlade//E with DeepReduce wins capacity deals now lost to Ceph or MinIO on HDD.
 
 ## History and trajectory
 
@@ -251,7 +251,7 @@ S3's 2020 strong consistency ([Chapter 9](../02-protocols-and-networking/09-obje
 - "Geo-EC is free durability." It puts the WAN on every read and leaves a multi-day exposed rebuild.
 - "Object stores have no metadata bottleneck." The index is the bottleneck, and LIST exposes it.
 - "MinIO has a metadata database." It deliberately does not; hence both its write scaling and its LIST cost.
-- "AWS S3 runs on X." Its internals are mostly unpublished. Cite ShardStore and stop there.
+- "AWS S3 runs on X." Its internals are mostly unpublished; cite ShardStore and stop.
 
 ## Going deeper (optional, L3 pointers)
 

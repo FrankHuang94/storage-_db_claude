@@ -7,15 +7,15 @@
 
 - **Software-defined storage (SDS) sells the storage OS without the box** (Ceph, MinIO, VAST, WEKA). **Hyperconverged infrastructure (HCI)** runs it on the same nodes as the VMs (Nutanix, vSAN).
 - **HCI's wall is coupled scaling.** Every node adds compute and capacity in a fixed ratio, stranding whatever the estate did not need.
-- **Cloud block storage is SDS at hyperscale.** EBS replicates each volume inside one Availability Zone, repairs chains through a separate configuration service, and offloads the client side to Nitro cards.
+- **Cloud block storage is SDS at hyperscale.** EBS replicates volumes inside one Availability Zone, with a separate configuration service and Nitro-card offload.
 - **Broadcom's VMware licensing reset (from December 2023) reopened "HCI vs. array"** and pushed customers toward Nutanix, public cloud and external arrays.
 - **Software-only buys margin %, no NAND inventory and fast iteration; appliances buy gross profit per deal and control of the media.**
 
 ## Why this matters for Everpure strategy
 
-Everpure (NYSE: P, formerly PSTG) earns most of its revenue from appliances built on its own DirectFlash modules. Yet it already runs every other model here: Portworx is SDS for Kubernetes, Pure Storage Cloud Dedicated runs Purity on cloud instances, and the Meta DirectFlash deal is a technology licence with no Everpure hardware[^1]. Which model fits which deal is a live strategy question.
+Everpure (NYSE: P, formerly PSTG) earns most of its revenue from appliances built on its own DirectFlash modules. Yet it already runs every other model here: Portworx (Kubernetes SDS), Purity on cloud instances, and a Meta DirectFlash technology licence with no Everpure hardware[^1].
 
-Broadcom gives it a deadline. Every VMware renewal must choose: stay on vSAN, switch HCI stacks, or split compute from storage. Everpure's May 2025 Nutanix partnership, with FlashArray as external storage for the AHV hypervisor, is a bet on the third[^2].
+Broadcom forces the choice: every VMware renewal must stay on vSAN, switch HCI stacks, or split compute from storage. Everpure's May 2025 Nutanix partnership, with FlashArray as external storage for the AHV hypervisor, is a bet on the third[^2].
 
 ## Core concepts
 
@@ -44,7 +44,7 @@ Two more walls follow. **East-west amplification:** at RF2 every write crosses t
 | Storage controller | CVM or kernel module failure: I/O redirected to another node's storage service | Nitro card failure is a host failure; volume can attach to a new instance |
 | Network link / partition | Minority side loses quorum; a split cluster can halt writes | Chain cannot complete writes until configuration service picks a new replica set[^6] |
 
-*Table 19.1 — HCI couples application recovery and data recovery on the same nodes; a cloud block service separates them and moves the complexity into a control plane.*
+*Table 19.1 — HCI couples application and data recovery on the same nodes; cloud block moves that complexity into a control plane.*
 
 ### Inside an EBS-style cloud block service
 
@@ -95,7 +95,7 @@ sequenceDiagram
     C-->>N: new chain membership
 ```
 
-*Figure 19.4 — Reads need one copy; the configuration master must stay available during partitions because that is when membership changes.*
+*Figure 19.4 — Reads need one copy; the configuration master must survive partitions, when membership changes.*
 
 Block Express internals are public only at a high level, so the read diagram leaves the serving copy generic. AWS rates io2 Block Express at 256,000 IOPS, 4,000 MB/s and 64 TiB per volume, under 500 µs average for 16 KiB I/O, and 99.999% durability[^9]. The fleet-level lesson came in April 2011: a network change cut many volumes off from their replicas, all re-mirrored at once, and the "re-mirroring storm" exhausted the zone's spare capacity[^11]. It is the HCI rebuild problem at cloud scale: rate-limit repair and reserve capacity, or recovery becomes the outage.
 
@@ -109,7 +109,7 @@ Block Express internals are public only at a high level, so the read diagram lea
 | Worst fit | Very small sites; extreme-scale cheap capacity | Small teams without storage skills | Capacity-heavy or GPU-heavy estates | Steady, large, high-IOPS estates (cost) |
 | Examples | FlashArray, PowerStore, NetApp AFF | Ceph, MinIO, VAST, WEKA, Portworx | Nutanix, vSAN | EBS, Azure Disk, Pure Storage Cloud Azure Native |
 
-*Table 19.2 — No model dominates; the right one depends on how stable the workload's compute-to-capacity ratio is and who will own integration risk.*
+*Table 19.2 — No model dominates; fit depends on how stable the compute-to-capacity ratio is and who owns integration risk.*
 
 ### The business-model trade-off
 
@@ -128,9 +128,9 @@ Block Express internals are public only at a high level, so the read diagram lea
 
 ## How Everpure approaches it vs. competitors
 
-Everpure's centre of gravity is the appliance, justified by DirectFlash: managing raw NAND in Purity yields density and power that commodity SSDs cannot match ([Chapter 26](../04-everpure/26-purity-and-directflash.md)). At the edges it runs software-only motions: Portworx, container-native SDS bought for about US$370M in 2020[^19]; Purity on cloud infrastructure[^15]; off-the-shelf FlashBlade//EXA data nodes ([Chapter 16](16-disaggregated-shared-everything.md)); and the Meta technology licence[^1].
+Everpure's centre of gravity is the appliance, justified by DirectFlash's density and power advantage over commodity SSDs ([Chapter 26](../04-everpure/26-purity-and-directflash.md)). At the edges it runs software-only motions: Portworx, container-native SDS bought for about US$370M in 2020[^19]; Purity on cloud infrastructure[^15]; off-the-shelf FlashBlade//EXA data nodes ([Chapter 16](16-disaggregated-shared-everything.md)); and the Meta technology licence[^1].
 
-Steelman the alternatives. Nutanix runs ~88% gross margins on US$2.55B ARR growing 16%[^12]. VAST scales on OEM supply chains (HPE, Cisco, Supermicro) without inventory[^3]. IBM's 2022 absorption of Red Hat's Ceph team[^20] keeps "free and good enough" alive. The appliance reply: coupled scaling and HCL support are real costs, and AI-era power limits reward co-designed media. Options a strategy team might evaluate, based on public information: more "array behind someone else's HCI" partnerships; DirectFlash licensing as a repeatable IP business; and Portworx against VMware for VMs moving to Kubernetes.
+Steelman the alternatives: Nutanix runs ~88% gross margins on US$2.55B ARR growing 16%[^12]; VAST scales on OEM supply chains without inventory[^3]; IBM's 2022 absorption of Red Hat's Ceph team[^20] keeps "free and good enough" alive. The appliance reply: HCL support is costly and AI-era power limits reward co-designed media. Options a strategy team might evaluate, based on public information: more "array behind someone else's HCI" partnerships; DirectFlash licensing as a repeatable IP business; and Portworx against VMware for VMs moving to Kubernetes.
 
 ## History and trajectory
 
@@ -150,9 +150,9 @@ timeline
 
 *Figure 19.5 — SDS and HCI matured quietly; Broadcom's 2023 licensing reset made platform choice a board-level cost decision.*
 
-EBS dates from 2008[^27]. Broadcom closed VMware on 22 November 2023, then ended perpetual licences and support renewals and folded thousands of SKUs into two bundles, VCF and vSphere Foundation[^21]. AT&T's 2024 lawsuit cited a proposed 1,050% increase; it later settled[^22]. Much of the base paid: Broadcom reported ~US$27B of FY2025 infrastructure-software revenue and 87% VCF adoption among its top 10,000 customers[^23] [VERIFY: search-summary only].
+EBS dates from 2008[^27]. Broadcom closed VMware on 22 November 2023, then ended perpetual licences and folded thousands of SKUs into two bundles, VCF and vSphere Foundation[^21]. AT&T's 2024 lawsuit cited a proposed 1,050% increase; it later settled[^22]. Much of the base paid: Broadcom reported ~US$27B of FY2025 infrastructure-software revenue and 87% VCF adoption among its top 10,000 customers[^23] [VERIFY: search-summary only].
 
-Storage felt it. Gartner expects over a third of VMware workloads to move by 2028[^24]. Nutanix's FlashArray integration, its first major certified external storage, reached GA around the turn of 2026[^2][^25]. VCF 9 deprecated vVols, the main hook for external arrays[^26], nudging customers toward vSAN capacity they already pay for. The trajectory is un-convergence: compute-only and storage-only nodes, arrays behind HCI, Kubernetes-native SDS for VMs.
+Storage felt it. Gartner expects over a third of VMware workloads to move by 2028[^24]. Nutanix's FlashArray integration, its first major certified external storage, reached GA around the turn of 2026[^2][^25]. VCF 9 deprecated vVols, the main external-array hook[^26]. The trajectory is un-convergence: split node types, arrays behind HCI, Kubernetes-native SDS for VMs.
 
 ## Numbers that matter
 
