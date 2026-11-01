@@ -48,7 +48,7 @@ flowchart TD
     B --> C["3 Volume manager remaps address<br/>~1 µs"]
     C --> D["4 NVMe-oF initiator builds command<br/>RDMA ~5–15 µs, TCP ~20–35 µs adder"]
     D --> E["5 NIC and 2–3 switch hops<br/>~1–5 µs"]
-    E --> F["6 Array software: map, hash, mirror<br/>to NVRAM on both controllers ~30–100 µs"]
+    E --> F["6 Array software: map, hash, persist<br/>to mirrored or shared NVRAM ~30–100 µs"]
     F --> G["ACK back up the stack<br/>end to end ~100–250 µs"]
     F -.-> H["7 Later: array or FTL writes full stripe<br/>off the critical path"]
     H -.-> I["8 NAND program: TLC hundreds of µs,<br/>QLC longer"]
@@ -57,7 +57,7 @@ flowchart TD
 
 *Figure 13.2 — Illustrative, order-of-magnitude latencies: on a networked array the network, protocol and controller software dominate a small write, and NAND programming is hidden behind NVRAM.*
 
-Walk the numbers. A networked array acknowledges the write once it is mirrored in NVRAM on both controllers, not when it reaches NAND. The critical-path steps sum to roughly 45–165 µs one way; with the return trip and queueing, a 4 KB write lands near 100–250 µs, consistent with the 150 µs quoted for FlashArray//XL170 (company-stated, conditions unspecified)[^7]. A local NVMe SSD skips layers 4–6 and acknowledges from power-loss-protected DRAM.
+Walk the numbers. A networked array acknowledges the write once it sits in two NVRAM locations (mirrored to the partner controller, or in NVRAM modules both controllers can reach, as on FlashArray; see [Chapter 14](14-scale-up-dual-controller.md)), not when it reaches NAND. The critical-path steps sum to roughly 45–165 µs one way; with the return trip and queueing, a 4 KB write lands near 100–250 µs, consistent with the 150 µs quoted for FlashArray//XL170 (company-stated, conditions unspecified)[^7]. A local NVMe SSD skips layers 4–6 and acknowledges from power-loss-protected DRAM.
 
 Three lessons follow. **NAND is not on the write critical path**: NVRAM or SSD DRAM absorbs the write and the slow program happens later. **Network and software dominate** small-I/O latency, which is why transport matters for databases: NVMe-oF over RDMA adds about 5–15 µs over local NVMe[^8], NVMe/TCP roughly 20–35 µs in early tests[^9], and the host kernel path becomes a large share of latency on very fast SSDs[^10]. **The extra ~100 µs buys what DAS lacks**: one copy shared by many hosts, surviving controller loss, deduplicated, snapshotted and replicated.
 
@@ -66,7 +66,7 @@ Three lessons follow. **NAND is not on the write critical path**: NVRAM or SSD D
 | Architecture | Where data services run | Where metadata and state live | What the network carries | Examples | Chapter |
 |---|---|---|---|---|---|
 | DAS | Host file system, volume manager, RAID | In the host | Nothing (PCIe inside the server) | Local NVMe in a database server | [1](../01-storage-fundamentals/01-what-storage-does.md) |
-| SAN array (scale-up) | Dual controllers in the array | Controller DRAM plus mirrored NVRAM | Block commands (FC, NVMe-oF, iSCSI) | FlashArray, PowerStore, PowerMax, ONTAP AFF | [14](14-scale-up-dual-controller.md) |
+| SAN array (scale-up) | Dual controllers in the array | Controller DRAM plus mirrored or shared NVRAM | Block commands (FC, NVMe-oF, iSCSI) | FlashArray, PowerStore, PowerMax, ONTAP AFF | [14](14-scale-up-dual-controller.md) |
 | NAS filer | Controllers, which also own the file system | In the filer | File operations (NFS, SMB) | ONTAP, FlashBlade, PowerScale | [8](../02-protocols-and-networking/08-file-protocols.md) |
 | Shared-nothing | Distributed software on every node | Partitioned across nodes | Client traffic plus east-west replication | PowerScale, WEKA, Ceph | [15](15-scale-out-shared-nothing.md) |
 | DASE | Stateless compute nodes | Shared SCM and flash enclosures | Front end plus all back-end media I/O | VAST, NetApp AFX, HPE X10000 | [16](16-disaggregated-shared-everything.md) |

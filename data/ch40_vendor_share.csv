@@ -1,0 +1,7 @@
+vendor,share_2q25_pct,share_2q26_pct,revenue_2q26_musd,yoy_2q26_pct,status_2q25,source,as_of
+Dell,22.3,23.8,2461,42.5,reported,"IDC 2Q2026 ESS Tracker release 2026-09-10 (share, growth); 2Q25 share from IDC table via StorageReview. https://www.idc.com/resource-center/press-releases/2q2026-ess-tracker/",2026-11-01
+Huawei,11.7,11.3,1169,29.4,derived,"IDC 2Q26 share and growth via StorageReview / itreseller.ch, 2026-09; 2Q25 share derived from 2Q26 revenue / (1+growth) / $7.74B. https://www.itreseller.ch/Artikel/106192/Markt_fuer_Enterprise-Speichergeraete_waechst_um_33_Prozent.html",2026-11-01
+NetApp,9.5,9.6,993,35.7,derived,"IDC 2Q26 share and growth via StorageReview, 2026-09; 2Q25 share derived. https://www.storagereview.com/news/idc-external-storage-tracker-q2-2026-10-3-billion-as-server-market-tops-166-billion",2026-11-01
+Everpure,7.2,8.1,838,50.0,derived,"IDC 2Q26 share and growth via StorageReview, 2026-09; 2Q25 share derived. https://www.storagereview.com/news/idc-external-storage-tracker-q2-2026-10-3-billion-as-server-market-tops-166-billion",2026-11-01
+HPE,6.9,6.8,703,31.9,derived,"IDC 2Q26 share and growth via StorageReview, 2026-09; 2Q25 share derived. https://www.storagereview.com/news/idc-external-storage-tracker-q2-2026-10-3-billion-as-server-market-tops-166-billion",2026-11-01
+Others,42.5,40.4,4178,27.1,derived,"Residual: 100% minus top five; growth derived from residual revenues. Worked from IDC 2Q26 totals.",2026-11-01

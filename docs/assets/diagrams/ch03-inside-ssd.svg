@@ -1,7 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 680" width="1000" role="img" aria-labelledby="t d" font-family="Inter, Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 720" width="1000" role="img" aria-labelledby="t d" font-family="Inter, Helvetica, Arial, sans-serif">
   <title id="t">Inside an enterprise NVMe SSD</title>
-  <desc id="d">A host connects over PCIe and NVMe to a controller system-on-chip. The controller contains several real-time processor cores running the flash translation layer firmware, hardware engines for error correction, encryption and DMA, on-chip SRAM, a DRAM controller and flash channel controllers. External DRAM holds the logical-to-physical mapping table, about 1 GB per TB of flash at 4 KB granularity. A bank of power-loss capacitors keeps the drive alive long enough to flush buffered data and map updates. Eight or sixteen NAND channels each connect to several dies; each die contains planes, each plane thousands of erase blocks, each block hundreds of pages.</desc>
-  <rect x="0" y="0" width="1000" height="680" fill="#FFFFFF"/>
+  <desc id="d">A host connects over PCIe and NVMe to a controller system-on-chip. The controller contains several real-time processor cores running the flash translation layer firmware, hardware engines for error correction, encryption and DMA, on-chip SRAM, a DRAM controller and flash channel controllers. External DRAM holds the logical-to-physical mapping table, about 1 GB per TB of flash at 4 KB granularity. A bank of power-loss capacitors keeps the drive alive long enough to flush buffered data and map updates. Eight or sixteen NAND channels each connect to several dies; each die contains planes, each plane thousands of erase blocks, each block hundreds of pages. A hatched share of blocks is over-provisioned spare area that the host never sees.</desc>
+  <defs>
+    <pattern id="op" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="6" height="6" fill="#FDE6D8"/><line x1="0" y1="0" x2="0" y2="6" stroke="#D55E00" stroke-width="2"/>
+    </pattern>
+  </defs>
+  <rect x="0" y="0" width="1000" height="720" fill="#FFFFFF"/>
 
   <text x="20" y="34" font-size="20" font-weight="700" fill="#222222">Inside an enterprise NVMe SSD: a small computer wrapped around NAND</text>
   <text x="20" y="56" font-size="13" fill="#555555">Logical view, not to scale. Original drawing for the Everpure Tech Atlas, Chapter 3.</text>
@@ -13,7 +18,8 @@
   <text x="95" y="372" font-size="12" text-anchor="middle" fill="#222222">sees a flat range</text>
   <text x="95" y="390" font-size="12" text-anchor="middle" fill="#222222">of logical blocks</text>
   <text x="95" y="408" font-size="12" text-anchor="middle" fill="#222222">(LBAs)</text>
-  <text x="95" y="432" font-size="12" text-anchor="middle" fill="#555555">optional: HMB in host DRAM</text>
+  <text x="95" y="426" font-size="12" text-anchor="middle" fill="#555555">client drives may</text>
+  <text x="95" y="441" font-size="12" text-anchor="middle" fill="#555555">borrow host DRAM</text>
   <!-- host link -->
   <line x1="170" y1="375" x2="214" y2="375" stroke="#222222" stroke-width="3"/>
   <polygon points="214,368 226,375 214,382" fill="#222222"/>
@@ -73,7 +79,7 @@
     <line x1="529" y1="592" x2="529" y2="610"/><line x1="537" y1="592" x2="537" y2="610"/>
     <line x1="564" y1="592" x2="564" y2="610"/><line x1="572" y1="592" x2="572" y2="610"/>
   </g>
-  <text x="533" y="630" font-size="12" text-anchor="middle" fill="#222222">ms of hold-up to flush</text>
+  <text x="533" y="628" font-size="12" text-anchor="middle" fill="#222222">flush on power loss</text>
   <line x1="533" y1="510" x2="533" y2="540" stroke="#C9B800" stroke-width="3" stroke-dasharray="4 3"/>
 
   <!-- NAND array -->
@@ -107,15 +113,22 @@
   <text x="807" y="488" font-size="12" text-anchor="middle" fill="#222222">Throughput comes from keeping many dies busy at once.</text>
 
   <!-- die zoom -->
-  <rect x="630" y="530" width="355" height="130" rx="10" fill="#FFFFFF" stroke="#009E73" stroke-width="2"/>
+  <rect x="630" y="530" width="355" height="175" rx="10" fill="#FFFFFF" stroke="#009E73" stroke-width="2"/>
   <text x="645" y="552" font-size="13" font-weight="700" fill="#222222">Zoom into one die</text>
   <g stroke="#00684D" fill="#E3F4EE">
     <rect x="645" y="562" width="70" height="60" rx="3"/><rect x="722" y="562" width="70" height="60" rx="3"/>
     <rect x="799" y="562" width="70" height="60" rx="3"/><rect x="876" y="562" width="70" height="60" rx="3"/>
   </g>
-  <g font-size="12" fill="#222222" text-anchor="middle">
-    <text x="680" y="597">plane 0</text><text x="757" y="597">plane 1</text><text x="834" y="597">plane 2</text><text x="911" y="597">plane 3</text>
+  <g stroke="#00684D" fill="url(#op)">
+    <rect x="645" y="608" width="70" height="14"/><rect x="722" y="608" width="70" height="14"/>
+    <rect x="799" y="608" width="70" height="14"/><rect x="876" y="608" width="70" height="14"/>
   </g>
-  <text x="645" y="640" font-size="12" fill="#222222">plane → thousands of erase blocks (MB-scale) → pages (~16 KB)</text>
-  <text x="645" y="655" font-size="12" fill="#D55E00">program by page, erase only by whole block</text>
+  <g font-size="12" fill="#222222" text-anchor="middle">
+    <text x="680" y="590">plane 0</text><text x="757" y="590">plane 1</text><text x="834" y="590">plane 2</text><text x="911" y="590">plane 3</text>
+  </g>
+  <text x="645" y="640" font-size="12" fill="#222222">plane → thousands of blocks (MBs) → pages (~16 KB)</text>
+  <text x="645" y="657" font-size="12" fill="#D55E00">program by page, erase only by whole block</text>
+  <rect x="645" y="670" width="22" height="14" fill="url(#op)" stroke="#D55E00"/>
+  <text x="675" y="682" font-size="12" fill="#222222">over-provisioned spare blocks: ~7–37% extra,</text>
+  <text x="675" y="698" font-size="12" fill="#222222">hidden from the host, used by garbage collection</text>
 </svg>

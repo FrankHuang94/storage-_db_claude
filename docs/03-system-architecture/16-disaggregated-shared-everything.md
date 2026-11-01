@@ -24,7 +24,7 @@ Everpure's answer, FlashBlade//EXA, was announced by Pure Storage in March 2025.
 Earlier architectures tie compute to media. A [dual-controller array](14-scale-up-dual-controller.md) puts two controllers in front of one shelf of drives. A [shared-nothing cluster](15-scale-out-shared-nothing.md) builds servers that each own their drives, so reaching another node's data means asking that node's CPU. DASE removes the ownership:
 
 - **Compute nodes ("CNodes" in VAST's terms)** run the file, object and block protocols, data reduction and erasure coding. They hold no authoritative state.
-- **Data enclosures ("DBoxes")** hold SSDs behind small, dumb-by-design fabric endpoints ("DNodes"). Each DBox has two of them for redundancy, and in VAST's Ceres DBox they are NVIDIA BlueField DPUs[^4].
+- **Data enclosures ("DBoxes")** hold SSDs behind small, dumb-by-design fabric endpoints ("DNodes"). Each DBox has at least two for redundancy. The original DBox used two x86 DNodes; the 1U Ceres DBox uses four NVIDIA BlueField DPUs, each fronting about a quarter of the SSDs[^4].
 - **The back-end fabric**, NVMe-oF over RDMA, makes every SSD look roughly local to every CNode[^5].
 
 ![Diagram of a DASE cluster: clients on a front-end network reach a row of stateless CNodes; every CNode connects through a back-end NVMe-oF fabric to every DBox; each DBox contains two DNodes, a small SCM tier for write buffer and metadata, and many QLC SSDs.](../assets/diagrams/ch16-dase-cluster.svg)
@@ -113,7 +113,7 @@ In panel A, 800 GB/s on 5 PB forces shared-nothing to buy 40 full nodes (cost 1,
 |---|---|---|
 | SSD | Rebuilt from erasure-coded strips. Locally decodable codes read ~1/4 of the stripe instead of all of it[^14]. Every CNode helps. | Small. Rebuild is many-to-many and fast. |
 | CNode | Clients fail over to another CNode's address. No data lost, because the node had no authoritative state. | In-flight operations retried. Lose 1/N of compute. |
-| DNode / DPU | Partner DNode in the same DBox keeps serving its SSDs. | Reduced enclosure bandwidth until replaced. |
+| DNode / DPU | Another DNode in the same DBox takes over its SSDs. | Reduced enclosure bandwidth until replaced. |
 | Whole DBox | Survivable only if each stripe has ≤2 strips per DBox ("DBox-HA", ≥8 DBoxes)[^12]. Rack-level protection needs ≥7 racks[^15]. | Without HA: data unavailable. With HA: higher erasure-coding overhead on small clusters. |
 | Fabric link / switch | Dual fabrics and multipathing reroute. A partition between compute and media halts I/O on the affected side. | A switch pair is a shared dependency for everything. |
 
@@ -143,17 +143,17 @@ Steady-state operations get simpler (no rebalancing when adding compute; CNode u
 |---|---|---|---|---|
 | VAST (CBox + DBox) | Stateless CNodes | DBoxes: SCM + QLC behind DPUs | Yes, the reference design | Metadata in shared SCM; any CNode reaches any SSD[^8] |
 | VAST EBox | CNode and DNode software on one server | Same server's SSDs, pooled | Logically yes; physically converged | Gives up independent scaling for hyperscaler/cloud fit[^16] |
-| Everpure FlashBlade//EXA | FlashBlade running Purity//FB as metadata core | Off-the-shelf data nodes (Purity//DN); DirectFlash nodes planned | **No.** Metadata/data split; clients read data nodes directly | pNFS: metadata over TCP, data over NFSv3/RDMA[^3][^17] |
-| NetApp AFX | AFX 1K controllers running ONTAP | NX224 NVMe-oF shelves in one shared pool | Yes (shared pool) | Up to 128 controllers, 52 enclosures[^18][^13] |
-| HPE Alletra MP X10000 | Containerized compute nodes | JBOF nodes | Yes ("SEDA") | Log-structured KV store; object plus native NFS since Release 4[^19][^20] |
-| HPE GreenLake for File | VAST software on Alletra MP compute | Alletra MP JBOFs | Yes (VAST-based) | Launched 2023[^21] |
-| Dell Lightning FS / PowerScale pNFS | Metadata server + storage nodes | Server-attached flash | No, parallel file system | pNFS with Flex Files layout[^22] |
+| Everpure FlashBlade//EXA | FlashBlade running Purity//FB as metadata core | Off-the-shelf Linux/NVMe data nodes managed by Purity//DN tooling; DirectFlash nodes planned | **No.** Metadata/data split; clients read data nodes directly | pNFS: metadata over TCP, data over NFSv3/RDMA[^3][^17] |
+| NetApp AFX | AFX 1K controllers running ONTAP | NX224 NVMe-oF shelves in one shared pool | Yes (shared pool) | Design maximum 128 controllers, 52 enclosures[^18][^13]; 32 controllers supported in ONTAP 9.19.1, per WWT[^19] |
+| HPE Alletra MP X10000 | Containerized compute nodes | JBOF nodes | Yes (HPE: "shared-everything") | Log-structured KV store; object plus native NFS since Release 4[^20][^21] |
+| HPE GreenLake for File | VAST software on Alletra MP compute | Alletra MP JBOFs | Yes (VAST-based) | Launched 2023[^22] |
+| Dell Lightning FS / PowerScale pNFS | Metadata server + storage nodes | Server-attached flash | No, parallel file system | pNFS with Flex Files layout[^23] |
 
 *Table 16.3 — "Disaggregated" covers two distinct designs: shared media (VAST, NetApp, HPE) and split metadata with a direct data path (FlashBlade//EXA, Dell).*
 
-**How close is FlashBlade//EXA to DASE?** It shares the motivation: scale metadata performance separately from data capacity and bandwidth. It differs on the key property. In EXA no compute tier can reach all media. Clients receive a layout from the metadata core and then talk directly to data nodes over RDMA[^17]. Architecturally that is the Lustre MDS/OSS pattern ([Chapter 17](17-parallel-file-systems.md)) with a far stronger metadata engine. The steelman for EXA is that it removes a hop. VAST's data path is client → CNode → DBox; EXA's is client → data node. EXA also reuses years of hardened Purity metadata code and lets customers source data-node hardware. Pure Storage reported that 60 data nodes exceeded 5 TB/s of reads, or ≥83 GB/s per node, scaling linearly[^3].
+**How close is FlashBlade//EXA to DASE?** It shares the motivation: scale metadata performance separately from data capacity and bandwidth. It differs on the key property. In EXA no compute tier can reach all media. Clients receive a layout from the metadata core and then talk directly to data nodes over RDMA[^17]. Architecturally that is the Lustre MDS/OSS pattern ([Chapter 17](17-parallel-file-systems.md)) with a far stronger metadata engine. The steelman for EXA is that it removes a hop. VAST's data path is client → CNode → DBox; EXA's is client → data node. EXA also reuses years of hardened Purity metadata code and lets customers source data-node hardware. Pure Storage reported that 60 data nodes exceeded 5 TB/s of reads (about 83 GB/s per node; the brief cites "upwards of" 85 GB/s per node), scaling linearly[^3]. The often-quoted ">10 TB/s" figure was a launch-time claim from preliminary testing, not a published configuration[^24].
 
-The steelman for VAST: shared media makes cluster-wide reduction, wide erasure codes and multi-protocol access natural. EXA's data-node protection also appears to be maturing. One hands-on review reported hardware HA with software erasure coding planned[^23] [VERIFY: current FlashBlade//EXA data-node protection scheme and release]. Options a strategy team might evaluate, based on public information: how fast DirectFlash-based data nodes close the media-efficiency gap, and whether EXA's design wins the >1 TB/s single-namespace deals while FlashBlade//S and FlashArray hold the enterprise.
+The steelman for VAST: shared media makes cluster-wide reduction, wide erasure codes and multi-protocol access natural. EXA's data-node protection also appears to be maturing. One hands-on review reported hardware HA with software erasure coding planned[^25] [VERIFY: current FlashBlade//EXA data-node protection scheme and release]. Options a strategy team might evaluate, based on public information: how fast DirectFlash-based data nodes close the media-efficiency gap, and whether EXA's design wins the >1 TB/s single-namespace deals while FlashBlade//S and FlashArray hold the enterprise.
 
 ## History and trajectory
 
@@ -171,7 +171,7 @@ timeline
 
 *Figure 16.5 — A single start-up's design (2016–2019) became an industry pattern in 2025, when three incumbents shipped disaggregated systems within eight months.*
 
-The roots are older: VAXclusters and Oracle RAC were "shared-disk" designs that choked on lock traffic and slow SANs. What changed was NVMe-oF making remote flash nearly local, and SCM giving a shared, persistent place for metadata[^24][^6]. Two trends point forward. Packaging is converging: VAST's EBox[^16] and Dell's Exascale "personalities" on common PowerEdge hardware[^25] blur the hardware line while keeping the logical split. And [CXL memory pooling](../02-protocols-and-networking/12-interfaces-and-emerging-tech.md) applies the same disaggregation logic one level down, inside the server.
+The roots are older: VAXclusters and Oracle RAC were "shared-disk" designs that choked on lock traffic and slow SANs. What changed was NVMe-oF making remote flash nearly local, and SCM giving a shared, persistent place for metadata[^26][^6]. Two trends point forward. Packaging is converging: VAST's EBox[^16] and Dell's Exascale "personalities" on common PowerEdge hardware[^27] blur the hardware line while keeping the logical split. And [CXL memory pooling](../02-protocols-and-networking/12-interfaces-and-emerging-tech.md) applies the same disaggregation logic one level down, inside the server.
 
 ## Numbers that matter
 
@@ -182,7 +182,7 @@ The roots are older: VAXclusters and Oracle RAC were "shared-disk" designs that 
 | DBox-HA minimum | 8 DBoxes | Stripe ≤ 2× DBox count | VAST KB[^12] |
 | RDMA NVMe-oF latency adder | ~5–15 µs | Per access vs local NVMe | SNIA 2016[^5] |
 | FlashBlade//EXA tested throughput | >5 TB/s with 60 data nodes | Company-stated; ≥83 GB/s per node | Everpure tech brief[^3] |
-| NetApp AFX max scale | 128 controllers, 52 NX224 enclosures | Company-stated, >1 EB effective | Blocks & Files, 2025-10-14[^18] |
+| NetApp AFX max scale | 128 controllers, 52 NX224 enclosures | Company-stated design maximum, >1 EB effective; 32 controllers supported in 9.19.1 | Blocks & Files, 2025-10-14[^18]; WWT[^19] |
 | Back-end traffic per client write | ~4× | Worked example above (2× mirror + migrate) | Worked example |
 | VAST–CoreWeave agreement | US$1.17 B | Reported by press | Reuters, 2025-11-06[^1] |
 
@@ -244,10 +244,12 @@ The roots are older: VAXclusters and Oracle RAC were "shared-disk" designs that 
 [^16]: Blocks & Files, "VAST enters 2025 with consolidated EBox and GCP support," 2025-01-15. https://blocksandfiles.com/2025/01/15/vast-enters-2015-with-consolidated-ebox-and-gcp-support/ (retrieved 2026-11-01).
 [^17]: Blocks & Files, "How Pure Storage developed its disaggregated FlashBlade//EXA system," 2025-04-17. https://blocksandfiles.com/2025/04/17/how-pure-storage-developed-its-disaggregated-flashblade-exa-system/ (retrieved 2026-11-01).
 [^18]: Blocks & Files, "NetApp disaggregates ONTAP storage and provides an AI Data Engine," 2025-10-14. https://blocksandfiles.com/2025/10/14/netapp-disaggregates-ontap-storage-and-provides-an-ai-data-engine/ (retrieved 2026-11-01).
-[^19]: Blocks & Files, "HPE Alletra X10000 analysis," 2025-02-13. https://blocksandfiles.com/2025/02/13/hpe-alletra-x10000-analysis/ (retrieved 2026-11-01).
-[^20]: StorageReview, "HPE Alletra Storage MP X10000 Release 4 is GA, doubling to 16 nodes and 23PB raw and adding native NFS beside object," n.d. https://www.storagereview.com/news/hpe-alletra-storage-mp-x10000-release-4-is-ga-doubling-to-16-nodes-and-23pb-raw-and-adding-native-nfs-beside-object (retrieved 2026-11-01).
-[^21]: HPCwire, "HPE taps VAST Data for fast file storage on GreenLake," 2023-04-04. https://www.hpcwire.com/2023/04/04/hpe-taps-vast-data-for-fast-file-storage-on-greenlake/ (retrieved 2026-11-01).
-[^22]: Blocks & Files, "Dell PowerScale gets struck by Lightning and goes parallel," 2025-11-17. https://www.blocksandfiles.com/ai-ml/2025/11/17/dell-powerscale-gets-struck-by-lightning-and-goes-parallel/1711291 (retrieved 2026-11-01).
-[^23]: World Wide Technology, "Hands-on with Everpure's FlashBlade//EXA," n.d. https://www.wwt.com/blog/hands-on-with-everpures-flashblade-exa (retrieved 2026-11-01).
-[^24]: Blocks & Files, "VAST Data's universal filesystem," 2019-02-26. https://blocksandfiles.com/2019/02/26/vast-datas-universal-filesystem/ (retrieved 2026-11-01).
-[^25]: StorageNewsletter, "Scale your AI ambitions with Dell storage and NVIDIA," 2026-03-27. https://www.storagenewsletter.com/2026/03/27/scale-your-ai-ambitions-with-dell-storage-and-nvidia/ (retrieved 2026-11-01).
+[^19]: World Wide Technology, "NetApp AFX 2K: What's New in AFX for Scalable AI Storage," n.d. https://www.wwt.com/blog/netapp-afx-2k-whats-new-in-afx-for-scalable-ai-storage (retrieved 2026-11-01; seen via search summary).
+[^20]: Blocks & Files, "HPE Alletra X10000 analysis," 2025-02-13. https://blocksandfiles.com/2025/02/13/hpe-alletra-x10000-analysis/ (retrieved 2026-11-01).
+[^21]: StorageReview, "HPE Alletra Storage MP X10000 Release 4 is GA, doubling to 16 nodes and 23PB raw and adding native NFS beside object," n.d. https://www.storagereview.com/news/hpe-alletra-storage-mp-x10000-release-4-is-ga-doubling-to-16-nodes-and-23pb-raw-and-adding-native-nfs-beside-object (retrieved 2026-11-01).
+[^22]: HPCwire, "HPE taps VAST Data for fast file storage on GreenLake," 2023-04-04. https://www.hpcwire.com/2023/04/04/hpe-taps-vast-data-for-fast-file-storage-on-greenlake/ (retrieved 2026-11-01).
+[^23]: Blocks & Files, "Dell PowerScale gets struck by Lightning and goes parallel," 2025-11-17. https://www.blocksandfiles.com/ai-ml/2025/11/17/dell-powerscale-gets-struck-by-lightning-and-goes-parallel/1711291 (retrieved 2026-11-01).
+[^24]: StorageReview, "FlashBlade//EXA: Pure Storage's New AI & HPC Powerhouse with 10+ TB/s Performance," 2025-03-11. https://www.storagereview.com/news/flashblade-exa-pure-storages-new-ai-hpc-powerhouse-with-10-tb-s-performance (retrieved 2026-11-01).
+[^25]: World Wide Technology, "Hands-on with Everpure's FlashBlade//EXA," n.d. https://www.wwt.com/blog/hands-on-with-everpures-flashblade-exa (retrieved 2026-11-01).
+[^26]: Blocks & Files, "VAST Data's universal filesystem," 2019-02-26. https://blocksandfiles.com/2019/02/26/vast-datas-universal-filesystem/ (retrieved 2026-11-01).
+[^27]: StorageNewsletter, "Scale your AI ambitions with Dell storage and NVIDIA," 2026-03-27. https://www.storagenewsletter.com/2026/03/27/scale-your-ai-ambitions-with-dell-storage-and-nvidia/ (retrieved 2026-11-01).

@@ -1,6 +1,6 @@
 # 18. Object storage architecture
 
-> **Depth:** L2 · **Reading time:** ~7 min · **Last verified:** 2026-11-01
+> **Depth:** L2 · **Reading time:** ~8 min · **Last verified:** 2026-11-01
 > **Prerequisites:** [Object storage and S3](../02-protocols-and-networking/09-object-storage-and-s3.md) · [Data protection and resilience](../01-storage-fundamentals/06-data-protection-and-resilience.md) · [Scale-out shared-nothing clusters](15-scale-out-shared-nothing.md)
 
 ## TL;DR
@@ -196,7 +196,7 @@ Software-defined object storage on dense HDD servers is still the lowest $/TB. I
 
 *Table 18.5 — Every vendor now has a flash object story; they differ in where the index lives and how protection crosses failure domains.*
 
-FlashBlade bets that object metadata is a database problem, solved in flash and NVRAM, shared with file. An analyst report describes writes mirrored to NVRAM on two other blades before acknowledgement[^8] [VERIFY: current Purity//FB write path]. Steelman for software-defined rivals: cheaper capacity, geo-EC and free choice of servers. FlashBlade's multi-site protection appears to be replication between arrays rather than geo-EC [VERIFY: FlashBlade multi-site object options in 2026]. Options a strategy team might evaluate, based on public information: publishing LIST and small-object benchmarks, and testing whether FlashBlade//E with DeepReduce wins capacity deals now lost to Ceph or MinIO on HDD.
+FlashBlade bets that object metadata is a database problem, solved in flash and NVRAM, shared with file. A 2023 analyst report describes writes mirrored to NVRAM on two other blades before acknowledgement[^8]. On current DFM-based systems, Everpure says Purity distributes the DFMs' NVRAM and flash among "authority" processes running on each blade, each owning a slice of the namespace[^26] [VERIFY: current Purity//FB PUT write path and copy count]. Steelman for software-defined rivals: cheaper capacity, geo-EC and free choice of servers. FlashBlade's multi-site protection appears to be replication between arrays rather than geo-EC [VERIFY: FlashBlade multi-site object options in 2026]. Options a strategy team might evaluate, based on public information: publishing LIST and small-object benchmarks, and testing whether FlashBlade//E with DeepReduce wins capacity deals now lost to Ceph or MinIO on HDD.
 
 ## History and trajectory
 
@@ -215,7 +215,7 @@ timeline
 
 *Figure 18.5 — Object storage spent 15 years optimising for cheap disk; since 2024 the contest has moved to flash, latency and object count.*
 
-S3's 2020 strong consistency ([Chapter 9](../02-protocols-and-networking/09-object-storage-and-s3.md)) pushed compatible vendors toward linearisable indexes. Pure Storage announced FlashBlade object features in 2017[^26]. Next, indexes absorb tables, vectors and richer metadata ([Chapter 33](../05-ai-storage/33-rag-vector-lakehouse.md)): the index is becoming the product.
+S3's 2020 strong consistency ([Chapter 9](../02-protocols-and-networking/09-object-storage-and-s3.md)) pushed compatible vendors toward linearisable indexes. Pure Storage announced FlashBlade object features in 2017[^27]. Next, indexes absorb tables, vectors and richer metadata ([Chapter 33](../05-ai-storage/33-rag-vector-lakehouse.md)): the index is becoming the product.
 
 ## Numbers that matter
 
@@ -289,4 +289,5 @@ S3's 2020 strong consistency ([Chapter 9](../02-protocols-and-networking/09-obje
 [^23]: Pure Storage, "FlashBlade Surpasses 3 Trillion Objects, Reimagining What's Possible for Scale," n.d. (reported October 2025 [VERIFY: publication date]). https://blog.purestorage.com/products/flashblade-surpasses-3-trillion-pure-storage/ (retrieved 2026-11-01).
 [^24]: Linuxiac, "MinIO Ends Active Development, Steers Users Toward Paid AIStor," 2025-12. https://linuxiac.com/minio-ends-active-development/ (retrieved 2026-11-01).
 [^25]: StorageNewsletter, "Pure Accelerate Techfest22: Pure Storage FlashBlade//S Platform," 2022-06-10. https://www.storagenewsletter.com/2022/06/10/pure-accelerate-techfest22-pure-storage-flashblade-s-platform/ (retrieved 2026-11-01).
-[^26]: ChannelBuzz, "Pure Storage makes multiple object storage announcements around FlashBlades," 2017-06. https://channelbuzz.ca/2017/06/pure-storage-makes-multiple-object-storage-announcements-around-flashblades-21750/ (retrieved 2026-11-01).
+[^26]: Everpure, "The Metadata Advantage: Scaling I/O performance for AI and HPC" (white paper), n.d. https://www.everpuredata.com/content/dam/pdf/en/white-papers/wp-meta-advantage-scaling-io-performance-flashblade-exa.pdf (retrieved 2026-11-01; seen via search summary).
+[^27]: ChannelBuzz, "Pure Storage makes multiple object storage announcements around FlashBlades," 2017-06. https://channelbuzz.ca/2017/06/pure-storage-makes-multiple-object-storage-announcements-around-flashblades-21750/ (retrieved 2026-11-01).

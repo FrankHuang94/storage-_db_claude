@@ -1,6 +1,6 @@
 # 15. Scale-out shared-nothing clusters
 
-> **Depth:** L2 · **Reading time:** ~8 min · **Last verified:** 2026-11-01
+> **Depth:** L2 · **Reading time:** ~9 min · **Last verified:** 2026-11-01
 > **Prerequisites:** [Data protection and resilience](../01-storage-fundamentals/06-data-protection-and-resilience.md) · [Datacenter networking](../02-protocols-and-networking/10-datacenter-networking.md) · [Scale-up dual-controller arrays](14-scale-up-dual-controller.md)
 
 ## TL;DR
@@ -134,7 +134,7 @@ Panel B's math: a node of 24 × 30.72 TB drives at 80% full holds 590 TB. Under 
 
 1. **Bundled scaling.** Each node adds fixed CPU, cache, capacity and ports. Capacity-heavy workloads pay for idle CPUs; throughput-heavy ones pay for idle terabytes. Mixed node pools only soften this.
 2. **East-west amplification.** Reads cross the back-end (N−1)/N of the time; rebuilds multiply traffic by the code width.
-3. **Rebuild storms.** Bigger drives make every node loss longer and noisier. At Facebook a median ~180 TB/day crossed top-of-rack switches for EC recovery[^8] [VERIFY: search-summary only]; locally repairable codes roughly halve repair traffic[^9].
+3. **Rebuild storms.** Bigger drives make every node loss longer and noisier. At Facebook, recovering Reed-Solomon-coded data added more than 100 TB a day of cross-rack network traffic[^8]; locally repairable codes roughly halve repair traffic[^9].
 4. **Hot spots.** Hashing spreads keys, not load. A million-file directory, or one checkpoint read by 1,000 GPUs, lands on its owner, like a contended line stalling at its home directory.
 5. **Membership limits.** Failure detection and all-to-all connections grow with node count. PowerScale tops out at 252 nodes on an Ethernet leaf-spine back-end[^10]; ONTAP at 24 nodes for NAS and 12 for SAN[^11].
 
@@ -178,13 +178,13 @@ Commodity hardware shifts value to software, which is why WEKA, Qumulo and Ceph 
 | NetApp ONTAP cluster | HA pairs federated over a cluster interconnect | Each pair owns its aggregates; volumes move between pairs | Up to 24 NAS nodes[^11]; AFX (2025) moves ONTAP to shared media[^17] |
 | Qumulo | Software on commodity or cloud nodes | Erasure-coded block layer across nodes [VERIFY: current protection scheme] | Became software-only under CEO Doug Gourlay (2024)[^18] |
 | Nutanix | One controller VM per HCI node | Replication factor 2 or 3 across nodes[^19] | Supports FlashArray as external storage since 2025[^1] |
-| Everpure FlashBlade//S | Chassis of 7–10 blades, DirectFlash Modules decoupled from blade compute | Global EC and flash management in Purity//FB[^20] | Pure calls it shared-everything within the system [VERIFY: multi-chassis data placement] |
+| Everpure FlashBlade//S | Chassis of 7–10 blades; each blade takes 1–4 DirectFlash Modules, so compute and capacity are sized separately | Global EC and flash management in Purity//FB; namespace split into "authorities" that run on blades[^20][^21] | Pure calls Purity//FB "partitioned-writer" and rejects the binary label[^22] [VERIFY: multi-chassis data placement] |
 
 *Table 15.3 — Every major scale-out incumbent is shared-nothing at heart; Everpure's file platforms sit between the patterns rather than in one.*
 
-Everpure sells no classic shared-nothing product. FlashArray is dual-controller ([Chapter 14](14-scale-up-dual-controller.md)). FlashBlade//S scales out blades in a chassis, but Purity//FB manages DirectFlash Modules globally and Pure Storage calls it shared-everything[^20]. FlashBlade//EXA splits metadata from data, yet its data nodes each own their NVMe, giving the data tier a shared-nothing flavour ([Chapter 16](16-disaggregated-shared-everything.md)).
+Everpure sells no classic shared-nothing product. FlashArray is dual-controller ([Chapter 14](14-scale-up-dual-controller.md)). FlashBlade//S scales out blades in a chassis. Pure Storage describes Purity//FB as a "partitioned-writer" design and argues that the shared-nothing versus shared-everything label obscures more than it reveals[^22]. Metadata and write ownership are partitioned into "authorities" running on each blade, much like shared-nothing owners, while Purity manages DFM flash and NVRAM globally[^21][^20]. Pure's own older datasheets did call FlashBlade "shared-nothing"[^23]. The fair summary is a partitioned scale-out design with pooled media management, not shared-everything in the DASE sense. FlashBlade//EXA splits metadata from data, yet its data nodes each own their NVMe, giving the data tier a shared-nothing flavour ([Chapter 16](16-disaggregated-shared-everything.md)).
 
-The steelman for PowerScale is maturity: two decades of OneFS, a vast installed base, and now pNFS and a parallel "Lightning" tier on common hardware[^21]. For WEKA and Ceph it is freedom over hardware and clouds. Options a strategy team might evaluate, based on public information: attacking the bundled-scaling wall in HCI estates, and leading with rebuild-time and failure-domain math against large-drive clusters.
+The steelman for PowerScale is maturity: two decades of OneFS, a vast installed base, and now pNFS and a parallel "Lightning" tier on common hardware[^24]. For WEKA and Ceph it is freedom over hardware and clouds. Options a strategy team might evaluate, based on public information: attacking the bundled-scaling wall in HCI estates, and leading with rebuild-time and failure-domain math against large-drive clusters.
 
 ## History and trajectory
 
@@ -203,7 +203,7 @@ timeline
 
 *Figure 15.7 — The algorithms date from 1997–2007; since 2025 incumbents have added disaggregated or parallel tiers beside them.*
 
-EMC paid about US$2.25 billion for Isilon in 2010[^22]; NetApp paid ~US$300 million in stock for Spinnaker in 2003 to cluster beyond two nodes[^23]. Since 2025 the trend is hybridization: NetApp AFX[^17] and Dell Lightning[^21] add shared-media or parallel paths beside shared-nothing cores, while WEKA's NeuralMesh refines the mesh itself[^3].
+EMC paid about US$2.25 billion for Isilon in 2010[^25]; NetApp paid ~US$300 million in stock for Spinnaker in 2003 to cluster beyond two nodes[^26]. Since 2025 the trend is hybridization: NetApp AFX[^17] and Dell Lightning[^24] add shared-media or parallel paths beside shared-nothing cores, while WEKA's NeuralMesh refines the mesh itself[^3].
 
 ## Numbers that matter
 
@@ -216,7 +216,7 @@ EMC paid about US$2.25 billion for Isilon in 2010[^22]; NetApp paid ~US$300 mill
 | Data moved on node add | ≈1/(N+1) | Versus ≈N/(N+1) for hash-mod-N | Worked example |
 | Read bytes crossing back-end | (N−1)/N; 94% at 16 nodes | Non-smart clients, even spread | Worked example |
 | Node rebuild time, 590 TB node | ~82 h at 10 nodes, ~12 h at 64 | 8+2 EC, 2 GB/s per survivor | Worked example (Figure 15.6) |
-| Facebook EC recovery traffic | ~180 TB/day (median) | Crossing top-of-rack switches | Rashmi et al., 2013[^8] |
+| Facebook EC recovery traffic | >100 TB/day | Cross-rack, (10,4) Reed-Solomon warehouse cluster | Rashmi et al., 2013[^8] |
 | PowerScale per-node read | Up to 35 GB/s | Company-stated, next-gen node, OneFS 9.15 | Dell blog[^12] |
 
 ## Conversation playbook
@@ -240,6 +240,7 @@ EMC paid about US$2.25 billion for Isilon in 2010[^22]; NetApp paid ~US$300 mill
 - "Ceph is free." The operators, spare capacity and rebuild risk are not.
 - "ONTAP is fully shared-nothing." Drives belong to HA pairs, which federate.
 - "Consistent hashing balances load." It balances *keys*, not skewed access.
+- "FlashBlade//S is shared-everything, like VAST." Pure calls Purity//FB a partitioned-writer design: blades own slices of the namespace, while media management is global.
 
 ## Going deeper (optional, L3 pointers)
 
@@ -277,6 +278,9 @@ EMC paid about US$2.25 billion for Isilon in 2010[^22]; NetApp paid ~US$300 mill
 [^18]: GeekWire, "Former Arista and Cisco exec Douglas Gourlay named new CEO of data storage company Qumulo," 2024-07. https://www.geekwire.com/2024/former-arista-and-cisco-exec-douglas-gourlay-named-new-ceo-of-data-storage-company-qumulo/ (retrieved 2026-11-01).
 [^19]: Nutanix Community, "Redundancy Factor vs Replication Factor," n.d. https://next.nutanix.com/how-it-works-22/redundancy-factor-vs-replication-factor-37486 (retrieved 2026-11-01).
 [^20]: StorageNewsletter, "Pure Accelerate Techfest22: Pure Storage FlashBlade//S Platform," 2022-06-10. https://www.storagenewsletter.com/2022/06/10/pure-accelerate-techfest22-pure-storage-flashblade-s-platform/ (retrieved 2026-11-01).
-[^21]: Blocks & Files, "Dell PowerScale gets struck by Lightning and goes parallel," 2025-11-17. https://www.blocksandfiles.com/ai-ml/2025/11/17/dell-powerscale-gets-struck-by-lightning-and-goes-parallel/1711291 (retrieved 2026-11-01).
-[^22]: eWeek, "EMC Acquires Scale-Out NAS Maker Isilon for $2.25 Billion," 2010-11-15. https://www.eweek.com/storage/emc-acquires-scale-out-nas-maker-isilon-for-2.25-billion/ (retrieved 2026-11-01).
-[^23]: The Register, "NetApp hoists $300m for Spinnaker," 2003-11-05. https://www.theregister.co.uk/2003/11/05/netapp_hoists_300m_for_spinnaker/ (retrieved 2026-11-01).
+[^21]: Everpure, "The Metadata Advantage: Scaling I/O performance for AI and HPC" (white paper), n.d. https://www.everpuredata.com/content/dam/pdf/en/white-papers/wp-meta-advantage-scaling-io-performance-flashblade-exa.pdf (retrieved 2026-11-01; seen via search summary).
+[^22]: J. Emerson (Pure Storage), "The Storage Architecture Spectrum: Why 'Shared-nothing' Means Nothing," n.d. https://blog.everpuredata.com/perspectives/the-storage-architecture-spectrum-why-shared-nothing-means-nothing/ (retrieved 2026-11-01; seen via search summary, host not fetchable).
+[^23]: Pure Storage, "FlashBlade for Media and Entertainment" (data sheet), n.d. https://www.purestorage.com/content/dam/pdf/en/datasheets/ds-flashblade-for-media-and-entertainment.pdf (retrieved 2026-11-01; seen via search summary).
+[^24]: Blocks & Files, "Dell PowerScale gets struck by Lightning and goes parallel," 2025-11-17. https://www.blocksandfiles.com/ai-ml/2025/11/17/dell-powerscale-gets-struck-by-lightning-and-goes-parallel/1711291 (retrieved 2026-11-01).
+[^25]: eWeek, "EMC Acquires Scale-Out NAS Maker Isilon for $2.25 Billion," 2010-11-15. https://www.eweek.com/storage/emc-acquires-scale-out-nas-maker-isilon-for-2.25-billion/ (retrieved 2026-11-01).
+[^26]: The Register, "NetApp hoists $300m for Spinnaker," 2003-11-05. https://www.theregister.co.uk/2003/11/05/netapp_hoists_300m_for_spinnaker/ (retrieved 2026-11-01).
