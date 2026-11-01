@@ -1,0 +1,141 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 620" width="1000" role="img" aria-labelledby="t d" font-family="Inter, Helvetica, Arial, sans-serif">
+<title id="t">WEKA NeuralMesh logical architecture</title>
+<desc id="d">Clients with the WEKA agent and protocol gateways reach a shared-nothing backend cluster over a DPDK fabric; each backend server runs compute processes holding metadata buckets, drive processes doing user-space NVMe I/O, and a management process; cold data tiers to an S3-compatible object store.</desc>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#555"/></marker></defs>
+<rect x="0" y="0" width="1000" height="620" fill="#FFFFFF"/>
+<text x="20" y="32" font-size="18" font-weight="bold" fill="#222">WEKA NeuralMesh: logical architecture (dedicated mode shown)</text>
+<rect x="20" y="50" width="720" height="120" rx="6" fill="#F5F5F5" stroke="#999"/>
+<text x="30" y="68" font-size="13" font-weight="bold" fill="#222">Clients</text>
+<rect x="35" y="75" width="250" height="88" rx="4" fill="#FFFFFF" stroke="#009E73" stroke-width="1.5"/>
+<text x="45" y="93" font-size="13" font-weight="bold" fill="#222">GPU server (client)</text>
+<text x="45" y="109" font-size="12" fill="#222">App: PyTorch, vLLM, Dynamo</text>
+<text x="45" y="125" font-size="12" fill="#222">WEKA client: POSIX driver plus</text>
+<text x="45" y="141" font-size="12" fill="#222">user-space frontend (DPDK)</text>
+<rect x="300" y="75" width="250" height="88" rx="4" fill="#FFFFFF" stroke="#009E73" stroke-width="1.5"/>
+<text x="310" y="93" font-size="13" font-weight="bold" fill="#222">GPU server (client)</text>
+<text x="310" y="109" font-size="12" fill="#222">Frontend hashes each operation</text>
+<text x="310" y="125" font-size="12" fill="#222">to the bucket that owns it</text>
+<text x="310" y="141" font-size="12" fill="#222">GDS: DMA straight into GPU memory</text>
+<rect x="565" y="75" width="165" height="88" rx="4" fill="#FFFFFF" stroke="#56B4E9" stroke-width="1.5"/>
+<text x="575" y="93" font-size="13" font-weight="bold" fill="#222">Protocol gateways</text>
+<text x="575" y="109" font-size="12" fill="#222">NFS, SMB, S3</text>
+<text x="575" y="125" font-size="12" fill="#222">for clients without</text>
+<text x="575" y="141" font-size="12" fill="#222">the WEKA agent</text>
+<rect x="20" y="182" width="720" height="34" rx="4" fill="#EEEEEE" stroke="#999"/>
+<text x="380" y="204" font-size="13" text-anchor="middle" fill="#222">Fabric: Ethernet or InfiniBand, DPDK user-space networking (UDP fallback), RDMA for GDS</text>
+<line x1="160" y1="163" x2="160" y2="181" stroke="#555" stroke-width="1.5" marker-end="url(#ar)" marker-start="url(#ar)"/>
+<line x1="425" y1="163" x2="425" y2="181" stroke="#555" stroke-width="1.5" marker-end="url(#ar)" marker-start="url(#ar)"/>
+<line x1="647" y1="163" x2="647" y2="181" stroke="#555" stroke-width="1.5" marker-end="url(#ar)" marker-start="url(#ar)"/>
+<line x1="117" y1="217" x2="117" y2="259" stroke="#555" stroke-width="1.5" marker-end="url(#ar)" marker-start="url(#ar)"/>
+<line x1="295" y1="217" x2="295" y2="259" stroke="#555" stroke-width="1.5" marker-end="url(#ar)" marker-start="url(#ar)"/>
+<line x1="473" y1="217" x2="473" y2="259" stroke="#555" stroke-width="1.5" marker-end="url(#ar)" marker-start="url(#ar)"/>
+<line x1="651" y1="217" x2="651" y2="259" stroke="#555" stroke-width="1.5" marker-end="url(#ar)" marker-start="url(#ar)"/>
+<rect x="20" y="228" width="720" height="250" rx="6" fill="#F2FAF7" stroke="#009E73"/>
+<text x="200" y="246" font-size="13" font-weight="bold" fill="#222">Backend cluster: shared-nothing, every server runs the same services</text>
+<rect x="35" y="260" width="165" height="205" rx="4" fill="#FFFFFF" stroke="#009E73" stroke-width="1.5"/>
+<text x="45" y="278" font-size="13" font-weight="bold" fill="#222">Backend server 1</text>
+<rect x="45" y="288" width="145" height="50" rx="3" fill="#D9F0E8" stroke="#009E73"/>
+<text x="53" y="304" font-size="12" font-weight="bold" fill="#222">Compute processes</text>
+<text x="53" y="318" font-size="12" fill="#222">metadata buckets,</text>
+<text x="53" y="332" font-size="12" fill="#222">placement, erasure code</text>
+<rect x="45" y="344" width="145" height="40" rx="3" fill="#E1F0FA" stroke="#56B4E9"/>
+<text x="53" y="360" font-size="12" font-weight="bold" fill="#222">Drive processes</text>
+<text x="53" y="376" font-size="12" fill="#222">user-space NVMe I/O</text>
+<rect x="45" y="390" width="145" height="24" rx="3" fill="#F0F0F0" stroke="#999"/>
+<text x="53" y="406" font-size="12" fill="#222">Management process</text>
+<rect x="45" y="422" width="32" height="32" rx="2" fill="#56B4E9" stroke="#0072B2"/>
+<text x="61" y="442" font-size="12" text-anchor="middle" fill="#222">SSD</text>
+<rect x="82" y="422" width="32" height="32" rx="2" fill="#56B4E9" stroke="#0072B2"/>
+<text x="98" y="442" font-size="12" text-anchor="middle" fill="#222">SSD</text>
+<rect x="119" y="422" width="32" height="32" rx="2" fill="#56B4E9" stroke="#0072B2"/>
+<text x="135" y="442" font-size="12" text-anchor="middle" fill="#222">SSD</text>
+<rect x="156" y="422" width="32" height="32" rx="2" fill="#56B4E9" stroke="#0072B2"/>
+<text x="172" y="442" font-size="12" text-anchor="middle" fill="#222">SSD</text>
+<rect x="213" y="260" width="165" height="205" rx="4" fill="#FFFFFF" stroke="#009E73" stroke-width="1.5"/>
+<text x="223" y="278" font-size="13" font-weight="bold" fill="#222">Backend server 2</text>
+<rect x="223" y="288" width="145" height="50" rx="3" fill="#D9F0E8" stroke="#009E73"/>
+<text x="231" y="304" font-size="12" font-weight="bold" fill="#222">Compute processes</text>
+<text x="231" y="318" font-size="12" fill="#222">metadata buckets,</text>
+<text x="231" y="332" font-size="12" fill="#222">placement, erasure code</text>
+<rect x="223" y="344" width="145" height="40" rx="3" fill="#E1F0FA" stroke="#56B4E9"/>
+<text x="231" y="360" font-size="12" font-weight="bold" fill="#222">Drive processes</text>
+<text x="231" y="376" font-size="12" fill="#222">user-space NVMe I/O</text>
+<rect x="223" y="390" width="145" height="24" rx="3" fill="#F0F0F0" stroke="#999"/>
+<text x="231" y="406" font-size="12" fill="#222">Management process</text>
+<rect x="223" y="422" width="32" height="32" rx="2" fill="#56B4E9" stroke="#0072B2"/>
+<text x="239" y="442" font-size="12" text-anchor="middle" fill="#222">SSD</text>
+<rect x="260" y="422" width="32" height="32" rx="2" fill="#56B4E9" stroke="#0072B2"/>
+<text x="276" y="442" font-size="12" text-anchor="middle" fill="#222">SSD</text>
+<rect x="297" y="422" width="32" height="32" rx="2" fill="#56B4E9" stroke="#0072B2"/>
+<text x="313" y="442" font-size="12" text-anchor="middle" fill="#222">SSD</text>
+<rect x="334" y="422" width="32" height="32" rx="2" fill="#56B4E9" stroke="#0072B2"/>
+<text x="350" y="442" font-size="12" text-anchor="middle" fill="#222">SSD</text>
+<rect x="391" y="260" width="165" height="205" rx="4" fill="#FFFFFF" stroke="#009E73" stroke-width="1.5"/>
+<text x="401" y="278" font-size="13" font-weight="bold" fill="#222">Backend server 3</text>
+<rect x="401" y="288" width="145" height="50" rx="3" fill="#D9F0E8" stroke="#009E73"/>
+<text x="409" y="304" font-size="12" font-weight="bold" fill="#222">Compute processes</text>
+<text x="409" y="318" font-size="12" fill="#222">metadata buckets,</text>
+<text x="409" y="332" font-size="12" fill="#222">placement, erasure code</text>
+<rect x="401" y="344" width="145" height="40" rx="3" fill="#E1F0FA" stroke="#56B4E9"/>
+<text x="409" y="360" font-size="12" font-weight="bold" fill="#222">Drive processes</text>
+<text x="409" y="376" font-size="12" fill="#222">user-space NVMe I/O</text>
+<rect x="401" y="390" width="145" height="24" rx="3" fill="#F0F0F0" stroke="#999"/>
+<text x="409" y="406" font-size="12" fill="#222">Management process</text>
+<rect x="401" y="422" width="32" height="32" rx="2" fill="#56B4E9" stroke="#0072B2"/>
+<text x="417" y="442" font-size="12" text-anchor="middle" fill="#222">SSD</text>
+<rect x="438" y="422" width="32" height="32" rx="2" fill="#56B4E9" stroke="#0072B2"/>
+<text x="454" y="442" font-size="12" text-anchor="middle" fill="#222">SSD</text>
+<rect x="475" y="422" width="32" height="32" rx="2" fill="#56B4E9" stroke="#0072B2"/>
+<text x="491" y="442" font-size="12" text-anchor="middle" fill="#222">SSD</text>
+<rect x="512" y="422" width="32" height="32" rx="2" fill="#56B4E9" stroke="#0072B2"/>
+<text x="528" y="442" font-size="12" text-anchor="middle" fill="#222">SSD</text>
+<rect x="569" y="260" width="165" height="205" rx="4" fill="#FFFFFF" stroke="#009E73" stroke-width="1.5" stroke-dasharray="5,4"/>
+<text x="579" y="278" font-size="13" font-weight="bold" fill="#222">Backend server N</text>
+<rect x="579" y="288" width="145" height="50" rx="3" fill="#D9F0E8" stroke="#009E73"/>
+<text x="587" y="304" font-size="12" font-weight="bold" fill="#222">Compute processes</text>
+<text x="587" y="318" font-size="12" fill="#222">metadata buckets,</text>
+<text x="587" y="332" font-size="12" fill="#222">placement, erasure code</text>
+<rect x="579" y="344" width="145" height="40" rx="3" fill="#E1F0FA" stroke="#56B4E9"/>
+<text x="587" y="360" font-size="12" font-weight="bold" fill="#222">Drive processes</text>
+<text x="587" y="376" font-size="12" fill="#222">user-space NVMe I/O</text>
+<rect x="579" y="390" width="145" height="24" rx="3" fill="#F0F0F0" stroke="#999"/>
+<text x="587" y="406" font-size="12" fill="#222">Management process</text>
+<rect x="579" y="422" width="32" height="32" rx="2" fill="#56B4E9" stroke="#0072B2"/>
+<text x="595" y="442" font-size="12" text-anchor="middle" fill="#222">SSD</text>
+<rect x="616" y="422" width="32" height="32" rx="2" fill="#56B4E9" stroke="#0072B2"/>
+<text x="632" y="442" font-size="12" text-anchor="middle" fill="#222">SSD</text>
+<rect x="653" y="422" width="32" height="32" rx="2" fill="#56B4E9" stroke="#0072B2"/>
+<text x="669" y="442" font-size="12" text-anchor="middle" fill="#222">SSD</text>
+<rect x="690" y="422" width="32" height="32" rx="2" fill="#56B4E9" stroke="#0072B2"/>
+<text x="706" y="442" font-size="12" text-anchor="middle" fill="#222">SSD</text>
+<line x1="380" y1="479" x2="380" y2="499" stroke="#555" stroke-width="1.5" marker-end="url(#ar)" marker-start="url(#ar)"/>
+<rect x="20" y="500" width="720" height="62" rx="6" fill="#FFF4E5" stroke="#E69F00"/>
+<text x="380" y="524" font-size="13" font-weight="bold" text-anchor="middle" fill="#222">Object tier: any S3-compatible store, on-premises or in a public cloud</text>
+<text x="380" y="546" font-size="12" text-anchor="middle" fill="#222">Cold extents tier out of flash; snapshots can be pushed to object for backup or cloud bursting</text>
+<rect x="760" y="50" width="225" height="512" rx="6" fill="#FAFAFA" stroke="#CCCCCC"/>
+<text x="772" y="74" font-size="14" font-weight="bold" fill="#222">How the pieces fit</text>
+<text x="772" y="100" font-size="13" font-weight="bold" fill="#009E73">Metadata</text>
+<text x="772" y="118" font-size="12" fill="#222">Sharded into thousands of</text>
+<text x="772" y="134" font-size="12" fill="#222">buckets spread over all</text>
+<text x="772" y="150" font-size="12" fill="#222">compute processes. There is</text>
+<text x="772" y="166" font-size="12" fill="#222">no dedicated metadata server.</text>
+<text x="772" y="200" font-size="13" font-weight="bold" fill="#009E73">Data protection</text>
+<text x="772" y="218" font-size="12" fill="#222">Distributed erasure coding:</text>
+<text x="772" y="234" font-size="12" fill="#222">3 to 16 data plus 2 or 4</text>
+<text x="772" y="250" font-size="12" fill="#222">parity strips, spread</text>
+<text x="772" y="266" font-size="12" fill="#222">any-to-any across servers.</text>
+<text x="772" y="300" font-size="13" font-weight="bold" fill="#009E73">Kernel bypass</text>
+<text x="772" y="318" font-size="12" fill="#222">DPDK networking and a</text>
+<text x="772" y="334" font-size="12" fill="#222">user-space NVMe path. In</text>
+<text x="772" y="350" font-size="12" fill="#222">performance mode each</text>
+<text x="772" y="366" font-size="12" fill="#222">process owns pinned cores.</text>
+<text x="772" y="400" font-size="13" font-weight="bold" fill="#009E73">Deployment modes</text>
+<text x="772" y="418" font-size="12" fill="#222">Dedicated: separate storage</text>
+<text x="772" y="434" font-size="12" fill="#222">servers, as drawn here.</text>
+<text x="772" y="450" font-size="12" fill="#222">Converged: backends run on</text>
+<text x="772" y="466" font-size="12" fill="#222">GPU servers' local NVMe.</text>
+<text x="772" y="482" font-size="12" fill="#222">Cloud: same software on</text>
+<text x="772" y="498" font-size="12" fill="#222">AWS, Azure, GCP and OCI.</text>
+<text x="20" y="588" font-size="12" fill="#555">Original drawing for the Everpure Tech Atlas, based on public WEKA documentation. Simplified: process counts per server,</text>
+<text x="20" y="605" font-size="12" fill="#555">gateway placement and network layout vary by deployment and software release.</text>
+</svg>
