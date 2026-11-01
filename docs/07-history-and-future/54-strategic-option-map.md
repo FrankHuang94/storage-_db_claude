@@ -13,7 +13,7 @@
 
 ## Why this matters for Everpure strategy
 
-The rest of this atlas describes layers, architectures and competitors one at a time. A corporate-development conversation needs them on one page. Strategists ask "where do we play, how do we get there, and what does it cost?", and those questions differ by layer. The answer for NAND (hedge supply, never buy a fab) is the opposite of the answer for data intelligence (Everpure bought 1touch for $125.0M in cash in 2026[^1]). The 2026 rebrand to Everpure and the "Data Primacy" pitch ([Chapter 28](../04-everpure/28-platform-and-software.md)) have moved strategy discussion toward the upper layers, which are also the most expensive and contested.
+This chapter puts the atlas's layers, architectures and competitors on one page. Strategists ask "where do we play, how do we get there, and what does it cost?", and those questions differ by layer. The answer for NAND (hedge supply, never buy a fab) is the opposite of the answer for data intelligence (Everpure bought 1touch for $125.0M in cash in 2026[^1]). The 2026 rebrand to Everpure and the "Data Primacy" pitch ([Chapter 28](../04-everpure/28-platform-and-software.md)) have moved strategy discussion toward the upper layers, which are also the most expensive and contested.
 
 This chapter is a synthesis. It contains **options a strategy team might evaluate, based on public information**, and nothing about non-public Everpure plans. Company names in the matrices illustrate a *category* of target or partner, or a past public transaction; no deal, approach or partnership is implied.
 
@@ -78,11 +78,11 @@ flowchart TD
 
 **Gate 1, strategic fit.** Does the option strengthen a layer customers pay for separately, or one that protects a layer they do pay for? KV cache passes if it is paid from the GPU budget ([Chapter 32](../05-ai-storage/32-inference-and-kv-cache.md)); a feature only sold inside array deals passes only as defence.
 
-**Gate 2, fit with Purity and Fusion.** Everpure's distinctive claim is one OS and one subscription model across products ([Chapter 28](../04-everpure/28-platform-and-software.md)). An asset that brings a second data path or OS breaks that claim; Dell's five-plus storage operating systems are the cautionary example ([Chapter 46](../06-industry-and-competition/46-incumbents.md)). Ask whether the asset can run *on* Purity, *beside* it under Fusion, or only *instead of* it. The [diligence framework](../06-industry-and-competition/50-diligence-framework.md) turns this into a checklist.
+**Gate 2, fit with Purity and Fusion.** Everpure's distinctive claim is one OS and one subscription model across products ([Chapter 28](../04-everpure/28-platform-and-software.md)). An asset that brings a second data path or OS breaks that claim; Dell's five-plus storage operating systems are the cautionary example ([Chapter 46](../06-industry-and-competition/46-incumbents.md)). Ask whether the asset can run *on* Purity, *beside* it under Fusion, or only *instead of* it.
 
 **Gate 3, financial.** FY26 free cash flow was $616M[^24], year-end cash and marketable securities $1.5B[^25], and management guides FY27 free cash flow to $600–800M after the NAND build[^7]. **Worked example (illustrative):** a target with $50M ARR at 15× costs $750M. For a five-year payback from gross profit alone, it must add $150M of gross profit a year; at the ~75% subscription gross margin Everpure reports[^26], that is about $200M of revenue a year, roughly 9% of Q2 FY27 subscription ARR of $2.13B[^26]. The bar is high because private AI-data marks are high: WEKA's last round valued it at ~16× ARR, and VAST's at ~60× committed ARR, both on company-stated figures ([Chapter 43](../06-industry-and-competition/43-weka.md)).
 
-**Gate 4, integration risk.** Everpure's record is mixed. Compuverde became FlashArray file services within about a year. StorReduce's ObjectEngine was quietly withdrawn ([Chapter 25](../04-everpure/25-company-history-and-strategy.md)). Risks rise with channel conflict, for example a target that sells through Everpure's competitors, and with client-side software that customers must install on every GPU node.
+**Gate 4, integration risk.** Everpure's record is mixed. Compuverde became FlashArray file services within about a year. StorReduce's ObjectEngine was quietly withdrawn ([Chapter 25](../04-everpure/25-company-history-and-strategy.md)). Risk rises with channel conflict (a target selling through rivals) and with client software on every GPU node.
 
 **Gate 5, antitrust and regulatory.** Small software tuck-ins rarely draw review. Larger deals do. The DOJ challenged HPE's ~$14B Juniper deal, which closed in July 2025 after a settlement[^27]; IBM–HashiCorp waited about ten months for US and UK clearance[^28]. Intel's NAND sale to SK hynix closed in two steps between 2021 and 2025[^23]. Cross-border targets add foreign-investment screening.
 
@@ -103,7 +103,7 @@ flowchart TD
 | Salesforce | Informatica | 2025 | $8B equity value[^35] | 7 | Catalog, governance, MDM |
 | Veeam | Securiti AI | 2025 | $1.725B[^36] | 7 | DSPM, privacy and AI governance |
 | Dell | Dataloop | 2025–26 | ~$120M (*reported*)[^37] | 8 | AI data orchestration |
-| Palo Alto Networks | Chronosphere | 2026 | $3.35B (*reported*)[^38] | 6 | Observability for agentic operations |
+| Palo Alto Networks | Chronosphere | 2026 | $3.35B (*reported*)[^38] [VERIFY: search-summary only] | 6 | Observability for agentic operations |
 | IBM | Confluent | 2026 | ~$11B enterprise value[^39] | 8 | Real-time data streaming for AI |
 | Everpure | 1touch | 2026 | $125.0M cash[^1] | 7 | Data discovery and classification |
 | Lenovo | Infinidat | 2025 → 2026 | Undisclosed; >$500M (*estimated*)[^20][^40] | 3 | High-end block installed base |
@@ -113,11 +113,11 @@ flowchart TD
 
 *Table 54.2 — The money has moved up the stack: 2024–2026 deals in data management and AI data dwarf the array and file deals of the same period.*
 
-Four lessons follow. **Storage incumbents are buying small and specific:** NetApp's two 2026 deals and Dell's Dataloop are undisclosed or around $120M, the same scale as 1touch. **Data and security companies pay platform prices** for governance and DSPM: $1.7B to $8B. That makes them likelier partners, or rival bidders, than targets. **Arrays consolidate through installed bases**, as with Lenovo–Infinidat, and buy distribution rather than technology. **Memory-tier software is attracting chip companies**, as AMD–MEXT shows, which hints that the KV-cache tier could be captured from the silicon side.
+Four lessons follow. **Storage incumbents are buying small and specific:** NetApp's two 2026 deals and Dell's Dataloop are undisclosed or around $120M, the same scale as 1touch. **Data and security companies pay platform prices** for governance and DSPM: $1.7B to $8B. That makes them likelier partners, or rival bidders, than targets. **Arrays consolidate through installed bases**, as with Lenovo–Infinidat. **Memory-tier software is attracting chip companies**, as AMD–MEXT shows, which hints that the KV-cache tier could be captured from the silicon side.
 
 ### Steelmanning "do nothing new"
 
-The strongest option may be to stay focused. **Growth is already high.** FY27 guidance of $5.03–5.07B implies ~38% growth[^26], driven by arrays, Evergreen and hyperscale licensing. Management attention is the scarcest input. **Cash is committed:** strategic NAND purchases pushed Q2 FY27 free cash flow negative[^7], and that hedge is a bigger bet than any tuck-in. **The record favours restraint.** Four deals in 17 years cost about $594M in total[^29][^1], and the smallest one failed ([Chapter 25](../04-everpure/25-company-history-and-strategy.md)). **Neutrality is an asset.** A storage vendor that partners with every catalog, backup and lakehouse vendor gets carried into deals by all of them. One that buys into those layers becomes their competitor. **Single-OS discipline is the moat**, and most targets would dilute it.
+The strongest option may be to stay focused. **Growth is already high.** FY27 guidance of $5.03–5.07B implies ~38% growth[^26]. **Cash is committed:** strategic NAND purchases pushed Q2 FY27 free cash flow negative[^7], and that hedge is a bigger bet than any tuck-in. **The record favours restraint.** Four deals in 17 years cost about $594M in total[^29][^1], and the smallest one failed ([Chapter 25](../04-everpure/25-company-history-and-strategy.md)). **Neutrality is an asset.** A storage vendor that partners with every catalog, backup and lakehouse vendor gets carried into deals by all of them. One that buys into those layers becomes their competitor. **Single-OS discipline is the moat**, and most targets would dilute it.
 
 The counter-argument is the one [Chapter 39](../05-ai-storage/39-agentic-ai-and-data-intelligence.md) makes. In an agentic enterprise, whoever answers "what is this data, and who may use it?" owns the customer relationship. If that is a catalog vendor, Everpure risks becoming a fast S3 endpoint under someone else's control plane. "Do nothing new" is defensible only if Data Intelligence and Fusion can reach non-Everpure data organically, quickly enough to matter.
 
@@ -191,7 +191,7 @@ In 2019–2020 Pure Storage bought capabilities (file, then Kubernetes) to widen
 
 **Don't say this:**
 
-- "Everpure should buy VAST" (or any named private company). It is speculative, ignores a ~$30B mark and channel conflict, and breaks the public-information rule.
+- "Everpure should buy VAST" (or any named private company). Speculative, ignores a ~$30B mark, and breaks the public-information rule.
 - "Partnering is what you do when you can't afford to buy." At layers 5–8, neutrality is often worth more than ownership.
 - "Storage vendors can't climb the stack." NetApp, Dell and Everpure are all trying; the open question is reach beyond their own arrays, not permission.
 - "M&A is how Everpure grows." Four deals in 17 years says otherwise; organic product and the Evergreen model built the business.
@@ -199,7 +199,7 @@ In 2019–2020 Pure Storage bought capabilities (file, then Kubernetes) to widen
 
 ## Going deeper (optional, L3 pointers)
 
-- Purchase-price allocation notes for Portworx (FY2021 10-K) and 1touch (Q1 FY27 10-Q): goodwill share, retention structures and earn-outs as templates for future tuck-ins.
+- Purchase-price allocation notes for Portworx (FY2021 10-K) and 1touch (Q1 FY27 10-Q): goodwill share, retention and earn-out structures.
 - DOJ and HPE filings on the Juniper settlement, a recent model of behavioural and divestiture remedies in IT infrastructure.
 - NVIDIA Dynamo/KVBM and NIXL plug-in interfaces: where a storage backend integrates, and how much is open source.
 - [Chapter 50](../06-industry-and-competition/50-diligence-framework.md)'s scorecard, applied to any category in Table 54.1.
