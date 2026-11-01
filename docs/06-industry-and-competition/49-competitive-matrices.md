@@ -161,7 +161,7 @@ Caution: IDC's 2Q26 market grew 33.6%, mostly from NAND price pass-through ([Cha
 
 | Vendor | Block | File | Object | Parallel FS / pNFS | KV-cache offer | NVIDIA cert depth | Data reduction | Multiprotocol, one system | Cloud availability | STaaS | Data intelligence / catalog | Sovereign presence |
 |---|---|---|---|---|---|---|---|---|---|---|---|---|
-| **Everpure** | ● | ● | ● | ● | ● | ● | ● | ● | ◐ | ● | ◐ | ◐ |
+| **Everpure** | ● | ● | ● | ● | ◐ | ● | ● | ● | ◐ | ● | ◐ | ◐ |
 | VAST | ◐ | ● | ● | ◐ | ◐ | ● | ● | ● | ◐ | ○ | ● | ● |
 | WEKA | ○ | ● | ◐ | ● | ● | ● | ◐ | ◐ | ● | ○ | ○ | ◐ |
 | DDN | ○ | ● | ● | ● | ● | ● | ◐ | ◐ | ◐ | ○ | ◐ | ● |
@@ -184,7 +184,7 @@ Caution: IDC's 2Q26 market grew 33.6%, mostly from NAND price pass-through ([Cha
 
 | Column | Evidence behind the ratings |
 |---|---|
-| KV-cache offer | Everpure Pure KVA with Dynamo since 2025, productised as PureKVA with availability announced for October 2026[^20] (● rests partly on audited MLPerf v3.0 KV results; by the legend's "new" test it is borderline); WEKA Augmented Memory Grid first, November 2025[^21]; DDN Dynamo integration June 2026[^22]; Dell NIXL on PowerScale[^23]; NetApp LMCache offload to ONTAP and StorageGRID[^24]; IBM Storage Scale KV reference design[^25] [VERIFY: Dell, NetApp and IBM KV-cache items read from search summaries only]; HPE evidence sponsored[^26]; Huawei M900[^27]; VAST ◐ because its KV software (VUA, open source since April 2025) is a library rather than a product and its BlueField-4 design ships 2H 2026 |
+| KV-cache offer | Everpure Pure KVA with Dynamo since 2025, productised as PureKVA with availability announced for October 2026[^20] (rated ◐, like VAST: general availability was announced for October 2026 but not confirmed by 2026-11-01, although its peer-reviewed MLPerf v3.0 KV-cache results are the strongest public evidence in the field); WEKA Augmented Memory Grid first, November 2025[^21]; DDN Dynamo integration June 2026[^22]; Dell NIXL on PowerScale[^23]; NetApp LMCache offload to ONTAP and StorageGRID[^24]; IBM Storage Scale KV reference design[^25] [VERIFY: Dell, NetApp and IBM KV-cache items read from search summaries only]; HPE evidence sponsored[^26]; Huawei M900[^27]; VAST ◐ because its KV software (VUA, open source since April 2025) is a library rather than a product and its BlueField-4 design ships 2H 2026 |
 | NVIDIA cert depth | ● = DGX SuperPOD plus certified storage: Everpure (FlashBlade//S500; FlashBlade//EXA had no completed NVIDIA certification by 2026-11-01)[^28], VAST, WEKA, DDN, NetApp, Dell, IBM. ◐ = narrower: HPE (X10000 Foundation), Hitachi (BasePOD), Nutanix[^29], Cloudian (Foundation)[^30]. ○ = Hammerspace[^31]; Huawei is outside NVIDIA's programmes. Per [Chapter 34](../05-ai-storage/34-nvidia-ecosystem.md) |
 | STaaS | Vendor owns hardware, bills for consumption: Evergreen//One, Dell APEX, NetApp Keystone, HPE GreenLake[^32]; IBM[^33] and Hitachi EverFlex[^34] narrower and block-centred |
 | Cloud availability | ● = native or first-party service in several clouds (NetApp; WEKA[^35]). Everpure ◐: Azure Native and Cloud Dedicated cover block, no managed EXA[^36] |

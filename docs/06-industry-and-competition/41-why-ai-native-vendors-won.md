@@ -181,7 +181,7 @@ Everpure's answer to drivers 1, 2 and 7 is FlashBlade//EXA. Pure Storage launche
 
 | Vendor and product | Date | Design | What it closes | What it does not (yet) |
 |---|---|---|---|---|
-| Everpure FlashBlade//EXA | Mar 2025[^40] | Metadata core plus direct-path data nodes, standard pNFS | Throughput and metadata scale; peer-reviewed MLPerf v3.0 lead among entrants[^30] | NVIDIA-Certified Storage claimed for EXA in March 2026, but no NCP or SuperPOD certification yet ([Chapter 27](../04-everpure/27-flasharray-and-flashblade.md)); no large neocloud anchor |
+| Everpure FlashBlade//EXA | Mar 2025[^40] | Metadata core plus direct-path data nodes, standard pNFS | Throughput and metadata scale; peer-reviewed MLPerf v3.0 lead among entrants[^30] | NVIDIA-Certified Storage validation being extended to EXA (announced March 2026); no completed EXA certification, NCP or SuperPOD badge published by November 2026 ([Chapter 27](../04-everpure/27-flasharray-and-flashblade.md)); no large neocloud anchor |
 | NetApp AFX | Oct 2025[^41] | Disaggregated ONTAP, optional GPU data node | ONTAP data services at scale-out | Shipping by 2026 (ONTAP 9.18.1 onward, AFX 2K added)[^42], but no neocloud references found [VERIFY: AFX 1K GA date] |
 | Dell Lightning File System | Mar 2026[^43] | Parallel file system inside Dell AI Data Platform | A "Tier 0" parallel FS sold through Dell's channel | New code with an unproven field record |
 | HPE Alletra MP X10000 | Nov 2024; native file 2026[^44] | Object-first, 16 compute plus 16 storage nodes, 23 PB raw | NVIDIA-certified object at Foundation level | Scale ceiling well below multi-exabyte neocloud pools |

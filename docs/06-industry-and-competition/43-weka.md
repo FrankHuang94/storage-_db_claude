@@ -231,7 +231,7 @@ These are options a strategy team might evaluate, based on public information:
 | Public cloud | Native on AWS, Azure, GCP, OCI since 2022[^2] | Google Cloud managed service (2025); Azure offering announced Nov 2025 | No public-cloud EXA offering found |
 | KV-cache product | AMG, commercially available Nov 2025[^15] | VUA (open source, Apr 2025)[^55]; BlueField-4-hosted CNodes in GPU servers (announced CES 2026)[^56] | PureKVA on FlashBlade incl. EXA (availability announced for Oct 2026)[^54] |
 | MLPerf Storage | v0.5, v1.0; absent v2.0 and v3.0 | Never submitted | First entry v3.0; top checkpoint and KV results among entrants[^21] |
-| NVIDIA alignment | Investor; SuperPOD-certified WEKApod; STX partner | Investor; STX partner; CNode-X | STX partner; NVIDIA-Certified Storage (Mar 2026)[^57] |
+| NVIDIA alignment | Investor; SuperPOD-certified WEKApod; STX partner | Investor; STX partner; CNode-X | STX partner; NVIDIA-Certified Storage validation for EXA announced Mar 2026, not yet listed by NVIDIA[^57] |
 | Scale signal | >US$100M ARR 2024 (company-stated); US$1.6B valuation | >US$500M CARR (company-stated); US$30B valuation[^37] | Part of a public company; first enterprise EXA customer in Q4 FY26 |
 
 *Table 43.3 — WEKA leads on deployment flexibility and KV-cache maturity; EXA leads on standard clients and 2026 public benchmark results; VAST leads on scale and data reduction.*
