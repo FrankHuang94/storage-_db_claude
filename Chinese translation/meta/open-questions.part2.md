@@ -307,3 +307,137 @@
 ## 4. 审阅者分歧与未解决的发现
 
 汇总自 `meta/reviews/` 中各独立审阅（Phase 2）的 `## Unresolved / disagreements` 部分。每一项都是审阅者无法依据本环境可访问的公开来源解决的问题，或与起草作者的分歧。
+
+### 来自 `part0.md`
+
+- **第 26 章与第 14 章：FlashArray NVRAM**。第 26 章（正文及图 26.1）称 "NVRAM mirrored across both controllers"（NVRAM 在两个控制器间镜像）。第 14 章（Part 3a）则称它驻留在机箱中并双归属（//m），或位于 DFMD 模块上（//XL）。两者之一应当修改。0.2 现采用中性表述。
+- **第 27 章图 27.1 图注** 称两个产品系列都分化为 TLC 性能层和 QLC 容量层。而第 27 章自己的表 27.1 将 FlashBlade//S 列为基于 QLC DFM。图注应由第 27 章负责人修正。
+- **第 29 章第 59 行** 仍写着 "Analysts identified the customer as Meta"（分析师认定该客户为 Meta），尽管第 29 章的要点速览（Part 4 之后）称 Meta 已在 FY25 10-K 中被点名。另需注意，一份 2026 年 8 月的搜索摘要称 "Everpure has not confirmed"（Everpure 尚未确认）Meta。10-K 点名一说依据的是对该文件的搜索摘要。
+- **第 59 章标题与大纲** 称有 200 张闪卡，但卡组实际有 279 张。
+- **300 TB DFM**。"Released in 2025"（2025 年发布）仍仅依据 FY26 10-K 的一份搜索摘要。未找到 GA 或出货公告。第 26 章的 VERIFY 保留。
+- **ARR 精度**。Q2 FY27 新闻稿的搜索摘要将其四舍五入为 "$2.1B"。本图谱的 $2.13B 来自图表 CSV 的备注。
+- **Part 4 的待解事项已解决**。股票代码变更新闻稿（Nasdaq/PR Newswire，2026-04-07）确认 CUSIP 未变，与第 25 章所述一致。
+- **`meta/open-questions.md`** 仍报告 200 个 VERIFY 标记，而行内实际为 177 个。需重新运行 `scripts/build_meta.py`。
+
+### 来自 `part1.md`
+
+- **第 38 章（不在我的审阅范围内）使用了相同的 TCO 介质输入**（HDD $22/TB，取自 Q1 2026；QLC $302/TB，取自 122 TB 的街价）。它应附上相同的说明：隐含溢价为 13.7×，而非标题中的 22.6×；且按同一指数，HDD 到 Q3 2026 已达约 $40/TB。需核对 TechRadar $37,128 价格的日期。
+- **2026 年 SSD:HDD 溢价** 仍只依据一家混合存储厂商（VDURA）来源未披露的指数，且该指数曾在 QLC 与 TLC 基准之间切换。未找到 TrendForce 或 Coughlin 的佐证。
+- **表 2.1 中的 P/E 范围** 现由 DWPD 额定值推导，而非来自 NAND 厂商披露（厂商很少公布这些数据）。
+- **DFM 迁出说法**（第 6 章，可能也见于第 26 章）：没有公开的小时数。应向 Everpure 工程团队询问 150 TB 和 300 TB 下迁出与重建的时间对比。
+- **300 TB DFM GA**（第 2、4 章）：仅有 2023 年路线图（"2026"）和 B&F 2026-08-11 支持。
+- **Right-Size Guarantee 期限**：来源相互矛盾（较旧材料为 6 个月，较新博客为 12 个月）。本章保留 12 个月，并在脚注上保留 VERIFY。
+- **EUC 定义**：我写明 Evergreen//One 的有效已用容量（effective used capacity）在数据缩减之前计量。计费单位文档确认了 EUC，但我未看到其正式定义。值得对照当前 Product Guide 核查一次。
+- **流程说明**：我误运行了一次只读的 `git status`（未通过 git 做任何更改）。
+
+### 来自 `part2.md`
+
+- **第 7 章**：Purity//FA 6.4.2（NVMe/TCP）的确切 GA 月份。来源在 2022 年与 2023 年之间存在冲突。
+- **第 7 章**：Crehan Research 的 FC +6%（2025）仍仅见于搜索摘要。
+- **第 8 章 / 第 11 章**：FlashBlade//S 的 GDS/NFS-over-RDMA 支持（Purity//FB 4.3.4，Oct 2023）依据的是一份 iThome 搜索摘要，未出现在 NVIDIA GDS 发布说明的合作伙伴表中。应由能访问 Everpure 发布说明的人确认。这也关系到第 34 章 "FlashBlade//S holds the full set"（FlashBlade//S 具备全部功能）的说法。
+- **第 8 章 / 第 11 章**：FlashBlade//EXA 的 GDS 依据的是一份 Portworx 文档的搜索摘要。EXA 的 NVIDIA 认证未公开。一份 SPECstorage AI_IMAGE 披露（Jan 2026，Purity//FB 4.6.4）描述了到数据节点的启用 RDMA 的 pNFS。如有用，可在第 16/27 章引用。
+- **第 9 章**：FlashBlade S3-over-RDMA 的 GA 状态。Pure 在 2025 年承诺 "later this year"（今年晚些时候）推出；截至 2026-11-01 未找到 GA 公告。如果仍未 GA，第 11 章的 "Everpure has announced it"（Everpure 已宣布）是准确的，但不应升级为 "ships"（已出货）。
+- **第 10 章**：Everpure 的 Spectrum-X 读 +25% / 写 +23% 数据在任何搜索中均未找到。保留 VERIFY 或删除这些数字。MetaRoCE（Aug 2026）仍未核实。
+- **第 11 章**：Lambda 标价（US$3.99 与 US$2.99）尚未解决。由于中档为示意，这不影响结论。
+- **第 12 章**：已出货的最大 E1.S/E3.S 容量、U.2 功率等级、CXL 3.1 发布日以及 2015–2019 年 Optane 日期仍为 VERIFY。E1.S 尺寸（33.75 × 118.75 mm）看起来是外壳尺寸；PCB 为 31.5 × 111.49 mm。我未作改动。
+
+### 来自 `part3a.md`
+
+- **第 24 章（不在我的审阅范围内）重复了 FlashBlade//S 的错误**：第 16 行（"a blade scale-out it calls shared-everything"）和第 118 行的表格行（"Everpure calls it shared-everything"）。应与修正后的第 15 章保持一致：Pure 称 Purity//FB 为 "partitioned-writer"（分区写入者）。第 27 章也应检查是否有相同措辞。
+- **FlashBlade//EXA 数据节点保护方案**（第 16、17 章）仍未核实。没有公开来源记录数据节点间的纠删码或故障域，一份 2026 年第三方评分卡也将其列为未解决。
+- **FlashBlade//S 多机箱数据放置以及当前 Purity//FB PUT 副本数**（第 15、18 章）仍未核实。
+- **ONTAP 9.19.1 中 NetApp AFF 的对称双活**（第 14 章）：依据的是一篇 NetApp Community 帖子。官方发布说明的确认仍待落实。
+- **Facebook 180 TB/day**：如果有人能访问 arXiv 1309.0186，扩展版论文可能给出接近 180 TB 的中位数。本章目前采用 USENIX 摘要中较保守的 ">100 TB/day"。
+- **AFX 支持的控制器数量**（9.19.1 中为 32）仅来自一份 WWT 摘要。应对照 NetApp Hardware Universe 核查。
+- **WebFetch 被阻止**：无法访问 blog.everpuredata.com 和 arxiv.org。新增的 Everpure 博客引用来自搜索摘要，并已在脚注中注明。
+
+### 来自 `part3b.md`
+
+- **FlashBlade//EXA 数据节点保护方案**（第 24 章的工程师问题，第 16/17 章）。在公开来源中仍无记载。第 24 章现已明确说明这一点。
+- **Everpure Q2 FY27 产品/订阅毛利率（66.2% / 74.9%）**。仅来自 Quartr 和 investing.com 的摘要；我无法从 sec.gov 获取 8-K 附件。这些数字可能是非 GAAP，现已如此标注。需对照 8-K 毛利率表确认。
+- **Broadcom FY2025 基础设施软件收入（约 US$27B）**。看似合理，但未确认；需核对 10-K。
+- **Evergreen//One Overdrive**（第 23 章）。未找到其条款或 GA 的来源。
+- **Meta Tectonic 扁平化为单一 ZippyDB schema**（第 21 章，Blocks & Files 2026-07-27）。搜索无结果，因此 VERIFY 保留。
+- **Pure1 Manage MCP 服务器 GA**（第 22 章）。仅在一篇 Everpure 博客中有描述，且通过搜索摘要获得。
+- **第 24 章热力图仍属本图谱的判断**。我仍建议请 Everpure 一线工程师对有争议的单元格做合理性检查，尤其是新的 pNFS 拆分象限位置。暂存区中的 ASK/VERIFY 保留。
+- **第 27 章（不在审阅范围内）**。我用 grep 搜索了 "calls it shared-everything" 及类似的 FlashBlade 措辞，在第 15/16 章之外未发现残留（这两章中现仅出现在更正性语境中）。
+- **网络**。本次会话中 usenix.org 和 docs.aws.amazon.com 无法解析，blog.everpuredata.com 和 sec.gov 未能抓取。所有针对这些来源的核查都依赖搜索摘要。
+
+### 来自 `part4.md`
+
+- **第 26 章：300 TB DFM 状态**。FY26 10-K 中 "released in 2025" 的解读仅来自一份搜索摘要。2025 年 6 月一篇 StorageReview 文章称 300 TB 模块 "expected by end-2025"（预计 2025 年底推出）。未找到 GA 或出货新闻稿。VERIFY 标记保留。
+- **第 27 章：FlashBlade//EXA 的 NCP 和 SuperPOD 认证** 按最新公开来源仍未完成，基于 DFM 的数据节点也仍未确认 GA。两者都是新兴 GPU 云项目的关键门槛。
+- **第 29 章：超大规模业务毛利率**。分析师估算（75–85%，纯特许权使用费 >90%）在精神上与管理层的表态相冲突——管理层称新模式使超大规模业务毛利率更接近公司平均水平。我把 85% 视为上限。真实数字未披露。
+- **第 29 章：Q4 FY26 产品毛利率 "67.3%, up more than 400 bp on mix"**（67.3%，因结构变化提升 400 多个基点）。尚未确认是 GAAP 还是非 GAAP，也未确认是否为同比比较。保持原样。
+- **第 25 章：CUSIP**。正文称更名后 CUSIP 未变。这依据的是引用股票代码变更新闻稿的研究笔记；我未独立确认。
+- **格式说明**。我对全部五章的脚注重新编号。其他编辑这些文件的代理应重新阅读 Sources 部分，而不要沿用旧的脚注编号。
+
+### 来自 `part5a.md`
+
+- **第 11 章（不在我的审阅范围内）** 仍带有 Dynamo 的 "[VERIFY: announcement date]"（发布日期待核实）。该日期现已确认为 2025-03-18（NVIDIA Newsroom，见第 32 章脚注 19），第 11 章可删除该标记。
+- **SuperPOD 存储表**（第 31 章 H100，第 34 章 B200/B300）：只看到了 H100 每 SU 读取行（15/40/125），而且只在片段中。每节点 40/20 数据、62 GB/s 写入、B200 标准/增强 40/20 与 125/62，以及 B300 640/2,000 数据，都需要直接阅读 docs.nvidia.com，而该网站在本次会话中被阻止。
+- **NVCS Enterprise 级别 GPU 数量**（约 1,000）未确认。
+- **Kokolis 等人在 16K GPU 下 1.8 h 的预测** 来自二手摘要。应核查 arXiv 2410.21680。
+- **Llama 3 §3.3 的数据** 与我对论文的理解一致，但本次会话无法访问 arXiv。
+- **PureKVA**：它是否真的在 2026 年 10 月达到 GA，以及 20× TTFT 宣称背后的测试条件，都仍是开放问题。
+- **Pinecone 寻求出售**（第 33 章）：两次搜索均无结果。VERIFY 保留。如果找不到一手报道，可考虑弱化为 "faced reported strategic pressure"（据报道面临战略压力）或删除该从句。
+- **VAST 参与 NVIDIA 的 Series E**（第 34 章）：未解决，保留 VERIFY。
+- **Common Crawl ">10 PB"** 与 **S3 500T 对象** 数据（第 30 章）：仍仅见于搜索摘要，保留 VERIFY。
+
+### 来自 `part5b.md`
+
+- **第 35 章——Cisco NCP 规格（每 GPU 0.16 GB/s）**。这是"六倍差距"的低端。仅有搜索摘要支持；必须在网络设置中允许访问 cisco.com 才能核查该 PDF。
+- **第 35 章——Oracle FY2026 资本开支 US$55.7B**。唯一来源是二手来源（引用 The Register）。CoreWeave Q3 2026 业绩（预计 11 月中旬发布）将为 Q2 数据标定日期。
+- **第 35 章——示意成本**。按 2026 年 NAND 价格，"US$1,000 per usable TB over four years"（四年每可用 TB US$1,000）显得偏低：仅介质就约为 $302/TB 原始容量，还未计系统加价。利用率结论成立，但满售出率下 70% 的利润率美化了新兴 GPU 云的情况。建议增加 2026 年价格的敏感性分析。
+- **第 36 章——S3 约 1 PB/s 峰值带宽**。唯一来源是二手来源。Meta 2024/2025/2026 年的工程博文仅通过搜索摘录阅读。
+- **第 37 章——v3.0 规则**。有三项需要 MLCommons v3.0 结果和规则页面，而这些页面在此无法访问：
+  - 向量数据库数据集规模（10M 还是 1M）及其索引类型；
+  - 功耗和机架空间效率是否为报告指标；
+  - EXA 是否参加了任何训练工作负载。
+- **第 37 章——模型规模**。1T 级检查点的模型归属（llama3-1t 还是 1.25T）仍留在暂存区。
+- **第 38 章——单一来源输入**。DBox 和 WD JBOD 的瓦数、FlashBlade//S500 的 1.3 W/TB、DDN 每台设备容量以及 EIA 电价都仅见于搜索摘要。因此若干 TB/W 图表柱依赖单一来源。
+- **第 38 章——盘功耗口径**。盘级 TB/W 混用了不同口径：QLC 用最大额定值，44 TB HDD 用 "operating"（运行），DFM 用 "under 10 W typical"（典型低于 10 W）。图注要求同口径比较，但要点速览中的 "~2×" 使用了混合口径。由于方向稳健，我未作改动。
+- **第 39 章——待核查事项**。无法核实 Everpure 的 OSI 成员资格；OSI 名录网站未能成功检索。NetApp AI Data Engine 的 GA 日期仍未确认。
+- **流程说明**。`scripts/make_charts.py` 会重新生成所有图表，而 matplotlib SVG 的 ID 未加盐（`svg.hashsalt` 未设置）。因此运行它可能使审阅范围之外的图表文件发生变动。建议在 `scripts/charts/_style.py` 中设置 `svg.hashsalt`。
+
+### 来自 `part6a.md`
+
+- **IDC 2Q26 厂商份额（第 40 章）**。华为 11.3%、NetApp 9.6%、Everpure 8.1% 和 HPE 6.8% 无法再次确认：idc.com 被阻止，且该表为图片。Dell 23.8% 和总计已确认。应由有 IDC 访问权限的人核查。
+- **VAST 财年结束月份（第 40、41、42 章）**。新闻稿只说 "exited fiscal year 2026"（结束了 2026 财年）。
+- **VAST Azure Native ISV Service GA（第 42、43 章）**。我未找到 GA 确认。VAST 自己的新闻稿页面似乎含有未填写的占位符，因此其 "now available"（现已可用）措辞不可靠。
+- **CNode-X 出货状态以及 Cisco 是否销售它（第 42 章表 42.1）**。只找到了 Supermicro 的发布信息。
+- **WEKA Series E 一级/二级份额拆分（第 43 章正文及 `data/ch43_funding.csv`）**。CSV 仍显示 US$40M 二级份额。由于该拆分看似合理但未确认，我未修改图表。
+- **WEKApod 3 每机柜 10.2 TB/s / 210M IOPS，以及 NeuralMesh 6 GA（第 43 章）**。均未确认。
+- **DDN 收入基数（第 41、44 章）**。Forbes 给出 US$400M/US$500M；B&F 给出 US$500M（2023）和 US$750M 估算（2024）。二者不可能都对，而第 41 章的 12.5× 倍数采用的是 Forbes 数据。我略有异议，不太赞成以 Forbes 数据为主，但无论哪方都没有证据。
+- **Blackstone–DDN 日期**。第 41 章称 2025-01-09，第 44 章称 2025-01-08。Business Wire 的 ID 显示为 1 月 8 日，媒体报道称 1 月 9 日。无关紧要；保持原样。
+- **VAST 写确认机制（第 42 章）**。"Mirrored into SCM on two enclosures"（在两个机箱的 SCM 中镜像）与第 16 章一致，但我在本次会话中无法对照 VAST 文档确认确切的副本数。
+
+### 来自 `part6b.md`
+
+- **第 41 章和第 43 章仍沿用旧的 EXA 认证措辞（不在我的审阅范围内；请统一）**。
+  - 第 41 章第 184 行写作 "NVIDIA-Certified Storage claimed for EXA in March 2026"。
+  - 第 43 章表 43.3 写作 "STX partner; NVIDIA-Certified Storage (Mar 2026)"。
+  - 两处都应改为 "extension of NVIDIA-Certified Storage validation announced Mar 2026; no completed EXA certification found by 2026-11-01"（2026 年 3 月宣布扩展 NVIDIA-Certified Storage 验证；截至 2026-11-01 未发现已完成的 EXA 认证）。
+- **第 44 章表格（KV 缓存层，VAST 列）** 写作 "CNode-X with NVIDIA context-memory support"（支持 NVIDIA 上下文内存的 CNode-X）。而在第 42 章和第 45 章中，VAST 的 KV 方案是 BlueField-4 CNode 加 VUA，CNode-X 则是存储内置 GPU 的节点。第 44 章审阅者应核查这一点。
+- **第 49 章矩阵 3：WEKA 势头 0.48 对 Hammerspace 0.58**。考虑到 AMG 率先推出、NeuralMesh 6 和 WEKApod 3 已发布、且存在 OCI 验证，这对 WEKA 可以说偏严。我未改动，因为"估值持平、HPE 退出"是一种站得住的解读。值得与竞争情报人员核对。
+- **第 49 章 KV 缓存单元格**。按本章自己的图例，Everpure ● 和 VAST ◐ 都处于边界。我未改动单元格，建议由主代理决定在确认 GA 之前 PureKVA 是否应标为 ◐。
+- **仍待解决**：VAST Azure GA 状态、NeuralMesh 6 GA，以及 8-K 表中 HPE 存储业务的确切数字。均已列入暂存区。
+
+### 来自 `part7.md`
+
+- **第 51 章 / 第 52 章：仅见于搜索摘要的图表锚点**。以下各项在 CSV 状态列和暂存区中仍为 VERIFY：RAMAC $10,000/MB（IBM 自己的估算约为 $11.4k/MB）、3380 标价区间、SunDisk 1991 年数据点、Semico/iSuppli 2005 年 $45/GB 数据、2008 年 TrendForce NAND 份额，以及 TrendForce 2026 年晶圆现货读数。它们都不会改变数量级或方向，但 2008 年份额决定了 HHI 对比。
+- **第 51 章：Symmetrix 41% 对 IBM 35%（1995）**。仍只依据一篇 Register 访谈。保留 "by one account"（据一种说法）的表述。
+- **第 53 章：PureKVA/CMX 与趋势 1**。Colgrove 关于 600 TB / 1 PB 的表态以及 Meta 512 TB 的表态仍未核实。Gartner 关于智能体运维的预测（<1% → 2028 年 20%）仍仅见于搜索摘要。
+- **第 53 章：图 53.2 与正文**。正文称 "Disaggregation and DPUs"（分解与 DPU）为 "table stakes"（基本门槛），但图中却将其置于 "Bet now"（立即押注）象限，而该图的 "Table stakes" 象限指的是高确定性、低影响。这是措辞冲突而非错误；作者可考虑重命名该象限或调整这一判断。
+- **第 54 章："four deals in 17 years cost about $594M"**（17 年间四笔交易共花费约 $594M）。这意味着 StorReduce 约为 $20M，我未核实。无论如何，总额都在四舍五入误差范围内。
+- **第 54 章：Gate 3 中 WEKA 约 16× ARR 和 VAST 约 60× 承诺 ARR 的估值标记**。两者都是公司自述，来源经由第 43 章。我保留了它们，因为它们是估值基准而非目标。
+
+### 来自 `part8.md`
+
+- **第 45 章和第 49 章（Part 6，不在我的审阅范围内；尚无 Part 6 审阅文件）** 仍称 EXA 的 MLPerf v3.0 结果为 "audited"（经审计）。第 49 章的要点速览还称 Everpure "is the only array vendor selling that IP into hyperscalers"（是唯一向超大规模云厂商销售该 IP 的阵列厂商）。第 34 章 / Part 5a 和第 29、36 章 / Part 4–5b 已分别改为 "public, peer-reviewed"（公开、经同行评审）和 "only array vendor publicly known to…"（公开已知唯一……的阵列厂商）。Part 8 现采用修正后的措辞，因此在 Part 6 审阅者统一这些章节之前，Part 8 与 Part 6 存在不一致。
+- **第 59 章标题与内容**。大纲、`mkdocs.yml`、`docs/index.md` 和 `README.md` 都写着 "200 flashcards"（第 58 章为 "60 one-liners"），但章节实际包含 279 张卡片和 66 条一句话要点。我未改动 H1 或导航，它们由 `meta/outline.md` 固定。主代理可考虑更新索引简介（"279 flashcards"、"66 one-liners"）。
+- **第 59 章没有第 54 章的卡片**（战略选项地图），因为第 54 章在卡组完成之后才完成。下次重新生成卡组时可补充几张第 54 章的卡片。
+- **卡片隐含地继承上游的 VERIFY**。Q135 和 Q261（300 TB DFM "released 2025"）、Q181（NVCS Enterprise 约 1,000）、Q43（FC +6%，仅见于搜索摘要）以及 Q226（HPE 停止转售 WEKA）的可靠程度只取决于其所在章节。如果这些 VERIFY 的结论不同，需重新生成卡片。
+- **PureKVA GA**。第 55、57、58、59 章以及产品线 SVG 现均写作 "announced for October 2026"（宣布于 2026 年 10 月推出）。如果 Everpure 确认 GA，需同时更新这五处。
+- **第 55 章 / 第 28 章：Fusion 附加率的客户基数**（约 14,500 对约 15,000）仍为 VERIFY。无论哪种，约 8% 的数字都不变。
+- **网络**。未使用网页搜索；所有事实均对照已审阅的章节和审阅文件核查。

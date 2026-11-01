@@ -207,7 +207,7 @@
 | 2029（路线图）,100,WD HAMR,HAMR,路线图 |
 
 ### 5.5 NAND 价格与 2025–26 年短缺（TrendForce）
-- TrendForce 2026 年 1 月的预测显示，1Q26 NAND 合约价环比上涨 33–38%（消费级/客户端 SSD 至少上涨 40%），驱动因素是供应商的产能纪律和服务器需求。2026 年 2 月的后续修订显示，1Q26 NAND 上涨 55–60%，企业级 SSD 上涨 53–58%。— 来源：StorageNewsletter (TrendForce), "Memory Makers Prioritize Server Applications, Driving Across-the-Board Price Increases in 1Q26, Says TrendForce", 2026-01-27, https://www.storagenewsletter.com/2026/01/27/memory-makers-prioritize-server-applications-driving-across-the-board-price-increases-in-1q26-says-trendforce/ (retrieved 2026-11-01) [VERIFY: 2 月 2 日修订数字来自二手来源]
+- TrendForce 2026 年 1 月的预测显示，1Q26 NAND 合约价环比上涨 33–38%（客户端 SSD 至少上涨 40%），驱动因素是供应商的产能纪律和服务器需求。2026 年 2 月的后续修订显示，1Q26 NAND 上涨 55–60%，企业级 SSD 上涨 53–58%。— 来源：StorageNewsletter (TrendForce), "Memory Makers Prioritize Server Applications, Driving Across-the-Board Price Increases in 1Q26, Says TrendForce", 2026-01-27, https://www.storagenewsletter.com/2026/01/27/memory-makers-prioritize-server-applications-driving-across-the-board-price-increases-in-1q26-says-trendforce/ (retrieved 2026-11-01) [VERIFY: 2 月 2 日修订数字来自二手来源]
 - 预测 2Q26 NAND 合约价环比上涨 70–75%，3Q26 上涨 10–15%。— 来源：TrendForce, "Combined Revenue of Top Five NAND Flash Brands Rises 77% QoQ in 2Q26...", 2026-08-18, https://www.trendforce.com/presscenter/news/20260818-13186.html (retrieved 2026-11-01) [VERIFY: 2Q26 70–75% 的数字经二手汇总获得]
 - 4Q26：预测 NAND 合约价环比上涨 15–20%，企业级 SSD 上涨 23–28%，是唯一一个涨幅较上季度加速的存储器品类。大部分新增供给已被锁定。— 来源：TrendForce, "AI Server Demand Sustains Memory Contract Price Increases in 4Q26, While Consumer-Side Pressure Persists", 2026-09-30, https://www.trendforce.com/presscenter/news/20260930-13258.html (retrieved 2026-11-01)
 - TrendForce 指出，主要 NAND 供应商 2026 年几乎不会新增晶圆产能。据报道，企业级 SSD 在 NAND bit 中的占比 2Q25 为 26%，2Q26 为 48%。— 来源：Capital & Compute, "Why SSDs Are So Expensive in 2026: The NAND Squeeze", 2026, https://capitalandcompute.net/blog/why-are-ssds-so-expensive/ (retrieved 2026-11-01) [VERIFY: bit 占比数字]
@@ -300,3 +300,39 @@
 
 ---
 
+## 9. 传统厂商的 AI 存储动作（2025–2026）
+
+- **Dell**：与 NVIDIA 合作的 AI Data Platform（GTC 2026-03-16）包含三个存储引擎：PowerScale（文件）、**Lightning File System**（并行文件系统，"Tier 0"；原名 Project Lightning）和 ObjectScale（对象），全部运行在通用硬件上。Dell 声称 Lightning 的吞吐量是竞争对手并行文件系统的 2 倍，每机架单元（RU）最高 150 GB/s。Dell 的新闻稿称 2026 年 4 月上市，而其博客称当天即可用。— 来源：Dell Newsroom, "Dell AI Data Platform with NVIDIA Supercharges Enterprise AI with Breakthrough Data Orchestration and Storage Innovations", 2026-03-16, https://www.dell.com/en-us/dt/corporate/newsroom/announcements/detailpage.press-releases~usa~2026~03~dell-ai-data-platform-with-nvidia-supercharges-enterprise-ai-with-breakthrough-data-orchestration-and-storage-innovations.htm (retrieved 2026-11-01); Blocks & Files, "Dell's AI story electrified by Lightning", 2026-03-16, https://www.blocksandfiles.com/ai-ml/2026/03/16/dells-ai-story-electrified-by-lightning/5209387 (retrieved 2026-11-01) [VERIFY: Lightning 的 GA 日期]
+- **NetApp（Insight，2025 年 10 月）**：NetApp 推出 **AFX**——一种分解式全闪存 ONTAP 系统（AFX 1K 控制器，容量/性能独立扩展，可选 DX50 GPU 数据计算节点）——以及 **AI Data Engine（AIDE）**，一种与 NVIDIA AI Data Platform 集成的 ONTAP 扩展。— 来源：Blocks & Files, "NetApp disaggregates ONTAP storage and provides an AI Data Engine", 2025-10-14, https://blocksandfiles.com/2025/10/14/netapp-disaggregates-ontap-storage-and-provides-an-ai-data-engine/ (retrieved 2026-11-01) [VERIFY: AFX/AIDE 的 GA 日期]
+- **HPE**：HPE 于 2025-07-02 完成对 Juniper Networks 约 $14B 的全现金收购；此前与 DOJ 达成和解，要求剥离 Instant On 业务并对 Mist AI 源代码进行授权。— 来源：HPE Newsroom, "Hewlett Packard Enterprise closes acquisition of Juniper Networks...", 2025-07, https://www.hpe.com/us/en/newsroom/press-release/2025/07/hewlett-packard-enterprise-closes-acquisition-of-juniper-networks-to-offer-industry-leading-comprehensive-cloud-native-ai-driven-portfolio.html (retrieved 2026-11-01)
+- HPE Alletra Storage MP X10000 可扩展至 16 个计算节点、16 个存储节点和 23 PB 原始容量，具备原生文件、RDMA、内联元数据增强，以及 100% 数据可用性保证（2026 年 5 月）。它作为首个对象平台持有 NVIDIA-Certified Storage Foundation 认证。HPE 被评为 2026 年 Gartner 企业存储平台魔力象限（MQ）领导者。— 来源：Blocks & Files, "HPE updates Alletras X and B10000, Zerto and Data Fabric in GreenLake private cloud update blast", 2026-05-12, https://www.blocksandfiles.com/file/2026/05/12/hpe-updates-alletras-x-and-b10000-zerto-and-data-fabric-in-greenlake-private-cloud-update-blast/5239011 (retrieved 2026-11-01); HPE Newsroom, "HPE named a Leader in 2026 Gartner Magic Quadrant for Enterprise Storage Platforms", 2026-08, https://www.hpe.com/us/en/newsroom/press-release/2026/08/hpe-named-a-leader-in-2026-gartner-magic-quadrant-for-enterprise-storage-platforms.html (retrieved 2026-11-01)
+- **IBM**：Storage Scale 6.0.1 于 2026 年 6 月 GA，Storage Scale System 7.0.1 于 2026-06-26 GA。IBM Content-Aware Storage 被并入其中，形成 "IBM Storage Scale AI Data Platform"，并提供经验证的推理架构。IBM 还在内容感知存储上演示了一个 1,000 亿（100B）向量的数据库。— 来源：IBM Community, 2026-06-08 (URL in 1.2) (retrieved 2026-11-01); HPCwire, "IBM Demonstrates Extreme Scale for Content-Aware Storage with 100B Vector Database", 2026, https://www.hpcwire.com/off-the-wire/ibm-demonstrates-extreme-scale-for-content-aware-storage-with-100b-vector-database/ (retrieved 2026-11-01) [VERIFY: 未发现 IBM 2025–26 年的存储收购；未检索 IBM Ceph 的状态]
+- **Hitachi Vantara**：推出 VSP One Block High End（2025 年末发布，2026 年初全球供货），并扩展 Hitachi iQ（2026-03-18），计划支持 NVIDIA STX。Hitachi 报告其 Q1 FY2026（截至 2026-06-30）存储营收增长 45%。— 来源：Hitachi Vantara, "Hitachi Vantara Launches Virtual Storage Platform One Block High End...", 2025, https://www.prnewswire.com/news-releases/hitachi-vantara-launches-virtual-storage-platform-one-block-high-end-storage-to-power-the-next-era-of-ai-and-mission-critical-workloads-302617559.html (retrieved 2026-11-01); Hitachi Vantara, "Hitachi Vantara Achieves Strong Q1 Revenue Growth as VSP One Drives...", 2026-08-12, https://www.hitachivantara.com/en-us/news/gl260812 (retrieved 2026-11-01) [VERIFY: 45% 这一数字的口径范围]
+- **Huawei**：OceanStor A800（2024 年发布）为全 NVMe，可扩展至 512 个控制器和 1 EB 以上，Huawei 声称每个控制器框可达 10M IOPS 和 500 GB/s。2026 年 5 月的一篇论坛回顾称，A800 取代即将退役的 A600 成为旗舰产品，另有 Data Engine Node 将 A 系列功能扩展到 Dorado。— 来源：Computer Weekly, "Huawei launches exabyte-scale OceanStor A800 at AI workloads", 2024, https://computerweekly.com/news/366583602/Huawei-launches-exabyte-scale-OceanStor-A800-at-AI-workloads (retrieved 2026-11-01); StorageNewsletter, "Recap Huawei IDI Forum 2026", 2026-05-27, https://www.storagenewsletter.com/2026/05/27/recap-huawei-idi-forum-2026/ (retrieved 2026-11-01)
+- **Everpure（原 Pure Storage）**：于 2026-02-23 更名（自 2026-03-05 起以新名称在 NYSE 交易，代码仍为 PSTG；根据 `meta/decisions.md` D12，股票代码于 2026-04-17 改为 P），并宣布将收购 1touch（数据智能），预计于 Q2 FY27 完成交割。— 来源：Everpure Blog, "FAQ: Pure Storage to become Everpure", 2026-02-23, https://blog.everpuredata.com/news-events/faq-pure-storage-to-become-everpure/ (retrieved 2026-11-01)
+- FlashBlade//EXA 将元数据节点（FlashBlade//S500）与采用通用 SSD 的数据节点分离，GA 时（2025 年）的目标为每机架 3.4 TB/s。— 来源：NAND Research, "Pure Storage FlashBlade//EXA", 2025, https://nand-research.com/research-note-pure-storage-flashblade-exa/ (retrieved 2026-11-01)
+
+---
+
+## 10. 功耗与密度
+
+- Micron 245 TB QLC：约 8.2 TB/W（最大功耗 30 W），而 44 TB HDD 约为 4.4 TB/W。720 盘 E3.L 配置的原始容量达 176.9 PB。— 来源：StorageReview review (URL in 5.2) (retrieved 2026-11-01) [VERIFY]
+- Meta 的 QLC 机架每机架超过 10 PB。— 来源：FMS 2025 Gupta deck (URL in §7) (retrieved 2026-11-01) [VERIFY]
+- VAST（2021 年，现已过时）：使用 30 TB QLC 时，每机架单元超过 1 PB，每 PB 约 500 W。— 来源：StorageNewsletter, "VAST Data Universal Storage All-Flash Platforms Double Storage Density With Intel QLC 30TB SSDs", 2021-12-23, https://www.storagenewsletter.com/2021/12/23/vast-data-universal-storage-all-flash-platforms-double-storage-density-with-intel-qlc-30tb-ssds/ (retrieved 2026-11-01)
+- Solidigm（厂商营销）声称，在容量和吞吐量相同的情况下，全闪存相比 HDD 可将机架数量和功耗最多减少 90%。它认为在电力稀缺的地方，TB/W 和每机架密度是决定性因素。— 来源：Washington Post Creative Group (Solidigm), 2026 (URL in 5.4) (retrieved 2026-11-01)
+- VAST 声称，托管在 BlueField-4 上的 CNode 可将 KV 缓存操作功耗降低 75%。NVIDIA 声称，在推理上下文场景下，ICMS/STX 相比传统存储能效最高提升 5 倍。— 来源：§1.6 and §2.2 sources (retrieved 2026-11-01)
+- 数据中心电力背景：Gartner 预测 2026 年为 565 TWh（+26%），其中 AI 优化服务器占 31%。TrendForce 估计 AI 服务器约占 2026 年数据中心电力需求容量的 33.4%，高于 2025 年的约 25%。— 来源：Gartner, 2026-06-10 (URL in 6.2); Network World, "Gartner: Data center electricity consumption to grow 26% in 2026", 2026-06, https://www.networkworld.com/article/4193996/gartner-data-center-electricity-consumption-to-grow-26-in-2026.html (retrieved 2026-11-01) [VERIFY: TrendForce 33.4% 的原始出处]
+- 未找到关于存储在 AI 数据中心电力中所占比例的权威数字。[VERIFY]
+
+**密度/能效数据点（可直接转为 CSV）**
+
+| 项目,指标,数值,依据,来源质量 |
+|---|
+| Micron 6600 ION 245TB,TB/W,~8.2,最大 30W,厂商 |
+| 44TB HDD（Micron 对比）,TB/W,~4.4,10W,厂商 |
+| 720x E3.L 245TB,原始容量 PB,176.9,Micron 假设,厂商 [VERIFY] |
+| 720x 44TB HDD 相同盘位,原始容量 PB,31.7,Micron 假设,厂商 [VERIFY] |
+| Meta QLC 机架,PB/机架,>10,FMS 2025,会议资料 [VERIFY] |
+| Dell Lightning FS,每 RU GB/s,150,厂商声明,厂商 |
+| FlashBlade//EXA,每机架 TB/s,3.4,GA 时,厂商 |
+| VAST (2021),W/PB,~500,30TB QLC,厂商（已过时） |
