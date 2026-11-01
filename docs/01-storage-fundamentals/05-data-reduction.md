@@ -183,8 +183,8 @@ The guarantee changes the answer. If X's 5:1 guarantee covered the 800 TB of dat
 | System | Dedupe | Compression / similarity | When it runs | Guarantee (current public terms) |
 |---|---|---|---|---|
 | Everpure FlashArray (Purity Reduce) | Inline, global; variable 4–32 KB, 512 B scan | Inline plus post-process deep reduction; pattern removal; copy reduction[^3] | Hybrid | Right-Size Guarantee: workload-based effective capacity, 12 months, //X and //XL, signed agreement[^20] |
-| Everpure FlashBlade | Not in DeepReduce materials | DeepReduce similarity, cluster-wide[^11] | Asynchronous, off the write path | None found [VERIFY] |
-| VAST Data | Global | Compression *or* similarity, whichever saves more[^8] | During SCM→QLC migration | No formal program found [VERIFY] |
+| Everpure FlashBlade | Not in DeepReduce materials | DeepReduce similarity, cluster-wide[^11] | Asynchronous, off the write path | None found [VERIFY: any FlashBlade data-reduction guarantee] |
+| VAST Data | Global | Compression *or* similarity, whichever saves more[^8] | During SCM→QLC migration | No formal program found [VERIFY: any VAST data-reduction guarantee] |
 | Dell PowerStore | Always-on inline | Always-on inline | Inline | 6:1 on Gen 3 (PowerStoreOS 5.0+); 5:1 on Gen 2 and PowerMax; reducible data only[^21][^22] |
 | NetApp AFF (ONTAP) | Inline plus background, cross-volume | Inline compression and compaction; TSSE for cold data[^14] | Hybrid | 4:1 SAN, 3:1 virtualization on NAS, 1.5:1 NAS[^23][^24] |
 | HPE Alletra MP | Yes | Yes | Inline | StoreMore: ≥4:1 effective vs usable on reducible data, for the support term[^25] |
