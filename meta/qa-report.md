@@ -4,33 +4,33 @@
 |---|---|---|---|---|---|---|
 | 0.1 | How to use this atlas | — | — | — | — | not written |
 | 0.2 | The one-page map | — | — | — | — | not written |
-| 1 | What storage does | — | — | — | — | not written |
-| 2 | Media physics for a semis person | — | — | — | — | not written |
+| 1 | What storage does | 2,507 / 2,200 | 7 (2/1/4) / 4 | 1 | 21 | PASS |
+| 2 | Media physics for a semis person | 2,866 / 2,500 | 10 (2/4/4) / 5 | 7 | 36 | PASS |
 | 3 | Inside an SSD | — | — | — | — | not written |
-| 4 | Performance and economics metrics | — | — | — | — | not written |
-| 5 | Data reduction | — | — | — | — | not written |
-| 6 | Data protection and resilience | — | — | — | — | not written |
-| 7 | Block protocols | — | — | — | — | not written |
-| 8 | File protocols | — | — | — | — | not written |
-| 9 | Object storage and S3 | — | — | — | — | not written |
-| 10 | Datacenter networking for storage | — | — | — | — | not written |
-| 11 | The GPU data path | — | — | — | — | not written |
-| 12 | Interfaces and emerging tech | — | — | — | — | not written |
-| 13 | The storage stack, layer by layer | — | — | — | — | not written |
-| 14 | Scale-up dual-controller arrays | — | — | — | — | not written |
-| 15 | Scale-out shared-nothing clusters | — | — | — | — | not written |
+| 4 | Performance and economics metrics | 2,728 / 2,400 | 9 (3/2/4) / 4 | 6 | 28 | PASS |
+| 5 | Data reduction | 2,412 / 2,100 | 9 (5/0/4) / 4 | 6 | 32 | PASS |
+| 6 | Data protection and resilience | 2,758 / 2,400 | 12 (4/4/4) / 4 | 6 | 35 | PASS |
+| 7 | Block protocols | 2,397 / 2,100 | 9 (6/0/3) / 4 | 6 | 25 | PASS |
+| 8 | File protocols | 2,181 / 1,900 | 7 (3/1/3) / 4 | 3 | 26 | PASS |
+| 9 | Object storage and S3 | 2,158 / 1,900 | 9 (4/2/3) / 4 | 4 | 37 | PASS |
+| 10 | Datacenter networking for storage | 2,412 / 2,100 | 10 (4/2/4) / 4 | 5 | 36 | PASS |
+| 11 | The GPU data path | 2,268 / 2,000 | 7 (3/2/2) / 4 | 8 | 26 | PASS |
+| 12 | Interfaces and emerging tech | 2,297 / 2,000 | 8 (3/1/4) / 4 | 10 | 37 | PASS |
+| 13 | The storage stack, layer by layer | 1,678 / 1,500 | 6 (2/1/3) / 3 | 1 | 33 | PASS |
+| 14 | Scale-up dual-controller arrays | 1,950 / 1,700 | 11 (5/1/5) / 3 | 4 | 32 | PASS |
+| 15 | Scale-out shared-nothing clusters | 1,942 / 1,700 | 11 (4/3/4) / 3 | 3 | 23 | PASS |
 | 16 | Disaggregated shared-everything architectures | 2,299 / 2,000 | 9 (3/2/4) / 4 | 1 | 25 | PASS |
-| 17 | Parallel and distributed file systems | — | — | — | — | not written |
-| 18 | Object storage architecture | — | — | — | — | not written |
-| 19 | Software-defined storage and HCI | — | — | — | — | not written |
-| 20 | Distributed-systems fundamentals for storage | — | — | — | — | not written |
-| 21 | Metadata: the hidden bottleneck | — | — | — | — | not written |
-| 22 | Control planes and fleet management | — | — | — | — | not written |
-| 23 | Consumption models | — | — | — | — | not written |
+| 17 | Parallel and distributed file systems | 1,836 / 1,600 | 9 (4/1/4) / 3 | 4 | 27 | PASS |
+| 18 | Object storage architecture | 1,715 / 1,500 | 11 (4/1/6) / 3 | 3 | 26 | PASS |
+| 19 | Software-defined storage and HCI | 1,608 / 1,400 | 9 (4/1/4) / 3 | 3 | 27 | PASS |
+| 20 | Distributed-systems fundamentals for storage | 1,708 / 1,500 | 8 (3/1/4) / 3 | 1 | 20 | PASS |
+| 21 | Metadata: the hidden bottleneck | 1,490 / 1,300 | 7 (3/1/3) / 3 | 3 | 27 | PASS |
+| 22 | Control planes and fleet management | 1,147 / 1,000 | 5 (3/0/2) / 3 | 1 | 23 | PASS |
+| 23 | Consumption models | 1,250 / 1,100 | 5 (2/1/2) / 3 | 2 | 20 | PASS |
 | 24 | Architecture decision matrix | — | — | — | — | not written |
-| 25 | Company history and strategy, 2009–2026 | — | — | — | — | not written |
+| 25 | Company history and strategy, 2009–2026 | 2,066 / 1,800 | 6 (2/1/3) / 3 | 5 | 45 | PASS |
 | 26 | Core technology: Purity and DirectFlash | — | — | — | — | not written |
-| 27 | Product portfolio: FlashArray and FlashBlade | — | — | — | — | not written |
+| 27 | Product portfolio: FlashArray and FlashBlade | 2,490 / 2,200 | 8 (3/1/4) / 4 | 6 | 41 | PASS |
 | 28 | Platform and software | — | — | — | — | not written |
 | 29 | Hyperscaler business, ecosystem and financials | — | — | — | — | not written |
 | 30 | The AI data pipeline end to end | — | — | — | — | not written |
@@ -65,4 +65,4 @@
 | 59 | Self-test: 200 flashcards | — | — | — | — | not written |
 | 60 | Cheat sheets | — | — | — | — | not written |
 
-**Totals (written chapters):** 2,299 words · 9 visuals · 1 VERIFY markers · 0 failing chapter(s)
+**Totals (written chapters):** 50,163 words · 202 visuals · 99 VERIFY markers · 0 failing chapter(s)
