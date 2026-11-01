@@ -15,7 +15,7 @@
 
 Interfaces decide what can be commoditised. With standard form factors and placement hints, a hyperscaler can buy flash from four NAND makers and run its own software. That is the alternative Everpure's DirectFlash licensing has to beat at Meta and at the second top-five hyperscaler announced in August 2026[^1]. FDP and EDSFF narrow the gap between proprietary modules and commodity SSDs.
 
-AI inference adds a second contest: the tier between GPU HBM and networked flash, where the KV cache lives. CXL memory, local NVMe and shared flash such as PureKVA all compete for it ([Chapter 32](../05-ai-storage/32-inference-and-kv-cache.md)). Optane shows how such tiers fail.
+AI inference adds a second contest: the KV-cache tier between GPU HBM and networked flash, where CXL memory, local NVMe and shared flash such as PureKVA compete ([Chapter 32](../05-ai-storage/32-inference-and-kv-cache.md)). Optane shows how such tiers fail.
 
 ## Core concepts
 
@@ -28,15 +28,15 @@ PCIe is a serial link of SerDes lanes: x4 for SSDs, x16 for GPUs and NICs. Each 
 *Figure 12.1 — Each generation doubles the x4 link a drive uses; the first PCIe 6.0 SSD in volume reads at ~95% of its link, four years after the spec.*
 Data: `data/ch12_pcie_bandwidth.csv`
 
-Per direction, bandwidth = lanes × rate × encoding efficiency ÷ 8. PCIe 6.0 x4 gives 32 GB/s raw, ~29.5 GB/s after flit overhead. Micron's 9650, the first PCIe 6.0 data-centre SSD in mass production, reads at up to 28 GB/s and offers a liquid-cooled option[^8].
+Per direction, bandwidth = lanes × rate × encoding efficiency ÷ 8. PCIe 6.0 x4 gives 32 GB/s raw, ~29.5 GB/s after flit overhead. Micron's 9650, the first Gen6 data-centre SSD in mass production, reads at 28 GB/s[^8].
 
 **The consequence is counter-intuitive.** A 2U server with 24 such drives holds about 24 × 29.5 ≈ 708 GB/s of drive bandwidth. Its two 400 GbE ports carry about 100 GB/s. In an array, the network ([Chapter 10](10-datacenter-networking.md)), CPUs and software bind long before the drive link. Faster links matter most for GPU-local NVMe holding checkpoints and KV cache ([Chapter 11](11-gpu-data-path.md)).
 
 ### PCIe 6.0 one notch deeper: PAM4 and FLIT
 
-Generations 1–5 used NRZ, one bit per symbol. Reaching 64 GT/s with NRZ would push Nyquist to 32 GHz, and board losses at that frequency are unmanageable. PCIe 6.0 adopted **PAM4** (two bits per symbol), as 56G/112G Ethernet SerDes did earlier. The symbol rate stays at 32 GBaud, so the channel looks like PCIe 5.0's, but the three stacked eyes are each a third of the height. The raw error rate rises to roughly 10⁻⁶, against 10⁻¹² for NRZ generations.
+With NRZ (one bit per symbol), 64 GT/s would push Nyquist to 32 GHz, where board losses are unmanageable. PCIe 6.0 adopted **PAM4** (two bits per symbol), as 56G/112G Ethernet SerDes did earlier. The symbol rate stays at 32 GBaud, so the channel looks like PCIe 5.0's, but the three stacked eyes are each a third of the height. The raw error rate rises to roughly 10⁻⁶, against 10⁻¹² for NRZ generations.
 
-Forward error correction (FEC) needs fixed-size blocks, so PCIe 6.0 introduced the **FLIT**. Each 256-byte flit carries 236 bytes of transaction data, a 6-byte link field, an 8-byte CRC and 6 bytes of FEC[^9]. The FEC is deliberately light, single-symbol-correcting across three interleaves, so it adds only nanoseconds. The CRC catches the rest and triggers a flit replay[^10]. Two effects matter for storage. First, flit mode drops per-packet framing, so small transfers (doorbells, completions, 64-byte CXL lines) waste less of the link. Second, PCIe and CXL now share one PHY and one roadmap.
+Forward error correction (FEC) needs fixed-size blocks, so PCIe 6.0 introduced the **FLIT**. Each 256-byte flit carries 236 bytes of transaction data, a 6-byte link field, an 8-byte CRC and 6 bytes of FEC[^9]. The FEC is deliberately light, single-symbol-correcting across three interleaves, so it adds only nanoseconds. The CRC catches the rest and triggers a flit replay[^10]. For storage, dropping per-packet framing means small transfers (doorbells, completions, 64-byte CXL lines) waste less link, and PCIe and CXL now share one PHY and roadmap.
 
 | | PCIe 5.0 | PCIe 6.0 | PCIe 7.0 |
 |---|---|---|---|
@@ -105,13 +105,13 @@ SNIA's EDSFF family replaced the 2.5-inch U.2 shape with ones designed for airfl
 
 *Table 12.2 — EDSFF replaced one universal bay with shapes sized to their power envelope; capacity now concentrates in E3.L and U.2, density in E1.S.*
 
-Two constraints bind at the top end. First, **controller DRAM**: A conventional SSD's flash translation layer keeps ~4 bytes of map per 4 KiB page, so it needs 1 GB of DRAM per TB. A 245 TB drive would need ~245 GB on board. Big QLC drives therefore map in coarser units, and small random writes pay in read-modify-write amplification. Second, the standard's **power and volume per bay**.
+Two constraints bind at the top end. First, **controller DRAM**: a conventional SSD's flash translation layer keeps ~4 bytes of map per 4 KiB page, i.e. 1 GB of DRAM per TB, or ~245 GB for a 245 TB drive. Big QLC drives therefore map in coarser units, and small random writes pay in read-modify-write amplification. Second, the standard's **power and volume per bay**.
 
-Everpure's **DirectFlash Module** escapes both because it is not an SSD. Purity runs one global FTL in the controller and treats modules as raw NAND ([Chapter 26](../04-everpure/26-purity-and-directflash.md)). The module needs no drive-sized DRAM map, and Everpure sets its shape and thermal design. DFMs reached 300 TB by 2026[^25], on a roadmap first set in 2023[^26], while the largest standard drives ship at 245.76 TB. The price: only Purity can drive a DFM. Meanwhile the standard moves: in July 2025 the SFF TA reopened the E1/E3 power and thermal specs, with Micron leading the work[^27].
+Everpure's **DirectFlash Module** escapes both because it is not an SSD. Purity runs one global FTL and treats modules as raw NAND, so no drive-sized DRAM map is needed, and Everpure sets the module's shape and thermals ([Chapter 26](../04-everpure/26-purity-and-directflash.md)). DFMs reached 300 TB by 2026[^25], on a roadmap first set in 2023[^26], while the largest standard drives ship at 245.76 TB. The price: only Purity can drive a DFM. Meanwhile the standard moves: in July 2025 the SFF TA reopened the E1/E3 power and thermal specs, with Micron leading the work[^27].
 
 ### Data placement: ZNS, FDP and host-managed flash
 
-NAND erases in large blocks. When data with different lifetimes share a block, garbage collection (GC) must copy the still-valid pages first. If a block is 75% valid when collected, each host write costs 1 ÷ (1 − 0.75) = 4 NAND writes. That is a write amplification factor (WAF) of 4. The cure is to group data by lifetime so whole blocks die at once, which needs the host to tell the drive.
+NAND erases in large blocks, so when data with different lifetimes share a block, garbage collection (GC) must first copy the still-valid pages. If a block is 75% valid when collected, each host write costs 1 ÷ (1 − 0.75) = 4 NAND writes. That is a write amplification factor (WAF) of 4. The cure is to group data by lifetime so whole blocks die at once, which needs the host to tell the drive.
 
 ```mermaid
 flowchart TB
@@ -137,16 +137,16 @@ flowchart TB
 
 **ZNS** [VERIFY: NVMe ZNS ratification, ~2020] exposes zones that must be written sequentially. Every file system and database must become zone-aware, so adoption stayed niche. **FDP** (NVMe TP4146, ratified late 2022) was driven by Meta and Google with Samsung. Writes carry a placement identifier, and the drive keeps identifiers in separate reclaim units. A drive that ignores the hints still works[^28][^29]. That backward compatibility is why hyperscalers chose FDP.
 
-**Semis bridge.** ZNS is a software-managed scratchpad; FDP is a hardware cache with hints, like non-temporal stores; DirectFlash is one memory controller managing every bank. For Everpure, FDP is a competitive fact. It gives commodity SSDs much of the WAF benefit DirectFlash has had since 2017, while keeping drives multi-sourced.
+**Semis bridge.** ZNS is a software-managed scratchpad; FDP is a hardware cache with hints, like non-temporal stores; DirectFlash is one memory controller managing every bank. For Everpure, FDP gives commodity SSDs much of DirectFlash's WAF benefit while keeping drives multi-sourced.
 
 ### Computational storage: why it stalled
 
 Computational storage puts FPGAs or Arm cores in the drive to filter, compress or search data before it crosses PCIe. SNIA defined an architecture for it, and NVM Express added computational-program command sets [VERIFY: SNIA CS architecture v1.0 (2022) and NVMe computational command sets (2024)]. Outside transparent in-drive compression, adoption is thin:
 
-1. **Data is striped.** Erasure coding spreads a record across 10 or more drives, so no single drive can evaluate a filter on it.
+1. **Data is striped.** Erasure coding spreads a record across 10+ drives, so no single drive can filter it.
 2. **Fragmentation.** Every vendor shipped its own accelerator and toolchain.
 3. **Procurement.** Drive buyers pay for $/TB and reliability, not lock-in features.
-4. **Compute moved up a level.** Array controllers, DPUs and GPUs took the offload. NVIDIA's BlueField-4 context-memory storage platform is computational storage at system level[^30].
+4. **Compute moved up.** Controllers, DPUs and GPUs took the offload; NVIDIA's BlueField-4 context-memory platform is computational storage at system level[^30].
 
 Near-data compute wins when it is invisible to software and sees whole objects: in the array or DPU, not the drive.
 
@@ -168,8 +168,8 @@ timeline
 
 The 2015–2021 milestones above come from background knowledge [VERIFY: Optane milestone dates]. The July 2022 wind-down and the US$559 million charge are documented[^31][^32]. Optane was technically strong but failed three non-technical tests:
 
-1. **Price gap.** It was neither cheap enough against DRAM nor fast enough to own the middle, while NAND $/GB kept falling beneath it.
-2. **Ecosystem.** The DIMMs needed Intel Xeon platforms. Full value needed software rewritten for persistent memory, and few applications made that investment.
+1. **Price gap.** Too dear against NAND, too slow against DRAM, while NAND $/GB kept falling.
+2. **Ecosystem.** The DIMMs needed Intel Xeons, and full value needed software rewritten for persistent memory, which few applications did.
 3. **Single supplier.** One fab, effectively one platform vendor. When Micron left in 2021 there was no second source; VAST had already qualified Kioxia SLC flash[^33].
 
 **What this implies for CXL memory and KV-cache tiers.**
