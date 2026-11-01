@@ -40,7 +40,7 @@ Liran Zvibel（CEO）、Maor Ben-Dayan 和 Omri Palmon 于 2013 年在以色列�
 
 三项设计选择定义了 WEKA：
 
-**1. 一切皆为用户态进程。** WEKA 定义了四类进程角色：*前端（frontend）*进程服务客户端，*计算（compute）*进程运行文件系统逻辑，*驱动器（drive）*进程独占 NVMe 设备，一个*管理（management）*进程负责控制。NFS、SMB 和 S3 作为独立容器运行[^7]。
+**1. 一切皆为用户态进程。** WEKA 定义了四类进程角色：*前端*（frontend）进程服务客户端，*计算*（compute）进程运行文件系统逻辑，*驱动器*（drive）进程独占 NVMe 设备，一个*管理*（management）进程负责控制。NFS、SMB 和 S3 作为独立容器运行[^7]。
 
 **2. 元数据是分片的，而非集中的。** Lustre 类系统把命名空间放在专用元数据服务器上，面对数百万个小文件时会成为瓶颈（[第 21 章](../03-system-architecture/21-metadata.md)）。WEKA 把元数据拆分成数千个"桶"（bucket），每个桶由每个节点计算进程中的一个虚拟元数据服务器负责。决定归属桶的是每次操作的哈希值，而不仅仅是 inode，因此即便是同一个热点文件的不同块区间也会分散到不同属主。桶的日志写入 WEKA 自身受保护的存储中[^8]。
 
@@ -50,7 +50,7 @@ Liran Zvibel（CEO）、Maor Ben-Dayan 和 Omri Palmon 于 2013 年在以色列�
 
 ### 内核旁路数据路径
 
-WEKA 的低延迟来自绕开操作系统的 I/O 管道。后端服务器运行 **DPDK**，通过 SR-IOV 将网卡映射到用户态。客户端同样使用 DPDK，在不支持时（例如某些 AWS 实例类型）回退到内核 UDP。在*性能（performance）*模式下，WEKA 进程在专用核心上忙轮询（busy-poll）。5.0 版本新增的 *CPU 优化（CPU-optimised）*模式则改用中断[^7]。驱动器进程以 SPDK 风格从用户态访问 NVMe。
+WEKA 的低延迟来自绕开操作系统的 I/O 管道。后端服务器运行 **DPDK**，通过 SR-IOV 将网卡映射到用户态。客户端同样使用 DPDK，在不支持时（例如某些 AWS 实例类型）回退到内核 UDP。在*性能*（performance）模式下，WEKA 进程在专用核心上忙轮询（busy-poll）。5.0 版本新增的 *CPU 优化*（CPU-optimised）模式则改用中断[^7]。驱动器进程以 SPDK 风格从用户态访问 NVMe。
 
 ```mermaid
 sequenceDiagram

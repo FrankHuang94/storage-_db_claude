@@ -80,3 +80,167 @@ flowchart LR
 *表 32.1 — 算例，非供应商数据：一次重算的成本约等于把同样的 KV 在 DRAM 中保存两小时或在闪存中保存约 40 小时，因此经济性归结为命中率和读取带宽。*
 
 三点结论。第一，八块 400G 网卡的速度超过八块本地 U.2 盘，这正是 NVIDIA 把上下文层放在以太网上的原因。第二，对最热的被淘汰块而言，DRAM 和 [CXL 内存](../02-protocols-and-networking/12-interfaces-and-emerging-tech.md)在速度上胜出，但每 GB-小时成本高出约 20 倍；Synopsys 宣称 CXL 卸载 KV 比 SSD 快 3.6 倍[^15]（供应商宣称），但真正的检验标准是每美元 token 数。第三，共享层的主要优势在单节点视角下看不见：**任何 GPU 都能命中任何会话的前缀**，因此路由器可以把回访用户发送到任意空闲节点。
+
+### 为什么长上下文和智能体会把 KV 变成存储问题
+
+智能体（agent）的会话很长，而且走走停停。一个运行 50 轮的编程智能体，上下文增长到 100K token，并在轮次之间等待工具数秒到数分钟；如果没有缓存，它每一轮都要重新预填充其历史：约 50 × 50K ≈ **250 万个预填充 token**，是完美复用情况下工作量的 25 倍。在数千个智能体之上，保留状态就是图 32.1 的右半部分：数十 TB 到 PB 级，在数分钟内被复用，可重算但丢失代价高昂。这正是共享闪存缓存的画像。TrendForce 将 4Q26 企业级 SSD 需求的一部分归因于为 KV 缓存采购 QLC[^16]。DeepSeek 在 2024 年把其 API 缓存移到磁盘，将命中价格定为未命中的十分之一，并报告一个被大量复用的 128K 提示的首 token 延迟从 13 s 降至约 0.5 s[^17]（公司自述）。Anthropic 对缓存读取按基础输入价格的 0.1× 计费[^18]。**提示缓存（prompt cache）定价就是市场自己对一次 KV 命中的估值。**
+
+### 软件栈：Dynamo、KVBM、NIXL、LMCache、llm-d
+
+NVIDIA 于 2025-03-18 在 GTC 上发布了开源分布式推理框架 **Dynamo**[^19]，并于 2026-03-16 宣布其达到生产就绪（1.0）[^20]。它在 TensorRT-LLM、vLLM 和 SGLang 之上实现 KV 感知路由和分离式推理服务。其 **KVBM** 将 KV 块分层存放在 G1（HBM）、G2（主机 DRAM）、G3（本地 SSD）和 G4（远程存储，被视为不透明的 blob 存储）中，在可用时通过 NIXL 和 GPUDirect Storage 完成磁盘 I/O[^21]。为节省 SSD 耐久度，近期版本只有在某个块被复用至少两次之后才把它从 DRAM 写到磁盘（这一默认值随版本而异）[^22]。底层的传输库 **NIXL** 具有插件式后端（UCX/RDMA、POSIX、GDS、对象存储、供应商自有）；这个插槽就是存储供应商进行集成的位置[^23]。
+
+```mermaid
+sequenceDiagram
+    participant U as 用户或智能体
+    participant R as Dynamo 路由器
+    participant W as GPU 工作节点
+    participant K as KVBM
+    participant S as G3 或 G4 层
+    U->>R: 携带长共享前缀的请求
+    R->>K: 对前缀块做哈希并查找
+    alt 在 G3 或 G4 中找到前缀
+        K->>S: 定位数据块
+        S-->>W: 经 RDMA 或 GDS 由 NIXL 传输到 HBM
+        W->>W: 仅对新 token 做预填充
+    else 未命中
+        W->>W: 完整重算预填充
+        W->>K: 注册新块
+        K->>S: 若被复用则稍后卸载
+    end
+    W-->>U: 先返回首个 token，再流式解码
+    Note over W,S: 活跃解码 KV 始终保留在 HBM 中
+```
+
+*图 32.4 — 命中时，昂贵的步骤变成一次从闪存到 HBM 的批量 DMA；未命中时，GPU 重新计算，新生成的块成为明天的命中。*
+
+开源层使这一层级保持供应商中立。**LMCache** 把 KV 从 vLLM 和 SGLang 移入共享层级；其作者报告在多轮对话和文档类工作负载上吞吐量最高提升 15 倍[^14]。vLLM 本身现已支持卸载到主机内存、存储和远程对等节点[^24]。**llm-d** 由 Red Hat、Google Cloud、IBM Research、CoreWeave 和 NVIDIA 于 2025 年 5 月发起，自 2026 年 3 月起成为 CNCF Sandbox 项目，把 KV 感知调度带入 Kubernetes[^25]。一家同时支持 NIXL、LMCache 和 llm-d 的供应商几乎可以覆盖所有推理服务栈。
+
+### 存储供应商在哪里能、在哪里不能创造价值
+
+**能做到的**：以闪存成本提供容量；跨节点共享的命名空间（更高的命中率、自由路由）；跨重启的持久化；租户隔离以及对敏感用户上下文的加密；以及为数百块 GPU 供数的带宽（FlashBlade//EXA 的 MLPerf v3.0 提交在 51 台主机上以 1,623.4 GiB/s 读取 KV[^26]，供应商提交；标准规模的领先者 UBIX 和 FarmGPU 以小得多的配置取得约 444 GiB/s，因此应按每主机比较，而非看标题数字）。**做不到的**：介入解码循环；对于数秒内即被复用的块，速度胜过 DRAM 或 CXL；对可重算数据的持久性收费；或阻止模型侧的压缩（MLA、fp8/fp4 KV、混合注意力），这些压缩会把盈亏平衡点推向本地内存。可守住的位置是**共享的、机柜组到集群级的层级**：对 DRAM 来说太大，对本地 NVMe 来说共享需求太强。
+
+## Everpure 的做法与竞争对手对比
+
+| 供应商 | 产品 | 集成路径 | 主打宣称（供应商宣称） | 注意事项 |
+|---|---|---|---|---|
+| **Everpure** | 基于 FlashBlade 的 PureKVA（S3 与 NFS）；规模化用 EXA | vLLM 与 Dynamo；经 RDMA 预置到 GPU 内存[^27] | TTFT 最高加快 20 倍；DeepReduce 始终开启；宣布于 2026 年 10 月上市[^28] | 测试细节未公开；MLPerf v3.0 KV 成绩是其中立数据点[^2] |
+| WEKA | 基于 NeuralMesh 的 Augmented Memory Grid | RDMA + GDS；开源 NIXL 插件；2025-11-18 正式上市（GA），OCI 为首发合作伙伴[^29] | "1000×" GPU 内存扩展；TTFT 最高降低 20 倍[^29] | 商用记录最长；NeuralMesh 6 的宣称缺乏可复现的方法[^30] |
+| VAST Data | VUA（开源，2025 年 4 月）；运行于 BlueField-4 的 CNode 软件（CES 2026） | vLLM、LMCache、Dynamo[^31] | KV 操作功耗降低 75%；硬件 2H 2026[^32] | 与 NVIDIA 以 DPU 为中心的 CMX 设计契合度最高 |
+| DDN | 经 Dynamo/NIXL 在 Infinia 和 EXAScaler 上提供 KV 缓存 | 自 2026 年 6 月起与 Dynamo 集成[^33] | KV 加载最高快 55 倍（2026）；快 27 倍、输入 token 成本降低 75%（2025）[^33][^34] | 倍数随基线差异很大 |
+| HPE | Alletra MP X10000 KV 卸载 | 在 H200 上经 Kamiwaza 验证的测试[^35] | TTFT 最高加快 20 倍，有效吞吐量 17 倍[^35] | 赞助内容 |
+| NVIDIA | BlueField-4 STX / CMX "G3.5" 层 | 原生集成于 Dynamo、Spectrum-X、BlueField-4[^3][^36] | 相较传统存储 5 倍 tokens/s、5 倍能效[^37] | 定义插槽；合作伙伴提供软件和闪存 |
+
+*表 32.2 — 此处所有宣称均为供应商报告，大多以无缓存为基线；可比数字只存在于 MLPerf Storage v3.0 中。*
+
+**为替代方案构建最强论证（steelman）。** WEKA 先行一步（在 GTC 2025 发布 AMG，OCI 为首发合作伙伴），拥有 Everpure 仍在积累的生产环境客户案例。VAST 把软件*运行在* GPU 服务器内部的 BlueField-4 DPU 上，最贴合 NVIDIA 的 CMX 蓝图，这可能左右 NVIDIA 主导的交易（[第 34 章](34-nvidia-ecosystem.md)）。最简单的对手是"免费"的那个：DGX 本身已配备约 31 TB 本地 NVMe，LMCache 可以使用它而无需额外的许可费用。
+
+**Everpure 的论据。** PureKVA 复用 FlashBlade 现有的共享、多租户、高带宽定位，而不是新增一个孤岛；其 MLPerf v3.0 KV 成绩是基准测试证据而非营销倍数，尽管 WEKA、VAST 和 DDN 没有参加那一轮[^26]。以下是战略团队基于公开信息可能评估的选项：提供上游 NIXL 后端以及 LMCache/llm-d 连接器，使 PureKVA 覆盖所有推理服务栈；把 EXA 定位为 STX/CMX 机柜的软件层而不是其竞争对手；以及按 GB-小时或所服务的 token 数为 KV 容量定价，正如推理买家已经在为缓存命中定价一样。
+
+## 历史与发展轨迹
+
+```mermaid
+timeline
+    title KV 缓存成为存储工作负载
+    2023 : vLLM PagedAttention 像虚拟内存一样对 KV 分页
+    2024 : 预填充与解码分离的论文 : SGLang RadixAttention : DeepSeek 把 API 上下文缓存移到磁盘
+    2025 : Mooncake 获 FAST 最佳论文 : Dynamo 与 NIXL 发布 : WEKA AMG 发布并正式上市 : VAST 开源 VUA : llm-d 发起 : Pure KVA 集成 Dynamo
+    2026 : NVIDIA 在 CES 发布上下文内存存储 : Dynamo 1.0 与带 CMX 的 BlueField-4 STX : DDN 在 Infinia 上提供 KV 缓存 : MLPerf Storage v3.0 加入 KV 缓存 : PureKVA 发布
+```
+
+*图 32.5 — 三年间，KV 缓存从一种 GPU 内存管理技巧变成了一个有参考机柜和基准测试的具名存储层级。*
+
+三股力量指向未来。**标准化**：NVIDIA 命名了各层级，并推出了软件库和机柜；MLCommons 定义了测试。**商品化**：以 NIXL 为接口，各后端可以互换，除非它们在吞吐量、共享或价格上有所不同。**模型侧压缩**：MLA 式压缩和低精度 KV 把每 token 字节数削减 4–10 倍，而上下文长度和智能体数量都在上升。KV 总需求能否跑赢这种压缩，决定了这一层级会成为一条收入线，还是仍只是一项功能（[第 53 章](../07-history-and-future/53-future-trends.md)）。
+
+## 关键数字
+
+| 指标 | 数值 | 背景 | 来源 / 日期 |
+|---|---|---|---|
+| 每 token KV，Llama 3.1 70B（fp16） | 320 KiB | 80 层 × 8 个 KV 头 × 128 × 2 × 2 B | 基于配置的算例[^4] |
+| 每 token KV，DeepSeek-V3（MLA） | ~69 KiB | 61 层 × 576 个值 × 2 B | 基于配置的算例[^5] |
+| 单个 128K token 的 70B 会话 | ≈ 43 GB | 扣除权重后约 31 个会话即可填满 DGX B200 的 HBM | 算例 |
+| DGX B200 内存层级 | 1,440 GB HBM；2 TB DRAM；30.7 TB NVMe | G1–G3 的参考节点 | NVIDIA 规格[^8] |
+| 重算与读取对比，128K 上下文 | ≈ 2.6 s 对 ≈ 0.13 s | 实际交付 16 PFLOPS 对 320 GB/s 读取 | 算例 |
+| 读取盈亏平衡带宽 | 每 GPU ~2–5 GB/s | 低于此值时重算更快 | 算例 |
+| DeepSeek 磁盘缓存 | 命中价格为未命中的 1/10；128K 提示 TTFT 13 s → 0.5 s | 公司自述，2024 | DeepSeek，2024-08-02[^17] |
+| FlashBlade//EXA MLPerf v3.0 KV | 85,736 tok/s（8B）；33,403 tok/s（70B）；1,623.4 GiB/s 读取 | 公司报告；v3.0 模拟 B200 | Everpure / StorageReview，2026-09[^2][^26] |
+| NVIDIA CMX 宣称 | 5 倍 tokens/s、5 倍能效 | 相对"传统存储"；供应商宣称，在 CES 上针对后来命名为 CMX 的平台提出 | NVIDIA，2026-01[^37] |
+
+## 对话手册
+
+**向产品经理提的问题**
+
+1. *"PureKVA 的 20 倍 TTFT 数字假设了怎样的命中率和上下文长度？基线是什么：重算、本地 NVMe，还是 DRAM 上的 LMCache？"* 高质量回答：说明模型、上下文、并发量和基线，以及收益在哪些情况下消失（短上下文、低复用）。
+2. *"我们是 NVIDIA CMX 机柜的供应商、竞争对手，还是其后的 G4 层？"* 高质量回答：针对每种 NVIDIA 交易类型给出定位，以及 Everpure 在 BlueField-4 闪存货架之外还能提供什么（共享、多租户、运维）。
+3. *"我们应如何为 KV 层定价：按 TB、按 GB-小时，还是按所服务的 token？"* 高质量回答：把价格锚定在客户的重算成本上，这一成本可从 API 提示缓存定价中看到。
+
+**向工程师提的问题**
+
+1. *"在 1,000 个并发会话下，PureKVA 能提供多少每 GPU 恢复带宽、每个 KV 块的 p99 延迟是多少？"* 高质量回答：每 GPU GB/s 远高于约 2–5 GB/s 的盈亏平衡点，给出块大小，以及在卸载与加载混合时的尾延迟。
+2. *"当模型更新或节点重启时，缓存会怎样？"* 高质量回答：缓存键中包含模型版本、失效机制、预热，以及丢失意味着重算而非数据丢失。
+3. *"我们有没有上游的 NIXL 后端？PureKVA 能否在不用我们自有客户端的情况下与 LMCache 和 llm-d 配合使用？"* 高质量回答：说出插件名称、上游合并状态以及支持的引擎版本。
+
+**不要这样说：**
+
+- "存储扩展了 GPU 内存。"它保存的是非活跃 KV；解码每一步都要重读每个活跃 token，无法从闪存中运行。
+- "KV 缓存需要企业级持久性。"它是可重算的。价值来自吞吐量、共享和每 GB-小时成本，而不是 11 个 9。
+- "本地 NVMe 就够了。"有时确实够，但只有本节点能看到它，这限制了命中率；而且它的恢复速度也慢于八块 400G 网卡。
+- 不说明基线、上下文长度和命中率就说"TTFT 快 20 倍"。
+- "CXL 能解决这个问题。"CXL 内存就是 DRAM 价格的 DRAM：更快，但 GB-小时成本约为闪存的 20 倍。
+
+## 深入阅读（可选，L3 指引）
+
+- Dynamo 的 KVBM 设计文档[^21]与 NIXL 代码仓库[^23]。
+- Mooncake（FAST 2025），分离式 KV 池的参考生产设计[^11]。
+- PagedAttention[^12]，以及关于跨引擎共享与命中率陷阱的 LMCache 论文[^14]。
+- MLCommons `kv_cache_benchmark` README：三个封闭工作负载（Llama 3.1 8B，200 个用户；8B，100 个用户外加 4 GB CPU 内存；70B，70 个用户），按 tokens/s、GiB/s 和 p95 读取延迟计分[^38]。
+
+## 关键术语
+
+- **KV 缓存（KV cache）**——存储下来的每 token 注意力键和值。
+- **预填充 / 解码（Prefill / decode）**——受算力限制的提示阶段；受内存限制的生成阶段。
+- **TTFT**——首 token 延迟。
+- **前缀缓存（Prefix caching）**——为相同的开头 token 复用 KV。
+- **GQA / MLA**——缩减每 token KV 的注意力设计。
+- **KVBM、NIXL、CMX**——分别为 Dynamo 的层级管理器、传输库、机柜组上下文内存层。
+- 其余术语见[术语表](../glossary.md)。
+
+## 资料来源
+
+[^1]: MLCommons via GlobeNewswire, "MLCommons Releases New MLPerf Storage v3.0 Benchmark Results," 2026-09-01. https://www.globenewswire.com/news-release/2026/09/01/3354412/0/en/mlcommons-releases-new-mlperf-storage-v3-0-benchmark-results.html (retrieved 2026-11-01).
+[^2]: Everpure Blog, "Everpure FlashBlade//EXA Tops MLPerf Storage v3.0 Checkpointing and KV cache Benchmarks," 2026-09. https://blog.everpuredata.com/purely-technical/everpure-flashblade-exa-tops-mlperf-storage-v3-benchmarks/ (retrieved 2026-11-01).
+[^3]: NVIDIA Investor Relations, "NVIDIA Launches BlueField-4 STX Storage Architecture With Broad Industry Adoption," 2026-03-16. https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Launches-BlueField-4-STX-Storage-Architecture-With-Broad-Industry-Adoption/default.aspx (retrieved 2026-11-01).
+[^4]: Meta, `llama-models` repository, "models/sku_list.py" (Llama 3.1 8B/70B/405B architecture arguments: dim, n_layers, n_heads, n_kv_heads), n.d. https://github.com/meta-llama/llama-models/blob/main/models/sku_list.py (retrieved 2026-11-01).
+[^5]: DeepSeek-AI, `DeepSeek-V3` repository, "inference/configs/config_671B.json" (n_layers 61, kv_lora_rank 512, qk_rope_head_dim 64), n.d. https://github.com/deepseek-ai/DeepSeek-V3/blob/main/inference/configs/config_671B.json (retrieved 2026-11-01).
+[^6]: NVIDIA, "NVIDIA H200 Tensor Core GPU," product page, n.d. (141 GB HBM3e, 4.8 TB/s). https://www.nvidia.com/en-us/data-center/h200/ (retrieved 2026-11-01).
+[^7]: Tom's Hardware, "Nvidia launches Vera Rubin NVL72 AI supercomputer at CES, promises up to 5x greater inference performance and 10x lower cost per token than Blackwell, coming 2H 2026," 2026-01. https://www.tomshardware.com/pc-components/gpus/nvidia-launches-vera-rubin-nvl72-ai-supercomputer-at-ces-promises-up-to-5x-greater-inference-performance-and-10x-lower-cost-per-token-than-blackwell-coming-2h-2026 (retrieved 2026-11-01).
+[^8]: NVIDIA, "NVIDIA DGX B200," product page, n.d. (1,440 GB GPU memory, 64 TB/s aggregate HBM bandwidth; 2 TB system memory configurable to 4 TB; 8 × 3.84 TB NVMe U.2; 8 × ConnectX-7 up to 400 Gb/s). https://www.nvidia.com/en-us/data-center/dgx-b200/ (retrieved 2026-11-01).
+[^9]: Y. Zhong et al., "DistServe: Disaggregating Prefill and Decoding for Goodput-optimized Large Language Model Serving," USENIX OSDI 2024. https://www.usenix.org/conference/osdi24/presentation/zhong-yinmin (retrieved 2026-11-01).
+[^10]: P. Patel et al., "Splitwise: Efficient Generative LLM Inference Using Phase Splitting," ISCA 2024 (arXiv:2311.18677). https://arxiv.org/abs/2311.18677 (retrieved 2026-11-01).
+[^11]: R. Qin et al., "Mooncake: Trading More Storage for Less Computation — A KVCache-centric Architecture for Serving LLM Chatbot," USENIX FAST 2025 (Best Paper). https://www.usenix.org/conference/fast25/presentation/qin (retrieved 2026-11-01).
+[^12]: W. Kwon et al., "Efficient Memory Management for Large Language Model Serving with PagedAttention," ACM SOSP 2023 (arXiv:2309.06180). https://arxiv.org/abs/2309.06180 (retrieved 2026-11-01).
+[^13]: L. Zheng et al., "SGLang: Efficient Execution of Structured Language Model Programs," NeurIPS 2024 (arXiv:2312.07104). https://arxiv.org/abs/2312.07104 (retrieved 2026-11-01).
+[^14]: Y. Cheng et al., "LMCache: An Efficient KV Cache Layer for Enterprise-Scale LLM Inference," arXiv:2510.09665, 2025-10 (rev. 2025-12; MLSys 2026). https://arxiv.org/abs/2510.09665 (retrieved 2026-11-01).
+[^15]: StorageReview, "Synopsys CXL 4.0 IP hits 128 GT/s, claims 3.6x KV cache offload over SSDs," 2025-12. https://www.storagereview.com/news/synopsys-cxl-4-0-ip-hits-128-gt-s-claims-3-6x-kv-cache-offload-over-ssds (retrieved 2026-11-01).
+[^16]: TrendForce, "AI Server Demand Sustains Memory Contract Price Increases in 4Q26, While Consumer-Side Pressure Persists," 2026-09-30. https://www.trendforce.com/presscenter/news/20260930-13258.html (retrieved 2026-11-01).
+[^17]: DeepSeek, "DeepSeek API introduces Context Caching on Disk," 2024-08-02. https://api-docs.deepseek.com/news/news0802 (retrieved 2026-11-01); corroborated by S. Willison, "DeepSeek API context caching," 2024-08-14. https://simonwillison.net/2024/Aug/14/deepseek-context-caching/ (retrieved 2026-11-01).
+[^18]: Anthropic, "Prompt caching," Claude developer documentation, n.d. https://docs.claude.com/en/docs/build-with-claude/prompt-caching (retrieved 2026-11-01).
+[^19]: NVIDIA Newsroom, "NVIDIA Dynamo Open-Source Library Accelerates and Scales AI Reasoning Models," 2025-03-18. https://nvidianews.nvidia.com/news/nvidia-dynamo-open-source-library-accelerates-and-scales-ai-reasoning-models (retrieved 2026-11-01).
+[^20]: NVIDIA Newsroom, "NVIDIA Enters Production With Dynamo, the Broadly Adopted Inference Operating System for AI Factories," 2026-03-16. https://nvidianews.nvidia.com/news/dynamo-1-0 (retrieved 2026-11-01).
+[^21]: NVIDIA, "KVBM design," Dynamo documentation v1.3.0, n.d. https://docs.nvidia.com/dynamo/v1.3.0/design-docs/component-design/kvbm-design.md (retrieved 2026-11-01).
+[^22]: NVIDIA, "KV cache offloading" (KVBM guide), Dynamo documentation, n.d. https://docs.dynamo.nvidia.com/dynamo/user-guides/kv-cache-offloading (retrieved 2026-11-01).
+[^23]: NVIDIA / ai-dynamo, "NIXL: NVIDIA Inference Xfer Library" (GitHub repository), n.d. https://github.com/ai-dynamo/nixl (retrieved 2026-11-01).
+[^24]: vLLM Blog, "Tiered KV Cache Offloading in vLLM," 2026-09-10. https://vllm.ai/blog/2026-09-10-tiered-kv-offloading (retrieved 2026-11-01).
+[^25]: CNCF Blog, "Welcome llm-d to the CNCF: evolving Kubernetes into SOTA AI infrastructure," 2026-03-24. https://www.cncf.io/blog/2026/03/24/welcome-llm-d-to-the-cncf-evolving-kubernetes-into-sota-ai-infrastructure/ (retrieved 2026-11-01).
+[^26]: StorageReview, "MLPerf Storage v3.0: 877 GiB/s Checkpoints, a Cloud First, and a Leaderboard Turned Over," 2026-09. https://www.storagereview.com/news/mlperf-storage-v3-0-877-gib-s-checkpoints-a-cloud-first-and-a-leaderboard-turned-over (retrieved 2026-11-01).
+[^27]: Pure Storage Blog, "Pure KVA Now Integrates with NVIDIA Dynamo for Scalable, Low-Latency LLM Inference," 2025. https://blog.purestorage.com/news-events/pure-kva-integrates-nvidia-dynamo-for-scalable-low-latency-llm-inference/ (retrieved 2026-11-01).
+[^28]: Blocks & Files, "Everpure bulks up AI offer," 2026-09-30. https://blocksandfiles.com/flash/2026/09/30/everpure-bulks-up-ai-offer/5300162 (retrieved 2026-11-01); StorageReview, "Everpure Adds PureKVA to FlashBlade, Claims Up to 20x Faster Time to First Token, and Makes DeepReduce Always-On," 2026. https://www.storagereview.com/news/everpure-purekva-flashblade-20x-time-to-first-token-always-on-deepreduce (retrieved 2026-11-01).
+[^29]: WEKA, "WEKA Breaks The AI Memory Barrier With Augmented Memory Grid on NeuralMesh," 2025-11-18. https://www.weka.io/news/weka-breaks-the-ai-memory-barrier-with-augmented-memory-grid (retrieved 2026-11-01).
+[^30]: NAND Research, "WEKA NeuralMesh 6 and WEKApod 3: density, KV cache and AI economics," 2026-07. https://nand-research.com/weka-neuralmesh-6-and-wekapod-3-density-kv-cache-and-ai-economics/ (retrieved 2026-11-01).
+[^31]: VAST Data, "Open and Undivided Attention," 2025-04. https://www.vastdata.com/blog/open-and-undivided-attention (retrieved 2026-11-01); Blocks & Files, "VAST's VUA flash caching virtually expands GPU server memory for AI token generation," 2025-04-25. https://blocksandfiles.com/2025/04/25/vasts-vua-flash-caching-virtually-expands-gpu-server-memory-for-ai-token-generation/ (retrieved 2026-11-01).
+[^32]: StorageNewsletter, "CES 2026: Vast Data Redesigns AI Inference Architecture for the Agentic Era with Nvidia," 2026-01-07. https://www.storagenewsletter.com/2026/01/07/ces-2026-vast-data-redesigns-ai-inference-architecture-for-the-agentic-era-with-nvidia/ (retrieved 2026-11-01).
+[^33]: Blocks & Files, "DDN launches faster array HW and KV cache SW for AI," 2026-06-24. https://www.blocksandfiles.com/ai-ml/2026/06/24/ddn-launches-faster-array-hw-and-kv-cache-sw-for-ai/5261447 (retrieved 2026-11-01).
+[^34]: Blocks & Files, "DDN touts Infinia storage as key to faster, cheaper AI inference," 2025-07-19. https://www.blocksandfiles.com/data-management/2025/07/19/ddn-touts-infinia-storage-as-key-to-faster-cheaper-ai-inference/1603774 (retrieved 2026-11-01).
+[^35]: Blocks & Files (Partner Content), "HPE puts storage to work on AI's expensive memory problem," 2026-10-29. https://www.blocksandfiles.com/ai-ml/2026/10/29/partner-content-hpe-puts-storage-to-work-on-ais-expensive-memory-problem/5305788 (retrieved 2026-11-01).
+[^36]: NAND Research, "NVIDIA STX & CMX: Infrastructure for AI Context Storage (GTC 2026)," 2026-03. https://nand-research.com/nvidia-stx-cmx-infrastructure-for-agentic-ai-context-storage/ (retrieved 2026-11-01).
+[^37]: NVIDIA Newsroom, "NVIDIA BlueField-4 Powers New Class of AI-Native Storage Infrastructure for the Next Frontier of AI," 2026-01-05. https://nvidianews.nvidia.com/news/nvidia-bluefield-4-powers-new-class-of-ai-native-storage-infrastructure-for-the-next-frontier-of-ai (retrieved 2026-11-01); NVIDIA Developer Blog, "Introducing NVIDIA BlueField-4-Powered Inference Context Memory Storage Platform for the Next Frontier of AI," 2026-01. https://developer.nvidia.com/blog/introducing-nvidia-bluefield-4-powered-inference-context-memory-storage-platform-for-the-next-frontier-of-ai/ (retrieved 2026-11-01).
+[^38]: MLCommons, `storage` repository, "kv_cache_benchmark/README.md," n.d. https://github.com/mlcommons/storage/blob/main/kv_cache_benchmark/README.md (retrieved 2026-11-01).

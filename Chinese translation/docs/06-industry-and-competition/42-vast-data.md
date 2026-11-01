@@ -243,3 +243,78 @@ VAST 是私营公司，不公布经审计的财务报表。除非另有说明，
 ### 如何销售
 
 VAST 的直销团队主攻最大的交易（新兴 GPU 云和实验室），OEM 则把覆盖面延伸到企业客户。NVIDIA 实际上就是联合销售方：它自 2021 年起即为投资者，为 VAST 做了 DGX SuperPOD 认证，并在推出其 AI Data Platform 和 STX 设计时把 VAST 列为合作伙伴[^67][^34]。VAST 从未参加 MLPerf Storage，从 v0.5（2023）到 v3.0（2026）的任何一轮都没有；它依靠参考客户而非经同行评审的基准测试来销售[^68][^69]。
+
+## 为何获得市场牵引力
+
+[第 41 章](41-why-ai-native-vendors-won.md)讨论了品类层面的原因。具体到 VAST，最强版本论证（steelman）有六个部分：
+
+1. **它很早就押对了介质曲线。** 它在 2016 年就为 QLC、SCM 和 NVMe-oF 进行设计，当时三者都尚未成熟；而传统厂商无法把这种设计改装到双控制器或无共享架构的代码上。
+2. **它让闪存便宜到足以承载"所有数据"。** 约 3% 开销的宽码加上全局缩减，使 VAST 可以主打单一闪存层，而不是闪存加磁盘，这契合每个 epoch 都要重读整个数据集的 AI 作业。
+3. **它契合新兴 GPU 云的运营方式。** 新兴 GPU 云需要标准 NFS 客户端、多租户、单一命名空间，以及随租户变化独立扩展吞吐量或容量的能力。DASE 四者兼具。
+4. **它在 AI 需求到来之前就选择了软件模式。** Gemini（2021）意味着当 GPU 集群在 2023–2025 年爆发时，VAST 可以在没有制造业资产负债表的情况下扩大订单额。
+5. **它与 NVIDIA 保持紧密。** NVIDIA 从 Series D 起投资，随后有基于 NFS-RDMA 的早期 GPUDirect Storage 合作，此后 NVIDIA 的发布活动中一直有 VAST 的身影。在 AI 基础设施领域，NVIDIA 的参考设计实际上就是采购清单。
+6. **它先讲故事，再按故事交付。** "操作系统"的定位很有野心，但 VAST 已以竞争对手难以匹敌的节奏交付了数据库、事件流、块存储和智能体工具。
+
+## 风险与待解问题
+
+| 风险 | 为何重要 | 什么能降低风险 |
+|---|---|---|
+| 估值跑在收入之前 | 60× 过往 CARR。Series F 约一半为老股转让，IPO 将在公开市场检验这一数字 | 经审计的收入、S-1，或 CARR 远超 US$1B |
+| NAND 短缺下的硬件依赖 | NAND 合约价格在 2026 年全年大幅上涨（TrendForce 预测 4Q26 环比再涨 15–20%）[^70]。VAST 以成本价转嫁硬件，因此价格冲击由客户承担，部署可能推迟。VAST 将其数据缩减作为对冲来推销[^71] | 通过 OEM 签订长期供应协议，或在 AI 数据上实现更高的缩减比 |
+| 客户集中度 | 单一客户约占累计订单额的 29%。新兴 GPU 云的需求取决于 GPU 融资周期 | 单独披露企业与云市场业务的增长 |
+| NVIDIA 将该模式商品化 | STX 和 BlueField-4 让每个合作伙伴都获得同样的"DPU 置于 GPU 服务器"设计[^34]。NetApp、HPE 和 Everpure 都在交付分解式系统（[第 16 章](../03-system-architecture/16-disaggregated-shared-everything.md)） | 竞争对手无法匹敌的软件功能，例如跨表和文件的单一 Element Store |
+| 向技术栈上层移动 | DataBase、AgentEngine 和 TuningEngine 与 Databricks、Snowflake、向量数据库以及 NVIDIA 自家软件竞争。这些品类的买方是不同的人群 | DataBase 和 AgentEngine 的公开参考客户 |
+| OEM 合作伙伴兼为竞争对手 | HPE 销售 X10000，Cisco 和 Supermicro 也销售竞品，且 HPE 控制交付哪些 VAST 功能[^65] | 直销、云和新兴 GPU 云渠道的增速超过 OEM |
+| 缺乏独立基准测试 | 未参加 MLPerf Storage v0.5–v3.0[^68] | 参加一轮公开基准测试 |
+
+*表 42.4 — VAST 的大多数风险，是其成功所依赖之选择的另一面：纯软件、与 NVIDIA 绑定、新兴 GPU 云优先、平台化野心。*
+
+值得跟踪的待解问题：CARR 中有多少来自 CoreWeave；BlueField-4 CNode 是否如期在 2026 年下半年交付；DataBase 能否赢得并非始于存储的工作负载；以及 Jeff Denworth 的角色——一家以色列媒体在 2026 年对此提出疑问[^72]，但他在 2026 年 1 月仍在代表 VAST 向媒体做简报[^19] [VERIFY: Denworth 目前的职务与职责范围]。
+
+## 对 Everpure 的战略意义
+
+以下是战略团队基于公开信息可能评估的选项：
+
+1. **以 FlashBlade//EXA 在大规模 AI 场景正面竞争。** EXA 对阵 VAST 的论据是：更短的数据路径（客户端直达数据节点，没有 CNode 这一跳）、标准 pNFS、Purity 的元数据引擎，以及在 VAST 缺席的那一轮中取得的经同行评审的 MLPerf v3.0 结果（[第 27 章](../04-everpure/27-flasharray-and-flashblade.md)）。差距在于 10 万 GPU 规模的参考客户、基于 DFM 的数据节点以及认证资质。
+2. **把 NAND 短缺变成切入点。** Everpure（NYSE: P，原 PSTG）自行设计 DirectFlash Module，并作为大批量买家采购 NAND（[第 26 章](../04-everpure/26-purity-and-directflash.md)）。VAST 的客户则是在紧张的市场中以成本价购买服务器。如果供应紧张持续到 2027 年，能保障容量和价格的厂商，可能比软件费更低的厂商更重要（[第 48 章](48-media-suppliers-and-nand-cycle.md)）。
+3. **有选择地而非全盘对标平台叙事。** Everpure 已有 KV 缓存工作（KVA）、Data Stream 和 Fusion。悬而未决的问题是，买方实际愿意为 VAST 的哪些上层功能付费。目前的证据指向存储原生功能（多协议、全局命名空间、事件触发器），而不是智能体运行时。
+4. **在新兴 GPU 云内部共存。** CoreWeave 也把 Everpure 列为其专用存储合作伙伴之一[^73]。新兴 GPU 云会多源采购，因此"第二供应商"的位置是现实的切入点。
+5. **关注 IPO。** VAST 的 S-1 将首次提供 AI 原生存储经济性的经审计视图：毛利率、订单额的收入确认方式以及客户集中度。这将重设 Everpure 自身估值讨论的基准。以 US$30B 的私募估值收购 VAST，对任何存储传统厂商而言都将是一笔变革性的、很可能以股票为主的交易，并伴随 OEM 渠道冲突。收购较小的上层资产是更常见的模式，NetApp 在 2026 年收购 DataPelago 即为一例[^74] [VERIFY: 交易日期与条款]（[第 46 章](46-incumbents.md)）。
+
+## Everpure 的做法与竞争对手对比
+
+| 维度 | VAST AI OS | Everpure FlashBlade//EXA |
+|---|---|---|
+| 架构 | DASE：无状态 CNode 通过 NVMe-oF 共享所有 SSD[^3] | 元数据/数据分离：Purity//FB 元数据核心，加上运行 Purity//DN 的数据节点[^75] |
+| 数据路径 | 客户端 → CNode → DBox（两次网络跳转） | 获取 pNFS 布局后，客户端通过 RDMA 直达数据节点 |
+| 元数据所在位置 | 共享 SCM，任何 CNode 均可访问 | 基于 DFM 的 FlashBlade 刀片 |
+| 介质 | SCM/SLC 加通用 QLC SSD | 元数据位于 DFM 上。数据节点目前使用第三方 NVMe，计划推出 DFM 数据节点 [VERIFY: DFM 数据节点 GA] |
+| 保护与缩减 | 最宽 146+4 的局部可解码码（2.7%）。全局相似性缩减 | 元数据核心上的 Purity 缩减。数据节点保护走独立的发布节奏（[第 16 章](../03-system-architecture/16-disaggregated-shared-everything.md)） |
+| 协议 | NFS/RDMA、SMB、S3、NVMe/TCP 块、Kafka、SQL | pNFS（NFSv4.1 元数据走 TCP，数据走 RDMA） |
+| 上层服务 | DataBase、DataEngine、InsightEngine、AgentEngine 等 | 面向 KV 缓存的 KVA、Fusion 控制平面、Data Stream 预览版[^76] |
+| 公开基准测试 | 未参加 MLPerf Storage | MLPerf v3.0：877.5 GiB/s 检查点写入、1,623.4 GiB/s KV 缓存读取[^68] |
+| 商业模式 | 软件订阅。硬件经合作伙伴或 OEM 以成本价提供 | Everpure 元数据硬件加软件。数据节点由客户自行采购，每个节点含 160 TiB 授权[^77] |
+| 规模验证案例 | CoreWeave、xAI（存在争议）、新兴 GPU 云 | Meta 超大规模 DFM 交易（相邻领域）[^78]；Q4 FY26 首个企业 EXA 客户[^79] |
+
+*表 42.5 — VAST 在服务广度、数据缩减和装机规模上领先。EXA 在数据路径简洁性上领先，并拥有 VAST 所没有的公开基准测试结果；Everpure 还掌控自身的介质供应。*
+
+在这一对比中，VAST 的最强论证是：广度会产生复利。每个新引擎都运行在同一个 Element Store 上，因此每增加一个引擎，平台就更难被替换。EXA 的最强论证是：在 1–10 TB/s 的前沿，瓶颈在于元数据和数据路径，而不在于形态的数量，而 EXA 恰恰在这里省掉了一跳。哪一点更重要取决于买方。以存储即服务为业务的新兴 GPU 云看重广度；运行单一超大训练任务的实验室看重每美元、每瓦的吞吐量。[第 45 章](45-head-to-head.md)给出了包括 WEKA 和 DDN 在内的四方比较。
+
+## 历史与发展轨迹
+
+```mermaid
+timeline
+    title VAST Data 产品与公司里程碑
+    2016 : 以分解式设计创立
+    2019 : Universal Storage 结束隐身状态并发布
+    2021 : Gemini 软件模式 : NFS over RDMA 搭配 GPUDirect Storage
+    2022 : 采用 BlueField DPU 的 Ceres DBox
+    2023 : 含 DataBase 的 VAST Data Platform : HPE GreenLake for File
+    2024 : 搭配 NVIDIA NIM 的 InsightEngine : Cisco UCS 渠道
+    2025 : 块与 Kafka : 开源 VUA KV 缓存 : AI OS 与 AgentEngine : CoreWeave 1.17B 交易 : Google Cloud 与 Azure
+    2026 : BlueField-4 CNode : CNode-X 与 Polaris : Series F 估值 30B
+```
+
+*图 42.6 — VAST 大约每年增加一个主要层级。自 2023 年起，新增内容更多是软件服务而非硬件。*
+
+其发展轨迹分为三个阶段：存储架构（2016–2020）、带数据平台的软件业务（2021–2023），以及自 2024 年起"恰好也存储数据"的 AI 基础设施公司。2026–2027 年值得关注的信号包括：CNode-X 和 BlueField-4 在 2026 年下半年的出货、TuningEngine 和 PolicyEngine 在年底前正式发布[^30]、可能的 IPO[^43]，以及 CARR 增长能否扩展到新兴 GPU 云之外。
