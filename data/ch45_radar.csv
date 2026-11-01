@@ -1,0 +1,33 @@
+vendor,axis,score,source,as_of
+Everpure FlashBlade//EXA,Proven scale,2,"Atlas judgment: GA since mid-2025; first enterprise EXA customer reported Q4 FY26 (Futurum 2026-02); no named 10K+ GPU production reference found",2026-11-01
+VAST,Proven scale,5,"Atlas judgment: CoreWeave US$1.17B agreement (Reuters 2025-11-06), xAI Colossus (contested with DDN), TACC Horizon high-speed tier (TACC 2025-11-17)",2026-11-01
+WEKA,Proven scale,3,"Atlas judgment: neocloud and lab references (CoreWeave option, Nebius, Cohere, OCI) but no disclosed mega-deal; ARR >US$100M in 2024 (company-stated)",2026-11-01
+DDN,Proven scale,5,"Atlas judgment: NVIDIA Selene and Eos (48 AI400X2, ~4 TB/s), xAI Colossus, 350 PB Infinia cluster (company-stated), >500k GPUs supported (company-stated)",2026-11-01
+Everpure FlashBlade//EXA,Audited benchmark evidence,5,"Atlas judgment: MLPerf Storage v3.0 top checkpoint write 877.5 GiB/s and KV-cache read 1,623.4 GiB/s (2026-09); SPECstorage AI_IMAGE #1 6,300 AI_Jobs (2026-02); caveat: rivals absent",2026-11-01
+VAST,Audited benchmark evidence,1,"Atlas judgment: no MLPerf Storage or SPECstorage submission in any round (StorageReview 2026-09); sells on POCs and references",2026-11-01
+WEKA,Audited benchmark evidence,3,"Atlas judgment: SPECstorage 2020 #1 on all five workloads (2025-02, HPE hardware), MLPerf v0.5/v1.0; skipped v2.0 and v3.0; KV claims vendor-run",2026-11-01
+DDN,Audited benchmark evidence,3,"Atlas judgment: MLPerf v1.0 and v2.0 entries, frequent IO500 entries; skipped MLPerf v3.0 including the KV-cache workload",2026-11-01
+Everpure FlashBlade//EXA,Capacity economics,2,"Atlas judgment: Purity reduction on metadata core; data-node protection and reduction mature on a separate Purity//DN release train; data nodes are third-party NVMe (DFM nodes not confirmed GA)",2026-11-01
+VAST,Capacity economics,5,"Atlas judgment: 146+4 locally decodable codes (2.7% overhead at >=75 DBoxes), global similarity reduction (~2:1 median, company-stated), QLC-native",2026-11-01
+WEKA,Capacity economics,3,"Atlas judgment: 16+4 EC keeps 80% of raw; NeuralMesh 6 adds guaranteed reduction (claimed up to 6x) but GA not confirmed as of 2026-11-01",2026-11-01
+DDN,Capacity economics,2,"Atlas judgment: EXAScaler has RAID under OSTs and little reduction; Infinia claims up to 10x reduction without published baseline",2026-11-01
+Everpure FlashBlade//EXA,Client and operational simplicity,4,"Atlas judgment: stock Linux pNFS client, Purity metadata ops and Pure1 heritage; docked one point for multi-vendor data-node integration and a young Purity//DN stack",2026-11-01
+VAST,Client and operational simplicity,4,"Atlas judgment: stock NFS (incl. RDMA), S3 and SMB clients; stateless CNodes; docked one point for fabric and minimum-size complexity",2026-11-01
+WEKA,Client and operational simplicity,2,"Atlas judgment: proprietary kernel module plus agent on every client for the fast path; NFS/SMB/S3 gateways are slower; polling cores to manage",2026-11-01
+DDN,Client and operational simplicity,2,"Atlas judgment: Lustre kernel client rebuilt and qualified per kernel and GPU image; MDS hot spots; two engines to operate",2026-11-01
+Everpure FlashBlade//EXA,Deployment flexibility,2,"Atlas judgment: customer-sourced data nodes, but metadata core is Everpure hardware and no public-cloud or converged EXA offering found",2026-11-01
+VAST,Deployment flexibility,4,"Atlas judgment: certified partner and OEM hardware (Supermicro, Cisco, HPE), EBox, Google Cloud managed service and Azure listing (2025)",2026-11-01
+WEKA,Deployment flexibility,5,"Atlas judgment: qualified servers, WEKApod appliances, inside GPU servers (Axon) and native on AWS, Azure, GCP and OCI since 2022",2026-11-01
+DDN,Deployment flexibility,3,"Atlas judgment: DDN appliances for EXAScaler; Infinia on commodity servers and OCI; Google Cloud Managed Lustre built on EXAScaler (GA 2025-07)",2026-11-01
+Everpure FlashBlade//EXA,KV-cache and inference maturity,3,"Atlas judgment: audited MLPerf v3.0 KV-cache read lead, but PureKVA only available from October 2026; up to 20x TTFT claim unpublished",2026-11-01
+VAST,KV-cache and inference maturity,3,"Atlas judgment: BlueField-4 CNode inside GPU servers announced Jan 2026 with hardware in 2H 2026; CNode-X; InsightEngine shipping",2026-11-01
+WEKA,KV-cache and inference maturity,4,"Atlas judgment: Augmented Memory Grid commercially available 2025-11-18 (OCI launch partner) and joint OCI validation 2026-06; evidence is vendor-run",2026-11-01
+DDN,KV-cache and inference maturity,3,"Atlas judgment: Infinia and EXAScaler KV cache via Dynamo/NIXL (2026-06); 27x vendor test; Nebul ~10x TTFT joint release (2026-10)",2026-11-01
+Everpure FlashBlade//EXA,NVIDIA ecosystem standing,2,"Atlas judgment: STX partner; NVIDIA-Certified Storage validation extended to EXA in Mar 2026 with NCP pending; no SuperPOD certification for EXA found; FlashBlade//S holds the badges",2026-11-01
+VAST,NVIDIA ecosystem standing,5,"Atlas judgment: NVIDIA investor since 2021; SuperPOD certified 2023; NCP HPS 2024; CNode-X and BlueField-4 launch partner",2026-11-01
+WEKA,NVIDIA ecosystem standing,4,"Atlas judgment: NVIDIA in Series E; WEKApod SuperPOD certified 2024; NCP HPS 2024; STX partner; no NVIDIA-internal flagship cluster",2026-11-01
+DDN,NVIDIA ecosystem standing,5,"Atlas judgment: NVIDIA's own Selene and Eos run on DDN; SuperPOD reference since DGX A100 era; NCP HPS 2024; GPU-initiated access work (2026-08)",2026-11-01
+Everpure FlashBlade//EXA,Platform breadth,2,"Atlas judgment: EXA serves pNFS only; S3, Data Stream and Fusion live elsewhere in the Everpure portfolio",2026-11-01
+VAST,Platform breadth,5,"Atlas judgment: NFS, SMB, S3, NVMe/TCP block, Kafka API and SQL tables on one Element Store, plus DataEngine and InsightEngine",2026-11-01
+WEKA,Platform breadth,3,"Atlas judgment: POSIX, NFS, SMB and S3 with object tiering; native object and multi-tenancy arrive with NeuralMesh 6",2026-11-01
+DDN,Platform breadth,3,"Atlas judgment: two engines (POSIX via Lustre; S3, SDK, KV via Infinia) joined only at the DDN CORE control plane",2026-11-01

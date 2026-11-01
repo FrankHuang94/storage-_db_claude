@@ -15,7 +15,7 @@
 
 Everpure's whole history sits on this curve. Pure Storage was incorporated in 2009[^1], when NAND was still about $1/GB[^2]. It sold all-flash arrays priced per *usable* gigabyte after data reduction, against 15K disk, and won the effective-$/GB argument before the raw one was close. The company's DirectFlash strategy is a bet on capturing more of each NAND generation's cost decline than SSD vendors pass through ([Chapter 26](../04-everpure/26-purity-and-directflash.md)). Its gross margin and pricing power still move with the NAND cycle ([Chapter 48](../06-industry-and-competition/48-media-suppliers-and-nand-cycle.md)).
 
-The history matters for three present-day decisions. The first is how to read the 2026 price spike: earlier spikes ended in overbuild, but this time suppliers are disciplined. The second is how far the "flash replaces disk" thesis can go when the raw premium over nearline disk has widened to ~18×. The third is how to value supplier relationships in an industry where the fab owners have changed at least four times in a decade. A strategy team that knows the 2008–2023 pattern can tell which features of 2026 are new.
+The history informs three live questions. Will the 2026 spike end in overbuild, as earlier ones did? How far can "flash replaces disk" go at an ~18× raw premium over nearline disk? And how much are supplier relationships worth when fab owners have changed at least four times in a decade?
 
 ## Core concepts
 
@@ -35,19 +35,19 @@ timeline
 
 ### Invention, and why Toshiba did not own the economics (1984–2000)
 
-Fujio Masuoka's team at Toshiba presented a flash EEPROM, the NOR type, at IEDM in December 1984[^3]. Kioxia, Toshiba's former memory unit, dates the invention of NAND to 1987[^4]. The Semiconductor History Museum of Japan places the NAND announcement in 1988[^3], so "1987" is the company's date, not an undisputed one. NAND's point was density. Cells in series share contacts, so the array is far smaller than NOR's, at the price of slow random reads. That trade only pays when the controller handles errors and mapping in firmware, an early version of the [FTL](../01-storage-fundamentals/03-inside-an-ssd.md) problem.
+Fujio Masuoka's team at Toshiba presented a flash EEPROM, the NOR type, at IEDM in December 1984[^3]. Kioxia, Toshiba's former memory unit, dates the invention of NAND to 1987[^4]. The Semiconductor History Museum of Japan places the NAND announcement in 1988[^3], so "1987" is the company's date, not an undisputed one. NAND traded NOR's fast random reads for density: cells in series share contacts. That trade pays only when a controller handles errors and mapping, the origin of the [FTL](../01-storage-fundamentals/03-inside-an-ssd.md).
 
-Masuoka later sued Toshiba over compensation for the invention, and the case settled in 2006[^5]. Kioxia's own retrospective puts 1990s NAND at about $10,000 per gigabyte (company-stated)[^6]. Another industry recollection suggests nearer $1,250/GB in the mid-1990s[^7]. Either way, flash was then a niche for BIOS chips, camera cards and industrial devices.
+Masuoka later sued Toshiba over compensation for the invention, and the case settled in 2006[^5]. Kioxia's own retrospective puts 1990s NAND at about $10,000 per gigabyte (company-stated)[^6]. Another industry recollection suggests nearer $1,250/GB in the mid-1990s[^7]. Either way, flash was then a niche product.
 
 ### Consumers paid for the learning curve (2005–2012)
 
 Apple's iPod nano launched on 7 September 2005 at 2 GB for $199 and 4 GB for $249[^8]. Analysts estimated the 2 GB model held about $90 of flash, or roughly $45/GB, at a time when 1 GB sold for about $45 in the volume market[^9]. Ten weeks later Apple signed supply agreements running to 2010 with Hynix, Intel, Micron, Samsung and Toshiba. It prepaid $1.25 billion[^10]. Intel and Micron formed IM Flash Technologies (IMFT), 51% owned by Micron, with Apple expected as its first customer[^11].
 
-To an M&A reader this is a customer-funded capacity build: the buyer's balance sheet de-risked the supplier's fab ramp. The consumer device became the volume driver, and smartphones followed. Volume drove the learning curve. The analyst data in Figure 52.2 shows the result: about $45/GB in 2005, ~$0.90/GB for consumer NAND by Q4 2008[^2], ~$1 in January 2011, ~$0.30 by July 2012 and ~$0.25 in early 2015[^12].
+This was a customer-funded capacity build: the buyer's balance sheet de-risked the suppliers' fab ramps. Music players, then smartphones, supplied the volume that drove the learning curve. Analyst data shows the result: about $45/GB in 2005, ~$0.90/GB for consumer NAND by Q4 2008[^2], ~$1 in January 2011, ~$0.30 by July 2012 and ~$0.25 in early 2015[^12].
 
 ![Log-scale chart of NAND flash price per gigabyte from the 1990s to 2026: retrospective estimates of $10,000 and $1,250 per GB in the 1990s, $191 per GB for a 2003 retail flash card, an analyst market-price line falling from $45 per GB in 2005 to about 5 cents in 2019, and a TrendForce wafer-spot line rising from 2.2 cents in July 2023 to about 29 to 33 cents in 2026, with grey bands marking the 2008, 2012, 2018–19 and 2022–23 busts and a yellow band for the 2025–26 surge.](../assets/charts/ch52-flash-cost.svg)
 
-*Figure 52.2 — NAND fell roughly 35% a year on average from 2005 to the 2023 trough. Each downturn steepened the decline, and the 2025–26 surge reversed about five years of it in months.*
+*Figure 52.2 — NAND fell roughly 35% a year on average from 2005 to the 2023 trough; the 2025–26 surge took spot prices back to roughly 2016–17 levels within months.*
 Data: `data/ch52_flash_cost.csv`
 
 The bases differ: retrospective claims, a retail card in 2003[^13], analyst market prices[^14][^15] and TrendForce 512Gb TLC wafer spot quotes divided by 64 GB[^16][^17][^18][^19]. Read the slope, not the decimals. Worked trend: $45 ÷ $0.0219 ≈ 2,050× over 17.9 years, so ln(2,050)/17.9 ≈ 0.43 per year, which is about a 35% annual decline.
@@ -90,7 +90,7 @@ flowchart LR
 
 *Figure 52.3 — The NAND cycle is a capacity-lag loop: margins fund wafers, wafers arrive late, and each bust ends with output cuts and ownership changes.*
 
-**Semiconductor bridge: NAND versus DRAM.** Both are commodity memories with the same loop, but the structures differ. DRAM consolidated through exits. Qimonda filed for insolvency in January 2009[^28], and Elpida filed for bankruptcy in February 2012 with 15.4% share[^29]; Micron then took over Elpida[^30]. In 2Q26, Samsung, SK hynix and Micron held 39.4%, 24.9% and 23.3% of DRAM revenue, about 88% together[^31]. NAND kept five large suppliers. In 2008, TrendForce put Samsung at 40.4%, Toshiba 28.1%, Hynix 15.1%, Micron 7.9% and Intel 5.8%[^32]. In 2Q26 the top five were Samsung, SK hynix Group, Micron, Kioxia and Sandisk, with $68.87B of revenue between them[^33]. On a top-five basis the Herfindahl index is about 2,750 for 2008 and about 2,260 for 2Q26 (worked: 33.5² + 20.7² + 17.2² + 15.6² + 13.0²). DRAM's top three alone score about 2,715. So NAND has become *less* concentrated, and its pricing is less disciplined. Kioxia and Sandisk share fabs under a joint venture, so there are fewer independent capacity decisions than there are brands.
+**Semiconductor bridge: NAND versus DRAM.** Both run the same loop, but DRAM consolidated through exits. Qimonda filed for insolvency in January 2009[^28], and Elpida filed for bankruptcy in February 2012 with 15.4% share[^29]; Micron then took over Elpida[^30]. In 2Q26, Samsung, SK hynix and Micron held 39.4%, 24.9% and 23.3% of DRAM revenue, about 88% together[^31]. NAND kept five large suppliers. In 2008, TrendForce put Samsung at 40.4%, Toshiba 28.1%, Hynix 15.1%, Micron 7.9% and Intel 5.8%[^32]. In 2Q26 the top five were Samsung, SK hynix Group, Micron, Kioxia and Sandisk, with $68.87B of revenue between them[^33]. On a top-five basis the Herfindahl index is about 2,750 for 2008 and about 2,260 for 2Q26 (worked: 33.5² + 20.7² + 17.2² + 15.6² + 13.0²). DRAM's top three alone score about 2,715. NAND has become *less* concentrated, and its pricing less disciplined, although Kioxia and Sandisk share fabs, so there are fewer capacity decisions than brands.
 
 ### Boom and bust, 2008–2026
 
@@ -100,7 +100,7 @@ flowchart LR
 - **2022–23:** SK hynix posted its first loss in a decade in Q4 2022[^38]. In April 2023 Samsung joined SK hynix, Micron and Kioxia in cutting output[^39]. The 512Gb TLC wafer spot price bottomed at about $1.40 (≈2.2¢/GB) in mid-2023[^16].
 - **2025–26:** AI servers absorbed enterprise SSD bits. TrendForce reported top-five NAND revenue up 77% QoQ to $68.87B in 2Q26[^33]. It forecast 4Q26 contract prices up another 15–20%, with most new supply already committed[^40]. Suppliers reportedly added almost no wafer capacity in 2026 [VERIFY: secondary source][^41].
 
-The pattern for a deal team is that every bust ended in a transaction (below).
+For a deal team, the pattern is that most busts were followed by transactions.
 
 ### Consolidation: the same fabs, new owners
 
@@ -119,7 +119,7 @@ The pattern for a deal team is that every bust ended in a transaction (below).
 
 *Table 52.2 — In twenty years almost every NAND fab outside Samsung changed owner or ownership structure, but the number of fab bases barely moved. Consolidation redistributed capacity rather than removing it.*
 
-Two exits stand out. Intel left despite having good technology, because NAND was a cyclical, non-core business inside a logic company; that is a familiar portfolio-pruning story. Toshiba sold because its parent needed cash after losses at its US nuclear unit[^45]. The SanDisk round trip, bought in 2016 and spun in 2025, suggests that public markets preferred a pure play over an HDD/NAND conglomerate.
+Intel left with good technology because cyclical NAND was non-core inside a logic company. Toshiba sold because its parent needed cash after losses at its US nuclear unit[^45]. The SanDisk round trip suggests public markets preferred a NAND pure play to an HDD/NAND conglomerate.
 
 ### The enterprise inflection: raw versus effective $/GB
 
