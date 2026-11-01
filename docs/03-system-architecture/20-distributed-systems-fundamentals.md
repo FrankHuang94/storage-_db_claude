@@ -24,7 +24,7 @@ A consistency model is the contract about what a reader may see when copies disa
 | Model | Promise to a reader | Cost | Who uses it |
 |---|---|---|---|
 | **Strong / linearizable** | Every read sees the latest acknowledged write, as if there were one copy | Each write waits for a quorum or synchronous mirror; minority side stops during a partition | Block arrays (FlashArray, PowerMax, ONTAP); metro clusters; Spanner; DynamoDB strongly consistent reads[^1] |
-| **Read-after-write** | A writer immediately sees its own write; others see it once committed | Index commit must be a single linearisation point | Amazon S3 since Dec 2020, Azure Blob, GCS ([Chapter 9](../02-protocols-and-networking/09-object-storage-and-s3.md)) |
+| **Strong read-after-write (per object)** | Once a PUT or DELETE is acknowledged, every later GET or LIST by any client reflects it; no multi-object transactions | Index commit must be a single linearisation point per key | Amazon S3 since Dec 2020, Azure Blob, GCS ([Chapter 9](../02-protocols-and-networking/09-object-storage-and-s3.md)) |
 | **Causal** | If write B depends on write A, nobody sees B without A | Track dependencies (version vectors) | Some geo-distributed databases; rare as a storage product guarantee |
 | **Close-to-open** | A file reopened after another client closes it shows that client's writes | Client caches revalidated on open | NFS ([Chapter 8](../02-protocols-and-networking/08-file-protocols.md)) |
 | **Eventual** | All copies converge if writes stop; reads may be stale meanwhile | Cheapest and fastest; conflicts need resolution (last-writer-wins) | Cross-region and asynchronous replication; Dynamo-style stores at low quorum settings[^2] |
@@ -92,7 +92,7 @@ The standard model is **mean time to data loss (MTTDL)**. A group of n drives to
 *Figure 20.2 — Illustrative model: extra parity moves durability by many nines, AFR and rebuild time by fewer, and correlated failures can erase the gain.*
 Data: `data/ch20_durability.csv`
 
-**Worked example** (10 PB usable, 30 TB drives, Backblaze's 2025 HDD AFR of 1.36%[^12]). RAID 6 (8+2) with a 42-hour single-spare rebuild models at **5.8 nines**. The same code rebuilt declustered in 4 hours reaches **7.8**: RAID 6 and 8+2 EC are identical maths, differing only in rebuild speed. Three-way replication reaches **9.0**; EC 16+4 reaches **15.1**. Device reliability helps less. Backblaze's SSDs ran at 0.9%[^13]; Everpure states 0.15% for DirectFlash Modules[^14] (NetApp disputes it[^15]). Cutting AFR from 1.36% to 0.15% adds 2.9 nines to RAID 6; moving from 8+2 to 16+4 adds 7.3. Rule of thumb: each tenfold cut in AFR is worth m+1 nines, each tenfold cut in rebuild time m.
+**Worked example** (10 PB usable, 30 TB drives, Backblaze's 2025 HDD AFR of 1.36%[^12]). RAID 6 (8+2) with a 42-hour single-spare rebuild models at **5.8 nines**. The same code rebuilt declustered in 4 hours reaches **7.8**: RAID 6 and 8+2 EC are identical maths, differing only in rebuild speed. Three-way replication reaches **9.0**; EC 16+4 reaches **15.1**. Device reliability helps less. Backblaze's SSDs ran at 0.9%[^13]; Everpure states 0.15% for DirectFlash Modules[^14] (NetApp disputes it[^15]). Cutting AFR from 1.36% to 0.15% adds 2.9 nines to RAID 6; moving from 8+2 to 16+4 adds 7.3. Rule of thumb: each tenfold cut in AFR is worth m+1 nines, each tenfold cut in rebuild time m. One caveat on the declustered lines: the model treats each group of k+m drives as independent. In a declustered layout, almost any m+1 failed drives share some stripe, which in this example costs back roughly three nines for 8+2 and five for 16+4. Rebuilding first the few stripes that have lost the most strips recovers much of that, and declustered systems generally do so.
 
 ### Correlated failures and failure domains
 
@@ -137,14 +137,14 @@ Read caches add a coherence cost: every client or node cache needs invalidation,
 | System | Agreement mechanism | Partition / PACELC behaviour | Durability or availability claim |
 |---|---|---|---|
 | Everpure ActiveCluster (FlashArray) | Synchronous mirror, Pure1 Cloud Mediator or on-premises mediator; pre-election if mediator lost | PC/EC: up to 11 ms RTT between arrays; loser of mediator race stops serving the pod[^19] | Six nines availability, installed base (company-stated)[^9] |
-| NetApp SnapMirror active sync / MetroCluster | ONTAP Mediator; Cloud Mediator from ONTAP 9.17.1 [VERIFY: search-summary only] | PC/EC; automatic unplanned failover via mediator[^20] | See [Chapter 6](../01-storage-fundamentals/06-data-protection-and-resilience.md) |
+| NetApp SnapMirror active sync / MetroCluster | ONTAP Mediator; ONTAP Cloud Mediator for SnapMirror active sync from ONTAP 9.17.1[^20] | PC/EC; automatic unplanned failover via mediator[^21] | See [Chapter 6](../01-storage-fundamentals/06-data-protection-and-resilience.md) |
 | Ceph | Paxos monitors hold cluster map; CRUSH places data by failure domain | PC/EC inside a cluster; multisite asynchronous | Depends on pool rule and EC profile[^5] |
 | Amazon S3 / DynamoDB | Replicated metadata; DynamoDB Multi-Paxos per partition | Strong within region; cross-region asynchronous | S3: designed for 11 nines[^10][^1] |
 | Dynamo-style (Cassandra) | Leaderless quorums, tunable N/W/R | PA/EL by default; PC with QUORUM settings | Operator-defined |
 
 *Table 20.3 — Nearly everyone converges on strong consistency inside a site and a witness for two-site clusters; claims differ in whether they are measured (availability) or modelled (durability).*
 
-Everpure's distinctive choice was a cloud-hosted witness, removing the need for a third site[^19]. Steelman for rivals: NetApp now ships a cloud mediator too, and Dell's SRDF family has three decades of deployments. An option a strategy team might evaluate, based on public information: publishing durability assumptions beside availability telemetry, making a modelled number defensible.
+Everpure's distinctive choice was a cloud-hosted witness, removing the need for a third site[^19]. Steelman for rivals: NetApp has shipped a cloud mediator since ONTAP 9.17.1[^20], and Dell's SRDF family has three decades of deployments. An option a strategy team might evaluate, based on public information: publishing durability assumptions beside availability telemetry, making a modelled number defensible.
 
 ## History and trajectory
 
@@ -241,4 +241,5 @@ Direction: strong consistency wherever latency allows, wider codes with decluste
 [^17]: D. Ford et al., "Availability in Globally Distributed Storage Systems," USENIX OSDI 2010, 2010-10. https://www.usenix.org/conference/osdi10/availability-globally-distributed-storage-systems (retrieved via search 2026-11-01).
 [^18]: A. Cidon et al., "Copysets: Reducing the Frequency of Data Loss in Cloud Storage," USENIX ATC 2013, 2013-06. https://www.usenix.org/conference/atc13/technical-sessions/presentation/cidon (retrieved via search 2026-11-01).
 [^19]: Everpure Support, "ActiveCluster Introduction," n.d. https://support.everpuredata.com/r/activecluster/activecluster-introduction (retrieved via search 2026-11-01).
-[^20]: NetApp, "SnapMirror active sync overview" (ONTAP documentation), n.d. https://docs.netapp.com/us-en/ontap/snapmirror-active-sync/ (retrieved via search 2026-11-01).
+[^20]: NetApp, "What's new in ONTAP 9.17.1" (ONTAP release notes), n.d. https://docs.netapp.com/us-en/ontap/release-notes/whats-new-9171.html (retrieved 2026-11-01; seen via search summary).
+[^21]: NetApp, "SnapMirror active sync overview" (ONTAP documentation), n.d. https://docs.netapp.com/us-en/ontap/snapmirror-active-sync/ (retrieved via search 2026-11-01).

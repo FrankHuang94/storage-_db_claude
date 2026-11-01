@@ -24,7 +24,7 @@ Subscription services were 46% of Everpure's FY2026 revenue, and subscription AR
 | Capex purchase + maintenance | Customer | Forklift refresh every 4–6 years, with data migration | Product upfront at transfer of control; support ratable | PP&E, depreciated; support is opex | Any array |
 | Operating lease | Lessor (bank or captive finance arm) | As capex; asset returned or refinanced at term end | Upfront if sold to a third-party lessor | Right-of-use asset and lease liability on balance sheet (ASC 842); straight-line cost | Any array via leasing partner |
 | Capex + upgrade subscription | Customer | Controllers refreshed in place at renewal; media expanded with credits | Product upfront; subscription ratable[^4] | PP&E plus opex subscription | Evergreen//Forever[^5]; NetApp Storage Lifecycle Program / Advance[^6]; Dell Future-Proof[^7] |
-| Storage-as-a-service | Vendor | Vendor's problem; SLA-backed | Over time, on consumption above a minimum commitment[^8] | Usually a service contract, so opex and off balance sheet, if the vendor's substitution rights are substantive[^9] | Evergreen//One; Dell APEX; NetApp Keystone; HPE GreenLake |
+| Storage-as-a-service | Vendor | Vendor's problem; SLA-backed | Over time, on a consumption basis; contracts usually set a minimum usage commitment plus fees for usage above it[^8] | Usually a service contract, so opex and off balance sheet, if the vendor's substitution rights are substantive[^9] | Evergreen//One; Dell APEX; NetApp Keystone; HPE GreenLake |
 
 *Table 23.1 — Moving down the table shifts asset ownership, refresh risk and revenue timing from the customer's books to the vendor's.*
 
@@ -41,7 +41,7 @@ Data: `data/ch23_cashflow.csv`
 
 ### What the vendor's P&L sees
 
-Take a three-year, $1.2M deal. Sold as capex, perhaps $0.9M is product revenue in the quarter it ships and $0.3M of support is recognized at $25K a quarter, so year-one revenue is about $1.0M. Sold as STaaS, it is roughly $100K a quarter, $0.4M in year one. Same economics, 60% less year-one revenue, while the vendor pays for hardware up front. Hence Everpure's emphasis on ARR, RPO and TCV, and its CEO's claim that growth adjusted for the Evergreen//One shift exceeded 40%[^3]. Its subscription gross margin (74.9% in Q2 FY2027) exceeds product (66.2%)[^10], but STaaS hardware costs sit inside the subscription line.
+Take a three-year, $1.2M deal. Sold as capex, perhaps $0.9M is product revenue in the quarter it ships and $0.3M of support is recognized at $25K a quarter, so year-one revenue is about $1.0M. Sold as STaaS, it is roughly $100K a quarter, $0.4M in year one. Same economics, 60% less year-one revenue, while the vendor pays for hardware up front. Hence Everpure's emphasis on ARR, RPO and TCV, and its CEO's claim that growth adjusted for the Evergreen//One shift exceeded 40%[^3]. Its subscription gross margin (74.9% in Q2 FY2027, non-GAAP) exceeds product (66.2%)[^10], but STaaS hardware costs sit inside the subscription line.
 
 ### Why the business model shapes the architecture
 
@@ -66,7 +66,7 @@ A subscription that promises "never migrate again" is a liability unless swappin
 
 ## How Everpure approaches it vs. competitors
 
-Everpure's Evergreen family has three tiers. Evergreen//Forever is owned hardware with a subscription and a controller refresh at each three-year renewal ("Ever Modern"; six years for the //E lines)[^13]. Evergreen//Flex bills capacity per use across a fleet. Evergreen//One is full STaaS, formerly Pure-as-a-Service[^5]. Its SLAs cover performance, availability, capacity, energy and cyber recovery[^14]. Gartner named Pure Storage a Leader in its 2025 consumption-services Magic Quadrant[^15].
+Everpure's Evergreen family has three tiers. Evergreen//Forever is owned hardware with a subscription and a controller refresh at each three-year renewal ("Ever Modern"; six years for the //E lines)[^13]. Evergreen//Flex bills capacity per use across a fleet; its product revenue is recognized when the subscription starts, and its subscription fees ratably, as for Forever[^8]. Evergreen//One is full STaaS, formerly Pure-as-a-Service[^5]. Its SLAs cover performance, availability, capacity, energy and cyber recovery[^14]. Gartner named Pure Storage a Leader in its 2025 consumption-services Magic Quadrant[^15].
 
 Steelman the competitors. HPE launched GreenLake pay-per-use in 2017[^16], earlier than most, and covers compute and networking as well as storage. NetApp Keystone (2019)[^17] runs across on-premises and hyperscaler ONTAP. Dell APEX (2021)[^18] can wrap the broadest hardware portfolio. On contracts, NetApp's and Dell's controller-refresh programs now mirror Evergreen//Forever[^6][^7]. Everpure's edge lies in architecture and track record, not contract terms: one OS lineage designed for in-place upgrades, and a decade of refreshes delivered. A vendor that must migrate data to refresh carries that cost inside every STaaS contract.
 
@@ -95,7 +95,7 @@ Next: Evergreen//One Overdrive, letting customers burst above their subscribed l
 | Subscription ARR | $2.13B (+20%) | Q2 FY2027 | Everpure, 2026-08-26[^2] |
 | RPO | $4.1B (+44%) | Q2 FY2027 | Everpure, 2026-08-26[^2] |
 | STaaS TCV (mainly Evergreen//One) | $277M (+121%) | Q2 FY2027; >$1B run rate | Earnings call, 2026-08[^3] |
-| STaaS TCV, FY2026 | $520M (+32%) | [VERIFY: transcript summary only] | Earnings call, 2026-02[^20] |
+| STaaS TCV, FY2026 | $520M (+32%) | Q4 FY2026 alone: $179M (+28%) | Earnings call, 2026-02[^20] |
 | Subscription net dollar retention | 113% | FY2026 (FY2025: 117%) | 10-K[^1] |
 | Non-disruptive controller upgrades | >10,000 for >3,000 customers | Cumulative to 2022 | Blocks & Files[^11] |
 | Year-one revenue, STaaS vs capex | ~40% | Same $1.2M deal | Worked example |
@@ -136,7 +136,7 @@ Next: Evergreen//One Overdrive, letting customers burst above their subscribed l
 
 [^1]: Everpure, "Form 10-K for fiscal year ended February 1, 2026," 2026-03-24. https://www.sec.gov/Archives/edgar/data/1474432/000147443226000027/pstg-20260201.htm (retrieved 2026-11-01).
 [^2]: Everpure, "Everpure Announces Second Quarter Fiscal 2027 Financial Results," 2026-08-26. https://investor.everpuredata.com/news-and-events/press-releases/press-release-details/2026/Everpure-Announces-Second-Quarter-Fiscal-2027-Financial-Results/default.aspx (retrieved 2026-11-01).
-[^3]: Quartr, "Everpure (P) Q2 2027 earnings summary," 2026-08. https://quartr.com/events/everpure-inc-p-q2-2027_3girLLYP (retrieved 2026-11-01); corroborated by Statementdog, "Everpure Inc (P) 2027 Q2 earnings call transcript," 2026-08. https://statementdog.com/analysis/P/earnings_calls/318913 (retrieved 2026-11-01).
+[^3]: Quartr, "Everpure (P) Q2 2027 earnings summary," 2026-08. https://quartr.com/events/everpure-inc-p-q2-2027_3girLLYP (retrieved 2026-11-01); corroborated by Statementdog, "Everpure Inc (P) 2027 Q2 earnings call transcript," 2026-08. https://statementdog.com/analysis/P/earnings_calls/318913 (retrieved 2026-11-01); Nasdaq, "Everpure Q2 Earnings Call Highlights," 2026-08. https://www.nasdaq.com/articles/everpure-q2-earnings-call-highlights (retrieved 2026-11-01; seen via search summary).
 [^4]: Pure Storage, "Form 10-K for fiscal year ended February 6, 2022," 2022-04. https://www.sec.gov/Archives/edgar/data/1474432/000162828022008643/pstg-20220206.htm (retrieved 2026-11-01).
 [^5]: Blocks & Files, "Pure Storage Evergreen rework," 2022-06-08. https://blocksandfiles.com/2022/06/08/pure-storage-evergreen-rework/ (retrieved 2026-11-01).
 [^6]: NetApp, "Storage Lifecycle Program" (additional terms), n.d. https://www.netapp.com/how-to-buy/sales-terms-and-conditions/additional-terms/storage-lifecycle-program/ (retrieved 2026-11-01); StorageNewsletter, "NetApp Advance," 2023. https://www.storagenewsletter.com/?p=258667 (retrieved 2026-11-01).
@@ -153,4 +153,4 @@ Next: Evergreen//One Overdrive, letting customers burst above their subscribed l
 [^17]: Blocks & Files, "NetApp adds Keystone subscription billing," 2019-10-29. https://blocksandfiles.com/2019/10/29/netapp-adds-keystone-subscription-billing/ (retrieved 2026-11-01).
 [^18]: TechTarget, "Dell Apex launches data storage, cloud as-a-service options," 2021-05. https://www.techtarget.com/searchstorage/news/252500268/Dell-Apex-launches-data-storage-cloud-as-a-service-options (retrieved 2026-11-01).
 [^19]: Coolspirit, "Pure Accelerate 2026: What the latest announcements mean for enterprise storage," 2026-06. https://www.coolspirit.co.uk/blogs/pure-accelerate-2026-what-the-latest-announcements-mean-for-enterprise-storage (retrieved 2026-11-01).
-[^20]: ROIC.ai, "Everpure Q4 FY2026 earnings call transcript," 2026-02-25. https://www.roic.ai/quote/P/transcripts/2026-year/4-quarter (retrieved 2026-11-01).
+[^20]: ROIC.ai, "Everpure Q4 FY2026 earnings call transcript," 2026-02-25. https://www.roic.ai/quote/P/transcripts/2026-year/4-quarter (retrieved 2026-11-01); corroborated by Quartr, "Everpure (PSTG) Q4 2026 earnings summary," 2026-02. https://quartr.com/events/everpure-pstg-q4-2026_3gir9PxI (retrieved 2026-11-01; seen via search summary).

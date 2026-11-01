@@ -82,16 +82,16 @@ sequenceDiagram
 
 *Figure 22.3 — Declarative automation means the engineer names an outcome and the control plane chooses the array, so placement logic becomes the vendor's product.*
 
-Pure Fusion's presets bundle QoS, protection and tags into a fleet-wide template[^8]. In September 2025 Everpure announced cross-array provisioning through storage classes[^9]. Automation hooks include a Terraform provider for Fusion[^10], certified Ansible collections[^11] and Portworx CSI for Kubernetes[^12]. The buyer changes: platform engineering teams judge API coverage, idempotency and provider maturity; a slick GUI matters less. CSI is double-edged. It makes arrays substitutable behind one Kubernetes interface, so differentiation must live above it, in fleet policy.
+Pure Fusion's presets bundle QoS, protection and tags into a fleet-wide template[^8]. In September 2025 Pure Storage (now Everpure) announced cross-array provisioning through storage classes[^9]. Automation hooks include a Terraform provider for Fusion (the newest release found dates from 2023 and targets the original Fusion service)[^10], certified Ansible collections[^11] and Portworx CSI for Kubernetes[^12]. The buyer changes: platform engineering teams judge API coverage, idempotency and provider maturity; a slick GUI matters less. CSI is double-edged. It makes arrays substitutable behind one Kubernetes interface, so differentiation must live above it, in fleet policy.
 
 ## How Everpure approaches it vs. competitors
 
 | Vendor | Telemetry / AIOps | Fleet control plane | Automation surface | AI layer (2024–26) |
 |---|---|---|---|---|
-| Everpure | Pure1; META analytics since 2017[^3] | Fusion, embedded in Purity since 2024[^13]; covers FlashArray, FlashBlade, Cloud Dedicated[^14] | REST, Terraform, Ansible, Portworx CSI[^10][^11][^12] | Pure1 AI Copilot (2024)[^15]; MCP integration slated Q4 FY26[^9] |
-| Dell | APEX AIOps Infrastructure Observability (ex-CloudIQ, 2024)[^16] | Per-platform managers plus APEX AIOps | Terraform providers, open-source CSI and CSM modules[^17] | APEX AIOps Incident Management (ex-Moogsoft)[^18] |
-| NetApp | Data Infrastructure Insights (ex-Cloud Insights, Sept 2024)[^19] | NetApp Console (ex-BlueXP, Oct 2025)[^20] spans on-prem and hyperscaler ONTAP | ONTAP REST, Ansible, Trident CSI | Console-integrated services |
-| HPE | InfoSight (via Nimble, 2017)[^6] | GreenLake cloud console (Data Services Cloud Console, 2021)[^21] | Unified API, CSI driver | GreenLake Intelligence, agentic with MCP (June 2025)[^22] |
+| Everpure | Pure1; META analytics since 2017[^3] | Fusion, embedded in Purity since 2024[^13]; covers FlashArray, FlashBlade, Cloud Dedicated[^14] | REST, Terraform, Ansible, Portworx CSI[^10][^11][^12] | Pure1 AI Copilot (2024)[^15]; MCP support announced 2025[^9]; Pure1 Manage MCP server for third-party AI clients (2026)[^16] |
+| Dell | Dell AIOps (ex-CloudIQ; branded APEX AIOps Infrastructure Observability from 2024)[^17][^18] | Per-platform managers plus APEX AIOps | Terraform providers, open-source CSI and CSM modules[^19] | AIOps Incident Management (ex-Moogsoft)[^20] |
+| NetApp | Data Infrastructure Insights (ex-Cloud Insights, Sept 2024)[^21] | NetApp Console (ex-BlueXP, Oct 2025)[^22] spans on-prem and hyperscaler ONTAP | ONTAP REST, Ansible, Trident CSI | Console-integrated services |
+| HPE | InfoSight (via Nimble, 2017)[^6] | GreenLake cloud console (Data Services Cloud Console, 2021)[^23] | Unified API, CSI driver | GreenLake Intelligence, agentic with MCP (June 2025)[^24] |
 
 *Table 22.1 — Every major vendor now has cloud telemetry, a fleet console, IaC hooks and a copilot; the difference is how unified the policy layer is.*
 
@@ -99,7 +99,7 @@ Everpure's distinctive choice is putting Fusion inside the array OS, so there is
 
 ## History and trajectory
 
-Per-array element managers gave way to cloud analytics (Nimble InfoSight, Pure1) and ML prediction (Pure1 META, 2017), then cloud consoles (HPE 2021), then policy control planes (Fusion embedded 2024; Enterprise Data Cloud 2025). The 2025–26 signal is agentic: Pure1's copilot and HPE's GreenLake Intelligence both expose MCP so AI agents can query and act on fleets[^9][^22]. The open question is how much write access customers will grant an agent.
+Per-array element managers gave way to cloud analytics (Nimble InfoSight, Pure1) and ML prediction (Pure1 META, 2017), then cloud consoles (HPE 2021), then policy control planes (Fusion embedded 2024; Enterprise Data Cloud 2025). The 2025–26 signal is agentic: Pure1's copilot and HPE's GreenLake Intelligence both expose MCP so AI agents can query and act on fleets[^9][^24]. The open question is how much write access customers will grant an agent.
 
 ## Numbers that matter
 
@@ -109,7 +109,7 @@ Per-array element managers gave way to cloud analytics (Nimble InfoSight, Pure1)
 | Sev-1 incidents prevented | >500 | Company-stated, cumulative to 2017 | BigDATAwire, 2017[^4] |
 | HPE InfoSight auto-resolution | 86% of issues | Company-stated; Nimble installed base | HPE[^7] |
 | HPE price for Nimble | ~$1.0B net cash | InfoSight a core rationale | HPE, 2017-04-17[^6] |
-| Phone-home interval | ~30 seconds | Third-party review [VERIFY: not in Everpure docs] | iThome[^23] |
+| Phone-home interval | ~30 seconds | Third-party review [VERIFY: not in Everpure docs] | iThome[^25] |
 | Rare-fault observations | 0.1 vs 5 per year | 1,000- vs 50,000-array fleet, 1-in-10,000 fault | Worked example |
 
 ## Conversation playbook
@@ -163,11 +163,13 @@ Per-array element managers gave way to cloud analytics (Nimble InfoSight, Pure1)
 [^13]: TechTarget, "Pure Storage adds AI and automation, extends SLAs," 2024-06. https://www.techtarget.com/searchStorage/news/366589453/Pure-Storage-adds-AI-and-automation-extends-SLAs (retrieved 2026-11-01).
 [^14]: Pure Storage, "Pure Fusion: Powering the Enterprise Data Cloud" (white paper), 2025. https://www.purestorage.com/content/dam/pdf/en/white-papers/wp-pure-fusion-powering-the-enterprise-data-cloud.pdf (retrieved 2026-11-01).
 [^15]: ITPro, "Pure Storage looks to 'fundamentally change' cloud storage management with new AI copilot tool," 2024-06. https://itpro.com/cloud/cloud-storage/pure-storage-looks-to-fundamentally-change-cloud-storage-management-with-new-ai-copilot-tool (retrieved 2026-11-01).
-[^16]: Dell Technologies Info Hub, "Talking CloudIQ: Now we're talking APEX AIOps Infrastructure Observability," 2024-07. https://infohub.delltechnologies.com/en-au/p/talking-cloudiq-now-we-re-talking-apex-aiops-infrastructure-observability (retrieved 2026-11-01).
-[^17]: Dell Technologies, "Terraform Providers" (solution brief), n.d. https://www.delltechnologies.com/asset/en-ie/solutions/infrastructure-solutions/briefs-summaries/terraform-providers-solution-brief.pdf (retrieved 2026-11-01); Dell, "terraform-provider-powerscale" (GitHub), n.d. https://github.com/dell/terraform-provider-powerscale (retrieved 2026-11-01).
-[^18]: Dell Technologies, "Moogsoft APEX AIOps rebranding notice," 2024-05-21. https://www.delltechnologies.com/asset/en-us/solutions/apex/templates-forms/moogsoft-apex-aiops-rebranding-notice.pdf (retrieved 2026-11-01).
-[^19]: NetApp, "Cloud Insights is now Data Infrastructure Insights," 2024-09. https://www.netapp.com/blog/cloud-insights-now-data-infrastructure-insights/ (retrieved 2026-11-01).
-[^20]: NetApp, "BlueXP is now NetApp Console," 2025-10-14. https://www.netapp.com/product-updates/new-console-centralized-data-management (retrieved 2026-11-01).
-[^21]: HPE, "Hewlett Packard Enterprise expands HPE GreenLake with breakthrough storage as-a-service business transformation," 2021-05-04. https://www.hpe.com/us/en/newsroom/press-release/2021/05/hewlett-packard-enterprise-expands-hpe-greenlake-with-breakthrough-storage-as-a-service-business-transformation.html (retrieved 2026-11-01).
-[^22]: HPE, "HPE reimagines hybrid IT operations with GreenLake Intelligence," 2025-06. https://www.hpe.com/us/en/newsroom/press-release/2025/06/hpe-reimagines-hybrid-it-operations-with-greenlake-intelligence.html (retrieved 2026-11-01).
-[^23]: iThome, review of Pure Storage FlashArray and Pure1 (Traditional Chinese), n.d. https://www.ithome.com.tw/review/129885 (retrieved 2026-11-01).
+[^16]: Everpure blog, "Pure1, now agentic," n.d. (2026). https://blog.everpuredata.com/products/pure1-now-agentic/ (retrieved 2026-11-01; seen via search summary, host not fetchable).
+[^17]: Dell Technologies Info Hub, "Talking CloudIQ: Now we're talking APEX AIOps Infrastructure Observability," 2024-07. https://infohub.delltechnologies.com/en-au/p/talking-cloudiq-now-we-re-talking-apex-aiops-infrastructure-observability (retrieved 2026-11-01).
+[^18]: Dell Technologies Support, "Dell AIOps (formerly CloudIQ)" product support articles, n.d. (2026). https://www.dell.com/support/product-details/en-us/product/cloud-iq/resources/articles (retrieved 2026-11-01; seen via search summary).
+[^19]: Dell Technologies, "Terraform Providers" (solution brief), n.d. https://www.delltechnologies.com/asset/en-ie/solutions/infrastructure-solutions/briefs-summaries/terraform-providers-solution-brief.pdf (retrieved 2026-11-01); Dell, "terraform-provider-powerscale" (GitHub), n.d. https://github.com/dell/terraform-provider-powerscale (retrieved 2026-11-01).
+[^20]: Dell Technologies, "Moogsoft APEX AIOps rebranding notice," 2024-05-21. https://www.delltechnologies.com/asset/en-us/solutions/apex/templates-forms/moogsoft-apex-aiops-rebranding-notice.pdf (retrieved 2026-11-01).
+[^21]: NetApp, "Cloud Insights is now Data Infrastructure Insights," 2024-09. https://www.netapp.com/blog/cloud-insights-now-data-infrastructure-insights/ (retrieved 2026-11-01).
+[^22]: NetApp, "BlueXP is now NetApp Console," 2025-10-14. https://www.netapp.com/product-updates/new-console-centralized-data-management (retrieved 2026-11-01).
+[^23]: HPE, "Hewlett Packard Enterprise expands HPE GreenLake with breakthrough storage as-a-service business transformation," 2021-05-04. https://www.hpe.com/us/en/newsroom/press-release/2021/05/hewlett-packard-enterprise-expands-hpe-greenlake-with-breakthrough-storage-as-a-service-business-transformation.html (retrieved 2026-11-01).
+[^24]: HPE, "HPE reimagines hybrid IT operations with GreenLake Intelligence," 2025-06. https://www.hpe.com/us/en/newsroom/press-release/2025/06/hpe-reimagines-hybrid-it-operations-with-greenlake-intelligence.html (retrieved 2026-11-01).
+[^25]: iThome, review of Pure Storage FlashArray and Pure1 (Traditional Chinese), n.d. https://www.ithome.com.tw/review/129885 (retrieved 2026-11-01).

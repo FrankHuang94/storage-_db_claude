@@ -38,7 +38,7 @@ def build(out_dir: Path) -> Path:
     axes, scores = _load()
     n = len(axes)
     angles = [2 * math.pi * i / n for i in range(n)]
-    fig, panels = plt.subplots(1, 4, figsize=(15, 4.9), subplot_kw={"projection": "polar"})
+    fig, panels = plt.subplots(1, 4, figsize=(16, 5.4), subplot_kw={"projection": "polar"})
     for ax, vendor in zip(panels, VENDORS):
         # faint outlines of the other three vendors for comparison
         for other in VENDORS:
@@ -51,7 +51,10 @@ def build(out_dir: Path) -> Path:
         ax.plot(angles + angles[:1], vals + vals[:1], color=COLORS[vendor], linewidth=2.4,
                 linestyle=STYLES[vendor])
         ax.fill(angles + angles[:1], vals + vals[:1], color=COLORS[vendor], alpha=0.22)
+        ax.set_theta_offset(math.pi / 2)
+        ax.set_theta_direction(-1)
         ax.set_ylim(0, 5)
+        ax.set_rlabel_position(200)
         ax.set_yticks([1, 2, 3, 4, 5])
         ax.set_yticklabels(["1", "2", "3", "4", "5"], fontsize=8, color="#777777")
         ax.set_xticks(angles)
@@ -59,7 +62,7 @@ def build(out_dir: Path) -> Path:
                             .replace("benchmark ", "benchmark\n").replace("Capacity ", "Capacity\n")
                             .replace("Deployment ", "Deployment\n").replace("Platform ", "Platform\n")
                             .replace("Proven ", "Proven\n") for a in axes], fontsize=8.5)
-        ax.tick_params(axis="x", pad=6)
+        ax.tick_params(axis="x", pad=10)
         ax.set_title(vendor, fontsize=12, fontweight="bold", color=COLORS[vendor], pad=22)
         ax.grid(color=_style.GRID)
     fig.suptitle("Atlas judgment, not measured data: four AI-storage platforms scored 1-5 on eight axes (Nov 2026)",
