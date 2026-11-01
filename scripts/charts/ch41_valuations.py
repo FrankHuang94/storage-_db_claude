@@ -45,7 +45,7 @@ def build(out_dir: Path) -> Path:
         for x, v, lab in pts:
             stated = lab == "company-stated"
             ax1.scatter(x, v, s=80, zorder=2, color=color if stated else "white", edgecolor=color, linewidth=1.8)
-            ax1.annotate(f"\\${v:g}B", (x, v), textcoords="offset points", xytext=(0, 9), ha="center", fontsize=9)
+            ax1.annotate(f"\\${v:g}B", (x, v), textcoords="offset points", xytext=(0, 9) if stated else (-16, -16), ha="center", fontsize=9)
         ax1.text(pts[-1][0] + 0.15, pts[-1][1], co, color=color, fontsize=11, fontweight="bold", va="center")
     ax1.set_yscale("log")
     ax1.set_ylim(0.4, 80)

@@ -57,7 +57,7 @@ def build(out_dir: Path) -> Path:
             if status != "sourced":  # hollow overlay for unverified / company-stated points
                 ax.plot([x], [v], marker=st["marker"], markersize=4, color="white", linestyle="none", zorder=4)
             dy = 7 if name != "512Gb TLC wafer spot (TrendForce)" else -14
-            if per in ("Mar 2026", "Aug 2026"):
+            if per in ("Mar 2026", "Aug 2026", "Jan 2012", "Jan 2021"):
                 continue
             ax.annotate(f"{_fmt(v)}\n{per}", (x, v), xytext=(4, dy), textcoords="offset points", fontsize=7.5,
                         color=st["color"])

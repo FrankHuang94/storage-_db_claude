@@ -5,11 +5,11 @@
 
 ## TL;DR
 
-- **The biggest challenger is the hyperscalers' own storage.** S3 alone holds more than 500 trillion objects. Data born in the cloud and kept there is never put out to bid for an array vendor.
-- **Hammerspace is the most strategic of the smaller players.** It sells a pNFS global namespace that sits *above* everyone's arrays, plus "Tier 0", which turns idle NVMe in GPU servers into shared storage. If it wins, the array underneath becomes interchangeable.
-- **Open-source object broke in 2025–2026.** MinIO gutted its free edition and archived the repository in April 2026, pushing users to paid AIStor, Ceph or forks. That opens the door for any vendor with a supported S3 offering.
-- **Software-defined and platform vendors win on control and cost, not peak speed.** Ceph, Lightbits and Nutanix suit buyers who want to own their hardware or leave VMware. Nutanix is both Everpure's partner and its rival.
-- **Qumulo, Cloudian, VDURA and Lenovo-owned Infinidat are niche threats.** Each has a defensible base. None is likely to displace Everpure broadly, but each caps its share in one segment.
+- **The biggest challenger is the hyperscalers' own storage.** S3 alone holds over 500 trillion objects; cloud-born data rarely goes out to bid.
+- **Hammerspace is the most strategic of the smaller players.** Its pNFS global namespace sits *above* everyone's arrays, and "Tier 0" turns idle GPU-server NVMe into shared storage. If it wins, arrays become interchangeable.
+- **Open-source object broke in 2025–2026.** MinIO gutted its free edition and archived the repository in April 2026, pushing users to paid AIStor, Ceph, forks or supported S3 from other vendors.
+- **Software-defined and platform vendors win on control and cost, not peak speed.** Ceph, Lightbits and Nutanix suit buyers who want to own hardware or leave VMware; Nutanix is also an Everpure partner.
+- **Qumulo, Cloudian, VDURA and Lenovo-owned Infinidat are niche threats.** Each has a defensible base and caps Everpure's share in one segment.
 
 ## Why this matters for Everpure strategy
 
@@ -60,11 +60,11 @@ flowchart LR
 
 ### Hammerspace: a namespace over everyone's storage
 
-Hammerspace separates *where a file appears* from *where its bytes live*. Metadata servers (Anvil) hold one global namespace. Data-services nodes (DSX) and existing NFS, object or cloud storage hold the bytes[^1]. Clients run the stock Linux NFSv4.2 client with the pNFS **Flex Files** layout: they get a layout from the metadata server, then do I/O directly against storage nodes ([Chapter 8](../02-protocols-and-networking/08-file-protocols.md)). Policies ("objectives") move files between tiers and sites while they stay open, because only the layout changes, not the file's identity.
+Hammerspace separates *where a file appears* from *where its bytes live*. Metadata servers (Anvil) hold one global namespace. Data-services nodes (DSX) and existing NFS, object or cloud storage hold the bytes[^1]. Clients run the stock Linux NFSv4.2 client with the pNFS **Flex Files** layout: they get a layout from the metadata server, then do I/O directly against storage nodes ([Chapter 8](../02-protocols-and-networking/08-file-protocols.md)). Policies ("objectives") move open files between tiers and sites; only the layout changes.
 
-**Semiconductor bridge.** This is virtual memory for files. The namespace is the page table, and moving data is like migrating a page from DRAM to CXL memory while the application keeps its address. Hammerspace's moat is that its "MMU" lives in the Linux kernel. Its CTO, Trond Myklebust, maintains the upstream Linux NFS client[^2], and influence over the client everyone already runs is hard to copy.
+**Semiconductor bridge.** This is virtual memory for files. The namespace is the page table; moving data is migrating a page from DRAM to CXL memory while the application keeps its address. The moat is that the "MMU" lives in the Linux kernel: CTO Trond Myklebust maintains the upstream Linux NFS client[^2].
 
-**Tier 0.** Launched in November 2024, Tier 0 pools the local NVMe inside GPU servers into a shared, protected tier of the same namespace[^3]. GPU nodes are grouped into volume groups and availability zones and protected by client-side mirroring. Client-side erasure coding is on the roadmap[^4]. Version 5.2 added "affinitization", which writes a client's data to its own local Tier 0 volume[^5].
+**Tier 0.** Launched in November 2024, Tier 0 pools the local NVMe inside GPU servers into a shared, protected tier of the same namespace[^3]. Protection is client-side mirroring across availability zones; client-side erasure coding is roadmap[^4]. Version 5.2 added "affinitization", which writes a client's data to its own local Tier 0 volume[^5].
 
 ```mermaid
 flowchart TB
@@ -90,15 +90,15 @@ flowchart TB
 
 *Figure 47.2 — Hammerspace keeps file identity in one metadata layer and moves bytes freely across GPU-local NVMe, existing arrays, object and cloud, so the array becomes one tier among several.*
 
-**Worked example (illustrative).** Take 1,000 GPU servers, each with eight 3.84 TB NVMe drives, a common DGX-class configuration. That is 1,000 × 8 × 3.84 TB ≈ **30.7 PB raw**, already paid for and mostly idle, or about 15 PB usable with two-way mirroring. At about 6 GB/s per Gen4 drive, aggregate local bandwidth is 1,000 × 8 × 6 ≈ **48 TB/s**, far more than any shared array in the cluster. The catches: a server reboot takes its drives offline, mirror traffic shares the GPUs' network, and the capacity is stranded on the server refresh cycle. Tier 0 therefore suits checkpoints and scratch data that are later drained to a shared tier ([Chapter 31](../05-ai-storage/31-training-storage.md)).
+**Worked example (illustrative).** Take 1,000 GPU servers with eight 3.84 TB NVMe drives each, a common DGX-class configuration: 1,000 × 8 × 3.84 TB ≈ **30.7 PB raw**, already paid for, or about 15 PB mirrored. At about 6 GB/s per Gen4 drive, aggregate local bandwidth is 1,000 × 8 × 6 ≈ **48 TB/s**, far more than any shared array. The catches: reboots take drives offline, mirror traffic shares the GPU network, and capacity follows the server refresh cycle. So Tier 0 suits checkpoints and scratch, later drained to a shared tier ([Chapter 31](../05-ai-storage/31-training-storage.md)).
 
-**Why it has customers.** Meta is the flagship. Its two 24,576-GPU GenAI clusters used parallel NFS co-developed with Hammerspace, alongside Tectonic[^6]. In April 2025 Hammerspace raised a US$100M Series B led by Altimeter, at a valuation above US$500M (*reported by press*), and talked of an IPO within about two years[^7]. Weak spots: it has no NVIDIA SuperPOD or NVIDIA-Certified Storage designation[^8], and its performance depends on the storage underneath.
+**Why it has customers.** Meta is the flagship. Its two 24,576-GPU GenAI clusters used parallel NFS co-developed with Hammerspace, alongside Tectonic[^6]. In April 2025 Hammerspace raised a US$100M Series B led by Altimeter, at a valuation above US$500M (*reported by press*), and talked of an IPO within about two years[^7]. Weak spots: no NVIDIA SuperPOD or NVIDIA-Certified Storage designation[^8], and performance bounded by the storage underneath.
 
 ### Qumulo and VDURA: file specialists that changed their business model
 
 **Qumulo** sells a scale-out NAS with real-time capacity and activity analytics, popular in media, life sciences and research. Under CEO Doug Gourlay (from July 2024) it moved from its own hardware to software for cloud, on-premises and edge[^9]. Its distinctive asset is **Azure Native Qumulo**, a file service sold and billed inside Azure. In June 2026 it added tooling to migrate legacy NAS data into it, aimed at buyers facing hardware shortages[^10]. Its last priced round was a US$125M Series E at US$1.2B in July 2020 (*company-stated*)[^11] [VERIFY: Qumulo funding since 2020]. Customers value its simplicity and visibility across billions of files, more than peak GPU throughput.
 
-**VDURA** is Panasas, rebranded in May 2024 as a software-first company[^12]. In 2025 it relaunched PanFS as an AI/HPC platform aimed at VAST, WEKA and DDN, with a V5000 all-flash appliance and, from March 2026, hybrid flash-plus-disk options[^13]. It claims one of the largest defense GPU installations (*company-stated*)[^14]. Its appeal is decades of parallel-file-system use at national labs, plus disk economics while flash is expensive. Its risk is scale: funding is unclear [VERIFY: VDURA funding].
+**VDURA** is Panasas, rebranded in May 2024 as a software-first company[^12]. In 2025 it relaunched PanFS as an AI/HPC platform aimed at VAST, WEKA and DDN, with a V5000 all-flash appliance and, from March 2026, hybrid flash-plus-disk options[^13]. It claims one of the largest defense GPU installations (*company-stated*)[^14]. It offers lab-proven PanFS and disk economics while flash is dear; its risk is scale [VERIFY: VDURA funding].
 
 ### MinIO: the open-source object store that closed itself
 
@@ -108,13 +108,13 @@ MinIO became the default S3-compatible store for developers, Kubernetes and many
 2. **Late 2025:** official binaries and images stopped updating [VERIFY: reported as October 2025]. On 3 December 2025 the project entered maintenance mode, with security fixes only case by case[^17].
 3. **2026:** the README was changed to say the repository is no longer maintained (reportedly 12 February [VERIFY: date]). GitHub shows `minio/minio` **archived on 25 April 2026**. The AGPLv3 source remains readable, and the README points to AIStor Free and AIStor Enterprise[^18].
 
-**Semiconductor bridge.** It resembles a licensor changing terms after an ecosystem has standardized on its architecture: licensees pay, fork or port. Community forks appeared[^19], and the obvious ports are Ceph RGW and commercial S3 stores.
+**Semiconductor bridge:** a licensor changing terms after an ecosystem standardized on its architecture. Licensees pay, fork[^19] or port, here to Ceph RGW or commercial S3.
 
-AIStor itself is serious: it shipped S3 over RDMA in November 2024[^20], and MinIO is an NVIDIA STX partner[^21]. **Worked example:** a neocloud migrating 50 PB off community MinIO at a sustained 100 GB/s needs 50 × 10¹⁵ ÷ 10¹¹ = 500,000 s ≈ **5.8 days** of saturated copying. With verification, cut-over and production load it becomes weeks. That friction is why many will pay MinIO rather than leave.
+AIStor itself is serious: it shipped S3 over RDMA in November 2024[^20], and MinIO is an NVIDIA STX partner[^21]. **Worked example:** a neocloud migrating 50 PB off community MinIO at a sustained 100 GB/s needs 50 × 10¹⁵ ÷ 10¹¹ = 500,000 s ≈ **5.8 days** of saturated copying. With verification and cut-over it takes weeks, so many will simply pay MinIO.
 
 ### Cloudian and Ceph: object for people who want control
 
-**Cloudian HyperStore** is S3-native object storage sold as software or appliances, including through HPE GreenLake, and strong with regulated on-premises buyers. In June 2024 it raised US$23M of growth financing from Morgan Stanley Expansion Capital, citing 30% ARR growth, breakeven and about US$256M raised in total (*company-stated*)[^22]. It was early to GPUDirect for object, claiming over 200 GB/s in November 2024[^23]. Its HyperScale AI Data Platform puts vector search in the storage layer[^24], and HyperStore 8.2.6 became NVIDIA-Certified (Foundation) in March 2026[^25].
+**Cloudian HyperStore** is S3-native object storage sold as software or appliances, including through HPE GreenLake, and strong with regulated on-premises buyers. In June 2024 it raised US$23M of growth financing from Morgan Stanley Expansion Capital, citing 30% ARR growth, breakeven and about US$256M raised in total (*company-stated*)[^22]. It was early to GPUDirect for object, claiming over 200 GB/s in November 2024[^23]. Its HyperScale AI Data Platform adds in-storage vector search[^24]; HyperStore 8.2.6 became NVIDIA-Certified (Foundation) in March 2026[^25].
 
 **Ceph** is the Linux of storage: one open-source system for block (RBD), file (CephFS) and object (RGW), free as code and costly to run well. Clyso tuned a 68-node NVMe cluster past 1 TiB/s, fighting laggy placement groups on the way[^26], which shows both the ceiling and the skill required. It is commercialized three ways:
 
@@ -122,13 +122,13 @@ AIStor itself is serious: it shipped S3 over RDMA in November 2024[^20], and Min
 - **Software and support specialists**, Croit (management software and support) and Clyso (engineering and consulting).
 - **Hardware integrators** such as 45Drives, which ships servers with its Houston management UI for Ceph deployment[^28].
 
-Think RISC-V: the ISA is free and the value goes to whoever makes it reliable. Buyers are telcos, universities, sovereign clouds and neoclouds that prize freedom from lock-in and have engineers.
+Think RISC-V: the ISA is free and value goes to whoever makes it reliable. Buyers are telcos, universities, sovereign clouds and neoclouds with engineers to spare.
 
 ### Block and platform: Lightbits, Infinidat, Nutanix
 
-**Lightbits** sells software-defined block storage over NVMe/TCP, a standard it helped create ([Chapter 7](../02-protocols-and-networking/07-block-protocols.md)), on commodity servers and ordinary Ethernet. Its showcase is Crusoe, whose AI-cloud block service runs on Lightbits at multi-petabyte scale[^29][^30]. Last disclosed funding was US$42M in 2022 (US$105.3M total)[^31]. Neoclouds use it to build an EBS-like service on their own hardware.
+**Lightbits** sells software-defined block storage over NVMe/TCP, a standard it helped create ([Chapter 7](../02-protocols-and-networking/07-block-protocols.md)), on commodity servers and ordinary Ethernet. Its showcase is Crusoe, whose AI-cloud block service runs on Lightbits at multi-petabyte scale[^29][^30]. Last disclosed funding was US$42M in 2022 (US$105.3M total)[^31]. Neoclouds use it to build EBS-like services.
 
-**Infinidat** builds InfiniBox, a high-end block array that serves most reads from DRAM in front of large HDD or flash pools, backed by aggressive guarantees. Lenovo announced the purchase in January 2025 and closed it in April 2026; Infinidat is now a unit of Lenovo's Infrastructure Solutions Group[^32]. Terms were undisclosed, and Calcalist estimated over US$500M (*estimated*)[^33]. The change is distribution: a sub-scale specialist now has a global server sales force behind it.
+**Infinidat** builds InfiniBox, a high-end block array that serves most reads from DRAM in front of large HDD or flash pools, backed by aggressive guarantees. Lenovo announced the purchase in January 2025 and closed it in April 2026; Infinidat is now a unit of Lenovo's Infrastructure Solutions Group[^32]. Terms were undisclosed, and Calcalist estimated over US$500M (*estimated*)[^33]. The change is distribution: Lenovo's global sales force.
 
 **Nutanix** is a platform company. Its storage, Nutanix Unified Storage (Files, Objects, Volumes), ships alongside the AHV hypervisor and NKP, a Kubernetes platform launched in 2024 from the D2iQ acquisition[^34]. The tailwind is Broadcom's VMware licensing changes. Nutanix reported more than 1,000 new logos in fiscal Q2 2026, its best in eight years, mostly ex-VMware [VERIFY: search-summary only][^35], and fiscal 2026 ARR of US$2.55B, up 16%[^36]. The twist is that AHV now accepts external arrays: Dell PowerFlex, Pure Storage FlashArray over NVMe/TCP (May 2025), then NetApp ONTAP and Dell PowerStore[^37][^38]. NUS also became NVIDIA-Certified in 2026[^39].
 
@@ -136,7 +136,7 @@ Think RISC-V: the ISA is free and the value goes to whoever makes it reliable. B
 
 Each hyperscaler sells a full menu: AWS S3, EBS and FSx (Lustre, NetApp ONTAP, OpenZFS, Windows); Azure Blob, Azure NetApp Files and Azure Managed Lustre; Google Cloud Storage and Managed Lustre. S3 alone holds more than 500 trillion objects and serves more than 200 million requests per second across hundreds of exabytes[^40]. They are also moving up the stack: S3 Vectors reached general availability in December 2025[^41].
 
-The parallel is hyperscaler custom silicon: Graviton, Trainium and TPU did not beat merchant chips everywhere, but they took the workloads already in the cloud. Two details matter. First, clouds rent partner technology as a first-party service when that is faster than building it. Google Cloud Managed Lustre runs on DDN EXAScaler and went GA in July 2025[^42], and NetApp's first-party and marketplace cloud storage revenue grew 27% in fiscal Q3 2026[^43]. Second, cloud services now compete on AI performance. Azure Managed Lustre was the first hyperscale cloud service in MLPerf Storage, at 642.2 GiB/s checkpoint write in v3.0[^44]. Google's DAOS-based Parallelstore is reportedly being phased out for Managed Lustre [VERIFY: partner source only][^45].
+The parallel is custom silicon: Graviton, Trainium and TPU did not beat merchant chips everywhere, but took the workloads already in the cloud. First, clouds rent partner technology as a first-party service when that is faster than building it. Google Cloud Managed Lustre runs on DDN EXAScaler and went GA in July 2025[^42], and NetApp's first-party and marketplace cloud storage revenue grew 27% in fiscal Q3 2026[^43]. Second, cloud services now compete on AI performance. Azure Managed Lustre was the first hyperscale cloud service in MLPerf Storage, at 642.2 GiB/s checkpoint write in v3.0[^44]. Google's DAOS-based Parallelstore is reportedly being phased out for Managed Lustre [VERIFY: partner source only][^45].
 
 ## How Everpure approaches it vs. competitors
 
@@ -189,13 +189,13 @@ Events in Figure 47.3 are sourced in the sections above. Three signals stand out
 
 **Questions for a PM**
 
-1. *"When a customer runs Hammerspace over FlashBlade, who owns the account?"* Strong: separates namespace from capacity, cites any joint references, and says what EXA offers that Hammerspace does not.
+1. *"When a customer runs Hammerspace over FlashBlade, who owns the account?"* Strong: separates namespace from capacity and says what EXA adds.
 2. *"How many MinIO community users have we converted since December 2025, and with what?"* Strong: FlashBlade or FlashArray S3, typical size, the rival Ceph or AIStor quote.
-3. *"What share of Nutanix AHV migrations attach FlashArray rather than Nutanix storage?"* Strong: an attach rate or trend, and how Nutanix sellers are paid on each.
+3. *"What share of Nutanix AHV migrations attach FlashArray rather than Nutanix storage?"* Strong: an attach rate and how Nutanix sellers are paid.
 
 **Questions for an engineer**
 
-1. *"What does Tier 0 lose if a GPU server reboots mid-checkpoint, and how does EXA handle that failure?"* Strong: mirror placement across failure domains, rebuild traffic on the GPU fabric, drain-to-shared-tier.
+1. *"What does Tier 0 lose if a GPU server reboots mid-checkpoint, and how does EXA handle that failure?"* Strong: mirror placement, rebuild traffic on the GPU fabric, draining.
 2. *"Where is our S3 slower than Ceph RGW or AIStor on small objects, and why?"* Strong: a measured objects-per-second figure and the metadata-path reason ([Chapter 18](../03-system-architecture/18-object-storage-architecture.md)).
 3. *"Could Purity run as a first-party service on AWS, as ONTAP does in FSx?"* Strong: separates the engineering gap (control plane, multi-tenancy, billing) from the commercial one.
 

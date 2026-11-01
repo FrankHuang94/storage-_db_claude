@@ -245,7 +245,7 @@ NVIDIA's 2025 AI Data Platform launch named Dell, HPE, Hitachi Vantara, IBM and 
 
 1. **KV-cache tiers.** Huawei's M900 and HPE's X10000 offload work show incumbents now competing in [inference context memory](../05-ai-storage/32-inference-and-kv-cache.md), not only training throughput.
 2. **Consolidation.** Expect more incumbent purchases of AI data software, following NetApp's two deals.
-3. **The pricing cycle.** Memory and NAND contract prices kept rising through 2026[^trend]. Part of the growth in Figure 46.4 is likely price, not share ([Chapter 48](48-media-suppliers-and-nand-cycle.md)).
+3. **The pricing cycle.** Memory and NAND contract prices kept rising through 2026[^49]. Part of the growth in Figure 46.4 is likely price, not share ([Chapter 48](48-media-suppliers-and-nand-cycle.md)).
 
 ## Numbers that matter
 
@@ -352,5 +352,5 @@ NVIDIA's 2025 AI Data Platform launch named Dell, HPE, Hitachi Vantara, IBM and 
 [^45]: TrendForce, "Huawei 2025 revenue: cloud revenue slips," 2026-04-01. https://www.trendforce.com/news/2026/04/01/news-huawei-2025-r-cloud-revenue-slips/ (retrieved 2026-11-01).
 [^46]: US Department of Commerce, Bureau of Industry and Security, "Addition of Entities to the Entity List," Federal Register 84 FR 22961, 2019-05-21. https://www.federalregister.gov/documents/2019/05/21/2019-10616/addition-of-entities-to-the-entity-list (retrieved 2026-11-01).
 [^47]: Everpure, "Everpure Announces Second Quarter Fiscal 2027 Financial Results," 2026-08-26. https://investor.everpuredata.com/news-and-events/press-releases/press-release-details/2026/Everpure-Announces-Second-Quarter-Fiscal-2027-Financial-Results/default.aspx (retrieved 2026-11-01).
-[^trend]: TrendForce, "AI Server Demand Sustains Memory Contract Price Increases in 4Q26, While Consumer-Side Pressure Persists," 2026-09-30. https://www.trendforce.com/presscenter/news/20260930-13258.html (retrieved 2026-11-01).
 [^48]: NVIDIA Newsroom, "NVIDIA and Storage Industry Leaders Unveil New Class of Enterprise Infrastructure for the Age of AI," 2025-03-18. https://nvidianews.nvidia.com/news/nvidia-and-storage-industry-leaders-unveil-new-class-of-enterprise-infrastructure-for-the-age-of-ai (retrieved 2026-11-01).
+[^49]: TrendForce, "AI Server Demand Sustains Memory Contract Price Increases in 4Q26, While Consumer-Side Pressure Persists," 2026-09-30. https://www.trendforce.com/presscenter/news/20260930-13258.html (retrieved 2026-11-01).
