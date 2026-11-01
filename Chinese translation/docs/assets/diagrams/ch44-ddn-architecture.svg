@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 720" width="1000" role="img" aria-labelledby="t d" font-family="Inter, Helvetica, Arial, sans-serif">
+  <title id="t">DDN architecture: EXAScaler and Infinia side by side under DDN CORE</title>
+  <desc id="d">Left: EXAScaler, DDN's Lustre distribution. Compute nodes run a Lustre kernel client, cross an LNet fabric (InfiniBand, RoCE or TCP), fetch layouts from the metadata server and then read and write striped data directly from object storage servers, packaged in AI400X-series appliances or delivered as Google Cloud Managed Lustre. Right: Infinia, a software-defined platform in which S3, SDK, KV-cache and limited POSIX access services sit as peers on a distributed key-value store with a hierarchical tenant keyspace, network erasure coding and commodity NVMe servers or cloud instances. Bottom: DDN CORE, a control plane and data fabric announced in November 2025, spans both engines on-premises and in clouds.</desc>
+  <rect x="0" y="0" width="1000" height="720" fill="#FFFFFF"/>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#222222"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="30" y="34" font-size="20" font-weight="700" fill="#222222">DDN: two data engines under one control plane</text>
+  <text x="30" y="56" font-size="13" fill="#555555">Logical view, not to scale. Original drawing for the Everpure Tech Atlas, Chapter 44. Performance notes are vendor claims.</text>
+
+  <!-- Client boxes -->
+  <rect x="30" y="72" width="450" height="52" rx="6" fill="#F3F6F9" stroke="#888888"/>
+  <text x="255" y="94" font-size="14" font-weight="700" text-anchor="middle" fill="#222222">GPU and HPC compute nodes</text>
+  <text x="255" y="113" font-size="12" text-anchor="middle" fill="#222222">each runs the Lustre kernel client (and GPUDirect Storage)</text>
+
+  <rect x="520" y="72" width="450" height="52" rx="6" fill="#F3F6F9" stroke="#888888"/>
+  <text x="745" y="94" font-size="14" font-weight="700" text-anchor="middle" fill="#222222">Inference servers, pipelines, applications</text>
+  <text x="745" y="113" font-size="12" text-anchor="middle" fill="#222222">S3 calls, DDN SDK, NIXL plugin for Dynamo and vLLM</text>
+
+  <!-- ================= LEFT PANEL: EXASCALER ================= -->
+  <rect x="30" y="140" width="450" height="458" rx="8" fill="#FFFFFF" stroke="#CC79A7" stroke-width="2"/>
+  <rect x="30" y="140" width="450" height="38" rx="8" fill="#CC79A7"/>
+  <text x="255" y="165" font-size="16" font-weight="700" text-anchor="middle" fill="#222222">EXAScaler: Lustre, productised</text>
+  <text x="255" y="198" font-size="13" text-anchor="middle" fill="#555555">Built for training, checkpoints and HPC simulation</text>
+
+  <!-- arrows from clients to LNet -->
+  <line x1="70" y1="124" x2="70" y2="210" stroke="#222222" stroke-width="1.6" marker-end="url(#ah)"/>
+  <line x1="440" y1="124" x2="440" y2="210" stroke="#222222" stroke-width="1.6" marker-end="url(#ah)"/>
+
+  <rect x="48" y="212" width="414" height="26" rx="4" fill="#DDDDDD"/>
+  <text x="255" y="230" font-size="12" text-anchor="middle" fill="#222222">LNet fabric: InfiniBand, RoCE or TCP, with RDMA</text>
+
+  <!-- MDS and OSS -->
+  <line x1="150" y1="238" x2="150" y2="256" stroke="#222222" stroke-width="1.6" marker-end="url(#ah)"/>
+  <line x1="360" y1="238" x2="360" y2="256" stroke="#222222" stroke-width="1.6" marker-end="url(#ah)"/>
+  <rect x="48" y="258" width="200" height="86" rx="6" fill="#F7E6F0" stroke="#CC79A7"/>
+  <text x="148" y="280" font-size="14" font-weight="700" text-anchor="middle" fill="#222222">MDS / MDT</text>
+  <text x="148" y="299" font-size="12" text-anchor="middle" fill="#222222">step 1: open, get layout</text>
+  <text x="148" y="316" font-size="12" text-anchor="middle" fill="#222222">namespace, inodes,</text>
+  <text x="148" y="332" font-size="12" text-anchor="middle" fill="#222222">layouts and locks</text>
+
+  <rect x="262" y="258" width="200" height="86" rx="6" fill="#F7E6F0" stroke="#CC79A7"/>
+  <text x="362" y="280" font-size="14" font-weight="700" text-anchor="middle" fill="#222222">OSS / OSTs</text>
+  <text x="362" y="299" font-size="12" text-anchor="middle" fill="#222222">step 2: stripes move directly</text>
+  <text x="362" y="316" font-size="12" text-anchor="middle" fill="#222222">file data as objects,</text>
+  <text x="362" y="332" font-size="12" text-anchor="middle" fill="#222222">many servers in parallel</text>
+
+  <!-- Appliance box -->
+  <rect x="48" y="360" width="414" height="98" rx="6" fill="#FFFFFF" stroke="#888888"/>
+  <text x="255" y="381" font-size="14" font-weight="700" text-anchor="middle" fill="#222222">Packaging: A³I appliances (AI400X2, AI400X3, AI400X3M)</text>
+  <text x="255" y="401" font-size="12" text-anchor="middle" fill="#222222">2U all-NVMe building block running EXAScaler on DDN controllers</text>
+  <text x="255" y="419" font-size="12" text-anchor="middle" fill="#222222">scale bandwidth by adding appliances; hybrid HDD options for capacity</text>
+  <text x="255" y="437" font-size="12" text-anchor="middle" fill="#222222">roughly 90 to 190 GB/s read per box across generations</text>
+
+  <!-- Deployment chips -->
+  <rect x="48" y="472" width="200" height="44" rx="6" fill="#F3F6F9" stroke="#888888"/>
+  <text x="148" y="490" font-size="12" text-anchor="middle" fill="#222222">On-prem: DGX SuperPOD</text>
+  <text x="148" y="506" font-size="12" text-anchor="middle" fill="#222222">reference architectures</text>
+  <rect x="262" y="472" width="200" height="44" rx="6" fill="#F3F6F9" stroke="#888888"/>
+  <text x="362" y="490" font-size="12" text-anchor="middle" fill="#222222">Cloud: Google Cloud</text>
+  <text x="362" y="506" font-size="12" text-anchor="middle" fill="#222222">Managed Lustre (GA 2025)</text>
+
+  <text x="48" y="545" font-size="12" fill="#222222">+ highest per-client bandwidth; coherent POSIX shared files</text>
+  <text x="48" y="565" font-size="12" fill="#222222">– kernel client to qualify on every node; MDT hot spots</text>
+  <text x="48" y="585" font-size="12" fill="#222222">– little data reduction; RAID under each target</text>
+
+  <!-- ================= RIGHT PANEL: INFINIA ================= -->
+  <rect x="520" y="140" width="450" height="458" rx="8" fill="#FFFFFF" stroke="#56B4E9" stroke-width="2"/>
+  <rect x="520" y="140" width="450" height="38" rx="8" fill="#56B4E9"/>
+  <text x="745" y="165" font-size="16" font-weight="700" text-anchor="middle" fill="#222222">Infinia: software-defined data platform</text>
+  <text x="745" y="198" font-size="13" text-anchor="middle" fill="#555555">Built for inference, KV cache, data prep and shared tenancy</text>
+
+  <line x1="560" y1="124" x2="560" y2="232" stroke="#222222" stroke-width="1.6" marker-end="url(#ah)"/>
+
+  <!-- Access services -->
+  <text x="745" y="226" font-size="12" text-anchor="middle" fill="#555555">Access services run as peers, not stacked layers</text>
+  <rect x="538" y="234" width="96" height="40" rx="5" fill="#E3F2FB" stroke="#56B4E9"/>
+  <text x="586" y="259" font-size="13" font-weight="700" text-anchor="middle" fill="#222222">S3</text>
+  <rect x="644" y="234" width="96" height="40" rx="5" fill="#E3F2FB" stroke="#56B4E9"/>
+  <text x="692" y="259" font-size="13" font-weight="700" text-anchor="middle" fill="#222222">SDK</text>
+  <rect x="750" y="234" width="96" height="40" rx="5" fill="#E3F2FB" stroke="#56B4E9"/>
+  <text x="798" y="252" font-size="12" font-weight="700" text-anchor="middle" fill="#222222">KV cache</text>
+  <text x="798" y="267" font-size="12" text-anchor="middle" fill="#222222">via NIXL</text>
+  <rect x="856" y="234" width="96" height="40" rx="5" fill="#FFFFFF" stroke="#56B4E9" stroke-dasharray="4 3"/>
+  <text x="904" y="252" font-size="12" font-weight="700" text-anchor="middle" fill="#222222">POSIX</text>
+  <text x="904" y="267" font-size="12" text-anchor="middle" fill="#222222">limited, 2.4</text>
+
+  <!-- Tenancy -->
+  <rect x="538" y="290" width="414" height="50" rx="6" fill="#F3F6F9" stroke="#888888"/>
+  <text x="745" y="310" font-size="12" font-weight="700" text-anchor="middle" fill="#222222">Hierarchical keyspace: realm, cluster, tenant, subtenant, dataset</text>
+  <text x="745" y="328" font-size="12" text-anchor="middle" fill="#222222">per-tenant share of performance and capacity; quotas</text>
+
+  <!-- KV store -->
+  <rect x="538" y="356" width="414" height="86" rx="6" fill="#E3F2FB" stroke="#56B4E9" stroke-width="1.5"/>
+  <text x="745" y="380" font-size="14" font-weight="700" text-anchor="middle" fill="#222222">Distributed key-value store (Bε-tree)</text>
+  <text x="745" y="399" font-size="12" text-anchor="middle" fill="#222222">one base layer for data and metadata alike</text>
+  <text x="745" y="416" font-size="12" text-anchor="middle" fill="#222222">network erasure coding across nodes</text>
+  <text x="745" y="433" font-size="12" text-anchor="middle" fill="#222222">always-on data reduction (vendor: up to 10x)</text>
+
+  <!-- Hardware -->
+  <rect x="538" y="458" width="414" height="58" rx="6" fill="#FFFFFF" stroke="#888888"/>
+  <text x="745" y="481" font-size="13" font-weight="700" text-anchor="middle" fill="#222222">Commodity NVMe servers or cloud instances</text>
+  <text x="745" y="500" font-size="12" text-anchor="middle" fill="#222222">hardware-agnostic; offered on Oracle Cloud (OCI)</text>
+
+  <text x="538" y="545" font-size="12" fill="#222222">+ fast tenant provisioning; object and KV cache in one namespace</text>
+  <text x="538" y="565" font-size="12" fill="#222222">– POSIX, ACLs and GPUDirect Storage still on the roadmap</text>
+  <text x="538" y="585" font-size="12" fill="#222222">– younger code base (announced 2023); fewer references</text>
+
+  <!-- connectors to CORE -->
+  <line x1="255" y1="598" x2="255" y2="620" stroke="#D55E00" stroke-width="2"/>
+  <line x1="745" y1="598" x2="745" y2="620" stroke="#D55E00" stroke-width="2"/>
+
+  <!-- CORE band -->
+  <rect x="30" y="620" width="940" height="56" rx="6" fill="#FBE3D3" stroke="#D55E00" stroke-width="1.5"/>
+  <text x="500" y="643" font-size="14" font-weight="700" text-anchor="middle" fill="#222222">DDN CORE (November 2025): one control plane and data fabric spanning both engines</text>
+  <text x="500" y="663" font-size="12" text-anchor="middle" fill="#222222">on-premises, Google Cloud, OCI and neoclouds such as CoreWeave, Nebius and Scaleway; management, not the data path</text>
+
+  <text x="30" y="704" font-size="12" fill="#555555">Sources: DDN and trade-press descriptions cited in Chapter 44 (Blocks &amp; Files 2023-11, 2025-11, 2026-01; StorageReview 2026-06, 2026-07).</text>
+</svg>

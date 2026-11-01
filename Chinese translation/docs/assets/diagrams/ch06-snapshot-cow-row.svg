@@ -1,0 +1,70 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 560" width="1000" height="560" role="img" aria-labelledby="t d">
+<title id="t">Copy-on-write versus redirect-on-write snapshots</title>
+<desc id="d">Two panels showing what happens when a host overwrites block B after a snapshot. Copy-on-write copies the old block to a reserve area before overwriting in place. Redirect-on-write writes the new block to free space and updates only the live volume pointer.</desc>
+<rect width="1000" height="560" fill="#FFFFFF"/>
+<defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#222222"/></marker><marker id="ar2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D55E00"/></marker></defs>
+<text x="20" y="32" font-family="Inter, Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#222222">Host overwrites block B after a snapshot was taken</text>
+<line x1="500" y1="50" x2="500" y2="500" stroke="#DDDDDD" stroke-width="2"/>
+<text x="20" y="70" font-family="Inter, Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#222222" text-anchor="start">Copy-on-write (COW)</text>
+<text x="20" y="90" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#555555" text-anchor="start">Snapshot reserve holds old versions; live data stays in place</text>
+<rect x="40" y="110" width="130" height="34" rx="5" fill="#0072B2" stroke="none"/>
+<text x="105.0" y="132.0" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" text-anchor="middle" fill="#FFFFFF">Live volume</text>
+<rect x="300" y="110" width="150" height="34" rx="5" fill="#E69F00" stroke="none"/>
+<text x="375.0" y="132.0" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" text-anchor="middle" fill="#222222">Snapshot reserve</text>
+<rect x="40" y="190" width="130" height="34" rx="5" fill="#56B4E9" stroke="none"/>
+<text x="105.0" y="212.0" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" text-anchor="middle" fill="#222222">A</text>
+<rect x="40" y="236" width="130" height="34" rx="5" fill="#D55E00" stroke="none"/>
+<text x="105.0" y="258.0" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" text-anchor="middle" fill="#FFFFFF">B' (overwrote B)</text>
+<rect x="40" y="282" width="130" height="34" rx="5" fill="#56B4E9" stroke="none"/>
+<text x="105.0" y="304.0" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" text-anchor="middle" fill="#222222">C</text>
+<rect x="40" y="328" width="130" height="34" rx="5" fill="#56B4E9" stroke="none"/>
+<text x="105.0" y="350.0" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" text-anchor="middle" fill="#222222">D</text>
+<text x="40" y="182" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#555555" text-anchor="start">In-place blocks (live volume reads these)</text>
+<rect x="300" y="236" width="150" height="34" rx="5" fill="#F0E442" stroke="none"/>
+<text x="375.0" y="258.0" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" text-anchor="middle" fill="#222222">B  (old copy)</text>
+<line x1="170" y1="253" x2="298" y2="253" stroke="#D55E00" stroke-width="2" marker-end="url(#ar2)"/>
+<text x="184" y="244" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#D55E00" text-anchor="start">1 read old B</text>
+<text x="184" y="274" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#D55E00" text-anchor="start">2 write to reserve</text>
+<text x="20" y="400" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#D55E00" text-anchor="start">3 overwrite B in place</text>
+<line x1="80" y1="388" x2="80" y2="274" stroke="#D55E00" stroke-width="2" stroke-dasharray="5 4" marker-end="url(#ar2)"/>
+<text x="300" y="300" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#555555" text-anchor="start">Snapshot view = reserve copies</text>
+<text x="300" y="318" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#555555" text-anchor="start">+ unchanged in-place blocks</text>
+<rect x="20" y="430" width="460" height="60" rx="5" fill="#F4F4F4" stroke="#888888"/>
+<text x="250.0" y="465.0" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" text-anchor="middle" fill="#222222"></text>
+<text x="36" y="455" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#222222" text-anchor="start">First overwrite of each block costs 1 read + 2 writes.</text>
+<text x="36" y="476" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#555555" text-anchor="start">Every extra snapshot level adds copy work; performance drops.</text>
+<text x="520" y="70" font-family="Inter, Helvetica, Arial, sans-serif" font-size="16" font-weight="700" fill="#222222" text-anchor="start">Redirect-on-write (ROW)</text>
+<text x="520" y="90" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#555555" text-anchor="start">Snapshot = frozen copy of the pointer map; new data goes to free space</text>
+<rect x="540" y="110" width="160" height="34" rx="5" fill="#0072B2" stroke="none"/>
+<text x="620.0" y="132.0" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" text-anchor="middle" fill="#FFFFFF">Live pointer map</text>
+<rect x="780" y="110" width="180" height="34" rx="5" fill="#E69F00" stroke="none"/>
+<text x="870.0" y="132.0" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" text-anchor="middle" fill="#222222">Snapshot pointer map</text>
+<rect x="670" y="200" width="140" height="34" rx="5" fill="#56B4E9" stroke="none"/>
+<text x="740.0" y="222.0" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" text-anchor="middle" fill="#222222">A</text>
+<rect x="670" y="246" width="140" height="34" rx="5" fill="#56B4E9" stroke="none"/>
+<text x="740.0" y="268.0" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" text-anchor="middle" fill="#222222">B  (old)</text>
+<rect x="670" y="292" width="140" height="34" rx="5" fill="#56B4E9" stroke="none"/>
+<text x="740.0" y="314.0" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" text-anchor="middle" fill="#222222">C</text>
+<rect x="670" y="338" width="140" height="34" rx="5" fill="#56B4E9" stroke="none"/>
+<text x="740.0" y="360.0" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" text-anchor="middle" fill="#222222">D</text>
+<text x="670" y="192" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#555555" text-anchor="start">Physical blocks on flash</text>
+<rect x="670" y="400" width="140" height="34" rx="5" fill="#D55E00" stroke="none"/>
+<text x="740.0" y="422.0" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#FFFFFF">B'  (new, free space)</text>
+<line x1="870" y1="144" x2="812" y2="217" stroke="#222222" stroke-width="2" marker-end="url(#ar)"/>
+<line x1="870" y1="144" x2="812" y2="263" stroke="#222222" stroke-width="2" marker-end="url(#ar)"/>
+<line x1="870" y1="144" x2="812" y2="309" stroke="#222222" stroke-width="2" marker-end="url(#ar)"/>
+<line x1="870" y1="144" x2="812" y2="355" stroke="#222222" stroke-width="2" marker-end="url(#ar)"/>
+<line x1="620" y1="144" x2="668" y2="217" stroke="#222222" stroke-width="2" marker-end="url(#ar)"/>
+<line x1="620" y1="144" x2="668" y2="309" stroke="#222222" stroke-width="2" marker-end="url(#ar)"/>
+<line x1="620" y1="144" x2="668" y2="355" stroke="#222222" stroke-width="2" marker-end="url(#ar)"/>
+<line x1="620" y1="144" x2="668" y2="417" stroke="#D55E00" stroke-width="2" marker-end="url(#ar2)"/>
+<text x="530" y="300" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#D55E00" text-anchor="start">1 write B'</text>
+<text x="530" y="318" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#D55E00" text-anchor="start">to free space</text>
+<text x="530" y="360" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#D55E00" text-anchor="start">2 update one</text>
+<text x="530" y="378" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#D55E00" text-anchor="start">live pointer</text>
+<rect x="520" y="450" width="460" height="60" rx="5" fill="#F4F4F4" stroke="#888888"/>
+<text x="750.0" y="485.0" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" text-anchor="middle" fill="#222222"></text>
+<text x="536" y="475" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="700" fill="#222222" text-anchor="start">Overwrite costs 1 write + a metadata update.</text>
+<text x="536" y="496" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#555555" text-anchor="start">Natural fit for log-structured flash (Purity, WAFL, ZFS).</text>
+<text x="20" y="540" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#555555" text-anchor="start">Either way, a snapshot lives on the same array as the data: it protects against bad writes, not against losing the array.</text>
+</svg>

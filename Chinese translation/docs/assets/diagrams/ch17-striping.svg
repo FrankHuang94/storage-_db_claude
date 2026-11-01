@@ -1,0 +1,101 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 590" width="1000" role="img" aria-labelledby="t d" font-family="Inter, Helvetica, Arial, sans-serif">
+  <title id="t">Lustre-style file striping across four OSTs</title>
+  <desc id="d">A 12 MiB region of one file is cut into twelve 1 MiB stripe units, S0 to S11. With a stripe count of four, the units are dealt round-robin to four object storage targets on two object storage servers: OST 0 holds S0, S4 and S8; OST 1 holds S1, S5 and S9; OST 2 holds S2, S6 and S10; OST 3 holds S3, S7 and S11. A formula box shows how a client maps a byte offset to an OST and an offset inside that OST object, with a worked example for offset 10.5 MiB.</desc>
+  <rect x="0" y="0" width="1000" height="590" fill="#FFFFFF"/>
+  <text x="30" y="36" font-size="20" font-weight="700" fill="#222222">Striping: one file, dealt round-robin across OSTs</text>
+  <text x="30" y="58" font-size="13" fill="#555555">Stripe size 1 MiB, stripe count 4. Logical view, not to scale. Original drawing for the Everpure Tech Atlas, Chapter 17.</text>
+  <text x="60" y="96" font-size="14" font-weight="700" fill="#222222">File F, bytes 0 to 12 MiB (as the application sees it)</text>
+  <rect x="60" y="106" width="70" height="44" fill="#0072B2" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="95.0" y="133" font-size="14" font-weight="700" text-anchor="middle" fill="#FFFFFF">S0</text>
+  <rect x="130" y="106" width="70" height="44" fill="#E69F00" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="165.0" y="133" font-size="14" font-weight="700" text-anchor="middle" fill="#222222">S1</text>
+  <rect x="200" y="106" width="70" height="44" fill="#009E73" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="235.0" y="133" font-size="14" font-weight="700" text-anchor="middle" fill="#FFFFFF">S2</text>
+  <rect x="270" y="106" width="70" height="44" fill="#CC79A7" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="305.0" y="133" font-size="14" font-weight="700" text-anchor="middle" fill="#222222">S3</text>
+  <rect x="340" y="106" width="70" height="44" fill="#0072B2" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="375.0" y="133" font-size="14" font-weight="700" text-anchor="middle" fill="#FFFFFF">S4</text>
+  <rect x="410" y="106" width="70" height="44" fill="#E69F00" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="445.0" y="133" font-size="14" font-weight="700" text-anchor="middle" fill="#222222">S5</text>
+  <rect x="480" y="106" width="70" height="44" fill="#009E73" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="515.0" y="133" font-size="14" font-weight="700" text-anchor="middle" fill="#FFFFFF">S6</text>
+  <rect x="550" y="106" width="70" height="44" fill="#CC79A7" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="585.0" y="133" font-size="14" font-weight="700" text-anchor="middle" fill="#222222">S7</text>
+  <rect x="620" y="106" width="70" height="44" fill="#0072B2" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="655.0" y="133" font-size="14" font-weight="700" text-anchor="middle" fill="#FFFFFF">S8</text>
+  <rect x="690" y="106" width="70" height="44" fill="#E69F00" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="725.0" y="133" font-size="14" font-weight="700" text-anchor="middle" fill="#222222">S9</text>
+  <rect x="760" y="106" width="70" height="44" fill="#009E73" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="795.0" y="133" font-size="14" font-weight="700" text-anchor="middle" fill="#FFFFFF">S10</text>
+  <rect x="830" y="106" width="70" height="44" fill="#CC79A7" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="865.0" y="133" font-size="14" font-weight="700" text-anchor="middle" fill="#222222">S11</text>
+  <line x1="60" y1="150" x2="60" y2="160" stroke="#555555"/>
+  <text x="60" y="175" font-size="12" text-anchor="middle" fill="#555555">0 MiB</text>
+  <line x1="340" y1="150" x2="340" y2="160" stroke="#555555"/>
+  <text x="340" y="175" font-size="12" text-anchor="middle" fill="#555555">4 MiB</text>
+  <line x1="620" y1="150" x2="620" y2="160" stroke="#555555"/>
+  <text x="620" y="175" font-size="12" text-anchor="middle" fill="#555555">8 MiB</text>
+  <line x1="900" y1="150" x2="900" y2="160" stroke="#555555"/>
+  <text x="900" y="175" font-size="12" text-anchor="middle" fill="#555555">12 MiB</text>
+  <text x="910" y="133" font-size="13" fill="#555555">...</text>
+  <rect x="40" y="215" width="440" height="252" rx="8" fill="#F7F9FB" stroke="#999999" stroke-dasharray="6 4"/>
+  <text x="260" y="458" font-size="13" font-weight="700" text-anchor="middle" fill="#222222">OSS 1 (failover partner: OSS 2)</text>
+  <rect x="520" y="215" width="440" height="252" rx="8" fill="#F7F9FB" stroke="#999999" stroke-dasharray="6 4"/>
+  <text x="740" y="458" font-size="13" font-weight="700" text-anchor="middle" fill="#222222">OSS 2 (failover partner: OSS 1)</text>
+  <line x1="95.0" y1="180" x2="150" y2="250" stroke="#0072B2" stroke-width="2" stroke-dasharray="4 3"/>
+  <rect x="70" y="250" width="160" height="40" rx="4" fill="#FFFFFF" stroke="#0072B2" stroke-width="2"/>
+  <text x="150" y="268" font-size="13" font-weight="700" text-anchor="middle" fill="#222222">OST 0</text>
+  <text x="150" y="284" font-size="12" text-anchor="middle" fill="#555555">holds object 0 of F</text>
+  <rect x="72" y="298" width="120" height="40" fill="#0072B2" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="132" y="323" font-size="14" font-weight="700" text-anchor="middle" fill="#FFFFFF">S0</text>
+  <text x="200" y="323" font-size="12" fill="#555555">at 0 MiB</text>
+  <rect x="72" y="342" width="120" height="40" fill="#0072B2" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="132" y="367" font-size="14" font-weight="700" text-anchor="middle" fill="#FFFFFF">S4</text>
+  <text x="200" y="367" font-size="12" fill="#555555">at 1 MiB</text>
+  <rect x="72" y="386" width="120" height="40" fill="#0072B2" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="132" y="411" font-size="14" font-weight="700" text-anchor="middle" fill="#FFFFFF">S8</text>
+  <text x="200" y="411" font-size="12" fill="#555555">at 2 MiB</text>
+  <line x1="165.0" y1="180" x2="370" y2="250" stroke="#E69F00" stroke-width="2" stroke-dasharray="4 3"/>
+  <rect x="290" y="250" width="160" height="40" rx="4" fill="#FFFFFF" stroke="#E69F00" stroke-width="2"/>
+  <text x="370" y="268" font-size="13" font-weight="700" text-anchor="middle" fill="#222222">OST 1</text>
+  <text x="370" y="284" font-size="12" text-anchor="middle" fill="#555555">holds object 1 of F</text>
+  <rect x="292" y="298" width="120" height="40" fill="#E69F00" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="352" y="323" font-size="14" font-weight="700" text-anchor="middle" fill="#222222">S1</text>
+  <text x="420" y="323" font-size="12" fill="#555555">at 0 MiB</text>
+  <rect x="292" y="342" width="120" height="40" fill="#E69F00" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="352" y="367" font-size="14" font-weight="700" text-anchor="middle" fill="#222222">S5</text>
+  <text x="420" y="367" font-size="12" fill="#555555">at 1 MiB</text>
+  <rect x="292" y="386" width="120" height="40" fill="#E69F00" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="352" y="411" font-size="14" font-weight="700" text-anchor="middle" fill="#222222">S9</text>
+  <text x="420" y="411" font-size="12" fill="#555555">at 2 MiB</text>
+  <line x1="235.0" y1="180" x2="630" y2="250" stroke="#009E73" stroke-width="2" stroke-dasharray="4 3"/>
+  <rect x="550" y="250" width="160" height="40" rx="4" fill="#FFFFFF" stroke="#009E73" stroke-width="2"/>
+  <text x="630" y="268" font-size="13" font-weight="700" text-anchor="middle" fill="#222222">OST 2</text>
+  <text x="630" y="284" font-size="12" text-anchor="middle" fill="#555555">holds object 2 of F</text>
+  <rect x="552" y="298" width="120" height="40" fill="#009E73" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="612" y="323" font-size="14" font-weight="700" text-anchor="middle" fill="#FFFFFF">S2</text>
+  <text x="680" y="323" font-size="12" fill="#555555">at 0 MiB</text>
+  <rect x="552" y="342" width="120" height="40" fill="#009E73" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="612" y="367" font-size="14" font-weight="700" text-anchor="middle" fill="#FFFFFF">S6</text>
+  <text x="680" y="367" font-size="12" fill="#555555">at 1 MiB</text>
+  <rect x="552" y="386" width="120" height="40" fill="#009E73" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="612" y="411" font-size="14" font-weight="700" text-anchor="middle" fill="#FFFFFF">S10</text>
+  <text x="680" y="411" font-size="12" fill="#555555">at 2 MiB</text>
+  <line x1="305.0" y1="180" x2="850" y2="250" stroke="#CC79A7" stroke-width="2" stroke-dasharray="4 3"/>
+  <rect x="770" y="250" width="160" height="40" rx="4" fill="#FFFFFF" stroke="#CC79A7" stroke-width="2"/>
+  <text x="850" y="268" font-size="13" font-weight="700" text-anchor="middle" fill="#222222">OST 3</text>
+  <text x="850" y="284" font-size="12" text-anchor="middle" fill="#555555">holds object 3 of F</text>
+  <rect x="772" y="298" width="120" height="40" fill="#CC79A7" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="832" y="323" font-size="14" font-weight="700" text-anchor="middle" fill="#222222">S3</text>
+  <text x="900" y="323" font-size="12" fill="#555555">at 0 MiB</text>
+  <rect x="772" y="342" width="120" height="40" fill="#CC79A7" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="832" y="367" font-size="14" font-weight="700" text-anchor="middle" fill="#222222">S7</text>
+  <text x="900" y="367" font-size="12" fill="#555555">at 1 MiB</text>
+  <rect x="772" y="386" width="120" height="40" fill="#CC79A7" stroke="#FFFFFF" stroke-width="2"/>
+  <text x="832" y="411" font-size="14" font-weight="700" text-anchor="middle" fill="#222222">S11</text>
+  <text x="900" y="411" font-size="12" fill="#555555">at 2 MiB</text>
+  <rect x="40" y="490" width="920" height="84" rx="8" fill="#FFFFFF" stroke="#0072B2" stroke-width="1.5"/>
+  <text x="60" y="514" font-size="13" font-weight="700" fill="#222222">Client-side arithmetic (no server asked):</text>
+  <text x="60" y="536" font-size="13" fill="#222222">stripe i = floor(offset / stripe size);  OST = i mod stripe count;  object offset = floor(i / count) x stripe size + (offset mod stripe size)</text>
+  <text x="60" y="560" font-size="13" fill="#222222">Example: offset 10.5 MiB gives i = 10, so OST 2, at 2 MiB + 0.5 MiB = 2.5 MiB into object 2. Same idea as DRAM channel interleaving.</text>
+</svg>

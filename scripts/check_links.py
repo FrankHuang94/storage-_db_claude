@@ -73,6 +73,9 @@ def main(argv: list[str]) -> int:
     if "--allow-planned" in argv:
         from atlas_lib import all_chapters
         PLANNED.update(c["path"].resolve() for c in all_chapters())
+        zh = ROOT / "Chinese translation"
+        PLANNED.update((zh / c["path"].relative_to(ROOT)).resolve() for c in all_chapters())
+        PLANNED.add((zh / "docs" / "glossary.md").resolve())
         argv = [a for a in argv if a != "--allow-planned"]
     files = [Path(a).resolve() for a in argv] if argv else sorted(
         [p for p in ROOT.rglob("*.md") if "node_modules" not in p.parts and "site" not in p.parts

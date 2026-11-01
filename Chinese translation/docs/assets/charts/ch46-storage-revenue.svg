@@ -1,0 +1,383 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="756.08125pt" height="427.904437pt" viewBox="0 0 756.08125 427.904437" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 427.904437 
+L 756.08125 427.904437 
+L 756.08125 -0 
+L 0 -0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 40.534169 322.018224 
+L 743.76 322.018224 
+L 743.76 37.922578 
+L 40.534169 37.922578 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 72.49898 322.018224 
+L 134.366355 322.018224 
+L 134.366355 133.143602 
+L 72.49898 133.143602 
+z
+" clip-path="url(#p7f26acf254)" style="fill: #dddddd; stroke: #888888; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 134.366355 322.018224 
+L 196.23373 322.018224 
+L 196.23373 84.455486 
+L 134.366355 84.455486 
+z
+" clip-path="url(#p7f26acf254)" style="fill: #56b4e9; stroke: #56b4e9; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 244.352799 322.018224 
+L 306.220175 322.018224 
+L 306.220175 245.655274 
+L 244.352799 245.655274 
+z
+" clip-path="url(#p7f26acf254)" style="fill: #dddddd; stroke: #888888; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 306.220175 322.018224 
+L 368.08755 322.018224 
+L 368.08755 222.829658 
+L 306.220175 222.829658 
+z
+" clip-path="url(#p7f26acf254)" style="fill: #d55e00; stroke: #d55e00; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 416.206619 322.018224 
+L 478.073994 322.018224 
+L 478.073994 279.94268 
+L 416.206619 279.94268 
+z
+" clip-path="url(#p7f26acf254)" style="fill: url(#h7e1d20a9c0); stroke: #888888; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 478.073994 322.018224 
+L 539.94137 322.018224 
+L 539.94137 263.925563 
+L 478.073994 263.925563 
+z
+" clip-path="url(#p7f26acf254)" style="fill: #0072b2; stroke: #0072b2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 588.060439 322.018224 
+L 649.927814 322.018224 
+L 649.927814 264.709275 
+L 588.060439 264.709275 
+z
+" clip-path="url(#p7f26acf254)" style="fill: url(#h7e1d20a9c0); stroke: #888888; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 649.927814 322.018224 
+L 711.79519 322.018224 
+L 711.79519 258.831434 
+L 649.927814 258.831434 
+z
+" clip-path="url(#p7f26acf254)" style="fill: #999999; stroke: #555555; stroke-linejoin: miter"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <defs>
+       <path id="m33add2a4b4" d="M 0 0 
+L 0 3.5 
+" style="stroke: #222222; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m33add2a4b4" x="134.366355" y="322.018224" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(125.632136 336.757697)">Dell</text>
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(98.618777 347.560158)">ISG storage line</text>
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(80.660261 358.362619)">Q2 FY27 (May–Jul 2026)</text>
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(81.724792 369.16508)">IDC 2Q26 share: 23.8%</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2">
+      <g>
+       <use xlink:href="#m33add2a4b4" x="306.220175" y="322.018224" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(289.52869 336.756994)">NetApp</text>
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(253.684784 347.559455)">Total company revenue</text>
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(261.055643 358.361916)">Q1 FY27 (14 weeks)</text>
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(256.441737 369.164377)">IDC 2Q26 share: 9.6%</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_3">
+      <g>
+       <use xlink:href="#m33add2a4b4" x="478.073994" y="322.018224" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(457.719932 336.756994)">Everpure</text>
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(425.538604 347.559455)">Total company revenue</text>
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(420.893057 358.361213)">Q2 FY27 (to Aug 2, 2026)</text>
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(428.295557 369.163674)">IDC 2Q26 share: 8.1%</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#m33add2a4b4" x="649.927814" y="322.018224" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(640.986877 336.756994)">HPE</text>
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(596.278674 347.559455)">Storage line, Cloud &amp; AI</text>
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(596.221721 358.361916)">Q3 FY26 (May–Jul 2026)</text>
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(600.149377 369.164377)">IDC 2Q26 share: 6.8%</text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_5">
+      <path d="M 40.534169 322.018224 
+L 743.76 322.018224 
+" clip-path="url(#p7f26acf254)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_6">
+      <defs>
+       <path id="m3c780416c9" d="M 0 0 
+L -3.5 0 
+" style="stroke: #222222; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m3c780416c9" x="40.534169" y="322.018224" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="33.534169" y="326.196935" transform="rotate(-0 33.534169 326.196935)">0</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_7">
+      <path d="M 40.534169 273.036216 
+L 743.76 273.036216 
+" clip-path="url(#p7f26acf254)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_8">
+      <g>
+       <use xlink:href="#m3c780416c9" x="40.534169" y="273.036216" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="33.534169" y="277.214927" transform="rotate(-0 33.534169 277.214927)">1</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_9">
+      <path d="M 40.534169 224.054208 
+L 743.76 224.054208 
+" clip-path="url(#p7f26acf254)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_10">
+      <g>
+       <use xlink:href="#m3c780416c9" x="40.534169" y="224.054208" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_7">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="33.534169" y="228.232919" transform="rotate(-0 33.534169 228.232919)">2</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_11">
+      <path d="M 40.534169 175.0722 
+L 743.76 175.0722 
+" clip-path="url(#p7f26acf254)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_12">
+      <g>
+       <use xlink:href="#m3c780416c9" x="40.534169" y="175.0722" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_8">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="33.534169" y="179.250911" transform="rotate(-0 33.534169 179.250911)">3</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_13">
+      <path d="M 40.534169 126.090192 
+L 743.76 126.090192 
+" clip-path="url(#p7f26acf254)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_14">
+      <g>
+       <use xlink:href="#m3c780416c9" x="40.534169" y="126.090192" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_9">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="33.534169" y="130.268903" transform="rotate(-0 33.534169 130.268903)">4</text>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_15">
+      <path d="M 40.534169 77.108185 
+L 743.76 77.108185 
+" clip-path="url(#p7f26acf254)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_16">
+      <g>
+       <use xlink:href="#m3c780416c9" x="40.534169" y="77.108185" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_10">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="33.534169" y="81.286895" transform="rotate(-0 33.534169 81.286895)">5</text>
+     </g>
+    </g>
+    <g id="text_11">
+     <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="19.892841" y="179.970401" transform="rotate(-90 19.892841 179.970401)">Revenue in the quarter (US$ billions)</text>
+    </g>
+   </g>
+   <g id="patch_11">
+    <path d="M 40.534169 322.018224 
+L 40.534169 37.922578 
+" style="fill: none; stroke: #888888; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 40.534169 322.018224 
+L 743.76 322.018224 
+" style="fill: none; stroke: #888888; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_12">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #555555" x="103.432667" y="128.042572" transform="rotate(-0 103.432667 128.042572)">3.86</text>
+   </g>
+   <g id="text_13">
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(153.580902 66.881555)">4.85</text>
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(149.95012 78.283411)">+26%</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #555555" x="275.286487" y="240.554244" transform="rotate(-0 275.286487 240.554244)">1.56</text>
+   </g>
+   <g id="text_15">
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(325.434722 205.255728)">2.02</text>
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(321.80394 216.657583)">+30%</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #555555" x="447.140307" y="274.84165" transform="rotate(-0 447.140307 274.84165)">0.86</text>
+   </g>
+   <g id="text_17">
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(497.288541 246.351633)">1.19</text>
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(493.65776 257.753488)">+38%</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #555555" x="618.994127" y="259.608245" transform="rotate(-0 618.994127 259.608245)">1.17</text>
+   </g>
+   <g id="text_19">
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(669.142361 241.257504)">1.29</text>
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(665.51158 252.659359)">+10%</text>
+   </g>
+   <g id="text_20">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'" transform="translate(40.534169 17.519297)">Storage-relevant revenue, fiscal quarter ending July–August 2026 vs a year earlier</text>
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'" transform="translate(40.534169 31.922578)">(definitions differ: not a like-for-like market-share comparison)</text>
+   </g>
+   <g id="legend_1">
+    <g id="patch_13">
+     <path d="M 474.688125 52.861172 
+L 492.688125 52.861172 
+L 492.688125 46.561172 
+L 474.688125 46.561172 
+z
+" style="fill: #dddddd; stroke: #888888; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_21">
+     <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start" x="499.888125" y="52.861172" transform="rotate(-0 499.888125 52.861172)">Same quarter a year earlier</text>
+    </g>
+    <g id="patch_14">
+     <path d="M 474.688125 66.361875 
+L 492.688125 66.361875 
+L 492.688125 60.061875 
+L 474.688125 60.061875 
+z
+" style="fill: url(#h7e1d20a9c0); stroke: #888888; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_22">
+     <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start" x="499.888125" y="66.361875" transform="rotate(-0 499.888125 66.361875)">Year-earlier value derived from reported growth rate</text>
+    </g>
+    <g id="patch_15">
+     <path d="M 474.688125 79.862578 
+L 492.688125 79.862578 
+L 492.688125 73.562578 
+L 474.688125 73.562578 
+z
+" style="fill: #555555"/>
+    </g>
+    <g id="text_23">
+     <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start" x="499.888125" y="79.862578" transform="rotate(-0 499.888125 79.862578)">Quarter ending Jul/Aug 2026 (bar in vendor colour)</text>
+    </g>
+   </g>
+  </g>
+  <g id="text_24">
+   <text style="font-size: 8px; font-family: 'DejaVu Sans'; fill: #555555" transform="translate(7.2 398.777406)">Sources: Dell Q2 FY27 results (2026-08); NetApp Q1 FY27 results (2026-09-02); Everpure Q2 FY27 results (2026-08-26); HPE Q3 FY26 8-K (2026-09-02). IDC shares: Worldwide Quarterly</text>
+   <text style="font-size: 8px; font-family: 'DejaVu Sans'; fill: #555555" transform="translate(7.2 408.379594)">Enterprise Storage Systems Tracker, 2Q26 (calendar Apr–Jun 2026), external storage only. IBM, Hitachi Vantara and Huawei do not disclose storage revenue. Data:</text>
+   <text style="font-size: 8px; font-family: 'DejaVu Sans'; fill: #555555" transform="translate(7.2 417.981781)">data/ch46_storage_revenue.csv</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p7f26acf254">
+   <rect x="40.534169" y="37.922578" width="703.225831" height="284.095646"/>
+  </clipPath>
+ </defs>
+ <defs>
+  <pattern id="h7e1d20a9c0" patternUnits="userSpaceOnUse" x="0" y="0" width="72" height="72">
+   <rect x="0" y="0" width="73" height="73" fill="#dddddd"/>
+   <path d="M -36 36 
+L 36 -36 
+M -30 42 
+L 42 -30 
+M -24 48 
+L 48 -24 
+M -18 54 
+L 54 -18 
+M -12 60 
+L 60 -12 
+M -6 66 
+L 66 -6 
+M 0 72 
+L 72 0 
+M 6 78 
+L 78 6 
+M 12 84 
+L 84 12 
+M 18 90 
+L 90 18 
+M 24 96 
+L 96 24 
+M 30 102 
+L 102 30 
+M 36 108 
+L 108 36 
+" style="fill: #888888; stroke: #888888; stroke-width: 1.0; stroke-linecap: butt; stroke-linejoin: miter"/>
+  </pattern>
+ </defs>
+</svg>
