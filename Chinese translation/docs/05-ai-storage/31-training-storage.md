@@ -49,7 +49,7 @@ MLPerf Storage 的检查点工作负载落在同一区间。IBM 报告 8B 场景
 *图 31.1 — 算例：检查点约为模型推理权重的 7–8 倍，因此一个 1T 参数模型每次保存 14–16 TB。*
 数据：`data/ch31_checkpoint_size.csv`
 
-一个细节：对于**混合专家（mixture-of-experts，MoE）**模型，检查点大小取决于*总*参数量，而计算量取决于*激活*参数量。一个总参数 1T、每个 token 激活几百亿参数的 MoE 模型，算起来像中等规模模型，存检查点却像 1T 模型，从而提高了单位 GPU 算力所需的存储带宽。
+一个细节：对于**混合专家（mixture-of-experts，MoE）** 模型，检查点大小取决于*总*参数量，而计算量取决于*激活*参数量。一个总参数 1T、每个 token 激活几百亿参数的 MoE 模型，算起来像中等规模模型，存检查点却像 1T 模型，从而提高了单位 GPU 算力所需的存储带宽。
 
 ### 吞吐量算术：字节 ÷ 时间窗口
 
@@ -124,3 +124,155 @@ sequenceDiagram
 3. **其他一切也要重启。** 容器镜像和 Python 环境会在同一时刻冲击共享存储；Meta 缩短了作业启动时间，以使有效训练时间保持在 90% 以上[^4]。
 
 一个有用的规划目标是恢复时间，而不是带宽。在两分钟内读取 5.7–6.5 TB 唯一数据需要 47–54 GB/s。同样的恢复若采用朴素的逐副本读取，则需要约 900 GB/s。
+
+### 数据加载：token 便宜，像素不便宜
+
+数据加载需求为 **每 GPU 每秒 token 数 × 每 token 字节数 × GPU 数**。Llama 3 405B 在 16,384 块 GPU 上的运行效率约为 H100 ~989 稠密 BF16 TFLOPS 的 41%[^4]。按每参数每 token 6 FLOPs 计算，每块 GPU 消耗 989×10¹² × 0.41 ÷ (6 × 405×10⁹) ≈ **167 tokens/s**。按每个 token ID 4 字节计，即每 GPU 0.7 KB/s，**整个集群约 11 MB/s**。（处理 15.6T token 约需 ~66 天，与实际训练相符[^4]。）然而 Meta 为 Llama 3 提供的 Tectonic 存储拥有 7,500 台 SSD 服务器上的 240 PB 容量，持续 2 TB/s、峰值 7 TB/s，Meta 仍称突发的检查点写入是"a major challenge"（一大挑战）[^4]。它是按检查点而不是 token 来规划的。
+
+| 工作负载 | 每 GPU 输入速率 | 每 GPU 每秒字节数 | 1,024 GPU | 依据 |
+|---|---|---|---|---|
+| 405B 稠密文本 LLM | 167 tokens/s | ~0.7 KB/s | ~0.7 MB/s | 基于 Llama 3 MFU 的算例 |
+| 8B 稠密文本 LLM | 8,450 tokens/s | ~34 KB/s | ~35 MB/s | 同一公式，较小模型 |
+| 图像模型，~100 KB JPEG | 1,000 images/s（示意） | ~100 MB/s | ~100 GB/s | 示意性假设 |
+| 视频模型，20 MB 片段 | 2 clips/s（示意） | ~40 MB/s | ~40 GB/s | 示意性假设 |
+| MLPerf Storage 3D U-Net | 每模拟 H100 ~2.7 GiB/s | ~2.7 GiB/s | ~2.8 TiB/s | DDN v1.0 成绩[^11] |
+
+*表 31.4 — 文本训练几乎不触及存储；图像、视频和科学体数据每 GPU 所需字节数可能高出五到六个数量级。*
+
+团队常把视频预编码为紧凑的潜在表示（latent），以一次离线计算换取存储带宽。MLPerf 3D U-Net 一行是刻意设计为受存储限制的（模型极小、体数据很大），是压力测试而非典型工作负载（[第 37 章](37-reading-benchmarks.md)）。
+
+### 这对 AI 工厂的容量规划意味着什么
+
+```mermaid
+flowchart LR
+    A["模型规模与优化器"] --> B["检查点字节数"]
+    C["GPU 数量与故障率"] --> D["检查点间隔"]
+    B --> E["排空或突发写入 GB/s"]
+    D --> E
+    B --> F["恢复读取 GB/s"]
+    G["目标重启时间"] --> F
+    H["数据模态与 tokens/s"] --> I["数据加载读取 GB/s"]
+    B --> J["检查点容量 × 保留数量"]
+    K["语料规模与版本"] --> L["数据集容量"]
+    E --> M["存储性能规格"]
+    F --> M
+    I --> M
+    J --> N["存储容量规格"]
+    L --> N
+```
+
+*图 31.3 — 对文本 LLM 而言，性能规格来自检查点的保存与恢复；对多模态训练而言，数据加载可能占主导。*
+
+容量示例：一次 405B 训练保留最近 10 个检查点外加 20 个评估里程碑，即 30 × 5.67 TB ≈ 170 TB——与多模态语料相比不大，但属于必须以恢复速度读取的热数据。NVIDIA 的 DGX SuperPOD（H100）参考架构中"best"存储层级要求每节点 40 GB/s 读、20 GB/s 写，每个 32 节点可扩展单元（SU）125/62 GB/s 读/写[^12] [VERIFY: 每 SU 125 GB/s 读取出现在该参考架构表 6 的搜索摘要中（good/better/best = 15/40/125 GB/s）；每节点数值与写入数值仍仅见于搜索摘要]。线性扩展到 64 个单元（16,384 块 GPU），约为 4 TB/s 写入，与 Meta 7 TB/s 的峰值处于同一量级。
+
+## Everpure 的做法与竞争对手对比
+
+| 方案 | 检查点突发落在何处 | 优势 | 劣势 | 示例（公开） |
+|---|---|---|---|---|
+| 共享全闪存，元数据/数据分离 | 共享命名空间，客户端直接写数据节点 | 聚合写入高；单一副本对所有节点可见，便于恢复 | 必须按突发或排空需求来规划容量 | Everpure FlashBlade//EXA：MLPerf Storage v3.0 中检查点写入 877.5 GiB/s[^1][^2] |
+| 并行文件系统 | 经条带化写入对象存储目标 | 在 HPC 规模下成熟；流式性能强 | 每 rank 一个文件的风暴受元数据服务器限制 | DDN EXAScaler（检查点加速 >2×，公司自述）[^13]；Azure Managed Lustre 在 v3.0 中为 642.2 GiB/s[^2] |
+| 分解式全共享架构 | SCM/闪存写缓冲，之后迁移到 QLC | 用快速层吸收突发；全局数据缩减 | 写路径放大后端流量 | VAST（未提交 MLPerf Storage）[^2][^14] |
+| 软件定义并行文件系统 | 通用 NVMe 服务器或云实例 | 按节点扩展；适配云与新兴 GPU 云（neocloud） | 硬件集成由客户负责 | WEKA（公司自述聚焦检查点）[^15] |
+| 节点本地层级 | GPU 服务器自身的 NVMe，随后排空 | 把网络移出关键路径 | 持久性依赖复制；容量被困在服务器中 | Hammerspace Tier 0[^16]；NVIDIA NeMo 本地检查点[^6] |
+| 自建 | 超大规模云厂商或实验室自有文件系统 | 针对单一工作负载调优；无供应商利润 | 需要工程人力；不对外销售 | Meta Tectonic[^4]；DeepSeek 3FS（180 个存储节点读取 ~6.6 TiB/s）[^17] |
+
+*表 31.5 — 每种架构都能吸收检查点；区别在于突发落在共享闪存、快速缓冲层，还是 GPU 服务器自身。*
+
+**Everpure 的定位。** FlashBlade//EXA 的卖点是通过客户端直连数据节点的路径获得聚合写入能力，并以元数据核心应对大规模文件创建。v3.0 提交中，1,024 个模拟加速器在 17.74 秒内写完一个 1.25T 参数的检查点仿真[^1]。这意味着每个检查点约 16–17 TB（本图谱推算），与图 31.1 一致。Everpure 还将 FlashBlade 与 PyTorch 异步检查点搭配推广，宣称检查点开销至少降低 10 倍（公司自述）[^18]。其中大部分收益来自软件模式，而该模式在任何存储上都适用。
+
+**为替代方案构建最强论证（steelman）。** DDN 的 Lustre 谱系二十年来一直在国家实验室中吸收每进程一个文件的检查点风暴。VAST 的写缓冲无需按突发来配置 QLC 即可吸收突发。节点本地层级直击根源：如果检查点很少离开 GPU 服务器，共享存储只需保存较慢的持久副本。此外，VAST、WEKA 和 DDN 均未提交 v3.0[^2]，因此 Everpure 的领先仅限于提交者之中，而非整个市场。
+
+## 历史与发展轨迹
+
+```mermaid
+timeline
+    title 大规模训练中的检查点
+    1974 : Young 发表最优检查点间隔公式
+    2006 : Daly 针对 HPC 重启转储加以完善
+    2023 : Gemini 将检查点保存在对等节点 CPU 内存中
+    2024 : PyTorch 推出异步分布式检查点 : Llama 3 论文报告 54 天内 419 次意外中断
+    2025 : MLPerf Storage v2.0 加入 Llama 3 检查点工作负载 : DeepSeek 开源 3FS
+    2026 : MLPerf Storage v3.0 运行 1.25T 检查点场景 : Everpure 首次提交即位居检查点写入榜首
+```
+
+*图 31.4 — 检查点理论已有 50 年历史；变化的是规模，它把检查点推进了存储基准测试和存储招标书（RFP）。*
+
+HPC 最先解决了这个问题：超级计算机的重启转储推动了 2000 年代的并行文件系统（[第 17 章](../03-system-architecture/17-parallel-file-systems.md)）。MLPerf Storage 在 v2.0（2025 年 8 月）中将检查点列为计分工作负载，使用 Llama 3 8B、70B、405B 和 1T 模型[^19]。其指标刻意偏保守：耗时取最慢进程，吞吐量取所有进程中的最小值，共写入并读取 10 个检查点[^20]。
+
+三个趋势指向未来：**检查点向 GPU 靠近**（主机 DRAM、本地 NVMe、对等副本），共享存储作为持久化兜底；**更低精度的优化器状态**降低每参数字节数，而总参数量持续增长；随着故障数随 GPU 数量增长，**恢复训练所需时间（time-to-resume）成为评判供应商的指标**。
+
+## 关键数字
+
+| 指标 | 数值 | 背景 | 来源 / 日期 |
+|---|---|---|---|
+| 训练状态，混合精度 Adam | 内存中 ~16 B/参数；保存 ~12–14 B/参数 | 405B → 6.48 TB 完整状态 | 算例 |
+| 60 s 内写完 405B 完整状态 | ~108 GB/s | 6.48 TB ÷ 60 s；30 分钟异步排空需 3.6 GB/s | 算例 |
+| Llama 3 中断次数 | 54 天 466 次（419 次意外，~78% 为硬件） | 16,384 块 H100；约每 3.1 h 一次 | Meta[^4]，2024-07 |
+| Llama 3 存储 | 240 PB、7,500 台服务器、持续 2 TB/s、峰值 7 TB/s | 检查点突发被称为一大挑战 | Meta[^4]，2024-07 |
+| Llama 3 每 GPU 检查点状态 | 1 MB 至 4 GB | 分片到 16K 块 GPU | Meta[^4]，2024-07 |
+| MTTF，1,024-GPU 作业 | 7.9 h（8 GPU 为 47.7 天） | Meta 研究集群 | Kokolis et al.[^10]，2025-02 |
+| 异步检查点停机时间，7B | 148.8 s → 6.3 s | PyTorch DCP 与 IBM 合作 | PyTorch[^5]，2024 |
+| MLPerf Storage v3.0 检查点写入最高值 | 877.5 GiB/s（读 588.3 GiB/s） | Everpure FlashBlade//EXA，30 个数据节点，1.25T 场景；供应商提交 | HPCwire[^1]，2026-09-02 |
+| 文本 token 输入，405B 于 16K GPU | 全集群 ~11 MB/s | 167 tokens/s/GPU × 4 B | 算例 |
+
+## 对话手册
+
+**向产品经理提的问题**
+
+1. *"在我们最近丢掉的五个训练交易中，检查点需求是以突发 GB/s、排空速率还是恢复训练所需时间来表述的？"* 高质量回答：了解客户的框架（同步还是异步）、检查点大小与间隔，以及招标书中的数字是真实需求还是照抄参考架构。
+2. *"对于运行异步检查点到本地 NVMe 的客户，我们如何规划集群容量？"* 高质量回答：持续排空带宽、恢复带宽和保留检查点所需容量，而非峰值写入；以及当这导致交易规模缩小时，定价如何弥补。
+3. *"当 VAST 或 WEKA 说 MLPerf Storage 不能反映真实客户时，我们怎么回应？"* 高质量回答：承认它是合成测试，然后援引 1.25T 场景、保守的最小吞吐量指标，以及相近规模的客户案例。
+
+**向工程师提的问题**
+
+1. *"带我走一遍缓存已清空后 16K 个 rank 的恢复过程：每秒打开的文件数、读取 GB/s 以及到第一个训练步的时间。"* 高质量回答：分开给出元数据与数据的数字，区分广播与逐副本读取，以及最慢客户端的尾部。
+2. *"当某个数据节点故障时，正在进行的检查点排空会怎样？"* 高质量回答：降级写入带宽的百分比、停顿或重试行为，以及恢复全速所需时间。
+3. *"在我们的平台上，检查点的写放大来自哪里：纠删码、元数据还是数据缩减？"* 高质量回答：给出"每客户端字节对应的后端字节数"，并坦承优化器状态几乎无法压缩。
+
+**不要这样说：**
+
+- "LLM 训练需要巨大的读带宽。"文本只需 MB/s。驱动带宽的是检查点、恢复和多模态数据。
+- "405B 的检查点是 810 GB。"那只是 bf16 权重。加上优化器状态约为 5.7–6.5 TB。
+- "降低检查点开销的唯一办法是更快的存储。"异步与分层检查点通过软件消除了大部分停顿。
+- "检查点数据去重效果很好。"相邻检查点之间几乎每个 fp32 值都不同；预期数据缩减很少。
+- "MLPerf 榜首就是市场上最快的系统。"主要竞争对手没有提交 v3.0。
+
+## 深入阅读（可选，L3 指引）
+
+- Meta，"The Llama 3 Herd of Models"，§3.3（存储与可靠性）。
+- Young（1974）与 Daly（2006）关于最优检查点间隔的论文。
+- PyTorch Distributed Checkpoint（DCP）文档：异步保存与加载时重新分片。
+- NVIDIA NeMo / Megatron "local checkpointing"（本地检查点），以及关于内存检查点放置的 Gemini（SOSP 2023）论文。
+- MLPerf Storage 检查点规则（subset 模式与 default 模式）。
+
+## 关键术语
+
+- **检查点（Checkpoint）**——保存下来的、恢复训练所需的全部训练状态副本。
+- **优化器状态（Optimizer state）**——Adam 的逐参数动量与 fp32 主权重，占检查点大小的大部分。
+- **异步检查点（Asynchronous checkpointing）**——先把状态拷贝到主机内存，再在训练继续进行的同时于后台写入存储。
+- **恢复风暴（Restore storm）**——故障后所有 GPU 同时读取最新检查点。
+- **Young 公式（Young's formula）**——最优检查点间隔，√(2 × 保存成本 × MTBF)。
+- 其余术语见[术语表](../glossary.md)。
+
+## 资料来源
+
+[^1]: HPCwire (Everpure release), "Everpure Leads MLPerf Storage Tests for Large Model Checkpointing and KV Cache," 2026-09-02. https://hpcwire.com/off-the-wire/everpure-leads-mlperf-storage-tests-for-large-model-checkpointing-and-kv-cache (retrieved 2026-11-01).
+[^2]: StorageReview, "MLPerf Storage v3.0: 877 GiB/s Checkpoints, a Cloud First, and a Leaderboard Turned Over," 2026-09. https://www.storagereview.com/news/mlperf-storage-v3-0-877-gib-s-checkpoints-a-cloud-first-and-a-leaderboard-turned-over (retrieved 2026-11-01).
+[^3]: IBM Research Blog, "IBM Storage Scale delivers real-world performance: an in-depth analysis," n.d. (2025). https://research.ibm.com/blog/ibm-storage-scale-mlperf (retrieved 2026-11-01).
+[^4]: Llama Team, AI @ Meta, "The Llama 3 Herd of Models," arXiv:2407.21783, 2024-07-31. https://arxiv.org/abs/2407.21783 (retrieved 2026-11-01).
+[^5]: PyTorch Blog, "Reducing Model Checkpointing Times by Over 10x with PyTorch Distributed Asynchronous Checkpointing," 2024-06. https://pytorch.org/blog/reducing-checkpointing-times/ (retrieved 2026-11-01).
+[^6]: NVIDIA, "Resiliency Features," NeMo Framework User Guide 25.04, n.d. https://docs.nvidia.com/nemo-framework/user-guide/25.04/resiliency.html (retrieved 2026-11-01).
+[^7]: Z. Wang et al., "Gemini: Fast Failure Recovery in Distributed Training with In-Memory Checkpoints," SOSP '23, 2023-10. https://www.amazon.science/publications/gemini-fast-failure-recovery-in-distributed-training-with-in-memory-checkpoints (retrieved 2026-11-01).
+[^8]: J. W. Young, "A first order approximation to the optimum checkpoint interval," Communications of the ACM 17(9), 1974-09. https://doi.org/10.1145/361147.361115 (retrieved 2026-11-01).
+[^9]: DatacenterDynamics, "Meta report details hundreds of GPU and HBM3 related interruptions to Llama 3 training run," 2024-07. https://datacenterdynamics.com/en/news/meta-report-details-hundreds-of-gpu-and-hbm3-related-interruptions-to-llama-3-training-run (retrieved 2026-11-01).
+[^10]: A. Kokolis et al. (Meta), "Revisiting Reliability in Large-Scale Machine Learning Research Clusters," arXiv:2410.21680v2, 2025-02-06. https://arxiv.org/abs/2410.21680v2 (retrieved 2026-11-01).
+[^11]: Blocks & Files, "MLPerf AI benchmark tests how storage systems keep GPUs busy," 2024-09-26. https://www.blocksandfiles.com/ai-ml/2024/09/26/mlperf-ai-benchmark-tests-how-storage-systems-keep-gpus-busy/1605043 (retrieved 2026-11-01).
+[^12]: NVIDIA, "Storage Architecture," DGX SuperPOD Reference Architecture (DGX H100), n.d. https://docs.nvidia.com/dgx-superpod/reference-architecture-scalable-infrastructure-h100/latest/storage-architecture.html (retrieved 2026-11-01).
+[^13]: DDN, "Understanding the impact of checkpoints on AI efficiency," n.d. https://www.ddn.com/blog/understanding-the-impact-of-checkpoints-on-ai-efficiency/ (retrieved 2026-11-01).
+[^14]: VAST Data, "We've got the write stuff, baby," n.d. https://vastdata.com/blog/weve-got-the-write-stuff-baby (retrieved 2026-11-01).
+[^15]: WEKA, "WEKA eliminates costly checkpoint bottlenecks" (solution brief), n.d. https://www.weka.io/resources/solution-brief/weka-eliminates-costly-checkpoint-bottlenecks/ (retrieved 2026-11-01).
+[^16]: Hammerspace, "Hammerspace Tier 0 Affinitization," 2026. https://hammerspace.com/hammerspace-tier-0-affinitization/ (retrieved 2026-11-01).
+[^17]: DeepSeek, "3FS: Fire-Flyer File System" (README), 2025. https://github.com/deepseek-ai/3FS (retrieved 2026-11-01).
+[^18]: Everpure Blog, "How to Accelerate Training for Large AI Models with Pure Storage FlashBlade and PyTorch Checkpointing," n.d. https://blog.everpuredata.com/purely-technical/pure-storage-flashblade-and-pytorch-asynchronous-checkpointing/ (retrieved 2026-11-01).
+[^19]: MLCommons via GlobeNewswire, "New MLPerf Storage v2.0 Benchmark Results Demonstrate the Critical Role of Storage Performance in AI Training Systems," 2025-08-04. https://www.globenewswire.com/news-release/2025/08/04/3126718/0/en/new-mlperf-storage-v2-0-benchmark-results-demonstrate-the-critical-role-of-storage-performance-in-ai-training-systems.html (retrieved 2026-11-01).
+[^20]: Lawrence Livermore National Laboratory, "MLPerf Storage," LLNL Benchmarks documentation, n.d. https://software.llnl.gov/benchmarks/81_mlpstor/mlpstor.html (retrieved 2026-11-01).
