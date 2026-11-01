@@ -9,7 +9,7 @@
 - **Treat every performance number as a claim until you reproduce it.** Normalise it per node, per rack unit, per kW and per usable TB. Then run your own proof of concept (PoC) on your own workload shape ([Chapter 37](../05-ai-storage/37-reading-benchmarks.md)).
 - **Field data beats models.** Annualised failure rates, rebuild-time distributions, data-loss incident logs and phone-home telemetry tell you more than any "eleven nines" durability figure.
 - **Integration fit with Everpure has four seams: control plane, data path, licensing and channel.** The data path is the expensive one. Purity and DirectFlash assume a single operating system managing raw NAND, so a second file system is a second product line, not a feature.
-- **Public data can score a target, but only roughly.** In the WEKA worked example, 38% of the weight rests on placeholders; the score is 2.8 of 5, with a plausible range of 2.1 to 3.7.
+- **Public data can score a target, but only roughly.** In the WEKA worked example, 38% of the weight rests on low-confidence scores, four of them placeholders; the score is 2.8 of 5, with a plausible range of 2.1 to 3.7.
 
 ## Why this matters for Everpure strategy
 
@@ -129,7 +129,7 @@ flowchart LR
 
 ### Worked example: WEKA, public data only
 
-WEKA is the chosen case because its public record ([Chapter 43](43-weka.md)) is unusually documented for a private company. It is a software-only target, which exercises every dimension. *This is a method illustration, not a recommendation, and it implies nothing about non-public Everpure plans.* Where public data is silent, the dimension gets a **placeholder 3** with low confidence.
+WEKA is the chosen case because its public record ([Chapter 43](43-weka.md)) is unusually documented for a private company. It is a software-only target, which exercises every dimension. *This is a method illustration, not a recommendation, and it implies nothing about non-public Everpure plans.* Where public data is silent, the dimension gets a **placeholder 3** with low confidence. Customer concentration is the one low-confidence dimension scored below 3, because the visible references lean on a few neoclouds and labs.
 
 | Dimension (weight) | Score | Known from public sources | Unknown without diligence access | Confidence |
 |---|---|---|---|---|
@@ -139,7 +139,7 @@ WEKA is the chosen case because its public record ([Chapter 43](43-weka.md)) is 
 | Metadata (6) | 4 | Metadata hashed into buckets on every node[^20] | Cross-shard operation cost at scale | Medium |
 | Durability (10) | 3 | 2 or 4 parity strips per stripe[^16] | Field AFR, rebuild data, incident log | Low |
 | Security (6) | 3 | NeuralMesh 6 adds per-tenant keys and isolation[^21] | Immutability, pen tests, CVE history | Low |
-| Roadmap (6) | 3 | AMG: unveiled March 2025[^22], available November 2025[^19]; NeuralMesh 6 GA planned 2H 2026[^21] | Whether NeuralMesh 6 hit GA on time | Medium |
+| Roadmap (6) | 3 | AMG: unveiled March 2025[^22], available November 2025[^19]; NeuralMesh 6 GA planned 2H 2026[^21], no GA announcement found by 2026-11-01 | Whether NeuralMesh 6 hit GA on time | Medium |
 | Team and code (10) | 2 | President, CFO, CRO left December 2024[^23]; next CFO left after four months[^24]; MinIO licence dispute[^9] | Key-author retention, SBOM | Medium |
 | Support (6) | 2 | Many hardware partners[^25] and four clouds; HPE stopped reselling March 2026[^26] | Tickets per system, telemetry coverage | Medium |
 | Hardware (6) | 3 | Software-only, but WEKApod 3 adds direct SSD exposure[^27] | WEKApod revenue share, supply terms | Medium |
@@ -157,9 +157,9 @@ xychart-beta
     bar [4, 3, 3, 4, 3, 3, 3, 2, 2, 3, 2, 3, 2]
 ```
 
-*Figure 50.3 — WEKA scores well on engineering and poorly on team stability, support load and Everpure fit; "?" marks low-confidence placeholders.*
+*Figure 50.3 — WEKA scores well on engineering and poorly on team stability, support load and Everpure fit; "?" marks low-confidence scores (four placeholder 3s and the customer score of 2).*
 
-**Reading the result.** The weighted score is 283 ÷ 100 = **2.83**. The five low-confidence dimensions carry 38 points of weight. Scoring them all 1 gives 2.14, and scoring them all 5 gives 3.66. Public data cannot tell a mediocre target from a good one, but it does set the agenda: field durability data, customer concentration and margin mix come first.
+**Reading the result.** The weighted score is 283 ÷ 100 = **2.83**. The five low-confidence dimensions (scalability, durability, security, customers, economics) carry 38 points of weight. Scoring them all 1 gives 2.14, and scoring them all 5 gives 3.66. Public data cannot tell a mediocre target from a good one, but it does set the agenda: field durability data, customer concentration and margin mix come first.
 
 **Options a strategy team might evaluate, based on public information.** The score favours lighter-touch options over a full acquisition. These include interoperability (Everpure object storage as a WEKA tier), competing head-on with PureKVA[^31] against AMG, or monitoring signals such as financing events and MLPerf participation ([Chapter 43](43-weka.md)). The integration score of 2 reflects data-path overlap, the costliest seam. The same template applied to VAST ([Chapter 42](42-vast-data.md)) or DDN ([Chapter 44](44-ddn.md)) would raise other questions: valuation and data-reduction IP for VAST, Lustre GPL obligations and appliance margin for DDN.
 
@@ -193,7 +193,7 @@ The focus of storage diligence has shifted with each wave. When EMC bought Xtrem
 | Everpure non-GAAP gross margin, Q2 FY27 | Product 66.2%; subscription 74.9% | Benchmark for a target's margin structure | Investing.com, 2026-08[^13] |
 | WEKA Series E | US$1.6B post-money, ≈ 16x 2024 ARR | Last priced round found | WEKA, 2024-05-15[^1][^29] |
 | Blended margin example | 59% at 40% hardware mix | Mix can move margin without any change in pricing | Worked example |
-| WEKA public-data score | 2.83 of 5; range 2.1–3.7 | 38% of weight rests on placeholders | Worked example (below) |
+| WEKA public-data score | 2.83 of 5; range 2.1–3.7 | 38% of weight rests on low-confidence scores | Worked example (below) |
 
 ## Conversation playbook
 
