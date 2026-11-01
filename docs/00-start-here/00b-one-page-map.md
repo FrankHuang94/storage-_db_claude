@@ -189,7 +189,7 @@ flowchart LR
 
 *Figure 0.2.10 — Most of the ecosystem is distribution and validation; in hyperscale, the NAND makers sell around Everpure straight to its customer.*
 
-NVIDIA controls the AI shortlist; Everpure is one of about a dozen co-design partners on its BlueField-4 STX architecture[^23]. Microsoft co-developed an Azure-native Everpure service[^24]. Cisco and integrators carry enterprise volume. Everpure holds a CoreWeave stake[^25], but VAST is that neocloud's incumbent. In hyperscale, NAND makers sell flash directly to the customer, so Everpure is paid for IP, software and support, not bits. See [Chapter 29](../04-everpure/29-hyperscaler-ecosystem-financials.md) and [Chapter 34](../05-ai-storage/34-nvidia-ecosystem.md).
+NVIDIA controls the AI shortlist; Everpure is a co-design partner on its BlueField-4 STX architecture[^23]. Microsoft co-developed an Azure-native Everpure service[^24]. Cisco and integrators carry enterprise volume. Everpure holds a CoreWeave stake[^25], but VAST is that neocloud's incumbent ([Chapter 35](../05-ai-storage/35-ai-factories-and-neoclouds.md)). In hyperscale, NAND makers sell flash directly to the customer, so Everpure is paid for IP, software and support, not bits. See [Chapter 29](../04-everpure/29-hyperscaler-ecosystem-financials.md) and [Chapter 34](../05-ai-storage/34-nvidia-ecosystem.md).
 
 #### 10. The competitive map
 

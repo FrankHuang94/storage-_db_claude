@@ -137,7 +137,7 @@ The swing has a mechanism. **Centralize** when the media is expensive and the ne
 
 ### Three recurring patterns, and the semiconductor parallel
 
-**1. How incumbents lose: slowly, then by acquisition.** No storage leader collapsed. Each lost its agenda first. IBM lost mainframe disk share to EMC's cache-and-software design. EMC bought into each new wave, but buying products did not change a business built on large, refresh-driven hardware sales. The end was a sale, not a failure. Media went the other way, to three survivors each. Micron bought bankrupt Elpida for US$615M in 2013[^36], and Samsung, SK hynix and Micron held about 90% of DRAM revenue in 4Q25 (36.0 + 32.1 + 22.4)[^37]. Hard-disk makers narrowed to Seagate, Western Digital and Toshiba[^38].
+**1. How incumbents lose: slowly, then by acquisition.** No storage leader collapsed. Each lost its agenda first. IBM lost mainframe disk share to EMC's cache-and-software design. EMC bought into each new wave, but buying products did not change a business built on large, refresh-driven hardware sales. The end was a sale, not a failure. Media went the other way, to three survivors each. Micron paid US$615M for bankrupt Elpida's equity in 2013[^36], and Samsung, SK hynix and Micron held about 90% of DRAM revenue in 4Q25 (36.0 + 32.1 + 22.4)[^37]. Hard-disk makers narrowed to Seagate, Western Digital and Toshiba[^38].
 
 **2. Why storage *systems* never consolidated like media.** The capital intensity sits in the media: fabs and head/disk plants. Array vendors resemble fabless chip companies. They buy NAND or drives, add controller software and sell a system. Entry costs are venture rounds, not a multi-billion-dollar fab, so every technology shift produces a new crop of entrants. Everpure's DirectFlash strategy, which buys raw NAND and manages it in its own software, is like a fabless company designing its own memory controller. It captures media economics without owning the fab.
 
@@ -166,7 +166,7 @@ The honest read: Everpure sits where EMC sat around 2012, a successful incumbent
 Three dated signals frame the next chapter of this history:
 
 - **Costs reversed.** Enterprise SSD went from US$185/TB (Q2 2020) to an index price of US$753/TB in Q3 2026, and nearline HDD from US$19/TB to about US$40/TB[^34][^35]. Every earlier era assumed falling media prices; tight NAND supply rewards the data reduction Pure Storage built its first decade on ([Chapter 48](../06-industry-and-competition/48-media-suppliers-and-nand-cycle.md)).
-- **The market grew with the cycle.** In 2Q26 external storage revenue reached US$10.3B (+33.6% YoY), and all-flash arrays were 52.1% of it. Everpure was #4 at 8.1% share and the fastest-growing vendor[^29].
+- **The market grew with the cycle.** In 2Q26 external storage revenue reached US$10.3B (+33.6% YoY), and all-flash arrays were 52.1% of it. Everpure was #4 at 8.1% share and, at +50.0% YoY, the fastest grower among the top five vendors[^29].
 - **Benchmarks and ecosystems became the gatekeepers.** MLPerf Storage v3.0 had 19 submitters, 11 of them first-time, including Everpure[^47]. As in the Fibre Channel and VMware eras, certification by the dominant platform (now NVIDIA) decides who gets considered ([Chapter 34](../05-ai-storage/34-nvidia-ecosystem.md)).
 
 Where it goes next, with CXL, KV-cache tiers and PLC NAND, is covered in [Chapter 53](53-future-trends.md).

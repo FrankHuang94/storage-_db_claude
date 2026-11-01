@@ -1,0 +1,5 @@
+- ASK | 0.2 | PM | Which of the ten "Everpure in 10 diagrams" views will change most in two years, and what event would change it?
+- ASK | 0.2 | PM | How much of FY27 revenue growth is NAND price pass-through versus capacity shipped, and how do you track it internally?
+- ASK | 0.2 | Eng | What does owning layers 6 to 8 of the stack cost per NAND generation in qualification time and engineering headcount?
+- ASK | 0.2 | CTO | If a pNFS namespace layer such as Hammerspace sits above every array, what keeps the array the control point?
+- ASK | 0.2 | CTO | Which signal will tell you first whether FlashBlade//EXA has closed the reference and certification gap with VAST?

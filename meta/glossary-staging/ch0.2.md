@@ -1,0 +1,8 @@
+- **Everpure** — the company formerly called Pure Storage, renamed in February 2026 and listed as NYSE: P since 2026-04-17. | 0.2
+- **Hyperscale licensing** — Everpure's business of licensing its DirectFlash design, software and support to hyperscalers that buy their own NAND. | 0.2
+- **Media economics** — the cost, density and power advantages a vendor gets from how it manages flash media, not from the NAND price itself. | 0.2
+- **Integrated media moat** — a competitive advantage from owning flash management down to the media, as with DirectFlash. | 0.2
+- **Control point** — the layer of the stack that owns the customer relationship and the metadata, and so captures most of the value. | 0.2
+- **Stock client** — the file-system client built into a standard operating system, such as the Linux NFS client, as opposed to a vendor's proprietary driver. | 0.2
+- **Price pass-through** — revenue growth that comes from passing higher component (NAND) costs on to customers rather than from shipping more units. | 0.2
+- **One-page map** — the atlas's mindmap of the storage and AI-storage domain, from media to Everpure. | 0.2
