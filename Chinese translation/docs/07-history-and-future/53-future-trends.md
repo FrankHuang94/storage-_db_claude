@@ -63,4 +63,201 @@ Everpure（NYSE: P，原 PSTG）的战略建立在贯穿这一时间窗口的三
 
 **12. AI 驱动的运维。** 存储 AIOps 已有二十年历史。新的变化是能够采取行动的智能体。Everpure 通过只读 MCP 服务器让 Pure1 变得"智能体化"（agentic），Copilot 正走向引导式故障分诊[^49]。据报道 Gartner 预测，目前运行智能体化存储管理的存储负责人不到 1%，到 2028 年将升至 20%[^50] [VERIFY: 仅见于搜索摘要]。瓶颈在于信任而非能力：会改变生产状态的智能体需要审计、回滚和爆炸半径（影响范围）限制。**判断：中；辅助型智能体现在就有，面向例行任务的可写自主操作在 2027–28 年。**
 
-ZHEOF_PLACEHOLDER
+### 影响与确定性
+
+```mermaid
+quadrantChart
+    title 对 Everpure 的影响与确定性，2026-2032
+    x-axis 确定性低 --> 确定性高
+    y-axis 影响小 --> 影响大
+    quadrant-1 立即下注
+    quadrant-2 以期权对冲
+    quadrant-3 低成本监测
+    quadrant-4 入场门槛
+    更大的闪存模块: [0.80, 0.88]
+    数据融合: [0.68, 0.80]
+    KV 缓存层级: [0.74, 0.74]
+    分解式架构与 DPU: [0.86, 0.68]
+    对象存储 over RDMA: [0.76, 0.56]
+    主权与边缘: [0.80, 0.50]
+    HDD 持续存在: [0.90, 0.42]
+    AI 运维: [0.60, 0.40]
+    PLC 与层数: [0.42, 0.62]
+    CXL 池化: [0.38, 0.30]
+    共封装光学: [0.46, 0.24]
+    DNA 与玻璃归档: [0.12, 0.14]
+```
+
+*图 53.2 — 五项趋势位于"立即下注"象限（对象存储 over RDMA 刚好处于边缘）；PLC 是唯一一项高影响、低确定性、需要对冲的趋势，奇特的新介质则只需低成本监测。位置是作者的判断，而非测量结果。*
+
+### 有日期的里程碑
+
+下表只列出有日期、有来源的路线图项目。每一项都是厂商或标准组织的目标，而非独立预测。
+
+```mermaid
+timeline
+    title 有日期的路线图里程碑，2026-2030
+    2026 : Micron 245 TB SSD 于 5 月发货 : BlueField-4 STX 与 CMX 硬件于下半年推出 : WD 40 TB UltraSMR 于下半年量产
+    2027 : Sandisk 512 TB SSD 列入路线图 : WD HAMR 爬坡 : Rubin Ultra Kyber 机架采用铜缆与 CPO 纵向扩展 : Seagate 50 TB HAMR 于年末进入认证 : Everpure FY2028 超大规模云厂商收入开始
+    2028 : PCIe 8.0 最终规范目标 : NVIDIA Feynman 一代 : Seagate 50 TB 更广泛供货
+    2029 : WD 目标 60 TB ePMR 与 100 TB HAMR
+    2030 : 据报道的 Samsung 1000 层 NAND 目标 : Cerabyte 100 PB 归档机架目标
+```
+
+*图 53.3 — 有日期的里程碑集中在 2026–28 年；2029 年以后唯一有日期的项目是那些曾经延期过的介质目标。*
+
+时间线的来源：Micron[^5]、NVIDIA[^33]、Western Digital[^15]、Sandisk[^7]、NVIDIA GTC 2026[^30]、Seagate[^1]、Everpure[^51]、经 The Register 报道的 PCI-SIG[^21]、TrendForce[^13] 和 Cerabyte[^18]。
+
+### 什么会改变我对前四项趋势的判断
+
+| 趋势 | 基准情形 | 会上调判断的信号 | 会下调判断的信号 |
+|---|---|---|---|
+| 更大的闪存模块 | 600 TB 级 DFM 于 2027–28 年推出；商品化 512 TB SSD 在一年内跟进 | 有日期的 600 TB DFM 发布；2027 年 NAND 合约价格下跌 | 商品化 512 TB SSD 率先发货；超大规模云厂商以 FDP SSD 而非授权模块为标准 |
+| KV 缓存层级 | 共享闪存在 2027–28 年大规模承载 G3.5/G4 | MLPerf KV 结果与生产环境的每 token 成本挂钩；Dynamo 默认将卸载指向网络存储 | 长上下文模型大幅缩小缓存；CXL 或 HBM 降价使 KV 留在内存中 |
+| 数据融合 | 存储厂商推出目录、治理和向量功能 | 客户为其他厂商阵列上的数据购买 Data Intelligence | Databricks、Snowflake 或超大规模云厂商免费捆绑这些功能 |
+| 分解式架构与 DPU | 成为入场门槛；AI pod 中出现 DPU 承载的存储软件 | 超过少数几家新兴 GPU 云（neocloud）进行 STX/CMX 生产部署 | 客户拒绝被 NVIDIA 锁定的存储节点；DPU 软件位置被单一厂商占据 |
+
+*表 53.1 — 四项影响最大趋势的路标信号；每一项都可在 12–18 个月内从公开数据中观察到。*
+
+## Everpure 的做法与竞争对手对比
+
+| # | 趋势 | 可能性 | 时间 | 赢家 | 输家 | 对 Everpure 的含义（待评估的选项） |
+|---|---|---|---|---|---|---|
+| 1 | 更大的闪存模块 | 高 | 2027–28 | 掌握 FTL 和重建路径者；NAND 厂商 | 温数据层中的磁盘；使用标准 SSD 的厂商 | 发布有日期的 600 TB 路线图；将授权扩展到更多超大规模云厂商 |
+| 2 | PLC、400–1,000 层 | 中 | 2029–32 | 位密度领先者；控制器 IP 所有者 | 动作迟缓的 NAND 厂商；对耐久度敏感的设计 | 尽早为归档层认证 PLC；保持两个 NAND 来源 |
+| 3 | HDD 持续存在（HAMR） | 高 | 现在 | Seagate、WD；混合与对象存储厂商 | "闪存取代所有磁盘"的时间表 | 以瓦数和密度而非 $/TB 定位闪存；在冷数据层寻求合作 |
+| 4 | CXL 池化 | 中 | 2029–32 | 内存厂商、交换芯片厂商 | 廉价 DRAM 缓存设计 | 跟踪；考虑在控制器内部使用 CXL，而非作为产品 |
+| 5 | 分解式架构、DPU | 高 | 现在 | NVIDIA；软件定义厂商 | 仅有固定双控制器的产品线 | 将数据服务移植到 BlueField 级 DPU；保留 EXA 的开放数据节点 |
+| 6 | 共封装光学 | 中 | 2029–32 | NVIDIA、Broadcom、光学供应商 | 可插拔模块厂商 | 关注机架功耗预算；几乎无需直接行动 |
+| 7 | KV 缓存层级 | 高 | 2027–28 | 快速共享闪存厂商；NVIDIA | 重度依赖重算的技术栈 | 让 PureKVA 成为 Dynamo/NIXL 的默认后端；公布每 token 成本 |
+| 8 | 数据融合 | 高（功能），中（经济收益） | 2027–28 | 拥有中立目录的平台厂商 | 单点工具；纯存储厂商 | 让 Data Intelligence 能在他人存储上运行；与湖仓（lakehouse）厂商合作 |
+| 9 | 主权与边缘 AI | 高 | 现在 | 设备型厂商、开放软件、本地集成商 | 仅限超大规模云厂商的技术栈 | 主权参考设计；本地云合作伙伴 |
+| 10 | 对象存储为主、S3 over RDMA | 高 | 2027–28 | 快速对象存储厂商；NVIDIA | 仅有并行文件系统的厂商 | 在 FlashBlade 和 EXA 上推出兼容 cuObject 的 RDMA S3 |
+| 11 | DNA、玻璃、陶瓷 | 低 | 观察 | 超大规模云厂商的归档 | 磁带（终将） | 监测；Pure Storage 已在 Cerabyte 持有少量战略股权（2024 年） |
+| 12 | AI 驱动的运维 | 中 | 2027–28 | 拥有设备群遥测数据的厂商 | 依赖人工运维的厂商 | 将 Pure1 智能体从只读推进到有边界的写操作 |
+
+*表 53.2 — 趋势记分卡：Everpure 在模块容量上处于有利位置，在融合方面起步早但尚未验证，而在 NVIDIA 参考设计设定规则的领域暴露最大。*
+
+对竞争对手的最强版本论证（steelman）涉及多个方向。**VAST** 与分解式架构、DPU 和融合最为契合。它已在 BlueField-4 上运行并销售数据库层，因此趋势 5、7 和 8 都发挥其优势。**WEKA 和 DDN** 拥有最强的 KV 缓存和 HPC 地位。**Dell、NetApp 和 HPE** 拥有拿下主权大单和全栈捆绑的覆盖面。**超大规模云厂商**则把融合直接拉进 S3 本身。Everpure 的独特资产是趋势 1。没有竞争对手出货 300 TB 的专有闪存模块（IBM 的 FlashCore Module 是最接近的类比），而超大规模云厂商的设计导入在不承担 NAND 风险敞口的情况下将其变现[^51]。反方最强论证：商品化 512 TB SSD 和 FDP 可能在一个产品周期内缩小这一领先优势。其主要风险敞口在于 NVIDIA 的 STX 把趋势 5 和 7 变成参考设计，在其中存储软件只是别人硬件上的一个功能。
+
+这些选项可分为两组。**无悔举措**在几乎任何情景下都有回报：有日期的模块路线图、与 Dynamo 和 NIXL 的默认集成、处处支持 RDMA 的 S3，以及公布每 token 成本而非 TTFT 倍数。**实物期权**现在持有成本低，只有在趋势向有利方向突破时才有价值：尽早为归档闪存认证 PLC、在 DPU 上运行 Purity 服务，以及与本地合作伙伴打造主权参考设计。CXL、共封装光学以及 DNA 或玻璃归档需要的是监测，而非投资。战略团队可以在[第 54 章](54-strategic-option-map.md)中为每组选项排列自建、收购或合作的优先次序。
+
+## 历史与发展轨迹
+
+存储预测的记录很差，而且偏差方向一致。每一个新层级都被预测会比实际更快到来。Intel 的 Optane 本应成为持久内存层级；Intel 于 2022 年将其关停，计提了 US$559 million 的费用[^52]。ZNS SSD 本应重塑闪存管理；而更温和、由 Meta 和 Google 推动的灵活数据放置（Flexible Data Placement，FDP）获得了更多超大规模云厂商的支持[^53]。"闪存到 2026 年干掉磁盘"之所以落空，是因为 NAND 价格上涨：2026 年企业级 SSD 相对磁盘的溢价不降反升[^16]。基于供给侧物理规律（密度、层数、PCIe 翻倍）的预测，比基于需求侧采用（新层级、新接口）的预测表现更好。
+
+需求背景本身不成问题。IDC 将其 2026 年 AI 基础设施预测上调至 US$497 billion，并预计支出将在 2029 年超过 US$1 trillion[^46]。存储只占其中一小部分，因此问题不在于存储需求是否增长，而在于哪些层级和哪些商业模式能够获取这部分需求。
+
+这段历史决定了本章的校准方式。容量趋势给"高"。新层级只有在一个主导平台所有者（拥有 Dynamo 和 STX 的 NVIDIA）正在将其标准化的情况下才给"高"。需要整个生态系统共同推动的层级（CXL 池化、PLC、DNA）给"中"或"低"。2026 年的 NAND 短缺提醒我们，周期可以一次压过路线图长达两年（[第 48 章](../06-industry-and-competition/48-media-suppliers-and-nand-cycle.md)）。
+
+## 关键数字
+
+| 指标 | 数值 | 背景 | 来源 / 日期 |
+|---|---|---|---|
+| 最大 DFM | 300 TB | Everpure 专有模块 | Blocks & Files, 2026-08-11[^4] |
+| 已发货的最大标准 SSD | 245.76 TB | Micron 6600 ION，PCIe 5.0 QLC | Micron, 2026-05-05[^5] |
+| 商品化 SSD 的下一步 | 512 TB | Sandisk 路线图，2027 年 | Blocks & Files, 2025-08-05[^7] |
+| HAMR 50 TB 级 | 2027 年末认证 | Seagate Mozaic 5 | Tom's Hardware, 2026-07[^1] |
+| HDD 路线图上限 | 2029 年 100 TB HAMR | Western Digital 目标 | WD, 2026-02-03[^15] |
+| 企业级 SSD 与 HDD 的 $/TB 之比 | ~18.6× | 2026 年；2020 年约 10× | Hardware Busters, 2026[^16] |
+| CXL 4.0 链路速率 | 128 GT/s | 基于 PCIe 7.0 PHY | CXL Consortium, 2025-11[^20] |
+| CXL 池化的 DRAM 节省 | ~7% | 16 插槽内存池，Azure 研究 | Pond, ASPLOS 2023[^22] |
+| 主权云 IaaS 支出 | 2026 年 ~US$80 B（+35.6%） | Gartner 预测 | Gartner, 2026-02-09[^45] |
+| 10,000 个 128K 会话的 KV 缓存 | ~430 TB | 70B 级模型，每会话 43 GB | 算例 |
+| 1 PB 模块以 20 GB/s 重建 | ~13.9 h | 对比 300 TB 时约 4.2 h | 算例 |
+
+## 对话手册
+
+**向产品经理提的问题**
+
+1. *"要让 600 TB DFM 先于商品化 512 TB SSD 发货，需要哪些前提成立？"* 高质量回答：点明 NAND 代际和 die 容量、重建设计以及认证周期。并说明与商品化驱动器的差距是在扩大还是缩小。
+2. *"在主权 AI 交易中，我们今天输在哪里？"* 高质量回答：点明具体因素，如本地支持、物理隔离、认证或本国合作伙伴，以及哪家竞争对手胜出（通常是 Dell、Huawei 或 DDN）。
+3. *"如果 NVIDIA 的 CMX 成为默认上下文层级，PureKVA 如何赚钱？"* 高质量回答：将 PureKVA 定位为 CMX 背后的 G4 共享层级，或一个兼容 CMX 的软件层，并给出每 token 成本对比，而非 TTFT 倍数。
+
+**向工程师提的问题**
+
+1. *"在每模块 1 PB 时，重建时间是多少？遭遇第二次故障的暴露窗口有多长？"* 高质量回答：给出聚合重建 GB/s、纠删码几何结构以及重建期间数据丢失的概率。
+2. *"Purity 的哪些部分可以运行在 BlueField-4 DPU 上？什么会出问题？"* 高质量回答：区分数据路径与元数据和全局去重，并指出内存和核心数量的限制。
+3. *"PLC 对我们的写入路径和耐久度预算有什么影响？"* 高质量回答：量化 P/E 周期、读重试延迟，以及日志结构化和磨损均衡能吸收多少影响。
+
+**不要这样说：**
+
+- "磁盘已死。"HAMR 订单簿排到了 2028 年，而 2026 年闪存每 TB 成本约为磁盘的 18 倍。
+- "CXL 将取代存储层级。"CXL 内存就是按 DRAM 价格出售的 DRAM；它是一个内存层级。
+- "DNA 存储很快就会到来。"目前不存在任何生产系统，写入吞吐量还需要数量级的提升。
+- "1,000 层 NAND 意味着闪存便宜 3 倍。"每比特成本取决于键合和工艺步骤，而非层数。
+- "我们的 KV 缓存让 TTFT 快 20 倍。"没有基线和每 token 成本，这个数字说服不了任何人。
+
+## 深入阅读（可选，L3 指引）
+
+- CXL Consortium 的 CXL 4.0 白皮书；关于池化经济性，参见 Li et al. 的 "Pond"（ASPLOS 2023）。
+- 关于 G1–G4 层级模型，参见 NVIDIA Dynamo KVBM 设计文档；MLPerf Storage v3.0 KV 缓存规则。
+- IEDM 2025 上 SK hynix 的多位点单元（multi-site-cell）PLC 论文；VLSI 2026 上关于 1,000 层 NAND 的论文。
+- Microsoft Research 关于 Project Silica 的出版物；DNA Data Storage Alliance 规范。
+
+## 关键术语
+
+- **上下文内存（Context memory）** — 位于 GPU 内存与共享存储之间、承载推理 KV 缓存的存储层级。
+- **CMX / STX** — NVIDIA 的 BlueField-4 上下文内存存储平台与存储参考架构。
+- **共封装光学（CPO）** — 将光引擎封装在交换机或处理器 die 旁边，取代可插拔模块。
+- **HAMR** — 热辅助磁记录（heat-assisted magnetic recording），使磁盘能够写入更小的比特。
+- **PLC** — 五层单元（penta-level cell），每个 NAND 单元存储 5 bit。
+- **主权 AI（Sovereign AI）** — 为将数据、控制和运营保留在某一司法管辖区内而构建的 AI 基础设施。
+- **技术雷达（Technology radar）** — 按成熟度环和类别放置趋势的图表。
+- 其余术语参见[术语表](../glossary.md)。
+
+## 资料来源
+
+[^1]: Tom's Hardware, "Seagate to start qualifying record-setting 50TB HDDs in 2027 — most drives are sold out through 2028," 2026-07. https://www.tomshardware.com/pc-components/hdds/seagate-to-start-qualifying-record-setting-50tb-hdds-in-2027-most-drives-are-sold-out-through-2028 ; corroborated by TechRadar, "Seagate reveals more on its 50TB HDD plans," 2026. https://techradar.com/pro/seagate-reveals-more-on-its-50tb-hdd-plans-but-looks-like-well-still-have-a-long-wait-to-buy-one (both seen via search, retrieved 2026-11-01).
+[^2]: Blocks & Files, "LTO-10 bumped to 40 TB as future tape capacities get cut," 2025-11-13. https://www.blocksandfiles.com/tape/2025/11/13/lto-10-bumped-to-40-tb-as-future-tape-capacities-get-cut/1711787 (seen via search, retrieved 2026-11-01).
+[^3]: Gigazine, "Pure Storage sets goal of realizing 300 TB SSD by 2026," 2023-03-08. https://gigazine.net/gsc_news/en/20230308-pure-storage-300-tb-ssd (retrieved 2026-11-01).
+[^4]: Blocks & Files, "Second hyperscaler plumps for Everpure's flash technology," 2026-08-11. https://www.blocksandfiles.com/flash/2026/08/11/second-hyperscaler-plumps-for-everpures-flash-technology/5285903 (retrieved 2026-11-01).
+[^5]: Micron Technology, "Industry-Leading 245TB Micron 6600 ION Data Center SSD Now Shipping," 2026-05-05. https://investors.micron.com/news/press-release/2026/Industry-Leading-245TB-Micron-6600-ION-Data-Center-SSD-Now-Shipping/default.aspx (retrieved 2026-11-01).
+[^6]: Pure Storage, "Eliminating Disk for Good" (webinar with co-founder John Colgrove), 2025. https://www.everpuredata.com/video/webinars/eliinating-disk-for-good/6374611414112.html (seen via search summary, 2026-11-01).
+[^7]: Blocks & Files, "Sandisk unveils 256 TB SSD for AI workloads, shipping in 2026," 2025-08-05. https://www.blocksandfiles.com/ai-ml/2025/08/05/sandisk-unveils-256-tb-ssd-for-ai-workloads-shipping-in-2026/1589534 (retrieved 2026-11-01).
+[^8]: TechRadar Pro, "Facebook engineers say bigger hard disk drives is making one critical metric far, far worse," 2025. https://www.techradar.com/pro/facebook-engineers-say-that-bigger-hard-disk-drives-is-making-one-critical-metric-far-far-worse (retrieved via search 2026-11-01).
+[^9]: TrendForce, "AI Server Demand Sustains Memory Contract Price Increases in 4Q26, While Consumer-Side Pressure Persists," 2026-09-30. https://www.trendforce.com/presscenter/news/20260930-13258.html (retrieved 2026-11-01).
+[^10]: Tom's Hardware, "Samsung unveils 10th Gen V-NAND: 400+ layers, 5.6 GT/s and hybrid bonding," 2026. https://www.tomshardware.com/pc-components/ssds/samsung-unveils-10th-gen-v-nand-400-layers-5-6-gt-s-and-hybrid-bonding (retrieved 2026-11-01).
+[^11]: Tom's Hardware, "Kioxia and Sandisk sample world's densest 3D NAND — new 332-Layer beats Samsung's 400-Layer NAND," 2026. https://www.tomshardware.com/pc-components/ssds/kioxia-and-sandisk-sample-worlds-densest-3d-nand-new-332-layer-beats-samsungs-400-layer-nand (retrieved 2026-11-01).
+[^12]: Blocks & Files, "Kioxia plots tech route to 1,000 layer 3D NAND by 2027," 2024-06-19. https://blocksandfiles.com/2024/06/19/kioxia-1000-layer-3d-nand/ ; TechRadar Pro, "SSD rival to Samsung reveals road to petabyte SSDs… Kioxia wants 1000-layer NAND in 3 years," 2024. https://www.techradar.com/pro/ssd-rival-to-samsung-reveals-road-to-petabyte-ssds-at-major-engineering-conference-kioxia-wants-1000-layer-nand-in-3-years-and-discusses-helc-molybdenum-100gbmm2-densities (both seen via search, retrieved 2026-11-01).
+[^13]: TrendForce, "Samsung Reportedly Targets 1000-Layer NAND by 2030, Rolls Out Wafer Bonding at 400 Layers," 2025-02-26. https://www.trendforce.com/news/2025/02/26/news-samsung-reportedly-targets-1000-layer-nand-by-2030-rolls-out-wafer-bonding-at-400-layers/ (seen via search, retrieved 2026-11-01).
+[^14]: Blocks & Files, "SK hynix developing split-cell 5-bit flash," 2026-01-15. https://www.blocksandfiles.com/flash/2026/01/15/sk-hynix-developing-split-cell-5-bit-flash/4090388 (retrieved 2026-11-01).
+[^15]: Western Digital, "Western Digital Accelerates Storage Innovation for AI Era," 2026-02-03. https://www.westerndigital.com/company/newsroom/press-releases/2026/2026-02-03-western-digital-accelerates-storage-innovation-for-ai-era (retrieved 2026-11-01).
+[^16]: Hardware Busters, "Enterprise SSD Prices Now Run 18.6x Hard Drives, and the Cheap Alternative Is Sold Out Until 2027," 2026. https://hwbusters.com/news/enterprise-ssd-prices-now-run-18-6x-hard-drives-and-the-cheap-alternative-is-sold-out-until-2027/ (retrieved 2026-11-01); 2020 baseline: Blocks & Files, "Enterprise SSDs cost ten times more than nearline disk drives," 2020-08-24. https://blocksandfiles.com/2020/08/24/10x-enterprise-ssd-price-premium-over-nearline-disk-drives/ (retrieved 2026-11-01).
+[^17]: Blocks & Files, "Project Silica's glass storage archive tech progress," 2025-12-23. https://blocksandfiles.com/2025/12/23/project-silicas-glass-storage-archive-tech-progress/ ; Microsoft Research, "Project Silica" briefing to the Library of Congress, 2026-03-09. https://www.digitalpreservation.gov/meetings/DSA2026/0124_Silica-2026-03-09-Library-of-Congress-sharing.pdf (both seen via search, retrieved 2026-11-01).
+[^18]: Blocks & Files, "Cerabyte promises fast, dense, low-cost tape alternative by 2030," 2025-07-02. https://www.blocksandfiles.com/data-management/2025/07/02/cerabyte-promises-fast-dense-low-cost-tape-alternative-by-2030/1595617 ; Hardware Busters, "Lasers, Ceramics, and 100PB Dreams: Cerabyte Wants to Ditch Tape… by 2030," 2025. https://hwbusters.com/news/lasers-ceramics-and-100pb-dreams-cerabyte-wants-to-ditch-tape-and-rewrite-data-storage-physics-by-2030/ (both seen via search, retrieved 2026-11-01); Business Wire, "Cerabyte Secures Strategic Investment from Pure Storage to Enable Sustainable Immutable Data Storage Solutions," 2024-07-29. https://www.businesswire.com/news/home/20240729348697/en/Cerabyte-Secures-Strategic-Investment-from-Pure-Storage-to-Enable-Sustainable-Immutable-Data-Storage-Solutions ; Business Wire, "Cerabyte Secures Strategic Investment from Western Digital," 2025-05-12. https://www.businesswire.com/news/home/20250512959987/en/Cerabyte-Secures-Strategic-Investment-from-Western-Digital (both via search summary, retrieved 2026-11-01).
+[^19]: Twist Bioscience, "Twist Bioscience Spins Out DNA Data Storage as Independent Company," 2025-05. https://investors.twistbioscience.com/news-releases/news-release-details/twist-bioscience-spins-out-dna-data-storage-independent-company ; Blocks & Files, "DNA storage gets a new twist with Atlas Data Storage," 2025-05-06. https://blocksandfiles.com/2025/05/06/dna-storage-gets-a-new-twist-with-atlas-data-storage/ (both seen via search, retrieved 2026-11-01).
+[^20]: CXL Consortium, "CXL 4.0 White Paper," 2025-11. https://computeexpresslink.org/wp-content/uploads/2025/11/CXL_4.0-White-Paper_FINAL.pdf (retrieved 2026-11-01).
+[^21]: The Register, "Confirmed: PCIe 8.0 will double version 7.0's speed and reach 256.0 GT/s," 2025-08-08. https://www.theregister.com/2025/08/08/pcie_8_spec_speed_announced/ (retrieved 2026-11-01).
+[^22]: H. Li et al., "Pond: CXL-Based Memory Pooling Systems for Cloud Platforms," ASPLOS '23, 2023. https://www.microsoft.com/en-us/research/publication/pond-cxl-based-memory-pooling-systems-for-cloud-platforms/ (retrieved 2026-11-01).
+[^23]: J. Handy and T. Coughlin, "Big Architectural Changes Are Coming," SNIA SDC 2024 (posted 2025-05). https://www.snia.org/sites/default/files/2025-05/SNIA-SDC2024-Handy-Coughlin-Big-Architectural-Changes-Are-Coming_0.pdf ; HPCwire, "What Hyperscalers Should Know About CXL," 2026-08-20. https://www.hpcwire.com/2026/08/20/what-hyperscalers-should-know-about-cxl/ (both seen via search, retrieved 2026-11-01).
+[^24]: StorageReview, "Samsung CXL Memory Pooling Demo With AMD at OCP 2026 Claims 38 Percent Lower TTFT and 3.3x Goodput for Agentic AI," 2026-10. https://www.storagereview.com/news/samsung-cxl-memory-pooling-amd-ocp-2026-cmm-d-agentic-ai (retrieved 2026-11-01).
+[^25]: Blocks & Files, "NetApp disaggregates ONTAP storage and provides an AI Data Engine," 2025-10-14. https://blocksandfiles.com/2025/10/14/netapp-disaggregates-ontap-storage-and-provides-an-ai-data-engine/ (retrieved 2026-11-01).
+[^26]: NVIDIA, "NVIDIA Launches BlueField-4 STX Storage Architecture With Broad Industry Adoption," 2026-03-16. https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Launches-BlueField-4-STX-Storage-Architecture-With-Broad-Industry-Adoption/default.aspx (retrieved 2026-11-01).
+[^27]: StorageNewsletter, "Nvidia GTC 2026: Nvidia Launches BlueField-4 STX Storage Architecture With Broad Industry Adoption," 2026-03-17. https://www.storagenewsletter.com/2026/03/17/nvidia-gtc-2026-nvidia-launches-bluefield-4-stx-storage-architecture-with-broad-industry-adoption/ (retrieved 2026-11-01).
+[^28]: StorageNewsletter, "CES 2026: Vast Data Redesigns AI Inference Architecture for the Agentic Era with Nvidia," 2026-01-07. https://www.storagenewsletter.com/2026/01/07/ces-2026-vast-data-redesigns-ai-inference-architecture-for-the-agentic-era-with-nvidia/ (retrieved 2026-11-01).
+[^29]: StorageReview, "NVIDIA Spectrum-X Ethernet Photonics Enters Full Production With 4x Fewer Lasers and a Five-Vendor CPO Supply Chain," 2026. https://www.storagereview.com/zh-TW/news/nvidia-spectrum-x-ethernet-photonics-enters-full-production-with-4x-fewer-lasers-and-a-five-vendor-cpo-supply-chain (seen via search summary, retrieved 2026-11-01); status cross-checked against search summaries of NVIDIA's 2026-05-31 production announcement and TrendForce's 2026-07-27 shipment report (retrieved 2026-11-01).
+[^30]: Jon Peddie Research, "NVIDIA GTC 2026 keynote," 2026-03. https://www.jonpeddie.com/news/nvidia-gtc-2026-keynote/ ; TweakTown, "NVIDIA updates roadmap with new details on its next-gen GPU architecture coming in 2028," 2026. https://www.tweaktown.com/news/110521/nvidia-updates-roadmap-with-new-details-on-its-next-gen-gpu-architecture-coming-in-2028/index.html (both seen via search, retrieved 2026-11-01).
+[^31]: Broadcom, "Broadcom Ships Tomahawk 6: World's First 102.4 Tbps Switch," 2025-06-03. https://investors.broadcom.com/news-releases/news-release-details/broadcom-ships-tomahawk-6-worlds-first-1024-tbps-switch (retrieved 2026-11-01).
+[^32]: NVIDIA, "KVBM design," Dynamo documentation v1.3.0, n.d. https://docs.nvidia.com/dynamo/v1.3.0/design-docs/component-design/kvbm-design.md (retrieved 2026-11-01).
+[^33]: NVIDIA, "NVIDIA BlueField-4 Powers New Class of AI-Native Storage Infrastructure for the Next Frontier of AI," 2026-01-05. https://nvidianews.nvidia.com/news/nvidia-bluefield-4-powers-new-class-of-ai-native-storage-infrastructure-for-the-next-frontier-of-ai (retrieved 2026-11-01).
+[^34]: MLCommons via GlobeNewswire, "MLCommons Releases New MLPerf Storage v3.0 Benchmark Results," 2026-09-01. https://www.globenewswire.com/news-release/2026/09/01/3354412/0/en/mlcommons-releases-new-mlperf-storage-v3-0-benchmark-results.html (retrieved 2026-11-01).
+[^35]: Blocks & Files, "Everpure bulks up AI offer," 2026-09-30. https://blocksandfiles.com/flash/2026/09/30/everpure-bulks-up-ai-offer/5300162 (retrieved 2026-11-01).
+[^36]: WEKA, "WEKA Breaks The AI Memory Barrier With Augmented Memory Grid on NeuralMesh," 2025-11-18. https://www.weka.io/news/weka-breaks-the-ai-memory-barrier-with-augmented-memory-grid (retrieved 2026-11-01).
+[^37]: SEC, "Everpure, Inc. Form 10-Q for the quarter ended May 3, 2026," 2026-06. https://www.sec.gov/Archives/edgar/data/0001474432/000147443226000061/pstg-20260503.htm (retrieved 2026-11-01).
+[^38]: HPCwire/BigDATAwire, "Everpure Announces Data Stream to Expand AI-Ready Data Offerings," 2026-06-17. https://www.hpcwire.com/bigdatawire/this-just-in/everpure-announces-data-stream-to-expand-ai-ready-data-offerings/ (retrieved 2026-11-01).
+[^39]: StorageNewsletter, "AWS re:Invent 2025: Amazon S3 Vectors is Now Generally Available with 40 Times the Scale of Preview," 2025-12-05. https://www.storagenewsletter.com/2025/12/05/aws-reinvent-2025-amazon-s3-vectors-is-now-generally-available-with-40-times-the-scale-of-preview/ (retrieved 2026-11-01).
+[^40]: Blocks & Files, "Gartner weaves enterprise storage magic spells again," 2026-08-24. https://www.blocksandfiles.com/block/2026/08/24/gartner-weaves-enterprise-storage-magic-spells-again/5291600 (seen via search summary, retrieved 2026-11-01); the same forecast with an earlier, lower baseline is quoted in vendor releases on Gartner's 2024 Magic Quadrant for File and Object Storage Platforms (e.g., Nutanix blog, "Gartner MQ for file object storage platforms," 2024, https://www.nutanix.com/es/blog/gartner-mq-for-file-object-storage-platforms, via search summary).
+[^41]: Blocks & Files, "Gartner unveils hottest storage trends for 2023," 2023-09-07. https://www.blocksandfiles.com/ai-ml/2023/09/07/gartner-unveils-hottest-storage-trends-for-2023/1603359 (seen via search summary, retrieved 2026-11-01).
+[^42]: Blocks & Files, "MinIO releases AIStor with GPUDirect-like S3 over RDMA," 2024-11-13. https://blocksandfiles.com/2024/11/13/minio-releases-aistor-with-gpudirect-like-s3-over-rdma/ (retrieved 2026-11-01).
+[^43]: NVIDIA Blog, "How to Unlock Accelerated AI Storage Performance With RDMA for S3-Compatible Storage," n.d. (reported November 2025). https://blogs.nvidia.com/blog/s3-compatible-ai-storage/ (retrieved 2026-11-01).
+[^44]: Everpure blog, "FlashBlade Augments its Fast Object Store with S3 over RDMA for AI/ML Workflows," n.d. https://blog.everpuredata.com/purely-technical/pure-storage-flashblade-fast-object-store-s3-rdma-for-ai-ml-workflows/ (retrieved 2026-11-01).
+[^45]: Gartner, "Gartner Says Worldwide Sovereign Cloud IaaS Spending Will Total $80 Billion in 2026," 2026-02-09. https://www.gartner.com/en/newsroom/press-releases/2026-02-09-gartner-says-worldwide-sovereign-cloud-iaas-spending-will-total-us-dollars-80-billion-in-2026 ; corroborated by HPCwire reprint. https://www.hpcwire.com/off-the-wire/gartner-says-worldwide-sovereign-cloud-iaas-spending-will-total-80b-in-2026/ (both seen via search, retrieved 2026-11-01).
+[^46]: IDC, "AI Infrastructure Spending Holds Near $90 Billion in Q1 2026 as Arm Overtakes x86 in Accelerated Servers; 2026 Forecast Raised to $497 Billion," 2026-07-21. https://www.idc.com/resource-center/blog/ai-infrastructure-spending-holds-near-90-billion-in-q1-2026-as-arm-overtakes-x86-in-accelerated-servers-2026-forecast-raised-to-497-billion/ ; IDC, "AI Infrastructure Spending Caps Historic Year at $90 Billion in Q4 2025; 2029 Spending to Eclipse $1 Trillion," 2026-04-16. https://www.idc.com/resource-center/blog/ai-infrastructure-spending-caps-historic-year-at-90-billion-in-q4-2025-2029-spending-to-eclipse-1-trillion/ (both seen via search, retrieved 2026-11-01).
+[^47]: StorageNewsletter, "SC25: DDN Launches Sovereign AI Solutions Based on NVIDIA AI Data Platform Reference Design," 2025-11-21. https://www.storagenewsletter.com/2025/11/21/sc25-ddn-launches-sovereign-ai-solutions-based-on-nvidia-ai-data-platform-reference-design/ (retrieved 2026-11-01).
+[^48]: Efficiently Connected, "Portworx at Red Hat Summit 2026," 2026-05. https://www.efficientlyconnected.com/portworx-edge-kubernetes-storage-red-hat-summit-2026/ (retrieved 2026-11-01).
+[^49]: Everpure blog, "Pure1, Now Agentic," 2026. https://blog.everpuredata.com/products/pure1-now-agentic/ (seen via search summary, retrieved 2026-11-01).
+[^50]: Blocks & Files, "Gartner's storage sermon for 2026–2028," 2025-12-02. https://blocksandfiles.com/2025/12/02/gartners-storage-sermon-for-2026-2028 (seen via search summary, retrieved 2026-11-01).
+[^51]: Everpure, "Everpure Lands New Design Win with Second Top-Five Hyperscaler," 2026-08-10. https://www.everpuredata.com/company/newsroom/press-releases/everpure-lands-new-design-win-with-second-top-five-hyperscaler.html (retrieved 2026-11-01).
+[^52]: AnandTech, "Intel To Wind Down Optane Memory Business – 3D XPoint Storage Tech Reaches Its End," 2022-07-28. https://www.anandtech.com/show/17515 (retrieved 2026-11-01).
+[^53]: NVM Express, "Overcoming the Write Amplification Problem with NVM Express Flexible Data Placement," n.d. https://nvmexpress.org/nvmeflexible-data-placement-fdp-blog/ (retrieved 2026-11-01).
