@@ -1,6 +1,6 @@
 # 10. Datacenter networking for storage
 
-> **Depth:** L2 · **Reading time:** ~10 min · **Last verified:** 2026-11-01
+> **Depth:** L2 · **Reading time:** ~11 min · **Last verified:** 2026-11-01
 > **Prerequisites:** [Block protocols and NVMe-oF](07-block-protocols.md) · [File protocols](08-file-protocols.md) · [Performance and economics metrics](../01-storage-fundamentals/04-performance-and-economics-metrics.md)
 
 ## TL;DR
@@ -15,13 +15,13 @@
 
 In AI deals, the storage vendor is a guest at a table NVIDIA sets. NVIDIA also sells the NIC, the DPU, the switches and the reference architectures that say which storage plugs in where. NVIDIA's networking revenue reached a reported US$14.8 billion in the quarter to April 2026, up 199% year on year[^6]. Storage that performs well and is certified on NVIDIA's fabric makes the shortlist.
 
-Three strategic questions follow. Does Everpure's Ethernet-only posture cost it InfiniBand-built clusters, or save engineering spend on a shrinking fabric? Does BlueField-hosted storage software commoditize the array controller, where Purity creates value? And which network camp should Everpure lean toward: NVIDIA, Cisco (where CEO Charles Giancarlo spent 14 years[^7]), Arista, or UEC? See [Chapter 11](11-gpu-data-path.md) for the GPU data path and [Chapter 34](../05-ai-storage/34-nvidia-ecosystem.md) for certifications.
+Three questions follow. Does Everpure's Ethernet-only posture cost it InfiniBand-built clusters, or save engineering spend on a shrinking fabric? Does BlueField-hosted storage software commoditize the array controller, where Purity creates value? And which network camp should Everpure lean toward: NVIDIA, Cisco (where CEO Charles Giancarlo spent 14 years[^7]), Arista, or UEC? See [Chapter 11](11-gpu-data-path.md) for the GPU data path and [Chapter 34](../05-ai-storage/34-nvidia-ecosystem.md) for certifications.
 
 ## Core concepts
 
 ### Three networks, not one
 
-AI clusters typically run separate fabrics because their traffic patterns conflict:
+AI clusters run separate fabrics because traffic patterns conflict:
 
 ```mermaid
 flowchart LR
@@ -107,11 +107,11 @@ sequenceDiagram
 
 **Worked example (illustrative): lossless costs buffer.** After sending PAUSE, a switch must absorb whatever is already in flight. On a 400G link with 100 m of fibre (≈0.5 µs each way), round-trip plus reaction time is about 1 µs. That is 50 GB/s × 1 µs = 50 KB, plus a maximum-size frame in each direction, or about 70 KB of reserved headroom per port per lossless class. A 64-port switch reserves ~4.5 MB just for this, and twice that at 800G. In shallow-buffer AI switch ASICs, that is buffer unavailable for absorbing incast.
 
-The industry has three answers. **Tune harder**: Meta found DCQCN hard to tune and leaned on routing and scheduling instead[^8]. **Make the fabric smarter**: Spectrum-X pairs NVIDIA switches with SuperNICs that spray packets across all paths, reorder them and apply telemetry-based rate control. NVIDIA reports storage read bandwidth gains of 20–48% over standard RoCE with DDN, VAST and WEKA[^12]. Everpure reports +25% reads and +23% writes in its own FlashBlade//EXA test, plus better noisy-neighbour isolation than DCQCN[^13]. All of these are vendor-run tests. **Stop needing lossless**: UEC 1.0 (published 11 June 2025) defines a new transport, UET, with per-packet multipathing, out-of-order delivery, and fabrics that can run lossy, with optional link-level retry and credit-based flow control[^2][^11]. Meta's August 2026 MetaRoCE likewise treats Ethernet as lossy, with no PFC[^3] [VERIFY: search-summary only].
+There are three answers. **Tune harder**, though Meta found DCQCN difficult to tune for its training collectives[^8]. **Make the fabric smarter**: Spectrum-X pairs NVIDIA switches with SuperNICs that spray packets across all paths, reorder them and apply telemetry-based rate control. NVIDIA reports 20–48% higher storage reads than standard RoCE with DDN, VAST and WEKA[^12]; Everpure reports +25% reads, +23% writes and better noisy-neighbour isolation on FlashBlade//EXA[^13] [VERIFY: search-summary only]. All are vendor-run tests. **Stop needing lossless**: UEC 1.0 (published 11 June 2025) defines a new transport, UET, with per-packet multipathing, out-of-order delivery and support for lossy fabrics, plus optional link-level retry and credit-based flow control[^2][^11]. Meta's August 2026 MetaRoCE likewise treats Ethernet as lossy, with no PFC[^3] [VERIFY: search-summary only].
 
 ### The DPU in the storage path
 
-A **SmartNIC** offloads fixed functions (checksums, RoCE, encryption). A **DPU** adds a general-purpose CPU complex and memory, so it can run a storage client, a storage target or a firewall. In chip terms, it is the server's I/O die becoming a programmable chiplet.
+A **SmartNIC** offloads fixed functions (checksums, RoCE, encryption). A **DPU** adds a general-purpose CPU complex and memory, so it can run a storage client, a storage target or a firewall. It is the server's I/O die becoming a programmable chiplet.
 
 BlueField-3 is a 400G part with 16 Arm cores. BlueField-4, announced October 2025 for 2026, combines an 800G ConnectX-9 with a 64-core Grace CPU, which NVIDIA claims is 6× BlueField-3's compute[^15][^16].
 
@@ -221,7 +221,7 @@ Three signals for 2026–2028: (1) **1.6T client ports** on 224G SerDes as 802.3
 
 **Questions for an engineer**
 
-1. *"Do we require PFC for RoCE, and what happens on a lossy fabric?"* Strong: it names the RNIC's loss-recovery mode (go-back-N or selective repeat), the expected throughput drop at 0.01–0.1% loss, and the ECN and PFC thresholds Everpure recommends.
+1. *"Do we require PFC for RoCE, and what happens on a lossy fabric?"* Strong: it names the RNIC's loss-recovery mode, the throughput drop at 0.01–0.1% loss, and recommended ECN and PFC thresholds.
 2. *"How does a 128-client checkpoint burst behave at our storage-side ports?"* Strong: it quotes incast measurements and whether packet spraying helps or hurts NFS-over-RDMA.
 3. *"What is our UEC plan?"* Strong: it knows which NICs ship UET and how NFS, NVMe-oF and S3 over RDMA would map onto it.
 
@@ -244,11 +244,11 @@ Three signals for 2026–2028: (1) **1.6T client ports** on 224G SerDes as 802.3
 
 - **RDMA / RNIC** — remote direct memory access; the NIC that implements it in hardware.
 - **RoCEv2** — RDMA transport carried in UDP/IP over Ethernet.
-- **PFC, ECN, DCQCN** — pause-based losslessness, congestion marking and the RoCE rate-control algorithm.
+- **PFC, ECN, DCQCN** — pause frames, congestion marking and RoCE rate control.
 - **Incast** — many senders converging on one receiver port.
-- **DPU / SuperNIC** — programmable NIC with its own CPU complex; NVIDIA's high-bandwidth AI NIC.
+- **DPU / SuperNIC** — NIC with its own CPU complex; NVIDIA's AI-tuned NIC.
 - **UEC / UET** — Ultra Ethernet Consortium and its transport.
-- **SerDes, PAM4** — serializer/deserializer lanes and four-level signalling that set port speeds.
+- **SerDes, PAM4** — the lanes and four-level signalling behind port speeds.
 - See the [glossary](../glossary.md) for the rest.
 
 ## Sources
