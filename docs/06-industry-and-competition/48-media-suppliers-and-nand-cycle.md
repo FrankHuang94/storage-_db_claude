@@ -35,7 +35,7 @@ Revenue share rewards mix, because enterprise SSD bits sell at a large premium. 
 | Samsung | #1 NAND, 29.3% revenue share 2Q26[^1] | V10, 400+ layers, hybrid bonding (announced)[^7] | BM1743 QLC, 61.44 TB launched; 122.88 TB planned[^8] | Drive supplier to server and array OEMs; no Everpure DFM qualification disclosed |
 | SK hynix + Solidigm | #2, 18.2%[^1] | 321-layer TLC, largest share of its NAND output in Q2 2026[^9][^10] | Solidigm D5-P5336, 122.88 TB QLC[^11] | LTAs with about 10 customers, with deposits[^12] |
 | Micron | #3, 15.1%; exited Crucial consumer business Dec 2025[^1][^13] | G9, 276 layers[^10] | 6600 ION, 245.76 TB QLC, shipping May 2026[^14] | G8 QLC qualified for Everpure's 150 TB DFM; G9 for hyperscaler DFMs[^15] |
-| Kioxia | #4, 13.6%; TSE-listed Dec 2024[^1][^16] | BiCS10, 332 layers, sampling (with Sandisk)[^17] | LC9, 245.76 TB QLC, announced July 2025[^18] | Long-standing Everpure partner (BiCS8 2 Tb QLC)[^19]; targets 50% of shipments under LTAs by 2028[^20] |
+| Kioxia | #4, 13.6%; TSE-listed Dec 2024[^1][^16] | BiCS10, 332 layers, sampling (with Sandisk)[^17] | LC9, 245.76 TB QLC, announced July 2025[^18] | Long-standing Everpure partner (BiCS8 2 Tb QLC)[^19]; targets 50% of shipments under LTAs by 2028 [VERIFY: search-summary only][^20] |
 | Sandisk | #5, 11.4%; spun from WD Feb 2025[^1][^21] | BiCS8 218 layers in product; BiCS10 with Kioxia[^22][^17] | UltraQLC SN670, 128/256 TB; 512 TB on 2027 roadmap[^22] | Most aggressive LTA seller: over a third of FY27 bits contracted by May 2026[^23] |
 | YMTC | ~14% of bits, #5 by revenue (Counterpoint)[^2] | Xtacking 4.0 [VERIFY: layer count] | Mostly consumer and Chinese domestic | US Entity List since Dec 2022; not a practical source for US vendors; adding fabs[^24] |
 | Western Digital | HDD only after the Sandisk split; FQ1'27 revenue $4.38B, 58.1% non-GAAP GM, 88% cloud[^25] | ePMR / UltraSMR; HAMR ramps 2027[^26] | 40 TB UltraSMR, volume 2H 2026[^26] | Sells mostly to hyperscalers; competes with QLC for nearline sockets |
@@ -85,7 +85,7 @@ flowchart LR
 - **Pass through dollars only:** price $120 keeps gross profit at $65, but GM falls to 54%.
 - **Hold GM at 65%:** price must rise to $55 ÷ 0.35 ≈ $157, and gross profit dollars rise 57%: the "revenue inflation" in 2026 prints.
 
-The evidence fits. Everpure raised prices on 9 February 2026 and guided product GM to the low end of its 65–70% range[^34]; product GM went from 67.3% in Q4 FY26[^35] to 65.5% in Q1 FY27[^36] and 66.2% in Q2[^37]. Product revenue grew 54% in Q2[^37] on fewer systems shipped; price, mix and capacity per system made up the difference[^38]. NetApp, which buys finished SSDs, shows the lag more starkly: product GM fell 4.2 points to 55.3% in its January 2026 quarter[^39] and to 54.6% in its July quarter, and the FY27 GM guide slipped from 68.5–69.5%[^41] to 68.1–69.1%[^40]. Products rose to 49% of revenue from 42%, dragging the blended margin down even if product GM holds[^40]. One call summary describes a roughly three-quarter pass-through lag [VERIFY: secondary summary][^42]. Dell repriced ISG on 10 December 2025 and shortened quote validity[^43].
+The evidence fits. Everpure raised prices on 9 February 2026 and guided product GM to the low end of its 65–70% range[^34]; product GM went from 67.3% in Q4 FY26[^35] to 65.5% in Q1 FY27[^36] and 66.2% in Q2[^37]. Product revenue grew 54% in Q2[^37] on fewer systems shipped; price, mix and capacity per system made up the difference[^38]. NetApp, which buys finished SSDs, shows the lag more starkly: product GM fell 4.2 points to 55.3% in its January 2026 quarter[^39] and to 54.6% in its July quarter, and the FY27 GM guide slipped from 68.5–69.5%[^40] to 68.1–69.1%[^41]. Products rose to 49% of revenue from 42%, dragging the blended margin down even if product GM holds[^41]. One call summary describes a roughly three-quarter pass-through lag [VERIFY: secondary summary][^42]. Dell repriced ISG on 10 December 2025 and shortened quote validity[^43].
 
 **Cash.** Everpure's Q2 FY27 operating cash flow was −$136M and free cash flow −$238M on strategic NAND and component purchases; a third party reads ~$577M as prepaid expenses [VERIFY: confirm in 10-Q][^44]. Management said supply coverage was sufficient "for the foreseeable future" and pricing had roughly caught up with costs[^45]. In derivatives terms this is a long forward on NAND: it pays if 4Q26's +15–20% arrives, and becomes write-down risk if the cycle breaks as in 4Q24.
 
@@ -106,7 +106,7 @@ Disk makers have their own upcycle: Seagate and Western Digital both posted ~58%
 | Everpure enterprise arrays | Raw NAND (Micron, Kioxia) → own DFMs | Everpure | List-price rises, 30-day quotes, strategic buys | ~70% average price rise; product GM 65.5–66.2%; Q2 FCF −$238M[^6][^37][^44] |
 | Everpure Evergreen//One | Same NAND, owned by Everpure | Everpure, at fixed $/TB | Smaller price changes on new contracts | Subscription GM 74.9% in Q2 FY27[^37] |
 | Everpure hyperscale licence | Nothing: the customer buys NAND | Hyperscaler | Not needed | No NAND procured[^4] |
-| NetApp, Dell, HPE arrays | Finished SSDs from NAND makers | Vendor; the SSD maker takes its own margin first | Price increases, shorter quote validity | NetApp product GM 54.6%; Dell ISG repricing[^40][^43] |
+| NetApp, Dell, HPE arrays | Finished SSDs from NAND makers | Vendor; the SSD maker takes its own margin first | Price increases, shorter quote validity | NetApp product GM 54.6%; Dell ISG repricing[^41][^43] |
 | Software-only (VAST, WEKA) | No media; hardware partners or the customer buy | Customer or hardware partner | Not on vendor P&L | Deal sizes and timing exposed instead |
 
 *Table 48.2 — Everpure is unusual in holding all three exposures at once: direct NAND buyer, fixed-price subscription owner and royalty-only licensor.*
@@ -147,7 +147,7 @@ Kioxia listed in Tokyo on 18 December 2024[^16] and Sandisk on Nasdaq on 24 Febr
 | Compounded contract-price move, 2Q25→4Q26 | ~4.7× | Product of forecast midpoints | Worked example (Figure 48.2) |
 | Everpure average price change, 2026 YTD | ~+70% | Input costs up 300–900% since mid-2025 | CEO letter, 2026-04-23[^6] |
 | Everpure Q2 FY27 FCF | −$238M | Strategic NAND and component buys | Yahoo Finance, 2026-08[^44] |
-| NetApp product GM | 54.6% (Jul-26 qtr) | Component costs; products 49% of revenue | Nasdaq, 2026-09[^40] |
+| NetApp product GM | 54.6% (Jul-26 qtr) | Component costs; products 49% of revenue | Nasdaq, 2026-09[^41] |
 | SSD/HDD $/TB premium | ~18.6–22.6× (2026) vs ~10× (2020) | Single-vendor index | PCSP / B&F[^5][^47] |
 | QLC break-even vs HDD for cloud buyers | ≤ ~3× HDD $/TB | TrendForce's threshold | TrendForce, 2025-09[^3] |
 
@@ -231,8 +231,8 @@ Kioxia listed in Tokyo on 18 December 2024[^16] and Sandisk on Nasdaq on 24 Febr
 [^37]: Investing.com, "Everpure Q2 FY27 slides: 38% revenue growth, guidance raised sharply," 2026-08. https://www.investing.com/news/company-news/everpure-q2-fy27-slides-38-revenue-growth-guidance-raised-sharply-93CH-4878054 (retrieved 2026-11-01).
 [^38]: Trefis, "What Are Everpure Stock Bulls Not Worried About?," 2026-09-24. https://www.trefis.com/articles/616473/what-are-everpure-stock-bulls-not-worried-about/2026-09-24 (retrieved 2026-11-01).
 [^39]: MarketBeat, "NetApp Q3 Earnings Call Highlights," 2026-02-26. https://www.marketbeat.com/instant-alerts/netapp-q3-earnings-call-highlights-2026-02-26/ (retrieved 2026-11-01).
-[^40]: Nasdaq, "NetApp Q1 Earnings Call Highlights Durable AI-Led Demand," 2026-09. https://www.nasdaq.com/articles/netapp-q1-earnings-call-highlights-durable-ai-led-demand (retrieved 2026-11-01).
-[^41]: NetApp (Business Wire), "NetApp Reports Fourth Quarter and Fiscal Year 2026 Results," 2026-05-28. https://www.businesswire.com/news/home/20260528348500/en/NetApp-Reports-Fourth-Quarter-and-Fiscal-Year-2026-Results (retrieved 2026-11-01).
+[^40]: NetApp (Business Wire), "NetApp Reports Fourth Quarter and Fiscal Year 2026 Results," 2026-05-28. https://www.businesswire.com/news/home/20260528348500/en/NetApp-Reports-Fourth-Quarter-and-Fiscal-Year-2026-Results (retrieved 2026-11-01).
+[^41]: Nasdaq, "NetApp Q1 Earnings Call Highlights Durable AI-Led Demand," 2026-09. https://www.nasdaq.com/articles/netapp-q1-earnings-call-highlights-durable-ai-led-demand (retrieved 2026-11-01).
 [^42]: Earnings Whispers, "NetApp (NTAP) earnings call summary," 2026-05. https://www.earningswhispers.com/article/NTAP/2605288500 (retrieved 2026-11-01).
 [^43]: MarketBeat, "Dell Technologies Q4 2026 Earnings Call Transcript," 2026-02-26. https://www.marketbeat.com/earnings/reports/2026-2-26-dell-technologies-inc-stock/ (retrieved 2026-11-01).
 [^44]: Yahoo Finance, "Everpure (P) Grew Revenue 38% but Free Cash Flow Was Negative," 2026-08. https://finance.yahoo.com/markets/stocks/articles/everpure-p-grew-revenue-38-023544268.html (retrieved 2026-11-01).
