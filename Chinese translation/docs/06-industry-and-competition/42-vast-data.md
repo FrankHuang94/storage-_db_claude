@@ -318,3 +318,143 @@ timeline
 *图 42.6 — VAST 大约每年增加一个主要层级。自 2023 年起，新增内容更多是软件服务而非硬件。*
 
 其发展轨迹分为三个阶段：存储架构（2016–2020）、带数据平台的软件业务（2021–2023），以及自 2024 年起"恰好也存储数据"的 AI 基础设施公司。2026–2027 年值得关注的信号包括：CNode-X 和 BlueField-4 在 2026 年下半年的出货、TuningEngine 和 PolicyEngine 在年底前正式发布[^30]、可能的 IPO[^43]，以及 CARR 增长能否扩展到新兴 GPU 云之外。
+
+## 关键数字
+
+| 指标 | 数值 | 背景 | 来源 / 日期 |
+|---|---|---|---|
+| 估值 | US$30B | Series F，公司自述；约为 2020 年那轮的 25× | CNBC / VAST，2026-04[^1] |
+| Series F 规模 | 约 US$1B，约一半为老股转让 | Drive Capital 与 Access Industries 联合领投 | Bloomberg，2026-04[^43] |
+| 承诺 ARR | >US$500M | 截至 2026 年 1 月结束的财年末，公司自述 | VAST 经 Futurum，2026-04[^42] |
+| 累计订单额 | >US$4B | 高于 2023 年底的约 US$1B，公司自述 | 2026-04[^42]；2023-12[^38] |
+| Rule of X | 228% | 在 10–30% FCF 利润率下意味着约 100% 增长（推算） | 2026-04[^42]；Bessemer[^48] |
+| CoreWeave 协议 | US$1.17B | 多年期；约占累计订单额的 29%（推算） | Reuters，2025-11-06[^54] |
+| 估值 ÷ CARR | 约 60× | 算例 | 算例 |
+| 最宽条带开销 | 2.7%（146+4） | 需 ≥75 个 DBox | VAST 博客[^21] |
+| SCM 占原始容量比例 | 约 0.9% | DF-3060V2 DBox | VAST 知识库[^9] |
+| 员工人数 | 约 1,200 | 约 1/3 在以色列，报道 | HPCwire，2026-03[^52] |
+
+## 对话手册
+
+**向产品经理提的问题**
+
+1. *"在最近十笔 EXA 与 VAST 竞争的交易中，是什么决定了结果？"* 高质量回答会把新兴 GPU 云交易与实验室、企业交易区分开，说出每类交易中的决定因素（参考客户、NFS 与 pNFS 客户端支持、NAND 涨价下的 $/TB、上层功能），并坦承 VAST 的广度在哪些地方胜出。
+2. *"VAST AI OS 的哪些功能在 RFP 中是硬性要求，而非锦上添花？"* 高质量回答会区分经常出现的单一命名空间多协议和事件触发器，与很少决定交易的 AgentEngine 类功能，并说明 Everpure 如何覆盖那些确实起决定作用的功能。
+3. *"NAND 短缺如何改变我们针对纯软件厂商的竞争话术？"* 高质量回答会量化一笔 50 PB 交易中硬件占总拥有成本（TCO）的比例，解释 Everpure 的供应地位与以成本价提供的白牌硬件之间的差别，并避免过度承诺价格保障。
+
+**向工程师提的问题**
+
+1. *"请对比讲解 VAST 与 EXA 上 1 GB/s 的写入：网络穿越次数、持久化点、以及缩减在哪里发生。"* 高质量回答会指出 VAST 先镜像后迁移的路径约产生 4× 的后端流量（[第 16 章](../03-system-architecture/16-disaggregated-shared-everything.md)），而 EXA 是直接写入数据节点，并说明两者各自在哪里消耗 CPU。
+2. *"相似性缩减在 AI 训练数据上是真正的优势吗？"* 高质量回答会说，它对检查点、版本、日志和近似重复的语料有帮助，对已压缩媒体和分词后的分片帮助甚微；并会要求提供实测比率，而不是营销用的中位数。
+3. *"BlueField-4 STX 对我们意味着什么？"* 高质量回答会解释，驻留在 DPU 上的控制器正成为 NVIDIA 的通用模式；指出仍能形成差异化的软件（元数据引擎、缩减、多租户），以及 EXA 与 STX 对齐的时间表。
+
+**不要这样说：**
+
+- "VAST 是一家硬件公司。"自 2021 年起，它一直在合作伙伴硬件上销售软件。
+- "VAST 有 US$2B 的 ARR。"那是媒体推测。公司自述的数字是 CARR 超过 US$500M。
+- "VAST 支撑着 xAI。"VAST 和 DDN 都声称在 Colossus 承担主要角色，份额划分未知。
+- "VAST 的数据缩减比是 3:1。"这接近其客户*平均值*（3.4:1）；公司自述的中位数是 1.75:1，且比率完全取决于数据。
+- "FlashBlade//EXA 在 MLPerf 中击败了 VAST。"VAST 并未参加。
+- "AI OS 已全部交付。"多个引擎和 CNode-X 是在 2026 年宣布的，GA 目标定在当年晚些时候。
+
+## 深入阅读（可选，L3 指引）
+
+- VAST 关于全局相似性压缩的美国专利申请 2019/0379394[^16]，以及其关于局部可解码码的工程博客系列[^20]。
+- Lockwood 等人，PDSW'21，对 VAST 系统读写行为的独立基准测试[^80]。
+- VAST 知识库中关于 DBox 高可用、机架级韧性和数据缩减的页面，可查阅条带与故障域规则。
+- NVIDIA 的 BlueField-4 STX 与推理上下文内存文档，用以分辨 KV 缓存设计中哪些部分属于 NVIDIA、哪些属于 VAST。
+
+## 关键术语
+
+- **Element Store** — VAST 位于所有协议和服务之下的单一元数据与数据结构。
+- **基于相似性的数据缩减（Similarity-based data reduction）** — 将近似重复的数据块以相对共享参考块的增量形式进行压缩。
+- **局部可解码纠删码（Locally decodable erasure code）** — 一种只需条带的一部分即可重建丢失单元的宽纠删码。
+- **VAST AI Operating System** — VAST 于 2025 年推出的统一品牌，涵盖 DataStore、DataBase、DataSpace 及其计算引擎。
+- **CNode-X / EBox / Ceres** — 分别为配备 GPU 的计算节点、融合服务器，以及基于 BlueField 的存储机箱。
+- **Gemini** — VAST 的"硬件按成本价 + 按容量计价的软件订阅"模式。
+- **承诺 ARR（Committed ARR，CARR）** — 已签署经常性合同（包括尚未生效的）的年化价值。
+- **Rule of X** — Bessemer 提出的、对增长加权的 Rule of 40 变体。
+- 其余术语见[术语表](../glossary.md)。
+
+## 资料来源
+
+[^1]: CNBC, "Nvidia backs AI company Vast Data at $30 billion valuation," 2026-04-22. https://www.cnbc.com/2026/04/22/nvidia-backs-ai-company-vast-data.html (retrieved 2026-11-01).
+[^2]: VAST Data, "VAST Data Raises $100 Million in Series C Funding at $1.2 Billion Valuation to Democratize Flash for All Data" (press release), 2020-04. https://vastdata.com/news-post/vast-data-raises-100-million-in-series-c-funding-at-1-2-billion-valuation-to-democratize-flash-for-all-data (retrieved 2026-11-01).
+[^3]: VAST Data, "How it works," n.d. https://vastdata.com/how-it-works (retrieved 2026-11-01).
+[^4]: Blocks & Files, "VAST Data's business sitrep," 2019-02-26. https://blocksandfiles.com/2019/02/26/vast-datas-business-sitrep/ ; StorageReview, "VAST Data emerges from stealth with Universal Storage," 2019-02. https://www.storagereview.com/news/vast-data-emerges-from-stealth-with-universal-storage (retrieved 2026-11-01).
+[^5]: Blocks & Files, "VAST Data exits hardware business, pivots to software subscriptions," 2021-04-06. https://blocksandfiles.com/2021/04/06/vast-data-software-subscriptions-pivot/ (retrieved 2026-11-01).
+[^6]: The Next Platform, "VAST Data Sheds Hardware Business To Tackle Largest Users," 2021-04-06. https://www.nextplatform.com/2021/04/06/vast-data-sheds-hardware-business-to-tackle-largest-users/ (retrieved 2026-11-01).
+[^7]: Blocks & Files, "VAST Data lessens Optane SSD dependency," 2021-11-05. https://blocksandfiles.com/2021/11/05/vast-data-lessens-optane-ssd-dependency/ (retrieved 2026-11-01).
+[^8]: Blocks & Files, "VAST Data launches Ceres storage drive enclosure," 2022-03-22. https://blocksandfiles.com/?p=37064 (retrieved 2026-11-01).
+[^9]: VAST Data Knowledge Base, "DBox DF-3015V2/DF-3060V2 Ceres Datasheet," n.d. https://kb.vastdata.com/docs/dbox-df-3015v2df-3060v2-ceres-datasheet (retrieved 2026-11-01).
+[^10]: Blocks & Files, "VAST enters 2025 with consolidated EBox and GCP support," 2025-01-15. https://blocksandfiles.com/2025/01/15/vast-enters-2015-with-consolidated-ebox-and-gcp-support/ (retrieved 2026-11-01).
+[^11]: Supermicro, "Supermicro and VAST Data launch new enterprise AI data platform solution (NVIDIA)" (press release), 2026-02-25. https://www.supermicro.com/de/pressreleases/supermicro-and-vast-data-launch-new-enterprise-ai-data-platform-solution-nvidia (retrieved 2026-11-01).
+[^12]: HPCwire, "VAST adds GPUs into clusters with CNode-X," 2026-02-25. https://www.hpcwire.com/2026/02/25/vast-adds-gpus-into-clusters-with-cnode-x/ ; VAST Data via GlobeNewswire, "VAST Data Introduces End-to-End Fully Accelerated AI Data Stack with NVIDIA," 2026-02-25. https://www.globenewswire.com/news-release/2026/02/25/3244905/0/en/VAST-Data-Introduces-End-to-End-Fully-Accelerated-AI-Data-Stack-with-NVIDIA.html (retrieved 2026-11-01).
+[^13]: StorageNewsletter, "CES 2026: Vast Data Redesigns AI Inference Architecture for the Agentic Era with Nvidia," 2026-01-07. https://www.storagenewsletter.com/2026/01/07/ces-2026-vast-data-redesigns-ai-inference-architecture-for-the-agentic-era-with-nvidia/ ; NAND Research, "VAST's novel approach to NVIDIA's new Inference Context Memory Storage platform," 2026-01. https://nand-research.com/research-note-vasts-novel-approach-to-nvidias-new-inference-context-memory-storage-platform/ (retrieved 2026-11-01).
+[^14]: VAST Data blog, "The latest VAST release is all about the protocols," n.d. (2025). https://vastdata.com/blog/the-latest-vast-release-is-all-about-the-protocols ; TechTarget, "Block storage and Kafka events come to Vast Data Platform," 2025-02. https://www.techtarget.com/searchstorage/news/366619465/Block-storage-and-Kafka-events-come-to-Vast-Data-Platform (retrieved 2026-11-01).
+[^15]: VAST Data blog, "Breaking data reduction trade-offs with global compression," n.d. https://vastdata.com/blog/breaking-data-reduction-trade-offs-with-global-compression (retrieved 2026-11-01).
+[^16]: US Patent Application 2019/0379394, "System and method for global data compression," 2019 (via Justia). https://patents.justia.com/patent/20190379394 (retrieved 2026-11-01).
+[^17]: Blocks & Files, "VAST Data reduction," 2019-02-26. https://blocksandfiles.com/2019/02/26/vast-data-reduction/ (retrieved 2026-11-01).
+[^18]: VAST Data, "Scaling Through Flash Scarcity" (webinar), n.d. https://www.vastdata.com/events/scaling-through-flash-scarcity (retrieved 2026-11-01).
+[^19]: Blocks & Files, "VAST Data's flash reclaim attacks competitors' installed bases," 2026-01-13. https://www.blocksandfiles.com/ai-ml/2026/01/13/vast-datas-flash-reclaim-attacks-competitors-installed-bases/4090394 (retrieved 2026-11-01; search extract only).
+[^20]: VAST Data blog, "Beyond Better Codes (Providing Resilience Efficiently, Part II)," n.d. https://vastdata.com/blog/providing-resilience-efficiently-part-ii (retrieved 2026-11-01).
+[^21]: VAST Data blog, "Bringing rack-level resilience to VAST, part one," n.d. https://www.vastdata.com/blog/bringing-rack-level-resilience-to-vast-part-one (retrieved 2026-11-01).
+[^22]: Blocks & Files, "GPUDirect Storage hitting the streets to VAST acclaim," 2021-06-28. https://www.blocksandfiles.com/file/2021/06/28/gpudirect-storage-hitting-the-streets-to-vast-acclaim/1611092 (retrieved 2026-11-01).
+[^23]: The Next Platform, "VAST Data builds out data platform with block storage and Kafka streams," 2025-02-21. https://www.nextplatform.com/2025/02/21/vast-data-builds-out-data-platform-with-block-storage-and-kafka-streams ; StorageReview, "VAST Data introduces fully unified AI data platform and launches Event Broker," 2025-02. https://www.storagereview.com/news/vast-data-introduces-fully-unified-ai-data-platform-and-launches-event-broker (retrieved 2026-11-01).
+[^24]: Blocks & Files, "VAST Data launches AI operating system," 2025-05-21. https://www.blocksandfiles.com/ai-ml/2025/05/21/vast-data-launches-ai-operating-system/1613219 (retrieved 2026-11-01).
+[^25]: The Next Platform, "VAST Data: What controls the data is more important than what stores it," 2026-02-27. https://www.nextplatform.com/store/2026/02/27/vast-data-what-controls-the-data-is-more-important-than-what-stores-it/4092860 (retrieved 2026-11-01).
+[^26]: SDxCentral, "Google Cloud enlists VAST Data to support AI multi-environment deployments," 2025-11. https://www.sdxcentral.com/news/google-cloud-enlists-vast-data-to-support-ai-multi-environment-deployments/ (retrieved 2026-11-01).
+[^27]: Futuriom, "VAST Data Declares Itself an AI Operating System," 2025-05. https://www.futuriom.com/articles/news/vast-data-declares-itself-an-ai-operating-system/2025/05 (retrieved 2026-11-01).
+[^28]: Blocks & Files, "VAST InsightEngine," 2024-10-01. https://blocksandfiles.com/2024/10/01/vast-insightengine/ (retrieved 2026-11-01).
+[^29]: SiliconANGLE, "VAST Data's SyncEngine helps AI agents tap unstructured data from every source," 2025-08-21. https://siliconangle.com/2025/08/21/vast-datas-syncengine-helps-ai-agents-tap-unstructured-data-every-source/ ; Blocks & Files, "VAST targets data sprawl with new SyncEngine utility," 2025-08-21. https://www.blocksandfiles.com/ai-ml/2025/08/21/vast-targets-data-sprawl-with-new-syncengine-utility/1598432 (both retrieved 2026-11-01).
+[^30]: HPCwire, "VAST Data Expands AI Data Stack, Keeps Eye on North Star," 2026-02-25. https://www.hpcwire.com/2026/02/25/vast-data-expands-ai-data-stack-keeps-eye-on-north-star/ (retrieved 2026-11-01).
+[^31]: Let's Data Science, "VAST Data Unveils AI Operating Enhancements," 2026-02 (secondary summary of VAST Forward 2026 announcements). https://letsdatascience.com/news/vast-data-unveils-ai-operating-enhancements-dd19113a (retrieved 2026-11-01).
+[^32]: StorageNewsletter, "VAST Forward 2026: VAST Data Introduces Polaris to Orchestrate Globally Distributed AI Data Infrastructure Across Hybrid Multicloud Environments," 2026-03-04. https://www.storagenewsletter.com/2026/03/04/vast-forward-2026-vast-data-introduces-polaris-to-orchestrate-globally-distributed-ai-data-infrastructure-across-hybrid-multicloud-environments/ ; SiliconANGLE, "VAST Data expands AI operating system with global control plane…," 2026-02-25. https://siliconangle.com/2026/02/25/vast-data-expands-ai-operating-system-global-control-plane-zero-trust-agent-framework-deeper-nvidia-integration/ (both retrieved 2026-11-01).
+[^33]: Blocks & Files, "VAST's VUA flash caching virtually expands GPU server memory for AI token generation," 2025-04-25. https://blocksandfiles.com/2025/04/25/vasts-vua-flash-caching-virtually-expands-gpu-server-memory-for-ai-token-generation/ ; VAST Data blog, "Open and Undivided Attention," 2025. https://www.vastdata.com/blog/open-and-undivided-attention (both retrieved 2026-11-01).
+[^34]: StorageNewsletter, "Nvidia GTC 2026: Nvidia Launches BlueField-4 STX Storage Architecture With Broad Industry Adoption," 2026-03-17. https://www.storagenewsletter.com/2026/03/17/nvidia-gtc-2026-nvidia-launches-bluefield-4-stx-storage-architecture-with-broad-industry-adoption/ (retrieved 2026-11-01).
+[^35]: VAST Data, "What is Gemini," n.d. https://vastdata.com/what-is-gemini (retrieved 2026-11-01).
+[^36]: Crunchbase News, "VAST Data secures $100M for storage, triples valuation to $1.2B," 2020-04. https://news.crunchbase.com/news/vast-data-secures-100m-for-storage-triples-valuation-to-1-2b (retrieved 2026-11-01).
+[^37]: StorageNewsletter, "Vast Data Raised $83 Million, Total Reaching $263 Million," 2021-05-05. https://www.storagenewsletter.com/2021/05/05/vast-data-raised-83-million-total-reaching-263-million/ (retrieved 2026-11-01).
+[^38]: Blocks & Files, "VAST Data funding," 2023-12-06. https://blocksandfiles.com/2023/12/06/vast-data-funding/ (retrieved 2026-11-01).
+[^39]: Crunchbase News, "Unicorn VAST Data valuation doubles (Fidelity)," 2023-12. https://news.crunchbase.com/ai/unicorn-vast-data-valuation-doubles-fidelity (retrieved 2026-11-01).
+[^40]: Globes, "Storage co Vast Data raising several billion dollars - report," 2025. https://en.globes.co.il/en/article-storage-co-vast-data-raising-several-billion-dollars-report-1001517875 (retrieved 2026-11-01).
+[^41]: Blocks & Files, "VAST Data plans funding round so early stockholders can get cash," 2026-02-05. https://www.blocksandfiles.com/file/2026/02/05/vast-data-plans-funding-round-so-early-stockholders-can-get-cash/4090372 (retrieved 2026-11-01).
+[^42]: Futurum, "VAST Data Valuation Triples. Can a Unified Platform Scale AI Globally?," 2026-04. https://futurumgroup.com/insights/vast-data-valuation-triples-can-a-unified-platform-scale-ai-globally/ ; VAST Data, "VAST Data Valued at $30 Billion as AI Drives a New Infrastructure Stack" (press release), 2026-04-21. https://www.vastdata.com/press-releases/vast-series-f-financing-at-30-billion-valuation (retrieved 2026-11-01).
+[^43]: Bloomberg, "Nvidia-Backed Vast Data Triples Value to $30 Billion, Mulls IPO," 2026-04. https://news.bloomberglaw.com/private-equity/nvidia-backed-vast-data-triples-value-to-30-billion-mulls-ipo (retrieved 2026-11-01).
+[^44]: Calcalist (CTech), "Vast Data closes round at $30 billion valuation," 2026-04. https://www.calcalistech.com/ctechnews/article/b8kyeze8s (retrieved 2026-11-01).
+[^45]: Wamda, "VAST Data closes Series F round at $30B valuation," 2026-04. https://www.wamda.com/2026/04/vast-data-closes-series-f-round-30b-valuation (retrieved 2026-11-01).
+[^46]: VAST Data via iTWire, "VAST Data Valued at $30 Billion as AI Drives a New Infrastructure Stack," 2026-04-21. https://itwire.com/guest-articles/company-news/vast-data-valued-at-$30-billion-as-ai-drives-a-new-infrastructure-stack.html (retrieved 2026-11-01).
+[^47]: Calcalist (CTech), "Vast Data triples valuation to $9.1 billion" (Series E coverage), 2023-12. https://www.calcalistech.com/ctechnews/article/bjfh5gast (retrieved 2026-11-01; search extract only).
+[^48]: Bessemer Venture Partners, "The Rule of X," n.d. https://bvp.com/atlas/the-rule-of-x (retrieved 2026-11-01).
+[^49]: C. Lam (Clouded Judgement), "Clouded Judgement 2.23.24 – Rule of X," 2024-02-23. https://cloudedjudgement.substack.com/p/clouded-judgement-22324-rule-of-x (retrieved 2026-11-01).
+[^50]: Sacra, "VAST Data," 2025. https://sacra.com/c/vast-data/ (retrieved 2026-11-01).
+[^51]: Blocks & Files, "VAST Data raises $1B at $30B valuation as AI storage demand surges," 2026-03-11. https://www.blocksandfiles.com/flash/2026/03/11/vast-data-raises-1b-at-30b-valuation-as-ai-storage-demand-surges/5208106 (retrieved 2026-11-01).
+[^52]: HPCwire, VAST Data headcount report (item p=189419), 2026-03. https://www.hpcwire.com/?p=189419 (retrieved 2026-11-01).
+[^53]: Everpure, "Everpure Announces Second Quarter Fiscal 2027 Financial Results," 2026-08-26. https://investor.everpuredata.com/news-and-events/press-releases/press-release-details/2026/Everpure-Announces-Second-Quarter-Fiscal-2027-Financial-Results/default.aspx (retrieved 2026-11-01).
+[^54]: Reuters (via Yahoo Finance), "Exclusive: Nvidia-backed Vast Data inks $1.17 billion AI deal with CoreWeave," 2025-11-06. https://finance.yahoo.com/news/exclusive-nvidia-backed-vast-data-120456403.html (retrieved 2026-11-01).
+[^55]: VAST Data, "Accelerating Global Enterprise AI Adoption (Nebius customer story)," n.d. https://www.vastdata.com/customers/nebius ; Fierce Network, "Here's why Nvidia-backed startup VAST Data is all the rage," n.d. https://www.fierce-network.com/cloud/heres-why-nvidia-backed-startup-vast-data-all-rage (retrieved 2026-11-01).
+[^56]: Blocks & Files, "VAST Data in xAI's frontier AI factory, Nscale's UK data centers and Williams F1 racing team," 2025-10-30. https://blocksandfiles.com/2025/10/30/vast-data-in-xais-frontier-ai-factory-nscales-uk-data-centers-and-williams-f1-racing-team/ (retrieved 2026-11-01).
+[^57]: Blocks & Files, "DDN supplying storage for xAI's Grok 3 Colossus AI supercomputer," 2024-11-19. https://blocksandfiles.com/2024/11/19/ddn-supplying-storage-for-xais-grok-3-colossus-ai-supercomputer/ (retrieved 2026-11-01).
+[^58]: VAST Data blog, "The story of VAST and xAI," n.d. https://www.vastdata.com/blog/the-story-of-vast-and-xai (retrieved 2026-11-01).
+[^59]: Blocks & Files, "VAST supports Google Cloud TPUs in managed service with Red Stapler's SW," 2025-11-11. https://blocksandfiles.com/2025/11/11/vast-supports-google-cloud-tpus-in-managed-service-with-red-staplers-sw/ (retrieved 2026-11-01).
+[^60]: Blocks & Files, "Azure gets VAST's AI OS as VAST builds out global AI operations data fabric," 2025-11-18. https://blocksandfiles.com/2025/11/18/azure-gets-vasts-ai-os-as-vast-builds-out-global-ai-operations-data-fabric ; NAND Research, "VAST Data expands cloud presence with Microsoft Azure and Google Cloud integrations," 2025-11. https://nand-research.com/research-note-vast-data-expands-cloud-presence-with-microsoft-azure-and-google-cloud-integrations/ (retrieved 2026-11-01).
+[^61]: VAST Data via Business Wire, announcement of VAST software in HPE GreenLake for File Storage, 2023-04-04. https://www.businesswire.com/news/home/20230404005358/en (retrieved 2026-11-01).
+[^62]: Blocks & Files, "VAST links up with Equinix and Cisco," 2024-10-01. https://www.blocksandfiles.com/ai-ml/2024/10/01/vast-links-up-with-equinix-and-cisco/1589567 (retrieved 2026-11-01).
+[^63]: StorageNewsletter, "Vast Data Secures Commercial Partnership Deal with CoreWeave for $1.17 Billion to Power the Next Generation of AI," 2025-11-07. https://www.storagenewsletter.com/2025/11/07/vast-data-secures-commercial-partnership-deal-with-coreweave-for-1-17-billion-to-power-the-next-generation-of-ai/ (retrieved 2026-11-01).
+[^64]: The Next Platform, "VAST Data's $1.17 Billion Deal With CoreWeave Is A Leading Indicator," 2025-11-07. https://www.nextplatform.com/2025/11/07/vast-datas-1-17-billion-deal-with-coreweave-is-a-leading-indicator/ (retrieved 2026-11-01).
+[^65]: Futurum, "HPE and VAST Data Join Forces to Launch HPE GreenLake for File Storage," 2023-04. https://futurumgroup.com/insights/hpe-and-vast-data-join-forces-to-launch-hpe-greenlake-for-file-storage (retrieved 2026-11-01).
+[^66]: Lenovo Press, "VTT Data Storage Solutions: The AI Operating System with VAST & Lenovo" (course DVDAT219), 2025-07. https://lenovopress.lenovo.com/course/dvdat219 (retrieved 2026-11-01).
+[^67]: Blocks & Files, "Storage vendors rally behind Nvidia at GTC 2025," 2025-03-18. https://www.blocksandfiles.com/ai-ml/2025/03/18/storage-vendors-rally-behind-nvidia-at-gtc-2025/1602277 (retrieved 2026-11-01).
+[^68]: StorageReview, "MLPerf Storage v3.0: 877 GiB/s Checkpoints, a Cloud First, and a Leaderboard Turned Over," 2026-09. https://www.storagereview.com/news/mlperf-storage-v3-0-877-gib-s-checkpoints-a-cloud-first-and-a-leaderboard-turned-over (retrieved 2026-11-01).
+[^69]: StorageReview, "Best storage arrays" buyer's guide (MLPerf Storage submitter history, updated 2026-09-01). https://www.storagereview.com/best/storage-arrays (retrieved 2026-11-01).
+[^70]: TrendForce, "AI Server Demand Sustains Memory Contract Price Increases in 4Q26, While Consumer-Side Pressure Persists," 2026-09-30. https://www.trendforce.com/presscenter/news/20260930-13258.html (retrieved 2026-11-01).
+[^71]: HPCwire, "How the memory shortage is impacting AI and HPC projects," 2026-01-15. https://www.hpcwire.com/2026/01/15/how-the-memory-shortage-is-impacting-ai-and-hpc-projects/ (retrieved 2026-11-01).
+[^72]: Calcalist (CTech), article 68ml6rrio, n.d. (2026). https://www.calcalistech.com/ctechnews/article/68ml6rrio (retrieved 2026-11-01).
+[^73]: CoreWeave, "Storage" (product page), n.d. https://coreweave.com/products/storage (retrieved 2026-11-01).
+[^74]: Yahoo Finance, "NetApp (NTAP) Acquires AI Storage Software Firm To Expand AI Infrastructure," 2026-07. https://finance.yahoo.com/technology/ai/articles/netapp-ntap-acquires-ai-storage-220629407.html (retrieved 2026-11-01).
+[^75]: Blocks & Files, "How Pure Storage developed its disaggregated FlashBlade//EXA system," 2025-04-17. https://blocksandfiles.com/2025/04/17/how-pure-storage-developed-its-disaggregated-flashblade-exa-system/ (retrieved 2026-11-01).
+[^76]: StorageReview, "Everpure aligns FlashBlade//EXA with NVIDIA AI Factory architectures, previews Data Stream," 2026-03-16. https://www.storagereview.com/news/everpure-aligns-flashblade-exa-with-nvidia-ai-factory-architectures-previews-data-stream (retrieved 2026-11-01).
+[^77]: Everpure, "FlashBlade//EXA Terms of Use," n.d. https://www.everpuredata.com/legal/flashblade-exa-terms-of-use.html (retrieved 2026-11-01).
+[^78]: Blocks & Files, "Pure knocking it out of the park," 2025-08-29. https://blocksandfiles.com/2025/08/29/pure-knocking-it-out-of-the-park/ (retrieved 2026-11-01).
+[^79]: Futurum, "Everpure Q4 FY 2026 Revenue Passes $1 Billion as Platform Strategy Scales," 2026-02. https://futurumgroup.com/insights/everpure-q4-fy-2026-revenue-passes-1-billion-as-platform-strategy-scales (retrieved 2026-11-01).
+[^80]: G. K. Lockwood et al., "New Challenges of Benchmarking All-Flash Storage for HPC," PDSW'21, 2021. https://pdsw.org/pdsw21/papers/ws_pdsw_paper_S2_P1_paper-lockwood.pdf (retrieved 2026-11-01).
