@@ -136,9 +136,8 @@ Middle paths exist. IBM builds its own FlashCore Modules for FlashSystem, puttin
 
 1. **FDP closes much of the gap without lock-in.** NVMe FDP, ratified in 2022 and backed by Meta and Google with Samsung, lets hosts tag writes so drives keep lifetimes apart, cutting write amplification while drives stay standard[^32][^36]. Meta is deploying standard QLC SSDs alongside DFMs[^37].
 2. **R&D scale.** Each NAND IDM funds controller and firmware teams from a far larger SSD revenue base, with process data first.
-3. **Single-design risk.** One module design and one FTL serve FlashArray, FlashBlade and two hyperscalers. A latent bug or a NAND-generation defect is correlated across the whole installed base.
-4. **Qualification burden.** A fabless buyer must characterise each new die (read thresholds, retention, program timing) without fab data, and NAND makers move to a new generation every year or two.
-5. **Hyperscalers can build it.** Open-channel SSDs (LightNVM) were the industry's attempt at host-managed flash, and they were set aside in favour of zoned and placement-hint designs[^38]. Yet when Meta wanted raw-flash control at scale, it licensed rather than built[^37].
+3. **Single-design risk and qualification burden.** One module design and one FTL serve FlashArray, FlashBlade and two hyperscalers, so a latent bug or NAND-generation defect is correlated across the base; and each new die must be characterised without fab data.
+4. **Hyperscalers can build it.** Open-channel SSDs (LightNVM) were the industry's attempt at host-managed flash, and they were set aside in favour of zoned and placement-hint designs[^38]. Yet when Meta wanted raw-flash control at scale, it licensed rather than built[^37].
 
 ## History and trajectory
 

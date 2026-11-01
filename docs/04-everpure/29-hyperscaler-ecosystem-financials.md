@@ -125,8 +125,6 @@ flowchart LR
 
 *Figure 29.4 — Most of the ecosystem is distribution and validation, not revenue. The hyperscaler edges are the exception: there the NAND makers sell around Everpure, straight to its customer.*
 
-Relationship types, in brief:
-
 - **Validation (NVIDIA).** SuperPOD (November 2024)[^25], NVIDIA-Certified Storage and NCP high-performance storage (March 2025)[^26] for FlashBlade//S; Data Stream on the AI Data Platform design[^27]; BlueField-4 STX partner[^28]. No fees, but no shortlist without them ([Chapter 27](27-flasharray-and-flashblade.md), [Chapter 34](../05-ai-storage/34-nvidia-ecosystem.md)).
 - **Converged distribution.** FlashStack joined Cisco's Secure AI Factory with NVIDIA in late 2025, sold via AHEAD, ePlus, SHI and WWT[^29].
 - **Hyperscalers, two roles.** DirectFlash customers, and cloud channels: Everpure Cloud Azure Native, co-developed with Microsoft[^30], and Cloud Dedicated on AWS and Azure[^31] ([Chapter 28](28-platform-and-software.md)).
@@ -150,7 +148,7 @@ Relationship types, in brief:
 
 ## History and trajectory
 
-Hyperscale went from announcement (December 2024) to first revenue (Q2 FY26) to more than 2 EB (Q3 FY26), then a second customer (August 2026)[^8][^11][^4][^14]. Signals to watch:
+Signals to watch:
 
 - **Q3 FY27** (quarter ending around 2026-11-01) is guided at $1.325–1.335B and is the first quarter with significant hyperscale revenue expected[^1][^5]. It had not been reported by 2026-11-01.
 - At the 2026-09-23 Financial Analyst Meeting, Everpure reaffirmed FY27 guidance and gave a preliminary FY28 outlook of $7.0–7.3B revenue (+39–45%) and $1.7–1.9B non-GAAP operating income. It expects three new vectors (Modern Data Software, Scale AI, Hyperscale Solutions) to reach only about 20% of revenue by FY2030[^43][^48].

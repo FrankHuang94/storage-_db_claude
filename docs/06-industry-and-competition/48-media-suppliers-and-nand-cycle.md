@@ -5,17 +5,17 @@
 
 ## TL;DR
 
-- **Five companies sell about 88% of NAND by revenue.** In 2Q26 Samsung had 29.3%, SK hynix Group (with Solidigm) 18.2%, Micron 15.1%, Kioxia 13.6% and Sandisk 11.4%. Top-five revenue reached $68.87B, up 77% in one quarter[^1]. YMTC ships as many bits as Kioxia but ranks lower by revenue[^2].
-- **2026 is a supply-side super-cycle, not just a demand spike.** Enterprise SSDs took about 48% of NAND bits[^2]. Suppliers added little wafer capacity, and the nearline HDD shortage pushed cloud buyers toward QLC[^3]. Compounding TrendForce's quarterly forecast midpoints gives contract prices about 4.7× their mid-2025 level by 4Q26.
-- **Array vendors feel the cycle as a lag, not a level.** Costs reprice every quarter; list prices, quotes and installed-base contracts reprice slower. Product gross margin dips, then recovers as price increases land. Meanwhile revenue inflates and cash goes into inventory and prepayments.
-- **Everpure's exposure is split three ways.** Enterprise arrays carry NAND on its books. Evergreen//One carries it at fixed contracted prices. The hyperscale DirectFlash business carries none, because the customer buys the NAND[^4].
-- **HDD vs QLC is now an allocation question as much as a price question.** Flash's $/TB premium over disk widened to roughly 15–22× in 2026 [VERIFY: single-vendor index][^5], far above the ~3× TrendForce says cloud buyers need[^3]. But nearline lead times also passed 52 weeks, so buyers take whatever media they can get.
+- **Five companies take about 88% of NAND revenue.** Top-five revenue hit $68.87B in 2Q26, up 77% in a quarter[^1]. YMTC ships as many bits as Kioxia but earns far less[^2].
+- **2026 is a supply-side super-cycle.** Enterprise SSDs took ~48% of NAND bits[^2], wafer additions stayed thin and the HDD shortage pushed cloud buyers to QLC[^3]. Compounded TrendForce forecasts put contract prices ~4.7× their mid-2025 level by 4Q26.
+- **Array vendors feel the cycle as a lag.** Costs reprice quarterly; price lists and contracts reprice slower. Product gross margin dips then recovers, revenue inflates, and cash goes into inventory and prepayments.
+- **Everpure's exposure is split three ways.** Arrays carry NAND on its books, Evergreen//One carries it at fixed contracted prices, and hyperscale DirectFlash carries none because the customer buys the NAND[^4].
+- **HDD vs QLC is now about allocation as much as price.** Flash's $/TB premium widened to ~15–22× [VERIFY: single-vendor index][^5], far above the ~3× cloud buyers need[^3], but nearline HDD lead times passed 52 weeks.
 
 ## Why this matters for Everpure strategy
 
-NAND is the largest single input in an all-flash array. Everpure buys raw NAND rather than finished SSDs, which makes it one of the few array vendors with a direct relationship to the fabs (see [Chapter 26](../04-everpure/26-purity-and-directflash.md)). In April 2026 the CEO wrote that input costs for many high-volume semiconductor components had risen 300–900% since mid-2025, and that Everpure's prices were up about 70% on average since January[^6]. A cost shock of that size moves revenue, gross margin, free cash flow and competitive pricing all at once. It also shapes which deal structures make sense: supply agreements, prepayments, multi-sourcing and subscription price protection.
+NAND is the largest single input in an all-flash array. Everpure buys raw NAND rather than finished SSDs, which makes it one of the few array vendors with a direct relationship to the fabs (see [Chapter 26](../04-everpure/26-purity-and-directflash.md)). In April 2026 the CEO wrote that input costs for many high-volume semiconductor components had risen 300–900% since mid-2025, and that Everpure's prices were up about 70% on average since January[^6]. A shock that size moves revenue, gross margin, free cash flow and competitive pricing at once.
 
-For a strategy team the questions are concrete. How long does a NAND upcycle take to show up in product gross margin, and how fast does it reverse? Is negative free cash flow from strategic buying a hedge or a speculative inventory bet? Does a fixed-price Evergreen//One book become a liability when NAND quadruples? And does the HDD shortage widen Everpure's QLC-versus-disk opening, or close it? This chapter answers those from public information.
+The strategy questions follow. How long until an upcycle hits product gross margin, and how fast does it reverse? Is negative free cash flow from strategic buying a hedge or an inventory bet? Does a fixed-price Evergreen//One book become a liability when NAND quadruples? Does the HDD shortage widen Everpure's QLC-versus-disk opening, or close it?
 
 ## Core concepts
 
@@ -26,9 +26,9 @@ For a strategy team the questions are concrete. How long does a NAND upcycle tak
 *Figure 48.1 — Samsung leads on both measures, but YMTC ships as many bits as Kioxia while earning far less per bit, because its mix is still mostly consumer.*
 Data: `data/ch48_nand_share.csv`
 
-The two panels measure different things. Revenue share rewards mix: enterprise SSD bits sell for far more than consumer ones. Micron grew 99% in a quarter and passed Kioxia for third place[^1]. Counterpoint ranks YMTC fifth by revenue, behind the four leaders, because data-centre SSDs are a small part of its mix[^2]. Counterpoint also calls 15% share the threshold at which a NAND maker can self-fund its capex[^2], and YMTC is close to it.
+Revenue share rewards mix, because enterprise SSD bits sell at a large premium. Micron grew 99% in a quarter and passed Kioxia for third[^1]. Counterpoint puts YMTC fifth by revenue because data-centre SSDs are a small part of its mix, and calls 15% share the level at which a NAND maker can self-fund capex[^2]; YMTC is close.
 
-**Semiconductor bridge.** This is the DRAM playbook. The industry consolidated to a handful of IDMs. Each node shift is a capex cliff (new deck stacks, hybrid bonding), so the swing factor is wafer starts, not demand. Kioxia and Sandisk are a special case. They share fabs through joint ventures in Japan, so they are two brands on one manufacturing base.
+**Semiconductor bridge.** This is the DRAM playbook: a handful of IDMs, each node a capex cliff (more decks, hybrid bonding), so wafer starts are the swing factor. Kioxia and Sandisk share fabs through Japanese joint ventures: two brands on one manufacturing base.
 
 | Company | NAND / HDD position | Latest layer node | Flagship enterprise capacity | Relationship to array vendors |
 |---|---|---|---|---|
@@ -43,23 +43,23 @@ The two panels measure different things. Revenue share rewards mix: enterprise S
 
 *Table 48.1 — Supplier profiles, autumn 2026: the NAND makers own the price, while Everpure's direct NAND relationships run through Micron and Kioxia.*
 
-CXMT is DRAM-only, so it matters here only indirectly. The same AI pull has tightened DRAM, which arrays need for controllers and caches, and that compounds the NAND hit.
+CXMT is DRAM-only and matters indirectly: AI has tightened DRAM too, which arrays need for controllers and caches.
 
 ### Why 2025–26 became a super-cycle
 
-Four forces lined up, and each is documented:
+Four forces lined up:
 
-1. **AI pulled enterprise SSD bits.** Server enterprise SSDs reached about 48% of NAND bit shipments in 2Q26[^2]. Enterprise SSD is also the category whose contract prices TrendForce still sees accelerating in 4Q26, at +23–28%, against +15–20% for blended NAND[^28].
-2. **Supply discipline after the 2022–23 bust.** In 1Q23 industry revenue fell to about $8.6B on a ~15% ASP drop[^29]; three years later the top five took $68.87B in a quarter. Having lived through that, suppliers have been slow to add wafers. Kioxia's FY26–28 capex plan averages about ¥470B a year, concentrated at Kitakami[^20]. SK hynix is building a new NAND fab (M17) but says it will stage ramps against demand visibility[^12]. Meaningful new capacity is not expected before late 2027 or 2028.
-3. **The HDD shortage spilled into QLC.** In September 2025 TrendForce reported nearline HDD lead times stretching from weeks to more than 52 weeks. It said North American cloud providers were evaluating QLC SSDs for cold data[^3], and it cited that spillover when it turned its 4Q25 NAND outlook from flat to up 5–10%[^30]. *Verified:* the HDD-to-QLC push is TrendForce's stated driver, not a later rationalisation.
-4. **Supply became a contract, not a spot purchase.** Sandisk had over a third of FY27 bits under long-term agreements (LTAs) by May 2026, with some running up to five years[^23]. Later reports put more than half of FY27 bits under contract [VERIFY: secondary source][^31]. These LTAs carry prepayments, price floors and ceilings[^23]. Micron's exit from consumer Crucial products moved more bits toward strategic customers[^13].
+1. **AI pulled enterprise SSD bits.** Server SSDs reached ~48% of NAND bit shipments in 2Q26[^2], and enterprise SSD is the one category TrendForce still sees accelerating in 4Q26 (+23–28% versus +15–20% blended)[^28].
+2. **Supply discipline after the 2022–23 bust.** In 1Q23 industry revenue fell to about $8.6B on a ~15% ASP drop[^29]; three years later the top five took $68.87B in a quarter. Scarred suppliers add wafers slowly. Kioxia's FY26–28 capex averages ~¥470B a year, mostly at Kitakami[^20]; SK hynix is building M17 but will stage ramps against demand visibility[^12]. Meaningful new capacity is not expected before late 2027–28.
+3. **The HDD shortage spilled into QLC.** In September 2025 TrendForce reported nearline HDD lead times beyond 52 weeks and North American cloud providers evaluating QLC for cold data[^3]. It named that spillover when it turned its 4Q25 outlook from flat to +5–10%[^30], so the HDD-to-QLC link is a stated driver, not hindsight.
+4. **Supply became a contract.** Sandisk had over a third of FY27 bits under long-term agreements (LTAs) of up to five years by May 2026[^23], and reportedly over half later [VERIFY: secondary source][^31], with prepayments and price floors and ceilings[^23]. Micron's Crucial exit freed bits for strategic customers[^13].
 
 ![Bar-and-line chart of TrendForce quarterly NAND contract-price forecasts from 1Q23 to 4Q26. Blended NAND bars are negative through 3Q23 (about −12%, −7.5%, −5.5%), positive from 4Q23 to 3Q24 (+10% to +18%), negative in 4Q24 and 1Q25 (−5.5%, −12.5%), then rise to +7.5% in 3Q25, +22.5% in 4Q25 (revised from +7.5%), +57.5% in 1Q26 (revised from +35.5%), +72.5% in 2Q26, +12.5% in 3Q26 and +17.5% in 4Q26. Enterprise SSD bars are shown where published. A compounded index line rises from 100 to about 102 by 2Q25 and 482 by 4Q26.](../assets/charts/ch48-nand-price.svg)
 
 *Figure 48.2 — Two quarters of 55–75% increases did more than the whole 2023–24 recovery; even the "slowing" 3Q26 and 4Q26 forecasts still compound on a much higher base.*
 Data: `data/ch48_nand_price.csv`
 
-Read the chart as forecasts, not invoices. TrendForce kept revising upward, and the 1Q26 and 2Q26 figures come from secondary coverage [VERIFY: confirm against TrendForce releases][^32][^33]. The index is our own arithmetic, so check it: 1.075 × 1.225 × 1.575 × 1.725 × 1.125 × 1.175 ≈ 4.7× from 2Q25 to 4Q26. That is the same order of magnitude as Everpure's "300–900%" component-cost statement[^6].
+These are forecasts, revised upward repeatedly; the 1Q26 and 2Q26 figures come from secondary coverage [VERIFY: confirm against TrendForce releases][^32][^33]. The index is our arithmetic: 1.075 × 1.225 × 1.575 × 1.725 × 1.125 × 1.175 ≈ 4.7× from 2Q25 to 4Q26, the same order as Everpure's "300–900%" component-cost statement[^6].
 
 ### How the cycle reaches an array vendor's P&L
 

@@ -182,7 +182,6 @@ Dated, public signals to watch through 2027:
 ## Going deeper (optional, L3 pointers)
 
 - The 2015 Form S-1 (risk factors and the early Evergreen description) and the FY2021 and FY2026 10-Ks (purchase accounting for Portworx and 1touch).
-- Quarterly prepared remarks from Q3 FY2025 onward, for how the hyperscaler licensing model is described.
 - [Chapter 29](29-hyperscaler-ecosystem-financials.md) for revenue mix and margin drivers, and [Chapter 54](../07-history-and-future/54-strategic-option-map.md) for the option map.
 
 ## Key terms
