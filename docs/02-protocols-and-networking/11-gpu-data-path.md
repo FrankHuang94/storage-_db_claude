@@ -29,7 +29,7 @@ At scale, idle time comes mostly from interruptions. Meta's Llama 3 run on 16,38
 
 Steady-state LLM training needs far less bandwidth than people assume. Take a 70B dense model on 1,024 H100s. At 40% utilization of the ~989 dense BF16 TFLOPS of an H100, the cluster processes about 1,024 × 989×10¹² × 0.4 ÷ (6 × 70×10⁹) ≈ **0.97 million tokens per second**. At ~4 bytes per token ID, that is **~4 MB/s for the whole cluster**. Any NAS serves that; GDS does nothing for it. Storage stalls GPUs in four places:
 
-1. **Checkpoint saves.** With Adam in mixed precision, the state is about 16 bytes per parameter: bf16 weights, fp32 master weights, and two fp32 moments. A 70B model therefore checkpoints 70×10⁹ × 16 = **1.12 TB**. Written synchronously at 20 GB/s, that takes 56 s. Every 30 minutes, that is 3.1% of wall-clock time spent idle.
+1. **Checkpoint saves.** With Adam in mixed precision, the full training state is about 16 bytes per parameter: bf16 weights (2) and gradients (2), fp32 master weights (4) and two fp32 Adam moments (4 + 4). Gradients are usually not saved, so a real checkpoint is closer to 14 bytes per parameter ([Chapter 31](../05-ai-storage/31-training-storage.md) walks through the variants); this example uses 16 as a round upper bound. A 70B model therefore checkpoints up to 70×10⁹ × 16 = **1.12 TB**. Written synchronously at 20 GB/s, that takes 56 s. Every 30 minutes, that is 3.1% of wall-clock time spent idle.
 2. **Checkpoint restores.** Every GPU reads its shard at once, the burstiest read storage sees.
 3. **Multimodal data loading.** Samples are megabytes. For many vision and audio models, Mohan et al. found training time dominated by "data stalls" (fetch plus pre-processing)[^5].
 4. **Inference KV-cache loads.** A Llama 3 70B token needs 80 layers × 8 KV heads × 128 dimensions × 2 (key and value) × 2 bytes ≈ **320 KiB of KV cache**[^4]. A 32K-token context is ~10.7 GB, and fetching it must beat recomputing ~2 × 70×10⁹ × 32,768 ≈ 4.6×10¹⁵ FLOPs (a second or more even on eight GPUs). The load is latency-critical and repeats for every returning user ([Chapter 32](../05-ai-storage/32-inference-and-kv-cache.md)).
@@ -200,7 +200,7 @@ Three trends point forward. **Object over RDMA:** cuObject standardizes S3 over 
 | Llama 3 effective training time | >90%, despite 466 interruptions in 54 days | 16,384 H100s | Meta[^4], 2024-07 |
 | DGX-2 CPU-memory-to-GPU limit vs direct aggregate | ~50 GB/s vs ~200 GB/s | Original GDS case | NVIDIA blog[^6], 2019 |
 | NetApp ONTAP GDS read throughput | 171 GiB/s, eight-node cluster | Company-stated, gdsio | NetApp[^17] |
-| 70B Adam checkpoint | 1.12 TB (16 B/parameter) | 56 s at 20 GB/s; 11 s at 100 GB/s | Worked example |
+| 70B Adam checkpoint | ≤1.12 TB (≤16 B/parameter; ~0.98 TB at 14 B) | 56 s at 20 GB/s; 11 s at 100 GB/s | Worked example |
 | Text-token input for 70B on 1,024 H100s | ~4 MB/s cluster-wide | Why LLM training is compute-bound | Worked example |
 | Llama 3 70B KV cache | ~320 KiB per token; ~10.7 GB per 32K context | Drives inference KV loads | Worked example from Meta architecture[^4] |
 | Idle cost, 1,024 H100s at US$3.99 | ~US$358k per 1% idle per year | Utilization economics | Worked example |
