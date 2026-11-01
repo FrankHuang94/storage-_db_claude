@@ -43,7 +43,7 @@ flowchart TD
 
 **2. Metadata.** Where does it live (DRAM, NVRAM, SCM, flash)? How is it partitioned, and what happens with a single hot directory? AI checkpointing makes this concrete. If 16,384 ranks each write one shard file into one directory, that is 16,384 creates in a burst. A design that serialises them on one directory lock turns a bandwidth problem into a metadata stall ([Chapter 21](../03-system-architecture/21-metadata.md)).
 
-**3. Failure domains.** What is the largest unit that can fail together: a drive, a node, an enclosure, a rack? How long until full redundancy returns? *Worked example:* a 300 TB DirectFlash Module at 80% full holds 240 TB. At a 2 GB/s rebuild rate, restoring it takes 240,000 GB ÷ 2 GB/s = 120,000 s ≈ 33 hours. Declustered across the array at 10 GB/s, it takes about 6.7 hours. Then ask which world the system is in, measured under production load.
+**3. Failure domains.** What is the largest unit that can fail together: a drive, a node, an enclosure, a rack? How long until full redundancy returns? *Worked example:* a 300 TB DirectFlash Module at 80% full holds 240 TB. At a 2 GB/s rebuild rate, restoring it takes 240,000 GB ÷ 2 GB/s = 120,000 s ≈ 33 hours. Declustered across the array at 10 GB/s, it takes about 6.7 hours. Ask which of the two the system achieves under production load.
 
 **4. Upgrades and NDU.** Non-disruptive upgrade is a Purity signature. Pure Storage reported more than 7,000 non-disruptive controller upgrades for over 2,700 customers between 2015 and mid-2021[^4]. The questions that matter for a target are how long mixed-version clusters are supported, what can be rolled back, and what an upgrade costs in performance while one controller or node is out.
 
@@ -89,7 +89,7 @@ flowchart LR
 
 *Figure 56.2 — Operate at L2 and treat L3 as territory you ask about; credibility collapses the moment you assert an implementation detail you cannot defend.*
 
-L2 behaviour has a recognisable script. Draw your understanding, put a number on it, and hand over the marker: "My mental model is a log-structured layout with a global FTL, so write amplification should stay near 1.1. Where is that wrong for your system?" At L3, the move is a precise question: "Is the dedup index in controller DRAM or paged from flash?" Never offer an opinion on code paths. Engineers spot bluffs by vague adjectives and borrowed numbers.
+L2 behaviour has a recognisable script. Draw your understanding, put a number on it, and hand over the marker: "My mental model is a log-structured layout with a global FTL, so write amplification should sit well below a standard SSD's. Where is that wrong for your system?" At L3, the move is a precise question: "Is the dedup index in controller DRAM or paged from flash?" Never offer an opinion on code paths. Engineers spot bluffs by vague adjectives and borrowed numbers.
 
 ### Ten whiteboard prompts
 
