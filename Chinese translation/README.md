@@ -4,6 +4,8 @@
 
 ## 关于本中文译本
 
+> **可打印 PDF：** [`pdf/Everpure-Tech-Atlas-zh-CN.pdf`](pdf/Everpure-Tech-Atlas-zh-CN.pdf)（A4，883 页，含封面、带页码的目录、各部分扉页、全部 62 章与术语表；图表已嵌入，闪卡答案展开显示）。由 `scripts/build_zh_pdf.py` 生成。
+
 - 本文件夹（`Chinese translation/`）是整部图谱的简体中文**参考译本**，目录结构与英文仓库完全镜像：`docs/` 下的全部章节与术语表，根目录的 `README`、`PROGRESS`、`CLAUDE` 文件，以及 `meta/` 下的各类文档。
 - 每个译文文件顶部都注明了对应的英文原文出处，并附有返回英文原文的链接。
 - 所有数字、名称（公司、产品、人名、标准）、日期以及资料来源引用均与英文原文保持一致，未作改动。
