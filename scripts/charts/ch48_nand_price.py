@@ -67,7 +67,7 @@ def build(out_dir: Path) -> Path:
             if orig is not None:
                 ax.plot(i + off, _mid(orig), marker="D", mfc="white", mec="#222222", ms=6, zorder=5)
             if seg == "blended NAND" and abs(m) >= 10:
-                ax.text(i + off, m + (3 if m > 0 else -3), f"{m:+.0f}%", ha="center",
+                ax.text(i + off, m + (3 if m > 0 else -3), f"{(int(m + 0.5) if m > 0 else -int(-m + 0.5)):+d}%", ha="center",
                         va="bottom" if m > 0 else "top", fontsize=7.5, color="#222222")
             if seg == "blended NAND":
                 level *= 1 + m / 100
@@ -87,7 +87,7 @@ def build(out_dir: Path) -> Path:
     ax2.spines["right"].set_visible(True)
     ax2.text(len(QUARTERS) - 1, index[-1] + 12, f"{index[-1]:.0f}", color="#D55E00", ha="center", fontsize=9,
              fontweight="bold")
-    ax.text(1, 70, "2023: tail of the\nworst downturn;\nsuppliers cut output", fontsize=8.5, color="#555555", ha="center")
+    ax.text(1.2, 28, "2023: tail of the\nworst downturn;\nsuppliers cut output", fontsize=8.5, color="#555555", ha="center")
     ax.text(8.6, 45, "4Q24–1Q25: inventory\ncorrection, then AI\nand HDD shortage", fontsize=8.5, color="#555555", ha="center")
     handles = [Patch(color=BLEND, label="Blended NAND contract price (TrendForce)"),
                Patch(color=ENT, label="Enterprise SSD contract price (where published)"),
@@ -101,6 +101,6 @@ def build(out_dir: Path) -> Path:
                             "data/ch48_nand_price.csv. Forecasts, not realised prices (realised moves were usually larger in "
                             "upturns, e.g. 1Q23 ASP fell ~15%). 2Q25 has no blended figure (enterprise SSD flat); 3Q24 enterprise "
                             "bar is the realised ~15% ASP rise; 4Q25 enterprise bar is a 'more than 25%' lower bound. Index is "
-                            "illustrative arithmetic. Data: data/ch48_nand_price.csv")
+                            "illustrative arithmetic (2Q25 held flat). Data: data/ch48_nand_price.csv")
     fig.tight_layout()
     return _style.save(fig, out_dir, NAME)

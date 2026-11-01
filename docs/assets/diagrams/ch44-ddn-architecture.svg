@@ -108,7 +108,7 @@
 
   <text x="538" y="545" font-size="12" fill="#222222">+ fast tenant provisioning; object and KV cache in one namespace</text>
   <text x="538" y="565" font-size="12" fill="#222222">– POSIX, ACLs and GPUDirect Storage still on the roadmap</text>
-  <text x="538" y="585" font-size="12" fill="#222222">– younger code base (first shipped 2023); fewer references</text>
+  <text x="538" y="585" font-size="12" fill="#222222">– younger code base (announced 2023); fewer references</text>
 
   <!-- connectors to CORE -->
   <line x1="255" y1="598" x2="255" y2="620" stroke="#D55E00" stroke-width="2"/>
