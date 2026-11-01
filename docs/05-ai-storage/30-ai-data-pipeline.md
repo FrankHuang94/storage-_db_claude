@@ -118,7 +118,7 @@ flowchart LR
 *Figure 30.4 — Illustrative: filtering shrinks petabytes to terabytes, then training produces artefacts larger than the model itself.*
 Data: `data/ch30_data_funnel.csv`
 
-**From crawl to weights.** DataComp-LM's pool holds 240T tokens of Common Crawl text[^11]. FineWeb filtered and deduplicated 96 snapshots into 15T tokens, about 44 TB on disk[^12][^13] [VERIFY: 44 TB from search summaries only], with a 1.3T-token educational subset[^12]. Llama 3 trained on about 15.6T tokens[^14]; as 4-byte token IDs that is 15.6e12 × 4 ≈ 62 TB. Filtering, not tokenization, does the shrinking, so curation is where the lake's capacity and scan bandwidth earn their keep.
+**From crawl to weights.** DataComp-LM's pool holds 240T tokens of Common Crawl text[^11]. FineWeb filtered and deduplicated 96 snapshots into 15T tokens, about 44 TB on disk[^12][^13], with a 1.3T-token educational subset[^12]. Llama 3 trained on about 15.6T tokens[^14]; as 4-byte token IDs that is 15.6e12 × 4 ≈ 62 TB. Filtering, not tokenization, does the shrinking, so curation is where the lake's capacity and scan bandwidth earn their keep.
 
 **Tokens are cheap to stream.** Llama 3's batch grew to 16M tokens per step[^14]: 64 MB at 4 bytes per token, so even one step per second is about 64 MB/s for the whole cluster. Multimodal is different; video can need GB/s per node.
 
@@ -156,7 +156,7 @@ Each step outward adds capacity and loses bandwidth per GPU; as in CPU design, t
 |---|---|---|---|---|
 | Ingest / lake | $/TB, durability, S3 compatibility | FlashBlade//E, FlashBlade S3, DirectFlash density[^3] | AWS S3 / Azure Blob (gravity, zero ops); HDD object stores (cheapest TB) | Hyperscalers in cloud; HDD object on-prem |
 | Curation | Scan throughput, table formats, GPU pipelines | Data Stream, built on NVIDIA's AI Data Platform design[^4][^20] | Lakehouse platforms on object storage; VAST's database and compute layer | Lakehouse software vendors |
-| Training + checkpoint | GB/s to TB/s, NVIDIA certification | FlashBlade//S500, FlashBlade//EXA; 877.5 GiB/s checkpoint write in MLPerf Storage v3.0 (company-reported)[^21] | DDN EXAScaler, WEKA, VAST, IBM Storage Scale, Dell Lightning FS[^22] | NVIDIA-aligned specialists ([Ch 41](../06-industry-and-competition/41-why-ai-native-vendors-won.md)) |
+| Training + checkpoint | GB/s to TB/s, NVIDIA certification | FlashBlade//S500, FlashBlade//EXA; 877.5 GiB/s checkpoint write in MLPerf Storage v3.0 (vendor-submitted; VAST, WEKA and DDN did not enter v3.0)[^21][^10] | DDN EXAScaler, WEKA, VAST, IBM Storage Scale, Dell Lightning FS[^22] | NVIDIA-aligned specialists ([Ch 41](../06-industry-and-competition/41-why-ai-native-vendors-won.md)) |
 | Fine-tuning | Multi-tenancy, QoS, many jobs | FlashBlade//S; FlashBlade//EXA multi-tenancy and QoS (2026)[^23] | NetApp AFX, Dell PowerScale, VAST | Enterprise incumbents |
 | Inference / KV cache | Time to first token, tokens per dollar | PureKVA, claimed up to 20x faster TTFT, test details unpublished[^2] | WEKA Augmented Memory Grid[^24], VAST on BlueField-4[^19], NVIDIA STX/CMX[^18] | Too early to call |
 | RAG | Vectors, freshness, permissions | Data Stream vector DB integration[^4] | Vector databases; AWS S3 Vectors[^25]; NetApp AI Data Engine[^26] | Database vendors + hyperscalers |
@@ -194,7 +194,7 @@ Small image files were the first AI storage problem; LLMs made checkpoints the b
 | Metric | Value | Context | Source / date |
 |---|---|---|---|
 | One Common Crawl monthly crawl | 3.0B pages, 460 TiB uncompressed | January 2025 crawl | Common Crawl[^5], 2025 |
-| FineWeb | 15T tokens from 96 snapshots; ~44 TB | Filtered, deduplicated web text | NeurIPS 2024[^12]; dataset card[^13] |
+| FineWeb | 15T tokens from 96 snapshots; ~44 TB | Filtered, deduplicated web text | NeurIPS 2024[^12]; Hugging Face[^13] |
 | DCLM-Pool | 240T tokens | Largest public pre-filter text pool | DataComp-LM[^11], 2024 |
 | Llama 3 pre-training | ~15.6T tokens; 240 PB Tectonic, 2 TB/s sustained, 7 TB/s peak | Meta's own training storage | Meta, 2024-07[^14] |
 | Checkpoint, 405B model | 5.7–6.5 TB | 14–16 bytes per parameter | Worked example |
@@ -252,7 +252,7 @@ Small image files were the first AI storage problem; LLMs made checkpoints the b
 [^10]: MLCommons via GlobeNewswire, "MLCommons Releases New MLPerf Storage v3.0 Benchmark Results," 2026-09-01. https://www.globenewswire.com/news-release/2026/09/01/3354412/0/en/mlcommons-releases-new-mlperf-storage-v3-0-benchmark-results.html (retrieved 2026-11-01).
 [^11]: J. Li et al., "DataComp-LM: In search of the next generation of training sets for language models," NeurIPS 2024 Datasets and Benchmarks, 2024-06. https://arxiv.org/abs/2406.11794 (retrieved 2026-11-01).
 [^12]: G. Penedo et al., "The FineWeb Datasets: Decanting the Web for the Finest Text Data at Scale," NeurIPS 2024 Datasets and Benchmarks, 2024. https://proceedings.neurips.cc/paper_files/paper/2024/hash/370df50ccfdf8bde18f8f9c2d9151bda-Abstract-Datasets_and_Benchmarks_Track.html (retrieved 2026-11-01).
-[^13]: Hugging Face, "HuggingFaceFW/fineweb" dataset card, n.d. https://huggingface.co/datasets/HuggingFaceFW/fineweb (retrieved 2026-11-01). [VERIFY: ~44 TB disk size seen in search summaries only; secondary summaries range 44–50 TB]
+[^13]: Hugging Face, "FineWeb: decanting the web for the finest text data at scale" (blog), 2024-05-31. https://huggingfacefw-blogpost-fineweb-v1.static.hf.space/ (retrieved 2026-11-01; "15-trillion tokens, 44TB disk space", seen via search result; dataset card HuggingFaceFW/fineweb gives the same figure). Secondary summaries quoting ~50 TB are not the official figure.
 [^14]: Meta (Llama Team), "The Llama 3 Herd of Models," arXiv:2407.21783, 2024-07-31. https://arxiv.org/abs/2407.21783 (retrieved 2026-11-01).
 [^15]: NVIDIA, "KVBM design," Dynamo documentation v1.3.0, n.d. https://docs.nvidia.com/dynamo/v1.3.0/design-docs/component-design/kvbm-design.md (retrieved 2026-11-01).
 [^16]: M. Horowitz, "1.1 Computing's energy problem (and what we can do about it)," ISSCC 2014, 2014-02. https://doi.org/10.1109/ISSCC.2014.6757323 (retrieved 2026-11-01); figures as reproduced in arXiv:1602.04183, https://arxiv.org/pdf/1602.04183 (retrieved 2026-11-01).
