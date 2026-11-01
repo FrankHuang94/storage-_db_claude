@@ -13,9 +13,9 @@
 
 ## Why this matters for Everpure strategy
 
-Everpure's "Data Primacy" pitch and its 1touch purchase rest on one bet: in an agentic enterprise, the scarce asset is *trusted context about data*, not capacity. If agents become the main consumers of enterprise data, the control point moves to whoever answers three questions on each request: what is this, may this agent see it, and what did it do with it. A vendor that answers them stays sticky as hardware commoditises; one that does not becomes the S3 endpoint under someone else's catalog ([Chapter 33](33-rag-vector-lakehouse.md)).
+Everpure's "Data Primacy" pitch and its 1touch purchase rest on one bet: in an agentic enterprise, the scarce asset is *trusted context about data*, not capacity. If agents become the main consumers of data, control moves to whoever answers three questions per request: what is this, may this agent see it, and what did it do with it. A vendor that answers them stays sticky as hardware commoditises; one that does not becomes the S3 endpoint under someone else's catalog ([Chapter 33](33-rag-vector-lakehouse.md)).
 
-The competition is not only VAST and NetApp. Salesforce paid US$8 billion for Informatica's catalog and governance business (closed November 2025)[^3]. The data-security posture management (DSPM) specialist Cyera raised US$600 million at a US$12 billion valuation in June 2026 (*reported*)[^4]. Those prices show where the value sits, and how costly it is to buy in.
+Salesforce paid US$8 billion for Informatica's catalog and governance business (closed November 2025)[^3]. The data-security posture management (DSPM) specialist Cyera raised US$600 million at a US$12 billion valuation in June 2026 (*reported*)[^4]. Those prices show where the value sits, and how costly it is to buy in.
 
 ## Core concepts
 
@@ -23,8 +23,8 @@ The competition is not only VAST and NetApp. Salesforce paid US$8 billion for In
 
 A storage system holds three kinds of metadata, and owns two of them by default ([Chapter 21](../03-system-architecture/21-metadata.md)):
 
-1. **System metadata:** names, paths, sizes, owners, access-control lists (ACLs), timestamps, snapshots, replicas. Every array has this.
-2. **Telemetry:** who read or wrote what, when, from where. Arrays and control planes such as Pure1 log it for operations ([Chapter 22](../03-system-architecture/22-control-planes.md)).
+1. **System metadata:** names, paths, sizes, owners, access-control lists (ACLs), timestamps, snapshots, replicas.
+2. **Telemetry:** who read or wrote what, when, from where. Control planes such as Pure1 log it ([Chapter 22](../03-system-architecture/22-control-planes.md)).
 3. **Content-derived metadata:** what the bytes *are*. This file holds a passport number; this table is EU customer data. Producing it means opening and classifying content, the job of discovery and DSPM tools and now Everpure Data Intelligence.
 
 **Semiconductor bridge:** system metadata is the tag RAM of a cache: it tells you a line exists and where. Content metadata means reading the data array itself, which costs bandwidth. Telemetry is the on-die bus monitor: only something on the write path sees every transaction without sampling, the core of the storage-vendor argument ([Chapter 28](../04-everpure/28-platform-and-software.md)).
@@ -48,7 +48,7 @@ flowchart BT
 
 ### Catalogs and semantic layers
 
-A **catalog** records what datasets exist, their schemas, owners, classifications and lineage. A **semantic layer** records what business terms *mean*: one governed definition of "active customer" or "net revenue", with the joins and filters that compute it. Humans carry these definitions in their heads; agents do not. Ask an LLM for "Q3 churn" against 4,000 raw tables and it will guess a join, and a guessed join returns a confident wrong number.
+A **catalog** records what datasets exist, their schemas, owners, classifications and lineage. A **semantic layer** records what business terms *mean*: one governed definition of "active customer" or "net revenue", with the joins and filters that compute it. Humans carry these definitions in their heads; agents do not. Ask an LLM for "Q3 churn" over 4,000 raw tables and it guesses a join, returning a confident wrong number.
 
 The industry is standardising this layer. Snowflake's Open Semantic Interchange (OSI) published a first, Apache-2-licensed specification in January 2026 covering datasets, metrics, dimensions and relationships. Databricks, Informatica, Salesforce, dbt Labs and dozens of others were in the working group[^5]. An analyst noted Everpure is not a member[^6] [VERIFY: search-summary only]. **Semiconductor bridge:** the semantic layer is the instruction-set architecture between "software" (agents) and "hardware" (tables and files), and whoever writes the ISA shapes everything above it.
 
@@ -82,16 +82,16 @@ sequenceDiagram
     A-->>U: Answer with citations
 ```
 
-*Figure 39.2 — One agent tool call passes through four control points before and after a single byte is read; the policy check and the audit write sit on the critical path of every call.*
+*Figure 39.2 — The policy check and audit write sit on the critical path of every agent tool call.*
 
-A human works serially; an agent splits a task into parallel sub-queries, retries and chains tools. Four properties follow.
+An agent splits a task into parallel sub-queries, retries and chains tools. Four properties follow.
 
 - **Many small reads.** Metadata lookups and 4–64 KB chunk fetches dominate, favouring low-latency flash and fast metadata services over raw GB/s.
 - **Fan-out.** Like a GPU warp's scatter-gather loads, the slowest of hundreds of object touches sets completion time.
 - **Fine-grained, delegated permissions.** The agent acts *on behalf of* a user, so the effective right is the user's entitlements intersected with the agent's scope, often at row or field level, finer than array ACLs.
 - **Lineage.** Auditing or undoing an action requires knowing which object versions informed it; snapshots make that possible.
 
-**Worked example (illustrative).** 5,000 employees each give an agent 10 tasks a day; each task makes 8 tool calls touching 25 objects. That is 5,000 × 10 × 8 × 25 = **10 million access decisions a day**. Over a 10-hour workday that averages 10M ÷ 36,000 s ≈ **280 per second**, with peaks several times higher. Compare 5,000 humans opening ~50 files each: 250,000 a day, 40× fewer. At ~1 KB per log record, that is ~10 GB of audit log a day, or ~1.8 TB over six months. Databricks reported that agents, not humans, created about 80% of databases provisioned on Neon (*company-stated*, 2025)[^10].
+**Worked example (illustrative).** 5,000 employees each give an agent 10 tasks a day; each task makes 8 tool calls touching 25 objects. That is 5,000 × 10 × 8 × 25 = **10 million access decisions a day**. Over a 10-hour workday that averages 10M ÷ 36,000 s ≈ **280 per second**, with peaks several times higher. The same humans opening ~50 files each make 250,000, 40× fewer. At ~1 KB per log record, that is ~10 GB of audit log a day, or ~1.8 TB over six months. Databricks says agents created ~80% of databases on Neon (*company-stated*, 2025)[^10].
 
 **Semiconductor bridge:** the policy engine is to agents what an **IOMMU** is to DMA-capable devices. Every access is translated and permission-checked, and the decision cache works like an IOTLB. Too slow and every I/O stalls; cache too long and a revoked permission stays live.
 
@@ -143,7 +143,7 @@ quadrantChart
     DSPM BigID Varonis Cyera: [0.12, 0.62]
 ```
 
-*Figure 39.3 — Storage vendors are climbing and data vendors are not descending; the atlas's judgment (not vendor data) is that VAST is furthest up, while Everpure and NetApp have bought or built a layer they have yet to prove off their own arrays.*
+*Figure 39.3 — Atlas judgment, not vendor data: storage vendors are climbing while data vendors are not descending, and VAST sits furthest up.*
 
 **Trade-offs.** VAST is the steelman for "storage becomes the AI data platform": database, runtime and policy in one system, but scoped to data on VAST. NetApp has the deepest metadata heritage and now indexes rival storage. Dell, like Everpure, bought a ~US$120–125M startup to get here. Cohesity and Rubrik hold a full copy of most enterprise data and can *undo* agent actions. Everpure's asset is entity-level classification plus a Pure1-managed fleet ([Chapter 28](../04-everpure/28-platform-and-software.md)); its gap is proof on non-Everpure data.
 
@@ -164,9 +164,9 @@ timeline
     2026 : OSI spec v1 : Everpure closes 1touch : Dell Data Orchestration Engine : AI Omnibus in force : Everpure Data Intelligence adds MCP : NetApp indexes rival storage
 ```
 
-*Figure 39.4 — In under two years the industry got a standard agent protocol, a semantic-layer spec and a regulatory clock, and every major storage vendor shipped or bought a data-intelligence layer.*
+*Figure 39.4 — In two years the industry gained an agent protocol, a semantic-layer spec and a regulatory clock.*
 
-The arc runs from storage-resource reports (2000s) through GDPR-era classification tools (2010s) to AI data platforms. NVIDIA's AI Data Platform reference design (March 2025) gave storage vendors a common template for putting GPUs and retrieval next to data ([Chapter 34](34-nvidia-ecosystem.md)). The 2026 shift is from *preparing* data for RAG to *governing access* by agents. Signals to watch over the next 12–18 months: separate disclosure of data-intelligence revenue; delegated-identity support in MCP; OSI moving to a foundation; and buying driven by the December 2027 deadline.
+The arc runs from storage-resource reports (2000s) through GDPR-era classification tools (2010s) to AI data platforms. NVIDIA's AI Data Platform design (March 2025) gave vendors a template for GPUs and retrieval next to data ([Chapter 34](34-nvidia-ecosystem.md)). The 2026 shift is from *preparing* data for RAG to *governing* agent access. Signals to watch over the next 12–18 months: separate disclosure of data-intelligence revenue; delegated-identity support in MCP; OSI moving to a foundation; and buying driven by the December 2027 deadline.
 
 ## Numbers that matter
 
