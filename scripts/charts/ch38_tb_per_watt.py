@@ -35,7 +35,9 @@ def _panel(ax, rows, title, xmax):
         hdd = r["group"] == "HDD"
         ax.barh(y, v, color=COLORS[r["group"]], hatch="//" if hdd else None,
                 edgecolor="white" if not hdd else "#555555", linewidth=0.6, height=0.62, zorder=3)
-        ax.text(v + xmax * 0.012, y, f"{v:.2f}  ({float(r['watts']):,.0f} W, {r['watts_basis']})",
+        basis = r["watts_basis"]
+        note = basis if "W/TB" in basis else f"{float(r['watts']):,g} W, {basis}"
+        ax.text(v + xmax * 0.012, y, f"{v:.2f}  ({note})",
                 va="center", fontsize=8.3, color="#333333")
     ax.set_yticks(list(ys))
     ax.set_yticklabels([r["item"] for r in rows], fontsize=9.2)
@@ -48,7 +50,7 @@ def build(out_dir: Path) -> Path:
     _style.apply()
     rows = _load()
     fig, (a1, a2) = plt.subplots(2, 1, figsize=(10.5, 7.4), gridspec_kw={"height_ratios": [5, 5]})
-    _panel(a1, [r for r in rows if r["level"] == "drive"], "Single drive or module, TB per watt (raw)", 13.5)
+    _panel(a1, [r for r in rows if r["level"] == "drive"], "Single drive or module, TB per watt (raw)", 16.5)
     _panel(a2, [r for r in rows if r["level"] == "system"],
            "Enclosure or system, TB per watt (raw except DDN, usable)", 3.4)
     a2.set_xlabel("Terabytes per watt (higher is better)")

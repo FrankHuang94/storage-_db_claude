@@ -32,7 +32,7 @@ Llama 3.1 70B has 80 layers and uses grouped-query attention (GQA): 64 query hea
 *Figure 32.1 — Worked example: KV size is linear in context and in sessions, so a few hundred retained long conversations already exceed everything one 8-GPU node holds.*
 Data: `data/ch32_kv_size.csv`
 
-Compare the hardware. An H200 has 141 GB of HBM[^6]; a Rubin GPU has 288 GB of HBM4[^7]. A DGX B200 node has 1,440 GB of HBM, 2 TB of host DRAM and 8 × 3.84 TB of local NVMe[^8]. After 71 GB of fp8 weights for a 70B model, ~1.37 TB remains for KV: **about 31 sessions at 128K**, fewer after activations. fp8 KV doubles the count but not the shape of the curve.
+Compare the hardware. An H200 has 141 GB of HBM[^6]; a Rubin GPU has 288 GB of HBM4[^7]. A DGX B200 node has 1,440 GB of HBM, 2 TB of host DRAM and 8 × 3.84 TB of local NVMe[^8]. After 71 GB of fp8 weights for a 70B model, ~1.37 TB remains for KV: **about 31 sessions at 128K**, fewer after activations (fp8 KV doubles it).
 
 ### Prefill versus decode: two different machines
 
