@@ -136,3 +136,113 @@
 
 ---
 
+## 5. NAND、SSD 与 HDD 介质
+
+### 5.1 3D NAND 层数
+- 据 2024-11-21 报道，SK hynix 开始量产 321 层（TLC、1Tb）4D NAND。它声称借助 "Three Plugs" 工艺，生产率比其 238 层一代高 59%。— 来源：Blocks & Files, "SK hynix begins mass production of 321-layer 3D NAND", 2024-11-21, https://www.blocksandfiles.com/ai-ml/2024/11/21/sk-hynix-begins-mass-production-of-321-layer-3d-nand/1605947 (retrieved 2026-11-01)
+- SK hynix 表示，2026 年第二季度 321 层 NAND 在其 NAND 产量中占比最大。下一代路线图目标说法不一（2026 年末 375 层 vs 2027 年 500 层）。— 来源：Tom's Hardware, "Inside the future of 3D NAND: The roadmap to 500 layers", 2026, https://www.tomshardware.com/pc-components/storage/inside-the-future-of-3d-nand-the-roadmap-to-500-layers (retrieved 2026-11-01) [VERIFY: 路线图]
+- Samsung V10（第 10 代 V-NAND）为 400+ 层，采用混合键合（hybrid bonding），I/O 速率 5.6 GT/s。Samsung 声称其密度比 V9 高约 58%，TLC 约 28 Gb/mm²。— 来源：Tom's Hardware, "Samsung unveils 10th Gen V-NAND: 400+ layers, 5.6 GT/s and hybrid bonding", 2026, https://www.tomshardware.com/pc-components/ssds/samsung-unveils-10th-gen-v-nand-400-layers-5-6-gt-s-and-hybrid-bonding (retrieved 2026-11-01) [VERIFY: 日期和密度数字]
+- Kioxia/Sandisk BiCS10 为 332 层，接口速率 4.8 GT/s。据报道其 QLC 面密度约 37 Gb/mm²，高于 Samsung 的 400 层产品。— 来源：Tom's Hardware, "Kioxia and Sandisk sample world's densest 3D NAND — new 332-Layer beats Samsung's 400-Layer NAND", 2026, https://www.tomshardware.com/pc-components/ssds/kioxia-and-sandisk-sample-worlds-densest-3d-nand-new-332-layer-beats-samsungs-400-layer-nand (retrieved 2026-11-01)
+- Kioxia/Sandisk 在 VLSI 2026 上发表了 1,000 层 3D NAND 技术研究。— 来源：Kantenna, "1,000-Layer 3D NAND: Kioxia and Sandisk Unveil World-First Tech at VLSI 2026", 2026-06, https://kantenna.com/topic/kioxia-sandisk-1000-layer-3d-nand-vlsi-2026-world-first (retrieved 2026-11-01) [VERIFY: 来源层级较低]
+- Micron G9 为 276 层，TLC 约 21.0 Gb/mm²，用于 245TB 的 6600 ION（QLC）。— 来源：Tom's Hardware, roadmap article (URL above); Micron IR, "Industry-Leading 245TB Micron 6600 ION Data Center SSD Now Shipping", 2026-05-05, https://investors.micron.com/news/press-release/2026/Industry-Leading-245TB-Micron-6600-ION-Data-Center-SSD-Now-Shipping/default.aspx (retrieved 2026-11-01)
+
+**各年份 NAND 层数领先者（可直接转为 CSV）**
+
+| 年份,厂商,层数,备注,状态 |
+|---|
+| 2013,Samsung,24,首款 V-NAND,[VERIFY: 背景知识] |
+| 2016,Samsung/业界,48,,[VERIFY: 背景知识] |
+| 2017,业界,64,,[VERIFY: 背景知识] |
+| 2018,业界,96,,[VERIFY: 背景知识] |
+| 2020,Micron,176,首款 176L,[VERIFY: 背景知识] |
+| 2022,Micron,232,首款 200+L,[VERIFY: 背景知识] |
+| 2022,SK hynix,238,,[VERIFY: 背景知识] |
+| 2024,Samsung,~286 (V9),,[VERIFY: 层数未确认] |
+| 2024,SK hynix,321,2024 年 11 月量产,有来源 |
+| 2025,Micron,276 (G9),,有来源 |
+| 2025-26,Kioxia/Sandisk,332 (BiCS10),密度最高,有来源 |
+| 2026,Samsung,400+ (V10),混合键合,有来源 |
+
+### 5.2 最大容量 SSD
+- **Micron 6600 ION** 于 2026-05-05 开始出货，可用容量 245.76 TB（原始容量 256 TB）。它采用 G9 QLC、PCIe 5.0，提供 E3.L 和 U.2 两种外形规格，Micron 称其为商用容量最大的 SSD。— 来源：Micron IR, 2026-05-05 (URL above) (retrieved 2026-11-01)
+- Micron 的对比（厂商口径）：在最大功耗 30 W 下约 8.2 TB/W，而 10 W 的 44 TB HDD 约为 4.4 TB/W。720 块 E3.L 盘的原始容量为 176.9 PB，相同盘位装满 44 TB HDD 则为 31.7 PB。— 来源：StorageReview, "Micron 6600 ION 245TB SSD Review: A Quarter Petabyte Per Drive Bay", 2026, https://www.storagereview.com/review/micron-6600-ion-245tb-ssd-review-a-quarter-petabyte-per-drive-bay (retrieved 2026-11-01) [VERIFY: 720 盘位机架的假设]
+- **Sandisk UltraQLC SN670** 于 FMS 2025（2025-08-05）发布，有 128 TB 和 256 TB 两个版本，基于 BiCS8 218 层 NAND，U.2 版本目标为 2026 年上半年。Sandisk 路线图显示 2027 年推出 512 TB。— 来源：Blocks & Files, "Sandisk unveils 256 TB SSD for AI workloads, shipping in 2026", 2025-08-05, https://www.blocksandfiles.com/ai-ml/2025/08/05/sandisk-unveils-256-tb-ssd-for-ai-workloads-shipping-in-2026/1589534 (retrieved 2026-11-01) [VERIFY: 实际出货状态]
+- **Solidigm D5-P5336 122.88 TB**（PCIe 4.0、192 层 QLC、U.2/E1.L）自 2025 年初开始出货。Solidigm 表示 245+ TB 的产品将在 2026 年底前推出。— 来源：StorageReview, "Solidigm 122.88TB D5-P5336 Review", 2025, https://www.storagereview.com/review/solidigm-122-88tb-d5-p5336-review-high-capacity-storage-meets-operational-efficiency (retrieved 2026-11-01); TechRadar, "Solidigm confirms 245+ TB SSDs set to launch before end of 2026", 2026, https://www.techradar.com/pro/solidigm-confirms-245-tb-ssds-set-to-launch-before-end-of-2026 (retrieved 2026-11-01) [VERIFY: 2024 年 11 月的发布日期]
+- Kioxia LC9（PCIe 5.0 QLC）最高 245.76 TB。据报道 SK hynix PS1101 属于 245 TB 级别。两者的出货状态均未确认。— 来源：DatacenterDisk, "Solidigm D5-P5336 vs Kioxia LC9", n.d., https://datacenterdisk.com/solidigm-d5-p5336-vs-kioxia-lc9 (retrieved 2026-11-01) [VERIFY: 两者均需核实]
+- DapuStor R6060 512 TB 已发布/展示，但尚未广泛供货。— 来源：DatacenterDisk, "Largest SSD in the World 2026: 512TB vs 245TB", 2026, https://datacenterdisk.com/largest-ssd (retrieved 2026-11-01) [VERIFY]
+- Everpure DirectFlash Module 单模块容量最高 300 TB。— 来源：Blocks & Files, "Second hyperscaler plumps for Everpure's flash technology", 2026-08-11, https://www.blocksandfiles.com/flash/2026/08/11/second-hyperscaler-plumps-for-everpures-flash-technology/5285903 (retrieved 2026-11-01)
+- Huawei 在发布 OceanStor A800（2024 年）的同时宣布了一款 128 TB 大容量 SSD。— 来源：DCD, "Huawei unveils its OceanStor A800 AI-specific storage solution, announces 128TB high-capacity SSD", 2024, https://www.datacenterdynamics.com/en/news/huawei-unveils-its-oceanstor-a800-ai-specific-storage-solution-announces-128tb-high-capacity-ssd (retrieved 2026-11-01)
+
+**各年份商用出货的最大容量 SSD（可直接转为 CSV）**
+
+| 年份,容量_TB,产品,接口,状态 |
+|---|
+| 2018,30.72,Samsung PM1643,SAS,[VERIFY: 背景知识] |
+| 2023,61.44,Solidigm D5-P5336,PCIe 4.0,[VERIFY: 背景知识] |
+| 2025,122.88,Solidigm D5-P5336,PCIe 4.0,有来源（2025 年初出货） |
+| 2026,245.76,Micron 6600 ION,PCIe 5.0,有来源（2026-05-05 出货） |
+| 2026（模块）,300,Everpure DFM（专有）,n/a,有来源（非标准 SSD） |
+| 2027（路线图）,512,Sandisk UltraQLC,n/a,路线图 |
+
+### 5.3 PLC
+- 截至 2026 年初，PLC（每单元 5 bit）NAND 尚未商用出货。SK hynix 于 2025 年 12 月在 IEDM 上展示了一种 "Multi-Site Cell"（多位点单元）分裂单元 PLC 方案，声称读取速度比传统 PLC 快最多 20 倍。这仅处于研究阶段。— 来源：Blocks & Files, "SK hynix developing split-cell 5-bit flash", 2026-01-15, https://www.blocksandfiles.com/flash/2026/01/15/sk-hynix-developing-split-cell-5-bit-flash/4090388 (retrieved 2026-11-01)
+
+### 5.4 HDD
+- Seagate Exos M（Mozaic 3+、HAMR）已历经 30 TB（2024 年 1 月发布）、32 TB 和 36 TB 送样。StorageReview 于 2025-07-15 评测了 30 TB 的 Exos M（每盘片 3 TB、10 张盘片）。— 来源：PetaPixel, "Seagate's new 30TB Hard Drive is the Largest Ever", 2024-01-18, https://petapixel.com/2024/01/18/seagates-new-30tb-hard-drive-is-the-largest-ever/ (retrieved 2026-11-01); CRN Asia, "Seagate introduces hard drive capacities of up to 36TB...", 2025, https://www.crnasia.com/india/news-network/news/seagate-introduces-hard-drive-capacities-of-up-to-36tb-extending-its-hamr-based-mozaic-3-technology-platform (retrieved 2026-11-01)
+- Seagate Mozaic 4+（每盘片 4 TB、10 张盘片）可达 40 TB。2026 年 3 月，Seagate 报告 Mozaic 4+ 已向两家超大规模云厂商批量出货，容量最高 44 TB。— 来源：TechRadar, "Seagate confirms 40TB hard drives have already been shipped...", 2025, https://www.techradar.com/pro/seagate-confirms-40tb-hard-drives-have-already-been-shipped-but-dont-expect-them-to-go-on-sale-till-2026 (retrieved 2026-11-01); raidzfscalculator.com, "Seagate Mozaic 4+: 40TB and 44TB HDDs Are Official", 2026-03-07, https://raidzfscalculator.com/en/2026/03/07/seagate-mozaic-4-40tb-and-44tb-hdds-are-official/ (retrieved 2026-11-01) [VERIFY: 来源层级较低；需通过 Seagate IR 确认]
+- Western Digital（Innovation Day，2026-02-03）：40 TB UltraSMR ePMR 正在两家超大规模云厂商处认证，2026 年下半年量产。HAMR 正在认证，2027 年爬坡。到 2029 年，ePMR 达到 60 TB，HAMR 达到 100 TB。— 来源：Western Digital, "Western Digital Accelerates Storage Innovation for AI Era", 2026-02-03, https://www.westerndigital.com/company/newsroom/press-releases/2026/2026-02-03-western-digital-accelerates-storage-innovation-for-ai-era (retrieved 2026-11-01)
+- StorageReview 稍后的一篇文章称，WD 的 40 TB UltraSMR 已开始出货，44 TB HAMR 定于 2027 年上半年推出。— 来源：StorageReview, "WD Bets 8x Bandwidth Beats More Terabytes as 40TB UltraSMR Starts Shipping", 2026, https://www.storagereview.com/news/wd-bets-8x-bandwidth-beats-more-terabytes-as-40tb-ultrasmr-starts-shipping (retrieved 2026-11-01) [VERIFY: 与"仍处于认证阶段"的报道相矛盾]
+- Coughlin Associates 估计，数据中心中超过 85% 的数据存放在 HDD 上；AI 驱动的 HDD 需求约占 2026 年出货量的 18%，到 2028 年将升至约 43%。— 来源：Washington Post Creative Group (Solidigm sponsored), "Is 2026 finally the year for data center storage to crossover to SSDs?", 2026, https://www.washingtonpost.com/creativegroup/solidigm/is-2026-finally-the-year-for-data-center-storage-to-crossover-to-ssds (retrieved 2026-11-01) [VERIFY: 引用 Coughlin 的赞助内容]
+
+**各年份 HDD 最大容量（可直接转为 CSV）**
+
+| 年份,容量_TB,厂商/产品,技术,状态 |
+|---|
+| 2020,20,Seagate/WD,PMR/ePMR,[VERIFY: 背景知识] |
+| 2022,22-26,WD (26TB UltraSMR),ePMR/SMR,[VERIFY: 背景知识] |
+| 2023,24,WD Gold,CMR,有来源（30TB 之前的纪录） |
+| 2024,30-32,Seagate Exos M (Mozaic 3+); WD 32TB UltraSMR,HAMR; ePMR SMR,有来源 |
+| 2025,36（送样）,Seagate Exos M,HAMR,有来源 |
+| 2026,40-44,Seagate Mozaic 4+; WD 40TB UltraSMR,HAMR; ePMR SMR,有来源/[VERIFY] |
+| 2029（路线图）,100,WD HAMR,HAMR,路线图 |
+
+### 5.5 NAND 价格与 2025–26 年短缺（TrendForce）
+- TrendForce 2026 年 1 月的预测显示，1Q26 NAND 合约价环比上涨 33–38%（消费级/客户端 SSD 至少上涨 40%），驱动因素是供应商的产能纪律和服务器需求。2026 年 2 月的后续修订显示，1Q26 NAND 上涨 55–60%，企业级 SSD 上涨 53–58%。— 来源：StorageNewsletter (TrendForce), "Memory Makers Prioritize Server Applications, Driving Across-the-Board Price Increases in 1Q26, Says TrendForce", 2026-01-27, https://www.storagenewsletter.com/2026/01/27/memory-makers-prioritize-server-applications-driving-across-the-board-price-increases-in-1q26-says-trendforce/ (retrieved 2026-11-01) [VERIFY: 2 月 2 日修订数字来自二手来源]
+- 预测 2Q26 NAND 合约价环比上涨 70–75%，3Q26 上涨 10–15%。— 来源：TrendForce, "Combined Revenue of Top Five NAND Flash Brands Rises 77% QoQ in 2Q26...", 2026-08-18, https://www.trendforce.com/presscenter/news/20260818-13186.html (retrieved 2026-11-01) [VERIFY: 2Q26 70–75% 的数字经二手汇总获得]
+- 4Q26：预测 NAND 合约价环比上涨 15–20%，企业级 SSD 上涨 23–28%，是唯一一个涨幅较上季度加速的存储器品类。大部分新增供给已被锁定。— 来源：TrendForce, "AI Server Demand Sustains Memory Contract Price Increases in 4Q26, While Consumer-Side Pressure Persists", 2026-09-30, https://www.trendforce.com/presscenter/news/20260930-13258.html (retrieved 2026-11-01)
+- TrendForce 指出，主要 NAND 供应商 2026 年几乎不会新增晶圆产能。据报道，企业级 SSD 在 NAND bit 中的占比 2Q25 为 26%，2Q26 为 48%。— 来源：Capital & Compute, "Why SSDs Are So Expensive in 2026: The NAND Squeeze", 2026, https://capitalandcompute.net/blog/why-are-ssds-so-expensive/ (retrieved 2026-11-01) [VERIFY: bit 占比数字]
+- 前五大 NAND 供应商营收在 4Q25 环比增长 23.8%，1Q26 环比增长 83.7%（超过 $38.9B），2Q26 环比增长 77%（达 $68.87B）。— 来源：TrendForce, "AI Server Storage Demand Surges; Top Five NAND Flash Suppliers Post 23.8% QoQ Revenue Growth in 4Q25", 2026-03-03, https://www.trendforce.com/presscenter/news/20260303-12943.html (retrieved 2026-11-01); iConnect007 (TrendForce), "Combined Revenue of Top Five Global NAND Flash Suppliers Rose by 83.7% QoQ for 1Q26", 2026-05, https://iconnect007.com/article/150139/combined-revenue-of-top-five-global-nand-flash-suppliers-rose-by-837-qoq-for-1q26/150136/smt (retrieved 2026-11-01); TrendForce, 2026-08-18 (URL above)
+- 2Q26 前五大企业级 SSD 厂商营收约达 $37.59B。— 来源：TrendForce, "Higher Prices and Shipments Drive Top Five Enterprise SSD Vendors' Revenue to Nearly US$37.59 Billion in 2Q26", 2026-09-01, https://www.trendforce.com/presscenter/news/20260901-13210.html (retrieved 2026-11-01)
+
+**TrendForce NAND 合约价环比预测（可直接转为 CSV）**
+
+| 季度,NAND合约价环比,企业级SSD环比,来源说明 |
+|---|
+| 1Q26,+33-38%（1 月）/ +55-60%（2 月修订）,+53-58%（2 月修订）,[VERIFY 修订数字] |
+| 2Q26,+70-75%,n/a,[VERIFY] |
+| 3Q26,+10-15%,n/a,TrendForce 2026-08-18 |
+| 4Q26,+15-20%,+23-28%,TrendForce 2026-09-30 |
+
+**2Q26 NAND 供应商营收（TrendForce，可直接转为 CSV）**
+
+| 排名,供应商,营收_十亿美元,环比增长,份额说明 |
+|---|
+| 1,Samsung,23.06,+70.7%,~33%（推算） |
+| 2,SK hynix Group（含 Solidigm）,14.27,+89.5%,~21%（推算） |
+| 3,Micron,11.85,+99.2%,~17%（推算） |
+| 4,Kioxia,10.72,+79.9%,13.6%（TrendForce 公布） |
+| 5,Sandisk,8.97,+50.7%,~13%（推算） |
+| -,前五合计,68.87,+77%, |
+— 来源：TrendForce, "Combined Revenue of Top Five NAND Flash Brands Rises 77% QoQ in 2Q26; Micron Moves Up to Third Place, Says TrendForce", 2026-08-18, https://www.trendforce.com/presscenter/news/20260818-13186.html (retrieved 2026-11-01)。推算份额是相对于前五合计的占比，并非 TrendForce 数字 [VERIFY: 官方份额列]。
+
+### 5.6 HDD 与 SSD 的 $/TB
+- Vdura 的指数（经 Forbes 报道）显示，2026 年第一季度 30 TB QLC 企业级 SSD 的 $/TB 是 30 TB HDD 的 22.6 倍。Vdura 稍后的一次读数约为 14.9 倍（2026 年 8 月），2026 年第三季度指数约为 18.6 倍。被引用的 Coughlin 数字为 20 倍以上。TrendForce 给出的企业级 QLC 每 GB 价格约为 HDD 的 15 倍。Vdura 数据显示，30 TB TLC SSD 价格从 2025 年第二季度到 2026 年第一季度上涨 472%，而 HDD 上涨 35%。— 来源：PCSP, "Enterprise SSD Prices 2026: How to Buy Server Storage Now", 2026, https://pcserverandparts.com/news/enterprise-ssd-prices-2026-server-storage-buying-guide/ (retrieved 2026-11-01); DatacenterDisk, "The SSD/HDD Price Divergence Report 2026", 2026, https://datacenterdisk.com/reports/ssd-hdd-price-divergence-2026 (retrieved 2026-11-01) [VERIFY: 大多数数字都可追溯到同一家厂商（Vdura）；需找到 Forbes 原文]
+- 历史基线：2020 年企业级 SSD 的 $/TB 约为近线（nearline）HDD 的 10 倍。— 来源：Blocks & Files, "Enterprise SSDs are ten times the price of nearline disk drives", 2020-05-15, https://blocksandfiles.com/2020/05/15/enterprise-ssds-are-ten-x-cost-of-nearline-disk-drives/ (retrieved 2026-11-01)
+- 据报道（引用 TrendForce），2026 年近线 HDD 交货周期超过 52 周。— 来源：PCSP, "Hard Drive Shortage 2026: Nearline Is Sold Out", 2026, https://pcserverandparts.com/news/hard-drive-shortage-2026-what-to-do/ (retrieved 2026-11-01) [VERIFY]
+
+### 5.7 公司事件
+- Sandisk 完成与 Western Digital 的分拆，于 2025-02-24 以 SNDK 代码在 Nasdaq 上市交易。WDC 保留 HDD 业务。— 来源：Sandisk IR, "Sandisk Celebrates Nasdaq Listing After Completing Separation from Western Digital", 2025-02-24, https://investor.sandisk.com/news-releases/news-release-details/sandisk-celebrates-nasdaq-listing-after-completing-separation (retrieved 2026-11-01)
+- Kioxia 的 IPO 定价为 ¥1,455/股（区间 ¥1,390–1,520），对应估值约 ¥784B，募资约 ¥120B（~$800M），出售方为 Bain 和 Toshiba。它于 2024-12-18 在东证 Prime 市场（TSE Prime）上市，开盘价 ¥1,440，首日收于 ¥1,601（市值 ~¥863B）。— 来源：Nippon.com (Jiji), "Kioxia Sets IPO Price at 1,455 Yen", 2024-12-09, https://nippon.com/en/news/yjj2024120900937 (retrieved 2026-11-01); Nippon.com (Jiji), "Chipmaker Kioxia Makes Solid Stock Market Debut", 2024-12-18, https://nippon.com/en/news/yjj2024121800877 (retrieved 2026-11-01)
+
+---
+

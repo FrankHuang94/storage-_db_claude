@@ -217,3 +217,93 @@
 | 42 | CTO | 我们预期到 2028 年买方会要求存储提供 VAST AI OS 的哪些层（DataBase、DataEngine 触发器、AgentEngine）？哪些属于合作伙伴？ |
 | 42 | PM | Everpure 的 NAND 供应地位如何转化为按成本价采购硬件的纯软件厂商无法匹敌的交付时间或价格承诺？ |
 | 42 | CTO | BlueField-4 STX 让每家厂商都有了驻留在 DPU 上的控制器，在 GPU 服务器边缘的 KV 缓存上，Purity 还剩下什么差异化？ |
+| 43 | PM | 在 FlashBlade//EXA 输给 WEKA 的竞争中，决定因素是云可移植性或融合式（GPU 服务器）部署而非性能的情况有多常见？ |
+| 43 | Eng | 在跨目录重命名和百万文件列举的尾延迟上，Purity//FB 的元数据核心与 WEKA 的哈希分片 bucket 相比如何？ |
+| 43 | CTO | 对于希望存储软件运行在 GPU 服务器内部或 BlueField-4 DPU 上的客户（WEKA 和 VAST 目前都在主推这一点），Everpure 是否有可信的回应？ |
+| 43 | PM | 在同口径的 OCI 式测试中，PureKVA 的 TTFT 和并发能力与 WEKA AMG 相比如何？我们会公布结果吗？ |
+| 43 | CTO | HPE 退出 WEKA 软件转售，是否为 EXA 通过前 WEKA 经销商打开任何渠道机会？ |
+| 44 | PM | 在 DDN 交付了首个 DGX SuperPOD 的客户中，是什么促成了 Everpure 在后续阶段赢单？受过 Lustre 训练的管理员通常提出什么异议？ |
+| 44 | Eng | 计入数据缩减和保护开销后，FlashBlade//EXA 与一个 AI400X3/AI400X3M 机柜在每机架单元 GB/s、每 kW 和每可用 TB 上相比如何？ |
+| 44 | PM | 在归一化基线上，PureKVA 的 KV 缓存性能与 DDN Infinia 公布的宣称（相对重算 27 倍；在 Nebul 相对 CPU 缓存约 10 倍 TTFT）相比如何？ |
+| 44 | CTO | NVIDIA 的 GPU 发起数据访问工作（Storage-Next）是否改变了 Everpure 为 EXA 所需的客户端架构？Everpure 有何对应的参与？ |
+| 44 | PM | Google Cloud Managed Lustre（DDN EXAScaler）是否作为替代方案出现在云邻近 AI 项目中？Everpure 如何回应？ |
+| 45 | PM | 在第 45 章的六种项目原型中，哪些产生了 EXA 在 FY27 的赢单和丢单？各自的决定性因素是什么？ |
+| 45 | Eng | EXA 在 AI 训练数据和检查点上实测的数据节点保护开销和缩减比是多少？何时公布？ |
+| 45 | CTO | 在 NVIDIA STX 将 KV 缓存位置标准化的情况下，到 2027 年 PureKVA 和 EXA 元数据核心的哪些部分仍是可辩护的差异化？ |
+| 45 | PM | 在大型新兴 GPU 云（例如 CoreWeave）取得第二来源地位，是否是 EXA 明确的切入策略？目标的参考客户里程碑是什么？ |
+| 45 | Eng | 在十亿文件列举或重命名风暴下，基于内部测试数据，Purity//FB 元数据核心与 WEKA bucket 和 Lustre DNE 相比如何？ |
+| 46 | PM | 在由 Dell 或 HPE 提供 GPU 服务器的 AI 工厂项目中，有多大比例的存储决策独立于服务器采购订单作出？自 2025 年以来有何变化？ |
+| 46 | PM | 过去四个季度中，哪些传统厂商装机基础（PowerMax、ONTAP、3PAR/Primera、FlashSystem、VSP）贡献了最多的 Everpure 替换？是什么触发的？ |
+| 46 | Eng | 在内部或客户测试中，FlashBlade//EXA 在元数据扩展和小文件性能上与 NetApp AFX 和 Dell Lightning FS 相比如何？ |
+| 46 | CTO | NetApp 收购 DataPelago 和 PEAK:AIO，是否改变了 Everpure 对自建还是收购面向 AI 的存储内数据处理能力的看法？ |
+| 46 | CTO | 在美国以外，华为 OceanStor A 系列或 M900 出现在 Everpure 参与竞争的主权 AI 招标中的频率如何？ |
+| 47 | PM | 在 FlashBlade//EXA 与 Hammerspace 同时投标的项目中，我们是把 Hammerspace 定位为 FlashBlade 之上的命名空间合作伙伴，还是正面竞争？联合部署中由谁主导客户？ |
+| 47 | PM | 自 2025 年 5 月集成以来，在 Nutanix AHV 迁移中 FlashArray 的附加率是多少？与 Nutanix Unified Storage、Dell PowerFlex/PowerStore 和 NetApp ONTAP 相比如何？ |
+| 47 | PM | 自 2025 年 12 月以来，有多少前 MinIO 社区版或 Ceph 用户转向 FlashBlade 或 FlashArray S3？这些项目通常由什么决定？ |
+| 47 | CTO | 在 AWS 或 Google 上提供类第一方的 Purity 服务（类似 FSx for NetApp ONTAP 或基于 DDN 的 Google Managed Lustre），在技术和商业上是否可行？ |
+| 47 | Eng | 在 GPU 服务器失效时的检查点持久性上，FlashBlade//EXA 与 Hammerspace Tier 0 相比如何？EXA 能否把 GPU 本地 NVMe 用作一个层？ |
+| 48 | PM | （面向财务）Q2 FY27 的战略性 NAND 采购中，有多少是预付款、多少是库存？覆盖多少个季度的需求？基于什么合约价假设？ |
+| 48 | PM | 在 NAND 成本已翻两番的情况下，现有 Evergreen//One 合同内的容量增长如何定价？续约时是否有重置或重新定价机制？ |
+| 48 | Eng | 为 DirectFlash Module 认证第三家 NAND 供应商的 die 需要多少个月和多少轮测试？是否有认证正在进行？ |
+| 48 | CTO | 鉴于数据缩减改进和 DFM 密度都能降低每有效 TB 的 NAND 用量，NAND 成本上升是否改变了两者在路线图中的优先级？ |
+| 48 | PM | 在 2026 年近线 HDD 缺货的项目中，QLC FlashArray//E 或 FlashBlade//E 是否凭可供货性而非价格赢下了席位？ |
+| 49 | PM | Everpure 能力行中哪个 ◐ 单元格（云可用性、数据智能、主权市场存在）目前导致最多丢单？对此有何计划？ |
+| 49 | CTO | 超大规模云厂商采用灵活数据放置（FDP）SSD，是否会缩小 DirectFlash 的介质经济性优势？缩小多少？ |
+| 49 | PM | Hammerspace 在 Everpure 客户中以什么形式出现：作为 FlashBlade 之上的命名空间，还是作为替代共享存储的 Tier 0 方案？ |
+| 49 | Eng | 在公有云中以托管服务形式提供 FlashBlade//EXA 需要什么？先上哪家云？ |
+| 50 | CTO | Purity 的哪些部分假设使用 DirectFlash 裸 NAND？最小需要什么改动才能让第三方数据路径运行在 DFM 上？ |
+| 50 | Eng | 为达到 Pure1 的覆盖程度，我们会要求收购目标提供哪些设备群遥测？回填需要多久？ |
+| 50 | PM | 哪些 Evergreen//One SLA 在法律上可以覆盖一款并非我们自建的产品？哪些需要例外条款？ |
+| 50 | CTO | 在 Portworx 和 1touch 中，哪个集成接缝（控制平面、数据路径、授权、渠道）耗时最长？为什么？ |
+| 50 | Eng | 我们针对文件和 KV 缓存工作负载的标准 PoC 测试框架是什么？能否在两周内在目标公司的硬件上运行？ |
+| 51 | CTO | 鉴于 2026 年的 NAND 价格，如果今天从头开始，您会改变 Purity 2012 年原始设计中的哪些假设（缩减比、NAND $/GB 走势、双控制器规模）？ |
+| 51 | PM | 在我们丢掉的 AI 项目中，原因是架构（分解、并行文件访问）、生态认证还是价格？自 2024 年以来这一构成如何变化？ |
+| 51 | Eng | 下一轮钟摆摆动最可能首先冲击我们平台的哪里：CXL 内存池化、DPU 承载的存储服务，还是 KV 缓存卸载层？ |
+| 51 | PM | 对于新一轮浪潮所需的能力，Portworx 集成在收购与自建方面给了什么教训？我们会有哪些不同做法？ |
+| 52 | PM | 在 2018–19 年和 2022–23 年的 NAND 下行周期中，FlashArray 定价把介质成本下降的多少传导给了客户？用了多少个季度？ |
+| 52 | CTO | Everpure 是否曾考虑与 NAND 供应商签订预付款或产能预留（如 Apple 在 2005 年所做）？在 2026 年短缺中，什么会改变这一考量？ |
+| 52 | Eng | 装机基础在块、文件/对象和 AI 数据上实际达到的有效数据缩减比分别是多少？自 2015 年以来趋势如何？ |
+| 52 | PM | 在当前相对近线 HDD 约 18× 的原始溢价下，FlashBlade 赢下磁盘替换项目的盈亏平衡缩减比或电价是多少？ |
+| 52 | Eng | 认证工作在 Micron 和 Kioxia 各代产品间如何分配？供应商送样后，新一代 NAND 多快能进入 DFM？ |
+| 53 | PM | 600 TB DFM 要先于商用 512 TB SSD 出货，需要哪些条件成立？我们预计何时发布有日期的路线图？ |
+| 53 | CTO | 哪些 Purity 和 FlashBlade 服务能在 STX/CMX 节点内的 BlueField-4 DPU 上运行？这是我们想走的路吗？ |
+| 53 | PM | PureKVA 相对 NVIDIA CMX 如何定位：作为其后的 G4 共享层，还是作为与之竞争的 G3.5 层？每 token 成本的证据是什么？ |
+| 53 | Eng | 在每模块 1 PB 时，多大的聚合重建带宽和怎样的纠删码几何结构能让二次故障暴露窗口保持在可接受范围？ |
+| 53 | CTO | PLC NAND 是否在面向归档的 DirectFlash 产品的认证计划中？它需要多少耐久度预算？ |
+| 53 | PM | 2026 年我们丢掉了哪些主权 AI 项目？差距在于本地支持、气隙（air-gap）认证还是本国合作伙伴？ |
+| 54 | CTO | Purity 或 Fusion 的哪些部分被设计为可承载第三方代码（插件、sidecar）？哪些为保护单一操作系统模式而刻意封闭？ |
+| 54 | PM | Fusion 和 Data Intelligence 部署中，有多大比例管理或索引不在 Everpure 阵列上的数据？这是否作为产品 KPI 跟踪？ |
+| 54 | PM | Everpure 目前在哪里衡量合作伙伴来源的商机管道（NVIDIA、Cisco、Nutanix、Red Hat、备份 ISV）？哪些生态举措对赢单率提升最大？ |
+| 54 | Eng | 要让 PureKVA 作为上游 NIXL/LMCache 后端发布需要什么？由谁负责这项工作？ |
+| 54 | CTO | 超大规模云厂商能用 FDP SSD 复制 DirectFlash 的哪些能力？授权模式如何防范其自行内化？ |
+| 55 | PM | 贵产品线最近丢掉的三个项目是什么、输给了谁、输在哪个属性上？解决办法是路线图、合作还是放弃？ |
+| 55 | PM | 如果下个季度多给您一个工程团队，您会把它投到哪里？又会停掉什么？ |
+| 55 | PM | 您记分卡上的哪个内部指标（附加率、赢单率、认证所需时间）您最希望对外披露？是什么让它无法报告？ |
+| 55 | PM | 对于 Data Intelligence 和 PureKVA，哪类角色签单？当项目覆盖非 Everpure 数据时，阵列销售人员如何获得激励？ |
+| 55 | PM | Pure1 遥测在哪些方面与销售从客户那里听到的不一致（例如 AI 数据上的缩减比）？这已改变了哪些路线图决策？ |
+| 56 | CTO | CTO 办公室用明确的路标跟踪哪些三到五年期技术押注（FDP 普及、BlueField-4 STX、CXL 内存、HDD 容量节点）？什么会改变 Everpure 在各项上的立场？ |
+| 56 | Eng | FlashBlade//EXA 元数据刀片和数据节点经测试（而非架构上）的上限是多少？超过之后什么资源最先饱和？ |
+| 56 | Eng | Purity 升级期间混合版本集群支持多长时间？哪些可以回滚？一个控制器离线时，不停机升级在性能上代价多大？ |
+| 56 | Eng | 过去一年中哪次现场故障诊断耗时最长？因此在代码或流程上做了哪些改变？ |
+| 56 | CTO | 在对被收购代码库进行技术尽职调查时，它必须达到什么门槛（测试、故障注入、升级兼容性）才能以 Purity 品牌发布？ |
+| 57 | PM | 本题库中哪三个问题是 PM 最常从新员工那里听到的？哪些是他们希望更多听到的？ |
+| 57 | Eng | 这些工程问题中，哪些无法用当前遥测回答？这一缺口本身是否是路线图事项？ |
+| 57 | CTO | 在差异化问题（FDP、共享介质、CMX 定位、可复制优势）中，CTO 办公室认为哪些已有定论、哪些仍是开放问题？ |
+| 57 | PM | 是否有内部赢/丢单资料库，能让战略岗新员工无需访谈销售就回答竞争类问题（Q117–Q131）？ |
+| 58 | PM | 当董事会问及 Everpure 为何在 FY27 指引中增长约 38% 时，管理层如何把答案拆分为 NAND 价格传导、份额提升和超大规模授权？ |
+| 58 | PM | 对于 FlashBlade//EXA，产品管理会把哪一个数字摆在 CFO 面前：检查点 GB/s、每机柜支持的 GPU 数，还是每喂饱一块 GPU 的成本？ |
+| 58 | CTO | CTO 办公室认为哪种 30 秒的 DirectFlash 解释在系统层面是准确的？哪些常见简化说法（"没有 SSD 控制器"、"2 倍密度"）被认为有误导性？ |
+| 58 | Eng | 就 KV 缓存卸载而言，按 Everpure 自己的建模，上下文内存层的价值中有多少来自容量、多少来自带宽？ |
+| 58 | PM | 目前哪个董事会层面的指标最能体现 Evergreen 的黏性：订阅净美元留存率、已完成的控制器升级，还是避免的迁移？ |
+| 59 | PM | 这 279 张卡片中，Everpure 新入职 PM 在第一周应能回答哪些？哪些术语是本图谱未涵盖的内部简称？ |
+| 59 | Eng | 关于 Purity 写入路径、全局 FTL 和 DFM 重建行为，哪些公开解释被工程师认为足够准确、可用于培训新同事？ |
+| 59 | CTO | 在与 CTO 办公室的对话中，外部人士最常搞错哪项取舍（DirectFlash 与 FDP、pNFS 与专有客户端、KV 缓存层放置）？ |
+| 59 | PM | 战略岗新员工应逐季跟踪哪些 Everpure 指标（ARR、RPO、STaaS TCV、Fusion 采用情况）？它们最先在哪里公布？ |
+| 60 | PM | 新增 FlashArray 容量中，基于 NVMe/TCP、FC 和 iSCSI 出货的比例各是多少？自 VMware 授权调整以来有何变化？ |
+| 60 | Eng | S3 over RDMA（兼容 cuObject）是否已在 FlashBlade//S 上正式发布？是否计划用于 FlashBlade//EXA？ |
+| 60 | CTO | Everpure 是否会推出专有并行客户端，还是坚持使用原生 pNFS 客户端作为永久设计承诺？ |
+| 60 | PM | 在 AI 项目中，Everpure 最常输在哪一架构行：DASE（VAST）还是专有并行文件系统（WEKA、DDN）？ |
+
+## 4. 审阅者分歧与未解决的发现
+
+汇总自 `meta/reviews/` 中各独立审阅（Phase 2）的 `## Unresolved / disagreements` 部分。每一项都是审阅者无法依据本环境可访问的公开来源解决的问题，或与起草作者的分歧。
