@@ -121,3 +121,145 @@ DRR 是*客户数据*的属性，而非阵列的属性。数据库和虚拟机�
 | 原始 $/TB | 磁盘厂商和云归档层 | 介质成本 | 每 TB IOPS、重建时间、每 IOPS 功耗 | 满足所需 IOPS 和 GB/s 时的 $/TB |
 
 *表 4.1 — 每个标题指标都只在运行包络的某一角成立；反问能把它挪到客户所在的那一角。*
+
+### 算例：五年 TCO，全闪存 QLC 对比混合磁盘
+
+**需求：** 为冷到温的非结构化数据（数据湖或 AI 数据集归档）提供 10 PB 有效容量，在美国一处托管机房中五年内保持不变。**示意**：平台成本、功率密度和缩减比均为本图谱的假设；市场输入数据均注明来源。
+
+| 项目 | 全闪存 QLC | 混合磁盘（30 TB HDD + 3% 闪存层） | 依据 / 假设 |
+|---|---|---|---|
+| 数据缩减比 | 2:1 | 1.3:1（仅压缩） | 闪存取厂商自己对非结构化数据采用的 2:1[^10][^11]；磁盘系统很少做在线去重，因为会使读取碎片化 |
+| 可用 ÷ 原始 | 80% | 75%（8+2 EC，含备用） | 假设 |
+| 原始容量 | 6,250 TB | 10,256 TB HDD（342 块盘）+ 288 TB 闪存 | 10,000 ÷ DRR ÷ 可用率 |
+| 介质价格 | $302/TB | HDD $22/TB；闪存层 $302/TB | 122.88 TB QLC SSD 售价 $37,128[^18]；30 TB 近线 HDD ≈ $668（Q1 2026）[^19] |
+| 平台（控制器、机框、软件、网络） | 每原始 TB $150 | 每原始 HDD TB $40；闪存层每原始 TB $150 | 假设 |
+| **购置成本** | **$2.83M** | **$0.77M** | 介质 + 平台 |
+| 系统功耗（IT 负载） | 0.40 W/TB → 2.5 kW | 0.55 W/TB → 5.8 kW | 假设，并与 2023 年代闪存约 1 W/TB[^14] 以及每块 30 TB HDD 9.5 W（未计机框开销）[^6] 交叉核对 |
+| 电费，5 年 | $23K | $54K | kW × PUE 1.54[^20] × 43,800 h × $0.1385/kWh[^21] |
+| 空间与电力容量，5 年 | $29K | $68K | kW × 托管费每 kW 每月 $196.25[^22] × 60 |
+| 机架单元（约数） | 约 13 RU | 约 17 RU | 闪存 0.5 PB/RU；4U 106 盘位 JBOD 加服务器为 0.64 PB/RU |
+| 支持服务，第 2–5 年 | $1.13M | $0.31M | 每年为购置成本的 10% |
+| 控制器/服务器更新（约第 4 年） | $0.28M | $0.14M | 平台成本的 30%；订阅模式下打包在费用中（[第 23 章](../03-system-architecture/23-consumption-models.md)） |
+| **五年 TCO** | **$4.29M**（每有效 TB $429） | **$1.33M**（每有效 TB $133） | 闪存 ≈ 3.2 倍 |
+| 随机读能力 | 数百万 IOPS（受控制器限制） | 约 58K IOPS（342 × 170） | 磁盘无法满足任何随机 I/O 需求 |
+
+*表 4.2 — 示意：按 2026 年 NAND 价格，磁盘在冷容量 TCO 上约以 3 倍胜出；电力与空间在两种方案总额中均不到 10%。*
+
+注意这些输入意味着什么：每 TB $302 对 $22 是 13.7 倍的介质溢价，远低于 22.6 倍的指数标题数字，因为 122 TB 盘每 TB 的市场价低于该指数所用的 30 TB QLC 盘（2026 年 Q1 约 $504/TB[^2]）。因此基准情形对闪存是宽厚的。磁盘价格也在变动：同一指数中的 30 TB HDD 到 2026 年 Q3 已涨至 $1,216（约 $40/TB）[^23]。按此磁盘价格、其他条件不变，闪存成本约为磁盘的 2.7 倍，而非 3.2 倍。有三项敏感性会改变结论。按 2025 年年中的介质价格（30 TB QLC 约 $80/TB，HDD $16.50/TB[^19]），闪存降至磁盘的约 2.0 倍。按 2026 年价格但闪存侧缩减比为 4:1 时，约为 1.6 倍。在 NAND 便宜*且*缩减 4:1 的*双重*条件下，两种方案打平（约 $1.17M 对 $1.16M）。仅靠电力无法弥合差距：即便把每腾出 1 kW 估值为每年 $15,000 的 GPU 产出（一个假设），节省的 3.3 kW 在五年内也只值约 $250K。闪存要拿下容量层，需要以下条件的某种组合：(a) 磁盘不超额采购盘位就无法满足的性能需求；(b) 可缩减的数据；(c) 电力或空间受限的站点；(d) 低于市场价的 NAND 成本——后者正是超大规模云厂商 DirectFlash 的投资逻辑（[第 29 章](../04-everpure/29-hyperscaler-ecosystem-financials.md)）。
+
+## Everpure 的做法与竞争对手对比
+
+| 厂商 | 主打指标（公开信息） | 为何适合其架构 | 最强版本论证 / 注意事项 |
+|---|---|---|---|
+| Everpure | 有效容量（全设备群平均 DRR）、大容量 DirectFlash 模块带来的 TB/W 与 TB/RU；合同约定的 watts/TiB | 掌控闪存转换层，因此能推出更大的模块（[第 26 章](../04-everpure/26-purity-and-directflash.md)）；始终开启的在线缩减 | 把指标变成保证。有效数字仍取决于 DRR：FlashArray 的有效容量假设平均 5:1，因此 FlashArray//XL R5 约 1.9 PB 的原始容量变成 7.4 PB 有效容量，在扣除 RAID、元数据和 TiB 换算后约为原始容量的 3.8 倍[^24][^25] |
+| VAST Data | 规模化下的有效 $/TB；QLC 加相似性缩减与宽条带纠删码 | 在共享资源池上做全局缩减（[第 16 章](../03-system-architecture/16-disaggregated-shared-everything.md)） | 其自己引用的中位数约为 2:1[^11]，这是诚实的；节省需要规模 |
+| WEKA | 每机架 IOPS、TB/s 与有效容量 | 运行在高密度服务器上的软件，为小文件和元数据密集型 AI 工作负载而构建 | 每机架有效容量数字带有 DRR 假设[^16] |
+| Dell、DDN | 每 RU 或每台设备 GB/s（DDN AI400X3M：读取最高 190 GB/s[^26]） | 为 GPU 供数的并行文件系统 | 带宽密度无法说明 $/TB 或混合负载下的尾延迟 |
+| Seagate、Western Digital | $/TB 与单盘 TB 数 | 磁盘的介质成本优势，目前在单盘层面约为 15–23 倍[^2] | 每 TB IOPS 随每一次容量提升而持续下降 |
+
+*表 4.3 — 每家厂商的标题指标，正是其架构为之而生、最能取胜的那一项。*
+
+Everpure 的独特之处在于合同化。其存储即服务（STaaS）产品 Evergreen//One 于 2023 年 1 月新增了每 TiB 最大瓦数保证，并以服务抵扣和整改措施作为担保[^27]。公布的数字在多数层级上假设 2:1 缩减，容量层则不假设缩减[^28]。其订阅按有效已用容量计费：客户无论是否用到，都要为预留承诺付费，超出部分按需计费。此外，Everpure 承诺在两者中较高者之上额外部署 25% 的容量缓冲（最多 1 PiB）[^29]。按每有效 TiB 定价把 DRR 风险转移给了厂商：如果数据缩减效果较差，Everpure 就得以同样的费用交付更多硬件，因此设备群缩减遥测数据成为毛利的一项输入。按每可用 TB 定价的最强版本论证是透明度。基于公开信息，战略团队可能评估的选项包括：当 NAND 成本一个季度内波动 50% 时，这类保证如何守住毛利；以及数据缩减效果差的 AI 买家是否会看重这类保证。
+
+## 历史与发展轨迹
+
+```mermaid
+timeline
+    title 性能与经济性指标的里程碑
+    1961 : Little 证明 L 等于 lambda 乘以 W
+    2013 : Dean 与 Barroso 发表 The Tail at Scale
+    2020 : 企业级 SSD 每 TB 价格约为近线 HDD 的 10 倍
+    2023 : FlashBlade E 推出，接近每 TB 1 W : Pure 推出每 TiB 瓦数保证
+    2025 : 122 TB 级 QLC SSD 出货
+    2026 : NAND 合约价飙升 : QLC 每 TB 价格为 HDD 的 15 至 23 倍 : 245 TB QLC SSD 出货
+```
+
+*图 4.5 — 这些指标由来已久；变化在于，电力恰好在 NAND 再度变贵之时成为硬约束。*
+
+存储营销的重心从 IOPS（磁盘时代）转向延迟和有效容量（2010 年代的全闪存），再转向每机架 GB/s 和 TB/W（AI 时代）。如今两股力量方向相反。Micron 的 245 TB QLC SSD 于 2026 年 5 月开始出货[^13]，据报道 DirectFlash 模块容量最高达 300 TB[^30] [VERIFY: 300 TB DFM 是否已正式供货]。这使 TB/W 和 TB/RU 逐年改善；与此同时，受 AI 服务器需求推动，NAND 合约价在 2026 年每个季度都在上涨[^1]，重新拉开了闪存厂商原以为会持续收窄的 $/TB 差距。可以预期，TCO 论证将更多倚重功耗、密度和保证条款，买家也会要求看可用容量而非有效容量数字。[第 37 章](../05-ai-storage/37-reading-benchmarks.md)（基准测试）与[第 38 章](../05-ai-storage/38-power-and-density.md)（功耗）都以本章为基础。
+
+## 关键数字
+
+| 指标 | 数值 | 背景 | 来源 / 日期 |
+|---|---|---|---|
+| 扇出尾部效应 | N=100、各 1% 时 63% 的请求变慢 | 1 − 0.99¹⁰⁰ | Dean & Barroso，2013[^7] |
+| M/M/1 p99 ÷ 均值 | ≈ 4.6 倍 | ln(100)；p99.9 ≈ 6.9 倍 | 算例 |
+| HDD 随机 IOPS（30 TB HAMR） | 4K QD16 下读约 170 / 写 350 | 每 TB < 6 IOPS | StorageReview，2025[^6] |
+| 旗舰 SSD（PCIe 6.0） | 5.5M IOPS，读取 28 GB/s | Micron 9650 | Tom's Hardware（经 Borecraft 转载），2026-02[^5] |
+| 单盘 TB/W，QLC 对比 HDD | 约 8.2 对 约 4.4 | 245 TB SSD 对 44 TB HDD（*厂商*） | StorageReview，2026[^13] |
+| QLC SSD 与 HDD 的 $/TB 之比 | 约 22.6 倍（Q1 2026）；约 10 倍（2020） | 仅购置成本；单一厂商指数 | VDURA 指数（经 Blocks & Files），2026[^2]；Blocks & Files，2020[^3] |
+| Pure Storage 宣传的平均 DRR | 5:1（含精简配置为 10:1） | 全设备群平均主张；因数据而异 | 10-K FY2019[^8]；数据手册[^9] |
+| 五年 TCO，10 PB 有效冷数据 | 每有效 TB 闪存约 $429 对磁盘约 $133（约 3.2 倍；按 Q3 2026 HDD 价格约 2.7 倍） | 2026 年价格；打平需要便宜的 NAND + 4:1 | 算例（表 4.2） |
+| 美国商业电价 | 13.85¢/kWh | 截至 2026 年 7 月的 12 个月 | EIA，2026[^21] |
+
+## 对话手册
+
+**向产品经理提的问题**
+
+1. *"我们为 AI 数据湖报有效容量时假设的 DRR 是多少？Pure1 遥测显示实际能达到多少？"* 高质量回答：按负载类别给出实测中位数，坦承 AI 语料缩减效果差，并说明 Evergreen//One 如何吸收缺口。
+2. *"按当前 NAND 价格，与混合磁盘系统相比，每有效 TB 成本的交叉点在哪里？"* 高质量回答：明确给出 DRR、密度和功耗假设，并坦承在 2026 年若没有性能或电力约束，冷容量很难赢下。
+3. *"在 AI 方案比拼中，我们在哪个指标上落败：每机架 GB/s、每 kW 还是 $/TB？"* 高质量回答：点名竞争对手、指标以及应对方式。
+
+**向工程师提的问题**
+
+1. *"在使用率 90% 的系统上、额定 IOPS 的 70% 下、单盘重建期间，p99.9 读延迟是多少？"* 高质量回答：给出带条件的数字，以及主导原因（GC、重建还是控制器 CPU）。
+2. *"应用需要多大的队列深度才能达到额定 IOPS？"* 高质量回答：用利特尔法则做算术，并给出数据库所处的 QD1–4 下的性能。
+3. *"watts/TiB 保证是在墙插处实测还是估算的？基于什么缩减比？"* 高质量回答：测量方法、DRR 口径，以及不可压缩数据的情形。
+
+**不要这样说：**
+
+- "我们的阵列能跑 200 万 IOPS，所以更快。" 应追问：在什么延迟、块大小、读写比例和填充水平下？
+- "平均延迟 150 µs，所以跑数据库没问题。" 数据库和 GPU 集群看的是 p99 和 p99.9。
+- "闪存现在比磁盘便宜。" 2026 年按 $/TB 并非如此；只有在注明的缩减、功耗和性能假设下才成立。
+- "有效容量就是客户实际得到的容量。" 那是*在其数据按假设缩减的前提下*客户得到的容量。
+- "电力是 TCO 中最大的一项。" 通常不到 10%；只有在电力受限的场合才占主导。
+
+## 深入阅读（可选，L3 指引）
+
+- 排队论：Harchol-Balter，*Performance Modeling and Design of Computer Systems*（Cambridge，2013），涉及 M/M/c、M/G/1，以及为何服务时间的方差会推高尾部。
+- Dean & Barroso，"The Tail at Scale"，涉及对冲请求（hedged requests）与绑定请求（tied requests），这是应对扇出尾部的主要软件手段[^7]。
+- SNIA 固态存储性能测试规范（Solid State Storage Performance Test Specification，PTS），涉及测量 SSD 之前的稳态预处理。
+- DRAM 方面：内存控制器调度（FR-FCFS）与缺失状态保持寄存器（MSHR），可视为 CPU 侧的队列深度类比。
+
+## 关键术语
+
+- **IOPS / 吞吐量 / 延迟** — 每秒操作数、每秒字节数、每次操作耗时。
+- **队列深度** — 同时未完成的 I/O 数；利特尔法则把它与 IOPS × 延迟联系起来。
+- **尾延迟（p99、p99.9）** — 有 1% 或 0.1% 的请求超过的延迟值。
+- **原始 / 可用 / 有效容量** — 盘容量总和；扣除保护与预留之后；按假设数据缩减之后。
+- **TB/W、TB/RU** — 每瓦容量与每机架单元容量。
+- **TCO** — 在注明期间内的总拥有成本，包括电力、空间、支持服务和设备更新。
+- 其余术语参见[术语表](../glossary.md)。
+
+## 资料来源
+
+[^1]: TrendForce, "AI Server Demand Sustains Memory Contract Price Increases in 4Q26, While Consumer-Side Pressure Persists," 2026-09-30. https://www.trendforce.com/presscenter/news/20260930-13258.html (retrieved 2026-11-01).
+[^2]: Blocks & Files, "VDURA says 30 TB QLC SSD capacity now costs 22.6x more than HDD," 2026-04-08. https://www.blocksandfiles.com/flash/2026/04/08/vdura-says-30-tb-qlc-ssd-capacity-now-costs-226x-more-than-hdd/5214761 (retrieved via search 2026-11-01). VDURA index: 30 TB QLC SSD from $2,450 (Q2 2025) to $15,121 (Q1 2026); VDURA is a hybrid flash/disk vendor and does not name its price sources.
+[^3]: Blocks & Files, "Enterprise SSDs are ten times the price of nearline disk drives," 2020-05-15. https://blocksandfiles.com/2020/05/15/enterprise-ssds-are-ten-x-cost-of-nearline-disk-drives/ (retrieved 2026-11-01).
+[^4]: J. D. C. Little, "A Proof for the Queuing Formula: L = λW," *Operations Research* 9(3):383–387, 1961. https://doi.org/10.1287/opre.9.3.383 (retrieved 2026-11-01).
+[^5]: Borecraft (syndicating Tom's Hardware), "First PCIe 6.0 SSD enters mass production with 28GB/s speeds, 5.5 million IOPS and liquid cooling," 2026-02-14. https://borecraft.com/2026/02/14/first-pcie-6-0-ssd-enters-mass-production-with-28gb-s-speeds-5-5-million-iops-and-liquid-cooling-micron-9650-series-ssds-support-air-and-liquid-cooling/ (retrieved 2026-11-01).
+[^6]: StorageReview, "Seagate Exos M 30TB Review: HAMR-ing Storage Density," 2025-07-15. https://www.storagereview.com/review/seagate-exos-m-30tb-review-hamr-ing-storage-density (retrieved 2026-11-01). Rated 9.5 W max operating, 6.9 W idle; 170/350 random read/write IOPS at 4K QD16.
+[^7]: J. Dean and L. A. Barroso, "The Tail at Scale," *Communications of the ACM* 56(2):74–80, 2013-02. https://research.google/pubs/pub40801/ (retrieved 2026-11-01).
+[^8]: Pure Storage, "Form 10-K for the fiscal year ended January 31, 2019," 2019-04. https://www.sec.gov/Archives/edgar/data/1474432/000162828019003437/a10k2019.htm (retrieved 2026-11-01).
+[^9]: Pure Storage, "Purity Data Sheet," n.d. https://ie.insight.com/content/dam/insight-web/emea/partner/pure-storage/Pure_Purity_Data_Sheet.pdf (retrieved 2026-11-01).
+[^10]: Blocks & Files, "Pure Storage intros fresh FlashArray features for enterprise," 2023-06-14. https://blocksandfiles.com/2023/06/14/pure-storage-flasharray/ (retrieved 2026-11-01).
+[^11]: VAST Data, "Scaling Through Flash Scarcity" (webinar), n.d. https://www.vastdata.com/events/scaling-through-flash-scarcity (retrieved 2026-11-01).
+[^12]: Gartner, "Gartner Says Data Center Electricity Consumption to Grow 26% in 2026," 2026-06-10. https://www.gartner.com/en/newsroom/press-releases/2026-06-10-gartner-says-data-center-electricity-demand-to-grow-26-percent-in-2026 (retrieved 2026-11-01).
+[^13]: StorageReview, "Micron 6600 ION 245TB SSD Review: A Quarter Petabyte Per Drive Bay," 2026. https://www.storagereview.com/review/micron-6600-ion-245tb-ssd-review-a-quarter-petabyte-per-drive-bay (retrieved 2026-11-01).
+[^14]: Blocks & Files, "Pure swings FlashBlade//E at unstructured data," 2023-03-01. https://blocksandfiles.com/2023/03/01/pure-flashblade-e/ (retrieved 2026-11-01). About 1.06 W/TB for a starting configuration, 0.83 W/TB per expansion.
+[^15]: Dell Technologies, "Dell AI Data Platform with NVIDIA Supercharges Enterprise AI with Breakthrough Data Orchestration and Storage Innovations," 2026-03-16. https://www.dell.com/en-us/dt/corporate/newsroom/announcements/detailpage.press-releases~usa~2026~03~dell-ai-data-platform-with-nvidia-supercharges-enterprise-ai-with-breakthrough-data-orchestration-and-storage-innovations.htm (retrieved 2026-11-01).
+[^16]: Unite.AI, "WEKA Launches NeuralMesh 6 and WEKApod 3 as AI Infrastructure Shifts Toward Inference," 2026-07. https://www.unite.ai/weka-launches-neuralmesh-6-and-wekapod-3-as-ai-infrastructure-shifts-toward-inference/ (retrieved 2026-11-01).
+[^17]: Pure Storage, "Hyperscaler," n.d. https://purestorage.com/pure-advantage/platform/hyperscaler.html (retrieved 2026-11-01).
+[^18]: TechRadar, "World's largest SSD has tripled in price in just nine months and now costs more than a new car," 2026. https://www.techradar.com/pro/worlds-largest-ssd-has-tripled-in-price-in-just-nine-months-and-now-costs-more-than-a-new-car (retrieved 2026-11-01). $37,128 for a 122.88 TB Solidigm D5-P5336 (~$302/TB).
+[^19]: ServNet UK, storage price table (30 TB enterprise HDD $495 in Q2 2025 and $668 in Q1 2026; 30 TB QLC SSD $2,450 in Q2 2025), 2026. https://www.servnetuk.com/insights/all-flash-vs-nearline-hdd-tco-2026 (retrieved 2026-11-01). Consistent with the VDURA index ratios reported by Blocks & Files (4.9× and 22.6×), from which these HDD prices derive.
+[^20]: Uptime Institute, "Global Data Center Survey 2025," 2025-07. https://intelligence.uptimeinstitute.com/resource/uptime-institute-global-data-center-survey-2025 (retrieved 2026-11-01). Weighted average PUE 1.54. [VERIFY: search-summary only]
+[^21]: U.S. Energy Information Administration, "Electric Power Monthly, Table 5.3: Average Price of Electricity to Ultimate Customers" (data for July 2026), 2026-09-24. https://www.eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_5_3 (retrieved 2026-11-01). Commercial sector, trailing 12 months. [VERIFY: search-summary only]
+[^22]: CBRE, "North America Data Center Trends H2 2025," 2026. https://www.cbre.co.uk/insights/books/north-america-data-center-trends-h2-2025/silicon-valley-data-center-market (retrieved 2026-11-01). Average asking rate for 250–500 kW in primary markets. [VERIFY: search-summary only]
+[^23]: StorageReview, "Enterprise SSD prices run at 6.5x last year; Vdura pegs a 30TB TLC drive at $22,600," 2026-08. https://storagereview.com/news/enterprise-ssd-prices-run-at-6-5x-last-year-vdura-pegs-a-30tb-tlc-drive-at-22600 (retrieved via search 2026-11-01). 18.6× TLC-to-HDD multiple implies a 30 TB HDD at ~$1,216.
+[^24]: Techzine, "Pure surprises: FlashArray gets S3 support, FlashArray//ST without DFMs," 2025-06. https://www.techzine.eu/blogs/infrastructure/132388/pure-surprises-flasharray-gets-s3-support-flasharray-st-without-dfms/ (retrieved 2026-11-01).
+[^25]: Pure Storage, "FlashArray//XL" product page (effective capacity footnote: average data reduction calculated at 5-to-1, excluding thin provisioning), n.d. https://www.purestorage.com/uk/products/nvme/flasharray-xl.html (retrieved via search 2026-11-01).
+[^26]: StorageReview, "DDN launches AI400X3M and Dynamo-integrated KV cache acceleration at ISC 2026," 2026-06. https://www.storagereview.com/news/ddn-launches-ai400x3m-and-dynamo-integrated-kv-cache-acceleration-at-isc-2026 (retrieved 2026-11-01).
+[^27]: Pure Storage, "With Industry-First Energy Efficiency Guarantee, Pure Storage Further Expands SLA Offerings for Evergreen//One," 2023-01-18. https://www.everpuredata.com/company/newsroom/press-releases/pure-expands-sla-offerings-evergreen-one.html (retrieved 2026-11-01).
+[^28]: Pure Storage Blog, post 110226 on the Evergreen//One energy efficiency SLA (title not retrieved), 2023. https://blog.purestorage.com/?p=110226 (retrieved 2026-11-01).
+[^29]: Pure Storage, "Evergreen//One Product Guide (June 16, 2024 – August 4, 2024)," 2024. https://www.purestorage.com/content/dam/pdf/en/legal/evergreen-one-product-guide-jun-16-2024-aug-4-2024.pdf (retrieved via search 2026-11-01); Everpure support, "Evergreen//One and Everpure Cloud Dedicated Array capacity" (EUC as the billing unit), n.d. https://support.everpuredata.com/r/everpure-cloud-dedicated-aws/eg1-pscd-array-capacity (retrieved via search 2026-11-01).
+[^30]: Blocks & Files, "Second hyperscaler plumps for Everpure's flash technology," 2026-08-11. https://www.blocksandfiles.com/flash/2026/08/11/second-hyperscaler-plumps-for-everpures-flash-technology/5285903 (retrieved 2026-11-01).
