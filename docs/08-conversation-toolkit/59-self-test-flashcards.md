@@ -1,6 +1,6 @@
 # 59. Self-test: 200 flashcards
 
-> **Depth:** L1–L2 · **Reading time:** ~53 min · **Last verified:** 2026-11-01
+> **Depth:** L1–L2 · **Reading time:** ~54 min · **Last verified:** 2026-11-01
 > **Prerequisites:** None to start, but the deck pays off most after a first pass through Parts 1–7. Begin with [What storage does](../01-storage-fundamentals/01-what-storage-does.md); pair it with the [Question bank](57-question-bank.md) and [Explain it in 30 seconds](58-explain-in-30-seconds.md).
 
 ## TL;DR
@@ -1219,7 +1219,7 @@ A Purity//FB metadata core on DFM blades sits beside separate third-party Linux/
 <details>
 <summary><strong>Q143.</strong> (L2) How should you describe EXA's MLPerf Storage v3.0 results?</summary>
 
-As the top numbers among entrants: 877.5 GiB/s checkpoint write and 1,623.4 GiB/s KV-cache read. VAST, WEKA, DDN, Dell, IBM and NetApp did not submit, so "#1" means first among the systems that entered. ([Ch 27](../04-everpure/27-flasharray-and-flashblade.md))
+As the top numbers among entrants: 877.5 GiB/s checkpoint write (read trailed at 588 GiB/s) and 1,623.4 GiB/s KV-cache read on 51 hosts, a lead that is partly scale. VAST, WEKA, DDN, Dell, IBM and NetApp did not submit, so "#1" means first among the systems that entered. ([Ch 27](../04-everpure/27-flasharray-and-flashblade.md))
 
 </details>
 

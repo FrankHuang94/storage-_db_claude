@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 962" width="1000" role="img" aria-labelledby="t d" font-family="Inter, Helvetica, Arial, sans-serif">
   <title id="t">Everpure product lineup poster, November 2026</title>
-  <desc id="d">A layered poster of Everpure's portfolio with a one-line positioning for each product. Top: the Everpure Platform umbrella. Data and AI services: Everpure Data Intelligence, Data Stream and PureKVA. Control plane and reach: Fusion, Pure1, Portworx and Everpure Cloud (Dedicated and Azure Native). Arrays: the FlashArray family (//XL, //X, //ST, //C, //E) on Purity//FA and the FlashBlade family (//S, //E, //EXA) on Purity//FB. A Purity band describes the shared storage OS family. DirectFlash media: TLC DFMs, QLC DFMs of 75, 150 and 300 TB, DFMD modules with NVRAM, and hyperscaler licensing. Bottom: Evergreen//Forever, //Flex and //One subscriptions. The same content appears as Table 60.4.</desc>
+  <desc id="d">A layered poster of Everpure's portfolio with a one-line positioning for each product. Top: the Everpure Platform umbrella. Data and AI services: Everpure Data Intelligence, Data Stream and PureKVA. Control plane and reach: Fusion, Pure1, Portworx and Everpure Cloud (Dedicated and Azure Native). Arrays: the FlashArray family (//XL, //X, //ST, //C, //E) on Purity//FA and the FlashBlade family (//S, //E, //EXA) on Purity//FB. A Purity band describes the storage OS family (Purity//FA and //FB) and Purity//DN, the software that manages EXA's third-party data nodes. DirectFlash media: TLC DFMs, QLC DFMs of 75, 150 and 300 TB, DFMD modules with NVRAM, and hyperscaler licensing. Bottom: Evergreen//Forever, //Flex and //One subscriptions. The same content appears as Table 60.4.</desc>
   <rect x="0" y="0" width="1000" height="962" fill="#FFFFFF"/>
   <text x="20" y="34" font-size="20" font-weight="700" fill="#222222">Product-lineup poster: the Everpure portfolio on one page</text>
   <text x="20" y="56" font-size="13" fill="#555555">Read bottom-up: media, OS, arrays, control plane, services; Evergreen is the commercial wrapper around all of it.</text>
@@ -68,7 +68,7 @@
   <rect x="511" y="394" width="468" height="44" fill="#F3F6F9"/>
   <text x="520" y="413" font-size="13" fill="#0B4F7C" text-anchor="start" font-weight="700">//S (R2)</text>
   <text x="640" y="412" font-size="12" fill="#222222" text-anchor="start">Performance file and object on QLC DFMs;</text>
-  <text x="640" y="427" font-size="12" fill="#222222" text-anchor="start">S100, S200, S500; DGX SuperPOD-certified</text>
+  <text x="640" y="427" font-size="12" fill="#222222" text-anchor="start">S100, S200, S500; SuperPOD- and NCP-certified</text>
   <text x="520" y="457" font-size="13" fill="#0B4F7C" text-anchor="start" font-weight="700">//E</text>
   <text x="640" y="456" font-size="12" fill="#222222" text-anchor="start">Capacity file and object: storage-only chassis</text>
   <text x="640" y="471" font-size="12" fill="#222222" text-anchor="start">behind a control chassis; lakes, backup</text>
@@ -80,8 +80,8 @@
   <text x="520" y="562" font-size="12" fill="#555555" text-anchor="start">EXA data nodes: third-party servers today; DFM-based</text>
   <text x="520" y="577" font-size="12" fill="#555555" text-anchor="start">nodes were planned for 2H 2025, GA unconfirmed.</text>
   <rect x="20" y="634" width="960" height="48" rx="6" fill="#F3F6F9" stroke="#888888"/>
-  <text x="32" y="654" font-size="12" fill="#222222"><tspan font-weight="700">Purity</tspan> — one log-structured storage OS family: <tspan font-weight="700">Purity//FA</tspan> (FlashArray), <tspan font-weight="700">Purity//FB</tspan> (FlashBlade), <tspan font-weight="700">Purity//DN</tspan> (EXA data nodes).</text>
-  <text x="32" y="671" font-size="12" fill="#222222">Inline data reduction, a key-value metadata store, and one global flash translation layer driving raw NAND across every module.</text>
+  <text x="32" y="654" font-size="12" fill="#222222"><tspan font-weight="700">Purity</tspan> — storage OS family: <tspan font-weight="700">Purity//FA</tspan> (FlashArray), <tspan font-weight="700">Purity//FB</tspan> (FlashBlade and EXA metadata core), <tspan font-weight="700">Purity//DN</tspan> (EXA data-node stack).</text>
+  <text x="32" y="671" font-size="12" fill="#222222">Purity//FA and //FB: inline data reduction, a key-value metadata store, and one global flash translation layer driving raw NAND across every DFM.</text>
   <text x="20" y="708" font-size="13" fill="#555555" text-anchor="start" font-weight="700">DIRECTFLASH MEDIA</text>
   <rect x="20.0" y="716" width="228.0" height="72" rx="6" fill="#F3F6F9" stroke="#888888"/>
   <text x="30.0" y="736" font-size="13" fill="#222222" text-anchor="start" font-weight="700">TLC DFMs</text>

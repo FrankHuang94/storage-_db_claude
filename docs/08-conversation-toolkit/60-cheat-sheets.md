@@ -194,13 +194,13 @@ Read it bottom-up. DFMs reached 300 TB[^17], above the largest standard SSD conf
 | Layer | Product | One-line positioning |
 |---|---|---|
 | Media | DirectFlash Modules (TLC; QLC 75/150/300 TB; DFMD) | Raw NAND managed by Purity's global FTL; denser than standard SSDs[^17] |
-| OS | Purity//FA, //FB, //DN | One log-structured OS family for FlashArray, FlashBlade and EXA data nodes |
-| FlashArray | //XL (R5, XL190) | Top scale-up block, up to 7.4 PB effective; Purity Turbo reads on the secondary[^21][^22] |
+| OS | Purity//FA, //FB; Purity//DN | One log-structured OS family for FlashArray and FlashBlade, including EXA's metadata core; Purity//DN is the software stack that manages EXA's third-party Linux data nodes[^19] |
+| FlashArray | //XL (R5, XL190) | Top scale-up block, up to 7.4 PB effective at an assumed 5:1 reduction; Purity Turbo reads on the secondary[^21][^22] |
 | FlashArray | //X (R5) | Mainstream tier-1 block and file on TLC DFMs |
 | FlashArray | //ST | Latency specialist on commercial SSDs, no data reduction, >10M IOPS per 5RU (company-stated)[^23] |
 | FlashArray | //C (R5) | QLC capacity tier on the //X controllers |
 | FlashArray | //E | Disk replacement, about 1 PB entry[^24] |
-| FlashBlade | //S (R2) | Performance file and object; S500 DGX SuperPOD-certified[^25] |
+| FlashBlade | //S (R2) | Performance file and object; S500 DGX SuperPOD-certified[^25]; FlashBlade also NCP high-performance-storage certified (Ch 27) |
 | FlashBlade | //E | Capacity file and object with storage-only chassis[^26] |
 | FlashBlade | //EXA | Purity//FB metadata core plus third-party data nodes over pNFS; 877.5 GiB/s MLPerf v3.0 checkpoint write[^27] |
 | Control plane | Fusion, Pure1 | Fleet policy and placement; telemetry and AIOps; both expose MCP servers |
@@ -216,7 +216,7 @@ Read it bottom-up. DFMs reached 300 TB[^17], above the largest standard SSD conf
 | Poster | Everpure coverage | Where a rival is stronger |
 |---|---|---|
 | Protocols | All block transports; NFS, SMB, pNFS; S3 on both families | Proprietary clients (WEKA, Lustre) give finer client-side control; object specialists ship S3 over RDMA today |
-| Architectures | Five of six rows, one OS family | VAST, NetApp AFX and HPE X10000 own the DASE row; Dell PowerScale has the scale-out NAS base |
+| Architectures | Five of six rows, one OS family across the arrays | VAST, NetApp AFX and HPE X10000 own the DASE row; Dell PowerScale has the scale-out NAS base |
 | Lineup | Own media, one OS, one control plane | Dell and HPE sell servers and networking on one purchase order; NetApp runs first-party in three hyperscalers |
 
 *Table 60.5 — Everpure trades portfolio breadth for one stack; its gaps sit at each poster's edges.*
