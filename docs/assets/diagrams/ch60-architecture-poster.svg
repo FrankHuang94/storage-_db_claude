@@ -39,22 +39,22 @@
   <rect x="365" y="116" width="270" height="22" rx="4" fill="#F3F6F9" stroke="#888888"/><text x="500.0" y="131.2" font-size="12" text-anchor="middle" fill="#222222">Clients: any node is an entry point</text>
   <rect x="365" y="150" width="60" height="62" rx="4" fill="#FFFFFF" stroke="#888888"/>
   <text x="395" y="168" font-size="12" fill="#222222" text-anchor="middle" font-weight="700">Node</text>
-  <text x="395" y="183" font-size="12" fill="#222222" text-anchor="middle">CPU, RAM</text>
+  <text x="395" y="183" font-size="12" fill="#222222" text-anchor="middle">CPU</text>
   <rect x="371" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="383" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="395" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="407" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/>
   <line x1="395" y1="212" x2="395" y2="226" stroke="#888888" stroke-width="1.2"/>
   <rect x="435" y="150" width="60" height="62" rx="4" fill="#FFFFFF" stroke="#888888"/>
   <text x="465" y="168" font-size="12" fill="#222222" text-anchor="middle" font-weight="700">Node</text>
-  <text x="465" y="183" font-size="12" fill="#222222" text-anchor="middle">CPU, RAM</text>
+  <text x="465" y="183" font-size="12" fill="#222222" text-anchor="middle">CPU</text>
   <rect x="441" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="453" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="465" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="477" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/>
   <line x1="465" y1="212" x2="465" y2="226" stroke="#888888" stroke-width="1.2"/>
   <rect x="505" y="150" width="60" height="62" rx="4" fill="#FFFFFF" stroke="#888888"/>
   <text x="535" y="168" font-size="12" fill="#222222" text-anchor="middle" font-weight="700">Node</text>
-  <text x="535" y="183" font-size="12" fill="#222222" text-anchor="middle">CPU, RAM</text>
+  <text x="535" y="183" font-size="12" fill="#222222" text-anchor="middle">CPU</text>
   <rect x="511" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="523" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="535" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="547" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/>
   <line x1="535" y1="212" x2="535" y2="226" stroke="#888888" stroke-width="1.2"/>
   <rect x="575" y="150" width="60" height="62" rx="4" fill="#FFFFFF" stroke="#888888"/>
   <text x="605" y="168" font-size="12" fill="#222222" text-anchor="middle" font-weight="700">Node</text>
-  <text x="605" y="183" font-size="12" fill="#222222" text-anchor="middle">CPU, RAM</text>
+  <text x="605" y="183" font-size="12" fill="#222222" text-anchor="middle">CPU</text>
   <rect x="581" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="593" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="605" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="617" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/>
   <line x1="605" y1="212" x2="605" y2="226" stroke="#888888" stroke-width="1.2"/>
   <rect x="365" y="226" width="270" height="26" rx="4" fill="#FDEBD9" stroke="#E69F00"/><text x="500.0" y="243.2" font-size="12" text-anchor="middle" fill="#222222">East-west net: replicas, EC, rebuilds</text>

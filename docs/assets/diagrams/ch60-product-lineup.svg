@@ -1,0 +1,117 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 962" width="1000" role="img" aria-labelledby="t d" font-family="Inter, Helvetica, Arial, sans-serif">
+  <title id="t">Everpure product lineup poster, November 2026</title>
+  <desc id="d">A layered poster of Everpure's portfolio with a one-line positioning for each product. Top: the Everpure Platform umbrella. Data and AI services: Everpure Data Intelligence, Data Stream and PureKVA. Control plane and reach: Fusion, Pure1, Portworx and Everpure Cloud (Dedicated and Azure Native). Arrays: the FlashArray family (//XL, //X, //ST, //C, //E) on Purity//FA and the FlashBlade family (//S, //E, //EXA) on Purity//FB. A Purity band describes the shared storage OS family. DirectFlash media: TLC DFMs, QLC DFMs of 75, 150 and 300 TB, DFMD modules with NVRAM, and hyperscaler licensing. Bottom: Evergreen//Forever, //Flex and //One subscriptions. The same content appears as Table 60.4.</desc>
+  <rect x="0" y="0" width="1000" height="962" fill="#FFFFFF"/>
+  <text x="20" y="34" font-size="20" font-weight="700" fill="#222222">Product-lineup poster: the Everpure portfolio on one page</text>
+  <text x="20" y="56" font-size="13" fill="#555555">Read bottom-up: media, OS, arrays, control plane, services; Evergreen is the commercial wrapper around all of it.</text>
+  <rect x="20" y="72" width="960" height="34" rx="6" fill="#0072B2"/>
+  <text x="500" y="94" font-size="15" fill="#FFFFFF" text-anchor="middle" font-weight="700">Everpure Platform: framed as Enterprise Data Cloud (2025), then Data Primacy (2026)</text>
+  <text x="20" y="128" font-size="13" fill="#555555" text-anchor="start" font-weight="700">DATA AND AI SERVICES</text>
+  <rect x="20.0" y="136" width="309.3333333333333" height="70" rx="6" fill="#E8F1F8" stroke="#0072B2"/>
+  <text x="30.0" y="156" font-size="14" fill="#0B4F7C" text-anchor="start" font-weight="700">Everpure Data Intelligence</text>
+  <text x="30.0" y="174" font-size="12" fill="#222222" text-anchor="start">Ex-1touch, closed May 2026; GA June 2026.</text>
+  <text x="30.0" y="189" font-size="12" fill="#222222" text-anchor="start">Classify, govern, trace data across estates</text>
+  <rect x="345.3333333333333" y="136" width="309.3333333333333" height="70" rx="6" fill="#E8F1F8" stroke="#0072B2"/>
+  <text x="355.3333333333333" y="156" font-size="14" fill="#0B4F7C" text-anchor="start" font-weight="700">Data Stream</text>
+  <text x="355.3333333333333" y="174" font-size="12" fill="#222222" text-anchor="start">Ingest, index and vectorise data for RAG on</text>
+  <text x="355.3333333333333" y="189" font-size="12" fill="#222222" text-anchor="start">FlashBlade + NVIDIA AI Data Platform design</text>
+  <rect x="670.6666666666666" y="136" width="309.3333333333333" height="70" rx="6" fill="#E8F1F8" stroke="#0072B2"/>
+  <text x="680.6666666666666" y="156" font-size="14" fill="#0B4F7C" text-anchor="start" font-weight="700">PureKVA</text>
+  <text x="680.6666666666666" y="174" font-size="12" fill="#222222" text-anchor="start">KV-cache offload on FlashBlade (S3, NFS);</text>
+  <text x="680.6666666666666" y="189" font-size="12" fill="#222222" text-anchor="start">announced Sep 2026; up to 20× TTFT (vendor)</text>
+  <text x="20" y="232" font-size="13" fill="#555555" text-anchor="start" font-weight="700">CONTROL PLANE AND REACH BEYOND THE ARRAY</text>
+  <rect x="20.0" y="240" width="228.0" height="86" rx="6" fill="#E8F1F8" stroke="#0072B2"/>
+  <text x="30.0" y="260" font-size="14" fill="#0B4F7C" text-anchor="start" font-weight="700">Fusion</text>
+  <text x="30.0" y="278" font-size="12" fill="#222222" text-anchor="start">Fleet policy: presets, placement</text>
+  <text x="30.0" y="293" font-size="12" fill="#222222" text-anchor="start">and automation; built into Purity;</text>
+  <text x="30.0" y="308" font-size="12" fill="#222222" text-anchor="start">MCP server for AI agents</text>
+  <rect x="264.0" y="240" width="228.0" height="86" rx="6" fill="#E8F1F8" stroke="#0072B2"/>
+  <text x="274.0" y="260" font-size="14" fill="#0B4F7C" text-anchor="start" font-weight="700">Pure1</text>
+  <text x="274.0" y="278" font-size="12" fill="#222222" text-anchor="start">SaaS telemetry, AIOps, forecasts</text>
+  <text x="274.0" y="293" font-size="12" fill="#222222" text-anchor="start">and support; the data behind</text>
+  <text x="274.0" y="308" font-size="12" fill="#222222" text-anchor="start">Evergreen SLAs; Manage MCP</text>
+  <rect x="508.0" y="240" width="228.0" height="86" rx="6" fill="#E8F1F8" stroke="#0072B2"/>
+  <text x="518.0" y="260" font-size="14" fill="#0B4F7C" text-anchor="start" font-weight="700">Portworx</text>
+  <text x="518.0" y="278" font-size="12" fill="#222222" text-anchor="start">Kubernetes data services on any</text>
+  <text x="518.0" y="293" font-size="12" fill="#222222" text-anchor="start">infrastructure; KubeVirt VMs as a</text>
+  <text x="518.0" y="308" font-size="12" fill="#222222" text-anchor="start">VMware exit route (acq. 2020)</text>
+  <rect x="752.0" y="240" width="228.0" height="86" rx="6" fill="#E8F1F8" stroke="#0072B2"/>
+  <text x="762.0" y="260" font-size="14" fill="#0B4F7C" text-anchor="start" font-weight="700">Everpure Cloud</text>
+  <text x="762.0" y="278" font-size="12" fill="#222222" text-anchor="start">Dedicated: Purity in your own AWS</text>
+  <text x="762.0" y="293" font-size="12" fill="#222222" text-anchor="start">or Azure account (ex-Cloud Block</text>
+  <text x="762.0" y="308" font-size="12" fill="#222222" text-anchor="start">Store). Azure Native: managed.</text>
+  <text x="20" y="352" font-size="13" fill="#555555" text-anchor="start" font-weight="700">ARRAYS</text>
+  <rect x="20" y="360" width="470" height="262" rx="6" fill="#FFFFFF" stroke="#0072B2"/>
+  <rect x="20" y="360" width="470" height="30" rx="6" fill="#0072B2"/>
+  <text x="30" y="380" font-size="13" fill="#FFFFFF" text-anchor="start" font-weight="700">FlashArray · Purity//FA · dual-controller; block first, plus file and S3</text>
+  <rect x="21" y="394" width="468" height="44" fill="#F3F6F9"/>
+  <text x="30" y="413" font-size="13" fill="#0B4F7C" text-anchor="start" font-weight="700">//XL (R5, XL190)</text>
+  <text x="150" y="412" font-size="12" fill="#222222" text-anchor="start">Top of scale-up block: up to 7.4 PB effective;</text>
+  <text x="150" y="427" font-size="12" fill="#222222" text-anchor="start">Purity Turbo lets the secondary serve reads</text>
+  <text x="30" y="457" font-size="13" fill="#0B4F7C" text-anchor="start" font-weight="700">//X (R5)</text>
+  <text x="150" y="456" font-size="12" fill="#222222" text-anchor="start">Mainstream tier-1 block and file on TLC DFMs:</text>
+  <text x="150" y="471" font-size="12" fill="#222222" text-anchor="start">sub-ms VMs, databases, VDI</text>
+  <rect x="21" y="482" width="468" height="44" fill="#F3F6F9"/>
+  <text x="30" y="501" font-size="13" fill="#0B4F7C" text-anchor="start" font-weight="700">//ST</text>
+  <text x="150" y="500" font-size="12" fill="#222222" text-anchor="start">Latency specialist: commercial SSDs, no data</text>
+  <text x="150" y="515" font-size="12" fill="#222222" text-anchor="start">reduction, &gt;10M IOPS per 5RU (company-stated)</text>
+  <text x="30" y="545" font-size="13" fill="#0B4F7C" text-anchor="start" font-weight="700">//C (R5)</text>
+  <text x="150" y="544" font-size="12" fill="#222222" text-anchor="start">QLC capacity tier for tier-2, dev/test, backup;</text>
+  <text x="150" y="559" font-size="12" fill="#222222" text-anchor="start">ms-class latency, same controllers as //X</text>
+  <rect x="21" y="570" width="468" height="44" fill="#F3F6F9"/>
+  <text x="30" y="589" font-size="13" fill="#0B4F7C" text-anchor="start" font-weight="700">//E</text>
+  <text x="150" y="588" font-size="12" fill="#222222" text-anchor="start">Disk replacement: QLC DFMs, ~1 PB entry,</text>
+  <text x="150" y="603" font-size="12" fill="#222222" text-anchor="start">lowest $/TB FlashArray</text>
+  <rect x="510" y="360" width="470" height="262" rx="6" fill="#FFFFFF" stroke="#0072B2"/>
+  <rect x="510" y="360" width="470" height="30" rx="6" fill="#0072B2"/>
+  <text x="520" y="380" font-size="13" fill="#FFFFFF" text-anchor="start" font-weight="700">FlashBlade · Purity//FB · scale-out file and object</text>
+  <rect x="511" y="394" width="468" height="44" fill="#F3F6F9"/>
+  <text x="520" y="413" font-size="13" fill="#0B4F7C" text-anchor="start" font-weight="700">//S (R2)</text>
+  <text x="640" y="412" font-size="12" fill="#222222" text-anchor="start">Performance file and object on QLC DFMs;</text>
+  <text x="640" y="427" font-size="12" fill="#222222" text-anchor="start">S100, S200, S500; DGX SuperPOD-certified</text>
+  <text x="520" y="457" font-size="13" fill="#0B4F7C" text-anchor="start" font-weight="700">//E</text>
+  <text x="640" y="456" font-size="12" fill="#222222" text-anchor="start">Capacity file and object: storage-only chassis</text>
+  <text x="640" y="471" font-size="12" fill="#222222" text-anchor="start">behind a control chassis; lakes, backup</text>
+  <rect x="511" y="482" width="468" height="60" fill="#F3F6F9"/>
+  <text x="520" y="501" font-size="13" fill="#0B4F7C" text-anchor="start" font-weight="700">//EXA</text>
+  <text x="640" y="500" font-size="12" fill="#222222" text-anchor="start">AI scale: Purity//FB metadata core plus</text>
+  <text x="640" y="515" font-size="12" fill="#222222" text-anchor="start">third-party Linux/NVMe data nodes, pNFS;</text>
+  <text x="640" y="530" font-size="12" fill="#222222" text-anchor="start">877.5 GiB/s MLPerf v3.0 checkpoint write</text>
+  <text x="520" y="562" font-size="12" fill="#555555" text-anchor="start">EXA data nodes: third-party servers today; DFM-based</text>
+  <text x="520" y="577" font-size="12" fill="#555555" text-anchor="start">nodes were planned for 2H 2025, GA unconfirmed.</text>
+  <rect x="20" y="634" width="960" height="48" rx="6" fill="#F3F6F9" stroke="#888888"/>
+  <text x="32" y="654" font-size="12" fill="#222222"><tspan font-weight="700">Purity</tspan> — one log-structured storage OS family: <tspan font-weight="700">Purity//FA</tspan> (FlashArray), <tspan font-weight="700">Purity//FB</tspan> (FlashBlade), <tspan font-weight="700">Purity//DN</tspan> (EXA data nodes).</text>
+  <text x="32" y="671" font-size="12" fill="#222222">Inline data reduction, a key-value metadata store, and one global flash translation layer driving raw NAND across every module.</text>
+  <text x="20" y="708" font-size="13" fill="#555555" text-anchor="start" font-weight="700">DIRECTFLASH MEDIA</text>
+  <rect x="20.0" y="716" width="228.0" height="72" rx="6" fill="#F3F6F9" stroke="#888888"/>
+  <text x="30.0" y="736" font-size="13" fill="#222222" text-anchor="start" font-weight="700">TLC DFMs</text>
+  <text x="30.0" y="754" font-size="12" fill="#222222" text-anchor="start">Performance media for the //X and</text>
+  <text x="30.0" y="769" font-size="12" fill="#222222" text-anchor="start">//XL FlashArray tiers</text>
+  <rect x="264.0" y="716" width="228.0" height="72" rx="6" fill="#F3F6F9" stroke="#888888"/>
+  <text x="274.0" y="736" font-size="13" fill="#222222" text-anchor="start" font-weight="700">QLC DFMs: 75/150/300 TB</text>
+  <text x="274.0" y="754" font-size="12" fill="#222222" text-anchor="start">Capacity tiers and FlashBlade; 300 TB</text>
+  <text x="274.0" y="769" font-size="12" fill="#222222" text-anchor="start">tops the largest 245.76 TB SSD</text>
+  <rect x="508.0" y="716" width="228.0" height="72" rx="6" fill="#F3F6F9" stroke="#888888"/>
+  <text x="518.0" y="736" font-size="13" fill="#222222" text-anchor="start" font-weight="700">DFMD</text>
+  <text x="518.0" y="754" font-size="12" fill="#222222" text-anchor="start">A DFM with built-in NVRAM, so</text>
+  <text x="518.0" y="769" font-size="12" fill="#222222" text-anchor="start">the write log grows with modules</text>
+  <rect x="752.0" y="716" width="228.0" height="72" rx="6" fill="#F3F6F9" stroke="#888888"/>
+  <text x="762.0" y="736" font-size="13" fill="#222222" text-anchor="start" font-weight="700">Hyperscaler licensing</text>
+  <text x="762.0" y="754" font-size="12" fill="#222222" text-anchor="start">DirectFlash designs licensed to Meta</text>
+  <text x="762.0" y="769" font-size="12" fill="#222222" text-anchor="start">and a second top-five (Aug 2026)</text>
+  <text x="20" y="814" font-size="13" fill="#555555" text-anchor="start" font-weight="700">EVERGREEN SUBSCRIPTIONS WRAP EVERY LAYER</text>
+  <rect x="20.0" y="822" width="309.3333333333333" height="72" rx="6" fill="#E5F5EF" stroke="#009E73"/>
+  <text x="30.0" y="842" font-size="13" fill="#222222" text-anchor="start" font-weight="700">Evergreen//Forever</text>
+  <text x="30.0" y="860" font-size="12" fill="#222222" text-anchor="start">You own the array; controllers refresh in</text>
+  <text x="30.0" y="875" font-size="12" fill="#222222" text-anchor="start">place at renewals (ex-Evergreen Gold)</text>
+  <rect x="345.3333333333333" y="822" width="309.3333333333333" height="72" rx="6" fill="#E5F5EF" stroke="#009E73"/>
+  <text x="355.3333333333333" y="842" font-size="13" fill="#222222" text-anchor="start" font-weight="700">Evergreen//Flex</text>
+  <text x="355.3333333333333" y="860" font-size="12" fill="#222222" text-anchor="start">You own the arrays but pay for capacity</text>
+  <text x="355.3333333333333" y="875" font-size="12" fill="#222222" text-anchor="start">used, pooled across the fleet</text>
+  <rect x="670.6666666666666" y="822" width="309.3333333333333" height="72" rx="6" fill="#E5F5EF" stroke="#009E73"/>
+  <text x="680.6666666666666" y="842" font-size="13" fill="#222222" text-anchor="start" font-weight="700">Evergreen//One</text>
+  <text x="680.6666666666666" y="860" font-size="12" fill="#222222" text-anchor="start">Everpure owns it: STaaS with up to ten SLAs,</text>
+  <text x="680.6666666666666" y="875" font-size="12" fill="#222222" text-anchor="start">incl. 99.9999% availability, 25% buffer</text>
+  <text x="20" y="922" font-size="12" fill="#555555" text-anchor="start">Names and positioning as of November 2026, per Chapters 26–28. Performance figures are company-stated or benchmark results</text>
+  <text x="20" y="938" font-size="12" fill="#555555" text-anchor="start">cited in Chapter 27. Original drawing, Chapter 60.</text>
+</svg>

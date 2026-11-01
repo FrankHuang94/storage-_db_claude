@@ -1,6 +1,6 @@
 # 2. Media physics for a semis person
 
-> **Depth:** L2 · **Reading time:** ~12 min · **Last verified:** 2026-11-01
+> **Depth:** L2 · **Reading time:** ~14 min · **Last verified:** 2026-11-01
 > **Prerequisites:** [What storage does](01-what-storage-does.md) · NAND basics from semiconductors (assumed)
 
 ## TL;DR

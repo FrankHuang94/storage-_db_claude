@@ -1,6 +1,6 @@
 # 6. Data protection and resilience
 
-> **Depth:** L2 · **Reading time:** ~12 min · **Last verified:** 2026-11-01
+> **Depth:** L2 · **Reading time:** ~13 min · **Last verified:** 2026-11-01
 > **Prerequisites:** [Media physics](02-media-physics.md) · [Inside an SSD](03-inside-an-ssd.md) · [Performance and economics metrics](04-performance-and-economics-metrics.md)
 
 ## TL;DR

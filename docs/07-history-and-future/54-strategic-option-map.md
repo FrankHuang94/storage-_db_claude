@@ -6,7 +6,7 @@
 ## TL;DR
 
 - **Read the industry as an eight-layer value stack**, from NAND media to AI data platforms and agents. Everpure (NYSE: P, formerly PSTG) owns the middle (flash modules, flash management and array software), competes in file, object and fleet management, and entered the top three layers only in 2026.
-- **Each layer has a natural mode.** Media is a partner-and-hedge layer, modules and array software are build layers, and the AI-data layers are where buy and partner options cluster, because that is where the scarce assets and the neutral buyers sit.
+- **Each layer has a natural mode.** Media is hedged, modules and array software are built, and buy and partner options cluster in the AI-data layers, where the scarce assets and neutral buyers sit.
 - **Prices rise steeply up the stack.** Everpure's largest deal was Portworx, at about $370M. Recent data-management and AI-data deals ran from $28M to $11B. A Securiti-sized deal ($1.725B) would cost almost three years of Everpure's FY26 free cash flow.
 - **A good option clears five gates, not one:** strategic fit, fit with Purity and Fusion, valuation against ARR and margin, integration risk (above all, a second operating system), and antitrust or foreign-investment review. Most options fail the second or fourth gate, not the first.
 - **"Do nothing new" is a serious option.** Revenue guidance implies ~38% growth, NAND is consuming cash, and Everpure's record favours small tuck-ins. The case against it is neutrality: whoever owns the catalog above the array owns the customer.
@@ -15,15 +15,15 @@
 
 The rest of this atlas describes layers, architectures and competitors one at a time. A corporate-development conversation needs them on one page. Strategists ask "where do we play, how do we get there, and what does it cost?", and those questions differ by layer. The answer for NAND (hedge supply, never buy a fab) is the opposite of the answer for data intelligence (Everpure bought 1touch for $125.0M in cash in 2026[^1]). The 2026 rebrand to Everpure and the "Data Primacy" pitch ([Chapter 28](../04-everpure/28-platform-and-software.md)) have moved strategy discussion toward the upper layers, which are also the most expensive and contested.
 
-This chapter is a synthesis. It contains **options a strategy team might evaluate, based on public information**, and nothing about non-public Everpure plans. Company names in the matrices illustrate a *category* of target or partner, or a past public transaction; no deal, approach or partnership is implied. Facts are re-cited from the chapters that established them, so every claim can be traced.
+This chapter is a synthesis. It contains **options a strategy team might evaluate, based on public information**, and nothing about non-public Everpure plans. Company names in the matrices illustrate a *category* of target or partner, or a past public transaction; no deal, approach or partnership is implied.
 
 ## Core concepts
 
 ### From the I/O stack to a value stack
 
-[Chapter 13](../03-system-architecture/13-storage-stack.md) traced a write through eight technical layers. The strategy stack below regroups them by *who captures value*. The bottom three layers are where Pure Storage's founding insight lives: consumer-grade NAND, managed by Purity's global FTL inside DirectFlash Modules (DFMs). The middle three layers are where storage systems compete. The top two are where storage meets data management and AI software, the claim the Everpure name makes.
+[Chapter 13](../03-system-architecture/13-storage-stack.md) traced a write through eight technical layers. The strategy stack below regroups them by *who captures value*. The bottom three hold Pure Storage's founding insight: consumer-grade NAND managed by Purity's global FTL inside DirectFlash Modules (DFMs). The middle three layers are where storage systems compete. The top two are where storage meets data management and AI software, the claim the Everpure name makes.
 
-**Semiconductor bridge.** The layers map onto the chip value chain. Media is the fab: capital-intensive, cyclical and owned by IDMs. DirectFlash is the integrated memory controller, the IP that makes commodity silicon behave better than it does as a standard part. Purity is the operating system or firmware stack that customers standardise on. The top layers resemble EDA plus cloud software, with higher multiples, more vendors and buyers who value neutrality. As in semis, value migrates toward whichever layer is scarce. Today that is trusted context about data, and GPU-adjacent memory capacity.
+**Semiconductor bridge.** Media is the fab: capital-intensive, cyclical and owned by IDMs. DirectFlash is the integrated memory controller, IP that makes commodity silicon behave better than a standard part. Purity is the firmware stack customers standardise on. The top layers resemble EDA plus cloud software, with higher multiples, more vendors and buyers who value neutrality. As in semis, value migrates toward whichever layer is scarce. Today that is trusted context about data, and GPU-adjacent memory capacity.
 
 ![Eight-layer strategy map from NAND media at the bottom to AI data platform and agents at the top. For each layer it shows Everpure's public position, build options, buy options as categories with one public precedent each, and partner options. Everpure owns flash modules and array software, is present but contested in file and object and in the control plane, is an early entrant in KV cache, data management and AI data platforms, and depends on suppliers for NAND.](../assets/diagrams/ch54-stack-strategy-map.svg)
 
@@ -31,7 +31,7 @@ This chapter is a synthesis. It contains **options a strategy team might evaluat
 
 ### Where Everpure stands, zone by zone
 
-**The owned core (layers 1–3).** Everpure does not make NAND. It buys raw flash, with qualified parts from Micron and Kioxia[^2][^3], and turns it into DFMs reaching 300 TB per module in 2026[^4]. Purity runs one FTL across those modules and one operating system across FlashArray and FlashBlade. The middle layers are also licensable on their own: Meta and, from August 2026, a second top-five hyperscaler license DirectFlash technology while buying their own NAND[^5]. Everpure was fourth in IDC's 2Q26 external-storage tracker with 8.1% share, the fastest grower in the top five[^6]. Nobody is likely to sell Everpure a better FTL, so the open question for layers 2–3 is how far to *license* them. Layer 1 is a supply-chain question: strategic NAND buying turned Q2 FY27 free cash flow to –$238M[^7].
+**The owned core (layers 1–3).** Everpure does not make NAND. It buys raw flash, with qualified parts from Micron and Kioxia[^2][^3], and turns it into DFMs reaching 300 TB per module in 2026[^4]. The middle layers are also licensable on their own: Meta and, from August 2026, a second top-five hyperscaler license DirectFlash technology while buying their own NAND[^5]. Everpure was fourth in IDC's 2Q26 external-storage tracker with 8.1% share, the fastest grower in the top five[^6]. Nobody is likely to sell Everpure a better FTL, so the open question for layers 2–3 is how far to *license* them. Layer 1 is a supply-chain question: strategic NAND buying turned Q2 FY27 free cash flow to –$238M[^7].
 
 **The contested middle (layers 4–6).** FlashBlade//EXA is Everpure's entry into GPU-cluster file storage. It posted the top results among MLPerf Storage v3.0 entrants[^8], but VAST, WEKA and DDN sat that round out, and EXA still lacks DFM-based data nodes, NCP certification and very-large-cluster references ([Chapter 27](../04-everpure/27-flasharray-and-flashblade.md)). For KV cache, PureKVA (September 2026)[^9] and a named role in NVIDIA's BlueField-4 STX architecture[^10] put Everpure in a tier that NVIDIA itself defines ([Chapter 32](../05-ai-storage/32-inference-and-kv-cache.md)). In the control plane, Pure1 and Fusion manage the fleet; Fusion users passed 1,200 in Q1 FY27, still under a tenth of the base[^11]. Portworx, bought in 2020, carries Everpure into Kubernetes and VMware-exit projects.
 
@@ -80,7 +80,7 @@ flowchart TD
 
 **Gate 2, fit with Purity and Fusion.** Everpure's distinctive claim is one OS and one subscription model across products ([Chapter 28](../04-everpure/28-platform-and-software.md)). An asset that brings a second data path or OS breaks that claim; Dell's five-plus storage operating systems are the cautionary example ([Chapter 46](../06-industry-and-competition/46-incumbents.md)). Ask whether the asset can run *on* Purity, *beside* it under Fusion, or only *instead of* it. The [diligence framework](../06-industry-and-competition/50-diligence-framework.md) turns this into a checklist.
 
-**Gate 3, financial.** Compare the price with ARR and with Everpure's own cash. FY26 free cash flow was $616M[^24], year-end cash and marketable securities $1.5B[^25], and management guides FY27 free cash flow to $600–800M after the NAND build[^7]. **Worked example (illustrative):** a target with $50M ARR at 15× costs $750M. For a five-year payback from gross profit alone, it must add $150M of gross profit a year; at the ~75% subscription gross margin Everpure reports[^26], that is about $200M of revenue a year, roughly 9% of Q2 FY27 subscription ARR of $2.13B[^26]. The bar is high because private AI-data marks are high: WEKA's last round valued it at ~16× ARR, and VAST's at ~60× committed ARR, both on company-stated figures ([Chapter 43](../06-industry-and-competition/43-weka.md)).
+**Gate 3, financial.** FY26 free cash flow was $616M[^24], year-end cash and marketable securities $1.5B[^25], and management guides FY27 free cash flow to $600–800M after the NAND build[^7]. **Worked example (illustrative):** a target with $50M ARR at 15× costs $750M. For a five-year payback from gross profit alone, it must add $150M of gross profit a year; at the ~75% subscription gross margin Everpure reports[^26], that is about $200M of revenue a year, roughly 9% of Q2 FY27 subscription ARR of $2.13B[^26]. The bar is high because private AI-data marks are high: WEKA's last round valued it at ~16× ARR, and VAST's at ~60× committed ARR, both on company-stated figures ([Chapter 43](../06-industry-and-competition/43-weka.md)).
 
 **Gate 4, integration risk.** Everpure's record is mixed. Compuverde became FlashArray file services within about a year. StorReduce's ObjectEngine was quietly withdrawn ([Chapter 25](../04-everpure/25-company-history-and-strategy.md)). Risks rise with channel conflict, for example a target that sells through Everpure's competitors, and with client-side software that customers must install on every GPU node.
 
@@ -119,15 +119,15 @@ Four lessons follow. **Storage incumbents are buying small and specific:** NetAp
 
 The strongest option may be to stay focused. **Growth is already high.** FY27 guidance of $5.03–5.07B implies ~38% growth[^26], driven by arrays, Evergreen and hyperscale licensing. Management attention is the scarcest input. **Cash is committed:** strategic NAND purchases pushed Q2 FY27 free cash flow negative[^7], and that hedge is a bigger bet than any tuck-in. **The record favours restraint.** Four deals in 17 years cost about $594M in total[^29][^1], and the smallest one failed ([Chapter 25](../04-everpure/25-company-history-and-strategy.md)). **Neutrality is an asset.** A storage vendor that partners with every catalog, backup and lakehouse vendor gets carried into deals by all of them. One that buys into those layers becomes their competitor. **Single-OS discipline is the moat**, and most targets would dilute it.
 
-The counter-argument is the one [Chapter 39](../05-ai-storage/39-agentic-ai-and-data-intelligence.md) makes. In an agentic enterprise, whoever answers "what is this data, and who may use it?" owns the customer relationship. If that is a catalog vendor, Everpure risks becoming a fast S3 endpoint under someone else's control plane. "Do nothing new" is defensible only if Data Intelligence and Fusion can reach non-Everpure data organically, quickly enough to matter. That is a measurable test, not a matter of belief.
+The counter-argument is the one [Chapter 39](../05-ai-storage/39-agentic-ai-and-data-intelligence.md) makes. In an agentic enterprise, whoever answers "what is this data, and who may use it?" owns the customer relationship. If that is a catalog vendor, Everpure risks becoming a fast S3 endpoint under someone else's control plane. "Do nothing new" is defensible only if Data Intelligence and Fusion can reach non-Everpure data organically, quickly enough to matter.
 
 ### How to use this map in conversation
 
 - **Start from the layer, not the deal.** Ask "how strong are we on layer 7 without new spending?" rather than "should we buy X?". People can answer the first without discussing non-public plans.
 - **Use category language.** Say "a DSPM-type asset" or "a parallel-metadata team", never a named private company as a target. Named companies are for precedents and competitive benchmarks.
-- **Bring the five gates.** PMs engage on gates 1–2, engineers on gate 2 and gate 4, finance on gate 3. A short pass through all five shows corporate-development judgment without presuming an answer.
+- **Bring the five gates.** PMs engage on gates 1–2, engineers on gate 2 and gate 4, finance on gate 3.
 - **Treat partnering as a real option, not a consolation.** At layers 5–8, being the best backend for NVIDIA, catalog or backup ecosystems may beat owning a layer outright.
-- **Name the do-nothing case first.** It signals respect for the core business and makes the rest of the discussion more credible.
+- **Name the do-nothing case first.** It signals respect for the core business.
 
 ## How Everpure approaches it vs. competitors
 
@@ -141,9 +141,9 @@ The counter-argument is the one [Chapter 39](../05-ai-storage/39-agentic-ai-and-
 | VAST | Build everything, raise capital | $30B valuation, NVIDIA a backer[^45] | Up-stack by building; equity as currency |
 | IBM | Buy data-in-motion and automation software | HashiCorp $6.4B[^28]; Confluent ~$11B[^39] | Data platform owned through software, not arrays |
 
-*Table 54.3 — Peers have chosen different modes: NetApp buys, VAST builds, HPE partners and IBM buys at platform prices; Everpure's record is the most build-centric.*
+*Table 54.3 — Peers have chosen different modes: NetApp buys, VAST builds, HPE partners and IBM buys at platform prices; Everpure's record is build-centric with small tuck-ins.*
 
-The steelmen differ. **NetApp's buying spree** is the strongest argument for speed. Two AI-software deals in about ten weeks (DataPelago in July, PEAK:AIO announced in September 2026) put GPU data processing and parallel metadata beside ONTAP while Everpure builds EXA's equivalents. **VAST** is the strongest argument for building. One codebase that reaches from DASE to agent runtimes avoids every gate-2 problem, and its private valuation lets it hire. **HPE** shows that partnering can carry a vendor into AI deals while it builds, but HPE's AI file still depends on a partner that also competes with it. Everpure sits between NetApp and VAST. It has more integration discipline than NetApp and much less capital than VAST's private mark implies, so tuck-ins plus deep partnering is its revealed preference to date.
+The steelmen differ. **NetApp's buying spree** is the strongest argument for speed. Two AI-software deals in about ten weeks (DataPelago in July, PEAK:AIO announced in September 2026) put GPU data processing and parallel metadata beside ONTAP while Everpure builds EXA's equivalents. **VAST** is the strongest argument for building. One codebase that reaches from DASE to agent runtimes avoids every gate-2 problem. **HPE** shows that partnering can carry a vendor into AI deals while it builds, but HPE's AI file still depends on a partner that also competes with it. Everpure sits between them: more integration discipline than NetApp, far less capital than VAST, so tuck-ins plus deep partnering is its revealed preference to date.
 
 ## History and trajectory
 
@@ -159,7 +159,7 @@ timeline
 
 *Figure 54.3 — Between 2019 and 2026 the centre of gravity of deal activity moved from storage plumbing (file systems, NAND) to data management and AI data platforms.*
 
-Through the 2010s, storage M&A was mostly consolidation of arrays and media. In 2019–2020 Pure Storage bought capabilities (file, then Kubernetes) to widen what Purity could serve. From 2024 the largest deals moved to table formats, databases, streaming and governance, bought by data-platform and security companies, not storage vendors. Storage vendors responded with small AI-data buys in 2025–2026. The signals to watch next: a VAST S-1, which would give audited AI-native storage economics ([Chapter 42](../06-industry-and-competition/42-vast-data.md)); the outcome of DDN's reported search for strategic investors ([Chapter 44](../06-industry-and-competition/44-ddn.md)); whether NVIDIA's STX turns the KV-cache tier into a commodity shelf; and whether Data Intelligence wins standalone, non-Everpure deployments.
+In 2019–2020 Pure Storage bought capabilities (file, then Kubernetes) to widen what Purity could serve. From 2024 the largest deals moved to table formats, databases, streaming and governance, bought by data-platform and security companies, not storage vendors. Storage vendors responded with small AI-data buys in 2025–2026. The signals to watch next: a VAST S-1, which would give audited AI-native storage economics ([Chapter 42](../06-industry-and-competition/42-vast-data.md)); the outcome of DDN's reported search for strategic investors ([Chapter 44](../06-industry-and-competition/44-ddn.md)); whether NVIDIA's STX turns the KV-cache tier into a commodity shelf; and whether Data Intelligence wins standalone, non-Everpure deployments.
 
 ## Numbers that matter
 
@@ -179,13 +179,13 @@ Through the 2010s, storage M&A was mostly consolidation of arrays and media. In 
 
 **Questions for a PM**
 
-1. *"Which layer above the array do customers pay for separately today?"* Strong answer: names a layer with standalone deals (for example, Fusion or Data Intelligence on non-Everpure storage) and admits where the attach rate is mostly inside array deals.
-2. *"Where would a partner get you to market faster than building?"* Strong answer: names an ecosystem (NVIDIA Dynamo, a catalog or a backup vendor), the integration it needs, and how the partner would be measured.
+1. *"Which layer above the array do customers pay for separately today?"* Strong answer: names standalone deals (Fusion or Data Intelligence on non-Everpure storage) and admits where attach is mostly inside array deals.
+2. *"Where would a partner get you to market faster than building?"* Strong answer: names an ecosystem (NVIDIA Dynamo, a catalog, a backup vendor), the integration needed and a success metric.
 3. *"What would make Data Intelligence credible on data that is not on Everpure?"* Strong answer: connectors, a separate price, reference customers with mixed estates, and a timeline.
 
 **Questions for an engineer**
 
-1. *"If you had to absorb outside code, where in Purity or Fusion could it live without a second data path?"* Strong answer: distinguishes control-plane plug-ins, sidecar services and the data path, and says which are off-limits.
+1. *"If you had to absorb outside code, where in Purity or Fusion could it live without a second data path?"* Strong answer: separates control-plane plug-ins, sidecar services and the data path, and says which are off-limits.
 2. *"What would it take for PureKVA to be the default backend in NVIDIA's KV stack?"* Strong answer: upstream NIXL and LMCache work, STX conformance, published latency and hit-rate figures.
 3. *"Which DirectFlash capabilities could a hyperscaler replicate with FDP SSDs, and how fast?"* Strong answer: separates global scheduling and density, which are hard to copy, from features FDP already covers ([Chapter 26](../04-everpure/26-purity-and-directflash.md)).
 
@@ -206,19 +206,18 @@ Through the 2010s, storage M&A was mostly consolidation of arrays and media. In 
 
 ## Key terms
 
-- **Value stack** — the layers of an industry ranked by where profit is captured, as opposed to the technical I/O path.
-- **Build / buy / partner** — the three ways to obtain a capability: develop it in-house, acquire it, or contract for it.
+- **Value stack** — industry layers ranked by where profit is captured, not by the I/O path.
+- **Build / buy / partner** — develop a capability in-house, acquire it, or contract for it.
 - **Tuck-in acquisition** — a small purchase of a team or product absorbed into an existing platform.
-- **Strategic fit** — whether an option strengthens a layer that customers pay for or that protects one they do.
-- **Technical fit** — whether an asset can run on, or beside, an existing OS and control plane without a second data path.
-- **Second-OS problem** — the cost and customer confusion of running two storage operating systems after an acquisition.
-- **Neutrality** — a vendor's ability to serve data stored on rivals' systems, which partners and buyers value.
+- **Strategic fit** — whether an option strengthens a layer customers pay for, or protects one.
+- **Technical fit** — whether an asset runs on or beside the existing OS without a second data path.
+- **Second-OS problem** — the cost and confusion of running two storage operating systems after a deal.
+- **Neutrality** — a vendor's ability to serve data stored on rivals' systems.
 - **ARR multiple** — purchase price or valuation divided by annual recurring revenue.
-- **Payback period** — years of incremental gross profit or cash flow needed to recover a purchase price.
 - **Antitrust remedy** — a divestiture or behavioural commitment required by regulators to clear a deal.
-- **Foreign-investment review** — government screening of cross-border acquisitions, such as CFIUS in the United States.
+- **Foreign-investment review** — government screening of cross-border deals, such as CFIUS in the US.
 - **DSPM** — data security posture management: software that finds sensitive data and checks who can access it.
-- **Do-nothing option** — continuing the current plan without new acquisitions or major partnerships, evaluated as a real alternative.
+- **Do-nothing option** — the current plan with no new deals or major partnerships, judged as a real alternative.
 
 ## Sources
 

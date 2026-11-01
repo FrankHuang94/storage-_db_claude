@@ -1,6 +1,6 @@
 # 5. Data reduction
 
-> **Depth:** L2 · **Reading time:** ~10 min · **Last verified:** 2026-11-01
+> **Depth:** L2 · **Reading time:** ~11 min · **Last verified:** 2026-11-01
 > **Prerequisites:** [Inside an SSD](03-inside-an-ssd.md) · [Performance and economics metrics](04-performance-and-economics-metrics.md)
 
 ## TL;DR
