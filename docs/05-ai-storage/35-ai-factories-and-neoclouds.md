@@ -9,7 +9,7 @@
 - **They buy storage as a product to resell, not as infrastructure to consume.** It must be multi-tenant, API-provisioned and metered in $/GB-month, and it must clear a margin over its own cost.
 - **Storage is roughly 1% of a neocloud's capex and about 4% of a GPU row's power, but it can idle 100% of the GPUs.** Neoclouds therefore weight reliability, time-to-deploy and NVIDIA alignment above price.
 - **VAST is the incumbent of record.** Its US$1.17 billion CoreWeave agreement is the largest disclosed deal[^3]. WEKA and DDN hold multi-vendor positions, and the biggest neoclouds increasingly build their own object tier.
-- **Everpure is a challenger here.** It has an equity stake in CoreWeave, small neocloud wins on FlashBlade//EXA and a consumption model that fits neocloud cash flows, but no large neocloud anchor yet.
+- **Everpure is a challenger here.** It has a CoreWeave equity stake, small FlashBlade//EXA neocloud wins and a fitting consumption model, but no large anchor account.
 
 ## Why this matters for Everpure strategy
 
@@ -25,7 +25,7 @@ An **AI factory** is NVIDIA's term for a data centre whose output is tokens: GPU
 
 The semiconductor bridge is the foundry model. Hyperscalers resemble IDMs: they design their own storage stacks ([Chapter 36](36-hyperscaler-ai-storage.md)), much as an IDM runs its own process. Neoclouds resemble a young pure-play foundry: they buy tools and compete on capacity, time-to-volume and yield (here, utilisation). They adopt whatever tool the reference flow qualifies, and NVIDIA Cloud Partner (NCP) reference designs play the role of the PDK. A storage vendor outside the qualified flow rarely gets evaluated.
 
-Scale has moved fast. CoreWeave reported a fleet of about 250,000 GPUs and 360 MW of active power at its 2025 IPO[^5]. It ended 2025 with more than 850 MW active and about 3.1 GW contracted[^1], and it targets more than 1.85 GW active by end-2026[^2]. Nebius targets 5 GW of contracted power by end-2026 [VERIFY: search-summary only][^6]. Oracle behaves like a quasi-neocloud with hyperscaler reach: its remaining performance obligations passed US$455 billion in its fiscal Q1 2026, mostly AI infrastructure[^7]. Fluidstack is building data centres for Anthropic's US$50 billion programme[^8].
+Scale has moved fast. CoreWeave reported a fleet of about 250,000 GPUs and 360 MW of active power at its 2025 IPO[^5]. It ended 2025 with more than 850 MW active and about 3.1 GW contracted[^1], and it targets more than 1.85 GW active by end-2026[^2]. Nebius targets 5 GW of contracted power by end-2026 [VERIFY: search-summary only][^6]. Oracle acts as a quasi-neocloud: its remaining performance obligations passed US$455 billion in fiscal Q1 2026[^7]. Fluidstack is building data centres for Anthropic's US$50 billion programme[^8].
 
 ### Anatomy of an AI-factory row
 
@@ -33,7 +33,7 @@ Scale has moved fast. CoreWeave reported a fleet of about 250,000 GPUs and 360 M
 
 *Figure 35.1 — In an AI-factory row, storage is a small slice of racks and power on its own network, yet every GPU depends on it for data, checkpoints and context.*
 
-A GB200 NVL72 rack holds 72 GPUs joined by NVLink into one scale-up domain. It is liquid-cooled and draws roughly 120 kW, with vendor ratings up to 130 kW[^9][^10]. Eight of them make a 576-GPU unit drawing about 1 MW. Three networks leave the row:
+A liquid-cooled GB200 NVL72 rack joins 72 GPUs by NVLink into one scale-up domain and draws roughly 120 kW (vendor ratings up to 130 kW)[^9][^10]. Eight of them make a 576-GPU unit drawing about 1 MW. Three networks leave the row:
 
 - **Back-end compute fabric** (InfiniBand or Spectrum-X Ethernet) carries GPU-to-GPU collectives between racks. Storage never touches it.
 - **Storage network** (Ethernet with RoCE) carries training reads, checkpoints and KV-cache spill. It is often converged with the front-end on the same NICs or DPUs.
@@ -43,7 +43,7 @@ How much storage does the row need? Reference designs disagree. Cisco's NCP high
 
 ### How a neocloud buys differently from an enterprise
 
-**1. Storage is resold, so it is priced per GB-month.** CoreWeave lists Distributed File Storage at US$0.07/GB-month. Its AI Object Storage is US$0.06 hot, US$0.03 warm and US$0.015 cold, with no egress or request fees[^14]. US$0.07/GB-month is US$70 per TB-month, or US$840 per TB-year. Now take an illustrative all-in cost (hardware, software, power and space) of US$1,000 per usable TB over four years. That is an assumption, not a vendor price. At list price and 100% sold, revenue is US$3,360 against US$1,000 of cost, a 70% gross margin. At 50% sold the margin falls to about 40%, and at 30% sold it is roughly breakeven. **The neocloud's storage P&L is a utilisation business.** Hence the premium on thin provisioning, data reduction and capacity-on-demand pricing. An enterprise sees only the US$1,000.
+**1. Storage is resold, so it is priced per GB-month.** CoreWeave lists Distributed File Storage at US$0.07/GB-month. Its AI Object Storage is US$0.06 hot, US$0.03 warm and US$0.015 cold, with no egress or request fees[^14]. US$0.07/GB-month is US$840 per TB-year. Assume, for illustration only, an all-in cost of US$1,000 per usable TB over four years. At list price and 100% sold, revenue is US$3,360 against US$1,000 of cost, a 70% gross margin. At 50% sold the margin falls to about 40%, and at 30% sold it is roughly breakeven. **The neocloud's storage P&L is a utilisation business.** Hence the premium on thin provisioning, data reduction and capacity-on-demand pricing. An enterprise sees only the US$1,000.
 
 **2. Multi-tenancy is the product.** An enterprise array serves one company with trusted administrators. A neocloud serves hundreds of tenants who must not see each other's data or noisy I/O. That means hard isolation (namespaces, VRF separation, per-tenant keys), QoS, quotas, metering and self-service APIs. Crusoe, for example, exposes VAST-backed shared disks through its API, CLI and Terraform[^15].
 
@@ -145,9 +145,8 @@ Data: `data/ch35_neocloud_capex.csv`
 
 ## History and trajectory
 
-- **2017–2022:** CoreWeave pivots from crypto mining to GPU cloud. Lambda, Crusoe and Nebius (spun out of Yandex) follow.
 - **2023–2024:** H100 scarcity creates the boom. Crusoe launches VAST-backed shared disks in September 2024[^15]. Pure Storage invests in CoreWeave in November 2024[^25].
-- **2025:** CoreWeave IPOs (March) and launches AI Object Storage with LOTA[^24]. Nebius adds DDN (May) and WEKA (June)[^27][^20]. In September Nebius signs the Microsoft contract[^4]. In November VAST signs the US$1.17B CoreWeave deal[^3] and Anthropic names Fluidstack for its US$50B build[^8]. Microsoft also contracts Nscale, reportedly for about 200,000 GB300 GPUs [VERIFY: secondary source only][^39].
+- **2025:** CoreWeave IPOs (March) and launches AI Object Storage with LOTA[^24]. Nebius adds DDN (May) and WEKA (June)[^27][^20]. In September Nebius signs the Microsoft contract[^4]. In November VAST signs with CoreWeave[^3] and Anthropic picks Fluidstack[^8]. Microsoft also contracts Nscale, reportedly for about 200,000 GB300 GPUs [VERIFY: secondary source only][^39].
 - **2026:** NVIDIA's STX names neocloud early adopters (March)[^18]. Everpure reports EXA neocloud wins and extends Evergreen//One to EXA (March)[^37], then adds EXA multi-tenancy (June)[^22]. CoreWeave signs a US$335M capacity deal with Backblaze (June)[^26] and raises capex guidance to US$35–39B (August)[^2].
 - **Where it goes:** inference over training, KV-cache tiers, more in-house object storage at the top, and credit stress among weaker neoclouds if GPU rental prices fall faster than debt amortises.
 
@@ -181,11 +180,11 @@ Data: `data/ch35_neocloud_capex.csv`
 
 **Don't say this:**
 
-- "Neoclouds are price-driven buyers." For storage they mostly are not. Risk, speed and power dominate because storage is about 1% of capex.
+- "Neoclouds are price-driven buyers." Not for storage: at about 1% of capex, risk, speed and power dominate.
 - "VAST owns all neoclouds." CoreWeave and Nebius run several vendors plus in-house storage.
 - "NCP certification wins the deal." It qualifies you. Reference-design placement and the anchor account win it.
 - "Multi-tenancy is a feature." For a neocloud it is the product.
-- "CoreWeave is a hyperscaler." It rents NVIDIA GPUs at hyperscale but buys, finances and integrates third-party storage like a foundry buys tools.
+- "CoreWeave is a hyperscaler." It buys and finances third-party storage like a foundry buys tools.
 
 ## Going deeper (optional, L3 pointers)
 
