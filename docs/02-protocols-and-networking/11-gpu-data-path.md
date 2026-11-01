@@ -5,63 +5,59 @@
 
 ## TL;DR
 
-- **The GPU is the expensive asset, and storage's job is to keep it busy.** At US$2–6 per H100-hour, every second a 1,024-GPU cluster waits on I/O costs roughly US$0.57–1.75. Storage pays for itself through utilization, not through its own price.
-- **GPUDirect Storage (GDS) removes the CPU "bounce buffer".** Without it, data lands in host DRAM and is then copied to GPU memory. With it, the NIC or SSD writes into GPU memory directly over PCIe. That frees CPU and memory bandwidth and raises the per-node ceiling, but it does not make the storage system itself any faster.
-- **Most LLM training is compute-bound, so GDS rarely matters in steady state.** A 70B model on 1,024 GPUs consumes only a few MB/s of tokens. Storage matters in bursts: checkpoint saves and restores, multimodal data loading, and, increasingly, inference KV-cache loads.
-- **The stack has layers.** Magnum IO is NVIDIA's umbrella. GPUDirect RDMA is the primitive. cuFile is the GDS API. NIXL is the inference transfer library. Dynamo is the inference orchestrator that calls NIXL. Vendors now compete to be a NIXL backend, not just a GDS partner.
-- **GDS support is table stakes, not a differentiator.** DDN, WEKA, VAST, IBM, Dell, NetApp, HPE and Everpure's FlashBlade//S all claim it. Buyers rank vendors on aggregate throughput, checkpoint behaviour and KV-cache integration.
+- **The GPU is the expensive asset; storage's job is to keep it busy.** At US$2–6 per H100-hour, each second a 1,024-GPU cluster waits on I/O costs US$0.57–1.75. Storage earns its keep through utilization, not its own price.
+- **GPUDirect Storage (GDS) removes the CPU "bounce buffer".** The NIC or SSD writes straight into GPU memory over PCIe, freeing CPU and DRAM bandwidth. It raises the per-node ceiling; it does not make the storage system faster.
+- **Most LLM training is compute-bound.** A 70B model on 1,024 GPUs reads a few MB/s of tokens. Storage matters in bursts: checkpoints, restores, multimodal loading and inference KV-cache loads.
+- **Know the stack.** Magnum IO is the umbrella, GPUDirect RDMA the primitive, cuFile the GDS API, NIXL the inference transfer library, Dynamo the orchestrator that calls NIXL.
+- **GDS is table stakes.** Nearly every AI storage vendor, including Everpure's FlashBlade//S, claims it. Deals turn on aggregate throughput, checkpoint behaviour and KV-cache integration.
 
 ## Why this matters for Everpure strategy
 
-In AI deals the customer's largest line item is GPUs, not storage. That flips how storage is sold. The pitch becomes "we keep your US$50 million of GPUs above X% utilization", not "we are cheaper per terabyte". Every AI storage vendor therefore stakes out a position on the GPU data path: GDS certification, RDMA protocols, and now NIXL plugins for KV cache. Failing these checks costs a vendor a place in NVIDIA reference architectures ([Chapter 34](../05-ai-storage/34-nvidia-ecosystem.md)). Passing them wins nothing by itself.
+In AI deals the largest line item is GPUs, so storage is sold as "we keep your US$50 million of GPUs busy", not "we are cheaper per terabyte". Every vendor therefore stakes out the GPU data path: GDS certification, RDMA protocols and now NIXL plugins for KV cache. Failing these checks costs a place in NVIDIA reference architectures ([Chapter 34](../05-ai-storage/34-nvidia-ecosystem.md)); passing them wins nothing by itself.
 
-For a strategy team, the useful questions are where the GPU data path is moving and whether Everpure is early or late. The movement has been from bulk file reads (GDS, 2019–2021) to object over RDMA (2024–2025) to latency-sensitive KV-cache tiers orchestrated by Dynamo (2025–2026). The last step turns storage from a training back-end into part of inference serving. That matters because inference spend is recurring, and it is where Everpure's PureKVA, WEKA's Augmented Memory Grid and DDN's Infinia are now competing ([Chapter 32](../05-ai-storage/32-inference-and-kv-cache.md)).
+The path has moved from bulk file reads (GDS, 2019–2021) to object over RDMA (2024–2025) to latency-sensitive KV-cache tiers orchestrated by Dynamo (2025–2026). That last step makes storage part of inference serving, which is recurring spend, and it is where Everpure's PureKVA, WEKA's Augmented Memory Grid and DDN's Infinia now compete ([Chapter 32](../05-ai-storage/32-inference-and-kv-cache.md)).
 
 ## Core concepts
 
 ### "Keep the GPU fed" is the whole game
 
-A semiconductor person already knows the logic from fabs. A fab is a fixed-cost machine, and what drives margin is utilization, not the price of the wafers you feed it. A GPU cluster works the same way. Its cost accrues by the hour whether or not it computes. Storage is a small share of cluster capex, but it can idle the whole cluster.
+A GPU cluster is a fab: a fixed-cost machine whose margin is set by utilization. Its cost accrues by the hour whether or not it computes, and storage, a small share of capex, can idle all of it. CoreWeave lists an 8× HGX H100 node at US$49.24 per hour, or US$6.16 per GPU-hour[^2]. Specialist clouds and marketplaces span roughly US$1.49 to US$6.98[^3]. A 1,024-GPU cluster at US$3.99 per GPU-hour, roughly Lambda's on-demand rate[^4] [VERIFY: search-summary only], costs 1,024 × 3.99 = **US$4,086 per hour, or about US$35.8 million a year**. One percent idle is US$358,000 a year.
 
-The numbers are concrete. CoreWeave lists an 8× HGX H100 node at US$49.24 per hour, or US$6.16 per GPU-hour[^2]. Specialist clouds and marketplaces span roughly US$1.49 to US$6.98[^3]. A 1,024-GPU cluster at US$3.99 per GPU-hour, roughly Lambda's on-demand rate[^4] [VERIFY: search-summary only], costs 1,024 × 3.99 = **US$4,086 per hour, or about US$35.8 million a year**. One percent idle is US$358,000 a year.
-
-Meta's Llama 3 report shows that idle time comes mostly from interruptions, not slow reads. On a 16,384-GPU H100 cluster, it logged 466 job interruptions in a 54-day snapshot and still reached more than 90% effective training time. Faster job startup and checkpointing were among the levers it named[^1]. Each interruption means reloading the last checkpoint, so storage bandwidth sets the restart cost.
+At scale, idle time comes mostly from interruptions. Meta's Llama 3 run on 16,384 H100s logged 466 interruptions in 54 days yet exceeded 90% effective training time, partly by cutting job-startup and checkpoint time[^1]. Each interruption reloads the last checkpoint, so storage sets the restart cost.
 
 ### Where storage actually stalls a GPU
 
-Most people overestimate the bandwidth that LLM training needs in steady state. Take a 70B dense model on 1,024 H100s. At 40% utilization of the ~989 dense BF16 TFLOPS of an H100, the cluster processes about 1,024 × 989×10¹² × 0.4 ÷ (6 × 70×10⁹) ≈ **0.97 million tokens per second**. Token IDs are about 4 bytes each, so the input stream is roughly **4 MB/s for the whole cluster**. Any NAS can serve that. Text training is compute-bound, and GDS does nothing for it.
-
-Storage stalls GPUs in four places:
+Steady-state LLM training needs far less bandwidth than people assume. Take a 70B dense model on 1,024 H100s. At 40% utilization of the ~989 dense BF16 TFLOPS of an H100, the cluster processes about 1,024 × 989×10¹² × 0.4 ÷ (6 × 70×10⁹) ≈ **0.97 million tokens per second**. At ~4 bytes per token ID, that is **~4 MB/s for the whole cluster**. Any NAS serves that; GDS does nothing for it. Storage stalls GPUs in four places:
 
 1. **Checkpoint saves.** With Adam in mixed precision, the state is about 16 bytes per parameter: bf16 weights, fp32 master weights, and two fp32 moments. A 70B model therefore checkpoints 70×10⁹ × 16 = **1.12 TB**. Written synchronously at 20 GB/s, that takes 56 s. Every 30 minutes, that is 3.1% of wall-clock time spent idle.
-2. **Checkpoint restores** after a failure. Every GPU reads its shard at the same moment, which is the most bursty read the storage system will see.
-3. **Multimodal data loading.** Images, video and audio are megabytes per sample. Mohan et al. found that for many vision and audio models, training time was dominated by "data stalls", the time spent fetching and pre-processing data[^5].
-4. **Inference KV-cache loads.** A Llama 3 70B token needs 80 layers × 8 KV heads × 128 dimensions × 2 (key and value) × 2 bytes ≈ **320 KiB of KV cache**[^1]. A 32K-token context is therefore ~10.7 GB. Fetching that from a shared tier must beat recomputing it. Recompute costs about 2 × 70×10⁹ × 32,768 ≈ 4.6×10¹⁵ FLOPs, roughly a second or more even across eight GPUs. The load is latency-critical, and it repeats for every returning user ([Chapter 32](../05-ai-storage/32-inference-and-kv-cache.md)).
+2. **Checkpoint restores.** Every GPU reads its shard at once, the burstiest read storage sees.
+3. **Multimodal data loading.** Samples are megabytes. For many vision and audio models, Mohan et al. found training time dominated by "data stalls" (fetch plus pre-processing)[^5].
+4. **Inference KV-cache loads.** A Llama 3 70B token needs 80 layers × 8 KV heads × 128 dimensions × 2 (key and value) × 2 bytes ≈ **320 KiB of KV cache**[^1]. A 32K-token context is ~10.7 GB, and fetching it must beat recomputing ~2 × 70×10⁹ × 32,768 ≈ 4.6×10¹⁵ FLOPs (a second or more even on eight GPUs). The load is latency-critical and repeats for every returning user ([Chapter 32](../05-ai-storage/32-inference-and-kv-cache.md)).
 
 ![Worked-example grouped bar chart of annual idle-GPU cost on a 1,024-GPU H100 cluster at three rental prices. A synchronous 1.12 TB checkpoint every 30 minutes at 20 GB/s costs $0.56M to $1.72M a year. At 100 GB/s it costs $0.11M to $0.34M. An asynchronous checkpoint with a 2-second pause costs $0.02M to $0.06M. Data-loading stalls of 5% cost $0.90M to $2.76M.](../assets/charts/ch11-gpu-idle-cost.svg)
 
 *Figure 11.1 — Worked example: storage stalls cost seven figures a year on a mid-sized cluster, but software (async checkpointing) removes more of that cost than faster hardware does.*
 Data: `data/ch11_gpu_idle_cost.csv`
 
-The chart carries the chapter's most important nuance. Moving the checkpoint target from 20 to 100 GB/s saves about US$0.9 million a year at mid-tier pricing. Switching to **asynchronous checkpointing** saves nearly all of it for free: GPUs copy state to host DRAM in a second or two and keep training while the CPU drains it to storage. Async checkpointing moves the bottleneck from storage *latency* to storage *throughput over the interval*. [Chapter 31](../05-ai-storage/31-training-storage.md) works through the 405B and 1T cases.
+The nuance: raising checkpoint bandwidth from 20 to 100 GB/s saves ~US$0.9 million a year at mid-tier pricing, but **asynchronous checkpointing** saves nearly all of it in software. GPUs copy state to host DRAM in a second or two and keep training while the CPU drains it, so storage need only absorb the checkpoint within the interval. [Chapter 31](../05-ai-storage/31-training-storage.md) works through the 405B and 1T cases.
 
 ### The traditional path: the bounce buffer
 
-On a standard Linux server, `read()` from a file or socket lands data in host DRAM, either in the page cache or in a pinned staging buffer. The application then calls `cudaMemcpy` to move it into GPU high-bandwidth memory (HBM). Each byte therefore crosses the memory bus twice, once written and once read, and the CPU spends cycles on the system calls, copies and cache management.
+On a standard Linux server, `read()` lands data in host DRAM (page cache or a pinned staging buffer); `cudaMemcpy` then moves it to GPU high-bandwidth memory (HBM). Each byte crosses the memory bus twice, and the CPU pays for system calls, copies and cache management.
 
 ![Two-panel diagram. Panel A, traditional path: data flows from the storage system to an RDMA NIC, through a PCIe switch up to the CPU root complex, is written into a bounce buffer in host DRAM, read back, and sent down through the PCIe switch into GPU HBM. Panel B, GPUDirect path: data flows from storage to the NIC and across the PCIe switch directly into GPU HBM; the CPU sends only control signals, and host DRAM is off the data path.](../assets/diagrams/ch11-gpudirect-path.svg)
 
 *Figure 11.2 — GPUDirect replaces two trips through host DRAM with one peer-to-peer DMA across the PCIe switch; the CPU keeps control but stops touching data.*
 
-**Worked example (why the bounce buffer bites).** Give a GPU node 200 GB/s of storage-facing network, for example four 400 Gb/s ports. Bounce-buffering 200 GB/s generates about 400 GB/s of DRAM traffic. A dual-socket server with eight channels of DDR5-4800 per socket has 2 × 8 × 38.4 ≈ 614 GB/s of *theoretical* peak. The staging copies would take about two-thirds of it, competing with the data-loader processes that decode and augment samples. If the NIC hangs off one socket and the GPU off the other, every byte also crosses the inter-socket link. This is the classic case for a DMA engine that bypasses the host bridge: memory bandwidth is the scarce resource, so you stop using it as a transit lounge.
+**Worked example (why the bounce buffer bites).** Give a GPU node 200 GB/s of storage-facing network, for example four 400 Gb/s ports. Bounce-buffering 200 GB/s generates about 400 GB/s of DRAM traffic. A dual-socket server with eight channels of DDR5-4800 per socket has 2 × 8 × 38.4 ≈ 614 GB/s of *theoretical* peak. Staging copies would consume about two-thirds of it, competing with data-loader processes; if NIC and GPU sit on different sockets, every byte also crosses the inter-socket link. It is the classic case for peer-to-peer DMA past the host bridge: stop using scarce memory bandwidth as a transit lounge.
 
-NVIDIA's original GDS write-up made the same point at system scale. On a DGX-2, the CPU-memory-to-GPU path was limited to about 50 GB/s, while drives and NICs reaching GPUs directly could aggregate to nearly 200 GB/s[^6]. NVIDIA's documentation says a direct path through a PCIe switch offers at least twice the peak bandwidth of a path through the CPU on some systems[^7].
+NVIDIA's original GDS write-up made the point at system scale: on a DGX-2, CPU memory could feed GPUs at ~50 GB/s, while drives and NICs reaching GPUs directly could aggregate to nearly 200 GB/s[^6].
 
 ### GPUDirect RDMA and GPUDirect Storage
 
-**GPUDirect RDMA** is the primitive. The GPU exposes a window of its memory on the PCIe bus, and a kernel module (`nvidia-peermem`) registers it with the RDMA stack. A NIC can then DMA network data straight into HBM, which is how NCCL moves gradients between nodes ([Chapter 10](10-datacenter-networking.md)).
+**GPUDirect RDMA** is the primitive: the GPU exposes a window of its memory on PCIe, `nvidia-peermem` registers it with the RDMA stack, and a NIC DMAs straight into HBM. NCCL moves gradients this way ([Chapter 10](10-datacenter-networking.md)).
 
-**GPUDirect Storage** applies the same idea to file and block I/O. The application calls the **cuFile** API, for example `cuFileRead` with a GPU buffer address in place of `read`. The file-system client resolves the file offset to a storage request and hands the device a GPU address as the DMA target. The NIC (for NFS over RDMA, Lustre, WekaFS, GPFS or NVMe-oF) or the local NVMe SSD then writes the data directly into GPU memory[^7].
+**GPUDirect Storage** applies it to file and block I/O. The application calls **cuFile** (`cuFileRead` with a GPU buffer instead of `read`); the file-system client turns the offset into a storage request with a GPU address as DMA target; the NIC or local NVMe SSD writes directly into GPU memory[^7].
 
 ```mermaid
 sequenceDiagram
@@ -89,16 +85,16 @@ sequenceDiagram
 
 *Figure 11.3 — The two paths issue the same storage request; GDS changes only where the bytes land, which is why it needs file-system client support but not a new storage protocol.*
 
-GDS has practical limits, and an engineer will expect you to know them:
+GDS's limits, which engineers will expect you to know:
 
-- **The storage system's ceiling does not move.** GDS raises what one client node can absorb. If the array delivers 100 GB/s, GPUs still get 100 GB/s.
-- **Topology matters.** The gain is largest when the NIC or SSD and the GPU share a PCIe switch. On unsupported configurations GDS falls back to a "compatibility mode" that uses the bounce buffer[^7].
-- **The client must support it.** The file-system client has to understand GPU addresses. Kernel NFS over RDMA, Lustre, WekaFS, IBM Storage Scale and BeeGFS do. A plain NFS-over-TCP mount does not.
-- **Data must arrive ready for the GPU.** If JPEGs are decoded or samples augmented on the CPU, the data has to pass through host memory anyway. GDS helps when the GPU itself decodes (for example with DALI) or when the bytes are already tensors, as with checkpoints and KV blocks.
+- **The array's ceiling does not move.** GDS raises what one client absorbs; a 100 GB/s array still delivers 100 GB/s.
+- **Topology matters.** Gains are largest when NIC or SSD and GPU share a PCIe switch; unsupported setups fall back to a bounce-buffer "compatibility mode"[^7].
+- **The client must support it.** NFS over RDMA, Lustre, WekaFS, IBM Storage Scale and BeeGFS clients do; NFS over TCP does not.
+- **Data must arrive GPU-ready.** CPU-side JPEG decode or augmentation forces a trip through host memory anyway. GDS helps when the GPU decodes (e.g., DALI) or the bytes are already tensors, as with checkpoints and KV blocks.
 
 ### The layer stack: Magnum IO, cuFile, NIXL and Dynamo
 
-The names nest, and confusing them is the fastest way to lose an engineer's attention.
+The names nest; confusing them loses an engineer fast.
 
 ```mermaid
 flowchart TB
@@ -145,13 +141,13 @@ flowchart TB
 
 *Figure 11.4 — Magnum IO, shaded blue, is the I/O plumbing; NIXL and Dynamo sit above it for inference, so a storage vendor's integration point has moved up from "GDS-capable file system" to "NIXL backend".*
 
-- **Magnum IO** is NVIDIA's umbrella brand for GPU I/O software: GPUDirect RDMA, GPUDirect Storage, NCCL, NVSHMEM and UCX. It was launched at SC19 in November 2019 with an "up to 20x" claim, and GDS was in early access at the time[^8]. GDS 1.0 was finalized in 2021 with a dozen storage partners[^9].
-- **cuFile** is the API for GDS. Applications or libraries (data loaders, checkpoint writers) call it in place of POSIX reads and writes.
-- **cuObject** extends the idea to S3. Requests stay as HTTP S3 calls, while the payload moves over RDMA. It needs changes in both the client SDK and the object server[^10].
-- **NIXL** (NVIDIA Inference Xfer Library) is an open-source (Apache 2.0) point-to-point transfer library. It moves KV blocks and tensors between GPU memory, CPU memory and storage through pluggable backends, including UCX, POSIX, GDS, object (OBJ), Azure Blob, 3FS, Mooncake and libfabric[^11].
-- **Dynamo** is NVIDIA's open-source distributed inference framework. Its KV Block Manager (KVBM) tiers KV cache across GPU HBM (G1), host DRAM (G2), local SSD (G3) and remote storage (G4), with disk I/O going through NIXL and using GDS where available[^12]. Dynamo 1.0 shipped on 2026-03-16[^13].
+- **Magnum IO** is NVIDIA's umbrella for GPU I/O software (GPUDirect RDMA, GDS, NCCL, NVSHMEM, UCX), launched at SC19 in November 2019 with GDS in early access[^8]. GDS 1.0 followed in 2021 with about a dozen storage partners[^9].
+- **cuFile** is the GDS API that data loaders and checkpoint writers call instead of POSIX.
+- **cuObject** does the same for S3: control stays in S3 calls, payload moves over RDMA; client SDK and object server both need changes[^10].
+- **NIXL** is an open-source (Apache 2.0) point-to-point library that moves KV blocks and tensors between GPU memory, CPU memory and storage via plug-ins including UCX, POSIX, GDS, object, Azure Blob, 3FS, Mooncake and libfabric[^11].
+- **Dynamo** is NVIDIA's open-source inference framework. Its KV Block Manager (KVBM) tiers KV cache across HBM (G1), host DRAM (G2), local SSD (G3) and remote storage (G4), with disk I/O through NIXL, using GDS where available[^12]. Dynamo 1.0 shipped 2026-03-16[^13].
 
-The semiconductor bridge: Magnum IO is the DMA engine and bus fabric, cuFile and NIXL are the driver API, and Dynamo is the memory controller's page policy, deciding what stays in "HBM" and what gets evicted to "flash".
+Semiconductor bridge: Magnum IO is the DMA engine and bus fabric, cuFile and NIXL the driver API, and Dynamo the memory controller's page policy, deciding what stays in "HBM" and what is evicted to "flash".
 
 ## How Everpure approaches it vs. competitors
 

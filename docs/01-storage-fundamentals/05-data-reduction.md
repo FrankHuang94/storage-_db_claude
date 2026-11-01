@@ -5,25 +5,25 @@
 
 ## TL;DR
 
-- **Data reduction lets one physical terabyte hold several logical terabytes.** Four techniques stack. Pattern removal drops zeros and repeated fills. Deduplication stores identical chunks once. Similarity reduction stores near-identical chunks as differences. Compression squeezes redundancy inside a chunk. The data-reduction ratio (DRR) is logical data written divided by physical capacity consumed.
-- **The ratio belongs to the data, not the array.** VDI can reach 12–20:1 and SQL Server databases 2–3:1. JPEGs, encrypted volumes and most AI training data sit near 1:1. A blended ratio is dominated by its least reducible slice.
-- **"Total efficiency" is not data reduction.** Thin provisioning and snapshots save capacity, but counting them can multiply a headline ratio several times with no change in the data. Pure Storage's own datasheet separates ~5:1 average reduction from ~10:1 "total efficiency" that includes thin provisioning[^1].
-- **Guarantees transfer risk, and the fine print sets the price.** Dell (6:1 on PowerStore Gen 3), NetApp (4:1 for SAN), HPE (4:1) and Everpure (a workload-based Right-Size Guarantee) all promise outcomes. Most cover only "reducible data", and most pay out in extra capacity.
-- **AI is the hard case and the new battleground.** Images, tokenized text and BF16 checkpoints barely shrink with generic tools, which erodes flash's effective-cost advantage. Similarity reduction (VAST, Everpure's Purity DeepReduce) and format-aware compression are how vendors are trying to win it back.
+- **Data reduction lets one physical terabyte hold several logical ones.** Four techniques stack: pattern removal (zeros and fills), deduplication (identical chunks stored once), similarity reduction (near-identical chunks stored as differences) and compression. The data-reduction ratio (DRR) is logical data written ÷ physical capacity consumed.
+- **The ratio belongs to the data, not the array.** VDI reaches 12–20:1, SQL Server 2–3:1, and JPEGs, encrypted volumes and most AI data sit near 1:1. The least reducible slice dominates a blend.
+- **"Total efficiency" is not data reduction.** Counting thin provisioning and snapshots multiplies a headline ratio with no change in the data. Pure Storage's own datasheet separates ~5:1 average reduction from ~10:1 "total efficiency" that includes thin provisioning[^1].
+- **Guarantees transfer risk; the fine print sets the price.** Dell (6:1, PowerStore Gen 3), NetApp (4:1 SAN), HPE (4:1) and Everpure (workload-based Right-Size Guarantee) mostly cover "reducible data" only and pay out in capacity.
+- **AI is the hard case and the new battleground.** Images, tokens and BF16 checkpoints barely shrink with generic tools. Similarity reduction (VAST, Everpure's Purity DeepReduce) and format-aware compression are the attempted fixes.
 
 ## Why this matters for Everpure strategy
 
-All-flash arrays beat disk in primary storage partly through data reduction. Raw flash cost several times more per terabyte than disk, and dividing by a 4–5:1 ratio closed much of the gap on a per-effective-terabyte basis. Everpure still quotes FlashArray in effective capacity, and Evergreen//One subscriptions are reportedly metered on effective used capacity [VERIFY: Evergreen//One billing basis in the current service description]. That makes DRR a margin line. When a fleet reduces less than the sizing assumed, someone pays for extra DirectFlash Modules. Under a guarantee or a subscription, that someone is the vendor.
+All-flash arrays beat disk in primary storage partly through data reduction: dividing flash's higher raw $/TB by 4–5:1 closed much of the gap per effective terabyte. Everpure still quotes FlashArray in effective capacity, and Evergreen//One is reportedly metered on effective used capacity [VERIFY: Evergreen//One billing basis in the current service description]. DRR is therefore a margin line. When a fleet reduces less than sizing assumed, someone pays for extra DirectFlash Modules, and under a guarantee or subscription that is the vendor.
 
-AI shifts the mix. Enterprise estates of VMs and databases reduce well, while AI estates of images, tokens and checkpoints do not. In AI deals, raw $/TB, density and power matter more, which is where DirectFlash competes ([Chapter 26](../04-everpure/26-purity-and-directflash.md)). Reduction that works on near-duplicates becomes a differentiator. VAST built its pitch on similarity reduction, and Everpure answered with DeepReduce on FlashBlade in 2026. A strategy team needs to tell which claims are physics and which are accounting.
+AI shifts the mix. VMs and databases reduce well; images, tokens and checkpoints do not. In AI deals raw $/TB, density and power matter more, which is where DirectFlash competes ([Chapter 26](../04-everpure/26-purity-and-directflash.md)), and near-duplicate reduction becomes a differentiator. VAST built its pitch on it; Everpure answered with DeepReduce on FlashBlade in 2026. A strategy team must separate physics from accounting.
 
 ## Core concepts
 
 ### Four techniques, one ratio
 
-**DRR = logical bytes written by hosts ÷ physical bytes consumed**, measured after reduction and before RAID or erasure-coding overhead, which sits elsewhere in the raw-to-effective waterfall ([Chapter 4](04-performance-and-economics-metrics.md)). Savings are 1 − 1/DRR: 2:1 saves 50%, 5:1 saves 80% and 10:1 saves 90%. Returns diminish. Doubling a ratio from 5:1 to 10:1 saves only ten more points of capacity. Always translate a ratio into a percentage before deciding whether a difference matters.
+**DRR = logical bytes written by hosts ÷ physical bytes consumed**, measured after reduction and before RAID or erasure-coding overhead, which sits elsewhere in the raw-to-effective waterfall ([Chapter 4](04-performance-and-economics-metrics.md)). Savings are 1 − 1/DRR: 2:1 saves 50%, 5:1 saves 80% and 10:1 saves 90%. Returns diminish: doubling 5:1 to 10:1 saves only ten more points, so compare percentages, not ratios.
 
-The techniques run from cheapest to most expensive:
+The pipeline runs cheapest first:
 
 ```mermaid
 flowchart LR
@@ -44,7 +44,7 @@ flowchart LR
 
 ### Deduplication: chunk, fingerprint, look up
 
-Deduplication cuts incoming data into chunks, hashes each one into a fingerprint, and checks an index. A hit means the chunk already exists, so the system stores only a pointer and increments a reference count. A miss means the chunk is new, so it is compressed, written and added to the index.
+Deduplication cuts data into chunks, hashes each into a fingerprint and checks an index. A hit stores only a pointer; a miss writes the chunk and indexes it.
 
 ```mermaid
 sequenceDiagram
@@ -69,39 +69,35 @@ sequenceDiagram
 
 *Figure 5.2 — Every write becomes an index lookup, so the speed and size of the fingerprint index, not the hash, set the cost of deduplication.*
 
-**Fixed versus variable chunking.** Fixed chunking cuts at every 4 KB or 8 KB offset. It is cheap and lines up with block addresses, but inserting one byte near the start of a stream shifts every boundary, and nothing matches any more. Content-defined chunking (CDC) slides a rolling hash over the data and cuts wherever the hash hits a chosen pattern, so boundaries move with the content and re-synchronise after an insert. LBFS used Rabin fingerprints for this, and FastCDC's cheaper Gear hash runs 3–12× faster at about the same dedupe ratio[^2]. Backup appliances use CDC because backup streams shift. Primary block arrays mostly use fixed or aligned chunks, because a database overwrites a page in place rather than inserting bytes. Purity on FlashArray is a hybrid: variable 4–32 KB chunks, with duplicates scanned at 512-byte granularity so misaligned copies are still found[^3].
+**Fixed versus variable chunking.** Fixed chunking cuts every 4 KB or 8 KB. It is cheap and aligns with block addresses, but one inserted byte shifts every later boundary and nothing matches. Content-defined chunking (CDC) cuts wherever a rolling hash hits a chosen pattern, so boundaries follow the content and re-synchronise after an insert. LBFS used Rabin fingerprints for this, and FastCDC's cheaper Gear hash runs 3–12× faster at about the same dedupe ratio[^2]. Backup appliances use CDC because backup streams shift; primary arrays mostly use aligned chunks because databases overwrite pages in place. Purity on FlashArray is a hybrid: variable 4–32 KB chunks scanned at 512-byte granularity, which catches misaligned copies[^3].
 
-**The index is the real problem.** A worked example: 1 PB of unique data in 8 KB chunks is 10¹⁵ ÷ 8,192 ≈ 1.2 × 10¹¹ chunks. At roughly 40 bytes per entry (a 32-byte SHA-256 plus an address), the index is about 5 TB, far more DRAM than a controller pair carries. Systems cope in three ways. Data Domain kept a Bloom filter in RAM to answer "definitely new" cheaply, laid chunks out in stream order, and prefetched neighbouring fingerprints together, which removed 99% of index disk accesses[^4]. Many primary arrays keep a partial index and accept that dedupe is best-effort. VAST keeps reduction metadata in shared storage-class memory[^5] ([Chapter 16](../03-system-architecture/16-disaggregated-shared-everything.md)). Larger chunks shrink the index in proportion but find fewer duplicates.
+**The index is the real problem.** 1 PB of unique data in 8 KB chunks is 10¹⁵ ÷ 8,192 ≈ 1.2 × 10¹¹ chunks. At ~40 bytes per entry (32-byte SHA-256 plus address) the index is ~5 TB, far more than a controller pair's DRAM. Data Domain kept a Bloom filter in RAM to answer "definitely new" cheaply, laid chunks out in stream order and prefetched neighbouring fingerprints, removing 99% of index disk accesses[^4]. Many primary arrays keep a partial index and treat dedupe as best-effort. VAST keeps reduction metadata in shared storage-class memory[^5] ([Chapter 16](../03-system-architecture/16-disaggregated-shared-everything.md)). Larger chunks shrink the index but find fewer duplicates.
 
-**Semiconductor bridge.** The fingerprint index is the tag RAM of an enormous cache in which every write is a lookup. The Bloom filter plays the role of a snoop filter: a cheap "not present" answer that spares the expensive tag lookup.
-
-Hash collisions are not a practical risk. For 1.2 × 10¹¹ chunks with a 256-bit hash, the birthday-bound probability is about n² ÷ 2²⁵⁷ ≈ 10⁻⁵⁵. Some systems still byte-compare on a hit, which costs a read.
+**Semiconductor bridge.** The fingerprint index is the tag RAM of a huge cache where every write is a lookup, and the Bloom filter is its snoop filter. Collisions are not a practical risk: for 1.2 × 10¹¹ chunks and a 256-bit hash, n² ÷ 2²⁵⁷ ≈ 10⁻⁵⁵.
 
 ### Compression: redundancy inside the chunk
 
-Lossless compressors in the LZ family replace repeated strings with back-references and then entropy-code the result. The trade-off is speed against ratio. On the standard Silesia benchmark corpus, LZ4 reaches ~2.1:1 while compressing at ~700 MB/s per core, and zstd level 1 reaches ~2.9:1 at ~510 MB/s. Both decompress at more than 1.5 GB/s[^6]. Arrays typically run a fast codec inline and recompress cold data harder in the background, which Purity calls deep reduction[^3]. Offload engines are the analogue of the LDPC block in an SSD controller ([Chapter 3](03-inside-an-ssd.md)): fixed-function logic beats general-purpose cores on throughput per watt.
+LZ-family compressors replace repeated strings with back-references, then entropy-code. Speed trades against ratio: on the Silesia corpus LZ4 reaches ~2.1:1 at ~700 MB/s per core and zstd level 1 ~2.9:1 at ~510 MB/s, both decompressing above 1.5 GB/s[^6]. Arrays run a fast codec inline and recompress cold data in the background (Purity's "deep reduction"[^3]). Offload engines are the analogue of an SSD controller's LDPC block ([Chapter 3](03-inside-an-ssd.md)): fixed-function logic wins on throughput per watt.
 
-Granularity is the subtle trade-off. Compressing 32 KB units yields better ratios than 4 KB units, but a 4 KB random read must then decompress the whole unit, which is read amplification. Compressed output also varies in size, so it cannot be overwritten in place. It has to be packed into log-structured segments and garbage-collected later, which adds to write amplification. That is why compression bolted onto update-in-place designs struggled, and why flash-native systems such as Purity and VAST were log-structured from the start.
+Granularity is the subtle trade-off. 32 KB units compress better than 4 KB units, but a 4 KB random read must decompress the whole unit. Compressed output varies in size, so it is packed into log-structured segments and garbage-collected later, adding write amplification. That is why compression bolted onto update-in-place designs struggled and why Purity and VAST were log-structured from the start.
 
 ### Similarity reduction: storing only the difference
 
-Deduplication needs an exact match, so changing one byte in an 8 KB chunk defeats it. Similarity reduction computes a different, locality-sensitive hash, built so that near-identical blocks collide. The first block with a given hash becomes the reference. Later matches are compressed using the reference as a dictionary, so only the differences are stored[^7]. In VAST's design, data is deduplicated first, and then compression or similarity is applied, whichever saves more. This happens while data migrates from the SCM write buffer to QLC, off the write path[^8]. Because the hash tables live in shared SCM, the scope is the whole cluster[^5].
+One changed byte defeats exact-match deduplication. Similarity reduction uses a locality-sensitive hash so near-identical blocks collide. The first block with a hash becomes the reference; later matches are compressed with it as a dictionary, storing only differences[^7]. VAST dedupes first, then applies compression or similarity, whichever saves more, while data migrates from the SCM buffer to QLC, off the write path[^8]. Hash tables in shared SCM make the scope cluster-wide[^5].
 
-VAST's figures are *company-stated*. It reported ~3:1 across its installed base in 2022[^9] and 8:1 on one quant firm's market data[^5], and a later webinar cited a ~2:1 median[^10]. Everpure's Purity DeepReduce on FlashBlade is also similarity-based, cluster-wide and asynchronous[^11]. It reached FlashBlade in February 2026 and became always-on in October 2026, and Everpure cites a median of about 2:1[^12][^13] [VERIFY: the baseline the 2:1 DeepReduce median is measured against]. The costs are real. Reading a delta block can require reading its reference too, and a reference cannot be freed while anything points to it, which complicates garbage collection.
-
-**Semiconductor bridge.** This is video coding's P-frame idea applied to storage: keep the I-frame, encode the next frames as differences.
+VAST's figures are *company-stated*: ~3:1 across its installed base in 2022[^9], 8:1 on one quant firm's market data[^5], and a ~2:1 median in a later webinar[^10]. Everpure's Purity DeepReduce is also similarity-based, cluster-wide and asynchronous[^11]. It reached FlashBlade in February 2026, became always-on in October, and Everpure cites a ~2:1 median[^12][^13] [VERIFY: the baseline the 2:1 DeepReduce median is measured against]. The costs: reading a delta block may also require its reference, and referenced blocks cannot be freed, which complicates garbage collection. **Semiconductor bridge:** this is video coding's P-frame, encoded as a difference from an I-frame.
 
 ### Inline versus post-process
 
-**Inline** reduction runs before data reaches flash. It writes less NAND, which helps endurance, and needs no landing space, but it puts CPU work in the write path. Under heavy load, some systems defer or skip it, so the ratio can depend on load. **Post-process** reduction lands data raw or lightly compressed and reduces it later. That gives the lowest write latency and allows heavier algorithms, but it needs landing capacity, and the ratio lags behind ingest. Most modern systems are hybrids. They acknowledge from NVRAM, reduce lightly inline and work harder in the background. Purity's deep reduction[^3], ONTAP's inline-plus-background deduplication and its temperature-sensitive efficiency for cold data[^14], and VAST's reduction at migration[^8] all follow this pattern. The useful question is what the ratio looks like during a bulk migration week compared with month three.
+**Inline** reduction runs before data reaches flash: fewer NAND writes, no landing space, but CPU work in the write path, and some systems defer it under load, so the ratio can depend on load. **Post-process** lands data raw or lightly compressed and reduces later: lowest write latency and room for heavier algorithms, but it needs landing capacity and the ratio lags ingest. Most systems are hybrids that acknowledge from NVRAM, reduce lightly inline and work harder in the background. Purity's deep reduction[^3], ONTAP's inline-plus-background deduplication and its temperature-sensitive efficiency for cold data[^14], and VAST's reduction at migration[^8] all follow this pattern. Ask what the ratio is in migration week versus month three.
 
 ### Pattern removal, thin provisioning and the "total efficiency" trick
 
-**Pattern removal** detects all-zero or repeating-pattern blocks and records them as metadata[^3]. It saves real capacity, but a thick-provisioned VM disk or a preallocated database file full of zeros "reduces" without limit, so some reported VM-estate ratios are partly zeros.
+**Pattern removal** records all-zero or repeating-pattern blocks as metadata[^3]. The saving is real, but zero-filled thick VM disks and preallocated database files "reduce" without limit, so some VM-estate ratios are partly zeros.
 
-**Thin provisioning** allocates capacity only when it is written. It avoids buying for empty space, but it is capacity efficiency, not data reduction. Pure Storage's own blog makes that argument with an example: 8 TB written to a 10 TB thin LUN "saves" 20%, while the same 8 TB on a 100 TB LUN "saves" 92%[^15]. Snapshots and clones are metadata copies ([Chapter 6](06-data-protection-and-resilience.md)), and counting each one at full logical size inflates the figure further.
+**Thin provisioning** allocates capacity only on write. That is capacity efficiency, not data reduction, as Pure Storage's own blog argues: 8 TB on a 10 TB thin LUN "saves" 20%, on a 100 TB LUN 92%[^15]. Snapshots and clones are metadata copies ([Chapter 6](06-data-protection-and-resilience.md)); counting each at full logical size inflates further.
 
-Here is a worked example. Hosts write 100 TB that reduces 3:1, leaving 33.3 TB physical. The volumes are provisioned at 400 TB, so "total efficiency" is 400 ÷ 33.3 = 12:1. Add seven daily snapshots, each counted at 100 TB logical, with 1% daily change. That is 7 TB of new writes, or 2.3 TB physical after reduction. The ratio becomes (400 + 700) ÷ 35.6 ≈ 31:1. The data has not changed.
+Worked example: hosts write 100 TB that reduces 3:1, so 33.3 TB physical. Provisioned at 400 TB, "total efficiency" is 400 ÷ 33.3 = 12:1. Add seven daily snapshots counted at 100 TB each, with 1% daily change (7 TB written, 2.3 TB physical): (400 + 700) ÷ 35.6 ≈ 31:1. The data has not changed.
 
 ```mermaid
 xychart-beta
@@ -130,9 +126,9 @@ xychart-beta
 
 *Table 5.1 — Reduction is a property of the data. AI data is near the bottom of the range unless the reduction is format-aware.*
 
-**Blended ratios are harmonic, not arithmetic.** Physical capacity = Σ(logical share ÷ DRR). An estate that is 80% VMs at 6:1 and 20% images at 1:1 needs 0.8/6 + 0.2/1 = 0.333 of its logical size, which is **3:1**, not the 5:1 an average of the ratios suggests. The incompressible slice dominates.
+**Blended ratios are harmonic, not arithmetic.** Physical = Σ(logical share ÷ DRR). An estate of 80% VMs at 6:1 and 20% images at 1:1 needs 0.8/6 + 0.2/1 = 0.333 of its logical size: **3:1**, not the 5:1 an average suggests.
 
-AI has three specific problems. Tokenizers are themselves compressors: raw English text compresses ~1.9:1 with zstd, and packing token IDs alone reaches ~2.25:1[^17], so stored shards have little redundancy left. BF16 weights split evenly between exponent and mantissa bits. A format-aware coder such as ZipNN saves ~33% by exploiting the skewed exponents, which generic codecs largely miss[^18]. The large AI wins happen in the application instead. Check-N-Run's incremental, quantized checkpoints cut capacity 2.5–8× for recommendation models[^19], but that compression is lossy and app-side, and it never shows up in an array's DRR ([Chapter 31](../05-ai-storage/31-training-storage.md)).
+For AI, tokenizers are themselves compressors: raw English text compresses ~1.9:1 with zstd and token-ID packing alone ~2.25:1[^17], so stored shards have little redundancy left. In BF16 weights, half the bits are exponent; a format-aware coder such as ZipNN exploits their skew to save ~33%, beating generic codecs[^18]. The big AI wins sit in the application: Check-N-Run's incremental, quantized checkpoints cut capacity 2.5–8× for recommendation models[^19], but that is lossy, app-side and invisible to array DRR ([Chapter 31](../05-ai-storage/31-training-storage.md)).
 
 ### Interrogating a vendor DRR claim
 
@@ -157,16 +153,16 @@ flowchart TD
 
 The six questions to put to any vendor:
 
-1. **What is in the numerator and the denominator?** Ask whether the ratio counts written data or provisioned capacity, and whether zero-filled, snapshot or clone space is in it.
-2. **Whose data was it measured on?** Ask for the workload, the median rather than the mean, and the 25th-percentile customer.
-3. **How much of my data is already compressed or encrypted?** That share includes backups, media, Parquet, AI shards and host-encrypted volumes.
-4. **Inline or post-process, and how does it behave under load?** Ask what the ratio is in week one of a migration and at 80% utilisation.
-5. **What does the reduction cost?** Ask for latency and throughput with reduction on and off, and how much DRAM or SCM the index needs per petabyte.
-6. **What exactly does the guarantee promise?** Ask about scope ("reducible data"), the measurement point and timing, the remedy (capacity or refund) and the duration.
+1. **What is in the numerator and denominator?** Written or provisioned capacity? Zero-filled, snapshot or clone space?
+2. **Whose data?** Which workload, median not mean, and the 25th-percentile customer.
+3. **How much of mine is already compressed or encrypted?** Backups, media, Parquet, AI shards, host-encrypted volumes.
+4. **Inline or post-process, and under load?** The ratio in migration week one and at 80% utilisation.
+5. **What does reduction cost?** Latency and throughput with it on and off, and index DRAM or SCM per petabyte.
+6. **What does the guarantee promise?** Scope ("reducible data"), measurement point, remedy (capacity or refund) and duration.
 
 ### Worked example: $/effective TB
 
-A buyer needs 1,000 TB of logical data: 400 TB databases, 400 TB VMs, 200 TB AI images and checkpoints. Prices are illustrative.
+A buyer needs 1,000 TB logical: 400 TB databases, 400 TB VMs, 200 TB AI images and checkpoints. Prices are illustrative.
 
 | | Vendor X | Vendor Y |
 |---|---|---|
@@ -180,7 +176,7 @@ A buyer needs 1,000 TB of logical data: 400 TB databases, 400 TB VMs, 200 TB AI 
 
 *Table 5.2 — Illustrative worked example: the headline makes X 20% cheaper, but on this data mix X costs 16% more.*
 
-The guarantee changes the answer. If X's 5:1 guarantee covered the 800 TB of databases and VMs, the shortfall would be 226.7 − 160 = 66.7 TB of free capacity, worth ~$40k at X's price. X would then cost ~$243 per effective TB, level with Y. **A guarantee's scope is worth as much as its ratio.**
+The guarantee changes the answer. If X's 5:1 guarantee covered the 800 TB of databases and VMs, the shortfall (226.7 − 160 = 66.7 TB) would be free capacity worth ~$40k, bringing X to ~$243 per effective TB, level with Y. **A guarantee's scope is worth as much as its ratio.**
 
 ## How Everpure approaches it vs. competitors
 
@@ -195,9 +191,9 @@ The guarantee changes the answer. If X's 5:1 guarantee covered the 800 TB of dat
 
 *Table 5.3 — Everyone reduces data. The real differences are scope (per volume versus global), similarity versus exact matching, and how carefully each guarantee is written.*
 
-**Guarantee mechanics matter more than the headline numbers.** Dell's PowerStore terms exclude host-compressed and host-encrypted data, require deduplication and compression to stay on, and accept a claim only after at least half the physical capacity is written[^26]. HPE's remedy is at its discretion: expertise, capacity or other compensation[^25]. Everpure's approach is the inverse of a fixed-ratio promise. It sizes each customer's workloads and guarantees the effective capacity that results[^20][^27]. For a mixed or AI-heavy estate that is more honest, though it cannot be compared line by line with a 6:1 banner.
+**Guarantee mechanics matter more than headlines.** Dell's PowerStore terms exclude host-compressed and host-encrypted data, require reduction to stay on, and accept claims only once half the physical capacity is written[^26]. HPE's remedy (expertise, capacity or other compensation) is at its discretion[^25]. Everpure inverts the fixed-ratio promise: it sizes each customer's workloads and guarantees the resulting effective capacity[^20][^27]. For mixed or AI-heavy estates that is more honest, though harder to compare with a 6:1 banner.
 
-**Steelman VAST.** Global similarity reduction finds savings that exact-match deduplication misses, and doing it at migration keeps it off the latency path. FlashArray's strength is the reverse: mature inline reduction on block workloads where per-volume ratios are well understood. Everpure's 2026 move to put DeepReduce on FlashBlade concedes that similarity matters for unstructured and AI data. Options a strategy team might evaluate, based on public information: extending similarity reduction to FlashBlade//EXA data nodes, and format-aware codecs for checkpoints and KV cache ([Chapter 42](../06-industry-and-competition/42-vast-data.md), [Chapter 45](../06-industry-and-competition/45-head-to-head.md)).
+**Steelman VAST.** Global similarity finds savings exact-match dedupe misses, and running it at migration keeps it off the latency path. FlashArray's strength is mature inline reduction on well-understood block workloads. Putting DeepReduce on FlashBlade concedes that similarity matters for unstructured and AI data. Options a strategy team might evaluate, based on public information: extending similarity reduction to FlashBlade//EXA data nodes, and format-aware codecs for checkpoints and KV cache ([Chapter 42](../06-industry-and-competition/42-vast-data.md), [Chapter 45](../06-industry-and-competition/45-head-to-head.md)).
 
 ## History and trajectory
 
@@ -214,7 +210,7 @@ timeline
 
 *Figure 5.5 — Reduction moved from backup (2000s) to primary flash (2010s) to unstructured and AI data (2020s), and the guarantees followed it.*
 
-Deduplication grew up in backup, where Data Domain's 2008 paper showed it could run at disk speed[^4]. Flash arrays then made reduction a primary-storage feature, because flash's price per raw TB demanded it. Guarantees followed in 2016 from Pure Storage[^28] and NetApp[^29]. Pure bought StorReduce in 2018 for US$20.5 million to bring deduplication to cloud object storage[^30]. VAST launched in 2019 with similarity reduction[^31]. In 2026 the frontier moved to unstructured and AI data: DeepReduce on FlashBlade[^12], and WEKA adding data reduction in NeuralMesh 6 in July[^32]. The next step is format awareness, meaning codecs that understand floating-point tensors, token streams and KV-cache blocks[^18].
+Deduplication grew up in backup, where Data Domain showed it could run at disk speed[^4]; flash's raw $/TB then made it a primary-storage feature. Guarantees followed in 2016 from Pure Storage[^28] and NetApp[^29]. Pure bought StorReduce in 2018 for US$20.5 million to bring deduplication to cloud object storage[^30]. VAST launched in 2019 with similarity reduction[^31]. In 2026 the frontier moved to unstructured and AI data: DeepReduce on FlashBlade[^12], and WEKA adding data reduction in NeuralMesh 6 in July[^32]. Next is format awareness: codecs that understand tensors, token streams and KV-cache blocks[^18].
 
 ## Numbers that matter
 
@@ -235,38 +231,38 @@ Deduplication grew up in backup, where Data Domain's 2008 paper showed it could 
 
 **Questions for a PM**
 
-1. *"What is the median and 25th-percentile DRR across the fleet for each workload, excluding thin provisioning and snapshots?"* A strong answer gives a telemetry-based distribution by workload and states plainly that the "total efficiency" figure is a different metric.
-2. *"How does the Right-Size Guarantee price AI datasets and checkpoints?"* A strong answer explains how near-1:1 data is carved out, how much shortfall the guarantee has historically paid out, and how that cost is reserved.
-3. *"Where does DeepReduce win against VAST similarity reduction, and where does it lose?"* A strong answer gives ratios on the same datasets and the scope (cluster versus namespace), and is candid about what EXA data nodes lack.
+1. *"What is the median and 25th-percentile DRR across the fleet for each workload, excluding thin provisioning and snapshots?"* Strong: a telemetry distribution by workload, with "total efficiency" called out as a different metric.
+2. *"How does the Right-Size Guarantee price AI datasets and checkpoints?"* Strong: how near-1:1 data is carved out, historical payout, and how that cost is reserved.
+3. *"Where does DeepReduce win against VAST similarity reduction, and where does it lose?"* Strong: ratios on the same datasets, scope, and candour about EXA data nodes.
 
 **Questions for an engineer**
 
-1. *"How big is the dedupe index per petabyte, and where does it live?"* A strong answer gives bytes per entry, its placement in DRAM, NVRAM or flash, and the miss behaviour.
-2. *"Under what load does inline reduction defer, and how fast does post-process catch up?"* A strong answer gives thresholds, a backlog metric and a worst-case landing capacity.
-3. *"What is the read amplification of a 4 KB random read on compressed or similarity-encoded data?"* A strong answer covers the compression unit size, reference-block reads and the cache hit rate.
+1. *"How big is the dedupe index per petabyte, and where does it live?"* Strong: bytes per entry, placement (DRAM, NVRAM, flash) and miss behaviour.
+2. *"Under what load does inline reduction defer, and how fast does post-process catch up?"* Strong: thresholds, a backlog metric, worst-case landing capacity.
+3. *"What is the read amplification of a 4 KB random read on compressed or similarity-encoded data?"* Strong: compression unit size, reference-block reads, cache hit rate.
 
 **Don't say this:**
 
-- "Our arrays get 10:1." Say whether the figure is data reduction or total efficiency, and for which workload.
-- "Dedupe works on AI data." Exact duplicates are rare after curation, and the gains come from similarity or format-aware coding.
-- "A higher ratio is always better." Going from 5:1 to 10:1 saves only 10 more points of capacity, and it may cost latency.
-- "The guarantee covers us." Most guarantees exclude host-compressed and encrypted data, and many pay out only in capacity.
-- "Encryption doesn't affect reduction." Host-side encryption drops reduction to 1:1. Only array-side encryption after reduction preserves it.
+- "Our arrays get 10:1." Say whether that is reduction or total efficiency, and for which workload.
+- "Dedupe works on AI data." Exact duplicates are rare after curation; gains come from similarity or format-aware coding.
+- "Higher ratio is always better." 5:1 to 10:1 saves ten more points and may cost latency.
+- "The guarantee covers us." Most exclude host-compressed and encrypted data and pay only in capacity.
+- "Encryption doesn't affect reduction." Host-side encryption drops it to 1:1; only array-side encryption after reduction preserves it.
 
 ## Going deeper (optional, L3 pointers)
 
-- Zhu, Li and Patterson, FAST '08, on Data Domain's Bloom filter and locality-preserved caching[^4]; Xia et al., USENIX ATC '16, on FastCDC[^2].
-- Colgrove et al., "Purity: Building Fast, Highly-Available Enterprise Flash Storage from Commodity Components," SIGMOD 2015, on the log-structured Purity design.
-- VAST's KB page on data reduction and its similarity blog posts[^8][^7]; the VAST Probe tool estimates similarity savings on your own data.
-- ZipNN (arXiv 2411.05239)[^18] and Check-N-Run (NSDI '22)[^19] on reducing AI models and checkpoints.
+- Data Domain (FAST '08)[^4] and FastCDC[^2] papers on dedupe indexing and chunking.
+- Colgrove et al., SIGMOD 2015, on Purity's log-structured design.
+- VAST's data-reduction KB and similarity posts[^8][^7]; VAST Probe estimates savings on your data.
+- ZipNN[^18] and Check-N-Run[^19] on reducing models and checkpoints.
 
 ## Key terms
 
-- **Data-reduction ratio (DRR)** — logical data written ÷ physical capacity consumed after reduction.
-- **Content-defined chunking** — cutting data where a rolling hash matches, so boundaries follow the content.
-- **Similarity reduction** — storing near-duplicate blocks as deltas against a reference block.
-- **Total efficiency** — a ratio that also counts thin provisioning and snapshots. It is not data reduction.
-- **Right-Size Guarantee** — Everpure's workload-based effective-capacity guarantee.
+- **DRR** — logical written ÷ physical consumed.
+- **Content-defined chunking** — boundaries set by a rolling hash.
+- **Similarity reduction** — near-duplicates stored as deltas.
+- **Total efficiency** — DRR plus thin provisioning and snapshots.
+- **Right-Size Guarantee** — Everpure's workload-based capacity guarantee.
 - See the [glossary](../glossary.md) for the rest.
 
 ## Sources

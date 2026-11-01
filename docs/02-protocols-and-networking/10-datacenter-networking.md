@@ -5,23 +5,23 @@
 
 ## TL;DR
 
-- **In an AI cluster the network is part of the storage system.** Every byte a GPU reads from shared storage crosses a switch fabric. Fabric design, congestion behaviour and NIC offloads decide delivered throughput as much as the array does.
-- **RDMA is DMA stretched across a fabric.** The NIC moves data straight between registered memory regions, with no kernel copies and no remote CPU. That is why NFS over RDMA, NVMe over RoCE and GPUDirect Storage exist.
-- **Ethernet has won the volume argument against InfiniBand.** Dell'Oro reports Ethernet took more than two-thirds of AI back-end switch sales in 2025, up from about 20% two years earlier[^1]. InfiniBand remains the low-jitter incumbent in many of the largest training clusters.
-- **RoCE's weak spot is congestion.** Classic RoCEv2 assumes a lossless fabric, built with PFC pause frames and ECN-driven rate control (DCQCN). Spectrum-X, Ultra Ethernet (UEC 1.0, June 2025) and Meta's 2026 MetaRoCE are all attempts to escape that fragility[^2][^3].
+- **In an AI cluster the network is part of the storage system.** Fabric design, congestion behaviour and NIC offloads decide delivered throughput as much as the array does.
+- **RDMA is DMA stretched across a fabric.** The NIC moves data between registered memory regions with no kernel copies and no remote CPU.
+- **Ethernet has won the volume argument against InfiniBand.** Dell'Oro reports Ethernet took more than two-thirds of AI back-end switch sales in 2025, up from about 20% two years earlier[^1]. InfiniBand still anchors many of the largest training clusters.
+- **RoCE's weak spot is congestion.** Classic RoCEv2 assumes a lossless fabric (PFC pauses plus ECN-driven DCQCN). Spectrum-X, Ultra Ethernet (UEC 1.0, June 2025) and Meta's 2026 MetaRoCE all try to escape that fragility[^2][^3].
 - **The DPU is moving storage logic into the NIC.** NVIDIA's BlueField-4 STX reference architecture (March 2026) runs storage services on an 800G DPU. Everpure is a named co-design partner, alongside nearly every competitor[^4][^5].
 
 ## Why this matters for Everpure strategy
 
-In AI deals, the storage vendor is increasingly a guest at a table NVIDIA sets. The GPU vendor also sells the NIC, the DPU, the switches (Spectrum-X and Quantum InfiniBand) and the reference architectures that say which storage plugs in where. NVIDIA's networking revenue reached a reported US$14.8 billion in the quarter to April 2026, up 199% year on year[^6]. That is bigger than most storage vendors' annual revenue. Storage that performs well on NVIDIA's fabric, and is certified on it, makes the shortlist. Storage that needs special network treatment does not.
+In AI deals, the storage vendor is a guest at a table NVIDIA sets. NVIDIA also sells the NIC, the DPU, the switches and the reference architectures that say which storage plugs in where. NVIDIA's networking revenue reached a reported US$14.8 billion in the quarter to April 2026, up 199% year on year[^6]. Storage that performs well and is certified on NVIDIA's fabric makes the shortlist.
 
-There are three strategic questions. First, does Everpure's Ethernet-only posture (no InfiniBand option on public materials) cost it deals in InfiniBand-built clusters, or save it engineering spend on a shrinking fabric? Second, does BlueField-hosted storage software turn the array controller, where Purity creates value, into a commodity? Third, which network vendors does Everpure align with: NVIDIA, Cisco (where CEO Charles Giancarlo spent 14 years[^7]), Arista, or the UEC camp? [Chapter 11](11-gpu-data-path.md) covers the GPU-side data path and [Chapter 34](../05-ai-storage/34-nvidia-ecosystem.md) covers NVIDIA's certification machinery.
+Three strategic questions follow. Does Everpure's Ethernet-only posture cost it InfiniBand-built clusters, or save engineering spend on a shrinking fabric? Does BlueField-hosted storage software commoditize the array controller, where Purity creates value? And which network camp should Everpure lean toward: NVIDIA, Cisco (where CEO Charles Giancarlo spent 14 years[^7]), Arista, or UEC? See [Chapter 11](11-gpu-data-path.md) for the GPU data path and [Chapter 34](../05-ai-storage/34-nvidia-ecosystem.md) for certifications.
 
 ## Core concepts
 
 ### Three networks, not one
 
-An AI cluster typically runs separate physical fabrics, because their traffic patterns conflict:
+AI clusters typically run separate fabrics because their traffic patterns conflict:
 
 ```mermaid
 flowchart LR
@@ -39,15 +39,15 @@ flowchart LR
 
 *Figure 10.1 — Storage traffic usually rides its own fabric (or a converged front-end), sized at a fraction of the GPU-to-GPU back-end but with nastier traffic patterns.*
 
-- **Front-end (north-south):** user requests, data ingest, management, and in many designs storage as well (a "converged" front-end).
-- **Back-end compute fabric (east-west):** collective operations such as all-reduce between GPUs, usually one NIC per GPU. It is the largest and most expensive network, and the one InfiniBand-versus-Ethernet fights are about.
-- **Storage network:** feeds datasets, absorbs checkpoints and, increasingly, serves KV cache ([Chapter 32](../05-ai-storage/32-inference-and-kv-cache.md)). Meta built a dedicated back-end for training so it could evolve separately from everything else[^8].
+- **Front-end (north-south):** user requests, ingest, management, and in many designs storage too (a "converged" front-end).
+- **Back-end compute fabric (east-west):** GPU collectives such as all-reduce, usually one NIC per GPU. It is the costliest network and the one InfiniBand-versus-Ethernet fights are about. Meta runs a dedicated training back-end so it can evolve independently[^8].
+- **Storage network:** feeds datasets, absorbs checkpoints and increasingly serves KV cache ([Chapter 32](../05-ai-storage/32-inference-and-kv-cache.md)).
 
-**Worked example (illustrative).** Take a 1,024-GPU cluster: 128 nodes of 8 GPUs. If each GPU has an 800G back-end NIC, injection bandwidth is 128 × 8 × 800 Gb/s ≈ 819 Tb/s. If each node has 2 × 400G storage ports, the storage side is 128 × 800 Gb/s ≈ 102 Tb/s (12.8 TB/s), about one-eighth as much. Now checkpoint a 405B-parameter model with optimizer state, roughly 405e9 × 16 bytes ≈ 6.5 TB, in 60 seconds. That needs 108 GB/s ≈ 0.86 Tb/s, under 1% of the client-side storage capacity. The bottleneck is the *storage-side* ports. Even at line rate, 0.86 Tb/s lands on three 400G ports, and in practice 8–16 ports for efficiency and redundancy. Storage traffic is therefore **many-to-few on writes and few-to-many on reads**. That shape, called **incast**, is the defining pathology of storage networks.
+**Worked example (illustrative).** Take a 1,024-GPU cluster: 128 nodes of 8 GPUs. If each GPU has an 800G back-end NIC, injection bandwidth is 128 × 8 × 800 Gb/s ≈ 819 Tb/s. If each node has 2 × 400G storage ports, the storage side is 128 × 800 Gb/s ≈ 102 Tb/s (12.8 TB/s), about one-eighth as much. Now checkpoint a 405B-parameter model with optimizer state, roughly 405e9 × 16 bytes ≈ 6.5 TB, in 60 seconds. That needs 108 GB/s ≈ 0.86 Tb/s, under 1% of the client-side storage capacity. The bottleneck is the *storage-side* ports: 0.86 Tb/s lands on a handful of 400G ports. Storage traffic is therefore **many-to-few on writes and few-to-many on reads**. That shape, called **incast**, is the defining pathology of storage networks.
 
 ### RDMA: DMA across a fabric
 
-A semiconductor reader already knows the idea. Inside a chip, a DMA engine moves a block between memory and a peripheral while the CPU does other work. RDMA (remote direct memory access) gives the NIC a DMA engine whose address space spans the fabric. The application registers a memory region once, and the kernel pins it and hands the NIC the translation. After that, the application posts work requests to a **queue pair** by ringing a doorbell, and the RDMA NIC (RNIC) does the transport in silicon.
+On a chip, a DMA engine moves blocks between memory and a peripheral while the CPU does other work. RDMA (remote direct memory access) gives the NIC a DMA engine whose address space spans the fabric. The application registers a memory region once (the kernel pins it and gives the NIC the translation), then posts work requests to a **queue pair** by ringing a doorbell. The RDMA NIC (RNIC) does the transport in silicon.
 
 ![Side-by-side diagram. Left, kernel TCP/IP: the application buffer is copied by the CPU into a kernel socket buffer, processed by the TCP/IP stack and driver with interrupts, then DMA'd to a simple Ethernet NIC; the remote host repeats this in reverse. Right, RDMA: registered application memory is DMA'd directly by an RDMA NIC that runs the transport in hardware; the kernel is used only for setup, and one-sided reads and writes need no remote CPU.](../assets/diagrams/ch10-rdma-vs-tcp.svg)
 
@@ -55,17 +55,17 @@ A semiconductor reader already knows the idea. Inside a chip, a DMA engine moves
 
 Three properties matter for storage:
 
-1. **Zero-copy.** Data moves from application (or GPU) memory to the wire without a CPU copy.
+1. **Zero-copy.** No CPU copy between application (or GPU) memory and the wire.
 2. **Kernel bypass.** No system call, interrupt or socket per I/O.
-3. **One-sided operations.** An RDMA READ or WRITE completes without the target's CPU running. Disaggregated designs rely on this ([Chapter 16](../03-system-architecture/16-disaggregated-shared-everything.md)): a compute node writes metadata into shared storage-class memory as if it were local.
+3. **One-sided operations.** An RDMA READ or WRITE completes without the target's CPU, which disaggregated designs rely on ([Chapter 16](../03-system-architecture/16-disaggregated-shared-everything.md)).
 
-**Worked example (illustrative arithmetic): why the copy matters at 400G.** A 400 Gb/s port carries 50 GB/s. On kernel TCP receive, the NIC DMAs 50 GB/s into kernel buffers, and the CPU then reads 50 GB/s and writes 50 GB/s to copy into user space. That is ~150 GB/s of DRAM traffic per port. A server socket with 12 channels of DDR5-4800 peaks at 12 × 38.4 ≈ 461 GB/s. Two 400G ports running TCP at line rate would use ~65% of that before the application touches a byte. With RDMA, the same two ports cost ~100 GB/s of DMA. Per-I/O overhead compounds this: at 4 KiB I/Os, 50 GB/s is ~12 million I/Os per second, and at an assumed 2 µs of kernel CPU per I/O that is ~24 busy cores. Some vendors get similar effects without RDMA. WEKA, for example, runs its own user-space stack over DPDK, which maps the NIC directly into its process[^9].
+**Worked example (illustrative arithmetic): why the copy matters at 400G.** A 400 Gb/s port carries 50 GB/s. On kernel TCP receive, the NIC DMAs 50 GB/s into kernel buffers, and the CPU then reads 50 GB/s and writes 50 GB/s to copy into user space. That is ~150 GB/s of DRAM traffic per port. A server socket with 12 channels of DDR5-4800 peaks at 12 × 38.4 ≈ 461 GB/s. Two 400G ports running TCP at line rate would use ~65% of that before the application touches a byte. With RDMA, the same two ports cost ~100 GB/s of DMA. Per-I/O overhead compounds this: at 4 KiB, 50 GB/s is ~12 million I/Os per second; at an assumed 2 µs of kernel CPU each, that is ~24 busy cores. WEKA gets a similar effect without RDMA by running its own user-space stack over DPDK[^9].
 
 The transports differ in what carries the RDMA:
 
-- **InfiniBand:** a purpose-built fabric with its own link layer, credit-based flow control (a sender transmits only when the receiver has buffer) and a central subnet manager.
-- **RoCEv2:** InfiniBand's transport inside UDP/IP packets on ordinary Ethernet, published in 2014. It is routable, so it scales across a datacenter. Meta uses it for most of its AI capacity[^8], and Microsoft reported RDMA carrying around 70% of Azure's traffic[^10].
-- **iWARP** (RDMA over TCP) exists but has lost the market. NVMe/TCP and NFS over TCP remain the "no special network" options ([Chapter 7](07-block-protocols.md)).
+- **InfiniBand:** a purpose-built fabric with credit-based flow control (send only when the receiver has buffer) and a central subnet manager.
+- **RoCEv2 (2014):** InfiniBand's transport inside routable UDP/IP packets on ordinary Ethernet. Meta uses it for most of its AI capacity[^8]; Microsoft reported RDMA carrying ~70% of Azure's traffic[^10].
+- **TCP options:** iWARP has lost the market; NVMe/TCP and NFS over TCP remain the "no special network" choices ([Chapter 7](07-block-protocols.md)).
 
 | Dimension | InfiniBand (NVIDIA Quantum) | Ethernet with RoCEv2 (standard switches) | Ethernet, AI-tuned (Spectrum-X, UEC) |
 |---|---|---|---|
@@ -82,7 +82,7 @@ The transports differ in what carries the RDMA:
 
 ### Congestion control: why "lossless" matters for RoCE
 
-TCP treats a dropped packet as normal: it retransmits and slows down. RDMA NICs were designed for InfiniBand's lossless links. Many RNIC generations recover from loss with **go-back-N**: one dropped packet forces retransmission of everything sent after it. At 400G, a 0.1% drop rate can collapse goodput. So RoCE fabrics are engineered not to drop, with two mechanisms:
+TCP treats a drop as normal. RNICs were designed for InfiniBand's lossless links, and many generations recover with **go-back-N**: one drop forces retransmission of everything sent after it, so even 0.1% loss can collapse goodput. RoCE fabrics are therefore engineered not to drop:
 
 ```mermaid
 sequenceDiagram
@@ -102,18 +102,18 @@ sequenceDiagram
 
 *Figure 10.3 — ECN plus DCQCN is the first, end-to-end brake; PFC is the emergency brake that prevents drops but can freeze whole links.*
 
-- **ECN + DCQCN.** Switches mark packets when queues build. The receiver echoes a congestion notification and the sender's NIC cuts its rate. DCQCN came out of Microsoft and Mellanox (SIGCOMM 2015) and became the default RoCE algorithm[^14].
-- **PFC (Priority Flow Control).** If a queue keeps growing, the switch sends a pause frame upstream for that traffic class. Nothing is dropped, but the paused link also stops unrelated flows. This causes head-of-line blocking, "pause storms" that spread across switches and, in rare topologies, deadlock[^14].
+- **ECN + DCQCN.** Switches mark packets as queues build; the receiver echoes a notification and the sender's NIC cuts its rate. DCQCN (Microsoft and Mellanox, 2015) became the default RoCE algorithm[^14].
+- **PFC (Priority Flow Control).** If a queue keeps growing, the switch sends a pause frame upstream for that traffic class. Nothing drops, but the paused link stops unrelated flows too: head-of-line blocking, congestion spreading and, rarely, deadlock[^14].
 
-**Worked example (illustrative): lossless costs buffer.** After sending PAUSE, a switch must absorb whatever is already in flight. On a 400G link with 100 m of fibre (≈0.5 µs each way), round-trip plus reaction time is about 1 µs. That is 50 GB/s × 1 µs = 50 KB, plus a maximum-size frame in each direction, or about 70 KB of reserved headroom per port per lossless class. A 64-port switch reserves ~4.5 MB just for this, and twice that at 800G. AI switch ASICs have shallow buffers relative to their bandwidth, so every byte of headroom is a byte not available for absorbing incast.
+**Worked example (illustrative): lossless costs buffer.** After sending PAUSE, a switch must absorb whatever is already in flight. On a 400G link with 100 m of fibre (≈0.5 µs each way), round-trip plus reaction time is about 1 µs. That is 50 GB/s × 1 µs = 50 KB, plus a maximum-size frame in each direction, or about 70 KB of reserved headroom per port per lossless class. A 64-port switch reserves ~4.5 MB just for this, and twice that at 800G. In shallow-buffer AI switch ASICs, that is buffer unavailable for absorbing incast.
 
-The industry has three answers. **Tune harder**: Meta found DCQCN hard to tune and leaned on routing and scheduling instead[^8]. **Make the fabric smarter**: NVIDIA's Spectrum-X pairs Spectrum switches with BlueField or ConnectX SuperNICs to spray packets across all paths, reorder them in the NIC and apply telemetry-based rate control. NVIDIA reports storage read bandwidth gains of 20–48% over standard RoCE with DDN, VAST and WEKA[^12]. Everpure reports +25% reads and +23% writes in its own FlashBlade//EXA test, plus better noisy-neighbour isolation than DCQCN[^13]. All of these are vendor-run tests. **Stop needing lossless**: UEC 1.0 (published 11 June 2025) defines a new transport, UET, with per-packet multipathing, out-of-order delivery, and fabrics that can run lossy, with optional link-level retry and credit-based flow control[^2][^11]. Meta's August 2026 MetaRoCE likewise treats Ethernet as lossy, with no PFC[^3] [VERIFY: search-summary only].
+The industry has three answers. **Tune harder**: Meta found DCQCN hard to tune and leaned on routing and scheduling instead[^8]. **Make the fabric smarter**: Spectrum-X pairs NVIDIA switches with SuperNICs that spray packets across all paths, reorder them and apply telemetry-based rate control. NVIDIA reports storage read bandwidth gains of 20–48% over standard RoCE with DDN, VAST and WEKA[^12]. Everpure reports +25% reads and +23% writes in its own FlashBlade//EXA test, plus better noisy-neighbour isolation than DCQCN[^13]. All of these are vendor-run tests. **Stop needing lossless**: UEC 1.0 (published 11 June 2025) defines a new transport, UET, with per-packet multipathing, out-of-order delivery, and fabrics that can run lossy, with optional link-level retry and credit-based flow control[^2][^11]. Meta's August 2026 MetaRoCE likewise treats Ethernet as lossy, with no PFC[^3] [VERIFY: search-summary only].
 
 ### The DPU in the storage path
 
-A **SmartNIC** offloads fixed functions (checksums, RoCE, encryption). A **DPU** adds a general-purpose CPU complex, memory and accelerators, so it can run software such as a storage client, a storage target, a firewall or a hypervisor's I/O path. In chip terms, the DPU is the server's I/O die becoming a separately programmable chiplet.
+A **SmartNIC** offloads fixed functions (checksums, RoCE, encryption). A **DPU** adds a general-purpose CPU complex and memory, so it can run a storage client, a storage target or a firewall. In chip terms, it is the server's I/O die becoming a programmable chiplet.
 
-NVIDIA's line shows the trajectory. BlueField-3 is a 400G part with 16 Arm cores. BlueField-4, announced October 2025 for 2026 availability, combines an 800G ConnectX-9 with a 64-core Grace CPU, which NVIDIA claims is 6× BlueField-3's compute[^15][^16].
+BlueField-3 is a 400G part with 16 Arm cores. BlueField-4, announced October 2025 for 2026, combines an 800G ConnectX-9 with a 64-core Grace CPU, which NVIDIA claims is 6× BlueField-3's compute[^15][^16].
 
 ```mermaid
 flowchart LR
@@ -133,15 +133,15 @@ flowchart LR
 
 DPUs play three storage roles:
 
-1. **Client-side offload.** The DPU terminates NVMe-oF or file protocols and presents storage to the host or GPU, and enforces encryption and tenant isolation. This matters for neoclouds that rent bare metal and cannot trust the tenant's OS.
+1. **Client-side offload.** The DPU terminates storage protocols and enforces encryption and tenant isolation, which matters to neoclouds renting bare metal.
 2. **Target-side controller.** VAST has used BlueField DPUs as the fabric endpoints inside its DBox enclosures since 2022[^17].
 3. **Storage software on the DPU.** At CES 2026, NVIDIA announced a BlueField-4-based context-memory storage tier for KV cache[^18]. At GTC on 16 March 2026 it generalized this into **BlueField-4 STX**, a modular storage reference architecture on Vera Rubin, BlueField-4 and Spectrum-X, whose first rack-scale implementation is the **CMX** context-memory platform[^4]. The named co-design partners are Cloudian, DDN, Dell, Everpure, Hitachi Vantara, HPE, IBM, MinIO, NetApp, Nutanix, VAST and WEKA[^5]. VAST says it will run its CNode software natively on BlueField-4[^19]. Everpure says it is aligning FlashBlade//EXA with STX[^20].
 
-The strategic tension: STX gives NVIDIA the reference controller hardware, so storage vendors compete on software running on NVIDIA silicon. That is good for software-defined players and a challenge for vendors whose differentiation includes their own controller hardware.
+The tension: STX makes NVIDIA the reference controller hardware, so vendors compete on software running on NVIDIA silicon, which favours software-defined players over those differentiated by controller hardware.
 
 ### Link speeds and the SerDes engine underneath
 
-Port speed is lane rate × lane count, and the lane rate is set by SerDes generations. A semis reader will recognize the cadence:
+Port speed is lane rate × lane count, and SerDes generations set the lane rate:
 
 | SerDes class | Lane rate, modulation | 4-lane port | 8-lane port | First IEEE standard |
 |---|---|---|---|---|
@@ -157,7 +157,7 @@ Port speed is lane rate × lane count, and the lane rate is set by SerDes genera
 *Figure 10.5 — Products now ship ahead of standards: NVIDIA's 800G InfiniBand and 1.6T-capable Ethernet silicon arrived before IEEE finished 1.6TbE.*
 Data: `data/ch10_link_speeds.csv`
 
-The 224G generation has arrived in silicon. Quantum-X800 (March 2024) was the first switch on 200G-per-lane SerDes[^25]. Broadcom's Tomahawk 6 (June 2025) and NVIDIA's Spectrum-6 (CES 2026) both reach 102.4 Tb/s per chip[^26][^27]. For storage, 800G client NICs in 2026 mean one GPU server can ingest 100 GB/s per port. That exceeds a whole mid-range array, so arrays must scale out or sit behind a caching tier.
+The 224G generation has arrived in silicon. Quantum-X800 (March 2024) was the first switch on 200G-per-lane SerDes[^25]. Broadcom's Tomahawk 6 (June 2025) and NVIDIA's Spectrum-6 (CES 2026) both reach 102.4 Tb/s per chip[^26][^27]. An 800G client port ingests 100 GB/s, more than a whole mid-range array, so arrays must scale out or sit behind a caching tier.
 
 ## How Everpure approaches it vs. competitors
 
@@ -171,9 +171,9 @@ The 224G generation has arrived in silicon. Quantum-X800 (March 2024) was the fi
 
 *Table 10.3 — Everpure is fully aligned with NVIDIA on Ethernet but, unlike DDN, VAST and WEKA, has no public InfiniBand story.*
 
-**Steelman for Everpure's Ethernet-only stance.** The market is moving its way. Ethernet has passed two-thirds of AI back-end switch sales[^1]. Enterprises and neoclouds outside the very top tier overwhelmingly buy Ethernet. A single fabric family keeps engineering focused. The Cisco relationship gives a route into enterprise AI factories, where Cisco runs the network.
+**Steelman for Everpure's Ethernet-only stance.** The market is moving its way: Ethernet has passed two-thirds of AI back-end switch sales[^1], one fabric family keeps engineering focused, and Cisco offers a route into enterprise AI factories.
 
-**Steelman for the competitors.** In the largest InfiniBand training clusters, DDN, VAST and WEKA can attach natively and Everpure cannot [VERIFY: whether any FlashBlade model offers InfiniBand connectivity]. VAST's head start on BlueField, inside DBoxes since 2022, gives it a natural STX story. Options a strategy team might evaluate, based on public information: whether Purity's metadata and data-reduction engines could run on BlueField-4 as an STX "personality"; how much Spectrum-X certification depth matters versus UEC neutrality as Broadcom-based fabrics grow; and whether a deeper Cisco or Arista alignment hedges against NVIDIA's dual role as partner and reference-architecture gatekeeper.
+**Steelman for the competitors.** In the largest InfiniBand training clusters, DDN, VAST and WEKA can attach natively and Everpure cannot [VERIFY: whether any FlashBlade model offers InfiniBand connectivity]. VAST's BlueField head start (DBoxes since 2022) gives it a natural STX story. Options a strategy team might evaluate, based on public information: whether Purity's metadata and data-reduction engines could run on BlueField-4 as an STX "personality"; how much Spectrum-X certification depth matters versus UEC neutrality as Broadcom-based fabrics grow; and whether a deeper Cisco or Arista alignment hedges against NVIDIA's dual role as partner and reference-architecture gatekeeper.
 
 ## History and trajectory
 
@@ -193,9 +193,9 @@ timeline
 
 *Figure 10.6 — RDMA spent 20 years as an HPC niche, then AI made it the default storage transport, and the argument shifted from "InfiniBand or Ethernet" to "which kind of Ethernet".*
 
-InfiniBand began as a 1999–2000 industry effort to replace PCI and server I/O. It survived in HPC, where Mellanox made it the default. NVIDIA bought Mellanox (announced 2019) and so owns both the leading InfiniBand stack and the leading RNIC line[^35] [VERIFY: deal date and value from NVIDIA release]. The Ultra Ethernet Consortium formed in 2023 under the Linux Foundation so that the rest of the industry could match InfiniBand's behaviour on open Ethernet [VERIFY: UEC founding date]. SNIA's Storage.AI project (August 2025) lists UEC as a partner, which hints that storage protocols will be profiled for UET[^36].
+InfiniBand began around 2000 as an effort to replace server I/O and survived in HPC, where Mellanox made it the default. Buying Mellanox (announced 2019) gave NVIDIA both the leading InfiniBand stack and the leading RNIC line[^35] [VERIFY: deal date and value from NVIDIA release]. The Ultra Ethernet Consortium formed in 2023 under the Linux Foundation to bring InfiniBand-like behaviour to open Ethernet [VERIFY: UEC founding date]. SNIA's Storage.AI project (August 2025) lists UEC as a partner, hinting that storage protocols will be profiled for UET[^36].
 
-Three signals for 2026–2028: (1) **1.6T client ports** on 224G SerDes as 802.3dj completes[^24]; (2) **lossy-tolerant RDMA** (UEC, MetaRoCE) reducing the PFC tuning burden that made RoCE storage fabrics fragile; (3) **storage software moving onto DPUs** via STX, with 2H 2026 hardware[^4].
+Three signals for 2026–2028: (1) **1.6T client ports** on 224G SerDes as 802.3dj completes[^24]; (2) **lossy-tolerant RDMA** (UEC, MetaRoCE) easing PFC tuning; (3) **storage software moving onto DPUs** via STX, with 2H 2026 hardware[^4].
 
 ## Numbers that matter
 
@@ -215,28 +215,28 @@ Three signals for 2026–2028: (1) **1.6T client ports** on 224G SerDes as 802.3
 
 **Questions for a PM**
 
-1. *"In which AI deals do we lose because the customer's fabric is InfiniBand?"* A strong answer quantifies it (count or share of lost opportunities). It knows whether such customers run a separate Ethernet storage network anyway, which is common, and treats InfiniBand as a gateway issue rather than a hard block.
-2. *"What does BlueField-4 STX mean for our controller roadmap: partner, port or compete?"* A strong answer separates the CMX context-memory tier, where Everpure could supply software or the tier behind it, from the full controller role, and has a view on Purity running on Arm/Grace.
-3. *"How much of a FlashBlade//EXA bill of materials is networking, and who supplies it?"* A strong answer gives a percentage and says whether the customer's Spectrum-X or Cisco fabric is reused or Everpure specifies switches.
+1. *"In which AI deals do we lose because the customer's fabric is InfiniBand?"* A strong answer quantifies lost opportunities and knows whether those customers run a separate Ethernet storage network anyway, which is common.
+2. *"What does BlueField-4 STX mean for our controller roadmap: partner, port or compete?"* A strong answer separates the CMX context-memory tier from the full controller role and has a view on Purity running on Arm/Grace.
+3. *"How much of a FlashBlade//EXA bill of materials is networking, and who supplies it?"* A strong answer gives a percentage and says whether the customer's fabric is reused.
 
 **Questions for an engineer**
 
 1. *"Do we require PFC for RoCE, and what happens on a lossy fabric?"* Strong: it names the RNIC's loss-recovery mode (go-back-N or selective repeat), the expected throughput drop at 0.01–0.1% loss, and the ECN and PFC thresholds Everpure recommends.
-2. *"How does a 128-client checkpoint burst behave at our storage-side ports?"* Strong: it quotes incast measurements, buffer behaviour and whether adaptive routing or spraying helps or hurts NFS-over-RDMA ordering.
-3. *"What is our UEC plan?"* Strong: it knows which NIC vendors ship UET, how NFS, NVMe-oF and S3 over RDMA map to it via libfabric, and when a profile might land.
+2. *"How does a 128-client checkpoint burst behave at our storage-side ports?"* Strong: it quotes incast measurements and whether packet spraying helps or hurts NFS-over-RDMA.
+3. *"What is our UEC plan?"* Strong: it knows which NICs ship UET and how NFS, NVMe-oF and S3 over RDMA would map onto it.
 
 **Don't say this:**
 
-- "RDMA is just faster Ethernet." RDMA is a memory-semantics transport; it runs over InfiniBand *or* Ethernet.
+- "RDMA is just faster Ethernet." RDMA is a transport that runs over InfiniBand *or* Ethernet.
 - "InfiniBand is dead." It still anchors many of the largest training clusters and grew strongly in Q2 2025[^1].
 - "Lossless means no congestion." PFC prevents drops by pausing links, which can spread congestion.
 - "800G means 800 GB/s." It is 800 Gb/s, which is 100 GB/s before protocol overhead.
-- "A DPU is a SmartNIC." A DPU runs general-purpose software, a SmartNIC offloads fixed functions, and the distinction is the whole STX argument.
+- "A DPU is a SmartNIC." A DPU runs general-purpose software; that distinction is the whole STX argument.
 
 ## Going deeper (optional, L3 pointers)
 
-- Zhu et al., "Congestion Control for Large-Scale RDMA Deployments" (SIGCOMM 2015): DCQCN's fluid model and buffer-threshold tuning[^14].
-- Gangidi et al., "RDMA over Ethernet for Distributed AI Training at Meta Scale" (SIGCOMM 2024): topology, routing and why DCQCN was hard to tune[^8].
+- Zhu et al., SIGCOMM 2015: DCQCN's fluid model and buffer tuning[^14].
+- Gangidi et al., SIGCOMM 2024: Meta's RoCE topology, routing and DCQCN experience[^8].
 - UEC Specification 1.0 at ultraethernet.org: UET semantic, packet-delivery and congestion-control sublayers.
 - InfiniBand Architecture Specification Vol. 1, Annex A17 (RoCEv2) for the wire format.
 

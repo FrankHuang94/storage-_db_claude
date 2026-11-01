@@ -5,35 +5,35 @@
 
 ## TL;DR
 
-- **S3 is a REST API over HTTP.** You PUT whole objects into a bucket under a key and GET them back. Every request is signed (SigV4) and priced individually. There are no directories, no in-place edits and no locks. That simplicity is why it scales to hundreds of trillions of objects and why every storage vendor now speaks it.
-- **The namespace is flat and LIST is the weak spot.** "Folders" are just key prefixes. Listing is a paged range scan of an index, 1,000 keys at a time, and small objects pay a per-request tax that can exceed the storage bill.
-- **Since December 2020, AWS S3 has been strongly consistent.** A successful PUT is immediately visible to every GET and LIST. Other S3-compatible systems vary, especially across sites, so "S3-compatible" does not mean "same semantics".
-- **S3 has become the default AI data interface.** Lakehouse tables, PyTorch data loaders, checkpoint libraries, MLPerf Storage and KV-cache tiers all target it. AWS is pushing it further with S3 Express One Zone, S3 Tables (Iceberg) and S3 Vectors.
-- **S3 over RDMA removes the last performance excuse.** HTTP keeps the control path while RDMA moves the bytes straight into GPU memory. NVIDIA's cuObject libraries, and adopters such as Cloudian, Dell, HPE, MinIO and IBM, are turning a cloud API into a GPU-fabric protocol.
+- **S3 is a REST API over HTTP.** You PUT whole objects into a bucket under a key and GET them back; every request is signed (SigV4) and priced. No directories, in-place edits or locks: that is why it scales.
+- **The namespace is flat; LIST and small objects are the weak spots.** "Folders" are key prefixes. LIST pages through an index 1,000 keys at a time, and per-request fees can exceed the storage bill.
+- **AWS S3 has been strongly consistent since December 2020.** Other S3-compatible systems vary, especially across sites.
+- **S3 is becoming the default AI data interface.** Lakehouses, data loaders, checkpoint libraries and KV-cache tiers target it, and AWS keeps adding Express One Zone, S3 Tables and S3 Vectors.
+- **S3 over RDMA removes the performance excuse.** HTTP keeps the control path while RDMA moves bytes straight into GPU memory, via NVIDIA's cuObject and adopters such as Cloudian, Dell, HPE, MinIO and IBM.
 
 ## Why this matters for Everpure strategy
 
-For AI buyers, the question has shifted from "file or object?" to "how fast is your S3?". The richest software ecosystem in data, from Spark, Iceberg and Snowflake to PyTorch loaders, now assumes an object API. MLPerf Storage v3.0 (September 2026) added an S3 access layer, and about one-sixth of its submissions used it[^1]. Pure Storage built FlashBlade as unified fast file and object from the start, and in June 2025 it added S3 to FlashArray[^2]. That positions Everpure well for an S3-first world.
+For AI buyers the question is shifting from "file or object?" to "how fast is your S3?". MLPerf Storage v3.0 (September 2026) added an S3 access layer, and about one-sixth of submissions used it[^1]. Pure Storage built FlashBlade as unified fast file and object, and added S3 to FlashArray in June 2025[^2], which suits an S3-first world.
 
-The threat is commoditisation from below and above. Below: once S3 runs over RDMA, object-native vendors (Cloudian, MinIO, HPE X10000, Dell ObjectScale) can compete for GPU-feeding work that used to need a parallel file system. Above: AWS keeps moving functions that storage vendors sell, such as table management, vector search and low-latency tiers, *into* the S3 service itself. The strategic questions are how good Everpure's S3 implementation is (small-object, LIST and RDMA performance), and whether its value sits in the protocol or in the data services behind it. Internal object-store design (placement, erasure coding across sites) is covered in [Chapter 18](../03-system-architecture/18-object-storage-architecture.md).
+The threat is commoditisation from two sides. With RDMA, object-native vendors (Cloudian, MinIO, HPE, Dell) can bid for GPU-feeding work that used to need a parallel file system. Meanwhile AWS pulls table management, vector search and low-latency tiers *into* S3 itself. The questions are how good Everpure's S3 is on small objects, LIST and RDMA, and whether its value lies in the protocol or the data services behind it. Internal object-store design is in [Chapter 18](../03-system-architecture/18-object-storage-architecture.md).
 
 ## Core concepts
 
 ### The model: buckets, keys, whole objects
 
-An object store holds **objects**: a blob of bytes plus metadata (system fields such as size, ETag and checksum, and user-defined `x-amz-meta-*` tags). Objects live in **buckets**, the units of policy, region, billing and versioning. Each object is addressed by a **key**, an arbitrary UTF-8 string up to 1,024 bytes. `s3://training/imagenet/train/n01440764/0001.jpg` *looks* like a path, but the slashes mean nothing to the system. It is a single key in a flat namespace. "Folders" in consoles are a display trick built on listing with a `prefix` and `delimiter`.
+An **object** is a blob of bytes plus metadata (size, ETag, checksum, user tags). Objects live in **buckets**, the unit of policy, region, billing and versioning, and are addressed by a **key** of up to 1,024 bytes. `s3://training/imagenet/train/0001.jpg` *looks* like a path, but the slashes mean nothing: it is one key in a flat namespace, and console "folders" are just listings by prefix.
 
-Three design choices follow, and each differs sharply from a file system ([Chapter 8](08-file-protocols.md)):
+Three choices separate this from a file system ([Chapter 8](08-file-protocols.md)):
 
-1. **Whole-object writes.** A PUT creates or replaces an entire object atomically. You cannot write bytes 4,096–8,191 of an existing object, append (Express One Zone is a narrow exception), or rename cheaply. Renaming a "directory" means copying and deleting every key under it.
-2. **No open/close, no locks, no sessions.** Each HTTP request stands alone. Concurrency control is optimistic. Conditional writes (`If-None-Match: *` to create only if absent, `If-Match: <ETag>` to update only if unchanged) let the first writer win while later ones get `412 Precondition Failed`[^3].
-3. **Metadata is minimal and immutable.** There is no mtime-driven POSIX semantics, no hard links and no permission bits per object, only bucket policies and IAM.
+1. **Whole-object writes.** A PUT atomically creates or replaces an entire object. There is no writing bytes 4,096–8,191 in place and no cheap rename: "renaming a folder" copies and deletes every key under it.
+2. **No sessions or locks.** Each request stands alone. Conditional writes (`If-None-Match: *`, `If-Match: <ETag>`) let the first writer win while later ones get `412 Precondition Failed`[^3].
+3. **Thin metadata.** No POSIX permissions, hard links or mtime semantics; access is governed by bucket policy and IAM.
 
-**Semiconductor bridge: S3 is an FTL at planetary scale.** NAND cannot overwrite a page in place. The FTL writes new data elsewhere, updates a mapping table and garbage-collects the stale page later ([Chapter 3](../01-storage-fundamentals/03-inside-an-ssd.md)). S3 works the same way: an overwrite is a new immutable object version plus a pointer swap in the index, and the old version is reclaimed later. A file system that allows in-place edits is closer to DRAM with byte-addressable writes. Immutability is what lets object stores erasure-code aggressively, cache anywhere and replicate without coherence traffic.
+**Semiconductor bridge: S3 is an FTL at planetary scale.** NAND cannot overwrite a page, so the FTL writes elsewhere, remaps and garbage-collects later ([Chapter 3](../01-storage-fundamentals/03-inside-an-ssd.md)). An S3 overwrite is likewise a new immutable version plus a pointer swap in the index. A file system with in-place edits is closer to byte-addressable DRAM. Immutability is what lets object stores erasure-code aggressively, cache anywhere and replicate without coherence traffic.
 
 ### Anatomy of a PUT
 
-AWS does not publish S3's internals, so the diagram shows the generic pattern most S3 implementations follow (component names are illustrative):
+AWS does not publish S3's internals; this is the generic pattern (component names illustrative):
 
 ```mermaid
 sequenceDiagram
@@ -56,7 +56,7 @@ sequenceDiagram
 
 *Figure 9.1 — A PUT becomes visible only when the index commit lands, after the data is durable; that ordering gives atomic replace and read-after-write consistency.*
 
-**SigV4** is the authentication scheme. The client builds a canonical string from the method, path, selected headers and payload hash. It derives a signing key through a chain of HMAC-SHA256 operations (secret → date → region → service), and sends the resulting signature in the `Authorization` header. The server recomputes the signature. No secret crosses the wire, and a signed request expires after a short window. The cost is CPU: every request needs hashing and HMACs at both ends, which matters at millions of requests per second.
+**SigV4** signs a canonical form of the method, path, headers and payload hash with a key derived by chained HMAC-SHA256 (secret → date → region → service). The server recomputes it, so no secret crosses the wire and requests expire quickly. The price is CPU hashing at both ends on every request.
 
 ### Anatomy of a GET
 
@@ -78,24 +78,24 @@ sequenceDiagram
 
 *Figure 9.2 — Every GET pays an auth check and an index lookup before any data moves, so small reads are dominated by fixed per-request cost.*
 
-**Byte-range GETs** are the main performance lever. A client can split a 1 GB object into 64 parallel 16 MB ranges across many connections. That is how loaders and checkpoint readers reach tens of GB/s from a service where any single HTTP stream manages a few hundred MB/s.
+**Byte-range GETs** are the main lever: split a 1 GB object into 64 parallel 16 MB ranges over many connections, because one HTTP stream runs far below NIC line rate.
 
 ### LIST, prefixes and the small-object tax
 
-Two numbers shape every S3 workload design. First, AWS guarantees *at least* 3,500 PUT/COPY/POST/DELETE and 5,500 GET/HEAD requests per second **per partitioned prefix**. It scales by splitting prefixes behind the scenes and returns `503 Slow Down` while doing so[^4]. Second, requests are billed: in S3 Standard (us-east-1), GETs cost $0.0004 and PUT/COPY/POST/LIST $0.005 per 1,000, against $0.023 per GB-month for the first 50 TB of storage[^5].
+Two numbers shape S3 workload design. AWS supports *at least* 3,500 writes and 5,500 reads per second **per partitioned prefix**, splitting prefixes as load grows and returning `503 Slow Down` meanwhile[^4]. And requests are billed: in S3 Standard (us-east-1), $0.0004 per 1,000 GETs and $0.005 per 1,000 PUTs or LISTs, against $0.023 per GB-month of storage for the first 50 TB[^5].
 
-LIST is a range scan over a sorted key index that returns at most 1,000 keys per call, each call priced like a PUT. Enumerating a 1-billion-object dataset takes 1,000,000 sequential-ish calls (parallelisable only if you know prefix boundaries) and costs 1,000,000 × $0.005 / 1,000 = **$5**. The dollars are trivial. The time is not: at roughly 20 ms per call, a single-threaded walk takes 1e6 × 0.02 s ≈ 5.6 hours. That is why lakehouse formats keep their own manifests rather than listing, and why "the first epoch is slow" is a common complaint.
+LIST is a paged scan of a sorted index, 1,000 keys per call. Enumerating 1 billion objects takes 1,000,000 calls: $5, but at an assumed ~20 ms per call, 5.6 hours single-threaded. That is why lakehouse formats keep their own manifests instead of listing.
 
 ![Two-panel log-scale bar chart. Panel A: GET request cost to read 1 PB once falls from $100,000 at 4 KB objects to $6,250 at 64 KB, $400 at 1 MB, $25 at 16 MB and $1.56 at 256 MB. Panel B: partitioned prefixes needed to read 1 PB in one hour fall from about 12,600 at 4 KB to about 789, 51, 3 and 0.2.](../assets/charts/ch09-small-object-tax.svg)
 
 *Figure 9.3 — Illustrative: at 4 KB per object, request charges and per-prefix limits dominate; at ≥16 MB they vanish, which is why AI datasets are packed into large shards.*
 Data: `data/ch09_small_object_tax.csv`
 
-The write side is worse. Storing 1 PB as 4 KB objects needs 2.5e11 PUTs × $0.005 / 1,000 = **$1.25 million** in request fees. Storing it costs about $21,550 a month (50 TB at $0.023, 450 TB at $0.022, 500 TB at $0.021[^5]). The PUT bill alone equals ~58 months of storage. Hence WebDataset-style tar shards, Parquet row groups and checkpoint files of hundreds of MB.
+Writes are worse. Storing 1 PB as 4 KB objects takes 2.5e11 PUTs × $0.005 / 1,000 = **$1.25 million** in fees, against ~$21,550 a month to store it (tiered $0.023/$0.022/$0.021 per GB[^5]): 58 months of storage. Hence tar shards, Parquet row groups and checkpoint files of hundreds of MB.
 
 ### Multipart upload
 
-Large objects are uploaded in parts. Parts upload in parallel and retry individually, and the object appears atomically at the end:
+Large objects upload as parallel, individually retryable parts that become visible atomically:
 
 ```mermaid
 sequenceDiagram
@@ -120,11 +120,11 @@ sequenceDiagram
 
 *Figure 9.4 — Multipart turns one fragile multi-terabyte stream into thousands of independent, retryable parts committed by a single atomic step.*
 
-Limits: 10,000 parts, each 5 MiB–5 GiB (the last part may be smaller)[^6]. In December 2025 AWS raised the maximum object size from 5 TB to 50 TB[^7]. That is just 10,000 × 5 GiB ≈ 53.7 TB, so it falls straight out of the part limits. A 6.5 TB checkpoint of a 405B-parameter model with optimizer state (405e9 × 16 bytes) needs parts of at least 6.5 TB ÷ 10,000 ≈ 650 MB. Written by 64 parallel streams at 200 MB/s each (12.8 GB/s), it takes about 8.5 minutes. Checkpoint math is in [Chapter 31](../05-ai-storage/31-training-storage.md).
+Limits are 10,000 parts of 5 MiB–5 GiB[^6]; in December 2025 AWS raised the maximum object from 5 TB to 50 TB[^7], which is roughly 10,000 × 5 GiB. A 6.5 TB checkpoint (405B parameters × 16 bytes) therefore needs parts of at least 650 MB; at 64 streams × 200 MB/s it writes in about 8.5 minutes ([Chapter 31](../05-ai-storage/31-training-storage.md)).
 
 ### Consistency models
 
-From 2006 to 2020, S3 offered read-after-write only for brand-new keys. Overwrites, deletes and LIST were *eventually* consistent, so a reader could see stale data for a while[^8]. On 1 December 2020 AWS made every GET, PUT, DELETE and LIST strongly consistent at no extra cost[^9]. Strong consistency removed whole classes of workaround: Netflix-style "S3Guard" metadata tables, and retries in Spark/Hive commit protocols.
+Until 2020, S3 guaranteed read-after-write only for new keys; overwrites, deletes and LIST were *eventually* consistent[^8]. On 1 December 2020 AWS made all of them strongly consistent at no extra cost[^9], retiring workarounds such as Hadoop's S3Guard metadata tables.
 
 | System | Read-after-write (new and overwrite) | LIST after write | Across regions / sites | Caveats |
 |---|---|---|---|---|
@@ -135,35 +135,33 @@ From 2006 to 2020, S3 offered read-after-write only for brand-new keys. Overwrit
 | Ceph RGW | Strong within a zone | Strong within a zone | Multisite is asynchronous and eventual; last writer wins | Non-zero RPO between sites[^12] |
 | MinIO AIStor | Strict read-after-write [VERIFY: current MinIO consistency documentation] | Strict | Site replication asynchronous | Erasure-set quorum writes |
 
-*Table 9.1 — Strong consistency inside one site or region is now standard; across sites almost everyone is asynchronous, so "S3-compatible" claims need checking per deployment.*
+*Table 9.1 — Strong consistency within a site is now standard; across sites almost everyone is asynchronous.*
 
-For L2 purposes: strong consistency means the PUT's index commit (Figure 9.1) is a single linearisation point that every reader sees. Making that true at S3's scale (more than 350 trillion objects and over 100 million requests per second in 2024[^13] [VERIFY: search-summary only]) took a replicated, cache-coherent metadata layer. The theory is in [Chapter 20](../03-system-architecture/20-distributed-systems-fundamentals.md).
+Strong consistency means the index commit in Figure 9.1 is one linearisation point every reader sees. At S3's scale (over 350 trillion objects and 100 million requests per second in 2024[^13] [VERIFY: search-summary only]) that needs a replicated, coherent metadata layer ([Chapter 20](../03-system-architecture/20-distributed-systems-fundamentals.md)).
 
 ### AWS is pulling functions into S3
 
-- **S3 Express One Zone** (November 2023) uses a new "directory bucket" type in a single Availability Zone. AWS says it is up to 10× faster than S3 Standard, with 50% lower request costs[^14]. In April 2025 AWS cut its storage price 31%, PUTs 55% and GETs 85%, taking storage from $0.16 to $0.11 per GB-month in us-east-1[^15]. Its target is consistent single-digit-millisecond latency, the gap that used to push AI scratch data to file systems. The trade-off is one-AZ durability.
-- **S3 Tables** (December 2024) are table buckets that store Apache Iceberg tables with managed compaction. That moves lakehouse maintenance, once a Databricks/Snowflake/vendor function, into the storage service[^16].
-- **S3 Vectors** entered preview on 15 July 2025 and reached GA in December 2025. It supports 2 billion vectors per index and up to 20 trillion per bucket, and AWS claims up to 90% lower cost than dedicated vector databases[^17]. See [Chapter 33](../05-ai-storage/33-rag-vector-lakehouse.md).
+- **S3 Express One Zone** (November 2023): single-AZ "directory buckets", up to 10× faster than S3 Standard with 50% lower request cost (AWS-stated)[^14], aiming at single-digit-millisecond latency. April 2025 cuts took storage from $0.16 to $0.11 per GB-month and GETs down 85%[^15]. The trade-off is one-AZ durability.
+- **S3 Tables** (December 2024): managed Apache Iceberg tables with automatic compaction, moving lakehouse upkeep into the storage service[^16].
+- **S3 Vectors** (preview July 2025, GA December 2025): 2 billion vectors per index, 20 trillion per bucket, up to 90% cheaper than dedicated vector databases (AWS-stated)[^17]; see [Chapter 33](../05-ai-storage/33-rag-vector-lakehouse.md).
 
 ### Why S3 became the AI data interface
 
-Four forces converged. **Lakehouses**: Iceberg, Delta and Hudi tables are Parquet files plus manifests in object storage, so analytics and feature pipelines speak S3 natively. **Data loaders**: PyTorch S3 connectors, WebDataset and streaming-dataset libraries read sharded objects directly, without mounting a file system. **Checkpoint libraries**: distributed-checkpoint writers emit many large files, the natural fit for parallel multipart PUTs. **Inference**: NVIDIA Dynamo's KV Block Manager treats remote object storage as its fourth cache tier (G4), behind HBM, DRAM and local SSD[^18], and CoreWeave's AI Object Storage puts a cache/proxy (LOTA) on every GPU node, claiming up to 7 GB/s per GPU (company-stated)[^19].
-
-The appeal is economic as much as technical. One API works on every cloud, neocloud and on-prem system, with no client kernel modules and with IAM-style security. What was missing was latency and per-node bandwidth for GPU feeding. That is the gap RDMA addresses.
+Four forces converged. **Lakehouses**: Iceberg, Delta and Hudi tables are Parquet files plus manifests in object storage. **Data loaders**: PyTorch S3 connectors and WebDataset-style libraries stream shards without mounting anything. **Checkpoint libraries**: distributed checkpoints are large files, ideal for parallel multipart PUTs. **Inference**: NVIDIA Dynamo's KV Block Manager uses remote object storage as its fourth cache tier after HBM, DRAM and local SSD[^18], and CoreWeave puts an object cache (LOTA) on every GPU node, claiming up to 7 GB/s per GPU (company-stated)[^19]. One API runs on every cloud, neocloud and on-prem system with no client kernel modules. What was missing was GPU-feeding bandwidth.
 
 ### S3 over RDMA
 
-Classic S3 pushes every byte through TCP, TLS, HTTP parsing and at least one host-memory bounce before it reaches GPU memory. Both CPUs touch every byte, so per-node throughput hits a CPU and DRAM-bandwidth wall long before a 400 GbE link saturates. S3 over RDMA splits the request in two:
+Classic S3 pushes every byte through TCP, TLS, HTTP parsing and a host-memory bounce, so both CPUs touch every byte and throughput hits a CPU and DRAM wall before a 400 GbE link fills. S3 over RDMA splits the request in two:
 
 ![Two-panel diagram. Top: classic S3 GET where bytes move from flash through the server's gateway and kernel TCP stack, across Ethernet, into the client's kernel socket buffers, a host DRAM user buffer and finally GPU memory, with CPU copies at each step. Bottom: S3 with RDMA, where a signed HTTP GET carrying an RDMA token travels on a dashed control path, while the storage server's RDMA NIC moves the object bytes over RoCE or InfiniBand directly into registered GPU memory via GPUDirect RDMA.](../assets/diagrams/ch09-s3-rdma-path.svg)
 
 *Figure 9.5 — S3 over RDMA keeps HTTP for authentication and metadata but hands bulk bytes to the NICs, removing the CPU and bounce-buffer copies from the data path.*
 
-The client registers a GPU or host buffer and encodes it as a token in a custom header (`x-amz-rdma-token`) on an otherwise normal, SigV4-signed S3 request. The server authenticates and looks up metadata as usual, then its RDMA NIC reads (PUT) or writes (GET) the registered buffer directly over RoCEv2 or InfiniBand. The HTTP reply only confirms completion[^20]. Clients without RDMA fall back to plain HTTP bodies in some implementations[^20]. Others, such as MinIO, return an explicit `x-amz-rdma-reply: 501` instead[^21]. This is the PIO-versus-DMA distinction from chip design: the CPU issues a descriptor and the DMA engine moves the payload. The same idea underlies GPUDirect Storage for files ([Chapter 11](11-gpu-data-path.md)).
+The client registers a GPU or host buffer and puts a token describing it in a header (`x-amz-rdma-token`) of a normal SigV4-signed request. The server authenticates and looks up metadata as usual, then moves the bytes to or from that buffer by RDMA over RoCEv2 or InfiniBand; the HTTP reply just confirms completion[^20]. Some servers fall back to HTTP bodies for non-RDMA clients[^20]; MinIO instead returns `x-amz-rdma-reply: 501`[^21]. It is PIO versus DMA: the CPU issues a descriptor, the DMA engine moves the payload, as in GPUDirect Storage for files ([Chapter 11](11-gpu-data-path.md)).
 
-**Who is doing it.** MinIO shipped S3 over RDMA in AIStor in November 2024[^22], and Cloudian demonstrated GPUDirect for object the same month, claiming >200 GB/s[^23]. NVIDIA then productised the pattern as "RDMA for S3-compatible storage" (the cuObject client and server libraries). Cloudian (HyperStore), Dell (ObjectScale) and HPE (Alletra Storage MP X10000) were named as adopters[^24] [VERIFY: NVIDIA announcement date, reported as November 2025]. The cuObject v1.0.0 release notes are dated January 2026[^25], and NVIDIA said in autumn 2026 that the libraries were generally available and that it was working with Google Cloud and Microsoft to standardise the approach through an industry group (xio-sig)[^26]. IBM added S3 with RDMA to Storage Scale in June 2026[^27]. Dell's ObjectScale 4.3 uses cuObject[^28]. An open-source gateway (Versity) ships both cuObject and an experimental AMD/ROCm equivalent[^20]. Vendor figures are illustrative, not comparable: Cloudian claims 35 GB/s per node with a 90% CPU reduction[^29]. MinIO reports a 16 GiB checkpoint loading in 0.65 s over RDMA versus 12.16 s over tuned HTTP[^30].
+**Who is doing it.** MinIO shipped S3 over RDMA in November 2024[^22], and Cloudian showed GPUDirect for object the same month (>200 GB/s claimed)[^23]. NVIDIA productised the pattern as "RDMA for S3-compatible storage" (cuObject libraries), naming Cloudian, Dell and HPE as adopters[^24] [VERIFY: NVIDIA announcement date, reported as November 2025]. cuObject 1.0 release notes date from January 2026[^25]; by autumn 2026 NVIDIA called the libraries generally available and was working with Google Cloud and Microsoft on standardisation (xio-sig)[^26]. IBM Storage Scale (June 2026)[^27], Dell ObjectScale 4.3[^28] and the open-source Versity gateway, which also has an experimental AMD variant[^20], followed. Vendor numbers are not comparable: Cloudian claims 35 GB/s per node and 90% lower CPU[^29]; MinIO reports a 16 GiB checkpoint loading in 0.65 s versus 12.16 s over tuned HTTP[^30].
 
-The caveat is fragmentation. Headers and semantics are vendor and library conventions, not part of AWS's S3 API, and AWS itself does not offer RDMA to S3. "S3 over RDMA" is today an on-prem and neocloud protocol for GPU fabrics.
+The caveat is fragmentation: these headers are ecosystem conventions, not AWS's API, and AWS does not offer RDMA to S3. For now it is an on-prem and neocloud GPU-fabric protocol.
 
 ## How Everpure approaches it vs. competitors
 
@@ -178,9 +176,9 @@ The caveat is fragmentation. Headers and semantics are vendor and library conven
 | MinIO AIStor | Software-defined object | Yes, since Nov 2024[^22] | Strong in DIY / neocloud; licence changes in 2025 |
 | AWS S3 / Express One Zone | The reference API | No | Pulls tables, vectors, low latency into the service[^14][^16][^17] |
 
-*Table 9.2 — Object protocol support is universal; differentiation is moving to RDMA data paths, small-object and LIST performance, and data services above the API.*
+*Table 9.2 — Everyone speaks S3; differentiation is moving to RDMA, small-object and LIST performance, and data services.*
 
-The steelman for object-native vendors is that they were built for S3 semantics from day one. With RDMA they no longer concede GPU-feeding throughput to file systems, and they usually cost less per TB. The steelman for unified platforms like FlashBlade and VAST is that AI pipelines mix file (POSIX tools, legacy HPC code) and object (lakehouse, loaders) over the *same* data. Copying between silos is expensive, and one platform with both protocols avoids it. Pure Storage's public read of re:Invent 2025 framed AWS's S3 moves as validation that enterprise AI is converging on object[^35]. Options a strategy team might evaluate, based on public information: whether to lead with FlashBlade S3-over-RDMA benchmarks (MLPerf Storage now has an S3 path[^1]), whether S3 Tables/Vectors-style services belong on-prem, and how to position against HPE and Dell, which bundle object with NVIDIA certifications.
+Steelman for object-native vendors: built for S3 semantics from day one, now with RDMA throughput, usually cheaper per TB. Steelman for unified platforms (FlashBlade, VAST): AI pipelines mix POSIX tools and object-native lakehouses over the *same* data, and copying between silos is costly. Everpure's own read of re:Invent 2025 treated AWS's S3 moves as evidence that enterprise AI is converging on object[^35]. Options a strategy team might evaluate, based on public information: publishing FlashBlade S3-over-RDMA results (MLPerf Storage now has an S3 path[^1]), on-prem equivalents of S3 Tables/Vectors, and positioning against HPE and Dell bundles with NVIDIA certification.
 
 ## History and trajectory
 
@@ -195,9 +193,9 @@ timeline
     2026 : cuObject 1.0 then GA : IBM Storage Scale S3 with RDMA : MLPerf Storage v3.0 adds S3
 ```
 
-*Figure 9.6 — In two decades S3 went from a web-backup API to the interface AI frameworks target first, and in 2024–2026 it gained a GPU-native data path.*
+*Figure 9.6 — S3 went from web-backup API to the interface AI frameworks target first, and gained a GPU-native data path in 2024–2026.*
 
-S3 launched in March 2006. By its 15th birthday in 2021 it held over 100 trillion objects[^36]. Its API became a de facto standard because AWS never licensed it: every vendor cloned it, and compatibility test suites rather than a standards body define "S3-compatible". Three signals point forward. The data path is going native to GPUs (RDMA, cuObject standardisation). Google's zonal Rapid Storage uses a stateful gRPC protocol rather than plain HTTP, aiming to cut per-request overhead[^37]. And the service is absorbing higher-level functions (tables, vectors). Expect the battleground to shift from "do you support S3?" to latency per small GET, LIST rate and what runs *inside* the bucket.
+S3 launched in March 2006 and held over 100 trillion objects by 2021[^36]. Its API became a de facto standard without a standards body: vendors cloned it, and compatibility is defined by test suites. Forward signals: GPU-native data paths (cuObject standardisation), Google's zonal Rapid Storage replacing plain HTTP with a stateful gRPC protocol[^37], and S3 absorbing tables and vectors. The contest is moving from "do you support S3?" to small-GET latency, LIST rate and what runs *inside* the bucket.
 
 ## Numbers that matter
 
@@ -217,40 +215,33 @@ S3 launched in March 2006. By its 15th birthday in 2021 it held over 100 trillio
 
 **Questions for a PM**
 
-1. *"When a neocloud asks for S3 over RDMA, what do we ship, on which FlashBlade models, and with which client libraries?"* A strong answer names GA status, cuObject (or other) compatibility, supported NICs and a measured GB/s per node, not just "we support RDMA".
-2. *"How do we win against an object-native vendor that now has RDMA and a lower $/TB?"* A strong answer goes beyond "we're faster". It cites unified file and object on the same data, small-object and LIST performance, data reduction and operational simplicity, with a deal example.
-3. *"Which AWS S3 features (conditional writes, Express-style low latency, Iceberg tables, vectors) do customers ask us to match on-prem?"* A strong answer prioritises by deal impact and admits the gaps.
+1. *"When a neocloud asks for S3 over RDMA, what do we ship, on which FlashBlade models, with which client libraries?"* Strong: GA status, cuObject compatibility, supported NICs and measured GB/s per node.
+2. *"How do we beat an object-native vendor with RDMA and lower $/TB?"* Strong: unified file and object on the same data, small-object and LIST performance, data reduction, with a deal example.
+3. *"Which AWS S3 features do customers want on-prem: conditional writes, low latency, Iceberg tables, vectors?"* Strong: prioritised by deal impact, gaps admitted.
 
 **Questions for an engineer**
 
-1. *"What is our LIST rate on a 1-billion-key bucket, and how does it scale with prefix count?"* Strong: keys per second, and where the index lives (flash-resident metadata, sharding).
-2. *"Where is the linearisation point for a PUT, and what does a reader on another node see mid-upload?"* Strong: it describes the index commit and atomic multipart completion, and how conditional writes are enforced.
-3. *"In S3 over RDMA, who initiates the transfer, how is the token secured, and what happens to SigV4 and TLS?"* Strong: auth stays on HTTP. The token is scoped and expiring, the payload is not TLS-encrypted on the fabric, and the answer says how that is mitigated.
+1. *"What is our LIST rate on a 1-billion-key bucket, and how does it scale?"* Strong: keys per second and how the index is sharded.
+2. *"Where is a PUT's linearisation point, and what does another reader see mid-upload?"* Strong: index commit, atomic multipart completion, conditional-write enforcement.
+3. *"In S3 over RDMA, how is the token secured and what happens to TLS?"* Strong: auth stays on HTTP, tokens are scoped and expiring, and the answer explains how an unencrypted fabric payload is mitigated.
 
 **Don't say this:**
 
-- "S3 is slow, cold storage." Express One Zone targets single-digit ms, and RDMA-attached on-prem S3 feeds GPUs at tens of GB/s per node.
-- "S3 is eventually consistent." That has not been true for AWS since December 2020. Ask about *cross-site* consistency instead.
-- "Object storage has folders." It has key prefixes, and renaming one copies every object.
-- "S3-compatible means identical." Consistency, conditional writes, multipart limits and RDMA headers vary by implementation.
-- "S3 over RDMA is an AWS feature." It is an NVIDIA and vendor ecosystem for on-prem and neocloud GPU fabrics.
+- "S3 is slow, cold storage." Express One Zone targets single-digit ms; RDMA-attached S3 feeds GPUs at tens of GB/s per node.
+- "S3 is eventually consistent." Not on AWS since December 2020; ask about *cross-site* consistency.
+- "Object storage has folders." It has prefixes; renaming one copies every object.
+- "S3-compatible means identical." Consistency, limits and RDMA headers vary.
+- "S3 over RDMA is an AWS feature." It is an NVIDIA and vendor ecosystem for on-prem GPU fabrics.
 
 ## Going deeper (optional, L3 pointers)
 
-- AWS S3 User Guide: SigV4 signing process, conditional writes, multipart limits and performance design patterns.
-- NVIDIA cuObject documentation and release notes (client/server libraries, Dynamic Connected transport).
-- Versity Gateway wiki, "S3-RDMA": an open-source server-side implementation including AMD's hipObject variant.
-- Apache Iceberg specification (manifest lists vs LIST-based discovery). Google's posts on the Colossus stateful protocol for Rapid Storage.
+- AWS S3 User Guide: SigV4, conditional writes, multipart limits, performance patterns.
+- NVIDIA cuObject docs; the Versity gateway "S3-RDMA" wiki (open-source server, AMD hipObject variant).
+- Apache Iceberg spec (manifests vs LIST discovery).
 
 ## Key terms
 
-- **Object / bucket / key** — immutable blob plus metadata; policy container; flat-namespace name.
-- **SigV4** — AWS's HMAC-based request-signing scheme.
-- **Multipart upload** — parallel, retryable parts committed atomically.
-- **Partitioned prefix** — the unit S3 scales request rates by.
-- **Conditional write** — a PUT that succeeds only if an ETag or absence precondition holds.
-- **S3 over RDMA / cuObject** — HTTP control path plus RDMA data path into registered GPU/host memory.
-- See the [glossary](../glossary.md) for the rest.
+- **Object, bucket, key**, **SigV4**, **multipart upload**, **partitioned prefix**, **conditional write**, **S3 over RDMA**, **cuObject**. Definitions in the [glossary](../glossary.md).
 
 ## Sources
 
