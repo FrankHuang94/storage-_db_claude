@@ -76,11 +76,11 @@ Data: `data/ch21_small_file_throughput.csv`
 
 ### Checkpoint metadata storms
 
-PyTorch Distributed Checkpoint writes at least one file per rank plus a `.metadata` file[^4]. A 16,384-GPU job creates 16,384 files in one directory within about a second; on one metadata server they serialize on the directory lock, and one-file-per-tensor mode multiplies the count. Closing costs too: 3FS notes that a striped file's exact length must be queried from storage at close[^5]. Bandwidth for a 405B model's ~6.5 TB checkpoint is the headline ([Chapter 31](../05-ai-storage/31-training-storage.md)); the create burst decides whether the first second is wasted.
+PyTorch Distributed Checkpoint writes at least one file per rank plus a `.metadata` file[^4]. A 16,384-GPU job creates 16,384 files in one directory almost simultaneously; on one metadata server they serialize on the directory lock, and one-file-per-tensor mode multiplies the count. Closing costs too: 3FS notes that a striped file's exact length must be queried from storage at close[^5]. Bandwidth for a 405B model's ~6.5 TB checkpoint is the headline ([Chapter 31](../05-ai-storage/31-training-storage.md)); the create burst decides whether the first second is wasted.
 
 ### Why `ls` on a billion files is hard
 
-`ls -l` reads directory entries in batches, stats each, then sorts in client memory. Serially, at ~100 µs per round trip, 10⁹ stats take 10⁵ s, about 28 hours. At 1 million stats/s in parallel it is ~17 minutes, and sorting 10⁹ names of ~50 bytes needs ~50 GB of client RAM. The fix is to scan the metadata store in parallel, not walk the tree. In 2011 IBM's GPFS, with metadata on flash, scanned 10 billion files in 43 minutes, versus 1 billion in about three hours on disk in 2007[^6]. Single servers hit memory walls first: an HDFS NameNode spends ~150 bytes of heap per file, directory or block[^7], so a billion files needs ~300 GB.
+`ls -l` reads directory entries in batches, stats each, then sorts in client memory. Serially, at ~100 µs per round trip, 10⁹ stats take 10⁵ s, about 28 hours. At 1 million stats/s in parallel it is ~17 minutes, and sorting 10⁹ names of ~50 bytes needs ~50 GB of client RAM. The fix is to scan the metadata store in parallel, not walk the tree. In 2011 IBM's GPFS, with metadata on flash, scanned 10 billion files in 43 minutes, versus 1 billion in about three hours on disk in 2007[^6]. Single servers hit memory walls first: an HDFS NameNode spends ~150 bytes of heap per file, directory or block[^7], so a billion single-block files need ~300 GB.
 
 ### Log-structured designs
 
