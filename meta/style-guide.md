@@ -6,6 +6,7 @@
 - No marketing fluff, no superlatives without numbers, no cheerleading for any vendor **including Everpure**. Steelman competitors.
 - Default depth **L2** (mechanism + trade-offs). L3 only in "Going deeper".
 - Use **semiconductor bridges** ("the FTL is to an SSD what a memory controller's address mapping + wear leveling is to DRAM/NAND…", "metadata servers are the tag RAM of a file system").
+- Ticker: Everpure trades as **NYSE: P** since 2026-04-17 (PSTG before). Write "NYSE: P (formerly PSTG)" on first mention in a chapter where it matters.
 - Use "Everpure" for the company from Feb 2026 onward and "Pure Storage" when describing earlier history (e.g., "Pure Storage (now Everpure) IPO'd in 2015"). Product names keep their official names (FlashArray, FlashBlade, Purity, DirectFlash, Evergreen, Portworx, Pure1, Fusion) unless sources show they were renamed.
 - Strategy content = *"options a strategy team might evaluate, based on public information."* Never speculate about non-public plans.
 

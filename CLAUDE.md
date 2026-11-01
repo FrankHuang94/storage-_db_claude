@@ -1,6 +1,6 @@
 # CLAUDE.md — Everpure Tech Atlas
 
-This repository is the **Everpure Tech Atlas**: a ≥100,000-word, visual-heavy knowledge base on storage and AI storage. It is written for a corporate development / strategy professional (CFA, MBA, legal background, semiconductor M&A experience) joining Strategy & Corporate Development at **Everpure** (formerly Pure Storage, renamed February 2026, NYSE: PSTG). The reader knows chips, NAND basics, datacenter economics and deal work. They do not know storage systems, protocols or storage software in depth.
+This repository is the **Everpure Tech Atlas**: a ≥100,000-word, visual-heavy knowledge base on storage and AI storage. It is written for a corporate development / strategy professional (CFA, MBA, legal background, semiconductor M&A experience) joining Strategy & Corporate Development at **Everpure** (formerly Pure Storage, renamed February 2026; NYSE ticker PSTG until 2026-04-16, **P** from 2026-04-17 — see `meta/decisions.md` D12). The reader knows chips, NAND basics, datacenter economics and deal work. They do not know storage systems, protocols or storage software in depth.
 
 **Goal:** let the reader hold credible, efficient conversations with Everpure product managers, engineering leaders and the Office of the CTO, by understanding *how things work, why the trade-offs exist, and what they mean strategically*.
 
