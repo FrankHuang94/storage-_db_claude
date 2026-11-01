@@ -56,7 +56,7 @@ The industry is standardising this layer. Snowflake's Open Semantic Interchange 
 
 **MCP** defines how an AI application (the *host*, with an MCP *client*) discovers and calls an MCP *server* that exposes **tools** (actions), **resources** (readable data) and **prompts**. Messages are JSON-RPC[^7]. MCP replaces an M × N mesh of custom connectors[^8]: a storage vendor writes one server and every compliant agent can use it.
 
-Two points matter for strategy. First, MCP is a **control and query plane, not a data plane**. An agent asking for "contracts with change-of-control clauses" gets references and snippets; training-scale bytes still move over S3, NFS or GPUDirect ([Chapter 11](../02-protocols-and-networking/11-gpu-data-path.md)). Second, MCP pushes security onto the server. The 2025-11-25 specification treats MCP servers as OAuth resource servers. It forbids passing the client's token through to upstream APIs and warns of **confused-deputy** attacks, in which a server with broad privileges is tricked into acting for a caller who lacks them[^9]. An MCP server in front of a petabyte array is a privileged deputy by design.
+MCP is a **control and query plane, not a data plane**: an agent asking for "contracts with change-of-control clauses" gets references and snippets; training-scale bytes still move over S3, NFS or GPUDirect ([Chapter 11](../02-protocols-and-networking/11-gpu-data-path.md)). It also pushes security onto the server. The 2025-11-25 specification treats MCP servers as OAuth resource servers, forbids passing the client's token through to upstream APIs, and warns of **confused-deputy** attacks, in which a server with broad privileges is tricked into acting for a caller who lacks them[^9]. An MCP server in front of an array is a privileged deputy by design.
 
 ### Why agents create new access patterns
 
@@ -97,15 +97,15 @@ A human works serially; an agent splits a task into parallel sub-queries, retrie
 
 ### Governance becomes a runtime requirement
 
-The EU AI Act (Regulation 2024/1689) entered into force on 1 August 2024. Its prohibitions applied from 2 February 2025 and general-purpose AI model obligations from 2 August 2025[^11]. For high-risk systems, defined by use case (hiring, credit, critical infrastructure and others), not by whether an agent is involved, Article 10 requires governed, relevant and representative training data. Article 12 requires automatic event logging, and providers and deployers must keep logs for at least six months[^11]. The Digital Omnibus on AI (Regulation 2026/1744, in force 27 July 2026) moved the high-risk deadlines to 2 December 2027 for Annex III systems and 2 August 2028 for systems embedded in regulated products. Prohibitions and GPAI rules were not delayed[^12]. Fines reach €35 million or 7% of worldwide turnover for prohibited practices[^11].
+The EU AI Act (Regulation 2024/1689) entered into force on 1 August 2024. Its prohibitions applied from 2 February 2025 and general-purpose AI model obligations from 2 August 2025[^11]. For high-risk systems, defined by use case (hiring, credit, critical infrastructure), not by whether an agent is involved, Article 10 requires governed, representative training data and Article 12 automatic event logging, with logs kept at least six months[^11]. The Digital Omnibus on AI (Regulation 2026/1744, in force 27 July 2026) moved high-risk deadlines to 2 December 2027 (Annex III) and 2 August 2028 (embedded in regulated products), without delaying prohibitions or GPAI rules[^12]. Fines reach €35 million or 7% of worldwide turnover for prohibited practices[^11].
 
 Gartner predicted in June 2025 that over 40% of agentic AI projects would be cancelled by the end of 2027, citing cost, unclear value and weak risk controls[^13]: governance decides whether agents reach production.
 
 ### Can storage vendors own this layer?
 
-**The storage-vendor case:** the array holds the inventory and sits on the write path, so it can classify on ingest or from snapshots without weekly crawls. It can enforce policy where the bytes live, including immutable snapshots for undoing what an agent did. 
+**The storage-vendor case:** the array holds the inventory and sits on the write path, so it can classify on ingest or from snapshots without weekly crawls. It can enforce policy where the bytes live, and immutable snapshots can undo what an agent did.
 
-**The data and security-vendor case:** enterprises hold data on many vendors' storage, in SaaS and in public cloud. A governance layer covering one vendor's arrays is a partial answer, and the buyer (CDO or CISO) is not the storage buyer. Catalog and DSPM vendors are neutral by construction and already integrated with identity systems. The deciding variable is coverage of *other people's* data. That is why NetApp's September 2026 move to index any NFS, SMB or S3 store[^14] and Dell's claim that its orchestration engine works beyond Dell storage[^15] matter more than their feature lists.
+**The data and security-vendor case:** data sits on many vendors' storage, in SaaS and in cloud, so one vendor's governance is partial; the buyer (CDO or CISO) is not the storage buyer; and catalog and DSPM vendors are neutral and already wired to identity systems. Coverage of *other people's* data decides it, which is why NetApp's September 2026 move to index any NFS, SMB or S3 store[^14] and Dell's claim that its orchestration engine works beyond Dell storage[^15] matter more than their feature lists.
 
 ## How Everpure approaches it vs. competitors
 
