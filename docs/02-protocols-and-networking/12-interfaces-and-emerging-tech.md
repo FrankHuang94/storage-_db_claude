@@ -8,7 +8,7 @@
 - **PCIe doubles every generation; the drive link is rarely the bottleneck.** A PCIe 6.0 x4 link carries ~29.5 GB/s each way, so in shared storage the network and software set throughput.
 - **CXL turns PCIe wires into a load/store memory bus.** Expanders ship; pooling is starting; multi-host sharing is still in labs.
 - **EDSFF replaced the 2.5-inch drive in hyperscale and AI servers,** fixing watts and NAND per bay. Everpure's proprietary DirectFlash Module (DFM) sidesteps some of those limits.
-- **FDP is commodity flash catching up with host-managed flash.** It cuts write amplification without breaking software; Purity has managed raw NAND since 2017.
+- **FDP is commodity flash catching up with host-managed flash.** It cuts write amplification without breaking software; Purity has managed raw NAND directly since DirectFlash launched.
 - **Optane is the case study for any new memory tier:** good physics, but a thin price gap, a CPU-locked ecosystem and one fab. CXL memory and KV-cache tiers face the same tests.
 
 ## Why this matters for Everpure strategy
@@ -30,7 +30,7 @@ Data: `data/ch12_pcie_bandwidth.csv`
 
 Per direction, bandwidth = lanes × rate × encoding efficiency ÷ 8. PCIe 6.0 x4 gives 32 GB/s raw, ~29.5 GB/s after flit overhead. Micron's 9650, the first Gen6 data-centre SSD in mass production, reads at 28 GB/s[^8].
 
-**The consequence is counter-intuitive.** A 2U server with 24 such drives holds about 24 × 29.5 ≈ 708 GB/s of drive bandwidth. Its two 400 GbE ports carry about 100 GB/s. In an array, the network ([Chapter 10](10-datacenter-networking.md)), CPUs and software bind long before the drive link. Faster links matter most for GPU-local NVMe holding checkpoints and KV cache ([Chapter 11](11-gpu-data-path.md)).
+**The consequence is counter-intuitive.** A 2U server with 24 such drives holds 24 × 29.5 ≈ 708 GB/s of drive bandwidth; two 400 GbE ports carry ~100 GB/s. In an array, the network ([Chapter 10](10-datacenter-networking.md)), CPUs and software bind long before the drive link. Faster links matter most for GPU-local NVMe holding checkpoints and KV cache ([Chapter 11](11-gpu-data-path.md)).
 
 ### PCIe 6.0 one notch deeper: PAM4 and FLIT
 
@@ -50,11 +50,7 @@ Forward error correction (FEC) needs fixed-size blocks, so PCIe 6.0 introduced t
 
 ### CXL: memory semantics over PCIe wires
 
-Compute Express Link runs three protocols on the PCIe PHY[^11]: **CXL.io** (ordinary PCIe), **CXL.cache** (a device coherently caches host memory) and **CXL.mem** (the host loads and stores device memory). They combine into three device types:
-
-- **Type 1** (io + cache): a SmartNIC or accelerator that caches host memory.
-- **Type 2** (all three): an accelerator whose own memory joins the coherent space.
-- **Type 3** (io + mem): a memory expander, meaning a controller plus DRAM.
+Compute Express Link runs three protocols on the PCIe PHY[^11]: **CXL.io** (ordinary PCIe), **CXL.cache** (a device coherently caches host memory) and **CXL.mem** (the host loads and stores device memory). **Type 1** devices (io + cache) are caching SmartNICs; **Type 2** (all three) are accelerators whose memory joins the coherent space; **Type 3** (io + mem) are memory expanders.
 
 **CXL.mem for the semis reader.** The host's home agent sends 64-byte cache-line reads and writes, and the device returns data or completions. The device's DRAM is mapped into physical address space as *host-managed device memory* (HDM), usually exposed as a CPU-less NUMA node that software reaches with plain loads and stores. Passive expanders are host-coherent (HDM-H). CXL 3.0 added **back-invalidate** (HDM-DB). The device keeps a snoop filter and can recall lines from host caches, which is what lets several hosts share one region coherently[^12]. Microsoft's Pond team measured direct-attached CXL memory at roughly 70–90 ns over local DRAM. That is a NUMA-hop penalty, not a storage one, and switches add more[^13].
 
@@ -107,7 +103,7 @@ SNIA's EDSFF family replaced the 2.5-inch U.2 shape with ones designed for airfl
 
 Two constraints bind at the top end. First, **controller DRAM**: a conventional SSD's flash translation layer keeps ~4 bytes of map per 4 KiB page, i.e. 1 GB of DRAM per TB, or ~245 GB for a 245 TB drive. Big QLC drives therefore map in coarser units, and small random writes pay in read-modify-write amplification. Second, the standard's **power and volume per bay**.
 
-Everpure's **DirectFlash Module** escapes both because it is not an SSD. Purity runs one global FTL and treats modules as raw NAND, so no drive-sized DRAM map is needed, and Everpure sets the module's shape and thermals ([Chapter 26](../04-everpure/26-purity-and-directflash.md)). DFMs reached 300 TB by 2026[^25], on a roadmap first set in 2023[^26], while the largest standard drives ship at 245.76 TB. The price: only Purity can drive a DFM. Meanwhile the standard moves: in July 2025 the SFF TA reopened the E1/E3 power and thermal specs, with Micron leading the work[^27].
+Everpure's **DirectFlash Module** escapes both because it is not an SSD. Purity runs one global FTL and treats modules as raw NAND, so no drive-sized DRAM map is needed, and Everpure sets the module's shape and thermals ([Chapter 26](../04-everpure/26-purity-and-directflash.md)). DFMs reached 300 TB by 2026[^25], on a roadmap first set in 2023[^26], while the largest standard drives ship at 245.76 TB. The price: only Purity can drive a DFM. Meanwhile, in July 2025 the SFF TA reopened the E1/E3 power and thermal specs[^27].
 
 ### Data placement: ZNS, FDP and host-managed flash
 
@@ -135,7 +131,7 @@ flowchart TB
 
 *Figure 12.3 — ZNS and FDP move placement knowledge from drive to host by degrees; host-managed flash such as DirectFlash moves all of it.*
 
-**ZNS** [VERIFY: NVMe ZNS ratification, ~2020] exposes zones that must be written sequentially. Every file system and database must become zone-aware, so adoption stayed niche. **FDP** (NVMe TP4146, ratified late 2022) was driven by Meta and Google with Samsung. Writes carry a placement identifier, and the drive keeps identifiers in separate reclaim units. A drive that ignores the hints still works[^28][^29]. That backward compatibility is why hyperscalers chose FDP.
+**ZNS** [VERIFY: NVMe ZNS ratification, ~2020] exposes zones that must be written sequentially. Software must become zone-aware, so adoption stayed niche. **FDP** (NVMe TP4146, ratified late 2022) was driven by Meta and Google with Samsung. Writes carry a placement identifier, and the drive keeps identifiers in separate reclaim units. A drive that ignores the hints still works[^28][^29], which is why hyperscalers chose FDP.
 
 **Semis bridge.** ZNS is a software-managed scratchpad; FDP is a hardware cache with hints, like non-temporal stores; DirectFlash is one memory controller managing every bank. For Everpure, FDP gives commodity SSDs much of DirectFlash's WAF benefit while keeping drives multi-sourced.
 
@@ -148,7 +144,7 @@ Computational storage puts FPGAs or Arm cores in the drive to filter, compress o
 3. **Procurement.** Drive buyers pay for $/TB and reliability, not lock-in features.
 4. **Compute moved up.** Controllers, DPUs and GPUs took the offload; NVIDIA's BlueField-4 context-memory platform is computational storage at system level[^30].
 
-Near-data compute wins when it is invisible to software and sees whole objects: in the array or DPU, not the drive.
+Near-data compute wins in the array or DPU, where whole objects are visible, not in the drive.
 
 ### Optane: the lessons for any new memory tier
 
@@ -166,7 +162,7 @@ timeline
 
 *Figure 12.4 — Optane went from launch to wind-down in about seven years; storage vendors that had a second source survived it.*
 
-The 2015–2021 milestones above come from background knowledge [VERIFY: Optane milestone dates]. The July 2022 wind-down and the US$559 million charge are documented[^31][^32]. Optane was technically strong but failed three non-technical tests:
+The July 2022 wind-down and US$559 million charge are documented[^31][^32]; earlier milestones are from background knowledge [VERIFY: Optane milestone dates 2015–2021]. Optane failed three non-technical tests:
 
 1. **Price gap.** Too dear against NAND, too slow against DRAM, while NAND $/GB kept falling.
 2. **Ecosystem.** The DIMMs needed Intel Xeons, and full value needed software rewritten for persistent memory, which few applications did.
@@ -174,9 +170,9 @@ The 2015–2021 milestones above come from background knowledge [VERIFY: Optane 
 
 **What this implies for CXL memory and KV-cache tiers.**
 
-- **Price gap.** CXL memory is DRAM, so it cannot be the *cheap* tier, only the *bigger* one. Flash has a wide and durable gap below DRAM. TrendForce attributes part of 4Q26 enterprise SSD demand to hyperscalers buying QLC for KV cache[^34]. Synopsys claims CXL is 3.6× faster than SSDs for KV offload[^35]. The relevant measure is cost per token, not speed.
+- **Price gap.** CXL memory is DRAM: a *bigger* tier, not a *cheap* one. Flash keeps a wide gap below DRAM, and TrendForce links part of 4Q26 SSD demand to hyperscalers buying QLC for KV cache[^34]. Synopsys claims CXL offloads KV 3.6× faster than SSDs[^35]; the test is cost per token.
 - **Ecosystem.** CXL runs on Intel and AMD, an improvement. KV-cache frameworks (Dynamo, KVBM, LMCache) are this cycle's persistent-memory rewrite: the tier is only as useful as the software driving it.
-- **Single supplier.** The risk has moved from the media to the platform. NVIDIA's BlueField-4 platform sets the reference design for the KV tier[^30]. Every storage vendor's KV product, PureKVA included[^36], depends on fitting NVIDIA's stack.
+- **Single supplier.** The risk moved from media to platform: NVIDIA's BlueField-4 design sets the KV-tier reference[^30], and every vendor's KV product, PureKVA included[^36], must fit it.
 
 ## How Everpure approaches it vs. competitors
 
@@ -194,7 +190,7 @@ The 2015–2021 milestones above come from background knowledge [VERIFY: Optane 
 
 ## History and trajectory
 
-NVMe flash arrays, DirectFlash included, grew up on PCIe 3.0; GPUs then pulled the 2017–2025 sprint. Optane rose and fell in that window, and Intel redirected its memory-tier ambitions to CXL[^32]. CXL itself went from direct attach (1.x), to switching and pooling (2.0), to fabrics and sharing (3.x) [VERIFY: CXL 1.0–3.1 release dates], and reached 4.0 in November 2025[^14]. FDP displaced ZNS at hyperscale after 2022.
+NVMe flash arrays, DirectFlash included, grew up on PCIe 3.0; GPUs then pulled the 2017–2025 sprint. Optane rose and fell in that window, and Intel redirected its memory-tier ambitions to CXL[^32]. CXL went from direct attach (1.x) to pooling (2.0) and fabrics/sharing (3.x) [VERIFY: CXL 1.0–3.1 release dates], reaching 4.0 in November 2025[^14]. FDP displaced ZNS at hyperscale after 2022.
 
 Watch through 2027: Gen6 platform volume, CXL 3.x switches leaving sampling, a bigger E3 power envelope, 512 TB standard drives, and KV tiers converging on NVIDIA's interfaces ([Chapter 53](../07-history-and-future/53-future-trends.md)).
 
