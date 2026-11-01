@@ -5,9 +5,9 @@
 
 ## TL;DR
 
-- **Consumers paid for flash's learning curve.** Cameras, music players and phones funded NAND's scale from the mid-2000s. Enterprise arrays inherited a cost curve they did not pay to build. NAND fell from roughly $45/GB in 2005 to about 2¢/GB at the 2023 trough, around 35% a year.
+- **Consumers paid for flash's learning curve.** Music players and phones funded NAND's scale from the mid-2000s; enterprise arrays inherited the curve. NAND fell from roughly $45/GB in 2005 to about 2¢/GB at the 2023 trough, around 35% a year.
 - **The cost levers ran out one after another.** Lithography carried the 2000s. Bits per cell (SLC→MLC→TLC→QLC) gave 50%, then 33%, then 25% cuts in cost per bit. 3D layers took over after Samsung's 24-layer V-NAND in 2013, and each new layer step now adds fewer bits per wafer and costs more capex.
-- **Flash never beat nearline disk on raw $/TB.** It beat *performance* disk (15K/10K RPM) on *effective* $/GB between about 2011 and 2015, because inline data reduction is cheap on flash and costly on disk. Latency, consistency, power and simpler operations then made all-flash the default for primary storage.
+- **Flash never beat nearline disk on raw $/TB.** It beat *performance* disk (15K/10K RPM) on *effective* $/GB between about 2011 and 2015, because inline data reduction is cheap on flash and costly on disk. Latency, power and simpler operations did the rest.
 - **NAND consolidated by changing owners, not by exits.** Intel's fabs went to SK hynix (Solidigm), Toshiba's went to a Bain group (Kioxia), and SanDisk went to WD and was spun out again in 2025. DRAM consolidated through bankruptcies, to three players with ~88% of revenue. NAND still has five large suppliers, which partly explains its harsher cycles.
 - **The cycle is a bit-growth-versus-wafer story.** Booms bring capex, then supply overshoots and prices fall below cash cost (2008, 2012, 2018–19, 2022–23). The 2025–26 AI surge took spot NAND prices up roughly 13–15× from the 2023 trough. Suppliers are adding layers, not wafers.
 
@@ -69,7 +69,7 @@ Cost per bit = wafer cost ÷ (good dies per wafer × bits per die). Every era of
 
 *Table 52.1 — Each extra bit per cell buys a smaller cost cut (1 − n/(n+1)) and costs more in speed and endurance, so bits per cell is a diminishing lever. Ideal figures ignore extra ECC and spare area.*
 
-**Layers (2013 onward).** Toshiba announced its BiCS 3D concept in June 2007[^23], but Samsung reached mass production first, with 24-layer, 128 Gb V-NAND on 6 August 2013[^24]. Leading layer counts reached 321 (SK hynix, November 2024)[^25] and 400+ (Samsung V10, 2026)[^26]. Applied Materials' analysis shows why layers are no free lunch. Going from 32 to 64 layers roughly doubled bits per wafer, but 96 to 128 layers added only ~33%. Meanwhile the greenfield cost per 3D NAND wafer start rose from ~1.5× planar to ~2.2× by 2021[^27]. Layer steps also need far more deposition and etch time per wafer.
+**Layers (2013 onward).** Toshiba announced its BiCS 3D concept in June 2007[^23], but Samsung reached mass production first, with 24-layer, 128 Gb V-NAND on 6 August 2013[^24]. Leading counts reached 321 (SK hynix, 2024)[^25] and 400+ (Samsung V10, 2026)[^26]. Layers are no free lunch. Going from 32 to 64 layers roughly doubled bits per wafer, but 96 to 128 layers added only ~33%. Meanwhile the greenfield cost per 3D NAND wafer start rose from ~1.5× planar to ~2.2× by 2021[^27]. Layer steps also need far more deposition and etch time per wafer.
 
 **Wafers.** Whatever the layers do not deliver, new fabs must. That makes the fourth lever the cyclical one.
 
@@ -123,7 +123,7 @@ Intel left with good technology because cyclical NAND was non-core inside a logi
 
 ### The enterprise inflection: raw versus effective $/GB
 
-The enterprise question was never "flash versus disk" in general. It was flash versus the *performance* disk that served databases and VMs: 10K and 15K RPM drives that were short-stroked, over-provisioned for IOPS and priced per usable GB.
+The real contest was flash versus *performance* disk: 10K and 15K RPM drives, short-stroked and over-provisioned for IOPS.
 
 | Year | Flash claim or market price | Disk comparator | Raw or effective? | Source type |
 |---|---|---|---|---|
@@ -139,16 +139,16 @@ Data reduction was the decisive asymmetry. Deduplication turns sequential reads 
 
 ### Why all-flash won primary storage, and disk kept the bulk tier
 
-A worked example shows the economics. Delivering 100,000 random IOPS from 15K drives at ~200 IOPS each takes ~500 spindles. At 600 GB each that is ~300 TB raw to serve perhaps 20–30 TB of hot data, plus the power, rack space and failure rate of 500 motors. A single shelf of SSDs does the same with headroom. The other advantages compound:
+An illustrative worked example: delivering 100,000 random IOPS from 15K drives at ~200 IOPS each takes ~500 spindles. At 600 GB each that is ~300 TB raw to serve perhaps 20–30 TB of hot data, plus the power, rack space and failure rate of 500 motors. A single shelf of SSDs does the same with headroom. The other advantages compound:
 
-- **Latency and consistency.** ~100 µs reads instead of 5–8 ms seeks. More important, tail latency no longer depends on queue depth and head position, so database and VDI performance became predictable.
+- **Latency and consistency.** ~100 µs reads instead of 5–8 ms seeks. Tail latency stopped depending on head position, so database and VDI performance became predictable.
 - **Power and density.** Fewer, denser devices. Today's 245 TB QLC drive rates at ~8.2 TB/W against ~4.4 TB/W for a 44 TB HDD (vendor comparison)[^61].
-- **Operational simplicity.** No short-stroking, no tiering policies and no hot-spot tuning, which cut the storage-admin labour that disk arrays consumed.
-- **Reduction economics.** As above, flash made dedupe and compression safe to run inline.
+- **Operational simplicity.** No short-stroking, tiering policies or hot-spot tuning.
+- **Reduction economics.** Inline dedupe and compression became safe to run.
 
-The 15K drive died first; ServeTheHome called Seagate's 15K.6 the likely final 15K series [VERIFY: article date][^62]. By 1Q26 all-flash arrays were 52.6% of IDC's external enterprise storage revenue, the first time above half[^63]. That is a reminder of how long hybrid arrays lasted.
+The 15K drive died first; ServeTheHome called Seagate's 15K.6 the likely final 15K series [VERIFY: article date][^62]. By 1Q26 all-flash arrays were 52.6% of IDC's external enterprise storage revenue, the first time above half[^63].
 
-Nearline disk survived because its competitor is not latency but raw $/TB at exabyte scale. Backup, archive and hyperscale bulk data reduce less or are already deduplicated upstream. At a 10–20× raw premium, power and density savings rarely close the gap. Coughlin estimates over 85% of data-centre data still sits on HDD [VERIFY: sponsored source][^64]. [Chapter 2](../01-storage-fundamentals/02-media-physics.md) has the media-level curves.
+Nearline disk survived because it competes on raw $/TB at exabyte scale, not latency. Backup, archive and hyperscale bulk data reduce less or are already deduplicated upstream. At a 10–20× raw premium, power and density savings rarely close the gap. Coughlin estimates over 85% of data-centre data still sits on HDD [VERIFY: sponsored source][^64]. [Chapter 2](../01-storage-fundamentals/02-media-physics.md) has the media-level curves.
 
 ## How Everpure approaches it vs. competitors
 
@@ -161,11 +161,11 @@ Nearline disk survived because its competitor is not latency but raw $/TB at exa
 
 *Table 52.4 — Where a company sits in this stack decides whether a NAND spike is a windfall, a pass-through or a margin squeeze.*
 
-The steelman for commodity-SSD vendors is that, in a shortage, the SSD makers' allocation and multi-sourcing matter more than FTL efficiency. Options a strategy team might evaluate, based on public information: long-term supply agreements or prepayments of the kind Apple used in 2005; whether the hyperscaler licensing model (customer buys the NAND) should extend to more segments while prices are high; and how much a structurally wider flash premium slows HDD-replacement deals.
+The steelman for commodity-SSD vendors: in a shortage, allocation and multi-sourcing matter more than FTL efficiency. Options a strategy team might evaluate, based on public information: long-term supply agreements or prepayments of the kind Apple used in 2005; whether the hyperscaler licensing model (customer buys the NAND) should extend to more segments while prices are high; and how much a structurally wider flash premium slows HDD-replacement deals.
 
 ## History and trajectory
 
-The long-run lesson is that NAND cost declines resume after every spike, but not on a fixed schedule. Signals to watch: whether suppliers convert 2026 profits into new wafer starts (the classic precursor to a bust) or keep migrating layers only. Kioxia/Sandisk's 332-layer BiCS10 out-densities Samsung's 400+-layer part, so density beats layer count[^68]. PLC remains research[^22]. Standard SSDs have reached 245 TB[^61], and Sandisk has shown a 512 TB roadmap for 2027[^69]. Consolidation is not over either. A Kioxia–Sandisk combination failed once, and Solidigm's integration into SK hynix finished only in March 2025[^51]. [Chapter 53](53-future-trends.md) takes up the 2026–2032 outlook.
+NAND cost declines have resumed after every spike, but not on a fixed schedule. The signal to watch is whether suppliers turn 2026 profits into new wafer starts, the classic precursor to a bust. Kioxia/Sandisk's 332-layer BiCS10 out-densities Samsung's 400+-layer part, so density beats layer count[^68]. PLC remains research[^22]. Standard SSDs have reached 245 TB[^61], and Sandisk has shown a 512 TB roadmap for 2027[^69]. Consolidation is not over: Kioxia and WD's flash unit (now Sandisk) failed to merge in 2023[^46]. [Chapter 53](53-future-trends.md) takes up the 2026–2032 outlook.
 
 ## Numbers that matter
 
@@ -186,15 +186,15 @@ The long-run lesson is that NAND cost declines resume after every spike, but not
 
 **Questions for a PM**
 
-1. *"In past NAND spikes, how long did it take for array pricing to catch up, and what is different with Evergreen subscriptions?"* Strong: separates list-price moves from contracted subscription pricing, gives a lag in quarters, and names which product lines absorb cost versus pass it through.
+1. *"In past NAND spikes, how long did it take for array pricing to catch up, and what is different with Evergreen subscriptions?"* Strong: separates list prices from contracted subscriptions, gives a lag in quarters, and names which lines absorb cost.
 2. *"Against nearline disk at an 18× raw premium, which workloads still convert, and on what effective ratio?"* Strong: names reduction ratios by data type (AI data reduces poorly) and a power or space constraint that makes the TCO case, not "flash is cheaper".
-3. *"If NAND suppliers overbuild in 2027–28 as they did after 2017, how do we turn cheaper bits into share?"* Strong: capacity-tier products, bigger DFMs and pricing per effective TB, with a view on how fast competitors' SSD costs follow.
+3. *"If NAND suppliers overbuild in 2027–28 as they did after 2017, how do we turn cheaper bits into share?"* Strong: capacity-tier products, bigger DFMs and per-effective-TB pricing, plus how fast rivals' SSD costs follow.
 
 **Questions for an engineer**
 
-1. *"What does each bits-per-cell step cost you in write path design, and is PLC worth it at a 20% bit gain?"* Strong: quantifies endurance and program-time penalties against the 20% and describes how the system-level FTL hides them.
+1. *"What does each bits-per-cell step cost you in write path design, and is PLC worth it at a 20% bit gain?"* Strong: weighs endurance and program-time penalties against the 20% and explains how the system FTL hides them.
 2. *"How do you compare suppliers' generations: layers, Gb/mm² or $/GB at module level?"* Strong: density, yield and module-level cost, with layer count dismissed as a proxy.
-3. *"How much raw NAND per effective TB do you save versus a commodity-SSD array, and where does it come from?"* Strong: splits the gain into over-provisioning, write amplification and reduction, with numbers per workload.
+3. *"How much raw NAND per effective TB do you save versus a commodity-SSD array, and where does it come from?"* Strong: splits the gain into over-provisioning, write amplification and reduction, per workload.
 
 **Don't say this:**
 
