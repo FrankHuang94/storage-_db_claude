@@ -20,18 +20,18 @@ NAME = "ch51-cost-per-gb"
 COLORS = {"HDD": "#0072B2", "Flash": "#D55E00"}
 LABEL_OFFSETS = {
     "IBM 350 RAMAC": (8, -4),
-    "IBM 3380 mainframe DASD": (-30, 10),
+    "IBM 3380 mainframe DASD": (-125, 0),
     "Small-system disk drives (approx.)": (8, 4),
-    "IBM 3380 (RAID paper Table I)": (-118, 6),
+    "IBM 3380 (RAID paper Table I)": (-158, -12),
     "Conners CP3100 PC disk (RAID paper Table I)": (8, -14),
-    "Lowest retail price (PriceWatch)": (-40, -16),
+    "Lowest retail price (PriceWatch)": (-112, 6),
     "SunDisk 20 MB flash drive for IBM": (8, 4),
     "Intel X25-M 80 GB SSD": (-120, 4),
-    "MLC NAND contract price (component)": (-150, -16),
-    "Median consumer SSD": (8, 6),
-    "Enterprise SSD (market)": (-120, 6),
-    "30 TB TLC enterprise SSD (VDURA index)": (-150, 10),
-    "30 TB nearline HDD (VDURA index)": (-150, 8),
+    "MLC NAND contract price (component)": (8, -13),
+    "Median consumer SSD": (-30, 14),
+    "Enterprise SSD (market)": (-10, -18),
+    "30 TB TLC enterprise SSD (VDURA index)": (9, 2),
+    "30 TB nearline HDD (VDURA index)": (9, -4),
 }
 SHORT = {
     "IBM 350 RAMAC": "RAMAC 1956",
@@ -46,8 +46,8 @@ SHORT = {
     "MLC NAND contract price (component)": "NAND chips, Q4 2008",
     "Median consumer SSD": "consumer SSD median, 2012",
     "Enterprise SSD (market)": "enterprise SSD, 2020",
-    "30 TB TLC enterprise SSD (VDURA index)": "enterprise SSD index, Q3 2026",
-    "30 TB nearline HDD (VDURA index)": "nearline HDD index, Q3 2026",
+    "30 TB TLC enterprise SSD (VDURA index)": "SSD index, Q3 2026",
+    "30 TB nearline HDD (VDURA index)": "HDD index, Q3 2026",
 }
 
 
@@ -82,7 +82,8 @@ def build(out_dir: Path) -> Path:
                         fontsize=8.5, color=color)
     ax.set_yscale("log")
     ax.set_ylim(0.005, 5e7)
-    ax.set_xlim(1953, 2029)
+    ax.set_xlim(1953, 2046)
+    ax.set_xticks([1960, 1970, 1980, 1990, 2000, 2010, 2020, 2026])
     ax.set_ylabel("US\\$ per GB, nominal (log scale)")
     ax.set_xlabel("Year")
     # marker legend

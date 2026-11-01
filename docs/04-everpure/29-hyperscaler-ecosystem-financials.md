@@ -6,16 +6,16 @@
 ## TL;DR
 
 - **Two revenue lines, three businesses.** Everpure (NYSE: P, formerly PSTG) sells arrays with NAND on its own books, Evergreen subscriptions recognised ratably, and hyperscale DirectFlash licences where the customer buys the NAND. Each has a different margin profile.
-- **The hyperscaler model licenses flash-management IP; it does not sell boxes.** The first customer, widely reported as Meta, passed 2 EB in FY26. A second top-five hyperscaler signed on 2026-08-10, with revenue from FY28.
+- **The hyperscaler model licenses flash-management IP; it does not sell boxes.** The first customer, Meta (named in the FY25 10-K), passed 2 EB in FY26. A second top-five hyperscaler signed on 2026-08-10, with revenue from FY28.
 - **Recurring revenue keeps compounding.** At Q2 FY27 (ended 2026-08-02), subscription ARR was $2.13B (+20%) and RPO $4.1B (+44%).
-- **Technology choices set margins.** DirectFlash removes SSD controllers and DRAM from the bill of materials. The 2026 NAND spike holds product gross margin (GM) near 65–66%, subscription GM runs about 75%, and hyperscale licensing is accretive but lumpy.
+- **Technology choices set margins.** DirectFlash removes SSD controllers and DRAM from the bill of materials. The 2026 NAND spike has pushed non-GAAP product gross margin (GM) down to 65–66%, subscription GM runs about 75%, and hyperscale licensing is accretive but lumpy.
 - **The ecosystem is mostly distribution.** NVIDIA certifications gate AI deals, Cisco and GSIs carry enterprise volume, and NAND makers sell directly to Everpure's hyperscale customers.
 
 ## Why this matters for Everpure strategy
 
-Everpure raised its FY27 revenue guidance from $4.3–4.4B in February 2026 to $5.03–5.07B in August. The new midpoint is about 38% above FY26's $3.66B[^1][^2]. A dollar of hyperscale licence revenue, of FlashArray//C and of Evergreen//One differ in cost, cash timing and durability, so the source of growth matters. This chapter links the architecture in [Chapter 26](26-purity-and-directflash.md) to the numbers analysts model; the revenue history is in [Chapter 25](25-company-history-and-strategy.md).
+Everpure raised its FY27 revenue guidance from $4.3–4.4B in February 2026 to $5.03–5.07B in August. The new midpoint is about 38% above FY26's $3.66B[^1][^2]. A dollar of hyperscale licence, FlashArray//C or Evergreen//One revenue differs in cost, cash timing and durability, so the source of growth matters. This chapter links the architecture in [Chapter 26](26-purity-and-directflash.md) to the numbers analysts model.
 
-The hyperscaler model also makes Purity and DirectFlash licensable IP, closer to a controller-IP vendor than a systems company. Whether it reaches more than two hyperscalers, and whether it complements or cannibalises arrays, sits near the centre of the equity story.
+Whether the licensing model reaches more than two hyperscalers, and whether it complements or cannibalises arrays, sits near the centre of the equity story.
 
 ## Core concepts
 
@@ -36,7 +36,7 @@ Subscription's share of revenue rose from 35% in FY23 to 46% in FY25 and FY26. I
 
 ### The hyperscaler model: licensing a controller, not selling a box
 
-**Semiconductor bridge.** An enterprise SSD is a chip-plus-firmware product: NAND die, a controller ASIC, DRAM for the flash translation layer (FTL) and firmware. DirectFlash takes the controller and the DRAM out of the drive and moves flash management into Purity, which sees raw NAND across the whole system (see [Chapter 26](26-purity-and-directflash.md)). The hyperscale deals sell that capability the way an IP vendor sells a design: the customer buys the "wafers" (NAND); Everpure supplies design, software and some non-NAND parts, and is paid as capacity deploys.
+**Semiconductor bridge.** DirectFlash takes the SSD's controller ASIC and FTL DRAM out of the drive and moves flash management into Purity ([Chapter 26](26-purity-and-directflash.md)). The hyperscale deals sell that capability the way an IP vendor sells a design: the customer buys the "wafers" (NAND); Everpure supplies design, software and some non-NAND parts, and is paid as capacity deploys.
 
 ```mermaid
 flowchart LR
@@ -56,12 +56,12 @@ flowchart LR
 
 What is public, in date order:
 
-- **Design win (December 2024).** With its Q3 FY25 results, Pure Storage announced a DirectFlash design win with an unnamed top-four hyperscaler. Hardware was excluded: the customer buys from its integrator, and Pure earns licence, software and support fees[^8][^9]. Analysts identified the customer as Meta. At the March 2025 FlashBlade//EXA launch, the CEO said Meta had picked DFMs for footprint and power savings[^10]. [VERIFY: the first date Everpure itself named Meta]
+- **Design win (December 2024).** With its Q3 FY25 results, Pure Storage announced a DirectFlash design win with an unnamed top-four hyperscaler. Hardware was excluded: the customer buys from its integrator, and Pure earns licence, software and support fees[^8][^9]. Analysts identified the customer as Meta; the CEO cited Meta's choice of DFMs at the March 2025 FlashBlade//EXA launch[^10], and the FY2025 10-K names Meta[^46].
 - **Volume (FY26).** Pure recognised its first revenue in Q2 FY26. The FY26 plan assumed 1–2 EB of DirectFlash deployed[^11], and by Q3 FY26 Pure said it had beaten its 2 EB forecast[^4]. For scale, 2 EB is about 26,700 modules at 75 TB or 13,300 at 150 TB (deployed sizes undisclosed). The stock rose about 24% intraday on 2025-08-28[^12].
 - **Standardised model (February 2026).** Management said hyperscale terms were now standard: Everpure procures some components, and hyperscalers keep buying NAND through their own supply chains. Revenue follows data-centre build-outs, with most of FY27's expected in Q3–Q4[^13]. [VERIFY: search-summary only]
-- **Second hyperscaler (2026-08-10).** Everpure announced a design win and supply agreement with a second unnamed top-five hyperscaler, built on DirectFlash. It contributes little to FY27 and is expected to matter from FY28[^14][^15]. Management said it mirrors the first, and that DirectFlash is mostly replacing SSDs, not disks, for now[^16].
+- **Second hyperscaler (2026-08-10).** Everpure announced a design win and supply agreement with a second unnamed top-five hyperscaler, built on DirectFlash. It contributes little to FY27 and is expected to matter from FY28[^14][^15]. Management said it mirrors the first, and that DirectFlash is mostly replacing SSDs, not disks, for now[^16]. The release itself warns that the customer may not order or deploy the volumes contemplated[^14].
 
-**Worked example (illustrative): why hyperscale lifts margin only at scale.** Everpure does not disclose hyperscale gross margin. Analyst commentary puts it around 75–85% (some notes say above 90% for pure royalties)[^17] [VERIFY: analyst estimates, search-summary only]. Suppose hyperscale is 5% of quarterly revenue at 85% GM and everything else runs at Q2 FY27's 69.9% non-GAAP GM[^18]. Blended GM = 0.95 × 69.9% + 0.05 × 85% = 66.4% + 4.25% ≈ **70.7%**, a lift of about 0.8 points. At a 10% share it is 0.90 × 69.9% + 0.10 × 85% ≈ **71.4%**. Hyperscale moves the blend only at double-digit revenue share, and component supply pulls its margin below royalty levels. In Q3 FY26 total GM rose to 72.3% from 70.2%, partly on royalties[^4], a real-world version of this arithmetic.
+**Worked example (illustrative): why hyperscale lifts margin only at scale.** Everpure does not disclose hyperscale gross margin. Analyst commentary puts it around 75–85% (some notes say above 90% for pure royalties)[^17] [VERIFY: analyst estimates, search-summary only]. Suppose hyperscale is 5% of quarterly revenue at 85% GM and everything else runs at Q2 FY27's 69.9% non-GAAP GM[^18]. Blended GM = 0.95 × 69.9% + 0.05 × 85% = 66.4% + 4.25% ≈ **70.7%**, a lift of about 0.8 points. At a 10% share it is 0.90 × 69.9% + 0.10 × 85% ≈ **71.4%**. Hyperscale moves the blend only at double-digit revenue share. Q3 FY26 is the real-world version: royalties helped lift non-GAAP product GM to 72.9% (from 67.4%) and GAAP GM to 72.3%[^4][^47]. But management said the newer models, with Everpure supplying components, bring hyperscale margins closer to the company average[^47], so 85% is an upper case.
 
 ### Subscription ARR and RPO: what the backlog says
 
@@ -78,16 +78,16 @@ How to read it:
 - **The RPO step.** RPO grew 40% in FY26 (14% in FY25) on large deals and longer Evergreen contracts[^19]. Some growth was borrowed: longer renewals slowed ARR growth to 16% and net dollar retention fell from 117% to 113%[^20].
 - **Sanity check.** Q2 subscription revenue of $499M × 4 ≈ $2.0B sits just below $2.13B ARR, which includes on-demand run-rate and late-quarter starts. RPO is about 1.9× ARR.
 
-**Tech lens.** Evergreen//One is where architecture shows up most directly in the financials. Everpure owns the hardware and charges per TB used, so DFM density, data reduction and watts per TB set its margin at a fixed price, and non-disruptive upgrades make multi-year SLAs workable. Evergreen//One sales grew 73% in Q1 FY27[^6], and storage-as-a-service total contract value (TCV) was $277M in Q2 (+121%)[^16] [VERIFY: TCV from call summaries].
+**Tech lens.** In Evergreen//One, Everpure owns the hardware and charges per TB used, so DFM density, data reduction and watts per TB set its margin, and non-disruptive upgrades make multi-year SLAs workable. Evergreen//One sales grew 73% in Q1 FY27[^6], and storage-as-a-service total contract value (TCV) was $277M in Q2 (+121%)[^16] [VERIFY: TCV from call summaries].
 
 ### Gross-margin drivers tied to technology
 
 | Driver | Technology mechanism | Margin effect | Public evidence |
 |---|---|---|---|
 | DirectFlash vs SSD bill of materials | No per-drive controller ASIC or FTL DRAM. An SSD needs about 1 GB of DRAM per TB, because it keeps a 4-byte map entry for each 4 KiB page. Purity manages NAND globally, with less hidden over-provisioning | Lower $/TB than buying finished SSDs, which supports product GM while Everpure prices aggressively | Q4 FY26 product GM 67.3%, up more than 400 bp on mix[^21] |
-| NAND pricing pass-through | Everpure buys NAND for enterprise arrays. Contract prices rose steeply through 2026, with TrendForce forecasting another +15–20% QoQ for 4Q26[^22] | Costs rise before price lists do. Margin lags and then recovers. Securing supply uses cash | Price rise on 2026-02-09[^7]; product GM 65.5% in Q1 and 66.2% in Q2 FY27[^6][^18]; Q2 free cash flow (FCF) –$238M on strategic NAND buys[^23] |
-| Evergreen//Forever and //One | Software-heavy support plus non-disruptive upgrades. With //One, Everpure also carries the hardware | Subscription GM about 75%. Hardware-heavy //One mix can dilute it relative to pure support [VERIFY: //One cost composition] | Subscription GM 75.6% in Q1 and 74.9% in Q2 FY27[^6][^18] |
-| Hyperscale licensing | The customer buys the NAND. Everpure supplies IP, software, support and some non-NAND parts | Royalty-like and margin-accretive, but lumpy and tied to customers' build-outs | Q3 FY26 GM 72.3%, helped by royalties[^4]; model standardised in Feb 2026[^13] |
+| NAND pricing pass-through | Everpure buys NAND for enterprise arrays. NAND contract prices rose steeply through 2026, with TrendForce forecasting another +15–20% QoQ for 4Q26 (enterprise SSDs reportedly +23–28%)[^22] | Costs rise before price lists do. Margin lags and then recovers. Securing supply uses cash | Price rise on 2026-02-09[^7]; non-GAAP product GM 65.5% in Q1 and 66.2% in Q2 FY27[^6][^18]; Q2 free cash flow (FCF) –$238M on strategic NAND buys[^23] |
+| Evergreen//Forever and //One | Software-heavy support plus non-disruptive upgrades. With //One, Everpure also carries the hardware | Subscription GM about 75%. Hardware-heavy //One mix can dilute it relative to pure support [VERIFY: //One cost composition] | Non-GAAP subscription GM 75.6% in Q1 and 74.9% in Q2 FY27[^6][^18] |
+| Hyperscale licensing | The customer buys the NAND. Everpure supplies IP, software, support and some non-NAND parts | Royalty-like and margin-accretive, but lumpy and tied to customers' build-outs | Q3 FY26 GAAP GM 72.3%, helped by royalties[^4]; model standardised in Feb 2026[^13] |
 | Deal and product mix | Large AI and enterprise deals; QLC capacity tiers (//C, //E) priced against disk | Management says it is deliberately running near the bottom of the 65–70% product GM range to win share | Long-term product GM range 65–70%[^24] |
 | Software attach | Portworx, Fusion, Data Intelligence (ex-1touch) | Close to pure software, but too small today to move the blend | Not separately disclosed |
 
@@ -127,11 +127,11 @@ flowchart LR
 
 Relationship types, in brief:
 
-- **Validation (NVIDIA).** DGX SuperPOD certification for FlashBlade//S500 (November 2024)[^25]; NVIDIA-Certified Storage Foundation and Enterprise plus NCP high-performance storage (March 2025)[^26]; Data Stream built on the AI Data Platform design (June 2026)[^27]; co-design partner for BlueField-4 STX[^28]. No fees, but no shortlist without them ([Chapter 34](../05-ai-storage/34-nvidia-ecosystem.md)).
+- **Validation (NVIDIA).** SuperPOD (November 2024)[^25], NVIDIA-Certified Storage and NCP high-performance storage (March 2025)[^26] for FlashBlade//S; Data Stream on the AI Data Platform design[^27]; BlueField-4 STX partner[^28]. No fees, but no shortlist without them ([Chapter 27](27-flasharray-and-flashblade.md), [Chapter 34](../05-ai-storage/34-nvidia-ecosystem.md)).
 - **Converged distribution.** FlashStack joined Cisco's Secure AI Factory with NVIDIA in late 2025, sold via AHEAD, ePlus, SHI and WWT[^29].
-- **Hyperscalers, two roles.** DirectFlash customers, and cloud channels: Pure Storage Cloud Azure Native was co-developed with Microsoft (September 2025)[^30]; Cloud Dedicated runs on AWS and Azure[^31].
-- **Neoclouds.** A November 2024 CoreWeave equity stake made Pure a preferred storage option there[^32], though Evercore noted investors rated it below a tier-1 hyperscaler win[^33]. STN's GPU cloud runs on FlashBlade//EXA[^34], and Evergreen//One reached EXA at GTC 2026[^35] ([Chapter 35](../05-ai-storage/35-ai-factories-and-neoclouds.md)).
-- **NAND.** Micron G8 QLC is qualified for the 150 TB DFM and G9 for hyperscaler DFMs; Kioxia is a long-standing partner[^36].
+- **Hyperscalers, two roles.** DirectFlash customers, and cloud channels: Everpure Cloud Azure Native, co-developed with Microsoft[^30], and Cloud Dedicated on AWS and Azure[^31] ([Chapter 28](28-platform-and-software.md)).
+- **Neoclouds.** A November 2024 CoreWeave stake made Pure a preferred storage option there[^32], though Evercore noted investors rated it below a tier-1 hyperscaler win[^33]; CoreWeave later signed a far larger deal with VAST. STN's GPU cloud runs on FlashBlade//EXA[^34], and Evergreen//One reached EXA in March 2026[^35] ([Chapter 35](../05-ai-storage/35-ai-factories-and-neoclouds.md)).
+- **NAND.** Micron and Kioxia supply and co-qualify DFM NAND ([Chapter 26](26-purity-and-directflash.md))[^36].
 - **ISVs and platforms.** Veeam (Fusion plug-in)[^37], Commvault (IntelliSnap)[^38], Rubrik and CrowdStrike (Enterprise Data Cloud)[^39], and Nutanix AHV external storage (May 2025)[^40].
 
 ## How Everpure approaches it vs. competitors
@@ -144,7 +144,7 @@ Relationship types, in brief:
 | NVIDIA alignment | SuperPOD, Certified Storage, NCP, STX partner | STX partner, deep NVIDIA ties | Component suppliers to NVIDIA systems | STX partners[^28] |
 | Revenue durability | 42–46% subscription; $4.1B RPO | *Company-stated* ARR only | Cyclical | Own subscription programs ([Ch 23](../03-system-architecture/23-consumption-models.md)) |
 
-*Table 29.2 — Everpure is the only array vendor monetising its flash design inside hyperscalers. VAST owns the neocloud software position, and the NAND makers capture the commodity price cycle.*
+*Table 29.2 — Everpure is the only array vendor publicly known to monetise its flash design inside hyperscalers. VAST owns the neocloud software position, and the NAND makers capture the commodity price cycle.*
 
 **Steelman the alternatives.** Hyperscalers have deep firmware teams and buy SSDs at huge volume, so the default is commodity drives ([Chapter 36](../05-ai-storage/36-hyperscaler-ai-storage.md)); DirectFlash must win on power and density TCO. NAND makers bank the 2026 price spike that Everpure's enterprise business absorbs. VAST's software-only model lets neoclouds own and finance hardware; Everpure's hyperscale licence model is a partial answer in the same spirit.
 
@@ -153,7 +153,7 @@ Relationship types, in brief:
 Hyperscale went from announcement (December 2024) to first revenue (Q2 FY26) to more than 2 EB (Q3 FY26), then a second customer (August 2026)[^8][^11][^4][^14]. Signals to watch:
 
 - **Q3 FY27** (quarter ending around 2026-11-01) is guided at $1.325–1.335B and is the first quarter with significant hyperscale revenue expected[^1][^5]. It had not been reported by 2026-11-01.
-- At the 2026-09-23 Financial Analyst Meeting, Everpure reaffirmed FY27 guidance and gave a preliminary FY28 outlook[^43]. [VERIFY: FY28 figures and long-term margin targets]
+- At the 2026-09-23 Financial Analyst Meeting, Everpure reaffirmed FY27 guidance and gave a preliminary FY28 outlook of $7.0–7.3B revenue (+39–45%) and $1.7–1.9B non-GAAP operating income. It expects three new vectors (Modern Data Software, Scale AI, Hyperscale Solutions) to reach only about 20% of revenue by FY2030[^43][^48].
 - One transcript summary says Everpure will report hyperscale as a single total, not customer by customer[^44]. [VERIFY: Chinese-language summary only]
 - NAND contract prices are still rising into 4Q26[^22], so product GM likely stays near the range floor.
 
@@ -165,7 +165,7 @@ Hyperscale went from announcement (December 2024) to first revenue (Q2 FY26) to 
 | Q2 FY27 revenue | $1.19B (+38%); product $687M (+54%) | Quarter ended 2026-08-02 | Release, 2026-08-26[^1] |
 | Subscription ARR | $2.13B (+20%) | Q2 FY27 end | Release, 2026-08-26[^1] |
 | RPO | $4.1B (+44%) | Q2 FY27 end; $3.7B at FY26 end | Release[^1]; ARS FY26[^19] |
-| Gross margin, Q2 FY27 | 68.4% GAAP / 69.9% non-GAAP; product 66.2%, subscription 74.9% | Product at low end of 65–70% range | Slides, 2026-08[^18] |
+| Gross margin, Q2 FY27 | 68.4% GAAP / 69.9% non-GAAP; product 66.2%, subscription 74.9% (non-GAAP) | Product at low end of 65–70% range | Slides, 2026-08[^18] |
 | Hyperscale volume | More than 2 EB in FY26 | Original plan 1–2 EB | B&F, 2025-12-03[^4] |
 | FY27 revenue guidance | $5.03–5.07B | Up from $4.3–4.4B (Feb 2026) | Release, 2026-08-26[^1] |
 | Q2 FY27 free cash flow | –$238M | Strategic NAND and component buys | Yahoo Finance, 2026-08[^23] |
@@ -191,7 +191,7 @@ Hyperscale went from announcement (December 2024) to first revenue (Q2 FY26) to 
 - "Subscription share fell, so recurring is weakening." It grew about 20%; product grew faster.
 - "Hyperscale will lift margins immediately." Not until it reaches double-digit revenue share.
 - "RPO is all subscription." It includes undelivered product.
-- "Meta is a disclosed customer in the 10-K." Filings describe an unnamed top hyperscaler.
+- "Everpure has named the second hyperscaler." It has not; only Meta is named.
 
 ## Going deeper (optional, L3 pointers)
 
@@ -256,3 +256,6 @@ Hyperscale went from announcement (December 2024) to first revenue (Q2 FY26) to 
 [^43]: Quiver Quantitative, "Why Everpure (P) Stock Is Up Today," 2026-09. https://www.quiverquant.com/news/Why+Everpure+%28P%29+Stock+Is+Up+Today (retrieved 2026-11-01).
 [^44]: StatementDog, "Everpure Inc (P) 2027 Q2 earnings call transcript (Chinese)," 2026-08. https://statementdog.com/analysis/P/earnings_calls/318913 (retrieved 2026-11-01).
 [^45]: Everpure, "Q2 FY27 Prepared Remarks," 2026-08-26. https://s21.q4cdn.com/687136699/files/doc_financials/2027/q2/Q2FY27-Prepared-Remarks.pdf (retrieved 2026-11-01).
+[^46]: SEC, "Pure Storage, Inc. Form 10-K for fiscal year ended February 2, 2025," 2025-04. https://www.sec.gov/Archives/edgar/data/1474432/000162828025015044/pstg-20250202.htm (seen via search summary, 2026-11-01).
+[^47]: Futurum Group, "Pure Storage Q3 FY 2026 Results: Revenue Up 16% YoY, Guidance Raised," 2025-12. https://futurumgroup.com/insights/pure-storage-q3-fy-2026-results-revenue-up-16-yoy-guidance-raised/ (retrieved via search summary 2026-11-01); Pure Storage, "Form 10-Q for the quarter ended November 2, 2025." https://www.sec.gov/Archives/edgar/data/1474432/000147443225000065/pstg-20251102.htm (retrieved via search summary 2026-11-01).
+[^48]: StorageNewsletter (Everpure release), "Everpure's Expanding Business Model Fuels New Long-Term Outlook," 2026-10-01. https://www.storagenewsletter.com/2026/10/01/everpures-expanding-business-model-fuels-new-long-term-outlook/ (retrieved via search summary 2026-11-01).

@@ -13,7 +13,7 @@
 
 ## Why this matters for Everpure strategy
 
-DirectFlash is the technical root of three things investors pay Everpure (NYSE: P, formerly PSTG) for. The first is product gross margin: a lower bill of materials per terabyte is one support for it, though product GM still fell to 66.2% (non-GAAP) in Q2 FY27 from 72.9% in Q3 FY26, a quarter flattered by hyperscale royalties, as NAND costs rose[^5][^45]. The second is the hyperscaler licensing business: Meta, then a second unnamed top-five hyperscaler in August 2026[^6]. The third is the power-and-density pitch to replace disk in power-constrained AI datacenters ([Chapter 38](../05-ai-storage/38-power-and-density.md)). If FDP gives commodity SSDs most of the benefit, or a hyperscaler builds its own equivalent, all three weaken together.
+DirectFlash is the technical root of three things investors pay Everpure (NYSE: P, formerly PSTG) for. The first is product gross margin, which a lower bill of materials supports but does not protect: non-GAAP product GM fell to 66.2% in Q2 FY27 from a royalty-flattered 72.9% in Q3 FY26 as NAND costs rose[^5][^45]. The second is the hyperscaler licensing business: Meta, then a second unnamed top-five hyperscaler in August 2026[^6]. The third is the power-and-density pitch to replace disk in power-constrained AI datacenters ([Chapter 38](../05-ai-storage/38-power-and-density.md)). If FDP gives commodity SSDs most of the benefit, or a hyperscaler builds its own equivalent, all three weaken together.
 
 The strategy question is which layer of the moat is durable: software (the global FTL), module design, NAND qualification know-how or supply relationships. Owning the module also makes Everpure a direct raw-NAND buyer in the 2026 shortage, competing for allocation with the IDMs' own SSD businesses.
 
@@ -21,7 +21,7 @@ The strategy question is which layer of the moat is durable: software (the globa
 
 ### Purity in one picture
 
-Purity was built in 2009–2012 to make commodity SSDs behave like enterprise storage. Its founding engineers described it as borrowing from databases and key-value stores. Every write is monotonic (append-only), and deletes are recorded as predicates that hide old records rather than overwriting them[^7]. That one choice explains most of the product.
+Purity was built in 2009–2012 to make commodity SSDs behave like enterprise storage, borrowing from databases and key-value stores. Every write is monotonic (append-only), and deletes are recorded as predicates that hide old records rather than overwriting them[^7]. That one choice explains most of the product.
 
 ```mermaid
 flowchart TB
@@ -64,7 +64,7 @@ DirectFlash deletes the inner layer. The DirectFlash Module (DFM) is a PCIe/NVMe
 
 ### The semiconductor lens: on-die memory controllers and IDM versus fabless
 
-**Moving the memory controller on-die.** Until the mid-2000s, x86 CPUs reached DRAM through a northbridge chip. AMD (2003) and Intel (2008) pulled the memory controller onto the CPU die. Latency fell, and the CPU could schedule DRAM banks with full knowledge of its own request stream. DirectFlash is the same move: the "flash northbridge" inside every SSD is absorbed into the array CPU. The price is the same too. An on-die controller ties each CPU generation to particular DRAM generations, and DirectFlash ties Purity releases to particular NAND generations. Each new die must be characterised and supported in software.
+**Moving the memory controller on-die.** Until the mid-2000s, x86 CPUs reached DRAM through a northbridge chip. AMD (2003) and Intel (2008) pulled the memory controller onto the CPU die. Latency fell and the CPU could schedule DRAM banks knowing its own request stream. DirectFlash is the same move: the "flash northbridge" inside every SSD is absorbed into the array CPU. So is the price: as an on-die controller ties CPUs to DRAM generations, DirectFlash ties Purity releases to NAND generations, each of which must be characterised in software.
 
 **IDM versus fabless.** The SSD makers (Samsung, SK hynix/Solidigm, Micron, Kioxia, Sandisk) are IDMs. They own the NAND fab, design the controller and tune firmware with privileged process data. Everpure behaves like a fabless system house: it buys the "wafer" (raw NAND), designs the module, differentiates in software and skips the SSD maker's controller, DRAM and firmware margin. The classic fabless trade-offs apply:
 
@@ -89,7 +89,7 @@ flowchart LR
 
 ### What owning the FTL buys
 
-**Density.** Without a per-drive DRAM map, module capacity is limited by NAND packages and power rather than by controller memory. That is why the DFM has led the largest standard SSD at each step (Figure 26.4).
+**Density.** Without a per-drive DRAM map, module capacity is limited by NAND packages and power, not controller memory, which is why DFMs have led the largest standard SSD at each step (Figure 26.4).
 
 **Power.** Everpure's CTO put the 75 TB DFM under 10 W, against a 25 W maximum for a 61.44 TB Solidigm SSD[^14]: about 0.13 W/TB against 0.41 W/TB, though comparing a typical draw with a maximum flatters the DFM. At system level, Everpure claims HDD-based and 15.36 TB-SSD systems need 2.4× the power of its 75 TB-DFM system and 4.8× that of its 150 TB-DFM system[^15], and up to 75% less power than disk in hyperscale use[^16]. NetApp's rebuttal is fair: compare whole systems, not modules[^17].
 
@@ -112,7 +112,7 @@ The 75 TB QLC DFM launched with FlashArray//E in 2023[^20]. In March 2023 Pure S
 
 Everpure qualified Micron's G8 QLC for the 150 TB DFM and is taking Micron G9 QLC into future DFMs, including hyperscaler ones[^26]. Kioxia, whose BiCS8 generation includes a 2 Tb QLC die, is a long-standing partner[^27]. Two suppliers give leverage and resilience at the cost of qualifying each new die.
 
-The 2026 shortage tested the model. Everpure raised prices on 9 February 2026, citing component costs[^28]. In Q2 FY27 it made strategic NAND and component purchases. Operating cash flow fell to −$136M and free cash flow to −$238M; a ~$577M build in prepaid expenses has been read as advance NAND buying[^29] [VERIFY: prepaid figure from third-party reading of the 10-Q]. Management said cash flow should normalise over two quarters[^3]. TrendForce forecasts NAND contract prices up another 15–20% quarter on quarter in Q4 2026, with enterprise SSDs reportedly up 23–28%[^42][^30].
+Everpure raised prices on 9 February 2026, citing component costs[^28]. Strategic NAND and component purchases in Q2 FY27 took operating cash flow to −$136M and free cash flow to −$238M; a ~$577M build in prepaid expenses has been read as advance NAND buying[^29] [VERIFY: prepaid figure from third-party reading of the 10-Q]. Management said cash flow should normalise over two quarters[^3]. TrendForce forecasts NAND contract prices up another 15–20% quarter on quarter in Q4 2026, with enterprise SSDs reportedly up 23–28%[^42][^30].
 
 The hyperscaler model sidesteps this: the customer licenses the design and buys its own NAND and hardware, so Everpure procures no NAND for it[^1][^4]. That is closer to Arm than to a fabless chip vendor ([Chapter 29](29-hyperscaler-ecosystem-financials.md)).
 
@@ -135,7 +135,7 @@ Middle paths exist. IBM builds its own FlashCore Modules for FlashSystem, puttin
 **Steelman the counter-case:**
 
 1. **FDP closes much of the gap without lock-in.** NVMe FDP, ratified in 2022 and backed by Meta and Google with Samsung, lets hosts tag writes so drives keep lifetimes apart, cutting write amplification while drives stay standard[^32][^36]. Meta is deploying standard QLC SSDs alongside DFMs[^37].
-2. **R&D scale.** Each NAND IDM funds controller and firmware teams from a far larger SSD revenue base, and co-designs controller and cell with process data first.
+2. **R&D scale.** Each NAND IDM funds controller and firmware teams from a far larger SSD revenue base, with process data first.
 3. **Single-design risk.** One module design and one FTL serve FlashArray, FlashBlade and two hyperscalers. A latent bug or a NAND-generation defect is correlated across the whole installed base.
 4. **Qualification burden.** A fabless buyer must characterise each new die (read thresholds, retention, program timing) without fab data, and NAND makers move to a new generation every year or two.
 5. **Hyperscalers can build it.** Open-channel SSDs (LightNVM) were the industry's attempt at host-managed flash, and they were set aside in favour of zoned and placement-hint designs[^38]. Yet when Meta wanted raw-flash control at scale, it licensed rather than built[^37].
@@ -178,8 +178,8 @@ Signals to watch: a date for 600 TB DFMs, standard SSDs reaching 512 TB, FDP ado
 
 **Questions for a PM**
 
-1. *"When a 512 TB standard SSD ships, what keeps DFMs ahead?"* Strong answer: a dated next module step and the gap in W/TB, TB/RU and DRAM avoided, at system level.
-2. *"How does NAND inflation flow through Evergreen//One pricing versus capex sales?"* Strong answer: separates pass-through on new sales from margin absorption on fixed-price subscriptions, and says how the Q2 FY27 NAND purchases hedge the gap.
+1. *"When a 512 TB standard SSD ships, what keeps DFMs ahead?"* Strong answer: a dated next module step and the system-level gap in W/TB, TB/RU and DRAM avoided.
+2. *"How does NAND inflation flow through Evergreen//One pricing versus capex sales?"* Strong answer: separates pass-through on new sales from absorption on fixed-price subscriptions, and how the Q2 FY27 NAND buys hedge the gap.
 3. *"Why does FlashArray//ST use commercial SSDs?"* Strong answer: small latency-optimised configurations where DFM capacity is overkill, with a clear rule for when DirectFlash wins.
 
 **Questions for an engineer**

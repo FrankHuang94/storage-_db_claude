@@ -65,11 +65,11 @@ Three acquisitions followed in 26 months (Table 25.1).
 
 *Table 25.1 — Everpure buys capabilities, not revenue. Disclosed consideration across four acquisitions totals about $594M, and the one clear miss (StorReduce) was also the cheapest.*
 
-The arithmetic: 20.5 + 47.9 + 15.9 + 352.9 + 32.2 + 125.0 ≈ $594M over eight years, against FY2026 free cash flow of $616M[^21]. The company has never bought a large installed base; every deal had to fit Purity or sit beside it.
+That is 20.5 + 47.9 + 15.9 + 352.9 + 32.2 + 125.0 ≈ $594M over eight years, less than FY2026 free cash flow of $616M[^21]. No deal bought a large installed base; each had to fit Purity or sit beside it.
 
 ### Era 3, 2020–2023: subscription and the first Meta relationship
 
-FY2021 revenue grew only 2%, which the company attributed to COVID-19. FY2022 then rose 29% to $2.18B[^22]. Meta became the showcase AI customer: its AI Research SuperCluster, unveiled in January 2022, used 175 PB of FlashArray and 10 PB of FlashBlade[^23]. In June 2022 Pure reorganised Evergreen into //Forever (owned arrays), //Flex (pay-per-use on owned hardware) and //One (storage-as-a-service)[^24]. The economics are covered in [Chapter 23](../03-system-architecture/23-consumption-models.md).
+FY2021 revenue grew only 2%, which the company attributed to COVID-19. FY2022 then rose 29% to $2.18B[^22]. Meta became the showcase AI customer: its AI Research SuperCluster, unveiled in January 2022, used 175 PB of FlashArray and 10 PB of FlashBlade[^23]. In June 2022 Pure reorganised Evergreen into //Forever, //Flex and //One (storage-as-a-service)[^24] ([Chapter 23](../03-system-architecture/23-consumption-models.md)).
 
 In May 2023 a Pure executive predicted that no new hard drives would be sold after 2028. Analysts such as Coughlin Associates disputed it[^25][^26]. It was a marketing line that pointed to the real strategy: QLC DirectFlash at hyperscale.
 
@@ -115,9 +115,9 @@ Worked numbers: FY2016 revenue was $440.3M and FY2026 was $3,662.8M[^35][^36]. T
 
 ### What worked, what took longer, what the rebrand signals
 
-**Worked:** Evergreen. It turned a hardware company into one where subscription ARR ($1,924M at FY2026) equals about 52% of revenue, and subscription services were $1,691M, or 46% of FY2026 revenue[^36]. Purity's single code base across FlashArray and FlashBlade worked too. The hyperscaler licence moved from announcement to volume shipments within a fiscal year, though its revenue is still small.
+**Worked:** Evergreen, which made subscription services $1,691M, or 46% of FY2026 revenue, with ARR of $1,924M[^36]; Purity's single code base across FlashArray and FlashBlade; and the hyperscaler licence, which reached volume shipments within a fiscal year, though its revenue is still small.
 
-**Took longer or landed narrower:** FlashBlade's GA took ten months after unveiling. Native file on FlashArray took a year from the Compuverde deal to Purity 6.0. One report says it needed two more years to mature [VERIFY: Purity//FA 6.4 as the release in which file services matured]. Portworx has no disclosed revenue line, and its pitch moved from containers to VM migration off VMware. Hyperscaler revenue was described as small in Q1 FY2027 and back-half-weighted[^38]. The 2028 "end of disk" call is still unproven.
+**Took longer or landed narrower:** native file on FlashArray took a year from the Compuverde deal to Purity 6.0, and one report says two more years to mature [VERIFY: Purity//FA 6.4 as the release in which file services matured]. Portworx has no disclosed revenue line, and its pitch moved from containers to VM migration off VMware. Hyperscaler revenue was described as small in Q1 FY2027 and back-half-weighted[^38]. The 2028 "end of disk" call is still unproven.
 
 **What the rebrand signals:** the old name tied the company to flash media just as its pitch moved to software, data services and licensing. Options a strategy team might evaluate, based on public information: whether data-intelligence revenue can be disclosed separately enough to support a platform multiple; whether further 1touch-sized deals (governance, vector, lakehouse connectors) are needed to make "data primacy" credible against VAST's AI OS; and how to keep the array franchise funding all of this while NAND costs rise. Everpure raised prices in February 2026[^39], and Q2 FY2027 free cash flow was −$238M after strategic NAND and component purchases[^40].
 
@@ -133,16 +133,16 @@ Worked numbers: FY2016 revenue was $440.3M and FY2026 was $3,662.8M[^35][^36]. T
 
 *Table 25.2 — Everyone is converging on "data platform for AI". Everpure is unusual in reaching it through one OS and a subscription base rather than through a portfolio (Dell) or a clean-sheet AI design (VAST).*
 
-The steelman for the alternatives: VAST's single-namespace, database-in-storage design was built for AI pipelines. Everpure is adding equivalent functions after the fact, through EXA and Data Stream. Dell and NetApp own larger installed bases and channel reach, and NetApp's ONTAP served file and block from one OS long before Purity 6.0. Everpure's counter-argument is consistency: one OS, one upgrade model and fleet telemetry across 14 years of installed systems ([Chapter 46](../06-industry-and-competition/46-incumbents.md), [Chapter 42](../06-industry-and-competition/42-vast-data.md)).
+The steelman for the alternatives: VAST's single-namespace, database-in-storage design was built for AI pipelines, while Everpure is adding equivalent functions after the fact through EXA and Data Stream. Dell and NetApp own larger installed bases and channel reach, and NetApp's ONTAP served file and block from one OS long before Purity 6.0. Everpure's counter-argument is consistency: one OS, one upgrade model and fleet telemetry across 14 years of installed systems ([Chapter 46](../06-industry-and-competition/46-incumbents.md), [Chapter 42](../06-industry-and-competition/42-vast-data.md)).
 
 ## History and trajectory
 
 Dated, public signals to watch through 2027:
 
 - **Q3 FY2027** results, due late November 2026, are the first quarter in which management expects hyperscale revenue to rise significantly[^38].
-- **Second hyperscaler** revenue is expected from FY2028[^34]. A third win would show a repeatable model rather than one customer relationship.
+- **Second hyperscaler** revenue is expected from FY2028[^34]. A third win would prove a repeatable model.
 - **NAND pricing**: the 2026 component spike tests whether Evergreen contracts protect or squeeze product margins ([Chapter 48](../06-industry-and-competition/48-media-suppliers-and-nand-cycle.md)).
-- **Data Intelligence adoption**: there are no disclosed metrics yet. The first customer counts or ARR disclosure will be the real test of the rebrand ([Chapter 39](../05-ai-storage/39-agentic-ai-and-data-intelligence.md)).
+- **Data Intelligence adoption**: no metrics are disclosed yet; the first customer count or ARR figure will be the real test of the rebrand ([Chapter 39](../05-ai-storage/39-agentic-ai-and-data-intelligence.md)).
 
 ## Numbers that matter
 
