@@ -207,7 +207,6 @@ Signals to watch: a date for 600 TB DFMs, standard SSDs reaching 512 TB, FDP ado
 - **Global FTL** — one flash translation layer for every module in an array.
 - **Log-on-log** — stacked log-structured layers whose GC and write amplification compound.
 - **RAID-HA** — Purity's dual-parity protection across modules.
-- **NVRAM** — persistent, mirrored memory where writes are acknowledged.
 - **FDP** — NVMe Flexible Data Placement: host hints that let drives separate data lifetimes.
 - **Indirection unit** — the granularity an SSD's map tracks; larger units cut DRAM but penalise small writes.
 - **NAND qualification** — characterising a new NAND die so firmware or software can drive it reliably.

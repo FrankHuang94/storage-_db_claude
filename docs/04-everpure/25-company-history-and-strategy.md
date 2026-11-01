@@ -77,7 +77,7 @@ In May 2023 a Pure executive predicted that no new hard drives would be sold aft
 
 On 3 December 2024 Pure announced a DirectFlash design win with a "top-four hyperscaler"[^27]. The FY2025 10-K later named the customer as Meta[^28]. The hyperscaler sources its own hardware and NAND; Pure licenses Purity and DirectFlash technology and provides support[^27]. It is an Arm-style IP licence: Pure trades hardware revenue for margin and reach. Volume deployment began in Q2 FY2026, and the CFO targeted 1–2 EB shipped by the end of that year[^29].
 
-In 2025 Pure also announced FlashBlade//EXA, a disaggregated system for AI-scale throughput, in March[^30]. In June it launched the *Enterprise Data Cloud*, which uses Pure Fusion to present a whole fleet as one policy-driven pool[^31] ([Chapter 28](28-platform-and-software.md)).
+2025 added FlashBlade//EXA for AI-scale throughput (March)[^30] and the *Enterprise Data Cloud*, which uses Fusion to run a fleet as one policy-driven pool (June)[^31] ([Chapter 28](28-platform-and-software.md)).
 
 ```mermaid
 flowchart LR

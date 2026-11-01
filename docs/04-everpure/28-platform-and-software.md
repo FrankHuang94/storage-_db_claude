@@ -61,7 +61,7 @@ Evergreen began in 2015; Evergreen Gold became Evergreen//Forever in the 2022 re
 
 *Table 28.1 — The three Evergreen tiers move risk progressively from the customer (owns and plans) to Everpure (owns, plans and guarantees).*
 
-The enabler is architectural. In a Purity dual-controller array, persistent state (data, metadata, write log) lives on flash modules and NVRAM in the chassis, not in the controllers ([Chapter 14](../03-system-architecture/14-scale-up-dual-controller.md)), so controllers swap one at a time while the partner serves I/O, and media is replaced by adding modules and evacuating old ones. **Semiconductor bridge:** a socket-compatible CPU upgrade where the "board" also holds all the state, so nothing is copied.
+The enabler is architectural. In a Purity dual-controller array, persistent state (data, metadata, write log) lives on flash modules and NVRAM in the chassis, not in the controllers ([Chapter 14](../03-system-architecture/14-scale-up-dual-controller.md)), so controllers swap one at a time while the partner serves I/O, and media is replaced by adding modules and evacuating old ones.
 
 ```mermaid
 flowchart LR
@@ -111,7 +111,7 @@ Watch adoption: over 1,200 Fusion customers against roughly 14,500–15,000 in t
 
 Portworx (acquired October 2020[^4]) pools whatever disks or cloud volumes sit under a Kubernetes cluster and gives containers persistent volumes, replication, snapshots, backup and DR, on any hardware or cloud, or directly on FlashArray. Everpure books Portworx term licences as product revenue and its other offerings as subscription services revenue[^3], so no standalone Portworx revenue figure is public.
 
-Portworx's second act came from Broadcom, which after closing VMware in November 2023 ended perpetual licences and moved customers onto bundles, with reported renewals ranging from cheaper to several times dearer[^25]. Many enterprises began evaluating **KubeVirt**, which runs VMs as Kubernetes objects (often via OpenShift Virtualization). Portworx Enterprise 3.6 (March 2026) added validated KubeVirt frameworks and a VM-readiness tool; customers run over 100,000 VM volumes on it (company-stated)[^26]. Everpure's own IT moved more than 5,000 VMs to KubeVirt on Portworx (company-stated)[^27]. An OpenShift plugin and an Edge SKU followed at Red Hat Summit 2026[^28].
+Portworx's second act came from Broadcom, whose post-2023 VMware licensing changes raised many renewal bills[^25] and pushed enterprises to evaluate **KubeVirt**, which runs VMs as Kubernetes objects (often via OpenShift Virtualization). Portworx Enterprise 3.6 (March 2026) added validated KubeVirt frameworks and a VM-readiness tool; customers run over 100,000 VM volumes on it (company-stated)[^26]. Everpure's own IT moved more than 5,000 VMs to KubeVirt on Portworx (company-stated)[^27]. An OpenShift plugin and an Edge SKU followed at Red Hat Summit 2026[^28].
 
 Everpure hedges the VMware exit both ways: Portworx for Kubernetes, and the May 2025 Nutanix partnership (FlashArray as external AHV storage) for another hypervisor[^29]. Either way the array can stay Everpure.
 
@@ -133,7 +133,7 @@ flowchart LR
 
 *Figure 28.4 — The thesis: the storage layer already knows where every byte is and who touched it; add knowledge of what the bytes mean, and you can sell governance, cyber recovery and AI-ready data from the same graph.*
 
-1touch, announced with the rebrand, closed on 2026-05-07 for $125.0M cash, subject to adjustments and escrow[^3]. As **Everpure Data Intelligence** (GA June 2026)[^10] it discovers structured and unstructured data, classifies it at entity level (flagging PII and PHI) into a semantic knowledge graph, tracks lineage, and enforces attribute-based access and residency policy[^32]. Analysts also describe it as reaching databases, SaaS and third-party storage, not only Everpure arrays[^11]. Native MCP support (September 2026) lets agents query it[^33]. **Data Stream**, on FlashBlade with NVIDIA GPUs and NVIDIA's AI Data Platform reference design, ingests, indexes and vectorises that data for RAG and inference[^34] ([Chapter 39](../05-ai-storage/39-agentic-ai-and-data-intelligence.md), [Chapter 33](../05-ai-storage/33-rag-vector-lakehouse.md)).
+1touch closed on 2026-05-07, the $125.0M subject to adjustments and escrow[^3]. As **Everpure Data Intelligence** (GA June 2026)[^10] it discovers structured and unstructured data, classifies it at entity level (flagging PII and PHI) into a semantic knowledge graph, tracks lineage, and enforces attribute-based access and residency policy[^32]. Analysts also describe it as reaching databases, SaaS and third-party storage, not only Everpure arrays[^11]. Native MCP support (September 2026) lets agents query it[^33]. **Data Stream**, on FlashBlade with NVIDIA GPUs and NVIDIA's AI Data Platform reference design, ingests, indexes and vectorises that data for RAG and inference[^34] ([Chapter 39](../05-ai-storage/39-agentic-ai-and-data-intelligence.md), [Chapter 33](../05-ai-storage/33-rag-vector-lakehouse.md)).
 
 Why a storage company? The array already holds the **inventory** (every volume, file, object, snapshot and access) and sits on the **write path**, so classification can trigger as data lands rather than by weekly crawls, as a catalog above storage must. **Semiconductor bridge:** on-die telemetry sees every transaction; external test equipment only samples.
 
@@ -231,7 +231,6 @@ Timeline sources: All Software Included[^41], Pure1 META[^42], Evergreen//One[^1
 - **KubeVirt** — runs VMs as Kubernetes objects.
 - **Everpure Cloud Dedicated / Azure Native** — customer-managed and fully managed cloud Purity.
 - **Everpure Data Intelligence** — discovery and classification product from 1touch.
-- **Attach rate** — share of customers buying an add-on product.
 - See the [glossary](../glossary.md).
 
 ## Sources

@@ -13,15 +13,13 @@
 
 ## Why this matters for Everpure strategy
 
-VAST, WEKA and DDN ([Chapters 42–45](45-head-to-head.md)) and the incumbents ([Chapter 46](46-incumbents.md)) get the attention. Much of the pressure on Everpure's (NYSE: P, formerly PSTG) margin, though, comes from layers Everpure does not control. Hammerspace and the hyperscalers compete for the *namespace and control plane* above the array. Ceph, MinIO and Lightbits put *software on commodity servers*, which caps what buyers will pay for an integrated system. Nutanix competes for the *platform* that VMware-exit budgets fund. Each tests Everpure's claim that integrated hardware plus Purity and Evergreen beats assembling parts.
-
-Most of these players are private, sub-scale or newly acquired. That makes them possible targets, partners or sales channels, not only rivals ([Chapter 54](../07-history-and-future/54-strategic-option-map.md)).
+VAST, WEKA and DDN ([Chapters 42–45](45-head-to-head.md)) and the incumbents ([Chapter 46](46-incumbents.md)) get the attention, but much of the pressure on Everpure's (NYSE: P, formerly PSTG) margin comes from layers it does not control. Hammerspace and the hyperscalers compete for the *namespace and control plane* above the array. Ceph, MinIO and Lightbits put *software on commodity servers*, which caps what buyers will pay for an integrated system. Nutanix competes for the *platform* that VMware-exit budgets fund. Each tests Everpure's claim that integrated hardware plus Purity and Evergreen beats assembling parts. Most are also private, sub-scale or newly acquired: possible targets, partners or channels ([Chapter 54](../07-history-and-future/54-strategic-option-map.md)).
 
 ## Core concepts
 
 ### A map by architecture
 
-Sort them by the *layer* each one competes for, not by revenue.
+Sort them by the *layer* they compete for.
 
 ```mermaid
 flowchart LR
@@ -96,13 +94,13 @@ flowchart TB
 
 ### Qumulo and VDURA: file specialists that changed their business model
 
-**Qumulo** sells a scale-out NAS with real-time capacity and activity analytics, popular in media, life sciences and research. Under CEO Doug Gourlay (from July 2024) it moved from its own hardware to software for cloud, on-premises and edge[^9]. Its distinctive asset is **Azure Native Qumulo**, a file service sold and billed inside Azure. In June 2026 it added tooling to migrate legacy NAS data into it, aimed at buyers facing hardware shortages[^10]. Its last priced round was a US$125M Series E at US$1.2B in July 2020 (*company-stated*)[^11] [VERIFY: Qumulo funding since 2020]. Customers value its simplicity and visibility across billions of files, more than peak GPU throughput.
+**Qumulo** sells a scale-out NAS with real-time capacity and activity analytics, popular in media, life sciences and research. Under CEO Doug Gourlay (from July 2024) it moved from its own hardware to software for cloud, on-premises and edge[^9]. Its distinctive asset is **Azure Native Qumulo**, a file service sold and billed inside Azure. In June 2026 it added tooling to migrate legacy NAS data into it[^10]. Its last priced round was a US$125M Series E at US$1.2B in July 2020 (*company-stated*)[^11] [VERIFY: Qumulo funding since 2020]. Customers buy simplicity and file analytics, not peak GPU throughput.
 
 **VDURA** is Panasas, rebranded in May 2024 as a software-first company[^12]. In 2025 it relaunched PanFS as an AI/HPC platform aimed at VAST, WEKA and DDN, with a V5000 all-flash appliance and, from March 2026, hybrid flash-plus-disk options[^13]. It claims one of the largest defense GPU installations (*company-stated*)[^14]. It offers lab-proven PanFS and disk economics while flash is dear; its risk is scale [VERIFY: VDURA funding].
 
 ### MinIO: the open-source object store that closed itself
 
-MinIO became the default S3-compatible store for developers, Kubernetes and many neoclouds: a single fast, free binary. It raised US$103M at a US$1B valuation in January 2022, led by Intel Capital[^15]. Then it withdrew the community edition in stages:
+MinIO, a single fast, free binary, became the default S3-compatible store for developers, Kubernetes and many neoclouds. It raised US$103M at a US$1B valuation in January 2022, led by Intel Capital[^15]. Then it withdrew the community edition in stages:
 
 1. **June 2025:** the admin console was removed, leaving a basic object browser; administration moved to the CLI or paid AIStor[^16].
 2. **Late 2025:** official binaries and images stopped updating [VERIFY: reported as October 2025]. On 3 December 2025 the project entered maintenance mode, with security fixes only case by case[^17].
@@ -114,29 +112,29 @@ AIStor itself is serious: it shipped S3 over RDMA in November 2024[^20], and Min
 
 ### Cloudian and Ceph: object for people who want control
 
-**Cloudian HyperStore** is S3-native object storage sold as software or appliances, including through HPE GreenLake, and strong with regulated on-premises buyers. In June 2024 it raised US$23M of growth financing from Morgan Stanley Expansion Capital, citing 30% ARR growth, breakeven and about US$256M raised in total (*company-stated*)[^22]. It was early to GPUDirect for object, claiming over 200 GB/s in November 2024[^23]. Its HyperScale AI Data Platform adds in-storage vector search[^24]; HyperStore 8.2.6 became NVIDIA-Certified (Foundation) in March 2026[^25].
+**Cloudian HyperStore** is S3-native object storage, sold as software, appliances or via HPE GreenLake, strong with regulated on-premises buyers. In June 2024 it raised US$23M of growth financing from Morgan Stanley Expansion Capital, citing 30% ARR growth, breakeven and about US$256M raised in total (*company-stated*)[^22]. It was early to GPUDirect for object (200+ GB/s claimed, November 2024)[^23]. Its HyperScale AI Data Platform adds in-storage vector search[^24]; HyperStore 8.2.6 became NVIDIA-Certified (Foundation) in March 2026[^25].
 
-**Ceph** is the Linux of storage: one open-source system for block (RBD), file (CephFS) and object (RGW), free as code and costly to run well. Clyso tuned a 68-node NVMe cluster past 1 TiB/s, fighting laggy placement groups on the way[^26], which shows both the ceiling and the skill required. It is commercialized three ways:
+**Ceph** is the Linux of storage: one open-source system for block (RBD), file (CephFS) and object (RGW), free as code and costly to run well. Clyso tuned a 68-node NVMe cluster past 1 TiB/s[^26], showing both the ceiling and the skill required. It is commercialized three ways:
 
 - **IBM Storage Ceph**, inherited from Red Hat, with release 9.0 in January 2026[^27].
 - **Software and support specialists**, Croit (management software and support) and Clyso (engineering and consulting).
 - **Hardware integrators** such as 45Drives, which ships servers with its Houston management UI for Ceph deployment[^28].
 
-Think RISC-V: the ISA is free and value goes to whoever makes it reliable. Buyers are telcos, universities, sovereign clouds and neoclouds with engineers to spare.
+Think RISC-V: the ISA is free; value goes to whoever makes it reliable for telcos, universities, sovereign clouds and neoclouds.
 
 ### Block and platform: Lightbits, Infinidat, Nutanix
 
-**Lightbits** sells software-defined block storage over NVMe/TCP, a standard it helped create ([Chapter 7](../02-protocols-and-networking/07-block-protocols.md)), on commodity servers and ordinary Ethernet. Its showcase is Crusoe, whose AI-cloud block service runs on Lightbits at multi-petabyte scale[^29][^30]. Last disclosed funding was US$42M in 2022 (US$105.3M total)[^31]. Neoclouds use it to build EBS-like services.
+**Lightbits** sells software-defined block storage over NVMe/TCP, a standard it helped create ([Chapter 7](../02-protocols-and-networking/07-block-protocols.md)). Crusoe's AI-cloud block service runs on it at multi-petabyte scale[^29][^30]. Last disclosed funding was US$42M in 2022 (US$105.3M total)[^31]. Neoclouds use it to build EBS-like services.
 
-**Infinidat** builds InfiniBox, a high-end block array that serves most reads from DRAM in front of large HDD or flash pools, backed by aggressive guarantees. Lenovo announced the purchase in January 2025 and closed it in April 2026; Infinidat is now a unit of Lenovo's Infrastructure Solutions Group[^32]. Terms were undisclosed, and Calcalist estimated over US$500M (*estimated*)[^33]. The change is distribution: Lenovo's global sales force.
+**Infinidat** builds InfiniBox, a high-end block array serving most reads from DRAM in front of large HDD or flash pools. Lenovo announced the purchase in January 2025 and closed it in April 2026; Infinidat is now a unit of Lenovo's Infrastructure Solutions Group[^32]. Calcalist estimated the undisclosed price at over US$500M (*estimated*)[^33]. What changes is distribution.
 
-**Nutanix** is a platform company. Its storage, Nutanix Unified Storage (Files, Objects, Volumes), ships alongside the AHV hypervisor and NKP, a Kubernetes platform launched in 2024 from the D2iQ acquisition[^34]. The tailwind is Broadcom's VMware licensing changes. Nutanix reported more than 1,000 new logos in fiscal Q2 2026, its best in eight years, mostly ex-VMware [VERIFY: search-summary only][^35], and fiscal 2026 ARR of US$2.55B, up 16%[^36]. The twist is that AHV now accepts external arrays: Dell PowerFlex, Pure Storage FlashArray over NVMe/TCP (May 2025), then NetApp ONTAP and Dell PowerStore[^37][^38]. NUS also became NVIDIA-Certified in 2026[^39].
+**Nutanix** sells a platform: Nutanix Unified Storage (Files, Objects, Volumes) alongside the AHV hypervisor and NKP, its Kubernetes platform built from the D2iQ acquisition (2024)[^34]. Broadcom's VMware licensing changes are the tailwind. Nutanix reported more than 1,000 new logos in fiscal Q2 2026, its best in eight years, mostly ex-VMware [VERIFY: search-summary only][^35], and fiscal 2026 ARR of US$2.55B, up 16%[^36]. AHV now also accepts external arrays: Dell PowerFlex, Pure Storage FlashArray over NVMe/TCP (May 2025), then NetApp ONTAP and Dell PowerStore[^37][^38]. NUS also became NVIDIA-Certified in 2026[^39].
 
 ### The biggest challenger: hyperscaler-native storage
 
-Each hyperscaler sells a full menu: AWS S3, EBS and FSx (Lustre, NetApp ONTAP, OpenZFS, Windows); Azure Blob, Azure NetApp Files and Azure Managed Lustre; Google Cloud Storage and Managed Lustre. S3 alone holds more than 500 trillion objects and serves more than 200 million requests per second across hundreds of exabytes[^40]. They are also moving up the stack: S3 Vectors reached general availability in December 2025[^41].
+Each hyperscaler sells a full menu: AWS S3, EBS and FSx (Lustre, NetApp ONTAP, OpenZFS, Windows); Azure Blob, Azure NetApp Files and Azure Managed Lustre; Google Cloud Storage and Managed Lustre. S3 alone holds more than 500 trillion objects and serves more than 200 million requests per second across hundreds of exabytes[^40]. S3 Vectors (GA December 2025) shows them moving up the stack[^41].
 
-The parallel is custom silicon: Graviton, Trainium and TPU did not beat merchant chips everywhere, but took the workloads already in the cloud. First, clouds rent partner technology as a first-party service when that is faster than building it. Google Cloud Managed Lustre runs on DDN EXAScaler and went GA in July 2025[^42], and NetApp's first-party and marketplace cloud storage revenue grew 27% in fiscal Q3 2026[^43]. Second, cloud services now compete on AI performance. Azure Managed Lustre was the first hyperscale cloud service in MLPerf Storage, at 642.2 GiB/s checkpoint write in v3.0[^44]. Google's DAOS-based Parallelstore is reportedly being phased out for Managed Lustre [VERIFY: partner source only][^45].
+The parallel is custom silicon: Graviton, Trainium and TPU did not beat merchant chips everywhere, but took the workloads already in the cloud. Clouds also rent partner technology as first-party services when that is faster than building. Google Cloud Managed Lustre runs on DDN EXAScaler and went GA in July 2025[^42], and NetApp's first-party and marketplace cloud storage revenue grew 27% in fiscal Q3 2026[^43]. And they compete on AI performance: Azure Managed Lustre was the first hyperscale cloud service in MLPerf Storage, at 642.2 GiB/s checkpoint write in v3.0[^44]. Google's DAOS-based Parallelstore is reportedly being phased out for Managed Lustre [VERIFY: partner source only][^45].
 
 ## How Everpure approaches it vs. competitors
 
@@ -155,7 +153,7 @@ The parallel is custom silicon: Graviton, Trainium and TPU did not beat merchant
 
 *Table 47.1 — The threat ranking follows layer, not size: whoever owns the namespace or the cloud account matters more than another box vendor.*
 
-Everpure's answer differs by layer. Against **hyperscalers**, it puts Purity in the cloud: Pure Storage Cloud Azure Native is a jointly developed managed Azure service[^46]. Its second top-five-hyperscaler DirectFlash design win (August 2026) makes a hyperscaler a customer[^47]. The steelman is NetApp, whose ONTAP is first-party on all three clouds; Everpure has no AWS or Google equivalent. Against **Hammerspace**, FlashBlade//EXA uses the same pNFS idea with Everpure's own metadata engine. The open question is whether Hammerspace is a namespace partner over FlashBlade or a layer that commoditizes it. Against **Ceph, MinIO and Lightbits**, Everpure sells simplicity and Evergreen against "free plus engineers": it wins where staff are scarce and loses where the customer *is* a storage-engineering team. With **Nutanix**, Everpure gains when VMware exits land on AHV with FlashArray, and loses when they land on Nutanix's own storage.
+Against **hyperscalers**, Everpure puts Purity in the cloud: Pure Storage Cloud Azure Native is a jointly developed managed Azure service[^46]. Its second top-five-hyperscaler DirectFlash design win (August 2026) makes a hyperscaler a customer[^47]. The steelman is NetApp, whose ONTAP is first-party on all three clouds; Everpure has no AWS or Google equivalent. Against **Hammerspace**, FlashBlade//EXA uses the same pNFS idea with Everpure's own metadata engine. Is Hammerspace a partner over FlashBlade, or a layer that commoditizes it? Against **Ceph, MinIO and Lightbits**, it sells simplicity and Evergreen against "free plus engineers", winning where staff are scarce. With **Nutanix**, Everpure wins when VMware exits land on AHV with FlashArray.
 
 ## History and trajectory
 
@@ -169,7 +167,7 @@ timeline
 
 *Figure 47.3 — Funding was small and sporadic. The defining events were a strategic acquisition, a licence retreat and the cloud and platform vendors moving in.*
 
-Events in Figure 47.3 are sourced in the sections above. Three signals stand out. **Capital went elsewhere.** Hammerspace's US$100M is the largest disclosed primary raise here, while VAST raised about US$1B in 2026 alone ([Chapter 42](42-vast-data.md)). CB Insights also lists a Hammerspace "Series B-II" in February 2026 with no amount [VERIFY: single aggregator][^48]. Long-lived venture-backed companies without fresh rounds are classic consolidation candidates. **Open source is being monetized harder**, and MinIO's retreat strengthens Ceph as the neutral default. **Platform owners are absorbing storage:** Lenovo bought Infinidat, Nutanix bundles storage with AHV, and the clouds rent Lustre and ONTAP as their own services. Public signals point to more server-vendor and platform acquisitions of sub-scale storage software, and to Hammerspace either listing or being bought; an analyst quoted at its Series B called a sale more likely[^7].
+Three signals stand out. **Capital went elsewhere.** Hammerspace's US$100M is the largest disclosed primary raise here, while VAST raised about US$1B in 2026 alone ([Chapter 42](42-vast-data.md)). CB Insights also lists a Hammerspace "Series B-II" in February 2026 with no amount [VERIFY: single aggregator][^48]. **Open source is being monetized harder**, which strengthens Ceph as the neutral default. **Platform owners are absorbing storage:** Lenovo bought Infinidat, Nutanix bundles storage with AHV, and the clouds rent Lustre and ONTAP as their own services. Expect more platform acquisitions of sub-scale storage software; an analyst quoted at Hammerspace's Series B thought a sale likelier than an IPO[^7].
 
 ## Numbers that matter
 
@@ -205,7 +203,7 @@ Events in Figure 47.3 are sourced in the sections above. Three signals stand out
 - "Hammerspace is an array competitor." It is a namespace layer that can sit on top of Everpure.
 - "Ceph is free." The code is; running it at scale costs engineers, which is what Everpure sells against.
 - "Nutanix is just a competitor." Since May 2025 it is also a FlashArray route to market.
-- "The cloud is just another competitor." It is the default home for new data, and Everpure partners with it.
+- "The cloud is just another competitor." It is the default home for new data.
 
 ## Going deeper (optional, L3 pointers)
 

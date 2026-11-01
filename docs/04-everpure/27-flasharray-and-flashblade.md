@@ -49,7 +49,7 @@ flowchart LR
 
 Sources for the nodes: FA-300 and //m[^8]; //XL[^9]; //E, //X R4 and //C R4[^10]; //XL R5, //ST and //S R2[^11]; //X R5 and //C R5[^12]; //XL190[^13]; EXA[^14].
 
-**Semiconductor bridge.** Read the R-numbers as die shrinks on a stable instruction set. Purity is the ISA. A new controller generation (newer Intel Xeon, more PCIe lanes) is a new stepping. Because Evergreen subscriptions swap controllers in place without moving data ([Chapter 23](../03-system-architecture/23-consumption-models.md)), a 2019 //X customer can be running R5 controllers today. That is why Everpure talks about "generations" more than about product SKUs.
+**Semiconductor bridge.** Read the R-numbers as die shrinks on a stable instruction set. Purity is the ISA. A new controller generation (newer Intel Xeon, more PCIe lanes) is a new stepping. Because Evergreen subscriptions swap controllers in place without moving data ([Chapter 23](../03-system-architecture/23-consumption-models.md)), a 2019 //X customer can be running R5 controllers today.
 
 ### FlashArray: one controller design, five media personalities
 
@@ -60,7 +60,7 @@ Every FlashArray is a two-controller, scale-up system ([Chapter 14](../03-system
 - **//E is the disk-replacement tier.** It launched in June 2023 with 75 TB QLC DFMs and an entry size of about 1 PB[^10].
 - **//ST is the deliberate exception.** It uses commercial PCIe SSDs, not DFMs. It is block-only. It turns off deduplication, compression and synchronous replication to shorten the I/O path. Everpure claims more than 10 million IOPS per 5RU[^16].
 
-**Worked example: what //ST's design choice costs.** Take 400 TB of logical database data that reduces 4:1 on a normal FlashArray. A //X stores it on about 100 TB of physical flash. //ST does not reduce data, so it needs the full 400 TB, roughly four times the NAND. With NAND prices up sharply in 2026 ([Chapter 48](../06-industry-and-competition/48-media-suppliers-and-nand-cycle.md)), //ST makes sense in two cases. One is data that barely reduces anyway: encrypted or already-compressed tablespaces, where the ratio may be near 1:1 and the penalty disappears. The other is a workload where each microsecond has a dollar value, such as trading, large OLTP or log writes.
+**Worked example: what //ST's design choice costs.** Take 400 TB of logical database data that reduces 4:1 on a normal FlashArray. A //X stores it on about 100 TB of physical flash. //ST does not reduce data, so it needs the full 400 TB, roughly four times the NAND. With NAND prices up sharply in 2026 ([Chapter 48](../06-industry-and-competition/48-media-suppliers-and-nand-cycle.md)), //ST makes sense only for data that barely reduces anyway (encrypted or compressed tablespaces near 1:1) or where each microsecond has a dollar value (trading, large OLTP, log writes).
 
 | Model | Target workloads | Media | Performance / capacity tier | Competitor it most often meets |
 |---|---|---|---|---|
@@ -170,7 +170,7 @@ Everpure's portfolio argument is *one software lineage per family, own media eve
 
 *Table 27.3 — Steelman by product line. FlashArray's exposures are breadth (mainframe, NAS heritage). FlashBlade//EXA's are references and certification maturity.*
 
-The strategic pattern is that Everpure is strongest where one OS can be stretched across tiers, as with FlashArray from //ST to //E. It is most exposed where a workload needs an ecosystem badge or a reference customer before it needs a better architecture. At EXA scale, buyers often ask "who runs this on a 10,000-GPU cluster?" before they ask about speed. Options a strategy team might evaluate, based on public information: whether DFM data nodes (closing the media-cost gap) or NCP/SuperPOD certification for EXA (closing the badge gap) matters more to neocloud win rates, and whether //ST and //E justify their SKU complexity or should fold into //X and //C over time.
+Everpure is strongest where one OS stretches across tiers (FlashArray from //ST to //E) and most exposed where buyers want an ecosystem badge or a reference customer first: at EXA scale, "who runs this on 10,000 GPUs?" comes before speed. Options a strategy team might evaluate, based on public information: whether DFM data nodes (closing the media-cost gap) or NCP/SuperPOD certification for EXA (closing the badge gap) matters more to neocloud win rates, and whether //ST and //E justify their SKU complexity or should fold into //X and //C over time.
 
 ## History and trajectory
 
