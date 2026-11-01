@@ -83,7 +83,7 @@ In AI, FlashBlade//S is the workhorse. FlashBlade//S500 earned DGX SuperPOD cert
 
 ### FlashBlade//EXA: metadata core plus data nodes
 
-EXA was announced on March 11, 2025, for AI and HPC at a scale beyond what a FlashBlade//S cluster reaches[^14], and declared generally available at Accelerate in June 2025[^42]. The design starts from a diagnosis: at thousands of GPUs, the bottleneck is metadata and coordination, not raw media bandwidth ([Chapter 21](../03-system-architecture/21-metadata.md)). EXA therefore splits the system into two independently scaled tiers[^17][^22]:
+EXA was announced on March 11, 2025, for AI and HPC at a scale beyond what a FlashBlade//S cluster reaches[^14], and declared generally available at Accelerate in June 2025[^22]. The design starts from a diagnosis: at thousands of GPUs, the bottleneck is metadata and coordination, not raw media bandwidth ([Chapter 21](../03-system-architecture/21-metadata.md)). EXA therefore splits the system into two independently scaled tiers[^17][^22]:
 
 ```mermaid
 flowchart LR
@@ -129,28 +129,28 @@ sequenceDiagram
 
 *Figure 27.3 — The pNFS read path: one metadata round trip, then many parallel direct transfers. This is the parallel-file-system pattern of [Chapter 17](../03-system-architecture/17-parallel-file-systems.md) with Purity as the metadata server.*
 
-Clients speak standard pNFS. Metadata travels as NFSv4.1 over TCP, and data moves over RDMA[^22]. No proprietary client driver is needed, which helps in locked-down GPU images. That is a fair point against WEKA and Lustre, whose clients buy finer client-side control in exchange; VAST makes the same standard-client argument with NFS over RDMA. Two consequences matter for the portfolio. First, EXA's data-node hardware is customer-sourceable, which helps neoclouds with server supply deals. Second, EXA's data services, including protection, reduction and multi-tenancy, mature on a separate release train (Purity//DN) from Purity//FB[^23]. Multi-tenancy and QoS for neoclouds arrived at Accelerate 2026 in June[^27].
+Clients speak standard pNFS. Metadata travels as NFSv4.1 over TCP, and data moves over RDMA[^27]. No proprietary client driver is needed, which helps in locked-down GPU images. That is a fair point against WEKA and Lustre, whose clients buy finer client-side control in exchange; VAST makes the same standard-client argument with NFS over RDMA. Two consequences matter for the portfolio. First, EXA's data-node hardware is customer-sourceable, which helps neoclouds with server supply deals. Second, EXA's data services, including protection, reduction and multi-tenancy, mature on a separate release train (Purity//DN) from Purity//FB[^23]. Multi-tenancy and QoS for neoclouds arrived at Accelerate 2026 in June[^28].
 
 ### What the benchmarks actually measured
 
-MLPerf Storage emulates accelerators in software. A run passes if the storage keeps every simulated GPU above a utilisation threshold. No real GPUs are involved ([Chapter 37](../05-ai-storage/37-reading-benchmarks.md))[^28]. Round v3.0, published September 1, 2026, moved the simulated accelerator from H100 to B200. It also added KV-cache and vector-database workloads[^29]. Everpure was one of 11 first-time submitters[^29]; DDN, Dell, Huawei, IBM, NetApp, VAST and WEKA were absent[^43]. Earlier "v2.0 results" from Pure Storage were a white paper, not an MLCommons-listed entry[^30] [VERIFY: whether any v2.0 result was officially submitted].
+MLPerf Storage emulates accelerators in software. A run passes if the storage keeps every simulated GPU above a utilisation threshold. No real GPUs are involved ([Chapter 37](../05-ai-storage/37-reading-benchmarks.md))[^29]. Round v3.0, published September 1, 2026, moved the simulated accelerator from H100 to B200. It also added KV-cache and vector-database workloads[^30]. Everpure was one of 11 first-time submitters[^30]; DDN, Dell, Huawei, IBM, NetApp, VAST and WEKA were absent[^31]. Earlier "v2.0 results" from Pure Storage were a white paper, not an MLCommons-listed entry[^32] [VERIFY: whether any v2.0 result was officially submitted].
 
 ![Bar chart of FlashBlade//EXA checkpoint write bandwidth in MLPerf Storage v3.0: 327.65 GiB/s at 10 data nodes, 484.1 at 15, 655.6 at 20 and 877.52 at 30, against a dashed line for perfectly linear scaling from the 10-node point; per-node throughput falls from about 32.8 to 29.3 GiB/s at 30 nodes.](../assets/charts/ch27-mlperf-checkpoint-scaling.svg)
 
 *Figure 27.4 — Checkpoint write scales nearly linearly with data nodes, but at 30 nodes per-node throughput is about 11% below the 10-node rate.*
 Data: `data/ch27_mlperf_checkpoint_scaling.csv`
 
-**Worked check on the headline.** Everpure reported 877.52 GiB/s for 17.74 seconds on the largest checkpoint model[^31]. That is 877.52 × 17.74 ≈ 15,570 GiB, or about 16.7 TB. That fits the round's 1.25-trillion-parameter checkpoint at about 13 bytes per parameter for weights plus optimizer state ([Chapter 31](../05-ai-storage/31-training-storage.md)). Scaling efficiency is (877.52 ÷ 30) ÷ (327.65 ÷ 10) = 29.25 ÷ 32.77 ≈ **89%**. In converted units, 877.52 GiB/s × 1.074 ≈ 942 GB/s. A cluster checkpointing every 30 minutes would stall for about 17.74 ÷ 1,800 ≈ 1% of wall-clock time, before any asynchronous checkpointing.
+**Worked check on the headline.** Everpure reported 877.52 GiB/s for 17.74 seconds on the largest checkpoint model[^33]. That is 877.52 × 17.74 ≈ 15,570 GiB, or about 16.7 TB. That fits the round's 1.25-trillion-parameter checkpoint at about 13 bytes per parameter for weights plus optimizer state ([Chapter 31](../05-ai-storage/31-training-storage.md)). Scaling efficiency is (877.52 ÷ 30) ÷ (327.65 ÷ 10) = 29.25 ÷ 32.77 ≈ **89%**. In converted units, 877.52 GiB/s × 1.074 ≈ 942 GB/s. A cluster checkpointing every 30 minutes would stall for about 17.74 ÷ 1,800 ≈ 1% of wall-clock time, before any asynchronous checkpointing.
 
 | Claim | Benchmark | Date | Configuration | Caveat |
 |---|---|---|---|---|
-| 877.5 GiB/s checkpoint write, top of round | MLPerf Storage v3.0, checkpointing | 2026-09-01 | 30 EXA blades (120 DFMs, metadata) + 30 Linux/NVMe data nodes, ~866 TB usable[^26] | VAST, WEKA, DDN absent. Data nodes are not DFMs. Reported read figure conflicts (588.3 vs 833.0 GiB/s)[^26][^31] |
+| 877.5 GiB/s checkpoint write, top of round | MLPerf Storage v3.0, checkpointing | 2026-09-01 | 30 EXA blades (120 DFMs, metadata) + 30 Linux/NVMe data nodes, ~866 TB usable[^26] | VAST, WEKA, DDN absent. Data nodes are not DFMs. Reported read figure conflicts (588.3 vs 833.0 GiB/s)[^26][^33] |
 | Near-linear scaling, 327.6 → 877.5 GiB/s | Same | 2026-09-01 | 10 → 30 data nodes | Per-node rate down ~11%. 15- and 20-node points from one secondary source |
 | 1,623.4 GiB/s KV-cache read | MLPerf Storage v3.0, KV cache | 2026-09-01 | 51-host EXA configuration[^26] | First round of a new workload. Next results ~443 GiB/s (UBIX, FarmGPU). Host vs node counts unclear |
-| 85,736 tokens/s (Llama 3.1 8B), 33,403 (70B), storage-only | MLPerf Storage v3.0, KV cache | 2026-09-01 | Not stated in coverage[^32] | Tokens a storage system can feed, not a GPU serving rate. "#1 on every test entered" is Everpure's framing |
-| 6,300 AI_Jobs at 0.97 ms, #1 | SPECstorage Solution 2020 AI_IMAGE | Tested Jan 2026, published 2026-02-17 | 30 S500R1-EXA blades, 60 data nodes, 80 hosts[^23] | Displaced HPE/WEKA (5,000)[^33]. Image-training proxy with few submitters |
-| >10 TB/s read, single namespace | Everpure preliminary testing | 2025-03-11 | Not disclosed[^34] | Vendor test, unaudited |
-| >5 TB/s read with 60 data nodes | Everpure technical brief | 2025 | 60 data nodes[^35] | Vendor test. ≥83 GB/s per node |
+| 85,736 tokens/s (Llama 3.1 8B), 33,403 (70B), storage-only | MLPerf Storage v3.0, KV cache | 2026-09-01 | Not stated in coverage[^34] | Tokens a storage system can feed, not a GPU serving rate. "#1 on every test entered" is Everpure's framing |
+| 6,300 AI_Jobs at 0.97 ms, #1 | SPECstorage Solution 2020 AI_IMAGE | Tested Jan 2026, published 2026-02-17 | 30 S500R1-EXA blades, 60 data nodes, 80 hosts[^23] | Displaced HPE/WEKA (5,000)[^35]. Image-training proxy with few submitters |
+| >10 TB/s read, single namespace | Everpure preliminary testing | 2025-03-11 | Not disclosed[^36] | Vendor test, unaudited |
+| >5 TB/s read with 60 data nodes | Everpure technical brief | 2025 | 60 data nodes[^37] | Vendor test. ≥83 GB/s per node |
 | Up to 20× faster time to first token (PureKVA) | Everpure internal | 2026-09-30 | Not published[^18] | "Up to"; baseline presumably recompute |
 
 *Table 27.2 — Benchmark claims for FlashBlade//EXA. The audited results are strong, but they come from rounds the main AI-native rivals skipped, on third-party data nodes.*
@@ -164,9 +164,9 @@ Everpure's portfolio argument is *one software lineage per family, own media eve
 | FlashArray//XL | In-place controller upgrades, high reduction, operational simplicity | Mainframe (FICON) attachment and decades of multi-site replication practice; FlashArray has no mainframe answer | Dell PowerMax, Hitachi VSP, IBM DS8000 |
 | FlashArray//X, //C | DFM density, shared controllers, block + file + S3 on one OS | NAS depth and installed base (ONTAP replication, caching, multiprotocol); FlashArray file services are younger | NetApp |
 | FlashArray//ST | Microsecond-class latency with array-grade availability | Server-local NVMe with database-native replication beats any networked array on latency and cost for one application | DIY / HCI |
-| //E and FlashBlade//E | Power, footprint and flash reliability for "cold" data | Raw $/TB. QLC was roughly 15× HDD per GB in 2026 per TrendForce[^36] [VERIFY: single-vendor-derived index] | HDD object and hybrid arrays |
+| //E and FlashBlade//E | Power, footprint and flash reliability for "cold" data | Raw $/TB. QLC was roughly 15× HDD per GB in 2026 per TrendForce[^38] [VERIFY: single-vendor-derived index] | HDD object and hybrid arrays |
 | FlashBlade//S | SuperPOD-certified scale-out file/object with Evergreen | PowerScale's installed base and mixed flash/HDD tiers in one cluster; VAST's global similarity reduction and database features | Dell, VAST |
-| FlashBlade//EXA | Purity metadata engine, standard pNFS client, customer-sourced data nodes, top v3.0 results | NVIDIA flagship references (DDN's ~4 TB/s on Eos)[^37]; WEKA's software-anywhere and cloud reach; VAST's neocloud scale (US$1.17B CoreWeave deal, *reported by press*)[^38]; SuperPOD certification held by all three | VAST, WEKA, DDN |
+| FlashBlade//EXA | Purity metadata engine, standard pNFS client, customer-sourced data nodes, top v3.0 results | NVIDIA flagship references (DDN's ~4 TB/s on Eos)[^39]; WEKA's software-anywhere and cloud reach; VAST's neocloud scale (US$1.17B CoreWeave deal, *reported by press*)[^40]; SuperPOD certification held by all three | VAST, WEKA, DDN |
 
 *Table 27.3 — Steelman by product line. FlashArray's exposures are breadth (mainframe, NAS heritage). FlashBlade//EXA's are references and certification maturity.*
 
@@ -176,7 +176,7 @@ Everpure is strongest where one OS stretches across tiers (FlashArray from //ST 
 
 The portfolio grew by forking, not acquiring (Figure 27.1), and the forks track the NAND roadmap: QLC density made //C and //E viable, and the 75 → 150 → 300 TB DFM progression ([Chapter 26](26-purity-and-directflash.md)) lets the capacity tiers compete with disk.
 
-Signals for 2026–2027: in March 2026 Everpure said NVIDIA-Certified Storage validation extended to EXA, with NCP certification "later this year"[^39], and aligned EXA with NVIDIA's BlueField-4 STX reference architecture[^40]. PureKVA and always-on DeepReduce were announced on 30 September 2026[^18]. The first enterprise EXA customer was reported in Q4 FY26[^41]. Watch for three things: DFM data-node GA, NCP and SuperPOD badges for EXA, and an MLPerf v4.0 round that VAST, WEKA or DDN actually enter.
+Signals for 2026–2027: in March 2026 Everpure said NVIDIA-Certified Storage validation extended to EXA, with NCP certification "later this year"[^41], and aligned EXA with NVIDIA's BlueField-4 STX reference architecture[^42]. PureKVA and always-on DeepReduce were announced on 30 September 2026[^18]. The first enterprise EXA customer was reported in Q4 FY26[^43]. Watch for three things: DFM data-node GA, NCP and SuperPOD badges for EXA, and an MLPerf v4.0 round that VAST, WEKA or DDN actually enter.
 
 ## Numbers that matter
 
@@ -185,7 +185,7 @@ Signals for 2026–2027: in March 2026 Everpure said NVIDIA-Certified Storage va
 | FlashArray launch | May 2012 | First product, with "All Software Included" licensing | S-1, 2015[^2] |
 | FlashArray//XL R5 | Up to 7.4 PB effective; 45 GB/s (512 KB read) | Top scale-up block | Datasheet[^15] |
 | FlashArray//ST | >10 M IOPS per 5RU | No dedupe or compression | Everpure, 2025[^16] |
-| EXA checkpoint write | 877.52 GiB/s (≈942 GB/s) | 30 data nodes, MLPerf v3.0 | 2026-09[^31] |
+| EXA checkpoint write | 877.52 GiB/s (≈942 GB/s) | 30 data nodes, MLPerf v3.0 | 2026-09[^33] |
 | EXA scaling efficiency, 10 → 30 nodes | ≈89% | 29.25 vs 32.77 GiB/s per node | Worked example |
 | EXA KV-cache read | 1,623.4 GiB/s | 51-host configuration | 2026-09[^26] |
 | SPECstorage AI_IMAGE | 6,300 AI_Jobs, 0.97 ms | 60 data nodes | SPEC, 2026-02[^23] |
@@ -196,9 +196,9 @@ Signals for 2026–2027: in March 2026 Everpure said NVIDIA-Certified Storage va
 
 **Questions for a PM**
 
-1. *"Where does //ST win deals that //XL190 with Purity Turbo would lose, and how big is that pool?"* A strong answer separates latency-bound from IOPS-bound buyers. It gives data-reduction ratios at which //ST's lack of reduction stops mattering, and it admits any overlap with //XL.
-2. *"What share of EXA pipeline needs DFM data nodes or NCP certification before signing?"* A strong answer splits enterprise from neocloud buyers, names the gating requirement for each, and gives a date for each gate.
-3. *"Which competitor shows up most against FlashBlade//E, and on what metric do we lose?"* A strong answer says HDD-based object on $/TB, and then gives the power, rack and refresh numbers that flip total cost of ownership at a stated capacity and term.
+1. *"Where does //ST win deals that //XL190 with Purity Turbo would lose, and how big is that pool?"* Strong: separates latency-bound from IOPS-bound buyers, gives the reduction ratio at which //ST's lack of reduction stops mattering, and admits overlap with //XL.
+2. *"What share of EXA pipeline needs DFM data nodes or NCP certification before signing?"* Strong: splits enterprise from neocloud buyers, with the gating requirement and a date for each.
+3. *"Which competitor shows up most against FlashBlade//E, and on what metric do we lose?"* Strong: HDD-based object on $/TB, plus the power, rack and refresh numbers that flip TCO at a stated capacity and term.
 
 **Questions for an engineer**
 
@@ -219,7 +219,6 @@ Signals for 2026–2027: in March 2026 Everpure said NVIDIA-Certified Storage va
 - The MLCommons v3.0 results tables and Everpure's submission system description (closed division, per-workload configurations).
 - The SPECstorage Solution 2020 full disclosure for the EXA result (Purity//FB 4.6.4, Purity//DN 1.0, network topology).
 - RFC 8881 (NFSv4.1) on pNFS layouts, and RFC 8435 (Flex Files), for the client path in Figure 27.3.
-- Everpure FlashBlade//EXA technical brief and terms of use (data-node licensing).
 
 ## Key terms
 
@@ -253,25 +252,25 @@ Signals for 2026–2027: in March 2026 Everpure said NVIDIA-Certified Storage va
 [^19]: Blocks & Files, "Pure Storage's FlashBlade//S500 gains Nvidia SuperPOD certification," 2024-11-18. https://www.blocksandfiles.com/ai-ml/2024/11/18/pure-storages-flashblade/s500-gains-nvidia-superpod-certification/1598641 (retrieved 2026-11-01).
 [^20]: Blocks & Files, "Pure Storage expands AI capabilities with Nvidia certification," 2025-03-19. https://www.blocksandfiles.com/ai-ml/2025/03/19/pure-storage-expands-ai-capabilities-with-nvidia-certification/1595136 (retrieved 2026-11-01).
 [^21]: Everpure blog, "Pure Storage NVIDIA certification for DGX GB200 and GB300 SuperPODs," n.d. https://blog.everpuredata.com/purely-technical/pure-storage-nvidia-certification-dgx-gb200-gb300-superpods/ (retrieved 2026-11-01).
-[^22]: Blocks & Files, "How Pure Storage developed its disaggregated FlashBlade//EXA system," 2025-04-17. https://blocksandfiles.com/2025/04/17/how-pure-storage-developed-its-disaggregated-flashblade-exa-system/ (retrieved 2026-11-01).
+[^22]: TechRepublic, "Pure Storage is 'Reinventing Storage for AI'" (Accelerate 2025 keynote, FlashBlade//EXA general availability), 2025-06-19. https://www.techrepublic.com/article/news-pure-storage-event-keynote-flashblade-exa/ (retrieved via search 2026-11-01).
 [^23]: SPEC, "SPECstorage Solution 2020_ai_image Result: Pure Storage FlashBlade//EXA (storage2020-20260130-00145)," published 2026-02-17. https://www.spec.org/storage2020/results/res2026q1/storage2020-20260130-00145.html (retrieved 2026-11-01).
 [^24]: Everpure, "FlashBlade//EXA Terms of Use," n.d. https://www.everpuredata.com/legal/flashblade-exa-terms-of-use.html (retrieved 2026-11-01).
 [^25]: NAND Research, "Research Note: Pure Storage FlashBlade//EXA," 2025-03. https://nand-research.com/research-note-pure-storage-flashblade-exa/ (retrieved 2026-11-01).
 [^26]: StorageReview, "MLPerf Storage v3.0: 877 GiB/s checkpoints, a cloud first and a leaderboard turned over," 2026-09. https://storagereview.com/news/mlperf-storage-v3-0-877-gib-s-checkpoints-a-cloud-first-and-a-leaderboard-turned-over (retrieved 2026-11-01).
-[^27]: TechTarget, "7 highlights from Pure Accelerate 2026," 2026-06. https://www.techtarget.com/it-infrastructure/opinion/7-highlights-from-Pure-Accelerate-2026 (retrieved 2026-11-01); Everpure blog, "Meet FlashBlade//EXA: the AI Data Platform for Scale," 2026-06. https://blog.everpuredata.com/products/meet-flashblade-exa-the-ai-data-platform-for-scale/ (retrieved 2026-11-01).
-[^28]: HPCwire, "The New MLPerf Storage Benchmark Runs Without ML Accelerators," 2024-10-03. https://www.hpcwire.com/2024/10/03/the-new-mlperf-storage-benchmark-runs-without-ml-accelerators/ (retrieved 2026-11-01).
-[^29]: MLCommons via GlobeNewswire, "MLCommons Releases New MLPerf Storage v3.0 Benchmark Results," 2026-09-01. https://www.globenewswire.com/news-release/2026/09/01/3354412/0/en/mlcommons-releases-new-mlperf-storage-v3-0-benchmark-results.html (retrieved 2026-11-01).
-[^30]: Everpure, "FlashBlade//EXA MLPerf Storage v2.0 Test Results" (white paper), n.d. https://www.everpuredata.com/content/dam/pdf/en/white-papers/twp-flashblade-exa-mlperf-storage-v2-0-test-results.pdf (retrieved 2026-11-01).
-[^31]: HPCwire (Everpure release), "Everpure Leads MLPerf Storage Tests for Large Model Checkpointing and KV Cache," 2026-09-02. https://hpcwire.com/off-the-wire/everpure-leads-mlperf-storage-tests-for-large-model-checkpointing-and-kv-cache (retrieved 2026-11-01).
-[^32]: Everpure blog, "Everpure FlashBlade//EXA Tops MLPerf Storage v3.0 Checkpointing and KV cache Benchmarks," 2026-09. https://blog.everpuredata.com/purely-technical/everpure-flashblade-exa-tops-mlperf-storage-v3-benchmarks/ (retrieved 2026-11-01).
-[^33]: Blocks & Files, "Everpure tops SPECstorage Solution 2020 AI IMAGE benchmark charts," 2026-03-13. https://www.blocksandfiles.com/flash/2026/03/13/everpure-tops-specstorage-solution-2020-ai-image-benchmark-charts/5209245 (retrieved 2026-11-01).
-[^34]: StorageReview, "FlashBlade//EXA: Pure Storage's new AI/HPC powerhouse with 10 TB/s performance," 2025-03-11. https://www.storagereview.com/news/flashblade-exa-pure-storages-new-ai-hpc-powerhouse-with-10-tb-s-performance (retrieved 2026-11-01).
-[^35]: Everpure, "Technical Brief: FlashBlade//EXA," n.d. (2025). https://www.everpuredata.com/content/dam/pdf/en/technical-briefs/tb-flashblade-exa.pdf (retrieved 2026-11-01).
-[^36]: DatacenterDisk, "The SSD/HDD Price Divergence Report 2026," 2026 (citing TrendForce). https://datacenterdisk.com/reports/ssd-hdd-price-divergence-2026 (retrieved 2026-11-01).
-[^37]: DDN, "DDN Delivers 4 Terabytes/Second of Accelerated Storage Performance in Groundbreaking NVIDIA Eos AI Supercomputer," 2024-03. https://www.ddn.com/press-releases/ddn-delivers-4-terabytes-second-of-accelerated-storage-performance-in-groundbreaking-nvidia-eos-ai-supercomputer/ (retrieved 2026-11-01).
-[^38]: Reuters (via AOL), "Exclusive: Nvidia-backed Vast Data inks $1.17 billion AI deal with CoreWeave," 2025-11-06. https://www.aol.com/articles/exclusive-nvidia-backed-vast-data-120456403.html (retrieved 2026-11-01).
-[^39]: Blocks & Files, "Everpure dives deeper into AI," 2026-03-16. https://www.blocksandfiles.com/ai-ml/2026/03/16/everpure-dives-deeper-into-ai/5209351 (retrieved 2026-11-01).
-[^40]: StorageReview, "Everpure aligns FlashBlade//EXA with NVIDIA AI Factory architectures, previews Data Stream," 2026-03-16. https://www.storagereview.com/news/everpure-aligns-flashblade-exa-with-nvidia-ai-factory-architectures-previews-data-stream (retrieved 2026-11-01).
-[^41]: Futurum, "Everpure Q4 FY 2026 Revenue Passes $1 Billion as Platform Strategy Scales," 2026-02. https://futurumgroup.com/insights/everpure-q4-fy-2026-revenue-passes-1-billion-as-platform-strategy-scales (retrieved 2026-11-01).
-[^42]: TechRepublic, "Pure Storage is 'Reinventing Storage for AI'" (Accelerate 2025 keynote, FlashBlade//EXA general availability), 2025-06-19. https://www.techrepublic.com/article/news-pure-storage-event-keynote-flashblade-exa/ (retrieved via search 2026-11-01).
-[^43]: Blocks & Files, "MLPerf Storage benchmark updated for modern AI," 2026-09-01. https://www.blocksandfiles.com/ai-ml/2026/09/01/mlperf-storage-benchmark-updated-for-modern-ai/5293617 (retrieved via search 2026-11-01).
+[^27]: Blocks & Files, "How Pure Storage developed its disaggregated FlashBlade//EXA system," 2025-04-17. https://blocksandfiles.com/2025/04/17/how-pure-storage-developed-its-disaggregated-flashblade-exa-system/ (retrieved 2026-11-01).
+[^28]: TechTarget, "7 highlights from Pure Accelerate 2026," 2026-06. https://www.techtarget.com/it-infrastructure/opinion/7-highlights-from-Pure-Accelerate-2026 (retrieved 2026-11-01); Everpure blog, "Meet FlashBlade//EXA: the AI Data Platform for Scale," 2026-06. https://blog.everpuredata.com/products/meet-flashblade-exa-the-ai-data-platform-for-scale/ (retrieved 2026-11-01).
+[^29]: HPCwire, "The New MLPerf Storage Benchmark Runs Without ML Accelerators," 2024-10-03. https://www.hpcwire.com/2024/10/03/the-new-mlperf-storage-benchmark-runs-without-ml-accelerators/ (retrieved 2026-11-01).
+[^30]: MLCommons via GlobeNewswire, "MLCommons Releases New MLPerf Storage v3.0 Benchmark Results," 2026-09-01. https://www.globenewswire.com/news-release/2026/09/01/3354412/0/en/mlcommons-releases-new-mlperf-storage-v3-0-benchmark-results.html (retrieved 2026-11-01).
+[^31]: Blocks & Files, "MLPerf Storage benchmark updated for modern AI," 2026-09-01. https://www.blocksandfiles.com/ai-ml/2026/09/01/mlperf-storage-benchmark-updated-for-modern-ai/5293617 (retrieved via search 2026-11-01).
+[^32]: Everpure, "FlashBlade//EXA MLPerf Storage v2.0 Test Results" (white paper), n.d. https://www.everpuredata.com/content/dam/pdf/en/white-papers/twp-flashblade-exa-mlperf-storage-v2-0-test-results.pdf (retrieved 2026-11-01).
+[^33]: HPCwire (Everpure release), "Everpure Leads MLPerf Storage Tests for Large Model Checkpointing and KV Cache," 2026-09-02. https://hpcwire.com/off-the-wire/everpure-leads-mlperf-storage-tests-for-large-model-checkpointing-and-kv-cache (retrieved 2026-11-01).
+[^34]: Everpure blog, "Everpure FlashBlade//EXA Tops MLPerf Storage v3.0 Checkpointing and KV cache Benchmarks," 2026-09. https://blog.everpuredata.com/purely-technical/everpure-flashblade-exa-tops-mlperf-storage-v3-benchmarks/ (retrieved 2026-11-01).
+[^35]: Blocks & Files, "Everpure tops SPECstorage Solution 2020 AI IMAGE benchmark charts," 2026-03-13. https://www.blocksandfiles.com/flash/2026/03/13/everpure-tops-specstorage-solution-2020-ai-image-benchmark-charts/5209245 (retrieved 2026-11-01).
+[^36]: StorageReview, "FlashBlade//EXA: Pure Storage's new AI/HPC powerhouse with 10 TB/s performance," 2025-03-11. https://www.storagereview.com/news/flashblade-exa-pure-storages-new-ai-hpc-powerhouse-with-10-tb-s-performance (retrieved 2026-11-01).
+[^37]: Everpure, "Technical Brief: FlashBlade//EXA," n.d. (2025). https://www.everpuredata.com/content/dam/pdf/en/technical-briefs/tb-flashblade-exa.pdf (retrieved 2026-11-01).
+[^38]: DatacenterDisk, "The SSD/HDD Price Divergence Report 2026," 2026 (citing TrendForce). https://datacenterdisk.com/reports/ssd-hdd-price-divergence-2026 (retrieved 2026-11-01).
+[^39]: DDN, "DDN Delivers 4 Terabytes/Second of Accelerated Storage Performance in Groundbreaking NVIDIA Eos AI Supercomputer," 2024-03. https://www.ddn.com/press-releases/ddn-delivers-4-terabytes-second-of-accelerated-storage-performance-in-groundbreaking-nvidia-eos-ai-supercomputer/ (retrieved 2026-11-01).
+[^40]: Reuters (via AOL), "Exclusive: Nvidia-backed Vast Data inks $1.17 billion AI deal with CoreWeave," 2025-11-06. https://www.aol.com/articles/exclusive-nvidia-backed-vast-data-120456403.html (retrieved 2026-11-01).
+[^41]: Blocks & Files, "Everpure dives deeper into AI," 2026-03-16. https://www.blocksandfiles.com/ai-ml/2026/03/16/everpure-dives-deeper-into-ai/5209351 (retrieved 2026-11-01).
+[^42]: StorageReview, "Everpure aligns FlashBlade//EXA with NVIDIA AI Factory architectures, previews Data Stream," 2026-03-16. https://www.storagereview.com/news/everpure-aligns-flashblade-exa-with-nvidia-ai-factory-architectures-previews-data-stream (retrieved 2026-11-01).
+[^43]: Futurum, "Everpure Q4 FY 2026 Revenue Passes $1 Billion as Platform Strategy Scales," 2026-02. https://futurumgroup.com/insights/everpure-q4-fy-2026-revenue-passes-1-billion-as-platform-strategy-scales (retrieved 2026-11-01).

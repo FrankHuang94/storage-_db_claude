@@ -56,12 +56,12 @@ flowchart LR
 
 What is public, in date order:
 
-- **Design win (December 2024).** With its Q3 FY25 results, Pure Storage announced a DirectFlash design win with an unnamed top-four hyperscaler. Hardware was excluded: the customer buys from its integrator, and Pure earns licence, software and support fees[^8][^9]. Analysts identified the customer as Meta; the CEO cited Meta's choice of DFMs at the March 2025 FlashBlade//EXA launch[^10], and the FY2025 10-K names Meta[^46].
-- **Volume (FY26).** Pure recognised its first revenue in Q2 FY26. The FY26 plan assumed 1–2 EB of DirectFlash deployed[^11], and by Q3 FY26 Pure said it had beaten its 2 EB forecast[^4]. For scale, 2 EB is about 26,700 modules at 75 TB or 13,300 at 150 TB (deployed sizes undisclosed).
+- **Design win (December 2024).** With its Q3 FY25 results, Pure Storage announced a DirectFlash design win with an unnamed top-four hyperscaler. Hardware was excluded: the customer buys from its integrator, and Pure earns licence, software and support fees[^8][^9]. Analysts identified the customer as Meta; the CEO cited Meta's choice of DFMs at the March 2025 FlashBlade//EXA launch[^10], and the FY2025 10-K names Meta[^11].
+- **Volume (FY26).** Pure recognised its first revenue in Q2 FY26. The FY26 plan assumed 1–2 EB of DirectFlash deployed[^12], and by Q3 FY26 Pure said it had beaten its 2 EB forecast[^4]. For scale, 2 EB is about 26,700 modules at 75 TB or 13,300 at 150 TB (deployed sizes undisclosed).
 - **Standardised model (February 2026).** Management said hyperscale terms were now standard: Everpure procures some components, and hyperscalers keep buying NAND through their own supply chains. Revenue follows data-centre build-outs, with most of FY27's expected in Q3–Q4[^13]. [VERIFY: search-summary only]
 - **Second hyperscaler (2026-08-10).** Everpure announced a design win and supply agreement with a second unnamed top-five hyperscaler, built on DirectFlash. It contributes little to FY27 and is expected to matter from FY28[^14][^15]. Management said it mirrors the first, and that DirectFlash is mostly replacing SSDs, not disks, for now[^16]. The release itself warns that the customer may not order or deploy the volumes contemplated[^14].
 
-**Worked example (illustrative): why hyperscale lifts margin only at scale.** Everpure does not disclose hyperscale gross margin. Analyst commentary puts it around 75–85% (some notes say above 90% for pure royalties)[^17] [VERIFY: analyst estimates, search-summary only]. Suppose hyperscale is 5% of quarterly revenue at 85% GM and everything else runs at Q2 FY27's 69.9% non-GAAP GM[^18]. Blended GM = 0.95 × 69.9% + 0.05 × 85% = 66.4% + 4.25% ≈ **70.7%**, a lift of about 0.8 points. At a 10% share it is 0.90 × 69.9% + 0.10 × 85% ≈ **71.4%**. Hyperscale moves the blend only at double-digit revenue share. Q3 FY26 is the real-world version: royalties helped lift non-GAAP product GM to 72.9% (from 67.4%) and GAAP GM to 72.3%[^4][^47]. But management said the newer models, with Everpure supplying components, bring hyperscale margins closer to the company average[^47], so 85% is an upper case.
+**Worked example (illustrative): why hyperscale lifts margin only at scale.** Everpure does not disclose hyperscale gross margin. Analyst commentary puts it around 75–85% (some notes say above 90% for pure royalties)[^17] [VERIFY: analyst estimates, search-summary only]. Suppose hyperscale is 5% of quarterly revenue at 85% GM and everything else runs at Q2 FY27's 69.9% non-GAAP GM[^18]. Blended GM = 0.95 × 69.9% + 0.05 × 85% = 66.4% + 4.25% ≈ **70.7%**, a lift of about 0.8 points. At a 10% share it is 0.90 × 69.9% + 0.10 × 85% ≈ **71.4%**. Hyperscale moves the blend only at double-digit revenue share. Q3 FY26 is the real-world version: royalties helped lift non-GAAP product GM to 72.9% (from 67.4%) and GAAP GM to 72.3%[^4][^19]. But management said the newer models, with Everpure supplying components, bring hyperscale margins closer to the company average[^19], so 85% is an upper case.
 
 ### Subscription ARR and RPO: what the backlog says
 
@@ -75,7 +75,7 @@ Data: `data/ch29_arr.csv`
 How to read it:
 
 - **Growth rate.** (2.13 ÷ 1.10)^(1/3.5 years) ≈ 1.21, about 21% a year[^3][^1].
-- **The RPO step.** RPO grew 40% in FY26 (14% in FY25) on large deals and longer Evergreen contracts[^19]. Some growth was borrowed: longer renewals slowed ARR growth to 16% and net dollar retention fell from 117% to 113%[^20].
+- **The RPO step.** RPO grew 40% in FY26 (14% in FY25) on large deals and longer Evergreen contracts[^20]. Some growth was borrowed: longer renewals slowed ARR growth to 16% and net dollar retention fell from 117% to 113%[^21].
 - **Sanity check.** Q2 subscription revenue of $499M × 4 ≈ $2.0B sits just below $2.13B ARR, which includes on-demand run-rate and late-quarter starts. RPO is about 1.9× ARR.
 
 **Tech lens.** In Evergreen//One, Everpure owns the hardware and charges per TB used, so DFM density, data reduction and watts per TB set its margin, and non-disruptive upgrades make multi-year SLAs workable. Evergreen//One sales grew 73% in Q1 FY27[^6], and storage-as-a-service total contract value (TCV) was $277M in Q2 (+121%)[^16] [VERIFY: TCV from call summaries].
@@ -84,11 +84,11 @@ How to read it:
 
 | Driver | Technology mechanism | Margin effect | Public evidence |
 |---|---|---|---|
-| DirectFlash vs SSD bill of materials | No per-drive controller ASIC or FTL DRAM. An SSD needs about 1 GB of DRAM per TB, because it keeps a 4-byte map entry for each 4 KiB page. Purity manages NAND globally, with less hidden over-provisioning | Lower $/TB than buying finished SSDs, which supports product GM while Everpure prices aggressively | Q4 FY26 product GM 67.3%, up more than 400 bp on mix[^21] |
-| NAND pricing pass-through | Everpure buys NAND for enterprise arrays. NAND contract prices rose steeply through 2026, with TrendForce forecasting another +15–20% QoQ for 4Q26 (enterprise SSDs reportedly +23–28%)[^22] | Costs rise before price lists do. Margin lags and then recovers. Securing supply uses cash | Price rise on 2026-02-09[^7]; non-GAAP product GM 65.5% in Q1 and 66.2% in Q2 FY27[^6][^18]; Q2 free cash flow (FCF) –$238M on strategic NAND buys[^23] |
+| DirectFlash vs SSD bill of materials | No per-drive controller ASIC or FTL DRAM. An SSD needs about 1 GB of DRAM per TB, because it keeps a 4-byte map entry for each 4 KiB page. Purity manages NAND globally, with less hidden over-provisioning | Lower $/TB than buying finished SSDs, which supports product GM while Everpure prices aggressively | Q4 FY26 product GM 67.3%, up more than 400 bp on mix[^22] |
+| NAND pricing pass-through | Everpure buys NAND for enterprise arrays. NAND contract prices rose steeply through 2026, with TrendForce forecasting another +15–20% QoQ for 4Q26 (enterprise SSDs reportedly +23–28%)[^23] | Costs rise before price lists do. Margin lags and then recovers. Securing supply uses cash | Price rise on 2026-02-09[^7]; non-GAAP product GM 65.5% in Q1 and 66.2% in Q2 FY27[^6][^18]; Q2 free cash flow (FCF) –$238M on strategic NAND buys[^24] |
 | Evergreen//Forever and //One | Software-heavy support plus non-disruptive upgrades. With //One, Everpure also carries the hardware | Subscription GM about 75%. Hardware-heavy //One mix can dilute it relative to pure support [VERIFY: //One cost composition] | Non-GAAP subscription GM 75.6% in Q1 and 74.9% in Q2 FY27[^6][^18] |
 | Hyperscale licensing | The customer buys the NAND. Everpure supplies IP, software, support and some non-NAND parts | Royalty-like and margin-accretive, but lumpy and tied to customers' build-outs | Q3 FY26 GAAP GM 72.3%, helped by royalties[^4]; model standardised in Feb 2026[^13] |
-| Deal and product mix | Large AI and enterprise deals; QLC capacity tiers (//C, //E) priced against disk | Management says it is deliberately running near the bottom of the 65–70% product GM range to win share | Long-term product GM range 65–70%[^24] |
+| Deal and product mix | Large AI and enterprise deals; QLC capacity tiers (//C, //E) priced against disk | Management says it is deliberately running near the bottom of the 65–70% product GM range to win share | Long-term product GM range 65–70%[^25] |
 | Software attach | Portworx, Fusion, Data Intelligence (ex-1touch) | Close to pure software, but too small today to move the blend | Not separately disclosed |
 
 *Table 29.1 — Every margin line traces back to a technology choice: who owns the NAND, how much of the drive Everpure designs, and who owns the hardware after the sale.*
@@ -125,12 +125,12 @@ flowchart LR
 
 *Figure 29.4 — Most of the ecosystem is distribution and validation, not revenue. The hyperscaler edges are the exception: there the NAND makers sell around Everpure, straight to its customer.*
 
-- **Validation (NVIDIA).** SuperPOD (November 2024)[^25], NVIDIA-Certified Storage and NCP high-performance storage (March 2025)[^26] for FlashBlade//S; Data Stream on the AI Data Platform design[^27]; BlueField-4 STX partner[^28]. No fees, but no shortlist without them ([Chapter 27](27-flasharray-and-flashblade.md), [Chapter 34](../05-ai-storage/34-nvidia-ecosystem.md)).
-- **Converged distribution.** FlashStack joined Cisco's Secure AI Factory with NVIDIA in late 2025, sold via AHEAD, ePlus, SHI and WWT[^29].
-- **Hyperscalers, two roles.** DirectFlash customers, and cloud channels: Everpure Cloud Azure Native, co-developed with Microsoft[^30], and Cloud Dedicated on AWS and Azure[^31] ([Chapter 28](28-platform-and-software.md)).
-- **Neoclouds.** A November 2024 CoreWeave stake made Pure a preferred storage option there[^32], though Evercore noted investors rated it below a tier-1 hyperscaler win[^33]; CoreWeave later signed a far larger deal with VAST[^41]. STN's GPU cloud runs on FlashBlade//EXA[^34], and Evergreen//One reached EXA in March 2026[^35] ([Chapter 35](../05-ai-storage/35-ai-factories-and-neoclouds.md)).
-- **NAND.** Micron and Kioxia supply and co-qualify DFM NAND ([Chapter 26](26-purity-and-directflash.md))[^36].
-- **ISVs and platforms.** Veeam (Fusion plug-in)[^37], Commvault (IntelliSnap)[^38], Rubrik and CrowdStrike (Enterprise Data Cloud)[^39], and Nutanix AHV external storage (May 2025)[^40].
+- **Validation (NVIDIA).** SuperPOD (November 2024)[^26], NVIDIA-Certified Storage and NCP high-performance storage (March 2025)[^27] for FlashBlade//S; Data Stream on the AI Data Platform design[^28]; BlueField-4 STX partner[^29]. No fees, but no shortlist without them ([Chapter 27](27-flasharray-and-flashblade.md), [Chapter 34](../05-ai-storage/34-nvidia-ecosystem.md)).
+- **Converged distribution.** FlashStack joined Cisco's Secure AI Factory with NVIDIA in late 2025, sold via AHEAD, ePlus, SHI and WWT[^30].
+- **Hyperscalers, two roles.** DirectFlash customers, and cloud channels: Everpure Cloud Azure Native, co-developed with Microsoft[^31], and Cloud Dedicated on AWS and Azure[^32] ([Chapter 28](28-platform-and-software.md)).
+- **Neoclouds.** A November 2024 CoreWeave stake made Pure a preferred storage option there[^33], though Evercore noted investors rated it below a tier-1 hyperscaler win[^34]; CoreWeave later signed a far larger deal with VAST[^35]. STN's GPU cloud runs on FlashBlade//EXA[^36], and Evergreen//One reached EXA in March 2026[^37] ([Chapter 35](../05-ai-storage/35-ai-factories-and-neoclouds.md)).
+- **NAND.** Micron and Kioxia supply and co-qualify DFM NAND ([Chapter 26](26-purity-and-directflash.md))[^38].
+- **ISVs and platforms.** Veeam (Fusion plug-in)[^39], Commvault (IntelliSnap)[^40], Rubrik and CrowdStrike (Enterprise Data Cloud)[^41], and Nutanix AHV external storage (May 2025)[^42].
 
 ## How Everpure approaches it vs. competitors
 
@@ -138,8 +138,8 @@ flowchart LR
 |---|---|---|---|---|
 | What hyperscalers buy | DirectFlash design + Purity licence + some parts; two top-5 wins | Software on partner hardware; strongest with neoclouds | Standard or custom SSDs, often running hyperscaler firmware | Little at hyperscale; strength is enterprise |
 | Who owns NAND cost | Everpure (enterprise); customer (hyperscale) | Hardware partner or customer | Supplier, and it captures the 2026 price spike | Vendor, which buys SSDs |
-| Neocloud motion | CoreWeave stake, STN, EXA with multi-tenancy | $1.17B CoreWeave agreement (*company-stated*)[^41] | Indirect, via servers | Dell AI Data Platform; NetApp AFX[^42] |
-| NVIDIA alignment | SuperPOD, Certified Storage, NCP, STX partner | STX partner, deep NVIDIA ties | Component suppliers to NVIDIA systems | STX partners[^28] |
+| Neocloud motion | CoreWeave stake, STN, EXA with multi-tenancy | $1.17B CoreWeave agreement (*company-stated*)[^35] | Indirect, via servers | Dell AI Data Platform; NetApp AFX[^43] |
+| NVIDIA alignment | SuperPOD, Certified Storage, NCP, STX partner | STX partner, deep NVIDIA ties | Component suppliers to NVIDIA systems | STX partners[^29] |
 | Revenue durability | 42–46% subscription; $4.1B RPO | *Company-stated* ARR only | Cyclical | Own subscription programs ([Ch 23](../03-system-architecture/23-consumption-models.md)) |
 
 *Table 29.2 — Everpure is the only array vendor publicly known to monetise its flash design inside hyperscalers. VAST owns the neocloud software position, and the NAND makers capture the commodity price cycle.*
@@ -151,22 +151,22 @@ flowchart LR
 Signals to watch:
 
 - **Q3 FY27** (quarter ending around 2026-11-01) is guided at $1.325–1.335B and is the first quarter with significant hyperscale revenue expected[^1][^5]. It had not been reported by 2026-11-01.
-- At the 2026-09-23 Financial Analyst Meeting, Everpure reaffirmed FY27 guidance and gave a preliminary FY28 outlook of $7.0–7.3B revenue (+39–45%) and $1.7–1.9B non-GAAP operating income. It expects three new vectors (Modern Data Software, Scale AI, Hyperscale Solutions) to reach only about 20% of revenue by FY2030[^43][^48].
-- One transcript summary says Everpure will report hyperscale as a single total, not customer by customer[^44]. [VERIFY: Chinese-language summary only]
-- NAND contract prices are still rising into 4Q26[^22], so product GM likely stays near the range floor.
+- At the 2026-09-23 Financial Analyst Meeting, Everpure reaffirmed FY27 guidance and gave a preliminary FY28 outlook of $7.0–7.3B revenue (+39–45%) and $1.7–1.9B non-GAAP operating income. It expects three new vectors (Modern Data Software, Scale AI, Hyperscale Solutions) to reach only about 20% of revenue by FY2030[^44][^45].
+- One transcript summary says Everpure will report hyperscale as a single total, not customer by customer[^46]. [VERIFY: Chinese-language summary only]
+- NAND contract prices are still rising into 4Q26[^23], so product GM likely stays near the range floor.
 
 ## Numbers that matter
 
 | Metric | Value | Context | Source / date |
 |---|---|---|---|
-| FY26 revenue (product / subscription) | $3,662.8M ($1,971.7M / $1,691.2M) | FY ended 2026-02-01; +16% | 10-K FY26[^20] |
+| FY26 revenue (product / subscription) | $3,662.8M ($1,971.7M / $1,691.2M) | FY ended 2026-02-01; +16% | 10-K FY26[^21] |
 | Q2 FY27 revenue | $1.19B (+38%); product $687M (+54%) | Quarter ended 2026-08-02 | Release, 2026-08-26[^1] |
 | Subscription ARR | $2.13B (+20%) | Q2 FY27 end | Release, 2026-08-26[^1] |
-| RPO | $4.1B (+44%) | Q2 FY27 end; $3.7B at FY26 end | Release[^1]; ARS FY26[^19] |
+| RPO | $4.1B (+44%) | Q2 FY27 end; $3.7B at FY26 end | Release[^1]; ARS FY26[^20] |
 | Gross margin, Q2 FY27 | 68.4% GAAP / 69.9% non-GAAP; product 66.2%, subscription 74.9% (non-GAAP) | Product at low end of 65–70% range | Slides, 2026-08[^18] |
 | Hyperscale volume | More than 2 EB in FY26 | Original plan 1–2 EB | B&F, 2025-12-03[^4] |
 | FY27 revenue guidance | $5.03–5.07B | Up from $4.3–4.4B (Feb 2026) | Release, 2026-08-26[^1] |
-| Q2 FY27 free cash flow | –$238M | Strategic NAND and component buys | Yahoo Finance, 2026-08[^23] |
+| Q2 FY27 free cash flow | –$238M | Strategic NAND and component buys | Yahoo Finance, 2026-08[^24] |
 | Illustrative blended GM lift | +0.8 pt at 5% hyperscale mix | Assumes 85% hyperscale GM | Worked example, this chapter |
 
 ## Conversation playbook
@@ -194,7 +194,7 @@ Signals to watch:
 ## Going deeper (optional, L3 pointers)
 
 - The ASC 606 treatment of hyperscale licence revenue (point-in-time or over time) in the FY26 10-K and the FY27 10-Qs.
-- The Q4 FY26 and Q2 FY27 prepared remarks on Everpure's investor site, for hyperscale model wording[^13][^45].
+- The Q4 FY26 and Q2 FY27 prepared remarks on Everpure's investor site, for hyperscale model wording[^13][^47].
 - FTL DRAM and over-provisioning mechanics: [Inside an SSD](../01-storage-fundamentals/03-inside-an-ssd.md); NAND pricing: [Chapter 48](../06-industry-and-competition/48-media-suppliers-and-nand-cycle.md).
 
 ## Key terms
@@ -219,41 +219,40 @@ Signals to watch:
 [^8]: SiliconANGLE, "Shares of Pure Storage jump on impressive earnings beat and strong guidance," 2024-12-03. https://siliconangle.com/2024/12/03/shares-pure-storage-jump-impressive-earnings-beat-strong-guidance/ (retrieved 2026-11-01).
 [^9]: Blocks & Files, "Pure Storage notches up hyperscaler deal, revenue uptick," 2024-12-04. https://www.blocksandfiles.com/block/2024/12/04/pure-storage-notches-up-hyperscaler-deal-revenue-uptick/1596200 (retrieved 2026-11-01).
 [^10]: Futurum Group, "Pure Storage Announces FlashBlade//EXA for the AI Factory," 2025-03. https://futurumgroup.com/insights/pure-storage-announces-flashblade-exa-for-the-ai-factory (retrieved 2026-11-01).
-[^11]: Blocks & Files, "Pure knocking it out of the park," 2025-08-29. https://blocksandfiles.com/2025/08/29/pure-knocking-it-out-of-the-park/ (retrieved 2026-11-01).
-[^12]: Barron's via iTiger, "Pure Storage Stock Rallies 24%. A Meta Deal Has Something to Do With It, Say Analysts," 2025-08-28. https://www.itiger.com/news/2562879055 (retrieved 2026-11-01).
+[^11]: SEC, "Pure Storage, Inc. Form 10-K for fiscal year ended February 2, 2025," 2025-04. https://www.sec.gov/Archives/edgar/data/1474432/000162828025015044/pstg-20250202.htm (seen via search summary, 2026-11-01).
+[^12]: Blocks & Files, "Pure knocking it out of the park," 2025-08-29. https://blocksandfiles.com/2025/08/29/pure-knocking-it-out-of-the-park/ (retrieved 2026-11-01).
 [^13]: Everpure, "Q4 FY26 Prepared Remarks," 2026-02-25. https://s21.q4cdn.com/687136699/files/doc_financials/2026/q4/Q4FY26-Everpure-Prepared-Remarks.pdf (retrieved 2026-11-01; content seen via search summary only).
 [^14]: Everpure, "Everpure Lands New Design Win with Second Top-Five Hyperscaler," 2026-08-10. https://www.everpuredata.com/company/newsroom/press-releases/everpure-lands-new-design-win-with-second-top-five-hyperscaler.html (retrieved 2026-11-01).
 [^15]: Blocks & Files, "Second hyperscaler plumps for Everpure's flash technology," 2026-08-11. https://www.blocksandfiles.com/flash/2026/08/11/second-hyperscaler-plumps-for-everpures-flash-technology/5285903 (retrieved 2026-11-01).
 [^16]: Motley Fool, "Everpure (P) Q2 2027 Earnings Call Transcript," 2026-08-31. https://www.fool.com/earnings/call-transcripts/2026/08/31/everpure-p-q2-2027-earnings-call-transcript/ (retrieved 2026-11-01).
 [^17]: Blocks & Files, "Pure Storage hammers revenue guidance as Meta deal boosts bottom-line outlook," 2025-08-29. https://www.blocksandfiles.com/ai-ml/2025/08/29/pure-storage-hammers-revenue-guidance-as-meta-deal-boosts-bottom-line-outlook/1610155 (retrieved 2026-11-01; analyst margin estimates seen via search summary only).
 [^18]: Investing.com, "Everpure Q2 FY27 slides: 38% revenue growth, guidance raised sharply," 2026-08. https://www.investing.com/news/company-news/everpure-q2-fy27-slides-38-revenue-growth-guidance-raised-sharply-93CH-4878054 (retrieved 2026-11-01).
-[^19]: Everpure, "Form ARS for fiscal year 2026," 2026. https://www.sec.gov/Archives/edgar/data/0001474432/000147443226000043/a10kfy2026.htm (retrieved 2026-11-01).
-[^20]: Everpure, "Form 10-K for fiscal year ended February 1, 2026," 2026-03-24. https://www.sec.gov/Archives/edgar/data/1474432/000147443226000027/pstg-20260201.htm (retrieved 2026-11-01).
-[^21]: Morningstar / PR Newswire, "Everpure Announces Fiscal Fourth Quarter and Full Year 2026 Financial Results," 2026-02-25. https://www.morningstar.com/news/pr-newswire/20260225sf95343/everpure-announces-fiscal-fourth-quarter-and-full-year-2026-financial-results (retrieved 2026-11-01).
-[^22]: TrendForce, "AI Server Demand Sustains Memory Contract Price Increases in 4Q26, While Consumer-Side Pressure Persists," 2026-09-30. https://www.trendforce.com/presscenter/news/20260930-13258.html (retrieved 2026-11-01).
-[^23]: Yahoo Finance, "Everpure (P) Grew Revenue 38% but Free Cash Flow Was Negative," 2026-08. https://finance.yahoo.com/markets/stocks/articles/everpure-p-grew-revenue-38-023544268.html (retrieved 2026-11-01).
-[^24]: CNHI News, "Everpure" (analyst-meeting coverage), 2026-09. https://www.cnhinews.com/news/article_df7adf0b-e673-56b4-99bf-f49ea5156bf0.html (retrieved 2026-11-01).
-[^25]: Blocks & Files, "Pure FlashBlade SuperPOD certification," 2024-11-18. https://blocksandfiles.com/2024/11/18/pure-flashblade-superpod-certification/ (retrieved 2026-11-01).
-[^26]: Blocks & Files, "Pure Storage expands AI capabilities with Nvidia certification," 2025-03-19. https://www.blocksandfiles.com/ai-ml/2025/03/19/pure-storage-expands-ai-capabilities-with-nvidia-certification/1595136 (retrieved 2026-11-01).
-[^27]: HPCwire / BigDATAwire, "Everpure Announces Data Stream to Expand AI-Ready Data Offerings," 2026-06-17. https://www.hpcwire.com/bigdatawire/this-just-in/everpure-announces-data-stream-to-expand-ai-ready-data-offerings/ (retrieved 2026-11-01).
-[^28]: StorageNewsletter, "Nvidia GTC 2026: Nvidia Launches BlueField-4 STX Storage Architecture With Broad Industry Adoption," 2026-03-17. https://www.storagenewsletter.com/2026/03/17/nvidia-gtc-2026-nvidia-launches-bluefield-4-stx-storage-architecture-with-broad-industry-adoption/ (retrieved 2026-11-01).
-[^29]: StorageNewsletter, "Pure Storage and Cisco Deliver AI Factories for the Enterprise with Nvidia," 2025-11-07. https://www.storagenewsletter.com/2025/11/07/pure-storage-and-cisco-deliver-ai-factories-for-the-enterprise-with-nvidia/ (retrieved 2026-11-01).
-[^30]: Blocks & Files, "Pure Enterprise Data Cloud updates," 2025-09-26. https://blocksandfiles.com/2025/09/26/pure-enterprise-data-cloud-updates/ (retrieved 2026-11-01).
-[^31]: Microsoft Learn, "Pure Storage Cloud overview," n.d. https://learn.microsoft.com/en-us/azure/partner-solutions/pure-storage/overview (retrieved 2026-11-01).
-[^32]: Pure Storage, "Pure Storage Announces Strategic Investment and Technology Partnership with CoreWeave," 2024-11. https://www.purestorage.com/company/newsroom/press-releases/pure-announces-strategic-investment-and-tech-partnership-with-coreweave.html (retrieved 2026-11-01).
-[^33]: TipRanks / The Fly, "Evercore says CoreWeave deal could yield sizable contributions for Pure Storage," 2024-11. https://www.tipranks.com/news/the-fly/evercore-says-coreweave-deal-could-yield-sizable-contributions-for-pure-storage (retrieved 2026-11-01).
-[^34]: Everpure, "STN customer story," n.d. https://www.everpuredata.com/au/customers/stn.html (retrieved 2026-11-01).
-[^35]: IT Brief, "Everpure expands AI storage, adds Data Stream beta," 2026-03. https://itbrief.news/story/everpure-expands-ai-storage-adds-data-stream-beta (retrieved 2026-11-01).
-[^36]: Blocks & Files, "Pure qualifies Micron's 276-layer flash," 2025-01-08. https://blocksandfiles.com/2025/01/08/pure-qualifies-microns-276-layer-flash/ (retrieved 2026-11-01).
-[^37]: Veeam, "Everpure + Veeam Partnership," n.d. https://www.veeam.com/solutions/alliance-partner/everpure.html (retrieved 2026-11-01).
-[^38]: Commvault, "Everpure supported technologies," 2026-02. https://www.commvault.com/supported-technologies/everpure (retrieved 2026-11-01).
-[^39]: Blocks & Files, "Pure debuts Enterprise Data Cloud with Fusion updates and new FlashArray systems," 2025-06-18. https://www.blocksandfiles.com/ai-ml/2025/06/18/pure-debuts-enterprise-data-cloud-with-fusion-updates-and-new-flasharray-systems/100996 (retrieved 2026-11-01).
-[^40]: SDxCentral, "Nutanix partners with Pure Storage in latest VMware assault," 2025-05. https://www.sdxcentral.com/news/nutanix-partners-with-pure-storage-in-latest-vmware-assault/ (retrieved 2026-11-01).
-[^41]: StorageNewsletter, "Vast Data Secures Commercial Partnership Deal with CoreWeave for $1.17 Billion to Power the Next Generation of AI," 2025-11-07. https://www.storagenewsletter.com/2025/11/07/vast-data-secures-commercial-partnership-deal-with-coreweave-for-1-17-billion-to-power-the-next-generation-of-ai/ (retrieved 2026-11-01).
-[^42]: Blocks & Files, "NetApp disaggregates ONTAP storage and provides an AI Data Engine," 2025-10-14. https://blocksandfiles.com/2025/10/14/netapp-disaggregates-ontap-storage-and-provides-an-ai-data-engine/ (retrieved 2026-11-01).
-[^43]: Quiver Quantitative, "Why Everpure (P) Stock Is Up Today," 2026-09. https://www.quiverquant.com/news/Why+Everpure+%28P%29+Stock+Is+Up+Today (retrieved 2026-11-01).
-[^44]: StatementDog, "Everpure Inc (P) 2027 Q2 earnings call transcript (Chinese)," 2026-08. https://statementdog.com/analysis/P/earnings_calls/318913 (retrieved 2026-11-01).
-[^45]: Everpure, "Q2 FY27 Prepared Remarks," 2026-08-26. https://s21.q4cdn.com/687136699/files/doc_financials/2027/q2/Q2FY27-Prepared-Remarks.pdf (retrieved 2026-11-01).
-[^46]: SEC, "Pure Storage, Inc. Form 10-K for fiscal year ended February 2, 2025," 2025-04. https://www.sec.gov/Archives/edgar/data/1474432/000162828025015044/pstg-20250202.htm (seen via search summary, 2026-11-01).
-[^47]: Futurum Group, "Pure Storage Q3 FY 2026 Results: Revenue Up 16% YoY, Guidance Raised," 2025-12. https://futurumgroup.com/insights/pure-storage-q3-fy-2026-results-revenue-up-16-yoy-guidance-raised/ (retrieved via search summary 2026-11-01); Pure Storage, "Form 10-Q for the quarter ended November 2, 2025." https://www.sec.gov/Archives/edgar/data/1474432/000147443225000065/pstg-20251102.htm (retrieved via search summary 2026-11-01).
-[^48]: StorageNewsletter (Everpure release), "Everpure's Expanding Business Model Fuels New Long-Term Outlook," 2026-10-01. https://www.storagenewsletter.com/2026/10/01/everpures-expanding-business-model-fuels-new-long-term-outlook/ (retrieved via search summary 2026-11-01).
+[^19]: Futurum Group, "Pure Storage Q3 FY 2026 Results: Revenue Up 16% YoY, Guidance Raised," 2025-12. https://futurumgroup.com/insights/pure-storage-q3-fy-2026-results-revenue-up-16-yoy-guidance-raised/ (retrieved via search summary 2026-11-01); Pure Storage, "Form 10-Q for the quarter ended November 2, 2025." https://www.sec.gov/Archives/edgar/data/1474432/000147443225000065/pstg-20251102.htm (retrieved via search summary 2026-11-01).
+[^20]: Everpure, "Form ARS for fiscal year 2026," 2026. https://www.sec.gov/Archives/edgar/data/0001474432/000147443226000043/a10kfy2026.htm (retrieved 2026-11-01).
+[^21]: Everpure, "Form 10-K for fiscal year ended February 1, 2026," 2026-03-24. https://www.sec.gov/Archives/edgar/data/1474432/000147443226000027/pstg-20260201.htm (retrieved 2026-11-01).
+[^22]: Morningstar / PR Newswire, "Everpure Announces Fiscal Fourth Quarter and Full Year 2026 Financial Results," 2026-02-25. https://www.morningstar.com/news/pr-newswire/20260225sf95343/everpure-announces-fiscal-fourth-quarter-and-full-year-2026-financial-results (retrieved 2026-11-01).
+[^23]: TrendForce, "AI Server Demand Sustains Memory Contract Price Increases in 4Q26, While Consumer-Side Pressure Persists," 2026-09-30. https://www.trendforce.com/presscenter/news/20260930-13258.html (retrieved 2026-11-01).
+[^24]: Yahoo Finance, "Everpure (P) Grew Revenue 38% but Free Cash Flow Was Negative," 2026-08. https://finance.yahoo.com/markets/stocks/articles/everpure-p-grew-revenue-38-023544268.html (retrieved 2026-11-01).
+[^25]: CNHI News, "Everpure" (analyst-meeting coverage), 2026-09. https://www.cnhinews.com/news/article_df7adf0b-e673-56b4-99bf-f49ea5156bf0.html (retrieved 2026-11-01).
+[^26]: Blocks & Files, "Pure FlashBlade SuperPOD certification," 2024-11-18. https://blocksandfiles.com/2024/11/18/pure-flashblade-superpod-certification/ (retrieved 2026-11-01).
+[^27]: Blocks & Files, "Pure Storage expands AI capabilities with Nvidia certification," 2025-03-19. https://www.blocksandfiles.com/ai-ml/2025/03/19/pure-storage-expands-ai-capabilities-with-nvidia-certification/1595136 (retrieved 2026-11-01).
+[^28]: HPCwire / BigDATAwire, "Everpure Announces Data Stream to Expand AI-Ready Data Offerings," 2026-06-17. https://www.hpcwire.com/bigdatawire/this-just-in/everpure-announces-data-stream-to-expand-ai-ready-data-offerings/ (retrieved 2026-11-01).
+[^29]: StorageNewsletter, "Nvidia GTC 2026: Nvidia Launches BlueField-4 STX Storage Architecture With Broad Industry Adoption," 2026-03-17. https://www.storagenewsletter.com/2026/03/17/nvidia-gtc-2026-nvidia-launches-bluefield-4-stx-storage-architecture-with-broad-industry-adoption/ (retrieved 2026-11-01).
+[^30]: StorageNewsletter, "Pure Storage and Cisco Deliver AI Factories for the Enterprise with Nvidia," 2025-11-07. https://www.storagenewsletter.com/2025/11/07/pure-storage-and-cisco-deliver-ai-factories-for-the-enterprise-with-nvidia/ (retrieved 2026-11-01).
+[^31]: Blocks & Files, "Pure Enterprise Data Cloud updates," 2025-09-26. https://blocksandfiles.com/2025/09/26/pure-enterprise-data-cloud-updates/ (retrieved 2026-11-01).
+[^32]: Microsoft Learn, "Pure Storage Cloud overview," n.d. https://learn.microsoft.com/en-us/azure/partner-solutions/pure-storage/overview (retrieved 2026-11-01).
+[^33]: Pure Storage, "Pure Storage Announces Strategic Investment and Technology Partnership with CoreWeave," 2024-11. https://www.purestorage.com/company/newsroom/press-releases/pure-announces-strategic-investment-and-tech-partnership-with-coreweave.html (retrieved 2026-11-01).
+[^34]: TipRanks / The Fly, "Evercore says CoreWeave deal could yield sizable contributions for Pure Storage," 2024-11. https://www.tipranks.com/news/the-fly/evercore-says-coreweave-deal-could-yield-sizable-contributions-for-pure-storage (retrieved 2026-11-01).
+[^35]: StorageNewsletter, "Vast Data Secures Commercial Partnership Deal with CoreWeave for $1.17 Billion to Power the Next Generation of AI," 2025-11-07. https://www.storagenewsletter.com/2025/11/07/vast-data-secures-commercial-partnership-deal-with-coreweave-for-1-17-billion-to-power-the-next-generation-of-ai/ (retrieved 2026-11-01).
+[^36]: Everpure, "STN customer story," n.d. https://www.everpuredata.com/au/customers/stn.html (retrieved 2026-11-01).
+[^37]: IT Brief, "Everpure expands AI storage, adds Data Stream beta," 2026-03. https://itbrief.news/story/everpure-expands-ai-storage-adds-data-stream-beta (retrieved 2026-11-01).
+[^38]: Blocks & Files, "Pure qualifies Micron's 276-layer flash," 2025-01-08. https://blocksandfiles.com/2025/01/08/pure-qualifies-microns-276-layer-flash/ (retrieved 2026-11-01).
+[^39]: Veeam, "Everpure + Veeam Partnership," n.d. https://www.veeam.com/solutions/alliance-partner/everpure.html (retrieved 2026-11-01).
+[^40]: Commvault, "Everpure supported technologies," 2026-02. https://www.commvault.com/supported-technologies/everpure (retrieved 2026-11-01).
+[^41]: Blocks & Files, "Pure debuts Enterprise Data Cloud with Fusion updates and new FlashArray systems," 2025-06-18. https://www.blocksandfiles.com/ai-ml/2025/06/18/pure-debuts-enterprise-data-cloud-with-fusion-updates-and-new-flasharray-systems/100996 (retrieved 2026-11-01).
+[^42]: SDxCentral, "Nutanix partners with Pure Storage in latest VMware assault," 2025-05. https://www.sdxcentral.com/news/nutanix-partners-with-pure-storage-in-latest-vmware-assault/ (retrieved 2026-11-01).
+[^43]: Blocks & Files, "NetApp disaggregates ONTAP storage and provides an AI Data Engine," 2025-10-14. https://blocksandfiles.com/2025/10/14/netapp-disaggregates-ontap-storage-and-provides-an-ai-data-engine/ (retrieved 2026-11-01).
+[^44]: Quiver Quantitative, "Why Everpure (P) Stock Is Up Today," 2026-09. https://www.quiverquant.com/news/Why+Everpure+%28P%29+Stock+Is+Up+Today (retrieved 2026-11-01).
+[^45]: StorageNewsletter (Everpure release), "Everpure's Expanding Business Model Fuels New Long-Term Outlook," 2026-10-01. https://www.storagenewsletter.com/2026/10/01/everpures-expanding-business-model-fuels-new-long-term-outlook/ (retrieved via search summary 2026-11-01).
+[^46]: StatementDog, "Everpure Inc (P) 2027 Q2 earnings call transcript (Chinese)," 2026-08. https://statementdog.com/analysis/P/earnings_calls/318913 (retrieved 2026-11-01).
+[^47]: Everpure, "Q2 FY27 Prepared Remarks," 2026-08-26. https://s21.q4cdn.com/687136699/files/doc_financials/2027/q2/Q2FY27-Prepared-Remarks.pdf (retrieved 2026-11-01).

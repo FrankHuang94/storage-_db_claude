@@ -79,25 +79,25 @@ flowchart LR
 
 *Figure 48.3 — One input-cost shock hits four lines at different speeds: cash immediately, margin with a lag, revenue upward, and the subscription book over the life of its contracts.*
 
-**Worked example (illustrative).** Take an array sold for $100 with a $35 bill of materials (BOM), $20 of it NAND, so gross margin (GM) is 65%. NAND doubles, and the BOM goes to $55. The vendor now has three choices:
+**Worked example (illustrative).** An array sells for $100 with a $35 bill of materials (BOM), $20 of it NAND: 65% gross margin (GM). NAND doubles; the BOM becomes $55. Three choices:
 
 - **Hold price:** GM falls to 45%.
 - **Pass through dollars only:** price $120 keeps gross profit at $65, but GM falls to 54%.
-- **Hold GM at 65%:** price must rise to $55 ÷ 0.35 ≈ $157. Gross profit dollars rise 57%, which is the "revenue inflation" visible in 2026 prints.
+- **Hold GM at 65%:** price must rise to $55 ÷ 0.35 ≈ $157, and gross profit dollars rise 57%: the "revenue inflation" in 2026 prints.
 
-The public evidence matches this shape. Everpure raised prices on 9 February 2026 and guided product GM to the low end of its 65–70% range[^34]. Product GM went from 67.3% in Q4 FY26[^35] to 65.5% in Q1 FY27[^36] and 66.2% in Q2[^37]. Product revenue grew 54% in Q2[^37], although Everpure shipped fewer systems; price, mix and capacity per system made up the difference[^38]. NetApp shows the lag more starkly. Its product GM fell 4.2 points to 55.3% in its January 2026 quarter[^39] and to 54.6% in its July quarter[^40]. Its FY27 GM guide moved from 68.5–69.5%[^41] to 68.1–69.1%. Products rose to 49% of revenue from 42%, which pulls the blended margin down even when product GM holds[^40]. One summary of NetApp's call describes roughly a three-quarter lag before price increases fully offset costs [VERIFY: secondary summary][^42]. Dell repriced ISG on 10 December 2025 and shortened quote validity[^43].
+The evidence fits. Everpure raised prices on 9 February 2026 and guided product GM to the low end of its 65–70% range[^34]; product GM went from 67.3% in Q4 FY26[^35] to 65.5% in Q1 FY27[^36] and 66.2% in Q2[^37]. Product revenue grew 54% in Q2[^37] on fewer systems shipped; price, mix and capacity per system made up the difference[^38]. NetApp, which buys finished SSDs, shows the lag more starkly: product GM fell 4.2 points to 55.3% in its January 2026 quarter[^39] and to 54.6% in its July quarter, and the FY27 GM guide slipped from 68.5–69.5%[^41] to 68.1–69.1%[^40]. Products rose to 49% of revenue from 42%, dragging the blended margin down even if product GM holds[^40]. One call summary describes a roughly three-quarter pass-through lag [VERIFY: secondary summary][^42]. Dell repriced ISG on 10 December 2025 and shortened quote validity[^43].
 
-**Cash.** Everpure's Q2 FY27 operating cash flow was −$136M and free cash flow −$238M, driven by strategic purchases of NAND and other components. A third party reads about $577M of this as prepaid expenses [VERIFY: confirm in 10-Q][^44]. Management said supply coverage was sufficient "for the foreseeable future" and that pricing had roughly caught up with costs[^45]. In derivatives language, the buying is a long forward position on NAND. It pays if 4Q26's forecast +15–20% arrives. It turns into an inventory write-down risk if the cycle breaks the way it did in 4Q24.
+**Cash.** Everpure's Q2 FY27 operating cash flow was −$136M and free cash flow −$238M on strategic NAND and component purchases; a third party reads ~$577M as prepaid expenses [VERIFY: confirm in 10-Q][^44]. Management said supply coverage was sufficient "for the foreseeable future" and pricing had roughly caught up with costs[^45]. In derivatives terms this is a long forward on NAND: it pays if 4Q26's +15–20% arrives, and becomes write-down risk if the cycle breaks as in 4Q24.
 
-**Evergreen exposure.** Under Evergreen//One, Everpure owns the hardware and charges per TB used. Capacity added mid-contract is bought at today's NAND price but billed at yesterday's rate. That is a short position on NAND, which pays off in downcycles and hurts in upcycles. Management raised Evergreen//One prices far less than product prices[^38]; one partner reports roughly +5% for Evergreen//One against 30%+ for Evergreen//Forever quotes [VERIFY: partner blog][^46]. Subscription GM slipped from 75.6% to 74.9% between Q1 and Q2 FY27[^36][^37], a modest move given the scale of the shock. The hyperscale business sits outside all of this, since Everpure does not procure that NAND[^4].
+**Evergreen exposure.** Under Evergreen//One, Everpure owns the hardware and bills per TB used, so capacity added mid-contract is bought at today's NAND price but billed at yesterday's rate: a short position on NAND that pays in downcycles. Evergreen//One prices rose far less than product prices[^38]; one partner reports ~+5% against 30%+ on Evergreen//Forever quotes [VERIFY: partner blog][^46]. Subscription GM slipped only from 75.6% to 74.9% between Q1 and Q2 FY27[^36][^37]. Hyperscale sits outside all this: Everpure does not procure that NAND[^4].
 
 ### HDD vs QLC economics in 2026
 
-Before the shortage the gap was narrowing: enterprise SSDs cost about 10× nearline disk per TB in 2020[^47] ([Chapter 2](../01-storage-fundamentals/02-media-physics.md) has the long-run curve). In 2026 one index put the premium at 22.6× in Q1 and 18.6× in Q3, with a 30 TB TLC SSD at about $22,600 against $1,216 for a 30 TB HDD [VERIFY: single-vendor index][^5]. TrendForce says cloud buyers need QLC within about 3× of HDD $/TB to break even[^3].
+Enterprise SSDs cost about 10× nearline disk per TB in 2020[^47] ([Chapter 2](../01-storage-fundamentals/02-media-physics.md) has the curve). In 2026 one index put the premium at 22.6× in Q1 and 18.6× in Q3 (a 30 TB TLC SSD at ~$22,600 against $1,216 for a 30 TB HDD) [VERIFY: single-vendor index][^5]. TrendForce says cloud buyers need QLC within ~3× of HDD $/TB[^3].
 
-**Worked example: does power close the gap?** Store 10 PB raw. Micron's comparison gives about 8.2 TB/W for its 245 TB SSD and 4.4 TB/W for a 44 TB HDD[^48]. Disk needs about 2.3 kW and flash about 1.2 kW, a 1.1 kW difference. Over five years at PUE 1.4 and $0.10/kWh, that saves 1.1 × 43,800 h × 1.4 × $0.10 ≈ $6.7k. At HDD prices of ~$40/TB, the media cost $0.4M. A 3× premium adds $0.8M; an 18× premium adds about $7M. Power alone never closes the gap. The case for flash rests on rack space, performance per TB, data reduction and failure handling. That is why array vendors sell *effective* $/TB after data reduction, and why Everpure argues total cost of ownership rather than media price ([Chapter 4](../01-storage-fundamentals/04-performance-and-economics-metrics.md)).
+**Worked example: does power close the gap?** Store 10 PB raw. Micron's comparison gives ~8.2 TB/W for its 245 TB SSD and 4.4 TB/W for a 44 TB HDD[^48]: about 1.2 kW versus 2.3 kW, a 1.05 kW gap. Over five years at PUE 1.4 and $0.10/kWh that saves 1.05 × 43,800 h × 1.4 × $0.10 ≈ $6.4k. HDD media at ~$40/TB cost $0.4M; a 3× premium adds $0.8M, an 18× premium about $7M. Power never closes the gap; rack space, performance per TB, data reduction and failure handling must. Hence array vendors sell *effective* $/TB and total cost of ownership ([Chapter 4](../01-storage-fundamentals/04-performance-and-economics-metrics.md)).
 
-Disk makers are enjoying their own cycle. Seagate and Western Digital both posted roughly 58% non-GAAP gross margins in the September quarter[^27][^25]. Both are adding exabytes through areal density (HAMR, UltraSMR), not new factories. So in 2026 neither medium is cheap and both are rationed. The flash-versus-disk decision is set as much by which supplier can deliver as by $/TB.
+Disk makers have their own upcycle: Seagate and Western Digital both posted ~58% non-GAAP gross margins in the September quarter[^27][^25], adding exabytes through areal density, not factories. Neither medium is cheap and both are rationed, so delivery capacity decides as much as $/TB.
 
 ## How Everpure approaches it vs. competitors
 
@@ -111,15 +111,15 @@ Disk makers are enjoying their own cycle. Seagate and Western Digital both poste
 
 *Table 48.2 — Everpure is unusual in holding all three exposures at once: direct NAND buyer, fixed-price subscription owner and royalty-only licensor.*
 
-**Steelman the alternatives.** Buying finished SSDs lets NetApp or Dell switch between four or five suppliers without qualifying dies, and pushes yield and firmware risk onto the drive maker. Everpure's raw-NAND model cuts out the SSD maker's margin and controller cost, but each new die needs characterisation work, which limits how quickly it can add a supplier ([Chapter 26](../04-everpure/26-purity-and-directflash.md)). Software-only vendors keep NAND off their own P&L entirely, though their customers' budgets still absorb it. VDURA's CEO went further and accused Everpure of using the shortage to pad margins; Everpure rejected the claim[^49].
+**Steelman the alternatives.** Buying finished SSDs lets NetApp or Dell switch among four or five suppliers without qualifying dies, and pushes yield and firmware risk onto the drive maker. Everpure's raw-NAND model removes the SSD maker's margin and controller, but each new die needs characterisation, slowing supplier additions ([Chapter 26](../04-everpure/26-purity-and-directflash.md)). Software-only vendors keep NAND off their P&L, though customers still pay it. VDURA's CEO accused Everpure of padding margins in the shortage; Everpure rejected the claim[^49].
 
 **Options a strategy team might evaluate (public information only):**
 
-- **Supply agreements with collars.** Suppliers now offer multi-year LTAs with prepayments and price floors and ceilings[^23][^12]. A collar caps upside cost but locks in a floor, which turns into overpayment in the next bust.
-- **A third NAND source.** Micron and Kioxia are qualified. Adding SK hynix/Solidigm, Samsung or Sandisk (on Kioxia's dies) would buy allocation leverage, at the cost of qualification effort. YMTC is ruled out by the Entity List.
-- **Pricing mechanics.** Options include index-linked pricing on large deals, shorter quote validity (already adopted) and a published Evergreen//One reset clause. The trade-off is price predictability, which is Evergreen's main selling point.
-- **Shift the exposure.** The hyperscale licence model has no NAND exposure at all. Sovereign or neocloud deals could also be structured so the customer procures the NAND.
-- **Use the cycle commercially.** While flash rises, Evergreen//One's price stability is a competitive weapon, provided the balance sheet can carry the short position.
+- **Supply agreements with collars.** Suppliers now offer multi-year LTAs with prepayments, floors and ceilings[^23][^12]. A collar caps cost but locks a floor that becomes overpayment in the next bust.
+- **A third NAND source.** Adding SK hynix/Solidigm, Samsung or Sandisk to Micron and Kioxia buys allocation leverage at the cost of qualification effort. YMTC is ruled out by the Entity List.
+- **Pricing mechanics.** Index-linked pricing on large deals, short quote validity (adopted) or an Evergreen//One reset clause, each traded against the price predictability Evergreen sells.
+- **Shift the exposure.** Extend the hyperscale pattern, where the customer procures NAND, to sovereign or neocloud deals.
+- **Use the cycle commercially.** Evergreen//One price stability is a weapon while flash rises, if the balance sheet can carry the short position.
 
 ## History and trajectory
 
@@ -135,7 +135,7 @@ timeline
 
 *Figure 48.4 — Each bust taught suppliers capex discipline, and 2026 is the first upcycle where much of the supply was sold forward under multi-year contracts.*
 
-Kioxia listed on the Tokyo Stock Exchange on 18 December 2024[^16], and Sandisk began trading separately on 24 February 2025[^21]. That leaves Western Digital as a pure HDD company and creates two listed NAND pure-plays with reasons to keep supply tight. YMTC is planning new fabs despite US export controls[^24]. Signals to watch: whether 1Q27 contract forecasts turn flat; LTA share at Sandisk and Kioxia (more contracted bits mean a smoother cycle for buyers with contracts and a more volatile spot market for those without); YMTC's eSSD mix; Everpure's operating cash flow normalising as guided; and whether product GM moves back toward the middle of the 65–70% range.
+Kioxia listed in Tokyo on 18 December 2024[^16] and Sandisk on Nasdaq on 24 February 2025[^21], leaving Western Digital a pure HDD company and creating two NAND pure-plays with every reason to keep supply tight. YMTC is planning new fabs despite export controls[^24]. Signals to watch: 1Q27 contract forecasts turning flat; LTA coverage at Sandisk and Kioxia (smoother for contracted buyers, choppier spot for everyone else); YMTC's eSSD mix; Everpure's cash flow normalising as guided; and product GM returning toward mid-range.
 
 ## Numbers that matter
 
@@ -155,30 +155,29 @@ Kioxia listed on the Tokyo Stock Exchange on 18 December 2024[^16], and Sandisk 
 
 **Questions for a PM**
 
-1. *"How much of this year's product growth is price versus units and capacity?"* A strong answer separates price, mix (more capacity per system, more QLC) and unit count, and admits that units fell in Q2[^38]. It explains how the comparison will look when NAND deflates.
-2. *"What happens to Evergreen//One margins if NAND stays here for two more years?"* Strong: capacity added at today's cost against contracted $/TB rates is the exposure. It is offset by renewal repricing, data-reduction guarantees and rising DFM density. A strong answer also says when a reset clause or a new rate card applies.
-3. *"Where does QLC beat disk in a 2026 deal, given a ~20× media premium?"* Strong: on effective $/TB after data reduction, plus floor space, power and performance per TB. QLC rarely wins pure cold archive at today's prices, and the PM should say so.
+1. *"How much of this year's product growth is price versus units?"* Strong: splits price, mix (capacity per system, QLC share) and units, admits units fell in Q2[^38], and says how comparisons look when NAND deflates.
+2. *"What happens to Evergreen//One margins if NAND stays here two more years?"* Strong: names the exposure (capacity added at today's cost against contracted $/TB) and the offsets: renewal repricing, data-reduction guarantees, DFM density.
+3. *"Where does QLC beat disk in a 2026 deal, at a ~20× media premium?"* Strong: effective $/TB after data reduction, plus space, power and performance; and an admission that pure cold archive still goes to disk.
 
 **Questions for an engineer**
 
-1. *"What does it cost, in time and testing, to qualify a new NAND die for DFMs?"* Strong: names the characterisation steps (read thresholds, retention, program timing, endurance under Purity's write patterns) and a realistic timeline.
-2. *"How does a die shrink or layer jump change DFM cost per TB versus a commodity SSD?"* Strong: separates NAND $/bit, which is identical for everyone, from controller, DRAM and over-provisioning savings, which are DirectFlash's own.
-3. *"If a supplier's next node slips, how fast can you shift volume to the other?"* Strong: refers to dual-qualified module SKUs and to Purity handling mixed NAND generations in one array.
+1. *"What does qualifying a new NAND die for DFMs cost in time and testing?"* Strong: names the steps (read thresholds, retention, program timing, endurance under Purity's write patterns) and a realistic timeline.
+2. *"How does a layer jump change DFM cost per TB versus a commodity SSD?"* Strong: separates NAND $/bit, the same for everyone, from controller, DRAM and over-provisioning savings, which are DirectFlash's own.
+3. *"If one supplier's next node slips, how fast can volume shift?"* Strong: dual-qualified module SKUs and Purity handling mixed NAND generations in one array.
 
 **Don't say this:**
 
-- "Everpure is protected from NAND prices because it uses DirectFlash." It buys raw NAND at market prices. DirectFlash removes SSD controllers and margins, not the NAND cost.
-- "Higher prices mean higher margins." Margin percentages usually fall first. Gross profit dollars can rise while GM% falls.
-- "The NAND makers are just raising prices." Contract prices follow wafer supply. Low capex since the 2023 losses, AI demand and the HDD shortage all matter.
-- "QLC has killed the hard drive." Disk makers posted record margins in 2026, and most data-centre data still sits on HDD.
-- "YMTC is a cheap second source." For a US vendor it is effectively off the table under export controls.
+- "DirectFlash protects Everpure from NAND prices." It removes SSD controllers and margins, not the NAND cost.
+- "Higher prices mean higher margins." GM% usually falls first, even as gross profit dollars rise.
+- "NAND makers are just gouging." Contract prices follow wafer supply: post-2023 capex restraint, AI demand and the HDD shortage.
+- "QLC has killed the hard drive." Disk makers posted record margins in 2026.
+- "YMTC is a cheap second source." Not for a US vendor under export controls.
 
 ## Going deeper (optional, L3 pointers)
 
-- TrendForce quarterly NAND and enterprise SSD contract-price releases (press centre) are the industry benchmark. Read the segment tables, not just the headlines.
-- Sandisk and Kioxia earnings materials on LTA structure: prepayments, floors and ceilings, and duration.
-- Everpure's Q2 FY27 Form 10-Q (prepaid expenses, inventory, purchase commitments) for the size of the forward NAND position.
-- NetApp FY26 and FY27 10-K/10-Q purchase-obligation notes, to compare how an SSD buyer discloses supply commitments.
+- TrendForce quarterly NAND and enterprise SSD contract-price releases: read the segment tables, not the headlines.
+- Sandisk and Kioxia earnings materials on LTA structure (prepayments, collars, duration).
+- Everpure's Q2 FY27 10-Q (prepaids, inventory, purchase commitments) to size the forward NAND position; NetApp's purchase-obligation notes for comparison.
 
 ## Key terms
 
