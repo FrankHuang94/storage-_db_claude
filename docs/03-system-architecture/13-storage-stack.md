@@ -15,7 +15,7 @@
 
 Part 3 compares architectures: dual-controller arrays, shared-nothing clusters, DASE, parallel file systems, object stores and HCI. Each is best read as an answer to one question: which layer does the clever work, and on whose hardware? That question maps onto the business. Owners of a scarce layer set prices; assemblers of commodity layers compete on cost. Everpure (NYSE: P, formerly PSTG) reported a 70.4% GAAP gross margin for fiscal 2026[^1]; Supermicro, which builds servers largely from bought-in parts, reported 11.1% for fiscal 2025[^2].
 
-The stack is also a map of adjacencies. Everpure's hyperscaler wins license the bottom layers (DirectFlash modules and flash management) without the array software, on hardware the customer sources[^3][^4]. WEKA attacks from the top, selling software for partners' servers[^5]. Who owns which layer shows where each player can expand and where it is exposed.
+The stack is also a map of adjacencies. Everpure's hyperscaler wins license the bottom layers (DirectFlash modules and flash management) without the array software, on hardware the customer sources[^3][^4]. WEKA attacks from the top, selling software for partners' servers[^5].
 
 ## Core concepts
 
@@ -76,7 +76,7 @@ Three lessons follow. **NAND is not on the write critical path**: NVRAM or SSD D
 
 *Table 13.1 — Where the intelligence lives decides what crosses the network and where each architecture hits its scaling wall.*
 
-Read down the table and you see a migration: from the host, to a shared controller pair, to software spread across commodity servers, and now to designs that separate metadata from the data path. The diagnostic questions never change: where does metadata live, and how many hops does a write cross before it is safe?
+For any architecture, two diagnostic questions apply: where does metadata live, and how many hops does a write cross before it is safe?
 
 ## How Everpure approaches it vs. competitors
 
@@ -125,9 +125,9 @@ timeline
 
 *Figure 13.3 — Each era moved the intelligence to a new layer; the current era splits metadata, data and fabric into separately scaled pieces.*
 
-Dates are from primary or reputable sources[^20][^21][^22][^23][^24][^25][^26][^13][^14][^27][^28][^29][^30][^31][^32][^33].
+Sources for Figure 13.3: [^20][^21][^22][^23][^24][^25][^26][^13][^14][^27][^28][^29][^30][^31][^32][^33].
 
-Each move answered a bottleneck: stranded DAS capacity led to pooled SANs; controller limits led to scale-out on commodity servers; flash made network and software the slow parts, so new designs cut hops and split metadata from data. Two signals point to the next re-cut. NVIDIA's 2026 STX design runs storage services on DPUs, pulling parts of layer 6 into the NIC[^33]. NVMe Flexible Data Placement lets any array steer placement on standard SSDs, narrowing, not erasing, the advantage of owning layer 7 ([Chapter 12](../02-protocols-and-networking/12-interfaces-and-emerging-tech.md)).
+Each move answered a bottleneck: stranded DAS capacity, then controller limits, then (with flash) the network and software themselves. Two signals point to the next re-cut. NVIDIA's 2026 STX design runs storage services on DPUs, pulling parts of layer 6 into the NIC[^33]. NVMe Flexible Data Placement lets any array steer placement on standard SSDs, narrowing, not erasing, the advantage of owning layer 7 ([Chapter 12](../02-protocols-and-networking/12-interfaces-and-emerging-tech.md)).
 
 ## Numbers that matter
 
@@ -145,38 +145,38 @@ Each move answered a bottleneck: stranded DAS capacity led to pooled SANs; contr
 
 **Questions for a PM**
 
-1. *"In the hyperscaler deals, which layer are we actually monetizing, and what stops the customer from building it?"* A strong answer names flash management and module design, cites AWS Nitro as proof that it can be built in-house, and locates the moat in time-to-capacity per NAND generation and qualification at exabyte scale.
-2. *"When a customer insists on software-only, what do we offer and what do we lose?"* A strong answer names the cases (sovereign cloud, standardized server fleets, public cloud), the products that address them, and the density or efficiency given up off DirectFlash.
-3. *"In latency-driven deals, which layer is usually the bottleneck?"* A strong answer points to the host stack, transport and controller software, with numbers for NVMe/TCP versus RDMA, not to NAND.
+1. *"In hyperscaler deals, which layer are we monetizing, and what stops the customer building it?"* Strong: flash management and module design; AWS Nitro proves in-sourcing is possible; the moat is time-to-capacity per NAND generation and exabyte-scale qualification.
+2. *"When a customer insists on software-only, what do we offer and what do we give up?"* Strong: names the cases (sovereign cloud, standard server fleets, public cloud), the products that serve them, and the density lost off DirectFlash.
+3. *"In latency-driven deals, which layer is the bottleneck?"* Strong: host stack, transport and controller software, with NVMe/TCP versus RDMA numbers; not NAND.
 
 **Questions for an engineer**
 
-1. *"Walk me through a 4 KB write: where is the persistence point, and what is the p99 contribution of each layer?"* Strong: names the NVRAM or mirror point, gives per-layer microseconds, and says which layer moves first under load.
-2. *"What does Purity know that a drive's FTL cannot, and how does that show up as write amplification at 90% full?"* Strong: gives a write-amplification or over-provisioning comparison and explains the mechanism.
-3. *"If Flexible Data Placement lets any array steer placement on standard SSDs, how much of the DirectFlash advantage remains?"* Strong: separates the advantages FDP closes (placement) from those it does not (DRAM, module density, power, end-to-end wear management).
+1. *"Walk a 4 KB write: where is the persistence point, and what is each layer's p99 contribution?"* Strong: names the NVRAM mirror point, per-layer microseconds, and which layer degrades first under load.
+2. *"What does Purity know that a drive FTL cannot, and what does that do to write amplification at 90% full?"* Strong: a quantified write-amplification or over-provisioning comparison plus the mechanism.
+3. *"If Flexible Data Placement lets any array steer placement on standard SSDs, what DirectFlash advantage remains?"* Strong: separates what FDP closes (placement) from what it does not (DRAM, density, power, global wear management).
 
 **Don't say this:**
 
-- "Flash latency is the bottleneck." On a networked array, the network and software layers dominate small writes, and the NAND program is off the critical path.
-- "DirectFlash is just an SSD without the case." It removes the drive-level FTL; flash management moves into Purity.
-- "Software-defined means no hardware." It always runs on someone's hardware. The question is who carries the inventory and earns the margin.
-- "SAN and NAS are different hardware." They differ mainly in who owns the file system, the host or the array.
-- "Disaggregation is new." Every era re-cut the stack. What changed is that flash made the network and software the slow layers.
+- "Flash latency is the bottleneck." On networked arrays, network and software dominate small writes; NAND programming is off the critical path.
+- "DirectFlash is an SSD without the case." It removes the drive-level FTL; flash management moves into Purity.
+- "Software-defined means no hardware." Someone's hardware always runs it; the question is who carries inventory and earns margin.
+- "SAN and NAS are different hardware." They differ mainly in who owns the file system: host or array.
+- "Disaggregation is new." Every era re-cut the stack.
 
 ## Going deeper (optional, L3 pointers)
 
-- Patterson, Gibson and Katz, "A Case for Redundant Arrays of Inexpensive Disks (RAID)," SIGMOD 1988: where controller intelligence began[^21].
-- Lee et al., "Asynchronous I/O Stack," USENIX ATC 2019: measures and shrinks the Linux host stack on ultra-low-latency SSDs[^10].
-- Ghemawat et al., "The Google File System," SOSP 2003, and Weil et al., "Ceph," OSDI 2006: the move to intelligence on commodity servers[^25][^13].
-- NVM Express Flexible Data Placement (TP4146) for host-directed placement on standard SSDs.
+- Patterson, Gibson and Katz, RAID paper, SIGMOD 1988[^21].
+- Lee et al., "Asynchronous I/O Stack," USENIX ATC 2019, on host-stack latency[^10].
+- The Google File System (SOSP 2003) and Ceph (OSDI 2006) papers[^25][^13].
+- NVM Express Flexible Data Placement (TP4146).
 
 ## Key terms
 
-- **Storage stack** — the eight layers an I/O crosses from application to media.
-- **Data services ("intelligence")** — placement, protection, data reduction and metadata management.
-- **Persistence point** — the layer where a write is durable enough to acknowledge.
-- **Vertical integration** — owning several adjacent layers, such as array software, FTL and module.
-- See the [glossary](../glossary.md) for the rest.
+- **Storage stack** — the eight layers from application to media.
+- **Data services ("intelligence")** — placement, protection, reduction, metadata.
+- **Persistence point** — where a write becomes safe to acknowledge.
+- **Vertical integration** — owning adjacent layers, e.g. array software, FTL and module.
+- See the [glossary](../glossary.md).
 
 ## Sources
 
