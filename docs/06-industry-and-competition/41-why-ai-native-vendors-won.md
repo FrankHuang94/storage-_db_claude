@@ -13,7 +13,7 @@
 
 ## Why this matters for Everpure strategy
 
-Every board conversation about AI storage now begins with the challengers' numbers. If the reader cannot separate the causes of their success from the noise around it, two errors follow. One is to over-copy: chasing valuation-driven narratives such as an "AI operating system". The other is to under-react: treating VAST, WEKA and DDN as niche HPC suppliers. This chapter breaks the thesis into drivers and asks of each one whether it is copyable, structural or fading.
+Most board conversations about AI storage now start with the challengers' numbers. If the reader cannot separate the causes of their success from the noise around it, two errors follow. One is to over-copy: chasing valuation-driven narratives such as an "AI operating system". The other is to under-react: treating VAST, WEKA and DDN as niche HPC suppliers. This chapter breaks the thesis into drivers and asks of each one whether it is copyable, structural or fading.
 
 For a strategy team, that framing sorts the options. Architecture gaps can be closed by engineering, and FlashBlade//EXA is that bet ([Chapter 27](../04-everpure/27-flasharray-and-flashblade.md)). NVIDIA certification can be earned. A neocloud anchor account and NVIDIA equity cannot simply be built. They have to be won, partnered for or bought. The vendor-level detail is in [Chapter 42](42-vast-data.md) (VAST), [Chapter 43](43-weka.md) (WEKA) and [Chapter 44](44-ddn.md) (DDN). This chapter is the cross-cutting explanation, and it is deliberately sceptical.
 
@@ -81,7 +81,7 @@ flowchart LR
 
 **Evidence.** VAST reports positive free cash flow despite rapid growth (*company-stated*)[^8]. WEKA runs natively on Nebius servers and in four public clouds ([Chapter 43](43-weka.md)).
 
-**Rating: moderate.** The counter-evidence is that hardware still sells. DDN, the most profitable of the three by its own account, sells appliances. WEKA launched WEKApod 3, its first chassis-up hardware, in July 2026[^21]. In the 2026 NAND shortage, owning supply became an advantage (see below).
+**Rating: moderate.** The counter-evidence is that hardware still sells. DDN, self-funded and profitable for about 25 years by its own account[^6], sells appliances. WEKA launched WEKApod 3, its first chassis-up hardware, in July 2026[^21]. In the 2026 NAND shortage, owning supply became an advantage (see below).
 
 ### Driver 5: HPC heritage and talent
 
@@ -156,11 +156,11 @@ The last row is the important caveat. VAST serves standard NFS and S3 clients. D
 
 ### Where the thesis is weak or overhyped
 
-**Valuations versus revenue.** Combined last valuations are US$30B + US$5B + US$1.6B ≈ US$36.6B. Combined revenue signals are about US$0.5B of VAST CARR, at least US$0.1B of WEKA ARR[^9] and about US$0.5B of reported DDN 2025 revenue[^10], roughly US$1.1B in total. For scale, IDC's external enterprise storage tracker recorded US$10.34B in the second quarter of 2026 alone, about US$41B annualised[^32]. The challengers are about 3% of that by revenue. The definitions differ, since IDC counts branded systems and under-counts software sold on partner servers, but not by an order of magnitude. VAST's 60x multiple on CARR, and about half of its Series F being secondary[^35], price in a winner-take-most outcome.
+**Valuations versus revenue.** Combined last valuations are US$30B + US$5B + US$1.6B ≈ US$36.6B. Combined revenue signals are about US$0.5B of VAST CARR, at least US$0.1B of WEKA ARR[^9] and about US$0.5B of reported DDN 2025 revenue[^10] [VERIFY: search-summary only], roughly US$1.1B in total. For scale, IDC's external enterprise storage tracker recorded US$10.34B in the second quarter of 2026 alone, about US$41B annualised[^32]. The challengers are about 3% of that by revenue. The definitions differ, and IDC's tracker of branded external systems may under-count software sold on partner servers, but not by an order of magnitude. VAST's 60x multiple on CARR, and about half of its Series F being secondary[^35], price in a winner-take-most outcome.
 
 ![Two-panel chart. Panel A plots post-money valuations on a log scale from 2020 to 2026: VAST rises from US$1.2B to US$30B, WEKA from US$0.75B to US$1.6B, and DDN has a single US$5B point in January 2025. Panel B shows worked multiples of valuation to revenue signal: VAST 60x on 2026 committed ARR, VAST 45.5x on 2023 ARR, WEKA 16x on 2024 ARR and DDN 12.5x on 2024 revenue.](../assets/charts/ch41-valuations.svg)
 
-*Figure 41.3 — The market has priced one winner: VAST's multiple is four to five times WEKA's and DDN's, so "AI-native vendors" is really a VAST valuation story with two more modestly priced peers.*
+*Figure 41.3 — The market has priced one winner: VAST's multiple is about four times WEKA's and five times DDN's, so "AI-native vendors" is really a VAST valuation story with two more modestly priced peers.*
 Data: `data/ch41_valuations.csv`
 
 **Customer concentration.** The CoreWeave agreement alone is about 29% of VAST's US$4B cumulative bookings ([Chapter 42](42-vast-data.md)). DDN's 2026 growth is reportedly tied to xAI and sovereign supercomputers[^10]. A pause in neocloud capex would hit all three at once.

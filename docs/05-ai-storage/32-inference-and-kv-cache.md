@@ -9,7 +9,7 @@
 - **Prefill is compute-bound; decode is memory-bound.** Decode rereads the whole cache for every new token, so active KV must sit in HBM. Storage can only hold KV that is *not being decoded right now*.
 - **It is a recompute-or-fetch trade.** Rebuilding a 128K context costs an 8-GPU node ~2.6 s of compute; fetching it over 8 × 400 Gb/s NICs takes ~0.13 s. Fetching wins above roughly 2–5 GB/s per GPU, so hit rate and bandwidth decide the economics.
 - **NVIDIA has standardized the hierarchy.** Dynamo's KV Block Manager (KVBM) defines tiers G1 (HBM) to G4 (networked storage), NIXL moves the bytes, and BlueField-4 STX/CMX adds a pod-level "G3.5" flash tier. Storage vendors, Everpure included, compete to be the G3.5/G4 backend.
-- **Discount the multipliers.** Everpure, WEKA, DDN, VAST and HPE all claim 20× or more faster time to first token, mostly against a no-cache baseline. MLPerf Storage v3.0 (September 2026) added the first neutral KV-cache test[^1].
+- **Discount the multipliers.** Everpure, WEKA, DDN and HPE each claim 20× or more faster time to first token, mostly against a no-cache baseline; VAST and NVIDIA claim power and throughput gains instead. MLPerf Storage v3.0 (September 2026) added the first neutral KV-cache test[^1].
 
 ## Why this matters for Everpure strategy
 
@@ -73,7 +73,7 @@ The semiconductor bridge is direct: the block hash is a cache tag, eviction is L
 | G2 host DRAM over PCIe 5 (~440 GB/s per node) | ≈ 0.1 s | ~0 | 2–4 TB → ~45–90 sessions | ≈ US$0.01 (DRAM at ~US$10/GB, 4-yr life, assumed) |
 | G3 local NVMe (8 drives, ~56 GB/s) | ≈ 0.8 s | ~0 | ~31 TB → ~700 sessions, this node only | ≈ US$0.0006 (flash system at ~US$0.50/GB, assumed) |
 | G3.5 / G4 networked flash (~320 GB/s to the node) | ≈ 0.13 s + lookup | ~0 | PB per pod or cluster, any node | ≈ US$0.0006 plus network and software |
-| Miss on a 1M-token context (343 GB) | ≈ 100 s recompute (attention dominates) | ≈ 800 GPU-s | does not fit one node's HBM | n/a |
+| Miss on a 1M-token context (343 GB) | ≈ 100 s recompute (attention dominates) | ≈ 800 GPU-s | ~4 sessions per node's HBM after weights; exceeds one GPU's 180 GB | n/a |
 
 *Table 32.1 — Worked example, not vendor data: one recompute costs about as much as holding the same KV in DRAM for two hours or on flash for ~40 hours, so the economics come down to hit rate and fetch bandwidth.*
 
@@ -115,13 +115,13 @@ Open-source layers keep the tier vendor-neutral. **LMCache** moves KV from vLLM 
 
 ### Where storage vendors can, and can't, add value
 
-**Can:** capacity at flash cost; a namespace shared across nodes (higher hit rates, free routing); persistence across restarts; tenant isolation and encryption of sensitive user context; and bandwidth to feed hundreds of GPUs (FlashBlade//EXA's MLPerf v3.0 entry read KV at 1,623.4 GiB/s on 51 hosts[^26], company-reported). **Can't:** touch the decode loop; beat DRAM or CXL for blocks reused within seconds; charge for durability on recomputable data; or stop model-side shrinkage (MLA, fp8/fp4 KV, hybrid attention), which moves the break-even toward local memory. The defensible position is the **shared, pod-to-cluster tier**: too big for DRAM, too shared for local NVMe.
+**Can:** capacity at flash cost; a namespace shared across nodes (higher hit rates, free routing); persistence across restarts; tenant isolation and encryption of sensitive user context; and bandwidth to feed hundreds of GPUs (FlashBlade//EXA's MLPerf v3.0 entry read KV at 1,623.4 GiB/s on 51 hosts[^26], vendor-submitted; the standard-scale leaders, UBIX and FarmGPU, posted ~444 GiB/s on much smaller configurations, so compare per host, not headline). **Can't:** touch the decode loop; beat DRAM or CXL for blocks reused within seconds; charge for durability on recomputable data; or stop model-side shrinkage (MLA, fp8/fp4 KV, hybrid attention), which moves the break-even toward local memory. The defensible position is the **shared, pod-to-cluster tier**: too big for DRAM, too shared for local NVMe.
 
 ## How Everpure approaches it vs. competitors
 
 | Vendor | Offering | Integration path | Headline claim (vendor claim) | Caveat |
 |---|---|---|---|---|
-| **Everpure** | PureKVA on FlashBlade (S3 and NFS); EXA for scale | vLLM and Dynamo; RDMA pre-staging into GPU memory[^27] | Up to 20× faster TTFT; DeepReduce always-on; GA October 2026[^28] | Test details unpublished; MLPerf v3.0 KV results are its neutral data point[^2] |
+| **Everpure** | PureKVA on FlashBlade (S3 and NFS); EXA for scale | vLLM and Dynamo; RDMA pre-staging into GPU memory[^27] | Up to 20× faster TTFT; DeepReduce always-on; availability announced for October 2026[^28] | Test details unpublished; MLPerf v3.0 KV results are its neutral data point[^2] |
 | WEKA | Augmented Memory Grid on NeuralMesh | RDMA + GDS; open-sourced NIXL plugin; GA 2025-11-18, OCI launch partner[^29] | "1000×" GPU memory extension; up to 20× lower TTFT[^29] | Longest commercial track record; NeuralMesh 6 claims lack a reproducible method[^30] |
 | VAST Data | VUA (open source, Apr 2025); CNode software on BlueField-4 (CES 2026) | vLLM, LMCache, Dynamo[^31] | 75% lower power for KV operations; hardware 2H 2026[^32] | Strongest fit with NVIDIA's DPU-centric CMX design |
 | DDN | KV cache on Infinia and EXAScaler via Dynamo/NIXL | Dynamo-integrated since June 2026[^33] | Up to 55× faster KV loading (2026); 27× faster, 75% lower input-token cost (2025)[^33][^34] | Multipliers vary widely by baseline |
@@ -132,7 +132,7 @@ Open-source layers keep the tier vendor-neutral. **LMCache** moves KV from vLLM 
 
 **Steelmanning the alternatives.** WEKA moved first (AMG at GTC 2025, OCI as launch partner) and has production references Everpure is still building. VAST running its software *on* the BlueField-4 DPU inside GPU servers fits NVIDIA's CMX blueprint most closely, which can decide NVIDIA-led deals ([Chapter 34](34-nvidia-ecosystem.md)). The simplest rival is the "free" one: a DGX already ships with ~31 TB of local NVMe, and LMCache can use it at no extra licence cost.
 
-**Everpure's case.** PureKVA reuses FlashBlade's existing shared, multi-tenant, high-bandwidth position rather than adding a silo, and its MLPerf v3.0 KV results are benchmark evidence, not a marketing multiplier. Options a strategy team might evaluate, based on public information: an upstream NIXL backend and LMCache/llm-d connectors so PureKVA reaches every serving stack; positioning EXA as the software layer for STX/CMX racks rather than a rival to them; and pricing KV capacity by GB-hour or tokens served, as inference buyers already price cache hits.
+**Everpure's case.** PureKVA reuses FlashBlade's existing shared, multi-tenant, high-bandwidth position rather than adding a silo, and its MLPerf v3.0 KV results are benchmark evidence, not a marketing multiplier, though WEKA, VAST and DDN did not enter that round[^26]. Options a strategy team might evaluate, based on public information: an upstream NIXL backend and LMCache/llm-d connectors so PureKVA reaches every serving stack; positioning EXA as the software layer for STX/CMX racks rather than a rival to them; and pricing KV capacity by GB-hour or tokens served, as inference buyers already price cache hits.
 
 ## History and trajectory
 
@@ -142,7 +142,7 @@ timeline
     2023 : vLLM PagedAttention pages KV like virtual memory
     2024 : Disaggregated prefill and decode papers : SGLang RadixAttention : DeepSeek moves API context cache to disk
     2025 : Mooncake wins FAST best paper : Dynamo and NIXL launched : WEKA AMG announced then GA : VAST open-sources VUA : llm-d launched : Pure KVA integrates Dynamo
-    2026 : NVIDIA context memory storage at CES : Dynamo 1.0 and BlueField-4 STX with CMX : DDN KV cache on Infinia : MLPerf Storage v3.0 adds KV cache : PureKVA GA
+    2026 : NVIDIA context memory storage at CES : Dynamo 1.0 and BlueField-4 STX with CMX : DDN KV cache on Infinia : MLPerf Storage v3.0 adds KV cache : PureKVA announced
 ```
 
 *Figure 32.5 — In three years KV cache went from a GPU memory-management trick to a named storage tier with a reference rack and a benchmark.*
@@ -161,7 +161,7 @@ Three forces point forward. **Standardization:** NVIDIA named the tiers and ship
 | Fetch break-even bandwidth | ~2–5 GB/s per GPU | Below this, recompute is faster | Worked example |
 | DeepSeek disk cache | Hit priced at 1/10 of miss; 13 s → 0.5 s TTFT on a 128K prompt | Company-stated, 2024 | DeepSeek, 2024-08-02[^17] |
 | FlashBlade//EXA MLPerf v3.0 KV | 85,736 tok/s (8B); 33,403 tok/s (70B); 1,623.4 GiB/s read | Company-reported; v3.0 simulates B200s | Everpure / StorageReview, 2026-09[^2][^26] |
-| NVIDIA CMX claim | 5× tokens/s, 5× power efficiency | vs "traditional storage"; vendor claim | NVIDIA, 2026-01[^37] |
+| NVIDIA CMX claim | 5× tokens/s, 5× power efficiency | vs "traditional storage"; vendor claim, made at CES for the platform since branded CMX | NVIDIA, 2026-01[^37] |
 
 ## Conversation playbook
 
