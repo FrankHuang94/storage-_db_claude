@@ -1,0 +1,21 @@
+- **RAID 1 (mirroring)** — Protection scheme that writes every block to two drives, giving 50% usable capacity. | 6
+- **RAID 5** — Striping with one rotating parity block per stripe; survives one drive failure. | 6
+- **RAID 6** — Striping with two independent parity blocks (P and Q) per stripe; survives any two drive failures. | 6
+- **RAID 10** — Striping across mirrored pairs; 50% usable capacity with fast, simple rebuilds. | 6
+- **Erasure coding (k+m)** — Scheme that stores k data strips plus m computed parity strips and can rebuild from any k of them. | 6
+- **Declustered RAID** — Layout that scatters stripes and spare space across all drives in a pool so rebuilds run in parallel. | 6
+- **Rebuild window** — Time between a drive failure and restored full redundancy, during which further failures risk data loss. | 6
+- **Unrecoverable read error (URE)** — A sector the drive cannot read back even after retries, specified as a rate per bits read. | 6
+- **Copy-on-write (COW) snapshot** — Snapshot method that copies an old block to a reserve area before overwriting it in place. | 6
+- **Redirect-on-write (ROW) snapshot** — Snapshot method that freezes the pointer map and writes new data to free space. | 6
+- **Clone** — A writable snapshot that shares unchanged blocks with its source. | 6
+- **Synchronous replication** — Replication that acknowledges a write only after both sites have persisted it, giving zero data loss. | 6
+- **Asynchronous replication** — Replication that acknowledges locally and ships changes later, so recent writes can be lost. | 6
+- **Near-synchronous replication** — Continuous streaming replication with local acknowledgement, giving an RPO of seconds. | 6
+- **RPO (recovery point objective)** — The maximum amount of recent data, measured in time, an organisation can afford to lose. | 6
+- **RTO (recovery time objective)** — The maximum time an organisation can afford a service to be down. | 6
+- **Stretched (metro) cluster** — Two arrays at nearby sites presenting the same volumes active/active over synchronous replication. | 6
+- **Split-brain** — Failure state in which two partitioned copies both accept writes and diverge. | 6
+- **Mediator** — Third-party witness that decides which side of a partitioned metro cluster keeps serving I/O. | 6
+- **SafeMode** — Everpure's snapshot immutability feature, in which deleted snapshots are retained for a set period and cannot be eradicated without support-gated approval. | 6
+- **3-2-1-1-0 rule** — Backup guideline of three copies, two media, one off-site, one immutable or offline, and zero restore-verification errors. | 6
