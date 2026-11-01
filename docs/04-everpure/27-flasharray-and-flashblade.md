@@ -153,7 +153,7 @@ Data: `data/ch27_mlperf_checkpoint_scaling.csv`
 | >5 TB/s read with 60 data nodes | Everpure technical brief | 2025 | 60 data nodes[^37] | Vendor test. ≥83 GB/s per node |
 | Up to 20× faster time to first token (PureKVA) | Everpure internal | 2026-09-30 | Not published[^18] | "Up to"; baseline presumably recompute |
 
-*Table 27.2 — Benchmark claims for FlashBlade//EXA. The audited results are strong, but they come from rounds the main AI-native rivals skipped, on third-party data nodes.*
+*Table 27.2 — Benchmark claims for FlashBlade//EXA. The peer-reviewed results are strong, but they come from rounds the main AI-native rivals skipped, on third-party data nodes.*
 
 ## How Everpure approaches it vs. competitors
 

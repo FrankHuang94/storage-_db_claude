@@ -26,7 +26,7 @@ Purity was built in 2009–2012 to make commodity SSDs behave like enterprise st
 ```mermaid
 flowchart TB
     H["Hosts and apps"] --> FE["Protocol front-ends<br/>FC, iSCSI, NVMe-oF, NFS, SMB, S3"]
-    FE --> NV["Mirrored NVRAM<br/>write acknowledged here"]
+    FE --> NV["NVRAM reachable by both controllers<br/>write acknowledged here"]
     NV --> DR["Inline data reduction<br/>pattern removal, dedupe, compression"]
     DR --> LS["Log-structured segment writer<br/>append only, never overwrite"]
     LS --> RH["RAID-HA<br/>dual parity across modules"]
@@ -42,7 +42,7 @@ flowchart TB
 
 *Figure 26.1 — Purity is a pipeline from protocol to raw NAND. The metadata store, not the data layout, is the centre of gravity, and DirectFlash is its lowest layer.*
 
-A write lands in NVRAM mirrored across both controllers and is acknowledged there[^10] ([Chapter 14](../03-system-architecture/14-scale-up-dual-controller.md)). Purity then removes patterns such as zeros, deduplicates, and compresses into variable-size blocks of roughly 4–32 KB, matching duplicates at 512-byte alignment[^11] ([Chapter 5](../01-storage-fundamentals/05-data-reduction.md)). Reduced data is packed into large segments written sequentially across modules with dual parity (RAID-HA)[^12]. Overwrites never happen in place: a newer version simply wins in the metadata map, which is why snapshots are nearly free ([Chapter 6](../01-storage-fundamentals/06-data-protection-and-resilience.md)).
+A write lands in persistent NVRAM that both controllers can reach (dual-homed chassis modules on earlier models, NVRAM on DirectFlash modules on //XL) and is acknowledged there[^10] ([Chapter 14](../03-system-architecture/14-scale-up-dual-controller.md)). Purity then removes patterns such as zeros, deduplicates, and compresses into variable-size blocks of roughly 4–32 KB, matching duplicates at 512-byte alignment[^11] ([Chapter 5](../01-storage-fundamentals/05-data-reduction.md)). Reduced data is packed into large segments written sequentially across modules with dual parity (RAID-HA)[^12]. Overwrites never happen in place: a newer version simply wins in the metadata map, which is why snapshots are nearly free ([Chapter 6](../01-storage-fundamentals/06-data-protection-and-resilience.md)).
 
 The metadata store is the hard part. Everpure describes a tiered "pyramid": hot metadata in controller DRAM, in-flight changes journalled in NVRAM, the bulk on flash[^13]. Purity//FB spreads the same ideas across FlashBlade's blades ([Chapter 27](27-flasharray-and-flashblade.md)).
 

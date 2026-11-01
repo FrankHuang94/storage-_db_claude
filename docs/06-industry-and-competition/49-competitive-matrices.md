@@ -7,7 +7,7 @@
 
 - **These matrices are the atlas's judgment,** synthesising Chapters 24 and 40–47. Use them to structure a conversation, not as a ranking.
 - **No vendor is top-right on all three quadrant charts.** VAST leads on AI depth and momentum but is thin on enterprise data services; Dell and NetApp lead on breadth and scale with retrofitted AI; hyperscalers serve mostly data already in their cloud.
-- **Everpure's distinctive position is media economics.** It pairs vertical integration with differentiated flash management (DirectFlash) and is the only array vendor selling that IP into hyperscalers. Its weakest cells are cloud availability, sovereign presence and data intelligence (offered only since 2026).
+- **Everpure's distinctive position is media economics.** It pairs vertical integration with differentiated flash management (DirectFlash) and is the only array vendor publicly known to license that IP into hyperscalers. Its weakest cells are cloud availability, sovereign presence and data intelligence (offered only since 2026).
 - **2025–26 moved the whole field upward.** WEKA made KV-cache offload a commercial product in November 2025; by late 2026 nearly every serious vendor had one. NVIDIA's STX gave twelve partners one reference design, so certification differentiates less.
 - **The matrices point to options a strategy team might evaluate:** convert benchmark leadership into neocloud share, widen cloud reach beyond Azure, make data intelligence a full-strength capability, and decide whether the namespace layer above arrays is a partner or a threat.
 
@@ -270,7 +270,7 @@ Four signals to watch in 2027:
 **Questions for a PM**
 
 1. *"Which ◐ cell in our row costs the most deals?"* A strong answer names one (cloud availability or neocloud fit), with lost deals and a plan, not a feature roadmap.
-2. *"Why aren't we higher than VAST on AI-native depth?"* A strong answer concedes EXA's shorter field record, then cites audited MLPerf results VAST has not entered.
+2. *"Why aren't we higher than VAST on AI-native depth?"* A strong answer concedes EXA's shorter field record, then cites peer-reviewed MLPerf results VAST has not entered.
 3. *"Is Hammerspace a partner or a threat?"* A strong answer separates accounts where it runs over FlashBlade from those where Tier 0 replaces shared storage.
 
 **Questions for an engineer**

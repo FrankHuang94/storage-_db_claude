@@ -3,10 +3,10 @@ Everpure FlashBlade//EXA,Proven scale,2,"Atlas judgment: GA since mid-2025; firs
 VAST,Proven scale,5,"Atlas judgment: CoreWeave US$1.17B agreement (Reuters 2025-11-06), xAI Colossus (contested with DDN), TACC Horizon high-speed tier (TACC 2025-11-17)",2026-11-01
 WEKA,Proven scale,3,"Atlas judgment: neocloud and lab references (CoreWeave option, Nebius, Cohere, OCI) but no disclosed mega-deal; ARR >US$100M in 2024 (company-stated)",2026-11-01
 DDN,Proven scale,5,"Atlas judgment: NVIDIA Selene and Eos (48 AI400X2, ~4 TB/s), xAI Colossus, 350 PB Infinia cluster (company-stated), >500k GPUs supported (company-stated)",2026-11-01
-Everpure FlashBlade//EXA,Audited benchmark evidence,5,"Atlas judgment: MLPerf Storage v3.0 top checkpoint write 877.5 GiB/s and KV-cache read 1,623.4 GiB/s (2026-09); SPECstorage AI_IMAGE #1 6,300 AI_Jobs (2026-02); caveat: rivals absent",2026-11-01
-VAST,Audited benchmark evidence,1,"Atlas judgment: no MLPerf Storage or SPECstorage submission in any round (StorageReview 2026-09); sells on POCs and references",2026-11-01
-WEKA,Audited benchmark evidence,3,"Atlas judgment: SPECstorage 2020 #1 on all five workloads (2025-02, HPE hardware), MLPerf v0.5/v1.0; skipped v2.0 and v3.0; KV claims vendor-run",2026-11-01
-DDN,Audited benchmark evidence,3,"Atlas judgment: MLPerf v1.0 and v2.0 entries, frequent IO500 entries; skipped MLPerf v3.0 including the KV-cache workload",2026-11-01
+Everpure FlashBlade//EXA,Peer-reviewed benchmark evidence,5,"Atlas judgment: MLPerf Storage v3.0 top checkpoint write 877.5 GiB/s and KV-cache read 1,623.4 GiB/s (2026-09); SPECstorage AI_IMAGE #1 6,300 AI_Jobs (2026-02); caveat: rivals absent",2026-11-01
+VAST,Peer-reviewed benchmark evidence,1,"Atlas judgment: no MLPerf Storage or SPECstorage submission in any round (StorageReview 2026-09); sells on POCs and references",2026-11-01
+WEKA,Peer-reviewed benchmark evidence,3,"Atlas judgment: SPECstorage 2020 #1 on all five workloads (2025-02, HPE hardware), MLPerf v0.5/v1.0; skipped v2.0 and v3.0; KV claims vendor-run",2026-11-01
+DDN,Peer-reviewed benchmark evidence,3,"Atlas judgment: MLPerf v1.0 and v2.0 entries, frequent IO500 entries; skipped MLPerf v3.0 including the KV-cache workload",2026-11-01
 Everpure FlashBlade//EXA,Capacity economics,2,"Atlas judgment: Purity reduction on metadata core; data-node protection and reduction mature on a separate Purity//DN release train; data nodes are third-party NVMe (DFM nodes not confirmed GA)",2026-11-01
 VAST,Capacity economics,5,"Atlas judgment: 146+4 locally decodable codes (2.7% overhead at >=75 DBoxes), global similarity reduction (~2:1 median, company-stated), QLC-native",2026-11-01
 WEKA,Capacity economics,3,"Atlas judgment: 16+4 EC keeps 80% of raw; NeuralMesh 6 adds guaranteed reduction (claimed up to 6x) but GA not confirmed as of 2026-11-01",2026-11-01

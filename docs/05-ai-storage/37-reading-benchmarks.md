@@ -110,7 +110,7 @@ The recurring tactics:
 5. **Workload cherry-picking.** Enter checkpointing and skip training, or report "#1 on every test entered". Everpure uses that framing for v3.0[^27].
 6. **Flattering denominators.** Per data node excluding metadata servers, per client, per undefined "rack".
 7. **Unverified previews.** Hammerspace's v1.0 records were first reported before verification[^28]. Pure Storage published a v2.0 white paper that was not an official listed submission[^29].
-8. **Not submitting.** Absence avoids a public loss. StorageReview lists no audited MLPerf result for VAST in any round[^30], and VAST, WEKA and DDN all skipped v3.0[^7].
+8. **Not submitting.** Absence avoids a public loss. StorageReview lists no published MLPerf result for VAST in any round[^30], and VAST, WEKA and DDN all skipped v3.0[^7].
 
 ### Worked normalisation example (illustrative assumptions)
 
@@ -203,7 +203,7 @@ IO500's first list was released at SC17 in November 2017[^37], and MLPerf Storag
 **Questions for a PM**
 
 1. *"Why did we enter checkpointing and KV cache in v3.0 but not training?"* Strong answer: names the target buyer and says what a training entry would have shown.
-2. *"How do sellers answer 'VAST and WEKA didn't need MLPerf'?"* Strong answer: concedes POCs dominate at neocloud scale; positions audited results as risk reduction for enterprises without test labs.
+2. *"How do sellers answer 'VAST and WEKA didn't need MLPerf'?"* Strong answer: concedes POCs dominate at neocloud scale; positions peer-reviewed results as risk reduction for enterprises without test labs.
 3. *"What is EXA's cost per GB/s at a customer's capacity point?"* Strong answer: a range at two or three bandwidth-to-capacity ratios, not a headline.
 
 **Questions for an engineer**

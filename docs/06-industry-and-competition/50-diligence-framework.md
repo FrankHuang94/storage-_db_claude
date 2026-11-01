@@ -66,7 +66,7 @@ Access gets more expensive at each stage. The **public-info teardown** reads doc
 | Dimension | Key questions | Evidence to request | Red flags |
 |---|---|---|---|
 | Architecture and walls | Which wall does this class hit, and at what scale? | Architecture docs; largest-cluster topology; failure-domain map | Team cannot name its wall; largest customer already near it |
-| Performance claims | Do the numbers survive normalisation and our workload? | Raw benchmark configs; audited submissions; PoC on our hardware | Vendor-run only; withdrawal from audited rounds; reduction assumed in headline |
+| Performance claims | Do the numbers survive normalisation and our workload? | Raw benchmark configs; peer-reviewed or audited submissions; PoC on our hardware | Vendor-run only; withdrawal from audited rounds; reduction assumed in headline |
 | Scalability | How do capacity, throughput and metadata scale separately? | Node, file and metadata-op counts for the top five clusters | Only capacity quoted; sub-linear curve beyond tens of nodes |
 | Metadata design | How is the namespace partitioned, and how are cross-shard operations kept atomic? | Design docs; small-file and rename benchmarks | Single metadata server; small-file collapse; no crash-consistency testing |
 | Durability and integrity | Has it lost or corrupted customer data, and how do you know? | Data-loss incident log; field AFR; rebuild-time distribution; checksum design | No end-to-end checksums; no incident log; "nines" offered instead of field data |
@@ -112,7 +112,7 @@ flowchart LR
 | Dimension | Weight | 1 = red flag | 3 = acceptable | 5 = best in class |
 |---|---|---|---|---|
 | Architecture and walls | 10 | Wall within the next customer's scale; team cannot name it | Known wall beyond the current largest deployment | Wall well beyond roadmap scale, with a published mitigation |
-| Performance claims | 8 | Vendor-run only; not reproducible | Some audited results; PoC within 20% of claims | Audited results in current rounds; PoC matches claims |
+| Performance claims | 8 | Vendor-run only; not reproducible | Some peer-reviewed results; PoC within 20% of claims | Peer-reviewed results in current rounds; PoC matches claims |
 | Scalability (capacity, perf) | 7 | Sub-linear beyond a few dozen nodes | Near-linear to the largest customer | Proven linear at multiples of the largest customer |
 | Metadata design | 6 | Single metadata server; small-file collapse | Scale-out metadata with known hot spots | Sharded, with atomic cross-shard operations at scale |
 | Durability and integrity | 10 | Unexplained data-loss incidents; no end-to-end checksums | End-to-end checksums; incidents disclosed and fixed | Fleet telemetry, scrubbing, clean multi-year incident log |
