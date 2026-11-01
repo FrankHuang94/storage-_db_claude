@@ -27,7 +27,7 @@ Each controller is a server with x86 CPUs, DRAM, front-end ports (FC, iSCSI or N
 
 *Figure 14.1 — Two controllers, one set of drives: every path, controller and drive connection is redundant, but the software and chassis are shared.*
 
-**Semiconductor bridge: hot standby, not lockstep.** ASIL-D automotive SoCs run two cores in lockstep and a comparator flags divergence. A controller pair compares nothing; the partner holds just enough state (the mirrored write log) to resume. Lockstep buys fault detection, storage HA buys availability, and both share a common-mode weakness: one bug hits both copies.
+**Semiconductor bridge: hot standby, not lockstep.** ASIL-D automotive SoCs run two cores in lockstep and a comparator flags divergence. A controller pair compares nothing; the partner holds just enough state (the mirrored write log) to resume. Lockstep buys fault detection, HA buys availability; both share one weakness: a bug hits both copies.
 
 ### Where state lives
 
@@ -171,7 +171,7 @@ The same choreography covers software and hardware. With stateless controllers, 
 ### How it scales and where it hits walls
 
 - **Capacity.** Shelves add drives until back-end ports or controller DRAM (which must hold block maps and dedupe tables) run out. FlashArray//XL R5 tops out near 1.9 PB raw, 7.4 PB effective[^23].
-- **Performance.** One pair's CPUs, memory bandwidth and PCIe lanes set the limit. Moving FlashArray//X R5 and //C R5 to Intel Emerald Rapids raised performance ~30% and ~40%[^24]: the array roadmap is largely Intel's. In chip terms, scale-up is a monolithic die riding process nodes; scale-out is the multi-die answer.
+- **Performance.** One pair's CPUs, memory bandwidth and PCIe lanes set the limit. Moving FlashArray//X R5 and //C R5 to Intel Emerald Rapids raised performance ~30% and ~40%[^24]: the array roadmap is largely Intel's. Scale-up is a monolithic die riding process nodes; scale-out is the multi-die answer.
 - **Federation.** PowerStore clusters up to four appliances and migrates volumes between them[^4], with ML rebalancing in Prime[^25]. ONTAP ASA clusters reach 12 nodes[^26], IBM four I/O groups[^27] [VERIFY: current FlashSystem cluster maximum], HPE's B10000 six nodes[^28]. A volume still lives on one pair; federation adds mobility and one management plane, not a bigger volume.
 - **The exception.** PowerMax 8500 scales to 16 nodes sharing a global cache over a 100 Gb/s NVMe/InfiniBand fabric[^29][^10], a scale-up machine built from many controllers.
 
@@ -191,7 +191,7 @@ The same choreography covers software and hardware. With stateless controllers, 
 
 ### Cost and operational implications
 
-Entry is cheap and operations simple: a few rack units, no back-end fabric. The hidden cost is the headroom tax of paying for two controllers to get one's failure-safe performance. Traditional refreshes replace the array and migrate data every three to five years; Evergreen-style swaps turn that capital event into a subscription line ([Chapter 23](23-consumption-models.md)). Many outages start on the host: single-fabric cabling or timeouts shorter than a takeover.
+Entry is cheap and operations simple. The hidden cost is the headroom tax of paying for two controllers to get one's failure-safe performance. Traditional refreshes replace the array and migrate data every three to five years; Evergreen-style swaps turn that capital event into a subscription line ([Chapter 23](23-consumption-models.md)). Many outages start on the host: single-fabric cabling or timeouts shorter than a takeover.
 
 ## How Everpure approaches it vs. competitors
 

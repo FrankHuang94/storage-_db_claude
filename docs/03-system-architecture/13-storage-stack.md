@@ -5,40 +5,40 @@
 
 ## TL;DR
 
-- **Every I/O crosses the same eight layers:** application, file system or object API, volume manager, protocol, network, array controller software, SSD controller/FTL, and media. Architectures differ in which layers exist and which one holds the "intelligence": placement, protection, data reduction and metadata.
-- **Storage history is the story of that intelligence moving.** It sat in the host (DAS), moved into a shared box on a network (SAN and NAS, 1990s), spread across clusters of commodity servers (2000s), then split into stateless compute and shared flash (late 2010s onward).
-- **Each layer crossed costs latency; each layer owned earns margin.** A 4 KB database write takes roughly 20–40 µs on a local SSD and roughly 100–250 µs on a networked array. Customers pay for those extra microseconds because they buy shared, protected, reduced data.
-- **Everpure owns three adjacent layers end to end.** Purity, the array software, also does the FTL's job and manages raw NAND inside DirectFlash modules. Most rivals stop at array software and buy standard SSDs, and software-only vendors stop higher still.
-- **Vertical integration is a strategic bet, not a default.** It buys density, efficiency and predictability, plus a layer that can be licensed on its own (the hyperscaler DirectFlash wins). It costs more R&D, NAND qualification work and supply exposure than a software-only model.
+- **Every I/O crosses eight layers:** application, file system or object API, volume manager, protocol, network, array software, SSD controller/FTL, media. Architectures differ in which layer holds the "intelligence": placement, protection, reduction and metadata.
+- **Storage history is that intelligence moving:** from the host (DAS), into a shared networked box (SAN and NAS, 1990s), across commodity server clusters (2000s), then into stateless compute over shared flash (late 2010s on).
+- **Each layer crossed costs latency; each layer owned earns margin.** A 4 KB database write takes ~20–40 µs on a local SSD and ~100–250 µs on a networked array. The extra microseconds buy shared, protected, reduced data.
+- **Everpure owns three adjacent layers.** Purity array software also does the FTL's job on raw NAND inside DirectFlash modules. Most rivals stop at array software; software-only vendors stop higher.
+- **Vertical integration is a bet, not a default.** It buys density, efficiency and a separately licensable layer (the hyperscaler wins), at the cost of more R&D and NAND supply exposure.
 
 ## Why this matters for Everpure strategy
 
-Part 3 compares architectures: dual-controller arrays, shared-nothing clusters, DASE, parallel file systems, object stores and HCI. They are easiest to compare as answers to one question: which layer does the clever work, and on whose hardware? The same question maps onto the business. A vendor that owns a scarce layer sets its price, while one that assembles commodity layers competes on cost. Everpure (NYSE: P, formerly PSTG) reported a 70.4% GAAP gross margin for fiscal 2026[^1]. Supermicro, which assembles servers largely from bought-in components, reported 11.1% for its fiscal 2025[^2].
+Part 3 compares architectures: dual-controller arrays, shared-nothing clusters, DASE, parallel file systems, object stores and HCI. Each is best read as an answer to one question: which layer does the clever work, and on whose hardware? That question maps onto the business. Owners of a scarce layer set prices; assemblers of commodity layers compete on cost. Everpure (NYSE: P, formerly PSTG) reported a 70.4% GAAP gross margin for fiscal 2026[^1]; Supermicro, which builds servers largely from bought-in parts, reported 11.1% for fiscal 2025[^2].
 
-The stack is also a map of adjacencies. Everpure's hyperscaler design wins license the bottom layers (DirectFlash modules and their flash management) without the array software above them, and the customer sources its own hardware[^3][^4]. WEKA attacks from the top, selling software that runs on partners' servers[^5]. Knowing which layers each player owns shows where each can expand and where each is exposed.
+The stack is also a map of adjacencies. Everpure's hyperscaler wins license the bottom layers (DirectFlash modules and flash management) without the array software, on hardware the customer sources[^3][^4]. WEKA attacks from the top, selling software for partners' servers[^5]. Who owns which layer shows where each player can expand and where it is exposed.
 
 ## Core concepts
 
 ### Eight layers, one I/O
 
-Read the stack top to bottom as the path a write takes:
+Read the stack top to bottom as the path of a write:
 
-1. **Application.** A database, hypervisor or training job decides what to persist and when it must be durable. For a database, that moment is the commit.
-2. **File system or object API.** It turns names such as `/db/redo01.log` or a bucket and key into blocks or objects, and it keeps the namespace (directories, permissions, sizes). That is metadata ([Chapter 21](21-metadata.md)).
-3. **Volume manager.** It pools and remaps block addresses. Examples are LVM, software RAID and the storage layer inside a hypervisor.
-4. **Protocol.** The command set: SCSI or NVMe for blocks, NFS or SMB for files, S3 for objects ([Chapters 7](../02-protocols-and-networking/07-block-protocols.md)–[9](../02-protocols-and-networking/09-object-storage-and-s3.md)).
-5. **Network.** Fibre Channel, Ethernet or InfiniBand carries those commands. In DAS a PCIe slot does the job ([Chapter 10](../02-protocols-and-networking/10-datacenter-networking.md)).
-6. **Array controller software.** The storage system's operating environment, such as Purity, ONTAP or VAST's software. It places data, applies RAID or erasure coding, and runs snapshots, replication, deduplication and compression.
-7. **SSD controller and FTL.** The drive's own processor maps logical blocks to physical NAND pages, levels wear and collects garbage ([Chapter 3](../01-storage-fundamentals/03-inside-an-ssd.md)).
-8. **Media.** NAND cells, storage-class memory or disk platters ([Chapter 2](../01-storage-fundamentals/02-media-physics.md)).
+1. **Application.** A database, hypervisor or training job decides what must be durable, and when (for a database, at commit).
+2. **File system or object API.** Turns names (`/db/redo01.log`, a bucket and key) into blocks or objects and keeps the namespace, which is metadata ([Chapter 21](21-metadata.md)).
+3. **Volume manager.** Pools and remaps block addresses: LVM, software RAID, a hypervisor's storage layer.
+4. **Protocol.** SCSI or NVMe for blocks, NFS or SMB for files, S3 for objects ([Chapters 7](../02-protocols-and-networking/07-block-protocols.md)–[9](../02-protocols-and-networking/09-object-storage-and-s3.md)).
+5. **Network.** Fibre Channel, Ethernet or InfiniBand; in DAS, a PCIe slot ([Chapter 10](../02-protocols-and-networking/10-datacenter-networking.md)).
+6. **Array controller software.** Purity, ONTAP, VAST and the like: placement, RAID or erasure coding, snapshots, replication, reduction.
+7. **SSD controller and FTL.** Maps logical blocks to NAND pages, levels wear, collects garbage ([Chapter 3](../01-storage-fundamentals/03-inside-an-ssd.md)).
+8. **Media.** NAND, storage-class memory or disk ([Chapter 2](../01-storage-fundamentals/02-media-physics.md)).
 
 ![Grid of the eight storage-stack layers (rows) against eight architectures (columns: DAS, SAN array, NAS filer, shared-nothing, DASE, parallel file system, object, HCI). Filled blue dots show the main intelligence at layer 6 for most networked architectures, at layers 2 and 3 for DAS and at layer 3 for HCI. Orange rings show secondary intelligence, such as the client file system in parallel FS and the back-end network in DASE and shared-nothing. A dashed blue box around layers 6 to 8 marks what Everpure owns end to end.](../assets/diagrams/ch13-storage-stack.svg)
 
 *Figure 13.1 — Every architecture has the same layers; what differs is which row holds the intelligence, and Everpure is unusual in owning rows 6 through 8 as one design.*
 
-"Intelligence" means four jobs: deciding where data goes, protecting it, shrinking it, and tracking it with metadata. Where an architecture puts those jobs decides what its network must carry and where it hits its scaling wall.
+"Intelligence" means four jobs: placing, protecting, shrinking and tracking data. Where an architecture puts them decides what its network carries and where it hits its scaling wall.
 
-**Semiconductor bridge: the compute stack.** Computing runs from application to compiler to ISA to microarchitecture to memory controller to DRAM cells, and its profits follow layer ownership. NVIDIA owns CUDA, the compiler and the silicon, and posted a 71.1% GAAP gross margin in fiscal 2026[^6]. A server assembler that owns none of those layers earns about a sixth of that. Storage repeats the pattern. The FTL is to an SSD what the address mapping, refresh and wear logic of a memory controller are to DRAM or NAND: it hides media physics behind a clean interface. Whoever owns it decides how much of the NAND's raw capability reaches the customer, and at what DRAM and spare-capacity cost. Margin is not only about layers: R&D intensity, scale and pricing power matter too.
+**Semiconductor bridge: the compute stack.** Computing runs from application to compiler to ISA to microarchitecture to memory controller to DRAM cells, and profit follows layer ownership. NVIDIA owns CUDA, the compiler and the silicon, and posted a 71.1% GAAP gross margin in fiscal 2026[^6]; a server assembler owning none of those layers earns about a sixth of that. In storage the FTL plays the memory controller's role: address mapping and wear management that hide media physics behind a clean interface. Whoever owns it decides how much raw NAND capability reaches the customer, and at what DRAM and spare-capacity cost. (Layers are not the whole margin story; R&D intensity and scale matter too.)
 
 ### Tracing one 4 KB database write
 
@@ -57,9 +57,9 @@ flowchart TD
 
 *Figure 13.2 — Illustrative, order-of-magnitude latencies: on a networked array the network, protocol and controller software dominate a small write, and NAND programming is hidden behind NVRAM.*
 
-Walk the numbers. A networked all-flash array acknowledges the write once it is mirrored in non-volatile memory on both controllers, not when it reaches NAND. The critical-path steps sum to roughly 45–165 µs one way, and with the return trip and queueing a 4 KB write lands near 100–250 µs. That range is consistent with vendor claims, for example 150 µs quoted for FlashArray//XL170 (company-stated, conditions unspecified)[^7]. The same write to a local NVMe SSD skips layers 4–6 and is acknowledged from the drive's power-loss-protected DRAM.
+Walk the numbers. A networked array acknowledges the write once it is mirrored in NVRAM on both controllers, not when it reaches NAND. The critical-path steps sum to roughly 45–165 µs one way; with the return trip and queueing, a 4 KB write lands near 100–250 µs, consistent with the 150 µs quoted for FlashArray//XL170 (company-stated, conditions unspecified)[^7]. A local NVMe SSD skips layers 4–6 and acknowledges from power-loss-protected DRAM.
 
-Three lessons follow. First, **NAND is not on the write critical path** in any serious system: the array's NVRAM or the SSD's DRAM absorbs the write, and the slow program happens later. Second, **the network and software layers dominate** a SAN's small-I/O latency. That is why transport choice matters for databases: NVMe-oF over RDMA adds about 5–15 µs over local NVMe[^8], against roughly 20–35 µs for NVMe/TCP in early tests[^9]. It is also why researchers attack the host kernel path, which becomes a large share of total latency on very fast SSDs[^10]. Third, **the extra ~100 µs buys what DAS lacks**: one copy of the data shared by many hosts, surviving the loss of a controller, deduplicated, snapshotted and replicated. Every architecture in Part 3 prices that trade differently.
+Three lessons follow. **NAND is not on the write critical path**: NVRAM or SSD DRAM absorbs the write and the slow program happens later. **Network and software dominate** small-I/O latency, which is why transport matters for databases: NVMe-oF over RDMA adds about 5–15 µs over local NVMe[^8], NVMe/TCP roughly 20–35 µs in early tests[^9], and the host kernel path becomes a large share of latency on very fast SSDs[^10]. **The extra ~100 µs buys what DAS lacks**: one copy shared by many hosts, surviving controller loss, deduplicated, snapshotted and replicated.
 
 ### Where the intelligence lives
 
@@ -76,7 +76,7 @@ Three lessons follow. First, **NAND is not on the write critical path** in any s
 
 *Table 13.1 — Where the intelligence lives decides what crosses the network and where each architecture hits its scaling wall.*
 
-Read down the table and you see a migration. DAS put intelligence in the host. SAN and NAS moved it into a controller pair that many hosts share. Shared-nothing, object and HCI spread it across commodity servers. DASE and parallel file systems split it again, separating metadata work from the data path. The diagnostic questions never change: where does metadata live, and how many hops does a write cross before it is safe?
+Read down the table and you see a migration: from the host, to a shared controller pair, to software spread across commodity servers, and now to designs that separate metadata from the data path. The diagnostic questions never change: where does metadata live, and how many hops does a write cross before it is safe?
 
 ## How Everpure approaches it vs. competitors
 
@@ -92,11 +92,11 @@ Read down the table and you see a migration. DAS put intelligence in the host. S
 
 *Table 13.2 — Everpure and IBM integrate down to the flash; most rivals stop at array software, and software-only players stop above the hardware entirely.*
 
-**Why collapse layers 6 and 7?** A standard SSD's FTL works blind. It does not know which blocks the array is about to overwrite or delete, so it can copy soon-to-be-dead data during garbage collection, and it reserves its own spare area and DRAM. With DirectFlash, Purity talks to raw NAND and handles placement, garbage collection and wear levelling across every module at once[^16]. The DRAM arithmetic shows why this matters as drives grow. A conventional FTL with a 4-byte entry per 4 KB page needs 1 TB ÷ 4 KB × 4 B ≈ 1 GB of DRAM per TB, so a 150 TB drive would need about 150 GB. Array software already keeps its own metadata for deduplication and snapshots. Moving flash mapping into that software is what lets module capacity scale without a matching DRAM bill. DFM capacity went from 75 TB in 2023 to 150 TB, and 300 TB per module was reported in August 2026[^17][^18] [VERIFY: official 300 TB DFM GA date].
+**Why collapse layers 6 and 7?** A standard SSD's FTL works blind: it does not know which blocks the array will soon overwrite, so it may copy dead-to-be data during garbage collection, and it carries its own spare area and DRAM. With DirectFlash, Purity drives raw NAND and handles placement, garbage collection and wear levelling across all modules at once[^16]. The DRAM arithmetic matters as drives grow: a 4-byte map entry per 4 KB page is 1 TB ÷ 4 KB × 4 B ≈ 1 GB of DRAM per TB, or ~150 GB for a 150 TB drive. Folding mapping into array software, which already keeps metadata for deduplication and snapshots, lets module capacity scale without that DRAM bill. DFMs went from 75 TB in 2023 to 150 TB, with 300 TB reported in August 2026[^17][^18] [VERIFY: official 300 TB DFM GA date].
 
-**Steelman the alternatives.** Software-only vendors ride server and SSD makers' cost curves for free, deploy in any cloud, and focus R&D on one layer. Array vendors on standard SSDs can multi-source drives and ship each new SSD generation as soon as it is qualified, while Everpure must engineer modules around each NAND generation. Integration also carries supply risk: Everpure raised prices in February 2026 as NAND costs surged[^19]. AWS's Nitro SSD shows that hyperscalers can build their own flash management, and AWS claimed 60% lower latency than OEM drives[^15]. So the licensing thesis rests on Everpure staying ahead in time-to-capacity, not on the layer being impossible to replicate.
+**Steelman the alternatives.** Software-only vendors ride server and SSD cost curves for free, run in any cloud and focus R&D on one layer. Array vendors on standard SSDs multi-source drives and adopt each SSD generation once qualified, while Everpure must engineer modules for each NAND generation and carries supply risk: it raised prices in February 2026 as NAND costs surged[^19]. AWS's Nitro SSD, claimed at 60% lower latency than OEM drives, proves hyperscalers can build layer 7 themselves[^15]. The licensing thesis therefore rests on staying ahead in time-to-capacity, not on the layer being unreplicable.
 
-Options a strategy team might evaluate, based on public information: how far to extend licensing of layers 7 and 8; whether FlashBlade//EXA's use of third-party data nodes ([Chapter 16](16-disaggregated-shared-everything.md)) dilutes the integration thesis or extends Purity's reach; and which layer next becomes contestable as DPUs take on storage services ([Chapter 12](../02-protocols-and-networking/12-interfaces-and-emerging-tech.md)).
+Options a strategy team might evaluate, based on public information: how far to license layers 7 and 8; whether FlashBlade//EXA's third-party data nodes ([Chapter 16](16-disaggregated-shared-everything.md)) dilute the integration thesis or extend Purity's reach; and which layer becomes contestable as DPUs absorb storage services.
 
 ## History and trajectory
 
@@ -127,7 +127,7 @@ timeline
 
 Dates are from primary or reputable sources[^20][^21][^22][^23][^24][^25][^26][^13][^14][^27][^28][^29][^30][^31][^32][^33].
 
-Each move was driven by a bottleneck. DAS stranded capacity in individual servers, so SANs pooled it behind a shared controller. Controllers then became the scaling wall, so web-scale firms spread the work across commodity servers. Flash then made the network and software the slow parts, so the newest designs cut hops and separate metadata from data. Two signals point to the next re-cut. NVIDIA's 2026 STX reference design runs storage services on DPUs, moving parts of layer 6 into the network card[^33]. Host-directed placement standards such as NVMe Flexible Data Placement let any array vendor steer where data lands on standard SSDs, which narrows, though does not erase, the advantage of owning layer 7 ([Chapter 12](../02-protocols-and-networking/12-interfaces-and-emerging-tech.md)).
+Each move answered a bottleneck: stranded DAS capacity led to pooled SANs; controller limits led to scale-out on commodity servers; flash made network and software the slow parts, so new designs cut hops and split metadata from data. Two signals point to the next re-cut. NVIDIA's 2026 STX design runs storage services on DPUs, pulling parts of layer 6 into the NIC[^33]. NVMe Flexible Data Placement lets any array steer placement on standard SSDs, narrowing, not erasing, the advantage of owning layer 7 ([Chapter 12](../02-protocols-and-networking/12-interfaces-and-emerging-tech.md)).
 
 ## Numbers that matter
 
