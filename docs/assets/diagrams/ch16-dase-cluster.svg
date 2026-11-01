@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 680" width="1000" role="img" aria-labelledby="t d" font-family="Inter, Helvetica, Arial, sans-serif">
+  <title id="t">DASE cluster: stateless compute nodes, shared persistent media</title>
+  <desc id="d">Clients connect over a front-end network to a row of stateless CNodes. Every CNode connects through a back-end NVMe-over-Fabrics network to every DBox enclosure. Each DBox holds two DNodes, a small storage-class-memory tier for the write buffer and metadata, and many QLC SSDs that hold almost all capacity. Adding CNodes adds performance; adding DBoxes adds capacity.</desc>
+  <rect x="0" y="0" width="1000" height="680" fill="#FFFFFF"/>
+
+  <!-- Title -->
+  <text x="30" y="36" font-size="20" font-weight="700" fill="#222222">DASE cluster: stateless compute, shared persistent media</text>
+  <text x="30" y="58" font-size="13" fill="#555555">Logical view, not to scale. Original drawing for the Everpure Tech Atlas, Chapter 16.</text>
+
+  <!-- Clients -->
+  <rect x="30" y="74" width="740" height="46" rx="6" fill="#F3F6F9" stroke="#888888"/>
+  <text x="400" y="102" font-size="14" text-anchor="middle" fill="#222222">Clients: GPU servers and application hosts (file, object and block protocols)</text>
+
+  <!-- Front-end network -->
+  <rect x="30" y="132" width="740" height="24" rx="4" fill="#DDDDDD"/>
+  <text x="400" y="149" font-size="12" text-anchor="middle" fill="#222222">Front-end network (Ethernet or InfiniBand): any client can reach any CNode</text>
+
+  <!-- Mesh: every CNode to every DBox (drawn first so boxes sit on top) -->
+  <g stroke="#888888" stroke-width="1.2" stroke-opacity="0.55" fill="none">
+    <line x1="82" y1="240" x2="145" y2="380"/><line x1="82" y1="240" x2="400" y2="380"/><line x1="82" y1="240" x2="655" y2="380"/>
+    <line x1="209" y1="240" x2="145" y2="380"/><line x1="209" y1="240" x2="400" y2="380"/><line x1="209" y1="240" x2="655" y2="380"/>
+    <line x1="336" y1="240" x2="145" y2="380"/><line x1="336" y1="240" x2="400" y2="380"/><line x1="336" y1="240" x2="655" y2="380"/>
+    <line x1="463" y1="240" x2="145" y2="380"/><line x1="463" y1="240" x2="400" y2="380"/><line x1="463" y1="240" x2="655" y2="380"/>
+    <line x1="590" y1="240" x2="145" y2="380"/><line x1="590" y1="240" x2="400" y2="380"/><line x1="590" y1="240" x2="655" y2="380"/>
+    <line x1="717" y1="240" x2="145" y2="380"/><line x1="717" y1="240" x2="400" y2="380"/><line x1="717" y1="240" x2="655" y2="380"/>
+  </g>
+
+  <!-- CNodes -->
+  <g font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">
+    <rect x="30" y="170" width="105" height="70" rx="6" fill="#0072B2"/>
+    <text x="82" y="200">CNode 1</text>
+    <rect x="157" y="170" width="105" height="70" rx="6" fill="#0072B2"/>
+    <text x="209" y="200">CNode 2</text>
+    <rect x="284" y="170" width="105" height="70" rx="6" fill="#0072B2"/>
+    <text x="336" y="200">CNode 3</text>
+    <rect x="411" y="170" width="105" height="70" rx="6" fill="#0072B2"/>
+    <text x="463" y="200">CNode 4</text>
+    <rect x="538" y="170" width="105" height="70" rx="6" fill="#0072B2"/>
+    <text x="590" y="200">CNode 5</text>
+    <rect x="665" y="170" width="105" height="70" rx="6" fill="#0072B2"/>
+    <text x="717" y="200">CNode N</text>
+  </g>
+  <g font-size="12" fill="#FFFFFF" text-anchor="middle">
+    <text x="82" y="222">stateless</text><text x="209" y="222">stateless</text><text x="336" y="222">stateless</text>
+    <text x="463" y="222">stateless</text><text x="590" y="222">stateless</text><text x="717" y="222">stateless</text>
+  </g>
+
+  <!-- Back-end fabric -->
+  <rect x="30" y="300" width="740" height="28" rx="4" fill="#DDDDDD" stroke="#888888"/>
+  <text x="400" y="319" font-size="13" font-weight="700" text-anchor="middle" fill="#222222">Back-end NVMe-oF fabric (RDMA): every CNode reaches every SSD</text>
+
+  <!-- DBoxes -->
+  <g>
+    <!-- DBox 1 -->
+    <rect x="30" y="380" width="230" height="208" rx="6" fill="#FFFFFF" stroke="#222222" stroke-width="1.5"/>
+    <text x="145" y="400" font-size="14" font-weight="700" text-anchor="middle" fill="#222222">DBox 1</text>
+    <rect x="40" y="408" width="98" height="28" rx="4" fill="#EEEEEE" stroke="#888888"/>
+    <text x="89" y="427" font-size="12" text-anchor="middle" fill="#222222">DNode A</text>
+    <rect x="152" y="408" width="98" height="28" rx="4" fill="#EEEEEE" stroke="#888888"/>
+    <text x="201" y="427" font-size="12" text-anchor="middle" fill="#222222">DNode B</text>
+    <rect x="40" y="444" width="210" height="30" rx="4" fill="#D55E00"/>
+    <text x="145" y="464" font-size="12" font-weight="700" text-anchor="middle" fill="#FFFFFF">SCM: write buffer + metadata</text>
+    <!-- DBox 2 -->
+    <rect x="285" y="380" width="230" height="208" rx="6" fill="#FFFFFF" stroke="#222222" stroke-width="1.5"/>
+    <text x="400" y="400" font-size="14" font-weight="700" text-anchor="middle" fill="#222222">DBox 2</text>
+    <rect x="295" y="408" width="98" height="28" rx="4" fill="#EEEEEE" stroke="#888888"/>
+    <text x="344" y="427" font-size="12" text-anchor="middle" fill="#222222">DNode A</text>
+    <rect x="407" y="408" width="98" height="28" rx="4" fill="#EEEEEE" stroke="#888888"/>
+    <text x="456" y="427" font-size="12" text-anchor="middle" fill="#222222">DNode B</text>
+    <rect x="295" y="444" width="210" height="30" rx="4" fill="#D55E00"/>
+    <text x="400" y="464" font-size="12" font-weight="700" text-anchor="middle" fill="#FFFFFF">SCM: write buffer + metadata</text>
+    <!-- DBox M -->
+    <rect x="540" y="380" width="230" height="208" rx="6" fill="#FFFFFF" stroke="#222222" stroke-width="1.5"/>
+    <text x="655" y="400" font-size="14" font-weight="700" text-anchor="middle" fill="#222222">DBox M</text>
+    <rect x="550" y="408" width="98" height="28" rx="4" fill="#EEEEEE" stroke="#888888"/>
+    <text x="599" y="427" font-size="12" text-anchor="middle" fill="#222222">DNode A</text>
+    <rect x="662" y="408" width="98" height="28" rx="4" fill="#EEEEEE" stroke="#888888"/>
+    <text x="711" y="427" font-size="12" text-anchor="middle" fill="#222222">DNode B</text>
+    <rect x="550" y="444" width="210" height="30" rx="4" fill="#D55E00"/>
+    <text x="655" y="464" font-size="12" font-weight="700" text-anchor="middle" fill="#FFFFFF">SCM: write buffer + metadata</text>
+  </g>
+
+  <!-- QLC drive grids: 2 rows x 11 per DBox, drive width 16, pitch 19 -->
+  <g fill="#56B4E9" stroke="#FFFFFF" stroke-width="1">
+    <g id="qlc">
+      <rect x="41" y="482" width="16" height="36"/><rect x="60" y="482" width="16" height="36"/><rect x="79" y="482" width="16" height="36"/><rect x="98" y="482" width="16" height="36"/><rect x="117" y="482" width="16" height="36"/><rect x="136" y="482" width="16" height="36"/><rect x="155" y="482" width="16" height="36"/><rect x="174" y="482" width="16" height="36"/><rect x="193" y="482" width="16" height="36"/><rect x="212" y="482" width="16" height="36"/><rect x="231" y="482" width="16" height="36"/>
+      <rect x="41" y="522" width="16" height="36"/><rect x="60" y="522" width="16" height="36"/><rect x="79" y="522" width="16" height="36"/><rect x="98" y="522" width="16" height="36"/><rect x="117" y="522" width="16" height="36"/><rect x="136" y="522" width="16" height="36"/><rect x="155" y="522" width="16" height="36"/><rect x="174" y="522" width="16" height="36"/><rect x="193" y="522" width="16" height="36"/><rect x="212" y="522" width="16" height="36"/><rect x="231" y="522" width="16" height="36"/>
+    </g>
+    <use href="#qlc" x="255"/>
+    <use href="#qlc" x="510"/>
+  </g>
+  <g font-size="12" text-anchor="middle" fill="#222222">
+    <text x="145" y="578">QLC SSDs: ~99% of raw capacity</text>
+    <text x="400" y="578">QLC SSDs: ~99% of raw capacity</text>
+    <text x="655" y="578">QLC SSDs: ~99% of raw capacity</text>
+  </g>
+
+  <!-- Right-hand annotations -->
+  <g font-size="13" fill="#222222">
+    <path d="M 790 205 L 812 205" stroke="#0072B2" stroke-width="3" marker-end="url(#arr)"/>
+    <text x="822" y="190" font-weight="700" fill="#0072B2">Add CNodes</text>
+    <text x="822" y="208">more IOPS, GB/s and</text>
+    <text x="822" y="225">protocol work; no data</text>
+    <text x="822" y="242">moves when you do</text>
+
+    <path d="M 790 314 L 812 314" stroke="#555555" stroke-width="3" marker-end="url(#arr2)"/>
+    <text x="822" y="300" font-weight="700">The fabric is the</text>
+    <text x="822" y="317" font-weight="700">backplane</text>
+    <text x="822" y="334">every I/O crosses it;</text>
+    <text x="822" y="351">its bandwidth caps the</text>
+    <text x="822" y="368">whole cluster</text>
+
+    <path d="M 790 480 L 812 480" stroke="#D55E00" stroke-width="3" marker-end="url(#arr3)"/>
+    <text x="822" y="455" font-weight="700" fill="#D55E00">Add DBoxes</text>
+    <text x="822" y="473">more capacity and</text>
+    <text x="822" y="490">media bandwidth; wider,</text>
+    <text x="822" y="507">cheaper erasure-code</text>
+    <text x="822" y="524">stripes</text>
+  </g>
+  <defs>
+    <marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#0072B2"/></marker>
+    <marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#555555"/></marker>
+    <marker id="arr3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="5" markerHeight="5" orient="auto"><path d="M0,0 L10,5 L0,10 z" fill="#D55E00"/></marker>
+  </defs>
+
+  <!-- Legend -->
+  <g font-size="12" fill="#222222">
+    <rect x="30" y="612" width="16" height="16" fill="#0072B2"/><text x="52" y="625">Stateless compute (CNode)</text>
+    <rect x="232" y="612" width="16" height="16" fill="#D55E00"/><text x="254" y="625">Persistent fast tier (SCM)</text>
+    <rect x="432" y="612" width="16" height="16" fill="#56B4E9"/><text x="454" y="625">Capacity flash (QLC)</text>
+    <rect x="602" y="612" width="16" height="16" fill="#DDDDDD" stroke="#888888"/><text x="624" y="625">Network</text>
+    <text x="30" y="656" fill="#555555">Packaging varies: VAST's EBox runs CNode and DNode software on one server; the logical split stays the same.</text>
+  </g>
+</svg>
