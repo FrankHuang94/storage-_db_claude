@@ -35,7 +35,7 @@ Scale has moved fast. CoreWeave reported a fleet of about 250,000 GPUs and 360 M
 
 A liquid-cooled GB200 NVL72 rack joins 72 GPUs by NVLink into one scale-up domain and draws roughly 120 kW (vendor ratings up to 130 kW)[^9][^10]. Eight of them make a 576-GPU unit drawing about 1 MW. Three networks leave the row:
 
-- **Back-end compute fabric** (InfiniBand or Spectrum-X Ethernet) carries GPU-to-GPU collectives between racks. Storage never touches it.
+- **Back-end compute fabric** (InfiniBand or Spectrum-X Ethernet) carries GPU-to-GPU collectives between racks. Storage normally stays off it.
 - **Storage network** (Ethernet with RoCE) carries training reads, checkpoints and KV-cache spill. It is often converged with the front-end on the same NICs or DPUs.
 - **Front-end network** carries tenant access, APIs, dataset ingest and management.
 
@@ -53,7 +53,7 @@ How much storage does the row need? Reference designs disagree. Cisco's NCP high
 
 **5. NVIDIA alignment is the entry ticket.** Neoclouds want storage certified at NVIDIA's NCP tier and present in NCP reference designs ([Chapter 34](34-nvidia-ecosystem.md)). They also want it on NVIDIA's roadmap: CoreWeave, Crusoe, Lambda, Nebius, OCI and others are named early adopters of the BlueField-4 STX context-memory architecture[^18]. And buyers rank neoclouds with SemiAnalysis's ClusterMAX ratings, whose ten criteria include storage[^19].
 
-**6. Software-defined is preferred.** Large neoclouds want storage on the same qualified servers, spares and automation as their compute. WEKA, for example, runs natively on Nebius's servers[^20]. Appliances are accepted when they are the fastest way to a certified, supported configuration.
+**6. Software-defined is preferred.** Large neoclouds want storage on the same qualified servers, spares and automation as their compute. WEKA, for example, runs natively on Nebius's servers[^20]. Appliances win when they are the fastest route to a certified configuration.
 
 **7. Financing shapes the deal.** Neoclouds fund GPUs with debt secured on customer contracts, plus customer prepayments and convertible bonds. Nebius expects prepayments to cover 50–60% of related 2026 capex [VERIFY: search-summary only][^6], and it issued about US$3.16 billion of convertible notes in September 2025[^21]. Vendors are asked to match with consumption pricing or deferred payments, and they take counterparty risk.
 
@@ -109,7 +109,7 @@ flowchart LR
 
 *Figure 35.2 — VAST touches every large neocloud, but the biggest buyers run several vendors in parallel plus their own object tier; dashed edges are reported but not confirmed by both parties.*
 
-Edge sources: CoreWeave (its storage page also lists IBM Storage Scale)[^23][^24][^3][^25][^26]; Nebius[^20][^27][^28][^29]; Lambda and Crusoe[^30][^15][^31]; OCI[^32][^33]. Nscale appears only in a Next Platform list of VAST partners[^34]; Fluidstack's 2025 VAST deal may not cover the Anthropic sites[^35]. Together AI has disclosed no storage vendor [VERIFY].
+Edge sources: CoreWeave (its storage page also lists IBM Storage Scale)[^23][^24][^3][^25][^26]; Nebius[^20][^27][^28][^29]; Lambda and Crusoe[^30][^15][^31]; OCI[^32][^33]. Nscale appears only in a Next Platform list of VAST partners[^34]; Fluidstack's 2025 VAST deal may not cover the Anthropic sites[^35]. Together AI has disclosed no storage vendor [VERIFY: Together AI storage vendor].
 
 ### The build-it-yourself threat
 
