@@ -865,3 +865,233 @@ Ceph 中数据放置和再平衡的单位，由 CRUSH 函数映射到硬盘。�
 
 </details>
 
+<details>
+<summary><strong>Q94.</strong> 定义并行文件系统的是哪一种拆分？</summary>
+
+把"数据在哪里？"与"把字节给我"分开：元数据服务器对每个文件只应答一次，然后客户端直接把数据条带化地分布到多台对象存储服务器上。（[第 17 章](../03-system-architecture/17-parallel-file-systems.md)）
+
+</details>
+
+<details>
+<summary><strong>Q95.</strong> (L2) 为什么 Lustre 和 GPFS 性能强大却难以运维？</summary>
+
+聪明的部分在客户端：每个节点上的内核模块负责条带化、加锁并使用 RDMA 通信。这带来了数 TB/s 的性能，但每次内核升级都得等待与之匹配的客户端版本。（[第 17 章](../03-system-architecture/17-parallel-file-systems.md)）
+
+</details>
+
+<details>
+<summary><strong>Q96.</strong> Lustre 在 HPC 领域的主导地位如何？</summary>
+
+它运行在 Top500 中超过 60% 的系统上，以及前 100 名中超过 65% 的系统上。（[第 17 章](../03-system-architecture/17-parallel-file-systems.md)）
+
+</details>
+
+<details>
+<summary><strong>Q97.</strong> (L2) 为什么条带化对检查点很重要？</summary>
+
+在示意案例中，一个 6.5 TB 的检查点按每个 OST 5 GB/s 计算，写到单个 OST 上约需 22 分钟，条带化到 64 个 OST 上约需 20 秒。（[第 17 章](../03-system-architecture/17-parallel-file-systems.md)）
+
+</details>
+
+<details>
+<summary><strong>Q98.</strong> (L2) 并行文件系统的瓶颈墙有哪些？</summary>
+
+元数据、小文件和客户端管理。单个 MDS 会把其命名空间上的操作串行化：在示意案例中，10 亿个小文件花在元数据上的时间约为 5.6 小时，而搬运数据只需 100 秒。（[第 17 章](../03-system-architecture/17-parallel-file-systems.md)）
+
+</details>
+
+<details>
+<summary><strong>Q99.</strong> 对象存储的三个平面是什么？</summary>
+
+无状态的 S3 网关、把键映射到分片的索引，以及保存纠删码分片的数据节点，背后还有各种后台服务。（[第 18 章](../03-system-architecture/18-object-storage-architecture.md)）
+
+</details>
+
+<details>
+<summary><strong>Q100.</strong> (L2) MinIO 式的哈希放置牺牲了什么？</summary>
+
+对键做哈希来计算放置位置，消除了元数据数据库这一瓶颈，却把 LIST 变成了全集群范围的扇出操作。而分片的元数据数据库则能让 LIST 保持低成本。（[第 18 章](../03-system-architecture/18-object-storage-architecture.md)）
+
+</details>
+
+<details>
+<summary><strong>Q101.</strong> (L2) 跨地域纠删码的代价和收益是什么？</summary>
+
+跨三个站点的 6+3 只需 1.5× 原始容量，而复制需要 2–3×；代价是要经过广域网读取，以及长达数天的站点重建（算例中约 9.3 天）。（[第 18 章](../03-system-architecture/18-object-storage-architecture.md)）
+
+</details>
+
+<details>
+<summary><strong>Q102.</strong> 什么是对冲读（hedged read）？</summary>
+
+向另一个副本或另一组分片发送重复请求，以压低尾延迟。在算例中，读取 9 个分片中的 8 个，可把卡顿的 GET 比例从 7.7% 降到 0.34%。（[第 18 章](../03-system-architecture/18-object-storage-architecture.md)）
+
+</details>
+
+<details>
+<summary><strong>Q103.</strong> 对比 SDS 与 HCI。</summary>
+
+SDS 出售的是不带硬件的存储操作系统（Ceph、MinIO、VAST、WEKA）。HCI 则把这类软件运行在与虚拟机相同的节点上（Nutanix、vSAN）。（[第 19 章](../03-system-architecture/19-software-defined-and-hci.md)）
+
+</details>
+
+<details>
+<summary><strong>Q104.</strong> 什么是闲置资源（stranded resources）？</summary>
+
+仅仅因为节点捆绑销售才买下、而工作负载并不需要的容量或算力。（[第 19 章](../03-system-architecture/19-software-defined-and-hci.md)）
+
+</details>
+
+<details>
+<summary><strong>Q105.</strong> (L2) HCI 的瓶颈墙是什么？</summary>
+
+耦合扩展：每个节点都按固定比例同时增加算力和容量。在算例中，一个按容量需求配置的集群约有 81% 的 CPU 核心处于闲置。（[第 19 章](../03-system-architecture/19-software-defined-and-hci.md)）
+
+</details>
+
+<details>
+<summary><strong>Q106.</strong> (L2) Broadcom 对 VMware 的调整如何影响了存储？</summary>
+
+自 2023 年 12 月起的授权模式重置重新打开了"HCI 还是阵列"之争，并把客户推向 Nutanix、公有云和外置阵列。Gartner 预测到 2028 年将有超过 35% 的 VMware 工作负载迁出。（[第 19 章](../03-system-architecture/19-software-defined-and-hci.md)）
+
+</details>
+
+<details>
+<summary><strong>Q107.</strong> (L2) 纯软件与一体机：两种商业模式各自换来了什么？</summary>
+
+纯软件换来的是毛利率百分比、无 NAND 库存和快速迭代（Nutanix 的非 GAAP 毛利率为 88.0%）。一体机换来的是每笔交易的毛利额和对介质的控制。（[第 19 章](../03-system-architecture/19-software-defined-and-hci.md)）
+
+</details>
+
+<details>
+<summary><strong>Q108.</strong> 要在 f 个故障下存活，共识需要多少个投票者？</summary>
+
+2f+1。这就是为什么双站点集群需要第三个投票者——见证者（witness）或仲裁者（mediator）——来防止脑裂。（[第 20 章](../03-system-architecture/20-distributed-systems-fundamentals.md)）
+
+</details>
+
+<details>
+<summary><strong>Q109.</strong> PACELC 在 CAP 的基础上增加了什么？</summary>
+
+"否则（else）"的情形：在没有网络分区时，日常的权衡是延迟与一致性之间的取舍，按功能逐一选择。同步城域复制选择一致性；异步容灾选择延迟。（[第 20 章](../03-system-architecture/20-distributed-systems-fundamentals.md)）
+
+</details>
+
+<details>
+<summary><strong>Q110.</strong> 什么是 FIT？</summary>
+
+每 10⁹ 器件小时的故障次数；1% 的年化故障率约为 1,140 FIT。（[第 20 章](../03-system-architecture/20-distributed-systems-fundamentals.md)）
+
+</details>
+
+<details>
+<summary><strong>Q111.</strong> (L2) 为什么"11 个 9 的持久性"是模型输出，而不是实测结果？</summary>
+
+它来自校验位数、重建时间以及故障相互独立的假设，而在实践中导致数据丢失的恰恰是相关故障。可用性的"几个 9"是实测的；持久性的"几个 9"是建模得出的。（[第 20 章](../03-system-architecture/20-distributed-systems-fundamentals.md)）
+
+</details>
+
+<details>
+<summary><strong>Q112.</strong> (L2) RAID 6 与 16+4 的算例说明了什么？</summary>
+
+在 10 PB、1.36% AFR 的条件下，重建需 42 小时的 RAID 6 建模结果约为 5.8 个 9，而重建需 4 小时的 16+4 约为 15.1 个 9。校验深度和重建时间决定持久性。（[第 20 章](../03-system-architecture/20-distributed-systems-fundamentals.md)）
+
+</details>
+
+<details>
+<summary><strong>Q113.</strong> 哪些操作属于元数据操作？</summary>
+
+open、stat、list、create 和 rename；只有 read 和 write 搬运有效载荷。（[第 21 章](../03-system-architecture/21-metadata.md)）
+
+</details>
+
+<details>
+<summary><strong>Q114.</strong> 定义 inode、dentry 和 extent。</summary>
+
+inode 是文件记录，dentry 是目录中"名称到 inode"的条目，extent 是一段连续的块。（[第 21 章](../03-system-architecture/21-metadata.md)）
+
+</details>
+
+<details>
+<summary><strong>Q115.</strong> (L2) 为什么 AI 训练的元数据负担很重？</summary>
+
+数据集包含数百万个约 100 KB 的样本（ImageNet-1k 平均约 113 KB），检查点则为每个 GPU rank 各创建一个文件。在每秒 1M 次元数据操作的条件下，一个 500 GB/s 的系统处理 113 KB 文件时只能提供约 28 GB/s。（[第 21 章](../03-system-architecture/21-metadata.md)）
+
+</details>
+
+<details>
+<summary><strong>Q116.</strong> (L2) 除了 TB/s，买方还应该问什么？</summary>
+
+每秒创建数（creates/s）和每秒 stat 数（stats/s）。元数据已经从单台服务器转向分布式数据库（VAST 的 SCM、FlashBlade 的键值存储、基于 FoundationDB 的 3FS），而 IO500 对元数据与带宽给予同等权重。（[第 21 章](../03-system-architecture/21-metadata.md)）
+
+</details>
+
+<details>
+<summary><strong>Q117.</strong> 对比数据平面与控制平面。</summary>
+
+数据平面以微秒级搬运字节。控制平面以秒级决定应当存在什么（卷、策略、放置），好的设计会把它排除在 I/O 路径之外。（[第 22 章](../03-system-architecture/22-control-planes.md)）
+
+</details>
+
+<details>
+<summary><strong>Q118.</strong> (L2) 为什么回传遥测（phone-home telemetry）的价值随设备群规模复利增长？</summary>
+
+罕见故障只有在大量系统上才能被学习到：一个万分之一概率的故障，在 1,000 台阵列的设备群中每年出现 0.1 次，在 50,000 台阵列的设备群中出现 5 次。这构成了支持成本和销售信号上的护城河。（[第 22 章](../03-system-architecture/22-control-planes.md)）
+
+</details>
+
+<details>
+<summary><strong>Q119.</strong> (L2) "存储即代码"如何改变了买方？</summary>
+
+平台工程师在 Terraform、Ansible 或 Kubernetes 清单中声明存储，因此过去靠 GUI 赢下的交易，如今靠 API 质量来赢。（[第 22 章](../03-system-architecture/22-control-planes.md)）
+
+</details>
+
+<details>
+<summary><strong>Q120.</strong> 说出购买存储的四种方式。</summary>
+
+一次性资本支出买断、租赁、资本支出加升级订阅（Evergreen//Forever 式），或存储即服务（STaaS）——由厂商拥有硬件，并按照 SLA 根据用量计费。（[第 23 章](../03-system-architecture/23-consumption-models.md)）
+
+</details>
+
+<details>
+<summary><strong>Q121.</strong> 定义 TCV、RPO 和 ARR。</summary>
+
+TCV 是已签署的合同总价值，RPO（剩余履约义务）是已签约但尚未确认的收入，ARR 是年化的订阅收入运行率。（[第 23 章](../03-system-architecture/23-consumption-models.md)）
+
+</details>
+
+<details>
+<summary><strong>Q122.</strong> (L2) 为什么向 STaaS 转型会压低报告的增长率？</summary>
+
+它把前期一次性确认的产品收入换成按期确认的收入（在 $1.2M 交易的算例中，第一年约为资本支出等价金额的 40%），同时推高 ARR、RPO 和 TCV。这就是 Everpure 优先强调这些指标的原因。（[第 23 章](../03-system-architecture/23-consumption-models.md)）
+
+</details>
+
+<details>
+<summary><strong>Q123.</strong> (L2) 为什么说商业模式本身就是一项架构要求？</summary>
+
+可信的订阅模式需要不停机升级、无状态控制器和设备群遥测。如果硬套在一台需要整机替换（forklift upgrade）的阵列上，订阅不过是在为这次整机替换提供融资。（[第 23 章](../03-system-architecture/23-consumption-models.md)）
+
+</details>
+
+<details>
+<summary><strong>Q124.</strong> 哪五个问题决定了大多数架构选择？</summary>
+
+规模多大、用哪种协议、看重延迟还是吞吐量、客户能接受多大的故障域，以及由谁运维、成本多少。（[第 24 章](../03-system-architecture/24-architecture-decision-matrix.md)）
+
+</details>
+
+<details>
+<summary><strong>Q125.</strong> (L2) 架构决策矩阵中最根本的分野是什么？</summary>
+
+受延迟约束与受吞吐量约束。数据库和虚拟机需要亚毫秒级的块存储；AI 训练和 HPC 需要以 TB/s 的速度写入同一个命名空间。（[第 24 章](../03-system-architecture/24-architecture-decision-matrix.md)）
+
+</details>
+
+<details>
+<summary><strong>Q126.</strong> (L2) 为什么"AI 存储"是一个产品组合问题？</summary>
+
+数据加载、检查点保存、KV 缓存服务和 RAG 落在矩阵的不同单元格中。Gartner 2025 年的魔力象限把块、文件和对象合并在一起，但底层架构并没有趋同。（[第 24 章](../03-system-architecture/24-architecture-decision-matrix.md)）
+
+</details>
