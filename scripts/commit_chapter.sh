@@ -18,7 +18,7 @@ for pat in "docs/assets/diagrams/ch${pad}-*" "docs/assets/charts/ch${pad}-*" "sc
   for f in $pat; do [ -e "$f" ] && git add "$f"; done
 done
 tag="ch${pad}"
-git commit -q -m "docs(${tag}): ${msg}
+git commit -q --allow-empty -m "docs(${tag}): ${msg}
 
 Co-Authored-By: Claude Opus 5.5 <noreply@anthropic.com>
 Claude-Session: https://claude.ai/code/session_015j6Et5cc16wRkKSRtDPPUF" && echo "committed ${tag}"
