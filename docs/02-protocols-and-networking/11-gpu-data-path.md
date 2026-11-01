@@ -21,9 +21,9 @@ The path has moved from bulk file reads (GDS, 2019–2021) to object over RDMA (
 
 ### "Keep the GPU fed" is the whole game
 
-A GPU cluster is a fab: a fixed-cost machine whose margin is set by utilization. Its cost accrues by the hour whether or not it computes, and storage, a small share of capex, can idle all of it. CoreWeave lists an 8× HGX H100 node at US$49.24 per hour, or US$6.16 per GPU-hour[^2]. Specialist clouds and marketplaces span roughly US$1.49 to US$6.98[^3]. A 1,024-GPU cluster at US$3.99 per GPU-hour, roughly Lambda's on-demand rate[^4] [VERIFY: search-summary only], costs 1,024 × 3.99 = **US$4,086 per hour, or about US$35.8 million a year**. One percent idle is US$358,000 a year.
+A GPU cluster is a fab: a fixed-cost machine whose margin is set by utilization. Its cost accrues by the hour whether or not it computes, and storage, a small share of capex, can idle all of it. CoreWeave lists an 8× HGX H100 node at US$49.24 per hour, or US$6.16 per GPU-hour[^1]. Specialist clouds and marketplaces span roughly US$1.49 to US$6.98[^2]. A 1,024-GPU cluster at US$3.99 per GPU-hour, roughly Lambda's on-demand rate[^3] [VERIFY: search-summary only], costs 1,024 × 3.99 = **US$4,086 per hour, or about US$35.8 million a year**. One percent idle is US$358,000 a year.
 
-At scale, idle time comes mostly from interruptions. Meta's Llama 3 run on 16,384 H100s logged 466 interruptions in 54 days yet exceeded 90% effective training time, partly by cutting job-startup and checkpoint time[^1]. Each interruption reloads the last checkpoint, so storage sets the restart cost.
+At scale, idle time comes mostly from interruptions. Meta's Llama 3 run on 16,384 H100s logged 466 interruptions in 54 days yet exceeded 90% effective training time, partly by cutting job-startup and checkpoint time[^4]. Each interruption reloads the last checkpoint, so storage sets the restart cost.
 
 ### Where storage actually stalls a GPU
 
@@ -32,7 +32,7 @@ Steady-state LLM training needs far less bandwidth than people assume. Take a 70
 1. **Checkpoint saves.** With Adam in mixed precision, the state is about 16 bytes per parameter: bf16 weights, fp32 master weights, and two fp32 moments. A 70B model therefore checkpoints 70×10⁹ × 16 = **1.12 TB**. Written synchronously at 20 GB/s, that takes 56 s. Every 30 minutes, that is 3.1% of wall-clock time spent idle.
 2. **Checkpoint restores.** Every GPU reads its shard at once, the burstiest read storage sees.
 3. **Multimodal data loading.** Samples are megabytes. For many vision and audio models, Mohan et al. found training time dominated by "data stalls" (fetch plus pre-processing)[^5].
-4. **Inference KV-cache loads.** A Llama 3 70B token needs 80 layers × 8 KV heads × 128 dimensions × 2 (key and value) × 2 bytes ≈ **320 KiB of KV cache**[^1]. A 32K-token context is ~10.7 GB, and fetching it must beat recomputing ~2 × 70×10⁹ × 32,768 ≈ 4.6×10¹⁵ FLOPs (a second or more even on eight GPUs). The load is latency-critical and repeats for every returning user ([Chapter 32](../05-ai-storage/32-inference-and-kv-cache.md)).
+4. **Inference KV-cache loads.** A Llama 3 70B token needs 80 layers × 8 KV heads × 128 dimensions × 2 (key and value) × 2 bytes ≈ **320 KiB of KV cache**[^4]. A 32K-token context is ~10.7 GB, and fetching it must beat recomputing ~2 × 70×10⁹ × 32,768 ≈ 4.6×10¹⁵ FLOPs (a second or more even on eight GPUs). The load is latency-critical and repeats for every returning user ([Chapter 32](../05-ai-storage/32-inference-and-kv-cache.md)).
 
 ![Worked-example grouped bar chart of annual idle-GPU cost on a 1,024-GPU H100 cluster at three rental prices. A synchronous 1.12 TB checkpoint every 30 minutes at 20 GB/s costs $0.56M to $1.72M a year. At 100 GB/s it costs $0.11M to $0.34M. An asynchronous checkpoint with a 2-second pause costs $0.02M to $0.06M. Data-loading stalls of 5% cost $0.90M to $2.76M.](../assets/charts/ch11-gpu-idle-cost.svg)
 
@@ -167,11 +167,11 @@ Semiconductor bridge: Magnum IO is the DMA engine and bus fabric, cuFile and NIX
 
 *Table 11.1 — Every serious AI storage vendor claims a GPU-direct path; the competitive frontier has moved to S3 over RDMA and KV-cache integration with Dynamo and NIXL.*
 
-**The real trade-off is client architecture, not GDS itself.** WEKA, DDN (Lustre) and IBM ship their own parallel-file-system clients. These open many RDMA connections per node, stripe across servers and are tuned for GDS, so they deliver the highest per-node throughput. The price is a kernel module to install and qualify on every GPU server. Everpure, VAST, NetApp and Dell rely on the standard Linux NFS client over RDMA, with no software to install, though historically with less per-client parallelism. FlashBlade//EXA closes much of that gap with pNFS: clients get a layout from the metadata core and then read data nodes directly over NFSv3 on RDMA[^21] ([Chapter 16](../03-system-architecture/16-disaggregated-shared-everything.md)).
+**The real trade-off is client architecture, not GDS.** WEKA, DDN (Lustre) and IBM ship their own clients that open many RDMA connections per node and stripe across servers, giving the highest per-node throughput at the price of a kernel module to qualify on every GPU server. Everpure, VAST, NetApp and Dell use the standard Linux NFS client over RDMA: nothing to install, historically less per-client parallelism. FlashBlade//EXA narrows the gap with pNFS, sending clients directly to data nodes over NFSv3 on RDMA[^21] ([Chapter 16](../03-system-architecture/16-disaggregated-shared-everything.md)).
 
-**Steelman the proprietary clients.** For a 2,000-GPU checkpoint restore, per-node absorption rate and client-side striping set the time to resume, and a purpose-built client is hard to beat. **Steelman the standard clients.** Neoclouds and enterprises run thousands of heterogeneous GPU servers with fast-moving kernels, so not having to qualify a client is a real operational saving. And because most training is compute-bound, per-node peak rarely binds.
+**Steelman the proprietary clients:** on a 2,000-GPU checkpoint restore, per-node absorption and client striping set time-to-resume. **Steelman the standard clients:** operators of thousands of heterogeneous GPU servers save real effort by not qualifying a client, and compute-bound training rarely hits per-node peak.
 
-Options a strategy team might evaluate, based on public information: whether to own and upstream a NIXL backend for FlashBlade (WEKA already open-sourced one), how quickly S3 over RDMA and cuObject compatibility reach EXA, and whether PureKVA's value lies in latency or in capacity economics once NVIDIA's BlueField-4 STX/CMX "context memory" tier ships in partners' boxes[^25].
+Options a strategy team might evaluate, based on public information: upstreaming a FlashBlade NIXL backend (WEKA open-sourced one), bringing S3 over RDMA and cuObject compatibility to EXA, and positioning PureKVA on latency versus capacity economics once NVIDIA's BlueField-4 STX/CMX context-memory tier ships[^25].
 
 ## History and trajectory
 
@@ -187,71 +187,68 @@ timeline
 
 *Figure 11.5 — The GPU data path moved from bulk file reads to object over RDMA to latency-critical KV-cache tiers in about six years.*
 
-GPUDirect RDMA predates all of this: it shipped with the Kepler generation [VERIFY: introduction year, believed 2012–2013 with CUDA 5]. GDS took it from networking to storage. Pure Storage announced in 2022 that FlashBlade//S would support GDS the following year[^26] [VERIFY: search-summary only]. Dynamo was announced at GTC in March 2025 [VERIFY: announcement date], and NVIDIA declared it production-ready as Dynamo 1.0 in March 2026[^13].
+GPUDirect RDMA dates from the Kepler generation [VERIFY: introduction year, believed 2012–2013 with CUDA 5]; GDS carried it into storage. Pure Storage said in 2022 that FlashBlade//S would support GDS the following year[^26] [VERIFY: search-summary only]. Dynamo, announced at GTC in March 2025 [VERIFY: announcement date], reached 1.0 in March 2026[^13].
 
-Three trends point forward. **First, object over RDMA.** cuObject standardizes S3 over RDMA[^10], and Cloudian[^24] and Everpure[^20] have announced RDMA-accelerated S3. That erodes the old "file for performance, object for capacity" split ([Chapter 9](09-object-storage-and-s3.md)). **Second, a dedicated context-memory tier.** NVIDIA's BlueField-4 STX reference architecture and CMX platform (GTC 2026) put a KV-cache storage tier inside each pod, with Everpure, DDN, VAST, WEKA, NetApp and others named as partners[^25]. That could commoditize KV storage hardware or open a new socket, depending on who supplies the software. **Third, GPU-initiated I/O.** Research systems let GPU threads issue NVMe commands themselves, without the CPU even for control. If that matures, the storage client moves into the GPU.
+Three trends point forward. **Object over RDMA:** cuObject standardizes S3 over RDMA[^10], and Cloudian[^24] and Everpure[^20] have announced it, eroding the "file for performance, object for capacity" split ([Chapter 9](09-object-storage-and-s3.md)). **A context-memory tier:** NVIDIA's BlueField-4 STX and CMX (GTC 2026) put KV-cache storage inside each pod, with Everpure, DDN, VAST, WEKA, NetApp and others as partners[^25]; whoever supplies the software decides whether that commoditizes hardware or opens a new socket. **GPU-initiated I/O:** research systems let GPU threads issue NVMe commands without the CPU, which would move the storage client into the GPU.
 
 ## Numbers that matter
 
 | Metric | Value | Context | Source / date |
 |---|---|---|---|
-| H100 on-demand price, CoreWeave | US$6.16 / GPU-hour (US$49.24 per 8-GPU node) | Top of the market range | CoreWeave pricing[^2], 2026 |
-| H100 rental range | US$1.49–6.98 / GPU-hour | 15+ providers | Intuition Labs[^3], 2026 |
-| Llama 3 effective training time | >90%, despite 466 interruptions in 54 days | 16,384 H100s | Meta[^1], 2024-07 |
+| H100 on-demand price, CoreWeave | US$6.16 / GPU-hour (US$49.24 per 8-GPU node) | Top of the market range | CoreWeave pricing[^1], 2026 |
+| H100 rental range | US$1.49–6.98 / GPU-hour | 15+ providers | Intuition Labs[^2], 2026 |
+| Llama 3 effective training time | >90%, despite 466 interruptions in 54 days | 16,384 H100s | Meta[^4], 2024-07 |
 | DGX-2 CPU-memory-to-GPU limit vs direct aggregate | ~50 GB/s vs ~200 GB/s | Original GDS case | NVIDIA blog[^6], 2019 |
 | NetApp ONTAP GDS read throughput | 171 GiB/s, eight-node cluster | Company-stated, gdsio | NetApp[^17] |
 | 70B Adam checkpoint | 1.12 TB (16 B/parameter) | 56 s at 20 GB/s; 11 s at 100 GB/s | Worked example |
 | Text-token input for 70B on 1,024 H100s | ~4 MB/s cluster-wide | Why LLM training is compute-bound | Worked example |
-| Llama 3 70B KV cache | ~320 KiB per token; ~10.7 GB per 32K context | Drives inference KV loads | Worked example from Meta architecture[^1] |
+| Llama 3 70B KV cache | ~320 KiB per token; ~10.7 GB per 32K context | Drives inference KV loads | Worked example from Meta architecture[^4] |
 | Idle cost, 1,024 H100s at US$3.99 | ~US$358k per 1% idle per year | Utilization economics | Worked example |
 
 ## Conversation playbook
 
 **Questions for a PM**
 
-1. *"In our last five lost AI deals, did GPU data path features decide it, or aggregate throughput and price?"* A strong answer separates checkbox items (GDS, NVIDIA certification) from deciding factors, and names specific cases where a proprietary client won on checkpoint-restore time.
-2. *"What is PureKVA's measured time-to-first-token gain versus recompute and versus local NVMe, and on which model and context length?"* A strong answer gives a model, context length, concurrency and network, separates vendor claims from customer-measured numbers, and states where the benefit disappears.
-3. *"Where does FlashBlade sit relative to Dynamo's G3 and G4 tiers and NVIDIA's CMX tier?"* A strong answer explains whether Everpure competes with CMX, supplies it, or sits behind it as G4, and what that means for revenue per GPU.
+1. *"In our last five lost AI deals, did GPU data path features decide it, or aggregate throughput and price?"* Strong: separates checkbox items (GDS, certification) from deciding factors, with named cases.
+2. *"What is PureKVA's measured time-to-first-token gain versus recompute and versus local NVMe, and on which model and context length?"* Strong: gives model, context, concurrency and network, separates vendor from customer numbers, and says where the benefit vanishes.
+3. *"Where does FlashBlade sit relative to Dynamo's G3 and G4 tiers and NVIDIA's CMX tier?"* Strong: says whether Everpure competes with, supplies or sits behind CMX, and the revenue-per-GPU effect.
 
 **Questions for an engineer**
 
-1. *"With GDS on FlashBlade, what single-node read rate do we reach on a current HGX node, and what limits it: NIC, NFS client concurrency or the array?"* Strong: it gives a GB/s number, names the bottleneck and states which `nconnect` or multipath settings applied.
-2. *"How does a 4,000-GPU checkpoint restore behave: per-node rate, metadata load, time to resume?"* Strong: it gives time-to-resume rather than peak bandwidth, and it accounts for the open/stat storm on thousands of shard files.
-3. *"Do we ship a NIXL backend, and is it the POSIX, GDS or OBJ plugin path?"* Strong: it says which plugin is used, whether it is upstream, and its block size and latency per KV fetch.
+1. *"With GDS on FlashBlade, what single-node read rate do we reach on a current HGX node, and what limits it: NIC, NFS client concurrency or the array?"* Strong: a GB/s figure, the named bottleneck, and the `nconnect`/multipath settings.
+2. *"How does a 4,000-GPU checkpoint restore behave: per-node rate, metadata load, time to resume?"* Strong: time-to-resume, not peak bandwidth, including the open/stat storm on thousands of shard files.
+3. *"Do we ship a NIXL backend, and is it the POSIX, GDS or OBJ plugin path?"* Strong: the plugin, whether it is upstream, and block size and latency per KV fetch.
 
 **Don't say this:**
 
-- "GDS makes storage faster." It removes a host-side copy. The array's throughput is unchanged.
-- "LLM training needs huge read bandwidth." Text training needs megabytes per second. The bursts come from checkpoints, restores and multimodal data.
-- "Magnum IO is a product you buy." It is NVIDIA's name for a family of free libraries.
-- "NIXL is a storage protocol." It is a transfer library with pluggable backends. The protocol underneath is still UCX/RDMA, POSIX, GDS or S3.
+- "GDS makes storage faster." It removes a host copy; array throughput is unchanged.
+- "LLM training needs huge read bandwidth." Text needs MB/s; bursts come from checkpoints, restores and multimodal data.
+- "Magnum IO is a product you buy." It is a family of free NVIDIA libraries.
+- "NIXL is a storage protocol." It is a transfer library; underneath sit UCX/RDMA, POSIX, GDS or S3.
 - "Having GDS is a differentiator." Almost every vendor in Table 11.1 has it.
 
 ## Going deeper (optional, L3 pointers)
 
-- NVIDIA GPUDirect Storage Overview, Design and Best Practices guides: PCIe topology rules, compatibility mode, `gdsio` benchmarking and alignment requirements[^7].
-- The NIXL repository (`ai-dynamo/nixl`) and Dynamo's KVBM design document, which cover backend plugins, memory registration and G1–G4 tier policy[^11][^12].
+- NVIDIA GDS Overview, Design and Best Practices guides: topology rules, compatibility mode, `gdsio`, alignment[^7].
+- The NIXL repository and Dynamo's KVBM design document: plugins, memory registration, G1–G4 policy[^11][^12].
 - Mohan et al., "Analyzing and Mitigating Data Stalls in DNN Training," PVLDB 2021, on fetch versus pre-processing stalls[^5].
 - On GPU-initiated storage access: Qureshi et al., the BaM system (ASPLOS 2023).
 
 ## Key terms
 
-- **Bounce buffer** — host-memory staging area that data passes through on its way to the GPU.
-- **GPUDirect RDMA** — a NIC DMAing directly into GPU memory.
-- **GPUDirect Storage (GDS) / cuFile** — direct DMA between storage and GPU memory, and the API that drives it.
-- **Magnum IO** — NVIDIA's umbrella for GPU I/O libraries.
-- **NIXL** — NVIDIA's inference transfer library with pluggable memory and storage backends.
-- **Dynamo / KVBM** — NVIDIA's inference framework and its KV-cache tiering manager.
+- **Bounce buffer** — host-memory staging on the way to the GPU.
+- **GPUDirect RDMA / GDS / cuFile** — NIC or storage DMA into GPU memory, and the GDS API.
+- **Magnum IO** — NVIDIA's GPU I/O library umbrella.
+- **NIXL / Dynamo / KVBM** — inference transfer library, inference framework, KV tier manager.
 - **cuObject** — NVIDIA's S3-over-RDMA libraries.
-- **Effective training time** — useful training time as a share of elapsed time.
 - See the [glossary](../glossary.md) for the rest.
 
 ## Sources
 
-[^1]: Llama Team, AI @ Meta, "The Llama 3 Herd of Models," arXiv:2407.21783, 2024-07-31. https://arxiv.org/abs/2407.21783 (retrieved 2026-11-01).
-[^2]: CoreWeave, "Pricing," n.d. (2026); 8× HGX H100 on-demand US$49.24/hr as reported consistently by multiple price trackers. https://www.coreweave.com/pricing (retrieved 2026-11-01).
-[^3]: Intuition Labs, "H100 Rental Prices Compared: $1.49–$6.98/hr Across 15+ Cloud Providers (2026)," 2026. https://intuitionlabs.ai/articles/h100-rental-prices-cloud-comparison (retrieved 2026-11-01).
-[^4]: Spheron, "Lambda Cloud H100 pricing 2026," 2026-05. https://www.spheron.network/blog/lambda-cloud-h100-pricing-2026/ (retrieved 2026-11-01).
+[^1]: CoreWeave, "Pricing," n.d. (2026); 8× HGX H100 on-demand US$49.24/hr as reported consistently by multiple price trackers. https://www.coreweave.com/pricing (retrieved 2026-11-01).
+[^2]: Intuition Labs, "H100 Rental Prices Compared: $1.49–$6.98/hr Across 15+ Cloud Providers (2026)," 2026. https://intuitionlabs.ai/articles/h100-rental-prices-cloud-comparison (retrieved 2026-11-01).
+[^3]: Spheron, "Lambda Cloud H100 pricing 2026," 2026-05. https://www.spheron.network/blog/lambda-cloud-h100-pricing-2026/ (retrieved 2026-11-01).
+[^4]: Llama Team, AI @ Meta, "The Llama 3 Herd of Models," arXiv:2407.21783, 2024-07-31. https://arxiv.org/abs/2407.21783 (retrieved 2026-11-01).
 [^5]: J. Mohan, A. Phanishayee, A. Raniwala, V. Chidambaram, "Analyzing and Mitigating Data Stalls in DNN Training," PVLDB 14, 2021. https://www.cs.utexas.edu/~vijay/papers/vldb21-datastalls.pdf (retrieved 2026-11-01).
 [^6]: NVIDIA Developer Blog, "GPUDirect Storage: A Direct Path Between Storage and GPU Memory," 2019. https://developer.nvidia.com/blog/gpudirect-storage/ (retrieved 2026-11-01).
 [^7]: NVIDIA, "GPUDirect Storage Overview Guide," n.d. https://docs.nvidia.com/gpudirect-storage/overview-guide/index.html (retrieved 2026-11-01).
