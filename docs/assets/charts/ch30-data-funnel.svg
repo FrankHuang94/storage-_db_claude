@@ -495,4 +495,181 @@ L 0 2
     <g id="xtick_47">
      <g id="line2d_52">
       <g>
-       <use xlink:href="#m7cf84c5d62" x="763.769117" y="355.332207" style="fill: #222222; stroke: #222222; stroke-width: 0.6"
+       <use xlink:href="#m7cf84c5d62" x="763.769117" y="355.332207" style="fill: #222222; stroke: #222222; stroke-width: 0.6"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_48">
+     <g id="line2d_53">
+      <g>
+       <use xlink:href="#m7cf84c5d62" x="772.371412" y="355.332207" style="fill: #222222; stroke: #222222; stroke-width: 0.6"/>
+      </g>
+     </g>
+    </g>
+    <g id="xtick_49">
+     <g id="line2d_54">
+      <g>
+       <use xlink:href="#m7cf84c5d62" x="779.4" y="355.332207" style="fill: #222222; stroke: #222222; stroke-width: 0.6"/>
+      </g>
+     </g>
+    </g>
+    <g id="text_6">
+     <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="544.124886" y="387.673067" transform="rotate(-0 544.124886 387.673067)">Bytes stored, terabytes (log scale)</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_55">
+      <defs>
+       <path id="m5959f7edac" d="M 0 0 
+L -3.5 0 
+" style="stroke: #222222; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m5959f7edac" x="308.849773" y="84.214644" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_7">
+      <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(221.313523 82.598067)">Raw web archive</text>
+      <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(86.026101 94.000665)">Common Crawl archive, all crawls since 2008</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_56">
+      <g>
+       <use xlink:href="#m5959f7edac" x="308.849773" y="132.706428" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_8">
+      <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(210.863523 131.089851)">Extracted text pool</text>
+      <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(12.53321 142.492449)">DCLM-Pool: text extracted from Common Crawl, 240T tokens</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_57">
+      <g>
+       <use xlink:href="#m5959f7edac" x="308.849773" y="181.198212" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_9">
+      <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(180.861335 179.581635)">Filtered and deduplicated</text>
+      <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(11.210632 190.984232)">FineWeb: 96 snapshots filtered and deduplicated, 15T tokens</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_58">
+      <g>
+       <use xlink:href="#m5959f7edac" x="308.849773" y="229.689996" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_10">
+      <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(186.022507 228.073418)">Quality-classified subset</text>
+      <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(82.536335 239.476016)">FineWeb-Edu: educational subset, 1.3T tokens</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_59">
+      <g>
+       <use xlink:href="#m5959f7edac" x="308.849773" y="278.181779" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_11">
+      <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(234.579382 276.565202)">Trained model</text>
+      <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(105.564929 287.9678)">Model weights: 405B parameters in BF16</text>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_60">
+      <g>
+       <use xlink:href="#m5959f7edac" x="308.849773" y="326.673563" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_12">
+      <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(237.804929 325.056986)">Re-expansion</text>
+      <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(58.240085 336.459584)">One full training checkpoint: weights + Adam state</text>
+     </g>
+    </g>
+   </g>
+   <g id="line2d_61">
+    <path d="M 308.849773 302.427671 
+L 779.4 302.427671 
+" clip-path="url(#pc5e75fde2b)" style="fill: none; stroke-dasharray: 2.96,1.28; stroke-dashoffset: 0; stroke: #888888; stroke-width: 0.8"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 308.849773 355.332207 
+L 308.849773 55.556 
+" style="fill: none; stroke: #888888; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 308.849773 355.332207 
+L 779.4 355.332207 
+" style="fill: none; stroke: #888888; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: start" x="715.714666" y="86.682418" transform="rotate(-0 715.714666 86.682418)">&gt;10 PB</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: start" x="625.375147" y="135.174573" transform="rotate(-0 625.375147 135.174573)">~960 TB  (240T tokens)</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: start" x="506.533832" y="183.666356" transform="rotate(-0 506.533832 183.666356)">~44 TB  (15T tokens)</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: start" x="424.208039" y="232.15814" transform="rotate(-0 424.208039 232.15814)">~5.2 TB  (1.3T tokens)</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: start" x="352.52802" y="280.649553" transform="rotate(-0 352.52802 280.649553)">~810 GB</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: start" x="432.810335" y="329.141337" transform="rotate(-0 432.810335 329.141337)">~6.5 TB</text>
+   </g>
+   <g id="legend_1">
+    <g id="patch_11">
+     <path d="M 528.336563 318.068692 
+L 546.336563 318.068692 
+L 546.336563 311.768692 
+L 528.336563 311.768692 
+z
+" style="fill: #0072b2; stroke: #0072b2; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_19">
+     <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start" x="553.536563" y="318.068692" transform="rotate(-0 553.536563 318.068692)">Reported size</text>
+    </g>
+    <g id="patch_12">
+     <path d="M 528.336563 331.569395 
+L 546.336563 331.569395 
+L 546.336563 325.269395 
+L 528.336563 325.269395 
+z
+" style="fill: #56b4e9; stroke: #56b4e9; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_20">
+     <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start" x="553.536563" y="331.569395" transform="rotate(-0 553.536563 331.569395)">Reported tokens, bytes estimated at ~4 B/token</text>
+    </g>
+    <g id="patch_13">
+     <path d="M 528.336563 345.070098 
+L 546.336563 345.070098 
+L 546.336563 338.770098 
+L 528.336563 338.770098 
+z
+" style="fill: #d55e00; stroke: #d55e00; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_21">
+     <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start" x="553.536563" y="345.070098" transform="rotate(-0 553.536563 345.070098)">Worked example</text>
+    </g>
+   </g>
+  </g>
+  <g id="text_22">
+   <text style="font-weight: 700; font-size: 12.5px; font-family: 'DejaVu Sans'; text-anchor: start" x="7.2" y="16.698047" transform="rotate(-0 7.2 16.698047)">Illustrative data-volume funnel: ~10 PB of crawl becomes &lt;1 TB of weights, then checkpoints re-expand it</text>
+  </g>
+  <g id="text_23">
+   <text style="font-size: 8px; font-family: 'DejaVu Sans'; fill: #555555" transform="translate(7.2 417.279531)">Illustrative chain across different public corpora, not one lab's pipeline. Sources: Common Crawl; DataComp-LM (NeurIPS 2024); FineWeb (NeurIPS 2024) and dataset card; Llama 3 Herd of Models</text>
+   <text style="font-size: 8px; font-family: 'DejaVu Sans'; fill: #555555" transform="translate(7.2 426.881719)">(2024). Data: data/ch30_data_funnel.csv</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pc5e75fde2b">
+   <rect x="308.849773" y="55.556" width="470.550227" height="299.776207"/>
+  </clipPath>
+ </defs>
+</svg>

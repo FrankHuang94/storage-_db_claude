@@ -72,7 +72,7 @@ flowchart LR
 ### Media and economics
 
 1. **Flash vs disk.** Chips versus spinning platters. Flash wins speed, power and space; disk wins cold-data price ([Ch 2](../01-storage-fundamentals/02-media-physics.md)).
-2. **Flash price premium.** Enterprise SSDs cost ~18.6× disk per terabyte in Q3 2026, up from ~10× in 2020[^1] ([Ch 53](../07-history-and-future/53-future-trends.md)).
+2. **Flash price premium.** Enterprise SSDs cost ~18.6× disk per terabyte in Q3 2026, up from ~10× in 2020[^1], so flash sells on density ([Ch 53](../07-history-and-future/53-future-trends.md)).
 3. **NAND.** The chip inside every SSD. Five suppliers earned $68.87B in 2Q26[^2], and also sell competing drives ([Ch 48](../06-industry-and-competition/48-media-suppliers-and-nand-cycle.md)).
 4. **NAND cycle.** Forecasts compound to ~4.7× mid-2025 contract prices by 4Q26[^3]. Revenue inflates first; margins recover later ([Ch 48](../06-industry-and-competition/48-media-suppliers-and-nand-cycle.md)).
 5. **QLC.** Four bits per cell: cheapest flash, but less durable. Purity makes it work by writing large sequential chunks ([Ch 2](../01-storage-fundamentals/02-media-physics.md)).
@@ -86,7 +86,7 @@ flowchart LR
 10. **Array.** A computer that pools, protects and serves drives over a network; customers really pay for its software ([Ch 13](../03-system-architecture/13-storage-stack.md)).
 11. **Dual controller.** Two servers share drives, so either can fail without downtime, as in FlashArray ([Ch 14](../03-system-architecture/14-scale-up-dual-controller.md)).
 12. **Scale-out.** Add boxes rather than enlarge one. It reaches petabytes but loads the network ([Ch 15](../03-system-architecture/15-scale-out-shared-nothing.md)).
-13. **Disaggregation.** Buy engines and fuel tanks separately. VAST pioneered it; everyone now ships it ([Ch 16](../03-system-architecture/16-disaggregated-shared-everything.md)).
+13. **Disaggregation.** Buy engines and fuel tanks separately. VAST pioneered it; rivals now ship versions ([Ch 16](../03-system-architecture/16-disaggregated-shared-everything.md)).
 14. **Parallel file system.** One lookup, then clients read from many servers at once. Lustre runs over 60% of the Top500[^5] ([Ch 17](../03-system-architecture/17-parallel-file-systems.md)).
 15. **Metadata.** The card catalogue: names, folders, permissions. AI's millions of small files make it the usual bottleneck ([Ch 21](../03-system-architecture/21-metadata.md)).
 16. **Erasure coding.** Parity math that survives drive failures: eight-plus-two costs 25% extra capacity, a mirror 100% ([Ch 6](../01-storage-fundamentals/06-data-protection-and-resilience.md)).
@@ -112,13 +112,13 @@ flowchart LR
 30. **Storage for AI.** Keeping GPUs busy. At $2–6 per GPU-hour[^9][^10], an idle 1,024-GPU cluster burns ~$0.57–1.75 a second ([Ch 11](../02-protocols-and-networking/11-gpu-data-path.md)).
 31. **"AI storage."** At least eight workloads, from bulk ingest to inference. Ask vendors which stage they actually win ([Ch 30](../05-ai-storage/30-ai-data-pipeline.md)).
 32. **Checkpoint.** Saving the game. A 405B-parameter model's state is ~6.5 TB; saving it in a minute needs ~108 GB/s ([Ch 31](../05-ai-storage/31-training-storage.md)).
-33. **Failure rate.** Meta's Llama 3 run had 419 unexpected interruptions in 54 days[^11], so save and restore speed saves GPU money ([Ch 31](../05-ai-storage/31-training-storage.md)).
-34. **GPUDirect Storage.** Data straight into GPU memory; everyone claims it, so it no longer differentiates ([Ch 11](../02-protocols-and-networking/11-gpu-data-path.md)).
+33. **Failure rate.** Meta's Llama 3 run had 419 unexpected interruptions in 54 days[^11], so fast restores protect GPU spend ([Ch 31](../05-ai-storage/31-training-storage.md)).
+34. **GPUDirect Storage.** Data straight into GPU memory; nearly every vendor claims it, so it no longer differentiates ([Ch 11](../02-protocols-and-networking/11-gpu-data-path.md)).
 35. **KV cache.** The AI's short-term memory: ~43 GB per long session on a 70B model[^12], so fleets reach petabytes ([Ch 32](../05-ai-storage/32-inference-and-kv-cache.md)).
 36. **Context memory.** NVIDIA's new flash tier between GPU memory and shared storage; every vendor wants to supply it ([Ch 53](../07-history-and-future/53-future-trends.md)).
 37. **RAG.** AI looking up company documents before answering, turning storage into search and governance ([Ch 33](../05-ai-storage/33-rag-vector-lakehouse.md)).
 38. **Agents and MCP.** Agents need findable, permitted data. MCP passed 10,000 servers[^13], turning metadata into a product ([Ch 39](../05-ai-storage/39-agentic-ai-and-data-intelligence.md)).
-39. **NVIDIA certification.** NVIDIA's approved-vendor list: absence means no deal, but it proves a floor, not a ranking ([Ch 34](../05-ai-storage/34-nvidia-ecosystem.md)).
+39. **NVIDIA certification.** NVIDIA's approved-vendor list: absence usually means no deal, but it proves a floor, not a ranking ([Ch 34](../05-ai-storage/34-nvidia-ecosystem.md)).
 40. **Neocloud.** A GPU-specialist cloud; CoreWeave guides 2026 capex to $35–39B[^14]. Storage is ~1% of it yet can idle every GPU ([Ch 35](../05-ai-storage/35-ai-factories-and-neoclouds.md)).
 41. **MLPerf Storage.** A peer-reviewed benchmark with simulated GPUs. EXA led v3.0 checkpointing at 877.5 GiB/s[^15]; VAST, WEKA and DDN skipped it[^16] ([Ch 37](../05-ai-storage/37-reading-benchmarks.md)).
 
@@ -127,7 +127,7 @@ flowchart LR
 42. **FlashArray and FlashBlade.** Block for databases and VMs; file and object at scale. Both run Purity ([Ch 27](../04-everpure/27-flasharray-and-flashblade.md)).
 43. **Purity.** Everpure's storage operating system. It writes like a database log, which makes cheap flash last ([Ch 26](../04-everpure/26-purity-and-directflash.md)).
 44. **DirectFlash.** Raw flash modules run by Purity, without SSD controllers. Modules reach 300 TB[^17] versus 245.76 TB for standard SSDs[^18] ([Ch 26](../04-everpure/26-purity-and-directflash.md)).
-45. **Evergreen.** Hardware refreshes in place, without migration; over 10,000 such upgrades by 2022[^19] ([Ch 23](../03-system-architecture/23-consumption-models.md)).
+45. **Evergreen.** Hardware refreshes in place, without migration; over 10,000 such upgrades by 2022[^19] anchor retention ([Ch 23](../03-system-architecture/23-consumption-models.md)).
 46. **Evergreen//One.** Storage on a utility bill; Everpure owns the hardware. It lowers reported growth while raising contracted revenue ([Ch 23](../03-system-architecture/23-consumption-models.md)).
 47. **ARR and RPO.** Subscription ARR $2.13B (+20%) and RPO $4.1B (+44%) at Q2 FY27[^20]: the recurring base under the hardware ([Ch 29](../04-everpure/29-hyperscaler-ecosystem-financials.md)).
 48. **Hyperscaler licensing.** Hyperscalers license DirectFlash and buy their own NAND. Meta passed 2 EB in FY26[^21]; a second signed August 2026[^17] ([Ch 29](../04-everpure/29-hyperscaler-ecosystem-financials.md)).
@@ -157,7 +157,7 @@ flowchart LR
 
 64. **Bigger drives.** 512 TB SSDs are on 2027 roadmaps[^35]. Rebuild time and watts become the limits ([Ch 53](../07-history-and-future/53-future-trends.md)).
 65. **Disk's future.** Not dying: Western Digital targets 100 TB drives by 2029[^36]. Disk keeps cold bulk ([Ch 53](../07-history-and-future/53-future-trends.md)).
-66. **Where value moves.** Up into data services and down into the network, away from the box ([Ch 53](../07-history-and-future/53-future-trends.md)).
+66. **Where value moves.** Up into data services and down into the network; the box matters less ([Ch 53](../07-history-and-future/53-future-trends.md)).
 
 ### Translating jargon
 
