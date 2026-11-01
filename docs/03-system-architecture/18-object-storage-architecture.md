@@ -5,15 +5,15 @@
 
 ## TL;DR
 
-- **An object store has three planes:** stateless S3 gateways, an index mapping each key to its fragments, and data nodes holding erasure-coded fragments. Rebuild, scrubbing and lifecycle services run behind them.
+- **An object store has three planes:** stateless S3 gateways, an index mapping keys to fragments, and data nodes holding erasure-coded fragments, with background services behind them.
 - **The index decides most outcomes.** A sharded metadata database makes LIST cheap. Hashing the key to compute placement (MinIO) removes the database bottleneck but turns LIST into a cluster-wide fan-out.
-- **Erasure coding across sites is the capacity lever.** 6+3 over three sites stores 1.5× raw, against 2–3× for replication, but puts the WAN on every read and makes a site rebuild take days.
+- **Erasure coding across sites is the capacity lever.** 6+3 over three sites stores 1.5× raw versus 2–3× for replication, at the price of WAN reads and multi-day site rebuilds.
 - **The scaling walls are object count, small objects and tail latency.** Disks are rarely the limit.
 - **Object storage is moving from cheap-and-deep to fast.** On all-flash object, the metadata engine matters more than $/TB.
 
 ## Why this matters for Everpure strategy
 
-[Chapter 9](../02-protocols-and-networking/09-object-storage-and-s3.md) showed S3 becoming the default AI data interface. Behind the API, systems differ sharply. A fast endpoint over a slow index still lists a billion keys slowly, and an HDD-era design still stalls on 4 KB objects. When an AI buyer weighs FlashBlade against MinIO AIStor, Cloudian or Dell ObjectScale, the questions that decide the deal concern the internals: objects per bucket, LIST rate, the cost of a small PUT, and what happens when a node dies.
+[Chapter 9](../02-protocols-and-networking/09-object-storage-and-s3.md) showed S3 becoming the default AI data interface. Behind the API, systems differ sharply: a fast endpoint over a slow index still lists a billion keys slowly. When an AI buyer weighs FlashBlade against MinIO AIStor, Cloudian or Dell ObjectScale, deals turn on internals: objects per bucket, LIST rate, the cost of a small PUT, and what happens when a node dies.
 
 Pure Storage built FlashBlade as all-flash file and object while object storage still meant disk archives. Now every rival ships flash object too, so the question is whether FlashBlade's metadata engine remains a differentiator.
 
@@ -25,18 +25,18 @@ Pure Storage built FlashBlade as all-flash file and object while object storage 
 
 *Figure 18.1 — Gateways, index and data nodes scale independently: gateways for request rate, the index for object count and LIST, data nodes for capacity and bandwidth.*
 
-- **Gateways** terminate HTTPS, check SigV4 and policy, choose placement and erasure-code. They hold no durable state.
+- **Gateways** terminate HTTPS, check SigV4 and policy, choose placement and erasure-code; they hold no durable state.
 - **The index** is a replicated, sharded table keyed by bucket + key + version. It stores the size, ETag and fragment map, sorted so that LIST is a range scan.
 - **Data nodes** run a local engine that maps fragments to disk extents. AWS's engine, **ShardStore**, is a key-value store of roughly 40,000 lines of Rust, validated with lightweight formal methods[^1]. It is LSM-based but keeps shard data outside the tree to limit write amplification[^2].
 
-AWS does not publish S3's index design. Its scale is public: over 500 trillion objects and 200 million requests per second (March 2026)[^3].
+S3's index design is unpublished; its scale is not: over 500 trillion objects and 200 million requests per second (March 2026)[^3].
 
 ### Where metadata lives: a database or a hash
 
 1. **A separate metadata database.** Cloudian HyperStore uses Cassandra for metadata and small objects[^4]. StorageGRID uses Cassandra with three copies per site[^5]. Ceph RGW keeps bucket indexes in RocksDB-backed omap, resharding above 100,000 objects per shard[^6][^7]. FlashBlade runs a distributed key-value database across its blades[^8].
-2. **Computed placement, with metadata stored beside the data.** MinIO hashes the object name to pick an **erasure set** of 2–16 drives and has no metadata database[^9][^10]. Objects under about 128 KiB are stored inline in the metadata file[^11]. Scality RING places keys on a Chord-style ring[^12]. Ceph's CRUSH works the same way ([Chapter 15](15-scale-out-shared-nothing.md)).
+2. **Computed placement, with metadata stored beside the data.** MinIO hashes the object name to pick an **erasure set** of 2–16 drives and has no metadata database[^9][^10]. Objects under about 128 KiB are stored inline in the metadata file[^11]. Scality RING places keys on a Chord-style ring[^12]. So does Ceph's CRUSH ([Chapter 15](15-scale-out-shared-nothing.md)).
 
-**Semiconductor bridge: page table versus set-associative cache.** An index database works like a page table, with the gateway cache as its TLB: data can live anywhere, but every miss costs a walk. Hash placement is a set-associative cache: address bits choose the set, and no table is consulted. A cache cannot be enumerated in address order, so LIST on a hash-placed store must query every erasure set and merge-sort the replies.
+**Semiconductor bridge: page table versus set-associative cache.** An index database is a page table, with the gateway cache as its TLB: data can live anywhere, but a miss costs a walk. Hash placement is a set-associative cache: address bits pick the set, no table needed. But a cache cannot be enumerated in address order, so LIST on a hash-placed store queries every erasure set and merge-sorts the replies.
 
 ### ★ Tracing a PUT
 
@@ -99,7 +99,7 @@ sequenceDiagram
 
 ### Erasure coding across nodes and sites
 
-**Semiconductor bridge: chipkill.** Server ECC spreads each codeword across DRAM chips, so the loss of a whole chip can be corrected. Object stores spread each stripe across nodes, racks or sites in the same way. A wider spread makes protection cheaper and reconstruction dearer.
+**Semiconductor bridge: chipkill.** Server ECC spreads each codeword across DRAM chips so a dead chip is correctable; object stores spread stripes across nodes, racks or sites. Wider spread means cheaper protection and dearer reconstruction.
 
 ```mermaid
 flowchart TB
@@ -127,7 +127,7 @@ flowchart TB
 
 *Table 18.1 — Worked example: geo-EC saves 15 PB raw per 10 PB usable, but leaves data unprotected during a multi-day rebuild.*
 
-StorageGRID documents the 1.5× figure for 6+3 over three sites, requires at least three sites, and advises against it above 100 ms of inter-site latency[^14][^15]. A site rebuild pulls twice the lost data over the WAN[^16]. In case C, rebuilding 5 PB means moving 10 PB, which takes 800,000 s (**~9.3 days**) at 100 Gb/s. AWS spreads S3 Standard across at least three Availability Zones in a region, targeting eleven nines of durability[^17], and metro distances keep that penalty small.
+StorageGRID documents the 1.5× figure for 6+3 over three sites, requires at least three sites, and advises against it above 100 ms of inter-site latency[^14][^15]. A site rebuild pulls twice the lost data over the WAN[^16]. In case C, rebuilding 5 PB means moving 10 PB, which takes 800,000 s (**~9.3 days**) at 100 Gb/s. AWS spreads S3 Standard across at least three Availability Zones, targeting eleven nines[^17]; metro distances keep the penalty small.
 
 ### How it scales and where it hits walls
 
@@ -179,7 +179,7 @@ HDD-era object stores were built around a disk's roughly 100–200 random IOPS. 
 
 ### Cost and operational implications
 
-Software-defined object storage on dense HDD servers is still the lowest $/TB. Its hidden cost is operations: index clusters need repair and compaction, data must be rebalanced and scrubbed, and multi-site networks must be run. In StorageGRID, the smallest node caps a site's metadata capacity[^5]. Licensing can also shift: MinIO's community edition entered maintenance mode in December 2025[^24]. Appliances cost more per TB but take most of that work away ([Chapter 19](19-software-defined-and-hci.md)).
+Software-defined object storage on dense HDD servers is still the lowest $/TB. Its hidden cost is operations: index repair and compaction, rebalancing, scrubbing and multi-site networking. In StorageGRID, the smallest node caps a site's metadata capacity[^5]. Licensing can also shift: MinIO's community edition entered maintenance mode in December 2025[^24]. Appliances cost more per TB but take most of that work away ([Chapter 19](19-software-defined-and-hci.md)).
 
 ## How Everpure approaches it vs. competitors
 
@@ -196,7 +196,7 @@ Software-defined object storage on dense HDD servers is still the lowest $/TB. I
 
 *Table 18.5 — Every vendor now has a flash object story; they differ in where the index lives and how protection crosses failure domains.*
 
-FlashBlade bets that object metadata is a database problem, solved in flash and NVRAM and shared with file. An analyst report describes writes mirrored to NVRAM on two other blades before the acknowledgement[^8] [VERIFY: current Purity//FB write path]. The steelman for software-defined rivals is cheaper capacity, geo-EC across sites and a free choice of servers. FlashBlade's multi-site protection appears to be replication between arrays rather than geo-EC [VERIFY: FlashBlade multi-site object options in 2026]. Options a strategy team might evaluate, based on public information: publishing LIST and small-object benchmarks, and testing whether FlashBlade//E with DeepReduce can win capacity deals that Ceph or MinIO on HDD win today.
+FlashBlade bets that object metadata is a database problem, solved in flash and NVRAM and shared with file. An analyst report describes writes mirrored to NVRAM on two other blades before the acknowledgement[^8] [VERIFY: current Purity//FB write path]. Steelman for software-defined rivals: cheaper capacity, geo-EC and free choice of servers. FlashBlade's multi-site protection appears to be replication between arrays rather than geo-EC [VERIFY: FlashBlade multi-site object options in 2026]. Options a strategy team might evaluate, based on public information: publishing LIST and small-object benchmarks, and testing whether FlashBlade//E with DeepReduce wins capacity deals now lost to Ceph or MinIO on HDD.
 
 ## History and trajectory
 
@@ -215,7 +215,7 @@ timeline
 
 *Figure 18.5 — Object storage spent 15 years optimising for cheap disk; since 2024 the contest has moved to flash, latency and object count.*
 
-S3's 2020 move to strong consistency ([Chapter 9](../02-protocols-and-networking/09-object-storage-and-s3.md)) forced every compatible vendor to run a linearisable index. Pure Storage announced object features for FlashBlade in 2017[^26]. ShardStore showed that even AWS rewrites its node engine[^1]. Next, indexes are absorbing tables, vectors and richer metadata ([Chapter 33](../05-ai-storage/33-rag-vector-lakehouse.md)), and the index is becoming the product.
+S3's 2020 strong consistency ([Chapter 9](../02-protocols-and-networking/09-object-storage-and-s3.md)) pushed compatible vendors toward linearisable indexes. Pure Storage announced FlashBlade object features in 2017[^26]. Next, indexes absorb tables, vectors and richer metadata ([Chapter 33](../05-ai-storage/33-rag-vector-lakehouse.md)): the index is becoming the product.
 
 ## Numbers that matter
 
@@ -235,22 +235,22 @@ S3's 2020 move to strong consistency ([Chapter 9](../02-protocols-and-networking
 
 **Questions for a PM**
 
-1. *"What is our largest production bucket by object count, and its LIST rate?"* Strong: objects, keys per second, client parallelism, and a comparison with a named competitor.
-2. *"Where do we lose object deals to MinIO, Ceph or Cloudian?"* Strong: $/TB at multi-PB scale, geo-EC and server choice, then where small-object and LIST performance flip the outcome.
-3. *"What share of FlashBlade capacity is accessed via S3 rather than NFS?"* Strong: a trend, plus the workloads driving it (lakehouse, checkpoints, KV cache).
+1. *"What is our largest production bucket by object count, and its LIST rate?"* Strong: objects, keys/s, client parallelism, a competitor comparison.
+2. *"Where do we lose object deals to MinIO, Ceph or Cloudian?"* Strong: $/TB, geo-EC and server choice, then where small-object and LIST speed flip it.
+3. *"What share of FlashBlade capacity is accessed via S3 rather than NFS?"* Strong: a trend and its workloads (lakehouse, checkpoints, KV cache).
 
 **Questions for an engineer**
 
-1. *"Trace a 4 KB PUT: where do the bytes land, how many drive writes, when is it erasure-coded?"* Strong: the inline or staging path, the amplification factor and the conversion trigger.
-2. *"What happens when one index shard gets hot?"* Strong: how splitting works, whether writes block, and for how long.
-3. *"How do we bound tail latency on wide stripes?"* Strong: hedged reads, fragment sizing, and p99 latency by object size.
+1. *"Trace a 4 KB PUT: where do the bytes land, how many drive writes, when is it erasure-coded?"* Strong: inline or staging path, amplification, conversion trigger.
+2. *"What happens when one index shard gets hot?"* Strong: how it splits, whether writes block, for how long.
+3. *"How do we bound tail latency on wide stripes?"* Strong: hedged reads, fragment sizing, p99 by object size.
 
 **Don't say this:**
 
 - "Object storage is cheap and slow." It increasingly runs on flash and feeds GPUs.
 - "Geo-EC is free durability." It puts the WAN on every read and leaves a multi-day exposed rebuild.
 - "Object stores have no metadata bottleneck." The index is the bottleneck, and LIST exposes it.
-- "MinIO has a metadata database." It deliberately does not, which explains both its write scaling and its LIST cost.
+- "MinIO has a metadata database." It deliberately does not; hence both its write scaling and its LIST cost.
 - "AWS S3 runs on X." Its internals are mostly unpublished. Cite ShardStore and stop there.
 
 ## Going deeper (optional, L3 pointers)

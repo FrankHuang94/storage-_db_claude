@@ -5,17 +5,17 @@
 
 ## TL;DR
 
-- **Software-defined storage (SDS) sells the storage operating system without the box.** Ceph, MinIO, VAST and WEKA software run on servers someone else builds. **Hyperconverged infrastructure (HCI)** goes further and runs that software on the same nodes as the virtual machines (Nutanix, vSAN).
-- **HCI's wall is coupled scaling.** Each node adds compute and capacity in a fixed ratio, so a capacity-heavy or compute-heavy estate strands whatever it did not need, and per-core software licences charge for the stranded cores too.
-- **Cloud block storage is SDS at hyperscale.** AWS EBS replicates each volume across storage servers inside one Availability Zone, uses a separate configuration service to repair replication chains, and offloads the client side to Nitro cards.
-- **The Broadcom–VMware licensing reset (December 2023 onward) is the biggest demand shock in this market in a decade.** It pushed customers toward Nutanix, public cloud and external arrays, and turned "HCI vs. array" back into an open question.
-- **Software-only and appliance are business models as much as architectures.** Software-only means higher gross margin %, no NAND inventory and fast iteration. Appliances mean more gross profit per deal, control of the media and a single support throat.
+- **Software-defined storage (SDS) sells the storage OS without the box** (Ceph, MinIO, VAST, WEKA). **Hyperconverged infrastructure (HCI)** runs it on the same nodes as the VMs (Nutanix, vSAN).
+- **HCI's wall is coupled scaling.** Every node adds compute and capacity in a fixed ratio, stranding whatever the estate did not need.
+- **Cloud block storage is SDS at hyperscale.** EBS replicates each volume inside one Availability Zone, repairs chains through a separate configuration service, and offloads the client side to Nitro cards.
+- **Broadcom's VMware licensing reset (from December 2023) reopened "HCI vs. array"** and pushed customers toward Nutanix, public cloud and external arrays.
+- **Software-only buys margin %, no NAND inventory and fast iteration; appliances buy gross profit per deal and control of the media.**
 
 ## Why this matters for Everpure strategy
 
-Everpure (NYSE: P, formerly PSTG) earns most of its revenue from appliances. Its FlashArray and FlashBlade ship as integrated systems on its own DirectFlash modules. But the company already runs every other model in this chapter: Portworx is pure SDS for Kubernetes, Pure Storage Cloud Dedicated runs Purity on cloud instances, and the Meta DirectFlash deal is a technology licence with no Everpure hardware in it[^1]. Each new deal therefore raises the same strategy question: which business model fits it?
+Everpure (NYSE: P, formerly PSTG) earns most of its revenue from appliances built on its own DirectFlash modules. Yet it already runs every other model here: Portworx is SDS for Kubernetes, Pure Storage Cloud Dedicated runs Purity on cloud instances, and the Meta DirectFlash deal is a technology licence with no Everpure hardware[^1]. Which model fits which deal is a live strategy question.
 
-The Broadcom shock gives that question a deadline. Every VMware estate up for renewal must decide whether to stay on vSAN, move to another HCI stack, or split compute from storage. Everpure's May 2025 partnership with Nutanix, which uses FlashArray as external storage for Nutanix's AHV hypervisor, is a bet on the third option[^2].
+Broadcom gives it a deadline. Every VMware renewal must choose: stay on vSAN, switch HCI stacks, or split compute from storage. Everpure's May 2025 Nutanix partnership, with FlashArray as external storage for the AHV hypervisor, is a bet on the third[^2].
 
 ## Core concepts
 
@@ -23,24 +23,19 @@ The Broadcom shock gives that question a deadline. Every VMware estate up for re
 
 ![Three-column diagram. Appliance: application servers connect over a SAN or NAS network to a vendor-built box containing two controllers running the storage OS and shared vendor-qualified media. Software-defined storage: application servers connect over Ethernet to a pool of commodity servers, each running storage software over its own drives. HCI: no separate storage tier; each node runs VMs and hypervisor, storage software and local drives, linked by a cluster network that carries replica writes. A bottom row explains what scales together in each model.](../assets/diagrams/ch19-hci-sds-appliance.svg)
 
-*Figure 19.1 — The storage software is the same in all three models; what changes is who supplies the hardware and what has to scale together.*
+*Figure 19.1 — The software is similar in all three; what changes is who supplies hardware and what must scale together.*
 
-Every storage system is software running on CPUs, DRAM, NICs and media. The **appliance** model ([Chapter 14](14-scale-up-dual-controller.md)) has one vendor design, qualify, ship and support the whole box. **SDS** puts the same kind of software on commodity servers chosen from a **hardware compatibility list (HCL)**, usually as a [shared-nothing cluster](15-scale-out-shared-nothing.md). **HCI** collapses the storage tier into the hypervisor cluster. Each node gives part of its CPU and memory to a storage service: Nutanix runs a controller VM (CVM) on every node, and vSAN runs inside the ESXi kernel. Each VM's writes are replicated to other nodes' local drives.
+In the **appliance** model ([Chapter 14](14-scale-up-dual-controller.md)) one vendor designs, qualifies, ships and supports the whole box. **SDS** runs on commodity servers from a **hardware compatibility list (HCL)**, usually as a [shared-nothing cluster](15-scale-out-shared-nothing.md). **HCI** folds storage into the hypervisor cluster: each node gives CPU and memory to a storage service (Nutanix's controller VM, or vSAN inside the ESXi kernel) that replicates each VM's writes to other nodes' drives.
 
-**Semiconductor bridge.** An appliance vendor resembles an IDM: it owns the design and the "fab" (the integration), carries inventory, and captures integration margin. A software-only SDS vendor is closer to an IP licensor such as Arm. It ships a design that others turn into hardware, takes a high-margin royalty-like fee, and depends on its partners' supply chains. VAST's "Gemini" model sits in between, like a fabless house. VAST specifies the hardware and a manufacturing partner sells it to the customer at cost, while VAST books only the software[^3].
+**Semiconductor bridge.** An appliance vendor is an IDM: it owns design and integration, carries inventory and captures integration margin. A software-only vendor is an IP licensor like Arm, collecting a high-margin fee on hardware others build. VAST's "Gemini" model is fabless: VAST specifies the hardware, a manufacturing partner sells it to the customer at cost, and VAST books only software[^3].
 
 ### Where HCI hits the wall
 
-**State and metadata.** In HCI, data lives on node-local drives with a replication factor of 2 or 3, or with erasure coding across nodes. Metadata is distributed across the cluster (Nutanix) or held by an object-ownership scheme inside the hypervisor (vSAN). So a node is simultaneously a compute host, a storage target and a metadata participant, and losing it touches all three.
+**State and metadata.** Data sits on node-local drives (replication factor 2–3, or erasure coding across nodes); metadata is distributed across the cluster. A node is at once compute host, storage target and metadata participant, so losing it touches all three.
 
-**Worked example: stranded resources.** Take an illustrative node with 64 cores and 8 × 15.36 TB SSDs (123 TB raw, ~61 TB usable at RF2). An estate needs 400 cores and 2 PB usable.
+**Worked example: stranded resources.** An illustrative node has 64 cores and 8 × 15.36 TB SSDs (123 TB raw, ~61 TB usable at RF2). An estate needs 400 cores and 2 PB usable. Sized for compute, ⌈400 ÷ 64⌉ = 7 nodes give only ~430 TB. Sized for capacity, ⌈2,000 ÷ 61⌉ = 33 nodes give 2,112 cores, 81% idle. Under per-core subscriptions such as VMware Cloud Foundation (VCF), idle cores still need licences; VCF's bundled 1 TiB of vSAN per core[^4] [VERIFY: search-summary only] softens this without fixing it. The fix is un-converging: Nutanix storage-only and compute-only nodes; vSAN Max (2023), a storage-only cluster of up to 8.6 PB that other clusters mount[^5]; or an external array behind HCI compute[^2]. Each concedes HCI's one-building-block promise.
 
-- Sized for compute: ⌈400 ÷ 64⌉ = 7 nodes. That gives only ~430 TB, far short of 2 PB.
-- Sized for capacity: ⌈2,000 ÷ 61⌉ = 33 nodes = 2,112 cores, of which 81% sit idle.
-
-Under per-core subscriptions such as VMware Cloud Foundation (VCF), those idle cores also need licences. VCF does include 1 TiB of vSAN per licensed core[^4] [VERIFY: search-summary only], so the bundle partly hides the problem rather than fixing it. The industry fixes it by un-converging. Nutanix offers storage-only and compute-only nodes. VMware's vSAN Max (2023) builds a storage-only vSAN cluster that other clusters mount, at up to 8.6 PB per cluster[^5]. Partnerships such as Nutanix with FlashArray hang an external array off HCI compute[^2]. Each fix concedes the original HCI promise of one building block for everything.
-
-Coupled scaling causes two more walls. **East-west amplification:** at RF2 every client write crosses the cluster network once more, and rebuilding a failed 123 TB node re-replicates its whole contents across survivors. At ~5 GB/s of spare rebuild bandwidth, that takes roughly 123,000 ÷ 5 ≈ 6.8 hours. **Noisy neighbours:** a VM-heavy node starves its own storage service, so storage latency depends on how busy the applications are.
+Two more walls follow. **East-west amplification:** at RF2 every write crosses the cluster network again, and rebuilding a failed 123 TB node at ~5 GB/s of spare bandwidth takes 123,000 ÷ 5 ≈ 6.8 hours. **Noisy neighbours:** busy VMs starve the storage service on their own node.
 
 | Failure | HCI (Nutanix / vSAN-style) | EBS-style cloud block |
 |---|---|---|
@@ -53,7 +48,7 @@ Coupled scaling causes two more walls. **East-west amplification:** at RF2 every
 
 ### Inside an EBS-style cloud block service
 
-AWS has described the architecture in public papers and docs. An EBS volume lives in one Availability Zone and is automatically replicated across several servers there[^7]. On Nitro instances, the guest sees an ordinary NVMe device[^8]. The NVMe controller is emulated by a Nitro card, which turns block commands into network requests. Classic EBS keeps each volume on a **replication chain** in which data flows client → primary → replica. A separate **configuration master**, Physalia, records who is in each chain. Each volume gets its own small Paxos-replicated "cell" of seven nodes, so that one failure cannot take out the configuration of many volumes[^6]. The newer io2 Block Express back end talks to Nitro over AWS's **Scalable Reliable Datagram (SRD)** protocol[^9]. SRD is a multipath transport implemented in the Nitro card, and it sprays packets across many network paths[^10].
+From AWS's public papers and docs: an EBS volume lives in one Availability Zone, replicated across several servers there[^7]. On Nitro instances the guest sees an ordinary NVMe device[^8], emulated by a Nitro card that turns block commands into network requests. Classic EBS keeps each volume on a **replication chain** (client → primary → replica). A separate **configuration master**, Physalia, records chain membership in a seven-node Paxos "cell" per volume, so one failure cannot strand many volumes' configuration[^6]. The io2 Block Express back end talks to Nitro over **Scalable Reliable Datagram (SRD)**[^9], a multipath transport in the Nitro card that sprays packets across many network paths[^10].
 
 ```mermaid
 flowchart LR
@@ -67,7 +62,7 @@ flowchart LR
     P --> S3["Snapshots to S3, multi-AZ"]
 ```
 
-*Figure 19.2 — The data path is client card → primary → replica; the configuration master is off the data path and is consulted only when a chain must change.*
+*Figure 19.2 — The configuration master sits off the data path and matters only when a chain changes.*
 
 ```mermaid
 sequenceDiagram
@@ -83,7 +78,7 @@ sequenceDiagram
     N-->>G: NVMe completion
 ```
 
-*Figure 19.3 — A write is acknowledged only after both copies in the chain persist it; the network round trips, not the flash, dominate latency.*
+*Figure 19.3 — A write is acknowledged only after both chain copies persist it; network round trips, not flash, dominate latency.*
 
 ```mermaid
 sequenceDiagram
@@ -100,9 +95,9 @@ sequenceDiagram
     C-->>N: new chain membership
 ```
 
-*Figure 19.4 — Reads need one copy; the configuration master is touched only when membership changes, which is why it must stay available during partitions.*
+*Figure 19.4 — Reads need one copy; the configuration master must stay available during partitions because that is when membership changes.*
 
-AWS has published only a high-level view of how Block Express lays data out internally, so the read diagram leaves the serving copy generic. AWS rates io2 Block Express at up to 256,000 IOPS, 4,000 MB/s and 64 TiB per volume. It quotes average latency under 500 µs for 16 KiB I/O and 99.999% durability[^9]. The fleet-level lesson is AWS's April 2011 outage. A network change cut many volumes off from their replicas. They all tried to re-mirror at once, and the resulting "re-mirroring storm" exhausted spare capacity in the zone[^11]. That is the cloud-scale version of the HCI rebuild problem: repair traffic must be rate-limited and capacity reserved, or recovery itself becomes the outage.
+Block Express internals are public only at a high level, so the read diagram leaves the serving copy generic. AWS rates io2 Block Express at 256,000 IOPS, 4,000 MB/s and 64 TiB per volume, under 500 µs average for 16 KiB I/O, and 99.999% durability[^9]. The fleet-level lesson came in April 2011: a network change cut many volumes off from their replicas, all re-mirrored at once, and the "re-mirroring storm" exhausted the zone's spare capacity[^11]. It is the HCI rebuild problem at cloud scale: rate-limit repair and reserve capacity, or recovery becomes the outage.
 
 ### Pros, cons and fit
 
@@ -127,15 +122,15 @@ AWS has published only a high-level view of how Block Express lays data out inte
 | Pricing power | Depends on lock-in: high for VMware (VCF), eroded for open-source-based products | Earned through efficiency (TB/W, data reduction) and lifecycle programmes | Strong for small users; weak against large customers who can repatriate |
 | Public examples | Nutanix; VAST Gemini[^3]; WEKA; MinIO AIStor; IBM Storage Ceph | Everpure FlashArray/FlashBlade; Dell; NetApp; DDN appliances | AWS EBS; Pure Storage Cloud Azure Native[^15] |
 
-*Table 19.3 — Software-only maximizes margin percentage and iteration speed; appliances maximize gross profit per deal and control of the media.*
+*Table 19.3 — Software-only maximizes margin percentage and iteration speed; appliances maximize gross profit per deal and media control.*
 
-**Worked example (illustrative split).** A customer budgets US$1M for a system. An appliance vendor books US$1M at 66%, which is **US$660k of gross profit**. A software-only vendor might book US$400k at 88%, or **US$352k**, while the server OEM books the US$600k of hardware. The higher percentage hides lower gross dollars. In exchange, the software vendor carries no inventory and no NAND-price risk, and it can ship on a new CPU or NIC as soon as the OEMs do. Open source caps pricing power from below: when a free tier is good enough, the vendor has to restrict it, as MinIO did by relicensing to AGPLv3 in 2021[^16], stripping the community console in 2025[^17] and putting the community edition into maintenance mode in December 2025[^18].
+**Worked example (illustrative split).** On a US$1M system, an appliance vendor books US$1M at 66%: **US$660k gross profit**. A software-only vendor might book US$400k at 88%: **US$352k**, with the OEM taking US$600k of hardware. In exchange it carries no inventory or NAND risk and ships on new CPUs and NICs as soon as OEMs do. Open source caps pricing from below; a free tier that is good enough must be fenced, as MinIO did with AGPLv3 in 2021[^16], a stripped community console in 2025[^17] and maintenance mode in December 2025[^18].
 
 ## How Everpure approaches it vs. competitors
 
-Everpure's centre of gravity is the appliance, justified by DirectFlash. Managing raw NAND in Purity gives density and power advantages that a server full of commodity SSDs cannot match ([Chapter 26](../04-everpure/26-purity-and-directflash.md)). Around that core, Everpure runs software-only motions on its edges. Portworx is container-native SDS, bought for about US$370M in 2020[^19]. Cloud Dedicated and Azure Native put Purity on cloud infrastructure[^15]. FlashBlade//EXA uses off-the-shelf data nodes ([Chapter 16](16-disaggregated-shared-everything.md)). The Meta deal licenses the technology instead of selling boxes[^1].
+Everpure's centre of gravity is the appliance, justified by DirectFlash: managing raw NAND in Purity yields density and power that commodity SSDs cannot match ([Chapter 26](../04-everpure/26-purity-and-directflash.md)). At the edges it runs software-only motions: Portworx, container-native SDS bought for about US$370M in 2020[^19]; Purity on cloud infrastructure[^15]; off-the-shelf FlashBlade//EXA data nodes ([Chapter 16](16-disaggregated-shared-everything.md)); and the Meta technology licence[^1].
 
-The steelmen run in both directions. Nutanix shows that a software-only HCI vendor can run near-90% gross margins and grow ARR 16% to US$2.55B[^12]. VAST shows that software on partner hardware can scale with OEM supply chains (HPE, Cisco, Supermicro) without inventory risk[^3]. IBM's absorption of Red Hat's Ceph team in 2022[^20] keeps the "free and good enough" option alive at hyperscale. The appliance counter-argument is that coupled scaling and HCL support costs are real, and that AI-era power limits reward co-designed media. Options a strategy team might evaluate, based on public information: how far to push "array behind someone else's HCI" partnerships (Nutanix today, possibly others); whether DirectFlash licensing becomes a repeatable IP business beyond one hyperscaler; and how Portworx positions against VMware for VMs moving to Kubernetes.
+Steelman the alternatives. Nutanix runs ~88% gross margins on US$2.55B ARR growing 16%[^12]. VAST scales on OEM supply chains (HPE, Cisco, Supermicro) without inventory[^3]. IBM's 2022 absorption of Red Hat's Ceph team[^20] keeps "free and good enough" alive. The appliance reply: coupled scaling and HCL support are real costs, and AI-era power limits reward co-designed media. Options a strategy team might evaluate, based on public information: more "array behind someone else's HCI" partnerships; DirectFlash licensing as a repeatable IP business; and Portworx against VMware for VMs moving to Kubernetes.
 
 ## History and trajectory
 
@@ -153,11 +148,11 @@ timeline
     2026 : Nutanix with FlashArray generally available : Nutanix ARR reaches 2.55B dollars
 ```
 
-*Figure 19.5 — HCI and SDS matured quietly for a decade; Broadcom's licensing reset in 2023 turned platform choice into a board-level cost decision.*
+*Figure 19.5 — SDS and HCI matured quietly; Broadcom's 2023 licensing reset made platform choice a board-level cost decision.*
 
-Broadcom closed its VMware acquisition on 22 November 2023. In December it stopped selling perpetual licences and support renewals and folded thousands of SKUs into two subscription bundles, VCF and vSphere Foundation[^21]. Price shocks followed. In a 2024 lawsuit, AT&T said it faced a proposed 1,050% annual increase; the case later settled[^22]. Broadcom's software results suggest that much of the installed base paid: reported infrastructure-software revenue was about US$27B in FY2025, and the company said 87% of its top 10,000 customers had adopted VCF[^23] [VERIFY: search-summary only].
+EBS dates from 2008[^27]. Broadcom closed VMware on 22 November 2023, then ended perpetual licences and support renewals and folded thousands of SKUs into two bundles, VCF and vSphere Foundation[^21]. AT&T's 2024 lawsuit cited a proposed 1,050% increase; it later settled[^22]. Much of the base paid: Broadcom reported ~US$27B of FY2025 infrastructure-software revenue and 87% VCF adoption among its top 10,000 customers[^23] [VERIFY: search-summary only].
 
-The knock-on effects reached storage. Gartner expects more than a third of VMware workloads to move to other platforms by 2028[^24]. Nutanix's partnership with FlashArray, generally available around the turn of 2026, was its first major certified external-storage integration[^2][^25]. Broadcom deprecated vVols, the main hook external arrays used inside VMware, in VCF 9[^26]. That nudges VCF customers toward the vSAN capacity they already pay for, and nudges arrays toward VMFS, NFS and non-VMware hypervisors. The trajectory is un-convergence: compute-only and storage-only nodes, external arrays on HCI, and Kubernetes-native SDS for VMs.
+Storage felt it. Gartner expects over a third of VMware workloads to move by 2028[^24]. Nutanix's FlashArray integration, its first major certified external storage, reached GA around the turn of 2026[^2][^25]. VCF 9 deprecated vVols, the main hook for external arrays[^26], nudging customers toward vSAN capacity they already pay for. The trajectory is un-convergence: compute-only and storage-only nodes, arrays behind HCI, Kubernetes-native SDS for VMs.
 
 ## Numbers that matter
 
@@ -176,38 +171,36 @@ The knock-on effects reached storage. Gartner expects more than a third of VMwar
 
 **Questions for a PM**
 
-1. *"In a VMware renewal, when do we win as external storage behind Nutanix rather than against vSAN?"* A strong answer names the triggers: capacity-heavy estates, the stranded-core licence cost of HCI, the need for data reduction or ransomware snapshots. It also admits where HCI's single building block wins, such as edge and small clusters.
-2. *"What is our gross profit per deal, not gross margin %, against a software-only competitor?"* Strong: it separates software and hardware dollars and explains who carries NAND risk.
-3. *"What breaks first if we sell Purity as software on customer-chosen servers?"* Strong: it names HCL support cost, the loss of DirectFlash density, and the effect on Evergreen economics.
+1. *"In a VMware renewal, when do we win behind Nutanix rather than against vSAN?"* Strong: capacity-heavy estates, stranded-core licence cost, data reduction; concedes edge and small clusters to HCI.
+2. *"What is our gross profit per deal, not margin %, against a software-only rival?"* Strong: splits software and hardware dollars and says who carries NAND risk.
+3. *"What breaks first if Purity ships as software on customer-chosen servers?"* Strong: HCL support cost, lost DirectFlash density, Evergreen economics.
 
 **Questions for an engineer**
 
-1. *"In HCI, what happens to a database VM's p99 latency during a node rebuild?"* Strong: it gives rebuild bandwidth caps, the throttling policy, and the time to restore full redundancy.
-2. *"How does a cloud block service avoid a re-mirroring storm?"* Strong: it mentions reserved spare capacity, rate-limited repair, and a configuration service with a small blast radius.
-3. *"What does NVMe/TCP to an external array cost in latency versus local HCI reads?"* Strong: it quotes tens of microseconds of network cost, then weighs that against avoided replica writes and data reduction.
+1. *"What happens to a database VM's p99 latency during an HCI node rebuild?"* Strong: rebuild bandwidth caps, throttling policy, time to full redundancy.
+2. *"How does a cloud block service avoid a re-mirroring storm?"* Strong: reserved spare capacity, rate-limited repair, a small-blast-radius configuration service.
+3. *"What does NVMe/TCP to an external array cost versus local HCI reads?"* Strong: tens of microseconds, weighed against avoided replica writes and data reduction.
 
 **Don't say this:**
 
-- "HCI is just SDS." HCI is SDS that shares nodes with the applications; coupling is the defining property and the main weakness.
-- "Software-only is always better economics." It is a higher percentage on a smaller revenue base, and the support burden shifts to the HCL.
-- "EBS is a SAN in the cloud." It is a replicated distributed service with a separate configuration plane, scoped to one Availability Zone.
-- "Broadcom killed vSAN." VCF bundles vSAN capacity; Broadcom's changes arguably increased vSAN's installed footprint while pushing some customers off VMware entirely.
-- "Ceph is free." The software is; the people, testing and hardware qualification are not.
+- "HCI is just SDS." It is SDS sharing nodes with applications; that coupling is its defining weakness.
+- "Software-only is always better economics." Higher percentage, smaller revenue base, support shifted to the HCL.
+- "EBS is a SAN in the cloud." It is a replicated service with a separate configuration plane, scoped to one zone.
+- "Broadcom killed vSAN." VCF bundles vSAN capacity; some customers left VMware, others now own more vSAN.
+- "Ceph is free." The software is; people, testing and hardware qualification are not.
 
 ## Going deeper (optional, L3 pointers)
 
-- Brooker, Chen and Ping, "Millions of Tiny Databases," NSDI 2020, on Physalia and EBS chain replication[^6].
-- Shalev et al., "A Cloud-Optimized Transport Protocol for Elastic and Scalable HPC," IEEE Micro 2020, on SRD[^10].
-- AWS's April 2011 post-event summary, a classic on repair-traffic failure modes[^11].
-- Weil et al., "Ceph: A Scalable, High-Performance Distributed File System," OSDI 2006, on CRUSH placement (see [Chapter 15](15-scale-out-shared-nothing.md)).
+- Brooker et al., NSDI 2020 (Physalia)[^6]; Shalev et al., IEEE Micro 2020 (SRD)[^10].
+- AWS's April 2011 post-event summary on repair-traffic failure[^11].
+- Weil et al., OSDI 2006, on Ceph and CRUSH (see [Chapter 15](15-scale-out-shared-nothing.md)).
 
 ## Key terms
 
-- **Software-defined storage (SDS)** — storage software sold separately from the hardware it runs on.
-- **Hyperconverged infrastructure (HCI)** — compute, storage software and media combined in each cluster node.
+- **SDS** — storage software sold apart from its hardware.
+- **HCI** — compute, storage software and media in every node.
 - **Stranded resources** — capacity or compute bought only because the node bundles it.
-- **Chain replication / configuration master** — replicating writes along an ordered chain of servers, with a separate service recording membership.
-- **SRD** — AWS's multipath datagram transport in Nitro cards.
+- **Chain replication** — writes flow along an ordered server chain; a configuration master tracks membership.
 - See the [glossary](../glossary.md) for the rest.
 
 ## Sources

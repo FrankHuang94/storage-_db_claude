@@ -1,25 +1,25 @@
 # 20. Distributed-systems fundamentals for storage
 
-> **Depth:** L2 · **Reading time:** ~8 min · **Last verified:** 2026-11-01
+> **Depth:** L2 · **Reading time:** ~7 min · **Last verified:** 2026-11-01
 > **Prerequisites:** [Data protection and resilience](../01-storage-fundamentals/06-data-protection-and-resilience.md) · [Object storage and S3](../02-protocols-and-networking/09-object-storage-and-s3.md) · [Scale-out shared-nothing clusters](15-scale-out-shared-nothing.md)
 
 ## TL;DR
 
 - **With more than one copy, a system must define "the latest write": its consistency model.** Primary storage chooses strong consistency and pays in latency.
-- **Consensus (Paxos, Raft) needs a majority: 2f+1 voters to survive f failures.** A two-site cluster therefore needs a third vote, a witness or mediator, to avoid split brain.
+- **Consensus (Paxos, Raft) needs 2f+1 voters to survive f failures.** Two-site clusters therefore need a third vote, a witness, against split brain.
 - **CAP in practice is PACELC.** The everyday trade is latency versus consistency, chosen per feature: sync metro picks consistency, async DR picks latency.
-- **"Eleven nines" of durability is a model output, not a measurement.** Parity count, rebuild time and the independence assumption drive it; correlated failures are what actually lose data.
+- **"Eleven nines" of durability is a model output, not a measurement.** Parity, rebuild time and assumed independence drive it; correlated failures actually lose data.
 - **Availability nines are measured; durability nines are modelled.** Ask which is quoted.
 
 ## Why this matters for Everpure strategy
 
-Many headline storage claims are distributed-systems claims in disguise: "zero RPO", "six nines", "11 nines durability", "strongly consistent S3", "no single point of failure". Each rests on a quorum rule, a failure model and a consistency choice. Knowing which lets a strategy team separate an engineering guarantee from a marketing number. The stakes are rising: disaggregated and parallel systems ([Chapters 16](16-disaggregated-shared-everything.md) and [17](17-parallel-file-systems.md)) spread metadata and erasure codes across hundreds of nodes, which is where both the hard engineering and the outage risk now live.
+Headline claims such as "zero RPO", "six nines", "11 nines durability" and "strongly consistent S3" each rest on a quorum rule, a failure model and a consistency choice. Knowing which separates an engineering guarantee from a marketing number. The stakes are rising: disaggregated and parallel systems ([Chapters 16](16-disaggregated-shared-everything.md) and [17](17-parallel-file-systems.md)) spread metadata and erasure codes across hundreds of nodes, where the hard engineering and the outage risk now live.
 
 ## Core concepts
 
 ### Consistency models: what a reader is promised
 
-With several copies, a read can hit one that has not yet seen the latest write. A consistency model is the contract about what a reader may see.
+A consistency model is the contract about what a reader may see when copies disagree.
 
 | Model | Promise to a reader | Cost | Who uses it |
 |---|---|---|---|
@@ -31,11 +31,11 @@ With several copies, a read can hit one that has not yet seen the latest write. 
 
 *Table 20.1 — Strong consistency is the norm inside one system or one metro; almost everything across regions is eventual.*
 
-**Semiconductor bridge: MESI versus consensus.** MESI already enforces single-writer, multiple-reader per cache line, which is exactly the strong-consistency invariant. The difference is the failure model: a coherence fabric assumes no lost messages and no independent core failures; a storage cluster must survive dropped packets, crashed nodes and partitions. Consensus is coherence that tolerates faults. A directory maps onto a metadata server; an Exclusive line maps onto a lease or NFS delegation.
+**Semiconductor bridge: MESI versus consensus.** MESI already enforces single-writer, multiple-reader per cache line, which is exactly the strong-consistency invariant. But a coherence fabric assumes no lost messages or independent core failures; a storage cluster must survive both. Consensus is coherence that tolerates faults. A directory maps onto a metadata server; an Exclusive line maps onto a lease or NFS delegation.
 
 ### Consensus at L2: Raft on a whiteboard
 
-Paxos (published 1998)[^3] and Raft (2014)[^4] solve the same problem: replicas agree on one ordered log, so all apply the same commands in the same order. Raft was designed to be teachable. Ceph's monitors run Paxos and need a strict majority[^5]; DynamoDB replicates each partition with Multi-Paxos[^1].
+Paxos (published 1998)[^3] and Raft (2014)[^4] solve the same problem: replicas agree on one ordered log, so all apply the same commands in the same order. Ceph's monitors run Paxos and need a strict majority[^5]; DynamoDB replicates each partition with Multi-Paxos[^1].
 
 ```mermaid
 sequenceDiagram
@@ -65,19 +65,19 @@ sequenceDiagram
 
 *Figure 20.1 — Raft in two phases: a randomised timeout elects one leader per term by majority vote, then a write commits once a majority has logged it, so the slowest replica never sets latency.*
 
-A strong whiteboard answer makes four points. **Terms** are a logical clock: a node seeing a higher term steps down, so a stale leader cannot commit. **Voters reject candidates with staler logs**, so a new leader holds every committed entry. **Commit needs a majority, not all**, so three nodes tolerate one failure.
+A strong whiteboard answer makes three points. **Terms** are a logical clock: a node seeing a higher term steps down, so a stale leader cannot commit. **Voters reject candidates with staler logs**, so a new leader holds every committed entry. **Commit needs a majority, not all**, so three nodes tolerate one failure.
 
 ### Quorum math: N, W, R
 
 Leaderless, Dynamo-style systems use quorums directly[^2]: with N replicas, writes wait for W acknowledgements and reads query R. **W + R > N** makes every read overlap the latest write (N=3, W=2, R=2 is classic). **W > N/2** stops two conflicting writes both succeeding. N=3, W=1, R=1 is fast but only eventually consistent.
 
-Tolerating f failures needs 2f+1 voters, so four voters survive one failure, no better than three[^5]. Without a majority rule you get **split brain**: both halves of a partitioned pair accept writes and diverge. Two-site clusters add a **witness** (or **mediator**): a data-less third vote, outside both sites' failure domains, that decides which side keeps serving.
+Surviving f failures needs 2f+1 voters, so four voters are no better than three[^5]. Without a majority you get **split brain**: both halves of a partitioned pair accept writes and diverge. Two-site clusters add a **witness** (or **mediator**): a data-less third vote, outside both sites' failure domains, that decides which side keeps serving.
 
 ### CAP and PACELC: what storage actually chooses
 
-CAP (Brewer, 2000; proved by Gilbert and Lynch, 2002[^6]) says that during a partition a system gives up consistency or availability. It is not "pick two": partitions happen regardless. Abadi's PACELC[^7] adds the everyday half: *else*, the trade is latency versus consistency.
+CAP (Brewer, 2000; proved by Gilbert and Lynch, 2002[^6]) says that during a partition a system gives up consistency or availability. Partitions are not optional, so it is not "pick two". Abadi's PACELC[^7] adds: *else*, trade latency against consistency.
 
-Storage chooses per feature. Synchronous metro clusters are **PC/EC**: each write pays an inter-site round trip, and in a partition the side that loses the mediator race stops serving. Asynchronous DR is **PA/EL**: local acknowledgement, remote copy lags by the RPO. Spanner is formally CP, yet Brewer argued it exceeds five nines because Google's network rarely partitions[^8]. Lesson: engineer the network so that CP rarely costs availability.
+Storage chooses per feature. Synchronous metro clusters are **PC/EC**: each write pays an inter-site round trip, and in a partition the side that loses the mediator race stops serving. Asynchronous DR is **PA/EL**: local acknowledgement, remote copy lags by the RPO. Spanner is formally CP, yet Brewer argued it exceeds five nines because Google's network rarely partitions[^8].
 
 ### Durability nines versus availability nines
 
@@ -85,7 +85,7 @@ Storage chooses per feature. Synchronous metro clusters are **PC/EC**: each writ
 
 **Durability** is the probability of not losing data in a year. S3 is designed for eleven nines[^10]; Azure states 11, 12 and 16 nines for locally, zone- and geo-redundant storage[^11]. Nobody can observe a 10⁻¹¹ event on one system, so these are model outputs. (At 100 trillion objects it still implies ~1,000 losses a year.)
 
-The standard model is **mean time to data loss (MTTDL)**. A group of n drives surviving m failures loses data when m+1 failures overlap within rebuild windows. With λ = AFR ÷ 8,766 h and μ = 1 ÷ rebuild time, MTTDL ≈ μᵐ ÷ [n(n−1)…(n−m) λᵐ⁺¹].
+The standard model is **mean time to data loss (MTTDL)**. A group of n drives tolerating m failures loses data when m+1 failures overlap. With λ = AFR ÷ 8,766 h and μ = 1 ÷ rebuild time, MTTDL ≈ μᵐ ÷ [n(n−1)…(n−m) λᵐ⁺¹].
 
 ![Two-panel illustrative line chart of modelled annual durability nines for 10 PB usable on 30 TB drives. Panel A plots nines against drive AFR from 0.1% to 5% for RAID 6 with a 42-hour rebuild, EC 8+2, EC 16+4 and 3-way replication with 4-hour rebuilds, plus a dashed EC 16+4 line with 10x correlated failures; vertical markers show Everpure DFM 0.15%, Backblaze SSD 0.9% and Backblaze HDD 1.36%. Panel B plots nines against rebuild time from 1 hour to 1 week at 1.36% AFR.](../assets/charts/ch20-durability.svg)
 
@@ -96,7 +96,7 @@ Data: `data/ch20_durability.csv`
 
 ### Correlated failures and failure domains
 
-The model assumes independence. If each further failure during a rebuild is ten times likelier, because drives share a batch, firmware or power feed, MTTDL falls by 10ᵐ: the dashed line in Figure 20.2 shows 16+4 losing four nines. In 2019 HPE warned that certain SAS SSDs would die at exactly 32,768 power-on hours without a firmware fix[^16]; drives installed together would have failed together, defeating any parity. Google's 2010 fleet study named planned kernel upgrades a major source of correlated failure[^17]. Random replica placement compounds it; copyset placement cut modelled data-loss probability in a 5,000-node power outage from 99.99% to 0.15%[^18].
+The model assumes independence. If each further failure during a rebuild is ten times likelier, because drives share a batch, firmware or power feed, MTTDL falls by 10ᵐ: the dashed line in Figure 20.2 shows 16+4 losing four nines. In 2019 HPE warned that certain SAS SSDs would die at exactly 32,768 power-on hours without a firmware fix[^16]: drives installed together fail together. Google's 2010 fleet study named planned kernel upgrades a major source of correlated failure[^17]. Random replica placement compounds it; copyset placement cut modelled data-loss probability in a 5,000-node power outage from 99.99% to 0.15%[^18].
 
 ```mermaid
 flowchart LR
@@ -115,7 +115,7 @@ flowchart LR
 
 The design rule is anti-affinity: at most m strips of a stripe in any domain you intend to survive. Ceph's CRUSH map encodes the hierarchy; VAST's DBox-HA caps strips per enclosure ([Chapter 16](16-disaggregated-shared-everything.md)).
 
-**Semiconductor bridge: FIT, AFR and chipkill.** One FIT is one failure per 10⁹ device-hours, so 1% AFR ≈ 0.01 ÷ 8,766 × 10⁹ ≈ **1,140 FIT**: Backblaze's 1.36% is ~1,550 FIT, a 0.15% module ~170. Erasure coding is chipkill one level up: Reed–Solomon symbols across DRAM devices survive a dead chip; strips across drives survive a dead drive. Both fail when "independent" devices share a defect.
+**Semiconductor bridge: FIT, AFR and chipkill.** One FIT is one failure per 10⁹ device-hours, so 1% AFR ≈ 0.01 ÷ 8,766 × 10⁹ ≈ **1,140 FIT**: Backblaze's 1.36% is ~1,550 FIT, a 0.15% module ~170. Erasure coding is chipkill one level up: Reed–Solomon across devices survives a dead chip or drive, until "independent" devices share a defect.
 
 ### Caching and tiering design
 
@@ -144,7 +144,7 @@ Read caches add a coherence cost: every client or node cache needs invalidation,
 
 *Table 20.3 — Nearly everyone converges on strong consistency inside a site and a witness for two-site clusters; claims differ in whether they are measured (availability) or modelled (durability).*
 
-Everpure's distinctive choice was a cloud-hosted witness, so customers need no third site[^19]. Steelman for rivals: NetApp now ships a cloud mediator too, and Dell's SRDF family has three decades of deployments. A lower-AFR module still means fewer degraded windows and service visits. An option a strategy team might evaluate, based on public information: publish durability assumptions (rebuild times, correlation handling) beside availability telemetry, turning a modelled number into a defensible one.
+Everpure's distinctive choice was a cloud-hosted witness, removing the need for a third site[^19]. Steelman for rivals: NetApp now ships a cloud mediator too, and Dell's SRDF family has three decades of deployments. An option a strategy team might evaluate, based on public information: publishing durability assumptions beside availability telemetry, making a modelled number defensible.
 
 ## History and trajectory
 
@@ -165,7 +165,7 @@ timeline
 
 *Figure 20.4 — Theory came first; products adopted strong consistency and cloud witnesses once networks made the latency affordable.*
 
-The direction: strong consistency wherever a metro allows, wider codes with faster declustered rebuilds, and witnesses as cloud services. AI scale puts metadata consensus and lease managers on the critical path ([Chapter 21](21-metadata.md)).
+Direction: strong consistency wherever latency allows, wider codes with declustered rebuilds, cloud witnesses. AI scale puts metadata consensus and lease managers on the critical path ([Chapter 21](21-metadata.md)).
 
 ## Numbers that matter
 

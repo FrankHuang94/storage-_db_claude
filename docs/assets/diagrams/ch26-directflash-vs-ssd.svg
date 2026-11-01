@@ -108,15 +108,15 @@
     <rect x="840" y="348" width="110" height="40" rx="4" fill="#009E73" fill-opacity="0.22"/>
     <text x="895" y="366">Thin controller</text><text x="895" y="381">link + NAND I/O</text>
 
-    <text x="605" y="408" fill="#555555">no FTL, no DRAM map</text>
-    <text x="750" y="408" fill="#555555">no FTL, no DRAM map</text>
-    <text x="895" y="408" fill="#555555">no FTL, no DRAM map</text>
+    <text x="605" y="404" fill="#555555">no FTL,</text><text x="605" y="416" fill="#555555">no DRAM map</text>
+    <text x="750" y="404" fill="#555555">no FTL,</text><text x="750" y="416" fill="#555555">no DRAM map</text>
+    <text x="895" y="404" fill="#555555">no FTL,</text><text x="895" y="416" fill="#555555">no DRAM map</text>
 
-    <rect x="550" y="418" width="110" height="198" rx="4" fill="#56B4E9" fill-opacity="0.30"/>
+    <rect x="550" y="422" width="110" height="194" rx="4" fill="#56B4E9" fill-opacity="0.30"/>
     <text x="605" y="512">Raw NAND</text><text x="605" y="528">exposed</text>
-    <rect x="695" y="418" width="110" height="198" rx="4" fill="#56B4E9" fill-opacity="0.30"/>
+    <rect x="695" y="422" width="110" height="194" rx="4" fill="#56B4E9" fill-opacity="0.30"/>
     <text x="750" y="512">Raw NAND</text><text x="750" y="528">exposed</text>
-    <rect x="840" y="418" width="110" height="198" rx="4" fill="#56B4E9" fill-opacity="0.30"/>
+    <rect x="840" y="422" width="110" height="194" rx="4" fill="#56B4E9" fill-opacity="0.30"/>
     <text x="895" y="512">Raw NAND</text><text x="895" y="528">exposed</text>
   </g>
   <text x="750" y="652" font-size="13" fill="#222222" text-anchor="middle">The array sees every block's health and validity, so it</text>

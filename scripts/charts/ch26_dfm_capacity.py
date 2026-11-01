@@ -36,7 +36,9 @@ def build(out_dir: Path) -> Path:
     s, x, y = pts("DFM shipped")
     ax.plot(x, y, "-o", color=blue, markersize=8, linewidth=2, label="DirectFlash Module, shipped", zorder=4)
     for r, xi, yi in zip(s, x, y):
-        ax.annotate(r["label"], (xi, yi), xytext=(-8, 9), textcoords="offset points", ha="right", fontsize=8.5, color=blue)
+        right = xi < 2020 or abs(yi - 150) < 1
+        ax.annotate(r["label"], (xi, yi), xytext=(9, -3) if right else (-8, 9), textcoords="offset points",
+                    ha="left" if right else "right", va="top" if right else "baseline", fontsize=8.5, color=blue)
 
     s, x, y = pts("DFM roadmap (stated 2023)")
     ax.plot(x, y, "--o", color=blue, markerfacecolor="white", markersize=8, linewidth=1.2,
@@ -70,7 +72,7 @@ def build(out_dir: Path) -> Path:
     ax.set_ylabel("Capacity per module or drive, TB (log2 scale)")
     ax.set_xlabel("Year shipped or targeted")
     ax.legend(loc="upper left", fontsize=9)
-    ax.set_title("DFM capacity doubled roughly every 1-1.5 years since 2023, staying one step ahead of standard SSDs",
+    ax.set_title("DFM capacity doubled roughly every 1-1.5 years since 2023, each step landing above the largest standard SSD",
                  loc="left", fontsize=12)
     _style.source_note(fig, "Sources: Pure Storage/Everpure filings, blogs and webinars; Blocks & Files (2023-03-01, 2024-09-24, "
                             "2025-08-05, 2026-08-11); StorageReview; TechTarget; Micron (2026-05-05). 2019 and 2025 DFM points rest "
