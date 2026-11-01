@@ -138,3 +138,120 @@ HDD 的曲线缓慢而平稳。Backblaze 的采购成本从 2009 年的约 $0.11
 *表 2.3 — 竞争的问题不在于"闪存还是磁盘"，而在于闪存管理的智能放在哪里、由谁来买单。*
 
 通用 SSD 方案的最强论证是供应灵活性：一块新的 245 TB 盘可以很快完成认证，而模块厂商必须自行开发。磁盘方案的最强论证是：在 18× 的差距下，EB 级冷数据还将在 HDD 和磁带上保留多年。有两项公开事实塑造了 Everpure 的处境。第一，它与 Meta 及第二家超大规模云厂商的交易是对 DirectFlash 技术的授权，管理层表示 Everpure 不为超大规模云业务采购 NAND[^2]，这使该收入线免受 NAND 价格飙升的冲击。第二，它已认证了多个 NAND 来源（Micron G8/G9 QLC、Kioxia BiCS8）[^39]。基于公开信息，战略团队可能评估的选项包括：2026 年 NAND 涨价中有多少传导到了阵列定价、有多少由利润率吸收；以及结构性走高的闪存溢价是否会拖慢替代 HDD 的交易，同时又强化面向 AI 站点的功耗与密度论据。
+
+## 历史与发展轨迹
+
+```mermaid
+timeline
+    title 存储介质里程碑
+    1956 : IBM RAMAC 交付首款硬盘驱动器
+    1987 : Toshiba 发表 NAND 闪存
+    2013 : Samsung 交付首款 24 层 3D V-NAND
+    2022 : Intel 逐步停产 Optane
+    2024 : Seagate 推出 30 TB HAMR 硬盘 : SK hynix 量产 321 层 NAND
+    2025 : LTO-10 30 TB 磁带盒出货 : Sandisk 发布 256 TB QLC SSD : SK hynix 展示分裂单元 PLC 研究成果
+    2026 : Micron 出货 245 TB QLC SSD : Samsung 发布 400 多层的 V10 : NAND 合约价飙升 : Seagate 向超大规模云厂商出货 44 TB HAMR
+    2027-2029 : WD HAMR 于 2027 年爬坡 : WD 目标 2029 年实现 100 TB HAMR
+```
+
+*图 2.6 — 2026 年，单设备闪存容量已超过磁盘约 5×，而 HDD 的新技术 HAMR 才刚刚进入量产。*
+
+RAMAC 的日期来自 Computer History Museum[^40]；Toshiba 的 NAND 论文（Masuoka 等，IEDM 1987）和 Samsung 的 24 层 V-NAND（2013 年）属于业界公认的历史，图 2.4 中 2016–2022 年的层数数据点仅作背景参考。展望未来：各厂商的层数路线图瞄准约 500 层，尽管时间表互有出入[^26]。PLC 仍处于研究阶段[^21]。HDD 容量路线图（WD：2029 年达到 100 TB）取决于 HAMR 能否按期爬坡[^30]。与此同时，2026 年的价格冲击是一场供给纪律事件，而非物理事件。AI 服务器吸纳了大量 bit 供给，TrendForce 报告称大部分新增供给已被预订[^3]。冲击持续多久，对 2027 年的定价至关重要。
+
+## 关键数字
+
+| 指标 | 数值 | 背景 | 来源/日期 |
+|---|---|---|---|
+| 已出货的最大标准 SSD | 245.76 TB（Micron 6600 ION，QLC） | 自 2026-05-05 起出货 | Micron[^18] |
+| 领先 3D NAND 层数 | 400+（Samsung V10） | 混合键合；每 mm² 密度更重要 | Tom's Hardware，2026[^24] |
+| 向超大规模云厂商出货的最大 HDD | 最高 44 TB（Seagate Mozaic 4+，HAMR） | 自 2026 年 3 月起向两家超大规模云厂商批量出货 | Seagate，2026-03-03[^32] |
+| 企业级 SSD ÷ 近线 HDD 的 $/TB | 22.6×（QLC，2026 年第一季度）；约 18.6×（TLC，2026 年第三季度）；9.7×（2020 年第二季度） | 单一厂商指数与 TrendForce 数据 | Blocks & Files[^36]；Hardware Busters[^13]；Blocks & Files[^34] |
+| 4Q26 NAND 合约价变化 | 环比 +15–20%（企业级 SSD +23–28%） | 预测值；此前 1H26 已大幅上涨 | TrendForce，2026-09-30[^3] |
+| 每瓦容量 | 约 8.2 TB/W（245 TB QLC）对约 4.4 TB/W（44 TB HDD） | 厂商对比 | StorageReview[^19] |
+| CXL 内存加载延迟 | 约 214–271 ns | 实测扩展器设备 | arXiv，2024[^9] |
+| LTO-10 磁带盒 | 原生 30 TB，约 $275–315 | 仅介质约 $0.01/GB | TechRadar[^14] |
+| QLC 耐久度（DWPD） | WAF 1 时约 0.55；WAF 3 时约 0.18 | 1,000 次 P/E、5 年保修；Micron 245 TB 额定值为顺序 1.0 / 随机 0.3 | 算例；StorageReview[^17] |
+| HDD 每 TB 随机 IOPS（30 TB） | 约 3–6 | QD1 下约 80 IOPS 至 QD16 下约 170，÷ 30 TB | 算例 |
+
+## 对话手册
+
+**向产品经理提的问题**
+
+1. *"按照当前闪存相对磁盘的溢价，全闪存方案在哪些场景仍能凭 TCO 胜出，在哪些场景会输？"* 高质量回答：指出每个细分市场的约束条件（功耗、机架空间、重建风险）和盈亏平衡溢价，而不是"闪存总是更便宜"。
+2. *"产品利润率对 2026 年 NAND 涨价的敞口有多大？有多少可以转嫁出去？"* 高质量回答：把阵列业务（Everpure 采购 NAND）与超大规模云授权业务（客户采购 NAND）区分开，并涵盖合同时点以及限制重新定价的 Evergreen 承诺。
+3. *"QLC 让我们能卖出哪些 TLC 卖不了的东西？在哪些场景我们会拒绝使用 QLC？"* 高质量回答：在文件、对象和备份场景中赢在容量和功耗；对于写密集、延迟敏感的块工作负载则需谨慎，除非写路径能够吸收这些写入。
+
+**向工程师提的问题**
+
+1. *"Purity 在现网 QLC 上看到的实际 WAF 是多少？它如何转化为 DWPD 余量？"* 高质量回答：按工作负载给出实测数字，并说明系统级 FTL 如何让 WAF 保持在接近 1 的水平。
+2. *"对于以读为主的 AI 数据集，你们如何处理读干扰和数据保持问题？"* 高质量回答：围绕前台 I/O 调度后台巡检（scrub）和数据迁移，并将读重试率遥测作为磨损信号。
+3. *"从 75 TB 模块升级到 300 TB 模块时，会有哪些变化：重建时间、爆炸半径（影响范围）、每 TB 性能？"* 高质量回答：给出重建小时数、保护方案，并说明模块内部的并行性如何防止每 TB 性能像大容量 HDD 那样崩塌。
+
+**不要这样说：**
+
+- "层数越多，闪存越便宜。"决定每 bit 成本的是位密度、晶圆成本和良率。332 层的器件可以在密度上超过 400 层的器件。
+- "QLC 磨损太快，不适合企业级。"在良好的写路径之后，它足以胜任大多数容量型工作负载。
+- "闪存现在比磁盘便宜。"在 2026 年按采购价格看并非如此——按某厂商的指数，溢价约为 18× 甚至更高。应改从 TCO、功耗和密度角度论证。
+- "SSD 是很好的归档介质。"JEDEC 规定的寿命末期断电保持时间只有三个月，没有任何东西能保证数年。
+- "HAMR 解决了磁盘的性能问题。"它增加的是容量。每块盘的 IOPS 保持不变，因此每 TB IOPS 持续下降。
+
+## 深入阅读（可选，L3 指引）
+
+- JEDEC JESD218/JESD219：SSD 耐久度和数据保持的测试条件。
+- IEDM/ISSCC 的 NAND 论文：各厂商的 tR、tPROG 和键合技术，例如 SK hynix 的多位点单元 PLC（IEDM 2025）[^21]。
+- NVM Express FDP（TP4146）和 ZNS 规范[^22]。
+- Seagate 和 Western Digital 关于 HAMR 路线图的投资者日材料。
+
+## 关键术语
+
+- **P/E 循环（P/E cycle）** — NAND 块的一次编程/擦除循环；闪存磨损的计量单位。
+- **DWPD** — 在保修期内可持续承受的每日整盘写入次数。
+- **电荷俘获单元（Charge-trap cell）** — 将电子存储在氮化物层中的 3D NAND 单元。
+- **读干扰（Read disturb）** — 由于读取相邻单元而导致未被读取单元逐渐损坏的现象。
+- **QLC / PLC** — 每单元 4 bit 和 5 bit 的 NAND。
+- **HAMR / SMR** — 热辅助磁记录和叠瓦式磁记录。
+- **内存–存储墙（Memory–storage wall）** — DRAM 级内存与闪存之间约 1,000× 的延迟跃升。
+- 其余术语见[术语表](../glossary.md)。
+
+## 资料来源
+
+[^1]: SiliconANGLE, "Shares of Pure Storage jump on impressive earnings beat and strong guidance," 2024-12-03. https://siliconangle.com/2024/12/03/shares-pure-storage-jump-impressive-earnings-beat-strong-guidance/ (retrieved 2026-11-01).
+[^2]: Everpure, "Everpure Lands New Design Win with Second Top-Five Hyperscaler," 2026-08-10. https://www.everpuredata.com/company/newsroom/press-releases/everpure-lands-new-design-win-with-second-top-five-hyperscaler.html (retrieved 2026-11-01); Motley Fool, "Everpure (P) Q2 2027 Earnings Call Transcript," 2026-08-31. https://www.fool.com/earnings/call-transcripts/2026/08/31/everpure-p-q2-2027-earnings-call-transcript/ (retrieved 2026-11-01).
+[^3]: TrendForce, "AI Server Demand Sustains Memory Contract Price Increases in 4Q26, While Consumer-Side Pressure Persists," 2026-09-30. https://www.trendforce.com/presscenter/news/20260930-13258.html (retrieved 2026-11-01).
+[^4]: Silicon Analysts, "HBM Memory Pricing and Specifications (2026)," 2026. https://siliconanalysts.com/data/hbm-pricing (retrieved 2026-11-01; figures seen via search summary).
+[^5]: Counterpoint Research, "Memory Price Tracker, April 2026," 2026-04. https://counterpointresearch.com/de/reports/memory-price-tracker-april-2026 (retrieved 2026-11-01; figure seen via search summary, consistent with a Citi estimate of $873 for 1Q26).
+[^6]: uAnalyze, "DDR5大漲價 2026年與HBM3e定價差距將收斂" (DDR5 price surge: gap with HBM3e pricing to narrow in 2026), n.d. (late 2025). https://uanalyze.com.tw/articles/1451142587 (retrieved 2026-11-01).
+[^7]: NVIDIA, "NVIDIA Blackwell Ultra AI Factory Platform Paves Way for Age of AI Reasoning," 2025-03-18. https://nvidianews.nvidia.com/news/nvidia-blackwell-ultra-ai-factory-platform-paves-way-for-age-of-ai-reasoning (primary release not fetched); The Register, "We heard you like HBM – Nvidia's Blackwell Ultra GPUs will have 288 GB of it," 2025-03-18. https://www.theregister.com/2025/03/18/nvidia_blackwell_ultra/ (retrieved via search 2026-11-01).
+[^8]: arXiv:2608.15764, "Concurrency Response of Plain Global Loads on the NVIDIA H100," 2026-08. https://arxiv.org/pdf/2608.15764 (seen via search summary, 2026-11-01). Pointer-chase plateau of ~353 ns for HBM-resident working sets; cycle-based studies report ~290–480 cycles.
+[^9]: arXiv:2409.14317, "Dissecting CXL Memory Performance at Scale: Analysis, Modeling, and Optimization," 2024-09. https://arxiv.org/pdf/2409.14317 (retrieved 2026-11-01).
+[^10]: Red Hat Ecosystem Catalog, "Micron CMM CZ120 256GB E3.S CXL2.0 Memory Expander," n.d. https://catalog.redhat.com/en/hardware/components/detail/259147 (retrieved 2026-11-01).
+[^11]: AnandTech, "Samsung Unveils CXL Memory Module Box: Up to 16 TB at 60 GB/s," 2024. https://www.anandtech.com/show/21333 (retrieved 2026-11-01).
+[^12]: R. Davis (Mellanox), "Demonstrating NVMe Performance over Ethernet," SNIA Data Storage Innovation Conference, 2016. https://www.snia.org/sites/default/files/DSI/2016/presentations/stor_networks/Rob_Davis_Demonstrating_NVMe_Performance_Ethernet.pdf (retrieved 2026-11-01).
+[^13]: Hardware Busters, "Enterprise SSD Prices Now Run 18.6x Hard Drives, and the Cheap Alternative Is Sold Out Until 2027," 2026. https://hwbusters.com/news/enterprise-ssd-prices-now-run-18-6x-hard-drives-and-the-cheap-alternative-is-sold-out-until-2027/ (retrieved 2026-11-01).
+[^14]: TechRadar, "Tape storage is not dead yet – but $300 LTO-10 cartridges and inflated exabyte numbers won't help its cause," n.d. (2025–26). https://www.techradar.com/pro/tape-is-not-dead-yet-but-usd300-lto-10-cartridges-and-inflated-exabyte-numbers-wont-help-its-cause (retrieved 2026-11-01).
+[^15]: StorageNewsletter, "Availability of FujiFilm LTO Ultrium 10 Cartridge with 30TB Native Capacity," 2025-06-16. https://www.storagenewsletter.com/2025/06/16/availability-of-fujifilm-lto-ultrium-10-cartridge-with-30tb-native-capacity/ (retrieved 2026-11-01).
+[^16]: AnandTech, "Intel To Wind Down Optane Memory Business – 3D XPoint Storage Tech Reaches Its End," 2022-07-28. https://www.anandtech.com/show/17515 (retrieved 2026-11-01).
+[^17]: StorageReview, "Micron 6600 ION 245TB SSD Review: A Quarter Petabyte Per Drive Bay," 2026. https://www.storagereview.com/review/micron-6600-ion-245tb-ssd-review-a-quarter-petabyte-per-drive-bay (retrieved via search 2026-11-01). Spec table: 1.0 DWPD (128 KB sequential), 0.3 DWPD (16 KB random).
+[^18]: Micron Technology, "Industry-Leading 245TB Micron 6600 ION Data Center SSD Now Shipping," 2026-05-05. https://investors.micron.com/news/press-release/2026/Industry-Leading-245TB-Micron-6600-ION-Data-Center-SSD-Now-Shipping/default.aspx (retrieved 2026-11-01).
+[^19]: StorageReview, "Micron 6600 ION 245TB SSD Review: A Quarter Petabyte Per Drive Bay," 2026. https://www.storagereview.com/review/micron-6600-ion-245tb-ssd-review-a-quarter-petabyte-per-drive-bay (retrieved 2026-11-01); StorageReview, "Solidigm 122.88TB D5-P5336 Review," 2025. https://www.storagereview.com/review/solidigm-122-88tb-d5-p5336-review-high-capacity-storage-meets-operational-efficiency (retrieved 2026-11-01).
+[^20]: Blocks & Files, "Sandisk unveils 256 TB SSD for AI workloads, shipping in 2026," 2025-08-05. https://www.blocksandfiles.com/ai-ml/2025/08/05/sandisk-unveils-256-tb-ssd-for-ai-workloads-shipping-in-2026/1589534 (retrieved 2026-11-01).
+[^21]: Blocks & Files, "SK hynix developing split-cell 5-bit flash," 2026-01-15. https://www.blocksandfiles.com/flash/2026/01/15/sk-hynix-developing-split-cell-5-bit-flash/4090388 (retrieved 2026-11-01).
+[^22]: NVM Express, "Overcoming the Write Amplification Problem with NVM Express Flexible Data Placement," n.d. https://nvmexpress.org/nvmeflexible-data-placement-fdp-blog/ (retrieved 2026-11-01).
+[^23]: Blocks & Files, "SK hynix begins mass production of 321-layer 3D NAND," 2024-11-21. https://www.blocksandfiles.com/ai-ml/2024/11/21/sk-hynix-begins-mass-production-of-321-layer-3d-nand/1605947 (retrieved 2026-11-01).
+[^24]: Tom's Hardware, "Samsung unveils 10th Gen V-NAND: 400+ layers, 5.6 GT/s and hybrid bonding," 2026. https://www.tomshardware.com/pc-components/ssds/samsung-unveils-10th-gen-v-nand-400-layers-5-6-gt-s-and-hybrid-bonding (retrieved 2026-11-01).
+[^25]: Tom's Hardware, "Kioxia and Sandisk sample world's densest 3D NAND — new 332-Layer beats Samsung's 400-Layer NAND," 2026. https://www.tomshardware.com/pc-components/ssds/kioxia-and-sandisk-sample-worlds-densest-3d-nand-new-332-layer-beats-samsungs-400-layer-nand (retrieved 2026-11-01).
+[^26]: Tom's Hardware, "Inside the future of 3D NAND: The roadmap to 500 layers," 2026. https://www.tomshardware.com/pc-components/storage/inside-the-future-of-3d-nand-the-roadmap-to-500-layers (retrieved 2026-11-01).
+[^27]: Blocks & Files, "Second hyperscaler plumps for Everpure's flash technology," 2026-08-11. https://www.blocksandfiles.com/flash/2026/08/11/second-hyperscaler-plumps-for-everpures-flash-technology/5285903 (retrieved 2026-11-01).
+[^28]: StorageReview, "Seagate NL35" review (7,200 rpm nearline drive specified at 8 ms seek; 13.1 ms measured average read access time), n.d. (mid-2000s). https://storagereview.com/review/seagate-nl35 (seen via search summary, 2026-11-01).
+[^29]: StorageReview, "WD Bets 8x Bandwidth Beats More Terabytes as 40TB UltraSMR Starts Shipping," 2026. https://www.storagereview.com/news/wd-bets-8x-bandwidth-beats-more-terabytes-as-40tb-ultrasmr-starts-shipping (retrieved 2026-11-01).
+[^30]: Western Digital, "Western Digital Accelerates Storage Innovation for AI Era," 2026-02-03. https://www.westerndigital.com/company/newsroom/press-releases/2026/2026-02-03-western-digital-accelerates-storage-innovation-for-ai-era (retrieved 2026-11-01).
+[^31]: PetaPixel, "Seagate's new 30TB Hard Drive is the Largest Ever," 2024-01-18. https://petapixel.com/2024/01/18/seagates-new-30tb-hard-drive-is-the-largest-ever/ (retrieved 2026-11-01).
+[^32]: Seagate Technology, "Seagate Delivers Industry's Highest Capacity Hard Drives with Next-Generation Mozaic 4+," 2026-03-03. https://investors.seagate.com/news/news-details/2026/Seagate-Delivers-Industrys-Highest-Capacity-Hard-Drives-with-Next-Generation-Mozaic-4/default.aspx (retrieved via search 2026-11-01).
+[^33]: Backblaze, "Hard Drive Cost Per Gigabyte," 2022-11. https://www.backblaze.com/blog/hard-drive-cost-per-gigabyte/ (retrieved 2026-11-01; figures seen via search summary); Blocks & Files, "Backblaze predicts HDD prices will fall to 1¢/GB by mid-2025," 2022-12-12. https://blocksandfiles.com/2022/12/12/backblaze-sees-hdd-pricing-falling-to-a-penny-a-gig/ (retrieved 2026-11-01).
+[^34]: Blocks & Files, "Enterprise SSDs cost ten times more than nearline disk drives," 2020-08-24. https://blocksandfiles.com/2020/08/24/10x-enterprise-ssd-price-premium-over-nearline-disk-drives/ (retrieved 2026-11-01); Blocks & Files, "How long before SSDs replace nearline disk drives?," 2019-08-28. https://blocksandfiles.com/2019/08/28/nearline-disk-drives-ssd-attack/ (retrieved 2026-11-01).
+[^35]: Blocks & Files, "Seagate: Is flash killing the hard drive? No," 2024-05-01. https://blocksandfiles.com/2024/05/01/seagate-is-flash-killing-the-hard-drive-no/ (retrieved 2026-11-01).
+[^36]: Blocks & Files, "VDURA says 30 TB QLC SSD capacity now costs 22.6x more than HDD," 2026-04-08. https://www.blocksandfiles.com/flash/2026/04/08/vdura-says-30-tb-qlc-ssd-capacity-now-costs-226x-more-than-hdd/5214761 (retrieved via search 2026-11-01); Tom's Hardware, "Vdura hikes its enterprise SSD pricing, now costs 22.6x more than hard drives," 2026-04. https://www.tomshardware.com/pc-components/ssds/vdura-sharply-revises-its-enterprise-ssd-pricing-figures (retrieved via search 2026-11-01).
+[^37]: Pure Storage, "Hyperscaler," n.d. https://purestorage.com/pure-advantage/platform/hyperscaler.html (retrieved 2026-11-01).
+[^38]: VAST Data Knowledge Base, "DBox DF-3015V2/DF-3060V2 Ceres Datasheet," n.d. https://kb.vastdata.com/docs/dbox-df-3015v2df-3060v2-ceres-datasheet (retrieved 2026-11-01).
+[^39]: Blocks & Files, "Pure qualifies Micron's 276-layer flash," 2025-01-08. https://blocksandfiles.com/2025/01/08/pure-qualifies-microns-276-layer-flash/ (retrieved 2026-11-01); Blocks & Files, "Kioxia 2 terabit NAND," 2024-07-03. https://blocksandfiles.com/2024/07/03/kioxia-2-terabit-nand/ (retrieved 2026-11-01).
+[^40]: Computer History Museum, "1956: First commercial hard disk drive shipped," n.d. https://www.computerhistory.org/storageengine/first-commercial-hard-disk-drive-shipped/ (retrieved 2026-11-01).
