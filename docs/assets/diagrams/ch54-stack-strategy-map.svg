@@ -1,0 +1,192 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 870" width="1000" role="img" aria-labelledby="t d" font-family="Inter, Helvetica, Arial, sans-serif">
+<title id="t">Layered stack strategy map: Everpure public position and build, buy and partner options per layer</title>
+<desc id="d">Eight layers from NAND media at the bottom to AI data platform and agents at the top. For each layer the map marks Everpure's current public position (owns and differentiated, present and contested, early entrant, or depends on others) and lists build options, buy options as categories of target with one public precedent, and partner options. A vertical arrow notes that disclosed deal prices and neutrality conflicts rise up the stack while capex and supply exposure rise down the stack.</desc>
+<rect x="0" y="0" width="1000" height="870" fill="#FFFFFF"/>
+<text x="20" y="34" font-size="20" font-weight="700" fill="#222222">Strategic option map: where Everpure sits on each layer, and the build / buy / partner options</text>
+<text x="20" y="56" font-size="13" fill="#555555">Atlas synthesis from public sources, November 2026. Options a strategy team might evaluate, not Everpure plans. Company names illustrate a</text>
+<text x="20" y="73" font-size="13" fill="#555555">category or a past public deal; no transaction or partnership is implied. Original drawing for the Everpure Tech Atlas, Chapter 54.</text>
+<rect x="48" y="92" width="198" height="30" fill="#F3F6F9" stroke="#DDDDDD"/>
+<text x="56" y="112" font-size="12.5" font-weight="700" fill="#222222">LAYER</text>
+<rect x="246" y="92" width="222" height="30" fill="#F3F6F9" stroke="#DDDDDD"/>
+<text x="254" y="112" font-size="12.5" font-weight="700" fill="#0072B2">EVERPURE PUBLIC POSITION</text>
+<rect x="468" y="92" width="176" height="30" fill="#F3F6F9" stroke="#DDDDDD"/>
+<text x="476" y="112" font-size="12.5" font-weight="700" fill="#222222">BUILD OPTION</text>
+<rect x="644" y="92" width="176" height="30" fill="#F3F6F9" stroke="#DDDDDD"/>
+<text x="652" y="112" font-size="12.5" font-weight="700" fill="#D55E00">BUY OPTION (category)</text>
+<rect x="820" y="92" width="168" height="30" fill="#F3F6F9" stroke="#DDDDDD"/>
+<text x="828" y="112" font-size="12.5" font-weight="700" fill="#009E73">PARTNER OPTION</text>
+<rect x="48" y="132" width="940" height="80" fill="#FAFBFC" stroke="#DDDDDD"/>
+<line x1="246" y1="132" x2="246" y2="212" stroke="#DDDDDD"/>
+<line x1="468" y1="132" x2="468" y2="212" stroke="#DDDDDD"/>
+<line x1="644" y1="132" x2="644" y2="212" stroke="#DDDDDD"/>
+<line x1="820" y1="132" x2="820" y2="212" stroke="#DDDDDD"/>
+<text x="56" y="159" font-size="14" font-weight="700" fill="#222222">8  AI data platform</text>
+<text x="56" y="177" font-size="14" font-weight="700" fill="#222222">and agents</text>
+<text x="56" y="199" font-size="12" fill="#555555">pipelines, DBs, agent runtimes</text>
+<circle cx="260" cy="156" r="7" fill="#FFFFFF" stroke="#E69F00" stroke-width="3"/>
+<text x="274" y="160" font-size="12" fill="#222222" font-weight="700">Data Stream, GA June 2026</text>
+<text x="274" y="178" font-size="12" fill="#222222">on NVIDIA AI Data Platform</text>
+<text x="274" y="196" font-size="12" fill="#222222">No database or agent runtime</text>
+<text x="476" y="160" font-size="12" fill="#222222">Storage-native services:</text>
+<text x="476" y="178" font-size="12" fill="#222222">event triggers, ingest,</text>
+<text x="476" y="196" font-size="12" fill="#222222">MCP access to data</text>
+<text x="652" y="160" font-size="12" fill="#222222">Category: serverless DB,</text>
+<text x="652" y="178" font-size="12" fill="#222222">table formats, data engines</text>
+<text x="652" y="196" font-size="12" fill="#D55E00">e.g. Databricks–Neon ~$1B</text>
+<text x="828" y="160" font-size="12" fill="#222222">NVIDIA AI Data Platform;</text>
+<text x="828" y="178" font-size="12" fill="#222222">lakehouse and model-</text>
+<text x="828" y="196" font-size="12" fill="#222222">platform vendors</text>
+<rect x="48" y="212" width="940" height="80" fill="#FFFFFF" stroke="#DDDDDD"/>
+<line x1="246" y1="212" x2="246" y2="292" stroke="#DDDDDD"/>
+<line x1="468" y1="212" x2="468" y2="292" stroke="#DDDDDD"/>
+<line x1="644" y1="212" x2="644" y2="292" stroke="#DDDDDD"/>
+<line x1="820" y1="212" x2="820" y2="292" stroke="#DDDDDD"/>
+<text x="56" y="239" font-size="14" font-weight="700" fill="#222222">7  Data management</text>
+<text x="56" y="261" font-size="12" fill="#555555">catalog, protection, governance</text>
+<circle cx="260" cy="236" r="7" fill="#FFFFFF" stroke="#E69F00" stroke-width="3"/>
+<text x="274" y="240" font-size="12" fill="#222222" font-weight="700">Data Intelligence (ex-1touch)</text>
+<text x="274" y="258" font-size="12" fill="#222222">SafeMode snapshots</text>
+<text x="274" y="276" font-size="12" fill="#222222">Catalog, DSPM owned by others</text>
+<text x="476" y="240" font-size="12" fill="#222222">Index write-path metadata;</text>
+<text x="476" y="258" font-size="12" fill="#222222">cover non-Everpure data;</text>
+<text x="476" y="276" font-size="12" fill="#222222">price DI separately</text>
+<text x="652" y="240" font-size="12" fill="#222222">Category: lineage, DSPM,</text>
+<text x="652" y="258" font-size="12" fill="#222222">semantic layer, classifiers</text>
+<text x="652" y="276" font-size="12" fill="#D55E00">e.g. Everpure–1touch $125M</text>
+<text x="828" y="240" font-size="12" fill="#222222">Backup ISVs; catalogs</text>
+<text x="828" y="258" font-size="12" fill="#222222">(Purview, Unity, Polaris);</text>
+<text x="828" y="276" font-size="12" fill="#222222">DSPM vendors</text>
+<rect x="48" y="292" width="940" height="80" fill="#FAFBFC" stroke="#DDDDDD"/>
+<line x1="246" y1="292" x2="246" y2="372" stroke="#DDDDDD"/>
+<line x1="468" y1="292" x2="468" y2="372" stroke="#DDDDDD"/>
+<line x1="644" y1="292" x2="644" y2="372" stroke="#DDDDDD"/>
+<line x1="820" y1="292" x2="820" y2="372" stroke="#DDDDDD"/>
+<text x="56" y="319" font-size="14" font-weight="700" fill="#222222">6  Control plane,</text>
+<text x="56" y="337" font-size="14" font-weight="700" fill="#222222">fleet and AIOps</text>
+<text x="56" y="359" font-size="12" fill="#555555">telemetry, automation, K8s</text>
+<circle cx="260" cy="316" r="7" fill="#FFFFFF" stroke="#0072B2" stroke-width="3"/>
+<text x="274" y="320" font-size="12" fill="#222222" font-weight="700">Pure1 (agentic), Fusion</text>
+<text x="274" y="338" font-size="12" fill="#222222">&gt;1,200 Fusion customers</text>
+<text x="274" y="356" font-size="12" fill="#222222">Portworx for Kubernetes</text>
+<text x="476" y="320" font-size="12" fill="#222222">Fusion over third-party</text>
+<text x="476" y="338" font-size="12" fill="#222222">arrays; agentic operations</text>
+<text x="652" y="320" font-size="12" fill="#222222">Category: automation, IaC,</text>
+<text x="652" y="338" font-size="12" fill="#222222">observability, K8s data</text>
+<text x="652" y="356" font-size="12" fill="#D55E00">e.g. Pure–Portworx ~$370M</text>
+<text x="828" y="320" font-size="12" fill="#222222">Kubernetes platforms</text>
+<text x="828" y="338" font-size="12" fill="#222222">(Red Hat); VMware-exit</text>
+<text x="828" y="356" font-size="12" fill="#222222">platforms (Nutanix)</text>
+<rect x="48" y="372" width="940" height="80" fill="#FFFFFF" stroke="#DDDDDD"/>
+<line x1="246" y1="372" x2="246" y2="452" stroke="#DDDDDD"/>
+<line x1="468" y1="372" x2="468" y2="452" stroke="#DDDDDD"/>
+<line x1="644" y1="372" x2="644" y2="452" stroke="#DDDDDD"/>
+<line x1="820" y1="372" x2="820" y2="452" stroke="#DDDDDD"/>
+<text x="56" y="399" font-size="14" font-weight="700" fill="#222222">5  KV cache and</text>
+<text x="56" y="417" font-size="14" font-weight="700" fill="#222222">context memory</text>
+<text x="56" y="439" font-size="12" fill="#555555">inference tiers G3.5 / G4</text>
+<circle cx="260" cy="396" r="7" fill="#FFFFFF" stroke="#E69F00" stroke-width="3"/>
+<text x="274" y="400" font-size="12" fill="#222222" font-weight="700">PureKVA, Sept 2026</text>
+<text x="274" y="418" font-size="12" fill="#222222">STX partner; MLPerf v3.0 KV</text>
+<text x="274" y="436" font-size="12" fill="#222222">NVIDIA defines the tier</text>
+<text x="476" y="400" font-size="12" fill="#222222">Upstream NIXL, LMCache</text>
+<text x="476" y="418" font-size="12" fill="#222222">connectors; price per</text>
+<text x="476" y="436" font-size="12" fill="#222222">GB-hour or token</text>
+<text x="652" y="400" font-size="12" fill="#222222">Category: memory tiering,</text>
+<text x="652" y="418" font-size="12" fill="#222222">inference-cache software</text>
+<text x="652" y="436" font-size="12" fill="#D55E00">e.g. AMD–MEXT (2026)</text>
+<text x="828" y="400" font-size="12" fill="#222222">NVIDIA Dynamo / KVBM,</text>
+<text x="828" y="418" font-size="12" fill="#222222">STX racks; inference-</text>
+<text x="828" y="436" font-size="12" fill="#222222">serving stacks</text>
+<rect x="48" y="452" width="940" height="80" fill="#FAFBFC" stroke="#DDDDDD"/>
+<line x1="246" y1="452" x2="246" y2="532" stroke="#DDDDDD"/>
+<line x1="468" y1="452" x2="468" y2="532" stroke="#DDDDDD"/>
+<line x1="644" y1="452" x2="644" y2="532" stroke="#DDDDDD"/>
+<line x1="820" y1="452" x2="820" y2="532" stroke="#DDDDDD"/>
+<text x="56" y="479" font-size="14" font-weight="700" fill="#222222">4  File, object and</text>
+<text x="56" y="497" font-size="14" font-weight="700" fill="#222222">parallel data services</text>
+<text x="56" y="519" font-size="12" fill="#555555">FlashBlade-class systems</text>
+<circle cx="260" cy="476" r="7" fill="#FFFFFF" stroke="#0072B2" stroke-width="3"/>
+<text x="274" y="480" font-size="12" fill="#222222" font-weight="700">FlashBlade //S, //E, //EXA</text>
+<text x="274" y="498" font-size="12" fill="#222222">pNFS; top MLPerf v3.0 entrant</text>
+<text x="274" y="516" font-size="12" fill="#222222">Gaps: DFM data nodes, NCP</text>
+<text x="476" y="480" font-size="12" fill="#222222">DFM data nodes, tenancy,</text>
+<text x="476" y="498" font-size="12" fill="#222222">certification badges,</text>
+<text x="476" y="516" font-size="12" fill="#222222">100k-GPU references</text>
+<text x="652" y="480" font-size="12" fill="#222222">Category: parallel</text>
+<text x="652" y="498" font-size="12" fill="#222222">metadata, namespace</text>
+<text x="652" y="516" font-size="12" fill="#D55E00">e.g. NetApp–PEAK:AIO</text>
+<text x="828" y="480" font-size="12" fill="#222222">Neocloud second source;</text>
+<text x="828" y="498" font-size="12" fill="#222222">namespace layers above;</text>
+<text x="828" y="516" font-size="12" fill="#222222">coexist with Lustre</text>
+<rect x="48" y="532" width="940" height="80" fill="#FFFFFF" stroke="#DDDDDD"/>
+<line x1="246" y1="532" x2="246" y2="612" stroke="#DDDDDD"/>
+<line x1="468" y1="532" x2="468" y2="612" stroke="#DDDDDD"/>
+<line x1="644" y1="532" x2="644" y2="612" stroke="#DDDDDD"/>
+<line x1="820" y1="532" x2="820" y2="612" stroke="#DDDDDD"/>
+<text x="56" y="559" font-size="14" font-weight="700" fill="#222222">3  Array / storage</text>
+<text x="56" y="577" font-size="14" font-weight="700" fill="#222222">software</text>
+<text x="56" y="599" font-size="12" fill="#555555">placement, protection, reduction</text>
+<circle cx="260" cy="556" r="8" fill="#0072B2"/>
+<text x="274" y="560" font-size="12" fill="#222222" font-weight="700">Purity//FA and //FB: one OS</text>
+<text x="274" y="578" font-size="12" fill="#222222">Evergreen refresh model</text>
+<text x="274" y="596" font-size="12" fill="#222222">IDC #4, 8.1% (2Q26)</text>
+<text x="476" y="560" font-size="12" fill="#222222">Core competence: keep the</text>
+<text x="476" y="578" font-size="12" fill="#222222">one-OS discipline</text>
+<text x="652" y="560" font-size="12" fill="#222222">Category: array vendors</text>
+<text x="652" y="578" font-size="12" fill="#222222">(installed base, 2nd OS)</text>
+<text x="652" y="596" font-size="12" fill="#D55E00">e.g. Lenovo–Infinidat</text>
+<text x="828" y="560" font-size="12" fill="#222222">Converged: Cisco</text>
+<text x="828" y="578" font-size="12" fill="#222222">FlashStack; Everpure</text>
+<text x="828" y="596" font-size="12" fill="#222222">Cloud on Azure and AWS</text>
+<rect x="48" y="612" width="940" height="80" fill="#FAFBFC" stroke="#DDDDDD"/>
+<line x1="246" y1="612" x2="246" y2="692" stroke="#DDDDDD"/>
+<line x1="468" y1="612" x2="468" y2="692" stroke="#DDDDDD"/>
+<line x1="644" y1="612" x2="644" y2="692" stroke="#DDDDDD"/>
+<line x1="820" y1="612" x2="820" y2="692" stroke="#DDDDDD"/>
+<text x="56" y="639" font-size="14" font-weight="700" fill="#222222">2  Flash modules / FTL</text>
+<text x="56" y="661" font-size="12" fill="#555555">raw-NAND management</text>
+<circle cx="260" cy="636" r="8" fill="#0072B2"/>
+<text x="274" y="640" font-size="12" fill="#222222" font-weight="700">DirectFlash, global FTL</text>
+<text x="274" y="658" font-size="12" fill="#222222">300 TB DFMs (2026)</text>
+<text x="274" y="676" font-size="12" fill="#222222">Licensed to 2 hyperscalers</text>
+<text x="476" y="640" font-size="12" fill="#222222">Larger DFMs; stay ahead</text>
+<text x="476" y="658" font-size="12" fill="#222222">of FDP commodity SSDs</text>
+<text x="652" y="640" font-size="12" fill="#222222">Category: controller and</text>
+<text x="652" y="658" font-size="12" fill="#222222">FTL IP teams</text>
+<text x="652" y="676" font-size="12" fill="#222222">(rarely for sale)</text>
+<text x="828" y="640" font-size="12" fill="#222222">License IP to more</text>
+<text x="828" y="658" font-size="12" fill="#222222">hyperscalers or OEMs</text>
+<rect x="48" y="692" width="940" height="80" fill="#FFFFFF" stroke="#DDDDDD"/>
+<line x1="246" y1="692" x2="246" y2="772" stroke="#DDDDDD"/>
+<line x1="468" y1="692" x2="468" y2="772" stroke="#DDDDDD"/>
+<line x1="644" y1="692" x2="644" y2="772" stroke="#DDDDDD"/>
+<line x1="820" y1="692" x2="820" y2="772" stroke="#DDDDDD"/>
+<text x="56" y="719" font-size="14" font-weight="700" fill="#222222">1  Media (NAND)</text>
+<text x="56" y="741" font-size="12" fill="#555555">dies, wafers, fabs</text>
+<circle cx="260" cy="716" r="7" fill="#999999"/>
+<text x="274" y="720" font-size="12" fill="#222222" font-weight="700">Buys raw NAND (Micron,</text>
+<text x="274" y="738" font-size="12" fill="#222222">Kioxia); owns no fabs</text>
+<text x="274" y="756" font-size="12" fill="#222222">Hyperscalers buy own NAND</text>
+<text x="476" y="720" font-size="12" fill="#222222">Not viable: multi-billion</text>
+<text x="476" y="738" font-size="12" fill="#222222">capex per node</text>
+<text x="652" y="720" font-size="12" fill="#222222">Category: NAND makers</text>
+<text x="652" y="738" font-size="12" fill="#D55E00">e.g. SK hynix–Intel NAND,</text>
+<text x="652" y="756" font-size="12" fill="#D55E00">$9B (2020–25)</text>
+<text x="828" y="720" font-size="12" fill="#222222">Long-term agreements</text>
+<text x="828" y="738" font-size="12" fill="#222222">with collars; a third</text>
+<text x="828" y="756" font-size="12" fill="#222222">NAND source</text>
+<line x1="30" y1="766" x2="30" y2="146" stroke="#D55E00" stroke-width="3"/>
+<polygon points="30,132 22,148 38,148" fill="#D55E00"/>
+<text x="24" y="452.0" font-size="12" fill="#222222" text-anchor="middle" transform="rotate(-90 24 452.0)">Up: higher deal multiples, more neutrality conflict · Down: more capex and supply exposure</text>
+<text x="48" y="806" font-size="12.5" font-weight="700" fill="#222222">Public position:</text>
+<circle cx="160" cy="802" r="7" fill="#0072B2"/>
+<text x="172" y="806" font-size="12" fill="#222222">Owns, differentiated</text>
+<circle cx="332.0" cy="802" r="6" fill="#FFFFFF" stroke="#0072B2" stroke-width="3"/>
+<text x="344.0" y="806" font-size="12" fill="#222222">Present, contested</text>
+<circle cx="490.8" cy="802" r="6" fill="#FFFFFF" stroke="#E69F00" stroke-width="3"/>
+<text x="502.8" y="806" font-size="12" fill="#222222">Early entrant (2026 launches)</text>
+<circle cx="722.2" cy="802" r="6" fill="#999999"/>
+<text x="734.2" y="806" font-size="12" fill="#222222">Buys from or depends on others</text>
+<text x="48" y="832" font-size="12" fill="#555555">Orange "e.g." lines are public precedents for the target category (acquirer–target, disclosed or reported value), not suggested targets.</text>
+<text x="48" y="852" font-size="12" fill="#555555">Sources: Everpure filings and releases FY2021–FY2027; IDC via StorageReview (2Q26); NVIDIA STX release (Mar 2026); deal releases cited in Chapter 54.</text>
+</svg>

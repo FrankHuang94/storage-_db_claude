@@ -131,9 +131,9 @@ The proprietary route has a cost. The Lustre client left the Linux staging tree 
 
 | Vendor / product | Client-facing approach | Client software | Notes |
 |---|---|---|---|
-| Everpure FlashBlade//S | NFSv3/4.1, SMB, S3; `nconnect` | Stock | Scale-out NAS; Everpure documents nconnect on kernels ≥ 5.3[^20]; NFS-over-RDMA status [VERIFY: FlashBlade//S NFS over RDMA / GDS support] |
+| Everpure FlashBlade//S | NFSv3/4.1, SMB, S3; `nconnect`; NFS over RDMA | Stock | Scale-out NAS; Everpure documents nconnect on kernels ≥ 5.3[^20]; NFS over RDMA with GDS reported from Purity//FB 4.3.4 (late 2023)[^27] [VERIFY: search-summary only; confirm in Purity//FB release notes] |
 | Everpure FlashBlade//EXA | pNFS: NFSv4.1/TCP to metadata core, NFSv3/RDMA to data nodes | Stock Linux client | Metadata core of 1–10 FlashBlade chassis; off-the-shelf data nodes at launch[^1][^21] |
-| VAST Data | NFSv3/4.1, NFS/RDMA, SMB, S3 | Optional VAST NFS multipath client | No public pNFS support found [VERIFY]; DASE makes any node a valid target[^13] |
+| VAST Data | NFSv3/4.1, NFS/RDMA, SMB, S3 | Optional VAST NFS multipath client | No public pNFS support found: its NFS client documentation (v4.5, 2026) lists multipath for NFSv3 and v4.1, not pNFS[^28]; DASE makes any node a valid target[^13] |
 | Hammerspace | pNFS Flex Files over existing NFS storage | Stock NFSv4.2 client | Metadata on Anvil servers[^22]; parallel NFS co-developed for Meta's 24k-GPU clusters[^23] |
 | Dell PowerScale / Lightning FS | pNFS Flex Files with separate metadata server (2026) | Stock | Lightning FS aimed at >16k-GPU / 4 TB/s sites[^3] |
 | NetApp ONTAP / AFX | NFSv4.1 pNFS, trunking; PEAK:AIO scale-out metadata to come | Stock | Deal announced 2026-09-25; terms undisclosed[^2][^24] |
@@ -143,9 +143,9 @@ The proprietary route has a cost. The Lustre client left the Linux staging tree 
 
 **Steelmen.** *Proprietary clients* remain safest for shared-file writes. *VAST's multipath* gets most of pNFS's bandwidth without a metadata server on every open, with a far lighter client than Lustre's. *pNFS* is the only option that takes the head out of the data path using the client already in the distro. Hammerspace cites a 10-node production IO500 result on the upstream NFSv4.2 client (*company-stated*)[^25].
 
-**Where pNFS is weaker.** It is only as good as each distro's Linux client, whose upstream maintainer is Hammerspace's CTO[^26]. Layout recalls under churn can stall clients, and metadata becomes the scaling point. Options a strategy team might evaluate, based on public information:
+**Where pNFS is weaker.** It is only as good as each distro's Linux client, one of whose upstream maintainers is Hammerspace's CTO[^26]. Layout recalls under churn can stall clients, and metadata becomes the scaling point. Options a strategy team might evaluate, based on public information:
 
-- whether EXA's NFSv3/RDMA data leg delivers GDS into GPU memory, which would let it meet VAST's GDS story head-on;
+- how well EXA's NFSv3/RDMA data leg delivers GDS into GPU memory: Portworx documentation describes GDS for EXA file systems over RDMA NFS[^29] [VERIFY: search-summary only], but NVIDIA certification for EXA and measured per-client numbers are not yet public;
 - whether FlashBlade//S should add pNFS, giving one protocol story from enterprise to EXA;
 - how much Everpure should invest upstream in the Linux pNFS client, which every pNFS vendor shares.
 
@@ -253,3 +253,6 @@ For 15 years pNFS was a standard in search of a market while HPC ran Lustre or G
 [^24]: NetApp, "Parallel NFS" (ONTAP 9 documentation), 2026-02. https://docs.netapp.com/us-en/ontap/pdfs/sidebar/Parallel_NFS.pdf (retrieved 2026-11-01).
 [^25]: Hammerspace via Business Wire, "Hammerspace Breaks IO500 Barriers: First Standards-Based Linux + NFS System To Achieve True HPC-Class Performance," 2025-11-20. https://www.businesswire.com/news/home/20251120823774/en/Hammerspace-Breaks-IO500-Barriers-First-Standards-Based-Linux-NFS-System-To-Achieve-True-HPC-Class-Performance (retrieved 2026-11-01).
 [^26]: SNIA, Trond Myklebust (Hammerspace), "Advancements in pNFS and NFSv4.2," SDC 2024 (posted 2025-05). https://snia.org/sites/default/files/2025-05/SNIA-SDC2024-Myklebust-Advancements-in-PNFS-NFSv4.2.pdf (retrieved 2026-11-01).
+[^27]: iThome (Taiwan), overview of GPUDirect Storage support among storage vendors (Pure Storage FlashBlade//S: NFS over RDMA, Purity//FB 4.3.4 or later, from October 2023), n.d. https://www.ithome.com.tw/tech/165670 (retrieved 2026-11-01; search-summary only, host not fetchable).
+[^28]: VAST Data, "VAST NFS documentation v4.5," 2026-04. https://vastnfs.vastdata.com/docs/4.5/index.html (retrieved 2026-11-01; search-summary only).
+[^29]: Portworx, "Enable the FlashArray and FlashBlade driver" (FlashBlade//EXA file systems with GPUDirect Storage over RDMA NFS), n.d. https://docs.portworx.com/portworx-enterprise/platform/configure-portworx-components/enable-fa-fb-driver (retrieved 2026-11-01; search-summary only, host not fetchable).

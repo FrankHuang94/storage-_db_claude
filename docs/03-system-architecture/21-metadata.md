@@ -108,7 +108,7 @@ The core trade-off is locality versus spread. Subtree partitioning keeps listing
 | System | Where metadata lives | How it scales | AI-relevant notes |
 |---|---|---|---|
 | Everpure FlashBlade//S, //E | Distributed key-value database across blades | Add blades | Company-stated "billions of files"[^16][^17] |
-| Everpure FlashBlade//EXA | FlashBlade metadata core; separate data nodes | Metadata core and data nodes scale independently | MLPerf Storage v3.0 config: 30 EXA blades with 120 DFMs for metadata, 30 data nodes[^20]; up to 20× metadata vs scale-out claim [VERIFY: search-summary only][^21] |
+| Everpure FlashBlade//EXA | FlashBlade metadata core; separate data nodes | Metadata core and data nodes scale independently | MLPerf Storage v3.0 config: 30 EXA blades with 120 DFMs for metadata, 30 data nodes[^20]; company-stated ">20× more files per namespace" than "the leading parallel file system", a namespace-size claim, not a metadata ops/s multiple[^21] |
 | VAST | V-tree in SCM shared by stateless CNodes | Any CNode serves any operation | No lock manager; locks are SCM writes[^15] |
 | WEKA | Thousands of virtual metadata servers on all cores | Hash-sharded buckets | Journals to its own storage[^13] |
 | DDN EXAScaler (Lustre) | MDS/MDT servers | DNE remote and striped directories | Data-on-MDT keeps small files on metadata targets[^22] |
@@ -148,7 +148,7 @@ DeepSeek open-sourced 3FS in February 2025[^26]. Meta reportedly flattened Tecto
 | HDFS NameNode heap | ~150 B per file, directory or block | Single-server ceiling | Cloudera docs[^7] |
 | GPFS metadata scan | 10 B files in 43 min on flash | vs 1 B in ~3 h on disk (2007) | HPCwire, 2011-07-22[^6] |
 | DCP checkpoint files | ≥1 per rank + `.metadata` | 16,384 ranks → 16,384 creates | PyTorch docs[^4] |
-| VAST V-tree | 7 levels, 512× fan-out per level | Company-stated [VERIFY: search-summary only] | Blocks & Files[^15] |
+| VAST V-tree | 7 levels, 512× fan-out per level | Company-stated, relayed by Blocks & Files; ~100 trillion objects | Blocks & Files[^15] |
 | IO500 weighting | Metadata = bandwidth in final score | Geometric mean of both | LLNL IO500 page[^25] |
 
 ## Conversation playbook
@@ -205,7 +205,7 @@ DeepSeek open-sourced 3FS in February 2025[^26]. Meta reportedly flattened Tecto
 [^18]: Snowflake, "How FoundationDB Powers Snowflake Metadata Forward," 2018. https://www.snowflake.com/en/blog/how-foundationdb-powers-snowflake-metadata-forward (retrieved 2026-11-01).
 [^19]: Google Cloud Blog, "How Colossus optimizes data placement for performance," 2025-03. https://cloud.google.com/blog/products/storage-data-transfer/how-colossus-optimizes-data-placement-for-performance (retrieved 2026-11-01).
 [^20]: StorageReview, "MLPerf Storage v3.0: 877 GiB/s checkpoints, a cloud first and a leaderboard turned over," 2026-09. https://storagereview.com/news/mlperf-storage-v3-0-877-gib-s-checkpoints-a-cloud-first-and-a-leaderboard-turned-over (retrieved 2026-11-01).
-[^21]: CDOTrends, "FlashBlade//EXA: data storage for AI" (Pure Storage white paper listing), n.d. https://cdotrends.com/white-paper/4890/flashbladeexa-data-storage-ai (retrieved 2026-11-01).
+[^21]: iTWire, "Pure Storage announces FlashBlade//EXA, the most powerful storage platform ever, built for AI," 2025-03. https://itwire.com/business-it-news/storage/pure-storage-announces-flashblade-exa-the-most-powerful-storage-platform-ever,-built-for-ai.html (retrieved 2026-11-01; seen via search summary); Pure Storage, "Pure AI" (product page, ">20X more files per namespace"), n.d. https://www.purestorage.com/pure-ai.html (retrieved 2026-11-01; seen via search summary); CDOTrends, "FlashBlade//EXA: data storage for AI" (Pure Storage white paper listing), n.d. https://cdotrends.com/white-paper/4890/flashbladeexa-data-storage-ai (retrieved 2026-11-01).
 [^22]: Lustre Wiki, "Data on MDT," n.d. https://wiki.lustre.org/Data_on_MDT (retrieved 2026-11-01).
 [^23]: DDN via Business Wire, "DDN Unveils Infinia 2.0, The AI Data Intelligence Platform…," 2025-02-20. https://www.businesswire.com/news/home/20250220891434/en/DDN-Unveils-Infinia-2.0-The-AI-Data-Intelligence-Platform-to-Maximize-Value-for-Enterprises-AI-Factories-and-Sovereign-AI (retrieved 2026-11-01).
 [^24]: S. Crusan and B. Johnson (Hudson River Trading), "Lustre DNE3: Busting the Small Files Myth," Lustre User Group 2025. https://wiki.lustre.org/images/f/f9/LUG2025-Lustre_DNE3-Busting_the_Small_Files_Myth-Crusan.pdf (retrieved 2026-11-01).

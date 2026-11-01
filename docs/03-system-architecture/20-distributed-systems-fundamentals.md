@@ -1,6 +1,6 @@
 # 20. Distributed-systems fundamentals for storage
 
-> **Depth:** L2 · **Reading time:** ~7 min · **Last verified:** 2026-11-01
+> **Depth:** L2 · **Reading time:** ~8 min · **Last verified:** 2026-11-01
 > **Prerequisites:** [Data protection and resilience](../01-storage-fundamentals/06-data-protection-and-resilience.md) · [Object storage and S3](../02-protocols-and-networking/09-object-storage-and-s3.md) · [Scale-out shared-nothing clusters](15-scale-out-shared-nothing.md)
 
 ## TL;DR

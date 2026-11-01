@@ -70,7 +70,7 @@ The FTL does more than map:
 
 ### Error correction: LDPC and read retry
 
-Flash is noisy by design: 8 or 16 voltage states share a few volts, and the distributions widen with wear, heat and time. Every read therefore passes through a hardware **low-density parity-check (LDPC)** decoder. The first attempt is a fast "hard" decode. If it fails, the controller **re-reads** the page at shifted reference voltages, giving "soft" confidence information that lets LDPC correct far more errors. The last resort is parity across dies, a RAID inside the drive.
+Flash is noisy by design: 8 or 16 voltage states share a few volts, and the distributions widen with wear, heat and time. Every read therefore passes through a hardware **low-density parity-check (LDPC)** decoder. The first attempt is a fast "hard" decode of a single read. If it fails, the controller escalates. First it **re-reads** the page at shifted reference voltages from a retry table and hard-decodes again. If that also fails, it takes several reads bracketing each reference voltage to build "soft" confidence information (log-likelihood ratios per bit), which lets LDPC correct far more errors. The last resort is parity across dies, a RAID inside the drive.
 
 Each retry costs another full NAND read, so a ~100 µs read can stretch to several hundred µs. This is a major source of **tail latency** on aged QLC, and why drives with equal headline IOPS differ at the 99.99th percentile. Think of a SerDes receiver re-tuning its equaliser on a marginal link. Controllers that track per-block voltage drift avoid most retries, a quiet advantage of IDMs with process data.
 
@@ -98,7 +98,7 @@ Three lessons follow. **OP buys endurance:** going from 14.5% to 37% OP halves m
 
 One ~4-byte entry per 4 KB is 1/1,000 of capacity: **about 1 GB of DRAM per TB of flash**. Harmless at 1 TB; not at 245 TB.
 
-| Drive capacity | Indirection unit | Map entries | Map DRAM at ~4 B/entry |
+| Drive capacity | Indirection unit | Map entries | Map DRAM at ~4 B/entry (floor) |
 |---|---|---|---|
 | 7.68 TB | 4 KB | 1.9 billion | ~7.5 GB |
 | 30.72 TB | 4 KB | 7.5 billion | ~30 GB |
@@ -109,7 +109,7 @@ One ~4-byte entry per 4 KB is 1/1,000 of capacity: **about 1 GB of DRAM per TB o
 
 *Table 3.1 — Worked arithmetic: mapping a quarter-petabyte drive at 4 KB would need ~240 GB of DRAM, more than many servers carry, so large QLC drives coarsen the indirection unit instead.*
 
-Two more constraints bite. A 32-bit entry addresses only 2³² × 4 KB ≈ 17.6 TB, so bigger drives need wider entries or a larger IU. And at roughly $14.5 per GB for server DRAM in 2026[^7], a 240 GB map would add about $3,500 per drive. Hence larger IUs. Solidigm's 61 TB D5-P5336 uses a 16 KB IU, after its predecessor used 64 KB[^8]. Micron's 245.76 TB 6600 ION uses 16 KB at its top capacity and 4 KB on its 30.72 TB model[^9], and reportedly carries about 64 GB of DRAM, consistent with the table[^10] [VERIFY: DRAM size, single outlet; headline figures differ].
+Two more constraints bite. A 32-bit entry addresses only 2³² × 4 KB ≈ 17.6 TB, so bigger drives need wider entries or a larger IU. Even at 16 KB, a 245.76 TB drive has 15 billion units, more than 2³² (4.3 billion), so its entries need at least 34 bits; the table's ~4 bytes per entry is a floor, not a design value. And at roughly $14.5 per GB for server DRAM in 2026[^7], a 240 GB map would add about $3,500 per drive. Hence larger IUs. Solidigm's 61 TB D5-P5336 uses a 16 KB IU, after its predecessor used 64 KB[^8]. Micron's 245.76 TB 6600 ION uses 16 KB at its top capacity and 4 KB on its 30.72 TB model[^9]. Reviewers report 64 GB of on-drive DRAM, consistent with the table, and credit it with roughly three times the random-write rate of rival 245 TB-class drives that use a 64 KB IU[^10]. (One outlet's headline says 16 GB; its body text and a second review say 64 GB.)
 
 The price is a **small-write penalty**. A 4 KB write to a 16 KB-IU drive forces a read-modify-write of the whole unit: 4× NAND writes before GC adds its own multiple, and 16× at 64 KB. Large QLC drives therefore suit large aligned writes (object stores, data lakes, AI datasets, checkpoints) or hosts that coalesce writes first.
 
@@ -123,7 +123,7 @@ Most modern all-flash arrays (Purity, WAFL-style designs, VAST's element store) 
 - **Unpredictable latency.** Each drive garbage-collects, retries and refreshes on its own schedule, so the array must over-design for tail latency.
 - **Lost information.** The array knows which data is cold and which segment it will clean next; behind a block interface, the drive cannot use that.
 
-There are three ways out. **Zoned Namespaces (ZNS)**, ratified in June 2020, expose zones the host must write sequentially and reset, removing drive GC[^12]. **Flexible Data Placement (FDP)**, ratified in late 2022 with Meta, Google and Samsung behind it, is gentler: the host tags writes so data of similar lifetime shares erase blocks, and the drive keeps its FTL[^13]. Samsung reported that FDP cut device WAF in Meta's CacheLib from ~1.3 to ~1.0, in a setup that also kept half the drive as host-side spare[^14] [VERIFY: search-summary only]. A FAST '26 study found WAF stays near 1 when lifetimes are classified correctly but degrades when they are not[^15]. Both are covered in [Chapter 12](../02-protocols-and-networking/12-interfaces-and-emerging-tech.md). The third way **removes the drive FTL**: Everpure's DirectFlash modules have no logical-address layer, and one FTL in Purity spans every module[^16] ([Chapter 26](../04-everpure/26-purity-and-directflash.md)).
+There are three ways out. **Zoned Namespaces (ZNS)**, ratified in June 2020, expose zones the host must write sequentially and reset, removing drive GC[^12]. **Flexible Data Placement (FDP)**, ratified in late 2022 with Meta, Google and Samsung behind it, is gentler: the host tags writes so data of similar lifetime shares erase blocks, and the drive keeps its FTL[^13]. Samsung reported that FDP cut device WAF in Meta's CacheLib from ~1.3 to ~1.0 in the default setup, which keeps half the drive as host-side spare, and from ~3.5 to ~1 when the cache uses the whole drive[^14]. The peer-reviewed version of that work (EuroSys 2025) reports device WAF close to 1 with no host over-provisioning on Meta and Twitter traces[^15]. A FAST '26 study found WAF stays near 1 when lifetimes are classified correctly but degrades when they are not[^16]. Both are covered in [Chapter 12](../02-protocols-and-networking/12-interfaces-and-emerging-tech.md). The third way **removes the drive FTL**: Everpure's DirectFlash modules have no logical-address layer, and one FTL in Purity spans every module[^17] ([Chapter 26](../04-everpure/26-purity-and-directflash.md)).
 
 ## How Everpure approaches it vs. competitors
 
@@ -131,7 +131,7 @@ There are three ways out. **Zoned Namespaces (ZNS)**, ratified in June 2020, exp
 |---|---|---|---|---|
 | DRAM for mapping | Often none: SRAM cache plus host memory buffer | ~1 GB/TB at 4 KB IU; ~0.25 GB/TB at 16 KB on large QLC | Same as enterprise | None on module; mapping lives in array controller DRAM (size not published) |
 | Over-provisioning | ~7–10% | ~14.5% (read-intensive) to ~37% (mixed-use) | Vendor-set; host may add its own spare | Pooled once across the array, set by Purity |
-| Power-loss protection | Usually none | Capacitors standard | Expected by hyperscale specs[^17] [VERIFY: OCP spec PLP wording] | Writes made durable in array NVRAM; module-level details not public |
+| Power-loss protection | Usually none | Capacitors standard | Expected by hyperscale specs[^18] [VERIFY: OCP spec PLP wording] | Writes made durable in array NVRAM; module-level details not public |
 | Who owns GC and placement | Drive firmware | Drive firmware | Shared: host hints placement, drive executes | Array software |
 | Firmware owner | Drive maker | Drive maker | Drive maker, to the hyperscaler's OCP-style spec | Everpure |
 | Best fit | PCs, boot drives | Databases, VMs, arrays built on standard drives | Caches, log-structured services at fleet scale | Everpure arrays and licensed hyperscaler designs |
@@ -147,7 +147,8 @@ timeline
     title How the drive FTL got challenged
     2009 : TRIM support reaches mainstream operating systems
     2011 : NVMe 1.0 defines a flash-native host interface
-    2017 : Linux LightNVM open-channel SSDs : Pure Storage launches DirectFlash
+    2016 : Linux LightNVM open-channel SSDs merged
+    2017 : Pure Storage launches DirectFlash
     2020 : NVMe ZNS ratified
     2022 : NVMe FDP ratified
     2023 : 61 TB QLC drive with 16 KB indirection unit
@@ -156,9 +157,9 @@ timeline
 
 *Figure 3.4 — For fifteen years the industry has been pulling flash management out of the drive, through hints, open-channel designs, zones, placement handles and, at Everpure, by removing the drive FTL altogether.*
 
-The FTL was the price of making SSDs imitate hard disks so existing software worked unchanged. Since then control has moved steadily to the host. Open-channel SSDs (Linux LightNVM, 2017) exposed raw geometry[^18], then fragmented and gave way to standard ZNS and FDP[^12][^13]. Pure Storage launched DirectFlash the same year[^19], applying the idea inside one vendor's stack.
+The FTL was the price of making SSDs imitate hard disks so existing software worked unchanged. Since then control has moved steadily to the host. Open-channel SSDs (Linux LightNVM, merged in 2016 and described at FAST 2017) exposed raw geometry[^19], then fragmented and gave way to standard ZNS and FDP[^12][^13]. Pure Storage launched DirectFlash in 2017[^20], applying the idea inside one vendor's stack.
 
-Two forces now push harder. Capacity is outrunning DRAM economics: 245.76 TB drives shipped in 2026[^20], with IUs rising in step. And power-bound AI datacentres make spare flash and DRAM that do no user work more visible. Expect larger IUs, wider hyperscale FDP adoption, and continued debate over smart versus thin drives.
+Two forces now push harder. Capacity is outrunning DRAM economics: 245.76 TB drives shipped in 2026[^21], with IUs rising in step. And power-bound AI datacentres make spare flash and DRAM that do no user work more visible. Expect larger IUs, wider hyperscale FDP adoption, and continued debate over smart versus thin drives.
 
 ## Numbers that matter
 
@@ -170,7 +171,7 @@ Two forces now push harder. Capacity is outrunning DRAM economics: 245.76 TB dri
 | Over-provisioning, 7.68 TB vs 6.4 TB drive from 8 TiB NAND | 14.5% vs 37% | Read-intensive (1 DWPD) vs mixed-use (3 DWPD) | Worked example; [^3][^4] |
 | Model WAF, random writes, at 7% / 14.5% / 37% OP | ~7.8 / ~4.1 / ~2.1 | Illustrative, uniform random, full drive | Worked example (Figure 3.3) |
 | Enterprise controller channels | 8 or 16 | Arm Cortex-R8 cores, LDPC engine | [^1], Marvell Bravera SC5 |
-| Device WAF with FDP (CacheLib) | ~1.3 → ~1.0 | Samsung test with 50% host-side spare | [^14], 2024 |
+| Device WAF with FDP (CacheLib) | ~1.3 → ~1.0 (50% host spare); ~3.5 → ~1 (full drive) | Samsung/Meta tests | [^14], 2024; [^15], 2025 |
 
 ## Conversation playbook
 
@@ -197,8 +198,8 @@ Two forces now push harder. Capacity is outrunning DRAM economics: 245.76 TB dri
 
 - Desnoyers, SYSTOR 2012: closed-form WAF for greedy cleaning[^5].
 - Yang et al., INFLOW 2014: compounding log layers[^11].
-- Bjørling et al., FAST 2017: LightNVM open-channel SSDs[^18].
-- WARP, FAST '26: FDP when lifetime hints are wrong[^15].
+- Bjørling et al., FAST 2017: LightNVM open-channel SSDs[^19].
+- WARP, FAST '26: FDP when lifetime hints are wrong[^16].
 - Also: demand-paged map caching (DFTL), SLC-mode caches on QLC, LDPC soft decoding.
 
 ## Key terms
@@ -216,14 +217,15 @@ FTL · L2P table · Indirection unit · Garbage collection · WAF · Over-provis
 [^7]: Counterpoint Research, "Memory Price Tracker, April 2026," 2026-04. https://counterpointresearch.com/de/reports/memory-price-tracker-april-2026 (retrieved 2026-11-01; figure seen via search summary).
 [^8]: AnandTech, "Solidigm Announces D5-P5336: 64 TB-Class Data Center SSD Sets NVMe Capacity Records," 2023-07. https://anandtech.com/show/18967 (retrieved via search 2026-11-01).
 [^9]: StorageReview, "Micron 6600 ION 245TB SSD Review: A Quarter Petabyte per Drive Bay," 2026. https://www.storagereview.com/review/micron-6600-ion-245tb-ssd-review-a-quarter-petabyte-per-drive-bay (retrieved via search 2026-11-01).
-[^10]: TechRadar Pro, "245.76TB Micron 6600 ION SSD ... is the one to beat in its class, reviewer says," 2026. https://www.techradar.com/pro/245-76tb-micron-6600-ion-ssd-has-a-staggering-16gb-ram-with-a-usd100-000-price-tag-and-is-the-one-to-beat-in-its-class-reviewer-says (retrieved via search 2026-11-01).
+[^10]: TweakTown, "Micron 6600 ION 245.76TB Enterprise SSD Review," 2026. https://www.tweaktown.com/reviews/11537/micron-6600-ion-245-76tb-enterprise-ssd-best-in-class-programming-speeds/index.html (retrieved via search 2026-11-01); TechRadar Pro, "245.76TB Micron 6600 ION SSD ... is the one to beat in its class, reviewer says," 2026. https://www.techradar.com/pro/245-76tb-micron-6600-ion-ssd-has-a-staggering-16gb-ram-with-a-usd100-000-price-tag-and-is-the-one-to-beat-in-its-class-reviewer-says (retrieved via search 2026-11-01; headline says 16 GB, body says 64 GB).
 [^11]: J. Yang, N. Plasson, G. Gillis, N. Talagala, S. Sundararaman, "Don't Stack Your Log On My Log," USENIX INFLOW 2014. https://www.usenix.org/conference/inflow14/workshop-program/presentation/yang (retrieved 2026-11-01).
 [^12]: NVM Express, "NVMe Zoned Namespaces (ZNS) Command Set Specification," n.d. https://nvmexpress.org/specification/nvme-zoned-namespaces-zns-command-set-specification/ (retrieved via search 2026-11-01); NVM Express, "New NVMe Command Sets: Zoned Namespace (ZNS) and Key Value (KV)," n.d. https://nvmexpress.org/wp-content/uploads/New-NVMe%C2%AE-Command-Sets-Zoned-Namespace-ZNS-Key-Value-KV.pdf (retrieved via search 2026-11-01).
 [^13]: NVM Express, "Overcoming the Write Amplification Problem with NVM Express Flexible Data Placement," n.d. https://nvmexpress.org/nvmeflexible-data-placement-fdp-blog/ (retrieved 2026-11-01).
-[^14]: Samsung, FMS 2024 presentation on FDP with CacheLib (PM9D3), 2024-08-08. https://files.futurememorystorage.com/proceedings/2024/20240808_OPSW-302-1_George.pdf (seen via search summary, 2026-11-01).
-[^15]: USENIX FAST '26, "Characterizing and Emulating FDP SSDs with WARP," 2026. https://www.usenix.org/conference/fast26/presentation/song (seen via search summary, 2026-11-01).
-[^16]: Everpure, "What Is DirectFlash and How Does It Work?," n.d. https://www.everpuredata.com/knowledge/what-is-directflash-and-how-does-it-work.html (retrieved via search 2026-11-01).
-[^17]: Encryption Consulting, "What is OCP 2.6 and How PKI Plays an Important Role in It," n.d. https://www.encryptionconsulting.com/what-is-ocp-2-6-and-how-pki-plays-an-important-role-in-it/ (seen via search summary, 2026-11-01).
-[^18]: M. Bjørling, J. González, P. Bonnet, "LightNVM: The Linux Open-Channel SSD Subsystem," USENIX FAST 2017. https://www.usenix.org/conference/fast17/technical-sessions/presentation/bjorling (retrieved 2026-11-01).
-[^19]: The Register, "Pure becomes a direct flasher," 2017-04-11. https://www.theregister.com/2017/04/11/pure_becomes_a_direct_flasher/ (retrieved via search 2026-11-01).
-[^20]: Micron Technology, "Industry-Leading 245TB Micron 6600 ION Data Center SSD Now Shipping," 2026-05-05. https://investors.micron.com/news/press-release/2026/Industry-Leading-245TB-Micron-6600-ION-Data-Center-SSD-Now-Shipping/default.aspx (retrieved 2026-11-01).
+[^14]: Samsung, FMS 2024 presentation on FDP with CacheLib, 2024-08-08. https://files.futurememorystorage.com/proceedings/2024/20240808_OPSW-302-1_George.pdf (retrieved via search 2026-11-01). Device WAF 1.3 → ~1 at 50% host over-provisioning; 3.5 → ~1 at 100% utilisation.
+[^15]: M. Allison et al., "Towards Efficient Flash Caches with Emerging NVMe Flexible Data Placement SSDs," EuroSys 2025 (arXiv:2503.11665), 2025-03. https://arxiv.org/abs/2503.11665 (retrieved via search 2026-11-01).
+[^16]: USENIX FAST '26, "Characterizing and Emulating FDP SSDs with WARP," 2026. https://www.usenix.org/conference/fast26/presentation/song (seen via search summary, 2026-11-01).
+[^17]: Everpure, "What Is DirectFlash and How Does It Work?," n.d. https://www.everpuredata.com/knowledge/what-is-directflash-and-how-does-it-work.html (retrieved via search 2026-11-01).
+[^18]: Encryption Consulting, "What is OCP 2.6 and How PKI Plays an Important Role in It," n.d. https://www.encryptionconsulting.com/what-is-ocp-2-6-and-how-pki-plays-an-important-role-in-it/ (seen via search summary, 2026-11-01).
+[^19]: M. Bjørling, J. González, P. Bonnet, "LightNVM: The Linux Open-Channel SSD Subsystem," USENIX FAST 2017. https://www.usenix.org/conference/fast17/technical-sessions/presentation/bjorling (retrieved 2026-11-01).
+[^20]: The Register, "Pure becomes a direct flasher," 2017-04-11. https://www.theregister.com/2017/04/11/pure_becomes_a_direct_flasher/ (retrieved via search 2026-11-01).
+[^21]: Micron Technology, "Industry-Leading 245TB Micron 6600 ION Data Center SSD Now Shipping," 2026-05-05. https://investors.micron.com/news/press-release/2026/Industry-Leading-245TB-Micron-6600-ION-Data-Center-SSD-Now-Shipping/default.aspx (retrieved 2026-11-01).

@@ -9,7 +9,7 @@
 - **The namespace is flat; LIST and small objects are the weak spots.** "Folders" are key prefixes. LIST pages through an index 1,000 keys at a time, and per-request fees can exceed the storage bill.
 - **AWS S3 has been strongly consistent since December 2020.** Other S3-compatible systems vary, especially across sites.
 - **S3 is becoming the default AI data interface.** Lakehouses, data loaders, checkpoint libraries and KV-cache tiers target it, and AWS keeps adding Express One Zone, S3 Tables and S3 Vectors.
-- **S3 over RDMA removes the performance excuse.** HTTP keeps the control path while RDMA moves bytes straight into GPU memory, via NVIDIA's cuObject and adopters such as Cloudian, Dell, HPE, MinIO and IBM.
+- **S3 over RDMA removes the performance excuse.** HTTP keeps the control path while RDMA moves bytes straight into GPU memory, via NVIDIA's cuObject libraries (adopted by Cloudian, Dell and HPE) and separate implementations such as MinIO's.
 
 ## Why this matters for Everpure strategy
 
@@ -133,7 +133,7 @@ Until 2020, S3 guaranteed read-after-write only for new keys; overwrites, delete
 | Google Cloud Storage | Strong, global | Strong | Strong even for multi-region buckets | ACL changes take ~1 minute; cached public objects may be stale[^10] |
 | Azure Blob Storage | Strong | Strong | Geo-redundant secondary is asynchronous | ETag `If-Match` for optimistic concurrency[^11] |
 | Ceph RGW | Strong within a zone | Strong within a zone | Multisite is asynchronous and eventual; last writer wins | Non-zero RPO between sites[^12] |
-| MinIO AIStor | Strict read-after-write [VERIFY: current MinIO consistency documentation] | Strict | Site replication asynchronous | Erasure-set quorum writes |
+| MinIO AIStor | Strict read-after-write (company-stated)[^38] | Strict list-after-write (company-stated)[^38] | Site replication asynchronous | Erasure-set quorum writes |
 
 *Table 9.1 — Strong consistency within a site is now standard; across sites almost everyone is asynchronous.*
 
@@ -159,7 +159,7 @@ Classic S3 pushes every byte through TCP, TLS, HTTP parsing and a host-memory bo
 
 The client registers a GPU or host buffer and puts a token describing it in a header (`x-amz-rdma-token`) of a normal SigV4-signed request. The server authenticates and looks up metadata as usual, then moves the bytes to or from that buffer by RDMA over RoCEv2 or InfiniBand; the HTTP reply just confirms completion[^20]. Some servers fall back to HTTP bodies for non-RDMA clients[^20]; MinIO instead returns `x-amz-rdma-reply: 501`[^21]. It is PIO versus DMA: the CPU issues a descriptor, the DMA engine moves the payload, as in GPUDirect Storage for files ([Chapter 11](11-gpu-data-path.md)).
 
-**Who is doing it.** MinIO shipped S3 over RDMA in November 2024[^22], and Cloudian showed GPUDirect for object the same month (>200 GB/s claimed)[^23]. NVIDIA productised the pattern as "RDMA for S3-compatible storage" (cuObject libraries), naming Cloudian, Dell and HPE as adopters[^24] [VERIFY: NVIDIA announcement date, reported as November 2025]. cuObject 1.0 release notes date from January 2026[^25]; by autumn 2026 NVIDIA called the libraries generally available and was working with Google Cloud and Microsoft on standardisation (xio-sig)[^26]. IBM Storage Scale (June 2026)[^27], Dell ObjectScale 4.3[^28] and the open-source Versity gateway, which also has an experimental AMD variant[^20], followed. Vendor numbers are not comparable: Cloudian claims 35 GB/s per node and 90% lower CPU[^29]; MinIO reports a 16 GiB checkpoint loading in 0.65 s versus 12.16 s over tuned HTTP[^30].
+**Who is doing it.** MinIO shipped S3 over RDMA in November 2024[^22], and Cloudian showed GPUDirect for object the same month (>200 GB/s claimed)[^23]. NVIDIA productised the pattern as "RDMA for S3-compatible storage" (cuObject libraries), naming Cloudian, Dell and HPE as adopters, in mid-November 2025, with general availability promised via the CUDA Toolkit in January[^24]. cuObject 1.0 release notes date from January 2026[^25]; by autumn 2026 NVIDIA called the libraries generally available and was working with Google Cloud and Microsoft on standardisation (xio-sig)[^26]. IBM Storage Scale (June 2026)[^27], Dell ObjectScale 4.3[^28] and the open-source Versity gateway, which also has an experimental AMD variant[^20], followed. Vendor numbers are not comparable: Cloudian claims 35 GB/s per node and 90% lower CPU[^29]; MinIO reports a 16 GiB checkpoint loading in 0.65 s versus 12.16 s over tuned HTTP[^30].
 
 The caveat is fragmentation: these headers are ecosystem conventions, not AWS's API, and AWS does not offer RDMA to S3. For now it is an on-prem and neocloud GPU-fabric protocol.
 
@@ -167,7 +167,7 @@ The caveat is fragmentation: these headers are ecosystem conventions, not AWS's 
 
 | System | Object role | S3 over RDMA (public status) | AI-relevant notes |
 |---|---|---|---|
-| Everpure FlashBlade | Unified fast file and object, one platform | Announced by Pure Storage at GTC March 2025 for FlashBlade//S[^31] [VERIFY: GA date] | KV cache accelerator over S3 and NFS[^32]; NVIDIA-certified storage |
+| Everpure FlashBlade | Unified fast file and object, one platform | Announced by Pure Storage at GTC March 2025 for FlashBlade//S, "later this year", with ~250 GB/s preliminary on five chassis (company-stated)[^31][^39] [VERIFY: GA date and cuObject compatibility; no GA notice found by 2026-11] | KV cache accelerator over S3 and NFS[^32]; NVIDIA-certified storage |
 | Everpure FlashArray | Block-first; S3 added June 2025[^2] | Not announced | Brings S3 to enterprise block estates |
 | VAST Data | NFS, SMB and S3 on one namespace[^33] | Not confirmed in our research | Multiprotocol shared-everything ([Ch 16](../03-system-architecture/16-disaggregated-shared-everything.md)) |
 | HPE Alletra MP X10000 | Object-native, now with native file | Yes (RDMA for S3)[^24] | First object platform NVIDIA-Certified (Foundation), March 2026[^34] |
@@ -268,7 +268,7 @@ S3 launched in March 2006 and held over 100 trillion objects by 2021[^36]. Its A
 [^21]: MinIO, "RDMA Acceleration," AIStor documentation, n.d. https://docs.min.io/aistor/operations/rdma/ (retrieved 2026-11-01).
 [^22]: Blocks & Files, "MinIO releases AIStor with GPUDirect-like S3 over RDMA," 2024-11-13. https://blocksandfiles.com/2024/11/13/minio-releases-aistor-with-gpudirect-like-s3-over-rdma/ (retrieved 2026-11-01).
 [^23]: IT Brief, "Cloudian enhances AI processing with NVIDIA GPUDirect tie-up," 2024-11. https://itbrief.co.uk/story/cloudian-enhances-ai-processing-with-nvidia-gpudirect-tie-up (retrieved 2026-11-01).
-[^24]: NVIDIA Blog, "How to Unlock Accelerated AI Storage Performance With RDMA for S3-Compatible Storage," n.d. (reported November 2025). https://blogs.nvidia.com/blog/s3-compatible-ai-storage/ ; Digital Watch Observatory, "NVIDIA brings RDMA acceleration to S3 object storage for AI workloads," 2025. https://dig.watch/updates/nvidia-brings-rdma-acceleration-to-s3-object-storage-for-ai-workloads (both retrieved 2026-11-01).
+[^24]: NVIDIA Blog, "How to Unlock Accelerated AI Storage Performance With RDMA for S3-Compatible Storage," n.d. (c. 2025-11-13; secondary coverage dated 2025-11-14). https://blogs.nvidia.com/blog/s3-compatible-ai-storage/ ; Digital Watch Observatory, "NVIDIA brings RDMA acceleration to S3 object storage for AI workloads," 2025. https://dig.watch/updates/nvidia-brings-rdma-acceleration-to-s3-object-storage-for-ai-workloads (both retrieved 2026-11-01).
 [^25]: NVIDIA, "NVIDIA cuObject server v1.0.0 Release Notes," 2026-01-12. https://docs.nvidia.com/gpudirect-storage/cuobject/cuobject-server-release-notes/index.html (retrieved 2026-11-01).
 [^26]: NVIDIA Technical Blog, "Expanding AI Storage Access with NVIDIA cuObject and the NVIDIA SCADA Server SDK," 2026. https://developer.nvidia.com/blog/expanding-ai-storage-access-with-nvidia-cuobject-and-the-nvidia-scada-server-sdk (retrieved 2026-11-01).
 [^27]: IBM Community, "IBM Storage Scale announces support for S3 over RDMA," 2026-06-16. https://community.ibm.com/community/user/blogs/ted-hoover/2026/06/16/ibm-storage-scale-announces-support-for-s3-over-rd (retrieved 2026-11-01).
@@ -282,3 +282,5 @@ S3 launched in March 2006 and held over 100 trillion objects by 2021[^36]. Its A
 [^35]: Everpure, "AWS re:Invent 2025: Five S3 Updates That Signal the Future of Enterprise AI Storage," 2025-12. https://blog.everpuredata.com/news-events/aws-reinvent-2025-future-of-enterprise-ai-storage/ (retrieved 2026-11-01).
 [^36]: AWS News Blog, "Amazon S3's 15th Birthday – It is Still Day 1 after 5,475 Days & 100 Trillion Objects," 2021-03. https://aws.amazon.com/blogs/aws/amazon-s3s-15th-birthday-it-is-still-day-1-after-5475-days-100-trillion-objects/ (retrieved 2026-11-01).
 [^37]: Google Cloud Blog, "How the Colossus stateful protocol benefits Rapid Storage," 2025-04. https://cloud.google.com/blog/products/storage-data-transfer/how-the-colossus-stateful-protocol-benefits-rapid-storage (retrieved 2026-11-01).
+[^38]: MinIO, "Strict Consistency: A Hard Requirement for Primary Storage" (blog), n.d. https://blog.min.io/strict-consistency-hard-requirement-for-primary-storage (retrieved 2026-11-01; company-stated, search-summary only).
+[^39]: Pure Storage, "FlashBlade Augments its Fast Object Store with S3 over RDMA for AI/ML Workflows," n.d. (2025). https://blog.purestorage.com/purely-technical/pure-storage-flashblade-fast-object-store-s3-rdma-for-ai-ml-workflows (retrieved 2026-11-01; search-summary only).

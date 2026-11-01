@@ -1,6 +1,6 @@
 # 24. Architecture decision matrix
 
-> **Depth:** L2 · **Reading time:** ~6 min · **Last verified:** 2026-11-01
+> **Depth:** L2 · **Reading time:** ~8 min · **Last verified:** 2026-11-01
 > **Prerequisites:** [The storage stack](13-storage-stack.md) · [Scale-up dual-controller](14-scale-up-dual-controller.md) · [Scale-out shared-nothing](15-scale-out-shared-nothing.md) · [DASE](16-disaggregated-shared-everything.md) · [Parallel file systems](17-parallel-file-systems.md) · [Object storage](18-object-storage-architecture.md) · [SDS and HCI](19-software-defined-and-hci.md)
 
 ## TL;DR
@@ -13,7 +13,7 @@
 
 ## Why this matters for Everpure strategy
 
-Everpure sells three architectures: scale-up (FlashArray); a partitioned blade scale-out (FlashBlade//S and //E), which Everpure itself calls "partitioned-writer" rather than shared-nothing or shared-everything[^2] ([Chapter 15](15-scale-out-shared-nothing.md)); and a pNFS-style parallel design that splits metadata from data (FlashBlade//EXA, [Chapter 17](17-parallel-file-systems.md)). It adds container-native SDS (Portworx) and Purity in public clouds. It sells no DASE system, because in EXA no compute tier reaches all media ([Chapter 16](16-disaggregated-shared-everything.md)), and no general-purpose HCI. A strategy team needs to know which cells Everpure covers natively, where it partners, and where rivals fit better by design, because discounting won't win those cells.
+Everpure sells three architectures: scale-up (FlashArray); a partitioned blade scale-out (FlashBlade//S and //E), which Everpure's engineers call "partitioned-writer", arguing that neither the shared-nothing nor the shared-everything label fits[^2] ([Chapter 15](15-scale-out-shared-nothing.md)); and a pNFS-style parallel design that splits metadata from data (FlashBlade//EXA, [Chapter 17](17-parallel-file-systems.md)). It adds container-native SDS (Portworx) and Purity in public clouds. It sells no DASE system, because in EXA no compute tier reaches all media ([Chapter 16](16-disaggregated-shared-everything.md)), and no general-purpose HCI. A strategy team needs to know which cells Everpure covers natively, where it partners, and where rivals fit better by design, because discounting won't win those cells.
 
 The matrix also guards against category errors: an enterprise "AI storage" request is often mostly a capacity and governance problem.
 

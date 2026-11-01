@@ -5,10 +5,10 @@
 
 ## TL;DR
 
-- **A block protocol has two layers: a command set and a transport.** SCSI rode parallel cables, Fibre Channel (FC) and TCP/IP (iSCSI). NVMe replaced it, and NVMe over Fabrics (NVMe-oF) carries NVMe over FC, RDMA or TCP.
+- **A block protocol is a command set riding a transport** (plus fabric services for discovery and access control). SCSI rode parallel cables, Fibre Channel (FC) and TCP/IP (iSCSI). NVMe replaced it, and NVMe over Fabrics (NVMe-oF) carries NVMe over FC, RDMA or TCP.
 - **NVMe's advantage is its queue model, not raw bandwidth.** Up to 65,535 I/O queues of up to 64K entries, one or more per core, driven by doorbell registers with no shared lock.
 - **NVMe/TCP is the enterprise default trajectory.** It runs on any Ethernet NIC and every major OS and array, and adds roughly 20–35 µs, small next to a flash read.
-- **RoCE (NVMe over RDMA on Ethernet) wins AI back-ends.** GPU servers already carry 400G RDMA NICs, and copy-free data movement keeps GPUs fed.
+- **NVMe over RoCE (RDMA on Ethernet) wins AI back-ends.** GPU servers already carry 400G RDMA NICs, and copy-free data movement keeps GPUs fed.
 - **Fibre Channel is not dying.** FC sales grew in 2025 and 128G switches launched. Most FC estates will move to NVMe/FC on the same hardware.
 
 ## Why this matters for Everpure strategy
@@ -33,7 +33,7 @@ The command set and the transport evolve on different clocks.
 
 SCSI was standardized in 1986 for disks on a ribbon cable[^2]. Its command model is rich (sense codes, persistent reservations that clusters use for fencing) and was designed when a disk access took about 5 ms. A 20 µs software stack was then 0.4% of the I/O; against an 80 µs flash read it is 25% (worked example).
 
-The bigger problem is queuing. SCSI-era stacks present roughly one queue per device per path, and cores contend for its lock. SATA's AHCI is the extreme: one queue, 32 commands deep. Sustained IOPS ≈ outstanding commands ÷ latency, so 32 commands at 100 µs caps a device at 32 ÷ 0.0001 s = **320,000 IOPS**, however fast the NAND behind it. Linux later retrofitted multi-queue layers (blk-mq) in software, but many HBAs still serialize.
+The bigger problem is queuing. SCSI-era stacks present roughly one queue per device per path, and cores contend for its lock. SATA's AHCI is the extreme: one queue, 32 commands deep. Sustained IOPS ≈ outstanding commands ÷ latency, so 32 commands at 100 µs caps a device at 32 ÷ 0.0001 s = **320,000 IOPS**, however fast the NAND behind it. Linux later retrofitted multi-queue layers (blk-mq, scsi-mq) and modern FC and SAS HBAs expose several hardware queues, but per-LUN queue depths and the heavier SCSI command path still cap concurrency well below NVMe's.
 
 ### Fibre Channel and iSCSI: two ways to network SCSI
 
@@ -56,7 +56,7 @@ sequenceDiagram
     T->>I: SCSI Response PDU with status
 ```
 
-*Figure 7.1 — SCSI over iSCSI (or FC, where the same steps are FCP_CMND, FCP_XFER_RDY, FCP_DATA and FCP_RSP): a write costs an extra round trip because the target must invite the data before the host sends it.*
+*Figure 7.1 — SCSI over iSCSI (or FC, where the same steps are FCP_CMND, FCP_XFER_RDY, FCP_DATA and FCP_RSP): by default a write costs an extra round trip because the target must invite the data before the host sends it. iSCSI immediate/unsolicited data and FC first burst can skip that step for the first chunk, if both ends negotiate it.*
 
 ### NVMe: a protocol designed around queues
 
@@ -109,12 +109,12 @@ sequenceDiagram
 
 ### NVMe-oF: stretching the rings across a network
 
-A remote SSD cannot DMA descriptors out of host DRAM, so NVMe-oF (1.0 in June 2016, with RDMA and FC bindings[^7]) sends them. The 64-byte SQE travels in a **command capsule**, optionally with small-write data inside, and the completion returns in a **response capsule**. Each NVMe queue pair maps onto one transport connection (an RDMA queue pair, a TCP connection or an FC exchange context), preserving per-core parallelism end to end. Multipathing uses **ANA** (Asymmetric Namespace Access), NVMe's equivalent of SCSI ALUA (see [Chapter 14](../03-system-architecture/14-scale-up-dual-controller.md)).
+A remote SSD cannot DMA descriptors out of host DRAM, so NVMe-oF (1.0 in June 2016, with RDMA and FC bindings[^7]) sends them. The 64-byte SQE travels in a **command capsule**, optionally with small-write data inside, and the completion returns in a **response capsule**. Each NVMe queue pair maps onto one transport connection (an RDMA queue pair, a TCP connection or an FC-NVMe connection within an association), preserving per-core parallelism end to end. Multipathing uses **ANA** (Asymmetric Namespace Access), NVMe's equivalent of SCSI ALUA (see [Chapter 14](../03-system-architecture/14-scale-up-dual-controller.md)).
 
 The transports differ mainly in how bulk data moves:
 
 - **RDMA (RoCEv2 on Ethernet, or InfiniBand).** The capsule carries the address and key of a registered host buffer; the target RDMA-WRITEs read data into it, or RDMA-READs write data out of it. No host CPU copies a byte, and the adder is about 5–15 µs over local NVMe[^8]. The price is RDMA NICs and, for RoCE, carefully tuned Ethernet (see [Chapter 10](10-datacenter-networking.md)).
-- **TCP.** Capsules and data travel as PDUs on a TCP stream: reads return as C2HData PDUs, and large writes wait for an R2T, as in iSCSI, then send H2CData PDUs. The kernel copies payloads and runs TCP; early Linux tests showed 20–35 µs added[^9]. Under heavy load the gap widens: one 2018 vendor test measured 183 µs average for TCP versus 107 µs for RoCE, although single-I/O latency was within a few microseconds[^10].
+- **TCP.** Capsules and data travel as PDUs on a TCP stream: reads return as C2HData PDUs (the last one may carry a success flag so the target can skip the response capsule), and writes larger than the in-capsule limit wait for an R2T, as in iSCSI, then send H2CData PDUs. The kernel copies payloads and runs TCP; early Linux tests showed 20–35 µs added[^9]. Under heavy load the gap widens: one 2018 vendor test measured 183 µs average for TCP versus 107 µs for RoCE, although single-I/O latency was within a few microseconds[^10].
 - **FC (FC-NVMe, standardized by T11 in 2017[^11]).** Capsules ride FC frames on the same HBAs, switches, zoning and lossless credits as SCSI-FC, with data movement offloaded to the HBA.
 
 ```mermaid
@@ -152,12 +152,12 @@ sequenceDiagram
         T->>H: R2T, ready to transfer
         H->>T: H2CData PDUs carry the data
     end
-    T->>W: persist mirrored copy
+    T->>W: persist to mirrored or shared NVRAM
     W-->>T: durable
     T->>H: response capsule with completion
 ```
 
-*Figure 7.5 — NVMe-oF write: in-capsule data lets small writes finish in one round trip on any transport, while large writes are pulled by the target (RDMA) or invited by an R2T (TCP).*
+*Figure 7.5 — NVMe-oF write: in-capsule data (up to a size the target advertises) lets small writes finish in one round trip on RDMA or TCP, while large writes are pulled by the target (RDMA) or invited by an R2T (TCP). FC-NVMe has an analogous first-burst option.*
 
 ### The transports compared
 
@@ -193,11 +193,11 @@ FC's survival is organizational as much as technical: a separate lossless fabric
 
 | Vendor / array | NVMe/RoCE | NVMe/FC | NVMe/TCP | Notable angle |
 |---|---|---|---|---|
-| Everpure FlashArray | 2019, Purity 5.2 "DirectFlash Fabric"[^13] | Feb 2021, Purity 6.1[^12] | Purity 6.4.2 [VERIFY: GA date][^22] | NVMe end to end internally (DirectFlash); Nutanix AHV over NVMe/TCP[^1] |
-| NetApp ONTAP (AFF/ASA) | Not offered on ONTAP [VERIFY: current ONTAP transport list] | ONTAP 9.4, 2018 [VERIFY: release] | ONTAP 9.10.1, late 2021[^23] | Unified file+block; large FC base |
-| Dell PowerStore | [VERIFY: support status] | PowerStoreOS 2.0 [VERIFY: release] | PowerStoreOS 2.1, early 2022[^24] | SmartFabric Storage Software for NVMe/TCP discovery[^18] |
+| Everpure FlashArray | 2019, Purity 5.2 "DirectFlash Fabric"[^13] | Feb 2021, Purity 6.1[^12] | Purity 6.4.2, 2022 [VERIFY: exact GA month; sources conflict][^22] | NVMe end to end internally (DirectFlash); Nutanix AHV over NVMe/TCP[^1] |
+| NetApp ONTAP (AFF/ASA) | Not supported on ONTAP, which offers NVMe/FC and NVMe/TCP only[^26]; the separate E-Series/EF line has RDMA options | ONTAP 9.4, 2018[^27] | ONTAP 9.10.1, late 2021[^23] | Unified file+block; large FC base |
+| Dell PowerStore | Not found in public PowerStore material; Dell chose NVMe/TCP for Ethernet hosts[^28] | PowerStoreOS 2.0, 2021[^29] | PowerStoreOS 2.1, early 2022[^24] | SmartFabric Storage Software for NVMe/TCP discovery[^18] |
 
-*Figure 7.7 — Everpure shipped RoCE early and followed on TCP; by 2026 protocol coverage is at parity, so differentiation sits in the internal data path and the automation around discovery.*
+*Figure 7.7 — Everpure shipped RoCE early and followed on TCP; by 2026 the three vendors are at parity on NVMe/FC and NVMe/TCP (only Everpure offers RoCE on these lines), so differentiation sits in the internal data path and the automation around discovery.*
 
 Everpure shipped RoCE first, a bet on latency-sensitive databases. Its structural argument is that DirectFlash already speaks NVMe from controller to raw NAND, so an NVMe front end removes the last SCSI translation (see [Chapter 26](../04-everpure/26-purity-and-directflash.md)). The steelman for competitors is strong. Dell's centralized discovery addresses a real NVMe/TCP pain point at scale, NetApp's unified ONTAP serves FC, NVMe and NAS from one estate, and because FC customers rarely change fabric, the incumbent with the deepest FC relationships often holds the account. Options a strategy team might evaluate, based on public information: owning NVMe/TCP automation in VMware-exit and Nutanix deals, and judging how much AI back-end RoCE demand reaches block arrays rather than file and object (FlashBlade; see [Chapter 27](../04-everpure/27-flasharray-and-flashblade.md)).
 
@@ -302,3 +302,7 @@ Signals to watch: NVMe/TCP offload on DPUs (erasing its CPU penalty), better Eth
 [^23]: TechTarget, "NetApp OnTap 9.10.1 adds ransomware protection, NVMe/TCP," 2021. https://www.techtarget.com/searchstorage/news/252508661/NetApp-OnTap-9101-adds-ransomware-protection-NVMe-TCP (retrieved 2026-11-01).
 [^24]: Blocks & Files, "More power for PowerStore: Dell adds NVMe/TCP networking to unified file/block array," 2021-09-28. https://blocksandfiles.com/2021/09/28/more-power-for-powerstore-dell-adds-nvme-tcp-networking-to-unified-fileblock-array/ (retrieved 2026-11-01); Dell Info Hub, "What's New with the Dell PowerStoreOS 2.1 Release?" 2022. https://infohub.delltechnologies.com/en-au/p/what-s-new-with-the-dell-powerstoreos-2-1-release (retrieved 2026-11-01).
 [^25]: NVM Express, "Which specifications are included in the refactored NVMe 2.0 specifications?" (FAQ), n.d. https://nvmexpress.org/?p=5558 (retrieved 2026-11-01).
+[^26]: NetApp Knowledge Base, "Is NVMe over RoCE supported with ONTAP?" n.d. https://kb.netapp.com/on-prem/ontap/da/SAN/SAN-KBs/Is_NVME_over_ROCE_supported_with_Ontap (retrieved 2026-11-01; search-summary only).
+[^27]: NetApp, "NVMe configuration, support and limitations" (ONTAP 9 documentation), n.d. https://docs.netapp.com/us-en/ontap/nvme/support-limitations.html (retrieved 2026-11-01; search-summary only).
+[^28]: WWT, "PowerStore 2.1: NVMe over TCP and SmartFabric Storage Software," n.d. (2022). https://www.wwt.com/article/powerstore-2-1-nvme-over-tcp-smartfabric-storage-software (retrieved 2026-11-01; search-summary only).
+[^29]: Channelbuzz, "Dell upgrades PowerStore software and unveils entry-level PowerStore 500 model," 2021-04. https://channelbuzz.ca/2021/04/dell-upgrades-powerstore-software-and-unveils-entry-level-powerstore-500-model-36437/ (retrieved 2026-11-01).

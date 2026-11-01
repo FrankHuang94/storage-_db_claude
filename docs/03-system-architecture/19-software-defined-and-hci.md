@@ -152,7 +152,7 @@ timeline
 
 Broadcom closed VMware on 22 November 2023, then ended perpetual licences and folded thousands of SKUs into two bundles, VCF and vSphere Foundation[^22]. AT&T's 2024 lawsuit cited a proposed 1,050% increase; it later settled[^23]. Much of the base paid: Broadcom reported ~US$27B of FY2025 infrastructure-software revenue[^24] [VERIFY: FY2025 infrastructure-software total, transcript summaries only], and in June 2025 its CEO said over 87% of its 10,000 largest customers had adopted VCF[^25].
 
-Storage felt it. Gartner expects over a third of VMware workloads to move by 2028[^26]. Nutanix's FlashArray integration reached GA around the turn of 2026[^2][^27]. It was not Nutanix's first external storage: Dell PowerFlex took that slot in May 2025, and Dell PowerStore followed in 2026[^28]. VCF 9 deprecated vVols, the main external-array hook[^29]. The trajectory is un-convergence: split node types, arrays behind HCI, Kubernetes-native SDS for VMs. Cloud block storage has been SDS since EBS was built in 2008[^30].
+Storage felt it. Gartner expects over a third of VMware workloads to move by 2028[^26]. Nutanix's FlashArray integration reached GA around the turn of 2026[^2][^27]. It was not Nutanix's first external storage: Dell PowerFlex took that slot in May 2025, and Dell PowerStore followed in 2026[^28]. VCF 9 deprecated vVols, the main external-array hook, with removal planned for 9.1[^29][^30]. The trajectory is un-convergence: split node types, arrays behind HCI, Kubernetes-native SDS for VMs. Cloud block storage has been SDS since EBS was built in 2008[^31].
 
 ## Numbers that matter
 
@@ -162,7 +162,7 @@ Storage felt it. Gartner expects over a third of VMware workloads to move by 202
 | Everpure product / subscription GM | 66.2% / 74.9% | Q2 FY27, non-GAAP; appliance-centric | Q2 FY27 results, 2026-08[^13] |
 | io2 Block Express per-volume max | 256K IOPS, 4,000 MB/s, 64 TiB | <500 µs average for 16 KiB; 99.999% durability | AWS docs[^9] |
 | Physalia cell size | 7 nodes per volume | Paxos-replicated configuration | NSDI 2020[^6] |
-| EBS daily I/O operations | >140 trillion | Fleet aggregate | AWS (Olson), 2024-08-22[^30] |
+| EBS daily I/O operations | >140 trillion | Fleet aggregate | AWS (Olson), 2024-08-22[^31] |
 | AT&T proposed VMware increase | 1,050% | Claim in court filing; settled | CIO Dive, 2024-09[^23] |
 | VMware workloads moving by 2028 | >35% | Gartner forecast | The Register, 2025-09-11[^26] |
 | HCI capacity-sized cluster idle cores | ~81% | 400 cores, 2 PB, 64-core nodes | Worked example |
@@ -234,4 +234,5 @@ Storage felt it. Gartner expects over a third of VMware workloads to move by 202
 [^27]: StorageNewsletter, "Availability of Nutanix with Pure Storage FlashArray," 2026-01-02. https://www.storagenewsletter.com/2026/01/02/availability-of-nutanix-with-pure-storage-flasharray/ (retrieved 2026-11-01).
 [^28]: StorageReview, "Dell PowerFlex with Nutanix Cloud Platform is now generally available," 2025-05. https://www.storagereview.com/news/dell-powerflex-with-nutanix-cloud-platform-is-now-generally-available (retrieved 2026-11-01; seen via search summary); Virtualization Review, "Nutanix NCI 7.6 adds Dell PowerStore support," 2026-07-28. https://virtualizationreview.com/articles/2026/07/28/nutanix-nci-7-6-adds-dell-powerstore-support.aspx (retrieved 2026-11-01; seen via search summary).
 [^29]: TechTarget, "Broadcom discontinues vVols storage capability for VMware," 2025. https://www.techtarget.com/it-infrastructure/news/366627334/Broadcom-discontinues-vVols-storage-capability-for-VMware (retrieved 2026-11-01).
-[^30]: M. Olson (AWS), "Continuous reinvention: A brief history of block storage at AWS," All Things Distributed, 2024-08. https://www.allthingsdistributed.com/2024/08/continuous-reinvention-a-brief-history-of-block-storage-at-aws.html (retrieved 2026-11-01; seen via search summaries, which agree on >140 trillion operations a day).
+[^30]: Dell Technologies, "Dell Unity: vVols Support Ending - Upgrade and Migration Considerations" (KB 000414330), updated 2026-01-12. https://www.dell.com/support/kbdoc/en-us/000414330/dell-unity-vvols-support-ending-upgrade-and-migration-considerations (retrieved 2026-11-01; seen via search summary).
+[^31]: M. Olson (AWS), "Continuous reinvention: A brief history of block storage at AWS," All Things Distributed, 2024-08. https://www.allthingsdistributed.com/2024/08/continuous-reinvention-a-brief-history-of-block-storage-at-aws.html (retrieved 2026-11-01; seen via search summaries, which agree on >140 trillion operations a day).

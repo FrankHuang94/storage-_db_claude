@@ -1,6 +1,6 @@
 # 23. Consumption models
 
-> **Depth:** L2 · **Reading time:** ~5 min · **Last verified:** 2026-11-01
+> **Depth:** L2 · **Reading time:** ~6 min · **Last verified:** 2026-11-01
 > **Prerequisites:** [Performance and economics metrics](../01-storage-fundamentals/04-performance-and-economics-metrics.md) · [Scale-up dual-controller arrays](14-scale-up-dual-controller.md) · [Control planes and fleet management](22-control-planes.md)
 
 ## TL;DR

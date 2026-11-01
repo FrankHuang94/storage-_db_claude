@@ -5,7 +5,7 @@
 
 ## TL;DR
 
-- **The GPU is the expensive asset; storage's job is to keep it busy.** At US$2–6 per H100-hour, each second a 1,024-GPU cluster waits on I/O costs US$0.57–1.75. Storage earns its keep through utilization, not its own price.
+- **The GPU is the expensive asset; storage's job is to keep it busy.** At US$2.00–6.16 per H100-hour, each second a 1,024-GPU cluster waits on I/O costs US$0.57–1.75. Storage earns its keep through utilization, not its own price.
 - **GPUDirect Storage (GDS) removes the CPU "bounce buffer".** The NIC or SSD writes straight into GPU memory over PCIe, freeing CPU and DRAM bandwidth. It raises the per-node ceiling; it does not make the storage system faster.
 - **Most LLM training is compute-bound.** A 70B model on 1,024 GPUs reads a few MB/s of tokens. Storage matters in bursts: checkpoints, restores, multimodal loading and inference KV-cache loads.
 - **Know the stack.** Magnum IO is the umbrella, GPUDirect RDMA the primitive, cuFile the GDS API, NIXL the inference transfer library, Dynamo the orchestrator that calls NIXL.
@@ -21,13 +21,13 @@ The path has moved from bulk file reads (GDS, 2019–2021) to object over RDMA (
 
 ### "Keep the GPU fed" is the whole game
 
-A GPU cluster is a fab: a fixed-cost machine whose margin is set by utilization. Its cost accrues by the hour whether or not it computes, and storage, a small share of capex, can idle all of it. CoreWeave lists an 8× HGX H100 node at US$49.24 per hour, or US$6.16 per GPU-hour[^1]. Specialist clouds and marketplaces span roughly US$1.49 to US$6.98[^2]. A 1,024-GPU cluster at US$3.99 per GPU-hour, roughly Lambda's on-demand rate[^3] [VERIFY: search-summary only], costs 1,024 × 3.99 = **US$4,086 per hour, or about US$35.8 million a year**. One percent idle is US$358,000 a year.
+A GPU cluster is a fab: a fixed-cost machine whose margin is set by utilization. Its cost accrues by the hour whether or not it computes, and storage, a small share of capex, can idle all of it. CoreWeave lists an 8× HGX H100 node at US$49.24 per hour, or US$6.16 per GPU-hour[^1]. Specialist clouds and marketplaces span roughly US$1.49 to US$6.98[^2]. A 1,024-GPU cluster at US$3.99 per GPU-hour, Lambda's 2026 on-demand 8× H100 rate as reported by several price trackers[^3] [VERIFY: Lambda's own pricing page has also shown US$2.99], costs 1,024 × 3.99 = **US$4,086 per hour, or about US$35.8 million a year**. One percent idle is US$358,000 a year.
 
-At scale, idle time comes mostly from interruptions. Meta's Llama 3 run on 16,384 H100s logged 466 interruptions in 54 days yet exceeded 90% effective training time, partly by cutting job-startup and checkpoint time[^4]. Each interruption reloads the last checkpoint, so storage sets the restart cost.
+At scale, a large share of idle time comes from interruptions. Meta's Llama 3 run on 16,384 H100s logged 466 interruptions in 54 days yet exceeded 90% effective training time, partly by cutting job-startup and checkpoint time[^4]. Each interruption reloads the last checkpoint, so storage sets the restart cost.
 
 ### Where storage actually stalls a GPU
 
-Steady-state LLM training needs far less bandwidth than people assume. Take a 70B dense model on 1,024 H100s. At 40% utilization of the ~989 dense BF16 TFLOPS of an H100, the cluster processes about 1,024 × 989×10¹² × 0.4 ÷ (6 × 70×10⁹) ≈ **0.97 million tokens per second**. At ~4 bytes per token ID, that is **~4 MB/s for the whole cluster**. Any NAS serves that; GDS does nothing for it. Storage stalls GPUs in four places:
+Steady-state LLM training needs far less bandwidth than people assume. Take a 70B dense model on 1,024 H100s. At 40% utilization of the ~989 dense BF16 TFLOPS of an H100, the cluster processes about 1,024 × 989×10¹² × 0.4 ÷ (6 × 70×10⁹) ≈ **0.96 million tokens per second**. At ~4 bytes per token ID, that is **~4 MB/s for the whole cluster**. Any NAS serves that; GDS does nothing for it. Storage stalls GPUs in four places:
 
 1. **Checkpoint saves.** With Adam in mixed precision, the full training state is about 16 bytes per parameter: bf16 weights (2) and gradients (2), fp32 master weights (4) and two fp32 Adam moments (4 + 4). Gradients are usually not saved, so a real checkpoint is closer to 14 bytes per parameter ([Chapter 31](../05-ai-storage/31-training-storage.md) walks through the variants); this example uses 16 as a round upper bound. A 70B model therefore checkpoints up to 70×10⁹ × 16 = **1.12 TB**. Written synchronously at 20 GB/s, that takes 56 s. Every 30 minutes, that is 3.1% of wall-clock time spent idle.
 2. **Checkpoint restores.** Every GPU reads its shard at once, the burstiest read storage sees.
@@ -159,8 +159,8 @@ Semiconductor bridge: Magnum IO is the DMA engine and bus fabric, cuFile and NIX
 | IBM Storage Scale | GDS (5.1.2 and newer)[^14] | — | GPFS client |
 | NetApp ONTAP | GDS via NFS over RDMA; 171 GiB/s in an eight-node demo (company-stated)[^17] | — | AFX disaggregated line (2025) |
 | Dell PowerScale | GDS via NFS over RDMA (OneFS 9.2 and newer)[^14] | — | pNFS "Lightning" variant (2025) |
-| **Everpure FlashBlade//S** | GDS claimed over NFS over RDMA[^18] [VERIFY: search-summary only] | PureKVA: KV cache on FlashBlade over NFS and S3, Dynamo integration, RDMA into GPU memory[^19] | S3 over RDMA announced for the object store[^20] |
-| **Everpure FlashBlade//EXA** | NFSv3 over RDMA data path to data nodes[^21] | Via PureKVA [VERIFY: EXA support] | GDS certification on EXA [VERIFY] |
+| **Everpure FlashBlade//S** | GDS over NFS over RDMA, reported from Purity//FB 4.3.4 (October 2023)[^18][^27] [VERIFY: search-summary only; not seen in NVIDIA GDS release-note partner tables] | PureKVA: KV cache on FlashBlade over NFS and S3, Dynamo integration, RDMA into GPU memory[^19] | S3 over RDMA announced for the object store[^20] |
+| **Everpure FlashBlade//EXA** | NFSv3 over RDMA data path to data nodes[^21]; Portworx documents GDS on EXA file systems over RDMA NFS[^28] [VERIFY: search-summary only] | Via PureKVA [VERIFY: EXA support] | NVIDIA certification of EXA still in progress as of March 2026 ([Chapter 34](../05-ai-storage/34-nvidia-ecosystem.md)) |
 | Hammerspace | GDS validation (company-stated, 2024)[^22] | — | NFS-based global namespace |
 | AWS FSx for Lustre | GDS with EFA (Nov 2024)[^23] | — | First major cloud file service with GDS |
 | Cloudian HyperStore | GPUDirect for object, S3 over RDMA (Nov 2024)[^24] | — | Object-first |
@@ -187,7 +187,7 @@ timeline
 
 *Figure 11.5 — The GPU data path moved from bulk file reads to object over RDMA to latency-critical KV-cache tiers in about six years.*
 
-GPUDirect RDMA dates from the Kepler generation [VERIFY: introduction year, believed 2012–2013 with CUDA 5]; GDS carried it into storage. Pure Storage said in 2022 that FlashBlade//S would support GDS the following year[^26] [VERIFY: search-summary only]. Dynamo, announced at GTC in March 2025 [VERIFY: announcement date], reached 1.0 in March 2026[^13].
+GPUDirect RDMA dates from Kepler-class GPUs and CUDA 5.0 (2012)[^29]; GDS carried it into storage. Pure Storage said in 2022 that FlashBlade//S would support GDS the following year[^26] [VERIFY: search-summary only], and trade press reports support arriving with Purity//FB 4.3.4 in October 2023[^27]. Dynamo, announced at GTC on 18 March 2025[^30], reached 1.0 in March 2026[^13].
 
 Three trends point forward. **Object over RDMA:** cuObject standardizes S3 over RDMA[^10], and Cloudian[^24] and Everpure[^20] have announced it, eroding the "file for performance, object for capacity" split ([Chapter 9](09-object-storage-and-s3.md)). **A context-memory tier:** NVIDIA's BlueField-4 STX and CMX (GTC 2026) put KV-cache storage inside each pod, with Everpure, DDN, VAST, WEKA, NetApp and others as partners[^25]; whoever supplies the software decides whether that commoditizes hardware or opens a new socket. **GPU-initiated I/O:** research systems let GPU threads issue NVMe commands without the CPU, which would move the storage client into the GPU.
 
@@ -271,3 +271,7 @@ Three trends point forward. **Object over RDMA:** cuObject standardizes S3 over 
 [^24]: IT Brief, "Cloudian enhances AI processing with NVIDIA GPUDirect tie-up," 2024-11. https://itbrief.co.uk/story/cloudian-enhances-ai-processing-with-nvidia-gpudirect-tie-up (retrieved 2026-11-01).
 [^25]: NVIDIA Investor Relations, "NVIDIA Launches BlueField-4 STX Storage Architecture With Broad Industry Adoption," 2026-03-16. https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Launches-BlueField-4-STX-Storage-Architecture-With-Broad-Industry-Adoption/default.aspx (retrieved 2026-11-01).
 [^26]: Blocks & Files, "Pure extends FlashBlade with more capacity and faster compute," 2022-06-08. https://www.blocksandfiles.com/file/2022/06/08/pure-extends-flashblade-with-more-capacity-and-faster-compute/1607994 (retrieved 2026-11-01).
+[^27]: iThome (Taiwan), overview of GPUDirect Storage support among storage vendors (Pure Storage FlashBlade//S: NFS over RDMA, Purity//FB 4.3.4 or later, from October 2023), n.d. https://www.ithome.com.tw/tech/165670 (retrieved 2026-11-01; search-summary only, host not fetchable).
+[^28]: Portworx, "Enable the FlashArray and FlashBlade driver" (FlashBlade//EXA file systems with GPUDirect Storage over RDMA NFS), n.d. https://docs.portworx.com/portworx-enterprise/platform/configure-portworx-components/enable-fa-fb-driver (retrieved 2026-11-01; search-summary only, host not fetchable).
+[^29]: NVIDIA, "GPUDirect RDMA" (CUDA 5.0 documentation, v0.2 draft), 2012. https://developer.download.nvidia.com/compute/cuda/5_0/rc/docs/GPUDirect_RDMA.pdf (retrieved 2026-11-01; search-summary only).
+[^30]: NVIDIA Investor Relations, "NVIDIA Dynamo Open-Source Library Accelerates and Scales AI Reasoning Models," 2025-03-18. https://investor.nvidia.com/news/press-release-details/2025/NVIDIA-Dynamo-Open-Source-Library-Accelerates-and-Scales-AI-Reasoning-Models/default.aspx (retrieved 2026-11-01).

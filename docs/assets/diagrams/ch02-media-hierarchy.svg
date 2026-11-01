@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 760" width="1000" role="img" aria-labelledby="t d" font-family="Inter, Helvetica, Arial, sans-serif">
   <title id="t">The memory and storage media hierarchy, HBM to tape</title>
-  <desc id="d">A seven-tier pyramid. From top to bottom: HBM, DRAM, CXL memory, local NVMe SSD, networked flash, hard disk and tape. Each tier is slower, larger and cheaper per gigabyte than the one above. Columns give approximate access latency, price per gigabyte and typical capacity per device or system as order-of-magnitude 2026 values. A marked gap of roughly one thousand times in latency separates the memory tiers from the flash tiers.</desc>
+  <desc id="d">A seven-tier pyramid. From top to bottom: HBM, DRAM, CXL memory, local NVMe SSD, networked flash, hard disk and tape. Each tier is generally larger and cheaper per gigabyte than the one above; HBM tops the pyramid for bandwidth, not latency, since a GPU load from HBM takes about 350 ns. Columns give approximate access latency, price per gigabyte and typical capacity per device or system as order-of-magnitude 2026 values. A marked gap of roughly one thousand times in latency separates the memory tiers from the flash tiers.</desc>
   <rect x="0" y="0" width="1000" height="760" fill="#FFFFFF"/>
   <text x="30" y="36" font-size="20" font-weight="700" fill="#222222">The memory and storage hierarchy: HBM to tape</text>
   <text x="30" y="58" font-size="13" fill="#555555">Order-of-magnitude, 2026. Device- or system-level figures; prices are 2026 contract/street levels during a memory shortage.</text>
@@ -13,8 +13,8 @@
   <text x="262" y="155" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">HBM</text>
   <text x="262" y="172" font-size="12" fill="#FFFFFF" text-anchor="middle">on GPU package</text>
   <line x1="327" y1="199" x2="975" y2="199" stroke="#DDDDDD" stroke-width="1"/>
-  <text x="590" y="163" font-size="13" fill="#222222" text-anchor="middle">~100 ns class</text>
-  <text x="745" y="163" font-size="13" fill="#222222" text-anchor="middle">~$10–20</text>
+  <text x="590" y="163" font-size="13" fill="#222222" text-anchor="middle">~350 ns from GPU</text>
+  <text x="745" y="163" font-size="13" fill="#222222" text-anchor="middle">~$8–18</text>
   <text x="893" y="163" font-size="13" fill="#222222" text-anchor="middle">~0.1–0.3 TB per GPU</text>
   <polygon points="199.1,202.0 324.9,202.0 347.9,278.0 176.1,278.0" fill="#E69F00" stroke="#FFFFFF" stroke-width="1"/>
   <text x="262" y="237" font-size="15" font-weight="700" fill="#222222" text-anchor="middle">DRAM</text>
@@ -35,7 +35,7 @@
   <text x="262" y="419" font-size="12" fill="#FFFFFF" text-anchor="middle">NAND flash in the server</text>
   <line x1="402" y1="445" x2="975" y2="445" stroke="#DDDDDD" stroke-width="1"/>
   <text x="590" y="409" font-size="13" fill="#222222" text-anchor="middle">~50–150 µs read</text>
-  <text x="745" y="409" font-size="13" fill="#222222" text-anchor="middle">~$0.10–0.80</text>
+  <text x="745" y="409" font-size="13" fill="#222222" text-anchor="middle">~$0.30–0.80</text>
   <text x="893" y="409" font-size="13" fill="#222222" text-anchor="middle">8–245 TB per drive</text>
   <polygon points="124.6,448.0 399.4,448.0 422.5,524.0 101.5,524.0" fill="#56B4E9" stroke="#FFFFFF" stroke-width="1"/>
   <text x="262" y="483" font-size="15" font-weight="700" fill="#222222" text-anchor="middle">Networked flash</text>
@@ -50,7 +50,7 @@
   <line x1="451" y1="609" x2="975" y2="609" stroke="#DDDDDD" stroke-width="1"/>
   <text x="590" y="573" font-size="13" fill="#222222" text-anchor="middle">~5–15 ms random</text>
   <text x="745" y="573" font-size="13" fill="#222222" text-anchor="middle">~$0.015–0.04</text>
-  <text x="893" y="573" font-size="13" fill="#222222" text-anchor="middle">30–44 TB per drive</text>
+  <text x="893" y="573" font-size="13" fill="#222222" text-anchor="middle">20–44 TB per drive</text>
   <polygon points="74.9,612.0 449.1,612.0 472.2,688.0 51.8,688.0" fill="#666666" stroke="#FFFFFF" stroke-width="1"/>
   <text x="262" y="647" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle">Tape</text>
   <text x="262" y="665" font-size="12" fill="#FFFFFF" text-anchor="middle">LTO cartridges in a library</text>
@@ -68,5 +68,5 @@
   <line x1="22" y1="393" x2="22" y2="674" stroke="#555555" stroke-width="1.5" marker-end="url(#ah)"/>
   <text x="0" y="0" font-size="12" fill="#555555" text-anchor="middle" transform="translate(14,534) rotate(-90)">bigger, cheaper per GB</text>
   <text x="30" y="716" font-size="12" fill="#555555">Latency = typical device access, excluding queueing. Networked flash = local flash + fabric (~5–15 µs) + storage software. Tape = load and locate.</text>
-  <text x="30" y="734" font-size="12" fill="#555555">$/GB: HBM and DRAM are 2026 contract levels during a shortage; SSD range spans QLC to TLC; tape excludes drives and library.</text>
+  <text x="30" y="734" font-size="12" fill="#555555">$/GB: HBM and DRAM are 2026 contract levels during a shortage; SSD range spans 2026 QLC to TLC; HBM ranks top on bandwidth, not latency; tape excludes drives and library.</text>
 </svg>
