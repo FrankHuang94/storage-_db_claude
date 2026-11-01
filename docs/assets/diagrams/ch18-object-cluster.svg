@@ -42,8 +42,8 @@
     <line x1="500" y1="232" x2="700" y2="290"/>
     <line x1="700" y1="232" x2="770" y2="290"/>
   </g>
-  <text x="182" y="268" font-size="12" fill="#555555">lookup / commit</text>
-  <text x="742" y="268" font-size="12" fill="#555555">fragments</text>
+  <text x="140" y="268" font-size="12" fill="#555555">lookup / commit</text>
+  <text x="756" y="268" font-size="12" fill="#555555">fragments</text>
 
   <!-- Index plane -->
   <rect x="30" y="292" width="390" height="176" rx="8" fill="#FFF6E5" stroke="#E69F00" stroke-width="1.5"/>

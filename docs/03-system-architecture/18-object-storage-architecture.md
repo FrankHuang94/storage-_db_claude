@@ -38,7 +38,7 @@ S3's index design is unpublished; its scale is not: over 500 trillion objects an
 
 **Semiconductor bridge: page table versus set-associative cache.** An index database is a page table, with the gateway cache as its TLB: data can live anywhere, but a miss costs a walk. Hash placement is a set-associative cache: address bits pick the set, no table needed. But a cache cannot be enumerated in address order, so LIST on a hash-placed store queries every erasure set and merge-sorts the replies.
 
-### ★ Tracing a PUT
+### Tracing a PUT
 
 ```mermaid
 sequenceDiagram
@@ -71,7 +71,7 @@ sequenceDiagram
 
 **Worked example (write amplification).** A 64 MB PUT under 8+4 coding writes twelve 8 MB fragments, 96 MB in all (1.5×). Gateway NICs carry 64 MB in and 96 MB out, 2.5× the client bandwidth. A 4 KB object under the same code would make 512 B fragments, each padded to a 4 KiB sector: 48 KiB on disk (12×) and 12 drive writes. So systems inline small objects (MinIO, Cloudian) or mirror first and erasure-code later. Dell ObjectScale triple-mirrors until a 128 MB chunk fills, then converts it to 12+4[^13].
 
-### ★ Tracing a GET
+### Tracing a GET
 
 ```mermaid
 sequenceDiagram
