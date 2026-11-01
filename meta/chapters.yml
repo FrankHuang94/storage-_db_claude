@@ -1,0 +1,101 @@
+# Machine-readable chapter registry (source of truth for scripts, nav and PROGRESS).
+# budget = target prose words as counted by scripts/wordcount.py
+parts:
+  - id: "0"
+    dir: 00-start-here
+    title: "Part 0 — Start Here"
+    chapters:
+      - {num: "0.1", file: 00a-how-to-use-this-atlas.md, title: "How to use this atlas", budget: 1500}
+      - {num: "0.2", file: 00b-one-page-map.md, title: "The one-page map", budget: 1500}
+  - id: "1"
+    dir: 01-storage-fundamentals
+    title: "Part 1 — Storage Fundamentals"
+    chapters:
+      - {num: "1", file: 01-what-storage-does.md, title: "What storage does", budget: 2200}
+      - {num: "2", file: 02-media-physics.md, title: "Media physics for a semis person", budget: 2500}
+      - {num: "3", file: 03-inside-an-ssd.md, title: "Inside an SSD", budget: 2400}
+      - {num: "4", file: 04-performance-and-economics-metrics.md, title: "Performance and economics metrics", budget: 2400}
+      - {num: "5", file: 05-data-reduction.md, title: "Data reduction", budget: 2100}
+      - {num: "6", file: 06-data-protection-and-resilience.md, title: "Data protection and resilience", budget: 2400}
+  - id: "2"
+    dir: 02-protocols-and-networking
+    title: "Part 2 — Protocols and Networking"
+    chapters:
+      - {num: "7", file: 07-block-protocols.md, title: "Block protocols", budget: 2100}
+      - {num: "8", file: 08-file-protocols.md, title: "File protocols", budget: 1900}
+      - {num: "9", file: 09-object-storage-and-s3.md, title: "Object storage and S3", budget: 1900}
+      - {num: "10", file: 10-datacenter-networking.md, title: "Datacenter networking for storage", budget: 2100}
+      - {num: "11", file: 11-gpu-data-path.md, title: "The GPU data path", budget: 2000}
+      - {num: "12", file: 12-interfaces-and-emerging-tech.md, title: "Interfaces and emerging tech", budget: 2000}
+  - id: "3"
+    dir: 03-system-architecture
+    title: "Part 3 — Storage System Architecture"
+    chapters:
+      - {num: "13", file: 13-storage-stack.md, title: "The storage stack, layer by layer", budget: 1500}
+      - {num: "14", file: 14-scale-up-dual-controller.md, title: "Scale-up dual-controller arrays", budget: 1700}
+      - {num: "15", file: 15-scale-out-shared-nothing.md, title: "Scale-out shared-nothing clusters", budget: 1700}
+      - {num: "16", file: 16-disaggregated-shared-everything.md, title: "Disaggregated shared-everything architectures", budget: 2000}
+      - {num: "17", file: 17-parallel-file-systems.md, title: "Parallel and distributed file systems", budget: 1600}
+      - {num: "18", file: 18-object-storage-architecture.md, title: "Object storage architecture", budget: 1500}
+      - {num: "19", file: 19-software-defined-and-hci.md, title: "Software-defined storage and HCI", budget: 1400}
+      - {num: "20", file: 20-distributed-systems-fundamentals.md, title: "Distributed-systems fundamentals for storage", budget: 1500}
+      - {num: "21", file: 21-metadata.md, title: "Metadata: the hidden bottleneck", budget: 1300}
+      - {num: "22", file: 22-control-planes.md, title: "Control planes and fleet management", budget: 1000}
+      - {num: "23", file: 23-consumption-models.md, title: "Consumption models", budget: 1100}
+      - {num: "24", file: 24-architecture-decision-matrix.md, title: "Architecture decision matrix", budget: 1200}
+  - id: "4"
+    dir: 04-everpure
+    title: "Part 4 — Everpure"
+    chapters:
+      - {num: "25", file: 25-company-history-and-strategy.md, title: "Company history and strategy, 2009–2026", budget: 1800}
+      - {num: "26", file: 26-purity-and-directflash.md, title: "Core technology: Purity and DirectFlash", budget: 2200}
+      - {num: "27", file: 27-flasharray-and-flashblade.md, title: "Product portfolio: FlashArray and FlashBlade", budget: 2200}
+      - {num: "28", file: 28-platform-and-software.md, title: "Platform and software", budget: 2000}
+      - {num: "29", file: 29-hyperscaler-ecosystem-financials.md, title: "Hyperscaler business, ecosystem and financials", budget: 1800}
+  - id: "5"
+    dir: 05-ai-storage
+    title: "Part 5 — AI Storage"
+    chapters:
+      - {num: "30", file: 30-ai-data-pipeline.md, title: "The AI data pipeline end to end", budget: 2000}
+      - {num: "31", file: 31-training-storage.md, title: "Training storage", budget: 2200}
+      - {num: "32", file: 32-inference-and-kv-cache.md, title: "Inference and KV cache", budget: 2300}
+      - {num: "33", file: 33-rag-vector-lakehouse.md, title: "RAG, vector databases and AI-native data formats", budget: 2000}
+      - {num: "34", file: 34-nvidia-ecosystem.md, title: "NVIDIA's ecosystem and certifications", budget: 2000}
+      - {num: "35", file: 35-ai-factories-and-neoclouds.md, title: "AI factories and neoclouds", budget: 1900}
+      - {num: "36", file: 36-hyperscaler-ai-storage.md, title: "How hyperscalers build AI storage", budget: 2000}
+      - {num: "37", file: 37-reading-benchmarks.md, title: "Reading benchmarks critically", budget: 2000}
+      - {num: "38", file: 38-power-and-density.md, title: "Power, density and the AI datacenter", budget: 1800}
+      - {num: "39", file: 39-agentic-ai-and-data-intelligence.md, title: "Agentic AI and data intelligence", budget: 1800}
+  - id: "6"
+    dir: 06-industry-and-competition
+    title: "Part 6 — Industry and Competition"
+    chapters:
+      - {num: "40", file: 40-market-structure.md, title: "Market structure and sizing", budget: 2000}
+      - {num: "41", file: 41-why-ai-native-vendors-won.md, title: "Why AI-native storage vendors gained traction", budget: 2500}
+      - {num: "42", file: 42-vast-data.md, title: "VAST Data deep dive", budget: 4000}
+      - {num: "43", file: 43-weka.md, title: "WEKA deep dive", budget: 3500}
+      - {num: "44", file: 44-ddn.md, title: "DDN deep dive", budget: 3500}
+      - {num: "45", file: 45-head-to-head.md, title: "Head-to-head: FlashBlade//EXA vs. VAST vs. WEKA vs. DDN", budget: 2500}
+      - {num: "46", file: 46-incumbents.md, title: "Incumbents", budget: 3000}
+      - {num: "47", file: 47-other-challengers.md, title: "Other challengers and software-defined players", budget: 2000}
+      - {num: "48", file: 48-media-suppliers-and-nand-cycle.md, title: "Media suppliers and the NAND cycle", budget: 2000}
+      - {num: "49", file: 49-competitive-matrices.md, title: "Competitive landscape matrices", budget: 1500}
+      - {num: "50", file: 50-diligence-framework.md, title: "Technical diligence framework", budget: 2000}
+  - id: "7"
+    dir: 07-history-and-future
+    title: "Part 7 — History and Future"
+    chapters:
+      - {num: "51", file: 51-history-of-storage.md, title: "History of storage, 1956–2026", budget: 2500}
+      - {num: "52", file: 52-history-of-flash.md, title: "History of flash and NAND economics", budget: 2300}
+      - {num: "53", file: 53-future-trends.md, title: "Future trends, 2026–2032", budget: 3000}
+      - {num: "54", file: 54-strategic-option-map.md, title: "Strategic option map", budget: 2200}
+  - id: "8"
+    dir: 08-conversation-toolkit
+    title: "Part 8 — Conversation Toolkit"
+    chapters:
+      - {num: "55", file: 55-talking-with-pms.md, title: "Talking with product managers", budget: 1600}
+      - {num: "56", file: 56-talking-with-engineering-and-cto.md, title: "Talking with engineering leaders and the CTO office", budget: 1600}
+      - {num: "57", file: 57-question-bank.md, title: "Question bank: 150 questions", budget: 1800}
+      - {num: "58", file: 58-explain-in-30-seconds.md, title: "Explain it in 30 seconds", budget: 1500}
+      - {num: "59", file: 59-self-test-flashcards.md, title: "Self-test: 200 flashcards", budget: 1500}
+      - {num: "60", file: 60-cheat-sheets.md, title: "Cheat sheets", budget: 1000}

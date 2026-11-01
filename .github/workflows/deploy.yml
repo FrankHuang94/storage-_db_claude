@@ -1,0 +1,53 @@
+name: Build and deploy MkDocs site
+
+on:
+  push:
+    branches:
+      - main
+      - "claude/**"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+env:
+  NO_MKDOCS_2_WARNING: "1"
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install mkdocs-material pyyaml matplotlib pandas
+
+      - name: Regenerate charts and synced files
+        run: |
+          python3 scripts/make_charts.py
+          python3 scripts/build_glossary.py
+          python3 scripts/sync_root.py
+
+      - name: QA (non-blocking report)
+        run: |
+          python3 scripts/check_links.py || true
+          python3 scripts/qa_report.py --quiet || true
+
+      - name: Build site
+        run: mkdocs build
+
+      - name: Deploy to gh-pages branch
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mkdocs gh-deploy --force --no-history
