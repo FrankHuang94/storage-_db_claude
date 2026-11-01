@@ -1,6 +1,6 @@
 # 57. Question bank: 150 questions
 
-> **Depth:** L2 · **Reading time:** ~10 min · **Last verified:** 2026-11-01
+> **Depth:** L2 · **Reading time:** ~11 min · **Last verified:** 2026-11-01
 > **Prerequisites:** [Talking with product managers](55-talking-with-pms.md) · [Talking with engineering leaders and the CTO office](56-talking-with-engineering-and-cto.md)
 
 ## TL;DR
@@ -90,17 +90,17 @@ flowchart TD
 5. [Eng] What does PLC cost the write path and endurance budget?
 6. [Eng] How long does qualifying a new NAND die take?
 7. [CTO] Which components are single-sourced, and what did Optane teach?
-8. [PM] How many quarters of demand does the strategic NAND buy cover?
+8. [PM] How many quarters does the strategic NAND buy cover?
    ↳ *Listen for:* prepaid-versus-inventory split, contract-price assumption ([Ch 48](../06-industry-and-competition/48-media-suppliers-and-nand-cycle.md)).
 9. [SE] Where disk was unavailable, did QLC win on availability?
-10. [Eng] What does a layer jump do to DFM versus SSD cost per TB?
+10. [Eng] What does a layer jump do to DFM cost per TB?
 
 #### 2. SSD and DirectFlash
 
 11. [Eng] What field write amplification does Purity see on QLC?
     ↳ *Listen for:* measured ranges by workload, converted to DWPD headroom ([Ch 3](../01-storage-fundamentals/03-inside-an-ssd.md)).
 12. [CTO] If FDP goes mainstream, which DirectFlash advantages survive?
-    ↳ *Listen for:* concedes the WAF gap; quantifies DRAM avoided, pooled spare, W/TB ([Ch 26](../04-everpure/26-purity-and-directflash.md)).
+    ↳ *Listen for:* concedes the WAF gap; quantifies DRAM avoided and W/TB ([Ch 26](../04-everpure/26-purity-and-directflash.md)).
 13. [Eng] Without module DRAM, where does the map live, per PB?
 14. [PM] When 512 TB standard SSDs ship, what keeps DFMs ahead?
 15. [Eng] How are LDPC read retries kept off the latency tail?
@@ -108,7 +108,7 @@ flowchart TD
 17. [PM] Why does FlashArray//ST use commercial SSDs?
 18. [SE] How do we explain usable-per-raw-TB against SSD-based arrays?
     ↳ *Listen for:* over-provisioning, reserve, parity and reduction separated ([Ch 3](../01-storage-fundamentals/03-inside-an-ssd.md)).
-19. [Eng] How much raw NAND per effective TB do we save, and where?
+19. [Eng] How much raw NAND per effective TB do we save?
 20. [CTO] Could a hyperscaler licensee internalise the global FTL?
     ↳ *Listen for:* what keeps it dependent, and the AWS Nitro precedent ([Ch 13](../03-system-architecture/13-storage-stack.md)).
 21. [PM] What limits 600 TB modules: dies, packaging, power or rebuild?
@@ -124,7 +124,7 @@ flowchart TD
 27. [Eng] A data node fails mid-write: what happens to in-flight I/O?
 28. [PM] Is S3 over RDMA generally available, and cuObject-compatible?
 29. [Eng] In S3 over RDMA, how are tokens scoped without TLS?
-30. [SE] Do we require PFC for RoCE, and what if the fabric drops packets?
+30. [SE] What happens to RoCE on a lossy fabric without PFC?
 31. [Eng] How do our storage ports absorb synchronized checkpoint incast?
 32. [PM] How often does an InfiniBand compute fabric cost us deals?
 33. [CTO] How would our RDMA protocols map onto Ultra Ethernet?
@@ -154,7 +154,7 @@ flowchart TD
 46. [PM] What are fleet median reduction ratios by workload?
     ↳ *Listen for:* distributions excluding thin provisioning; candour on AI data ([Ch 5](../01-storage-fundamentals/05-data-reduction.md)).
 47. [Eng] How big is the dedupe index per PB, and where?
-48. [Eng] When does inline reduction defer, and how fast does it catch up?
+48. [Eng] When does inline reduction defer, and for how long?
 49. [Eng] What read amplification does similarity encoding add?
 50. [SE] How does the Right-Size Guarantee treat irreducible data?
 51. [Eng] A large DFM dies at 80% fill: time to full redundancy?

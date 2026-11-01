@@ -104,7 +104,7 @@ The strategic tension: Everpure built its franchise with conservative enterprise
 | **Dell** | PowerStore, PowerMax | PowerScale; Lightning parallel file system | ObjectScale | Separate engines for each abstraction on common hardware[^15]; PowerProtect for backup |
 | **NetApp** | ONTAP AFF/ASA | ONTAP (unified block, file and S3); AFX disaggregated[^16] | ONTAP S3; StorageGRID | One OS across tiers; tiering to cloud |
 | **HPE** | Alletra MP B10000 | Alletra MP X10000 (native NFS added) | Alletra MP X10000 | Shared Alletra MP hardware[^17] |
-| **VAST Data** | Offered over NVMe/TCP, not the focus [VERIFY: VAST block GA date] | Core strength | Core strength | One platform for hot and capacity data on QLC[^18] |
+| **VAST Data** | NVMe/TCP block volumes since early 2025, not the focus[^18] | Core strength | Core strength | One platform for hot and capacity data on QLC[^19] |
 | **Public cloud (AWS as example)** | EBS | EFS, FSx (incl. Lustre) | S3 storage classes | Archive classes priced ~23x below standard[^10] |
 
 *Table 1.3 — Everpure covers all three abstractions with two hardware families and one software lineage; Dell sells a product per abstraction, NetApp one unified OS, VAST one platform aimed at file and object at scale.*
@@ -129,7 +129,7 @@ timeline
 
 *Figure 1.3 — Each abstraction arrived to solve a sharing problem: block pooled disks, file shared namespaces, object shared the internet.*
 
-IBM's 350 disk unit shipped in 1956 with fifty 24-inch platters holding about 3.75 MB[^19]. Networking then turned storage into a shared service. S3's growth shows where scale went. Amazon reported over 280 trillion objects and over 100 million requests per second in 2023[^20]. By its twentieth anniversary in March 2026 it cited more than 500 trillion objects and over 200 million requests per second across hundreds of exabytes, with storage prices down from 15 to 2 cents per GB[^21].
+IBM's 350 disk unit shipped in 1956 with fifty 24-inch platters holding about 3.75 MB[^20]. Networking then turned storage into a shared service. S3's growth shows where scale went. Amazon reported over 280 trillion objects and over 100 million requests per second in 2023[^21]. By its twentieth anniversary in March 2026 it cited more than 500 trillion objects and over 200 million requests per second across hundreds of exabytes, with storage prices down from 15 to 2 cents per GB[^22].
 
 Three trajectories matter for the rest of the atlas:
 
@@ -147,7 +147,7 @@ Three trajectories matter for the rest of the atlas:
 | Hot vs coldest cloud price | US$0.023 vs US$0.00099 per GB-month (~23x) | S3 Standard vs Glacier Deep Archive, US East | AWS pricing, retrieved 2026-11[^10] |
 | 1 PB for a month, hot vs cold | ~US$23,000 vs ~US$990 | 1,000,000 GB × list price | Worked example |
 | LTO tape shipped, 2025 | 160.3 EB compressed (~64 EB native) | Down 9% from 2024; Q1 2026 +57% YoY | LTO Program via Blocks & Files, 2026-09-04[^11] |
-| Amazon S3 scale | >500 trillion objects, >200M requests/s | Hundreds of exabytes | AWS, 2026-03[^21] |
+| Amazon S3 scale | >500 trillion objects, >200M requests/s | Hundreds of exabytes | AWS, 2026-03[^22] |
 | 8 KB block writes in 1 GiB | 131,072 | 1 GiB ÷ 8 KiB; why block metadata lives in the host | Worked example |
 
 ## Conversation playbook
@@ -175,7 +175,7 @@ Three trajectories matter for the rest of the atlas:
 ## Going deeper (optional, L3 pointers)
 
 - SNIA's dictionary and its "Object Storage" and "File vs Block vs Object" educational webcasts give vendor-neutral definitions.
-- Andy Warfield's FAST '23 keynote and accompanying essay on operating S3 at scale[^20].
+- Andy Warfield's FAST '23 keynote and accompanying essay on operating S3 at scale[^21].
 - The SCSI block command set (T10 SBC) and NVMe base specification for how LBAs are addressed. RFC 8881 (NFSv4.1) for file semantics. The Amazon S3 API reference for object semantics.
 - [Chapter 13](../03-system-architecture/13-storage-stack.md) for the layer-by-layer stack and [Chapter 24](../03-system-architecture/24-architecture-decision-matrix.md) for matching architectures to workloads.
 
@@ -210,7 +210,8 @@ Three trajectories matter for the rest of the atlas:
 [^15]: Dell Technologies, "Dell AI Data Platform with NVIDIA Supercharges Enterprise AI with Breakthrough Data Orchestration and Storage Innovations," 2026-03-16. https://www.dell.com/en-us/dt/corporate/newsroom/announcements/detailpage.press-releases~usa~2026~03~dell-ai-data-platform-with-nvidia-supercharges-enterprise-ai-with-breakthrough-data-orchestration-and-storage-innovations.htm (retrieved 2026-11-01).
 [^16]: Blocks & Files, "NetApp disaggregates ONTAP storage and provides an AI Data Engine," 2025-10-14. https://blocksandfiles.com/2025/10/14/netapp-disaggregates-ontap-storage-and-provides-an-ai-data-engine/ (retrieved 2026-11-01).
 [^17]: Blocks & Files, "HPE updates Alletras X and B10000, Zerto and Data Fabric in GreenLake private cloud update blast," 2026-05-12. https://www.blocksandfiles.com/file/2026/05/12/hpe-updates-alletras-x-and-b10000-zerto-and-data-fabric-in-greenlake-private-cloud-update-blast/5239011 (retrieved 2026-11-01).
-[^18]: Blocks & Files, "VAST Data's universal filesystem," 2019-02-26. https://blocksandfiles.com/2019/02/26/vast-datas-universal-filesystem/ (retrieved 2026-11-01).
-[^19]: Computer History Museum, "1956: First commercial hard disk drive shipped," n.d. https://www.computerhistory.org/storageengine/first-commercial-hard-disk-drive-shipped/ (retrieved 2026-11-01).
-[^20]: A. Warfield, "Building and operating a pretty big storage system called S3," All Things Distributed, 2023-07. https://www.allthingsdistributed.com/2023/07/building-and-operating-a-pretty-big-storage-system.html (retrieved 2026-11-01).
-[^21]: AWS News Blog, "Twenty years of Amazon S3 and building what's next," 2026-03. https://aws.amazon.com/blogs/aws/twenty-years-of-amazon-s3-and-building-whats-next/ (retrieved 2026-11-01).
+[^18]: The Next Platform, "Vast Data Builds Out Data Platform With Block Storage And Kafka Streams," 2025-02-21. https://www.nextplatform.com/2025/02/21/vast-data-builds-out-data-platform-with-block-storage-and-kafka-streams (retrieved via search 2026-11-01); VAST Data KB, "Overview of Block Storage on VAST Cluster," n.d. https://kb.vastdata.com/documentation/docs/overview-of-block-storage-on-vast-cluster (retrieved via search 2026-11-01).
+[^19]: Blocks & Files, "VAST Data's universal filesystem," 2019-02-26. https://blocksandfiles.com/2019/02/26/vast-datas-universal-filesystem/ (retrieved 2026-11-01).
+[^20]: Computer History Museum, "1956: First commercial hard disk drive shipped," n.d. https://www.computerhistory.org/storageengine/first-commercial-hard-disk-drive-shipped/ (retrieved 2026-11-01).
+[^21]: A. Warfield, "Building and operating a pretty big storage system called S3," All Things Distributed, 2023-07. https://www.allthingsdistributed.com/2023/07/building-and-operating-a-pretty-big-storage-system.html (retrieved 2026-11-01).
+[^22]: AWS News Blog, "Twenty years of Amazon S3 and building what's next," 2026-03. https://aws.amazon.com/blogs/aws/twenty-years-of-amazon-s3-and-building-whats-next/ (retrieved 2026-11-01).
