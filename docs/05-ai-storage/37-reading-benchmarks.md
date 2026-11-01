@@ -15,7 +15,7 @@
 
 Benchmarks are how AI-storage vendors, Everpure included, turn engineering into sales claims. FlashBlade//EXA's MLPerf Storage v3.0 and SPECstorage AI_IMAGE results anchor Everpure's case for neocloud and AI-factory deals ([Chapter 27](../04-everpure/27-flasharray-and-flashblade.md)), and competitors will attack them as Everpure attacks theirs. Pricing a benchmark claim separates a durable technical lead from a configuration choice, which also matters when a diligence target ([Chapter 50](../06-industry-and-competition/50-diligence-framework.md)) leads with a "world record".
 
-Participation is itself a strategic choice, with costs (engineering weeks, hardware, the risk of a public loss) and payoffs (credibility with buyers who cannot test for themselves). Which tests to enter and how to frame results are options a strategy team might evaluate, based on public information about who enters and who stays out.
+Participation is itself a strategic choice: costs (engineering weeks, hardware, a possible public loss) against credibility with buyers who cannot test for themselves. Which tests to enter, and how to frame results, are options a strategy team might evaluate from public information.
 
 ## Core concepts
 
@@ -152,8 +152,8 @@ The semiconductor parallel is perf-per-watt at a fixed workload versus peak TOPS
 |---|---|---|---|---|---|
 | **Everpure** | v3.0 first submission: top checkpoint write and KV-cache results[^21][^7]; v2.0 white paper only[^27] | AI_IMAGE #1, 6,300 AI_Jobs (Feb 2026)[^15] | None found | Pure Storage-based SUT cited as a comparison point[^12] | Strong, audited numbers in rounds rivals skipped |
 | **VAST** | Never submitted[^28] | None found | None found | None found | Sells on references, POCs and NVIDIA alignment |
-| **WEKA** | v1.0 reportedly; not v2.0 or v3.0 [VERIFY: v1.0 participation] | All five workloads #1 (Feb 2025); AI_IMAGE since passed by EXA[^14][^16] | Customer submissions, e.g., 665.49 at a research hospital[^29] | Earlier cloud results | Prefers benchmarks it can win broadly |
-| **DDN** | v1.0 and v2.0; skipped v3.0[^6][^7] | None found | Frequent; "#1" claims on the 10-node list[^19] | Earlier EXAScaler results | HPC-native benchmark culture |
+| **WEKA** | v1.0 reportedly; not v2.0 or v3.0 [VERIFY: v1.0 participation] | All five workloads #1 (Feb 2025); AI_IMAGE since passed by EXA[^14][^16] | Customer submissions, e.g., 665.49 at a cancer research centre (company-stated)[^29] | kdb+ on AWS (2021)[^30] | Prefers benchmarks it can win broadly |
+| **DDN** | v1.0 and v2.0; skipped v3.0[^6][^31][^7] | None found | Frequent; "#1" claims on the 10-node list[^19] | EXAScaler AI400X (2020)[^32] | HPC-native benchmark culture |
 | **Azure, NVIDIA, Nebius** | First-time v3.0 entrants[^8] | n/a | n/a | n/a | Clouds now benchmark managed storage too |
 
 *Table 37.3 — Who enters which benchmark is itself a positioning signal.*
@@ -183,7 +183,7 @@ timeline
 
 *Figure 37.4 — Benchmarks have moved from HPC file I/O toward the AI pipeline. Each round adds a stage, from training reads to checkpointing to inference context.*
 
-MLPerf Storage grew from 13 organisations in v1.0 (September 2024)[^30] to 26 in v2.0 (August 2025), when checkpointing arrived[^31], then shrank to 19 in v3.0 even as it added inference workloads[^8]. Benchmarks follow the I/O hot spot, which in 2026 is KV-cache offload ([Chapter 32](32-inference-and-kv-cache.md)) and S3 access[^32]. Watch whether VAST, WEKA or DDN enter v4.0, whether power and rack-unit efficiency become ranked metrics, and whether IO500's reproducibility gate spreads.
+IO500 dates from 2017 and MLPerf Storage v0.5 from 2023 [VERIFY: both launch dates]. MLPerf Storage grew from 13 organisations in v1.0 (September 2024)[^33] to 26 in v2.0 (August 2025), when checkpointing arrived[^34], then shrank to 19 in v3.0 even as it added inference workloads[^8]. Benchmarks follow the I/O hot spot, which in 2026 is KV-cache offload ([Chapter 32](32-inference-and-kv-cache.md)) and S3 access[^35]. Watch whether VAST, WEKA or DDN enter v4.0, whether power and rack-unit efficiency become ranked metrics, and whether IO500's reproducibility gate spreads.
 
 ## Numbers that matter
 
@@ -266,6 +266,9 @@ MLPerf Storage grew from 13 organisations in v1.0 (September 2024)[^30] to 26 in
 [^27]: Everpure, "FlashBlade//EXA MLPerf Storage v2.0 Test Results" (white paper), n.d. https://www.everpuredata.com/content/dam/pdf/en/white-papers/twp-flashblade-exa-mlperf-storage-v2-0-test-results.pdf (retrieved 2026-11-01).
 [^28]: StorageReview, "Best Storage Arrays 2026: AI Storage Leaders and Audited Results," 2026. https://www.storagereview.com/best/storage-arrays (retrieved 2026-11-01; via search summary).
 [^29]: WEKA, "Revolutionizing Research: WEKA's IO500 Benchmark Success," n.d. https://www.weka.io/?p=39859 (retrieved 2026-11-01).
-[^30]: MLCommons, "New MLPerf Storage v1.0 Benchmark Results Show Storage Systems Play a Critical Role in AI Model Training Performance," 2024-09-25. https://mlcommons.org/2024/09/mlperf-storage-v1-0-benchmark-results/ (retrieved 2026-11-01).
-[^31]: MLCommons via GlobeNewswire, "New MLPerf Storage v2.0 Benchmark Results Demonstrate the Critical Role of Storage Performance in AI Training Systems," 2025-08-04. https://www.globenewswire.com/news-release/2025/08/04/3126718/0/en/new-mlperf-storage-v2-0-benchmark-results-demonstrate-the-critical-role-of-storage-performance-in-ai-training-systems.html (retrieved 2026-11-01).
-[^32]: Blocks & Files, "MLPerf Storage benchmark updated for modern AI," 2026-09-01. https://www.blocksandfiles.com/ai-ml/2026/09/01/mlperf-storage-benchmark-updated-for-modern-ai/5293617 (retrieved 2026-11-01).
+[^30]: STAC, "STAC Report: kdb+ 4.0 on WekaFS and AWS under STAC-M3 (tick analytics)," 2021. https://docs.stacresearch.com/node/46449 (retrieved 2026-11-01; via search summary).
+[^31]: HPCwire/AIwire, "DDN Showcases AI400X3 Performance in Latest MLPerf Storage Benchmarks," 2025-08-05. https://www.hpcwire.com/aiwire/2025/08/05/ddn-showcases-ai400x3-performance-in-latest-mlperf-storage-benchmarks/ (retrieved 2026-11-01).
+[^32]: StorageNewsletter, "STAC Report: kdb+ 3.6 with DDN EXAScaler and AI400X flash appliances under STAC-M3," 2020-10-20. https://storagenewsletter.com/2020/10/20/securities-technology-analysis-center-report-kdb-3-6-with-ddn-exascaler-and-ai400x-flash-appliances-under-stack-m3 (retrieved 2026-11-01; via search summary).
+[^33]: MLCommons, "New MLPerf Storage v1.0 Benchmark Results Show Storage Systems Play a Critical Role in AI Model Training Performance," 2024-09-25. https://mlcommons.org/2024/09/mlperf-storage-v1-0-benchmark-results/ (retrieved 2026-11-01).
+[^34]: MLCommons via GlobeNewswire, "New MLPerf Storage v2.0 Benchmark Results Demonstrate the Critical Role of Storage Performance in AI Training Systems," 2025-08-04. https://www.globenewswire.com/news-release/2025/08/04/3126718/0/en/new-mlperf-storage-v2-0-benchmark-results-demonstrate-the-critical-role-of-storage-performance-in-ai-training-systems.html (retrieved 2026-11-01).
+[^35]: Blocks & Files, "MLPerf Storage benchmark updated for modern AI," 2026-09-01. https://www.blocksandfiles.com/ai-ml/2026/09/01/mlperf-storage-benchmark-updated-for-modern-ai/5293617 (retrieved 2026-11-01).

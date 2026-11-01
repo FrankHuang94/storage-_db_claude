@@ -8,7 +8,7 @@
 - **The KV cache is a conversation's working memory:** the attention keys and values of every token so far. A Llama 3.1 70B-class model needs **320 KiB per token**, so one 128K-token session is about **43 GB**; a fleet of retained sessions reaches petabytes.
 - **Prefill is compute-bound; decode is memory-bound.** Decode rereads the whole cache for every new token, so active KV must sit in HBM. Storage can only hold KV that is *not being decoded right now*.
 - **It is a recompute-or-fetch trade.** Rebuilding a 128K context costs an 8-GPU node ~2.6 s of compute; fetching it over 8 × 400 Gb/s NICs takes ~0.13 s. Fetching wins above roughly 2–5 GB/s per GPU, so hit rate and bandwidth decide the economics.
-- **NVIDIA has standardized the hierarchy.** Dynamo's KV Block Manager (KVBM) defines tiers G1 (HBM) to G4 (networked storage), NIXL moves the bytes, and BlueField-4 STX/CMX adds a pod-level "G3.5" flash tier. Every storage vendor, Everpure included, competes to be the G3.5/G4 backend.
+- **NVIDIA has standardized the hierarchy.** Dynamo's KV Block Manager (KVBM) defines tiers G1 (HBM) to G4 (networked storage), NIXL moves the bytes, and BlueField-4 STX/CMX adds a pod-level "G3.5" flash tier. Storage vendors, Everpure included, compete to be the G3.5/G4 backend.
 - **Discount the multipliers.** Everpure, WEKA, DDN, VAST and HPE all claim 20× or more faster time to first token, mostly against a no-cache baseline. MLPerf Storage v3.0 (September 2026) added the first neutral KV-cache test[^1].
 
 ## Why this matters for Everpure strategy
@@ -55,13 +55,13 @@ Because the phases want different hardware, **disaggregated serving** runs prefi
 
 ### Prefix caching: the hit-rate game
 
-Many requests share a beginning: the same system prompt, contract, code repository or earlier chat turns. **Prefix caching** stores KV in fixed-size blocks keyed by a hash of the tokens up to that block, so a new request reuses the longest matching prefix and prefills only new tokens. vLLM's PagedAttention (SOSP 2023) enabled this by managing KV in pages, like virtual memory; its authors reported that earlier systems wasted 60–80% of KV memory to fragmentation, and that paging improved throughput 2–4×[^12]. SGLang's RadixAttention extended the idea to a prefix tree[^13].
+Requests often share a beginning (system prompt, document, repository, earlier turns). **Prefix caching** stores KV in fixed-size blocks keyed by a hash of the tokens up to that block, so a new request reuses the longest matching prefix and prefills only new tokens. vLLM's PagedAttention (SOSP 2023) enabled this by paging KV like virtual memory, cutting fragmentation waste and raising throughput 2–4×[^12]. SGLang's RadixAttention extended the idea to a prefix tree[^13].
 
-The semiconductor bridge is direct: the block hash is a cache tag, eviction is LRU with a frequency filter, and average access time is hit rate × fetch time + miss rate × recompute time. The quirk is that misses are *recomputable*: losing a block costs time and money, never correctness, so durability matters far less than throughput and tail latency. Hit rates are fragile. LMCache's authors found that context truncation, a common serving practice, can halve the prefix hit ratio[^14]. A model update invalidates the entire cache, because KV is specific to the model weights that produced it.
+The semiconductor bridge is direct: the block hash is a cache tag, eviction is LRU with a frequency filter, and average access time is hit rate × fetch time + miss rate × recompute time. The quirk is that misses are *recomputable*: losing a block costs time and money, never correctness, so durability matters far less than throughput and tail latency. Hit rates are fragile: context truncation can halve them[^14], and a model update invalidates the entire cache.
 
 ### Recompute or fetch: the break-even
 
-**Worked example (128K-token context, Llama 3.1 70B, 8-GPU B200-class node).** Recompute costs about 2 × 70.6×10⁹ × 131,072 ≈ 1.85×10¹⁶ FLOPs for the linear layers, plus about 2.25×10¹⁶ for causal attention (2 × n² × 8,192 × 80 layers), so ≈ 4.1×10¹⁶ FLOPs. Assume the node *delivers* 16 PFLOPS (2 PFLOPS per GPU, an assumption well below peak). Recompute then takes **≈ 2.6 s and ≈ 21 GPU-seconds**. Fetching 43 GB over eight 400 Gb/s NICs at ~80% efficiency (320 GB/s) takes **≈ 0.13 s** with the GPUs free. Generally, a 70B model spends 0.5–1 million FLOPs to recreate each byte of KV, so at 2 PFLOPS per GPU fetching wins above **~2–5 GB/s per GPU**: a low bar for RDMA flash, and why KV offload works at all.
+**Worked example (128K-token context, Llama 3.1 70B, 8-GPU B200-class node).** Recompute costs about 2 × 70.6×10⁹ × 131,072 ≈ 1.85×10¹⁶ FLOPs for the linear layers, plus about 2.25×10¹⁶ for causal attention (2 × n² × 8,192 × 80 layers), so ≈ 4.1×10¹⁶ FLOPs. Assume the node *delivers* 16 PFLOPS (2 PFLOPS per GPU, an assumption well below peak). Recompute then takes **≈ 2.6 s and ≈ 21 GPU-seconds**. Fetching 43 GB over eight 400 Gb/s NICs at ~80% efficiency (320 GB/s) takes **≈ 0.13 s** with the GPUs free. A 70B model spends 0.5–1 million FLOPs to recreate each byte of KV, so at 2 PFLOPS per GPU fetching wins above **~2–5 GB/s per GPU**: a low bar for RDMA flash, and why KV offload works at all.
 
 ![Stacked diagram of six KV-cache tiers with latency, bandwidth-to-GPU and capacity columns: G1 GPU HBM, G2 host DRAM, optional CXL memory extending G2, G3 local NVMe, G3.5 pod context memory (CMX), and G4 networked shared storage; a left arrow marks offload/evict downward, a right arrow marks onload/prefetch upward, a dashed line below CXL marks the memory-to-I/O latency cliff, and a dotted line below G3 marks where KV becomes shared across servers and survives restarts.](../assets/diagrams/ch32-kv-tiering.svg)
 
@@ -81,7 +81,7 @@ Three conclusions. First, eight 400G NICs out-run eight local U.2 drives, which 
 
 ### Why long context and agents turn KV into a storage problem
 
-Agents are long and stop-start. A coding agent that runs 50 turns, growing to 100K tokens and waiting seconds to minutes on tools between turns, would re-prefill its history every turn without a cache: about 50 × 50K ≈ **2.5 million prefill tokens**, 25× the work with perfect reuse. Its KV must survive those pauses without occupying HBM others need. Across thousands of agents the retained state is the right-hand side of Figure 32.1: tens of TB to PB, reused within minutes, recomputable but expensive to lose. That is the profile of a shared flash cache. TrendForce attributes part of 4Q26 enterprise SSD demand to QLC purchases for KV cache[^16]. DeepSeek moved its API cache to disk in 2024, pricing hits at one-tenth of a miss, and reported that first-token latency on a heavily reused 128K prompt fell from 13 s to about 0.5 s[^17] (company-stated). Anthropic bills cache reads at 0.1× the base input price[^18]. **Prompt-cache pricing is the market's own valuation of a KV hit.**
+Agents are long and stop-start. A coding agent that runs 50 turns, growing to 100K tokens and waiting seconds to minutes on tools between turns, would re-prefill its history every turn without a cache: about 50 × 50K ≈ **2.5 million prefill tokens**, 25× the work with perfect reuse. Across thousands of agents the retained state is the right-hand side of Figure 32.1: tens of TB to PB, reused within minutes, recomputable but expensive to lose. That is the profile of a shared flash cache. TrendForce attributes part of 4Q26 enterprise SSD demand to QLC purchases for KV cache[^16]. DeepSeek moved its API cache to disk in 2024, pricing hits at one-tenth of a miss, and reported that first-token latency on a heavily reused 128K prompt fell from 13 s to about 0.5 s[^17] (company-stated). Anthropic bills cache reads at 0.1× the base input price[^18]. **Prompt-cache pricing is the market's own valuation of a KV hit.**
 
 ### The software stack: Dynamo, KVBM, NIXL, LMCache, llm-d
 
@@ -121,7 +121,7 @@ Open-source layers keep the tier vendor-neutral. **LMCache** moves KV from vLLM 
 
 | Vendor | Offering | Integration path | Headline claim (vendor claim) | Caveat |
 |---|---|---|---|---|
-| **Everpure** | PureKVA on FlashBlade (S3 and NFS); EXA for scale | vLLM and Dynamo; RDMA pre-staging into GPU memory[^27] | Up to 20× faster TTFT; DeepReduce always-on; GA October 2026[^28] | Test details unpublished; MLPerf v3.0 KV results are the only neutral data[^2] |
+| **Everpure** | PureKVA on FlashBlade (S3 and NFS); EXA for scale | vLLM and Dynamo; RDMA pre-staging into GPU memory[^27] | Up to 20× faster TTFT; DeepReduce always-on; GA October 2026[^28] | Test details unpublished; MLPerf v3.0 KV results are its neutral data point[^2] |
 | WEKA | Augmented Memory Grid on NeuralMesh | RDMA + GDS; open-sourced NIXL plugin; GA 2025-11-18, OCI launch partner[^29] | "1000×" GPU memory extension; up to 20× lower TTFT[^29] | Longest commercial track record; NeuralMesh 6 claims lack a reproducible method[^30] |
 | VAST Data | VUA (open source, Apr 2025); CNode software on BlueField-4 (CES 2026) | vLLM, LMCache, Dynamo[^31] | 75% lower power for KV operations; hardware 2H 2026[^32] | Strongest fit with NVIDIA's DPU-centric CMX design |
 | DDN | KV cache on Infinia and EXAScaler via Dynamo/NIXL | Dynamo-integrated since June 2026[^33] | Up to 55× faster KV loading (2026); 27× faster, 75% lower input-token cost (2025)[^33][^34] | Multipliers vary widely by baseline |
@@ -132,7 +132,7 @@ Open-source layers keep the tier vendor-neutral. **LMCache** moves KV from vLLM 
 
 **Steelmanning the alternatives.** WEKA moved first (AMG at GTC 2025, a hyperscale cloud partner) and has production references Everpure is only beginning to build. VAST running its software *on* the BlueField-4 DPU inside GPU servers fits NVIDIA's CMX blueprint most closely, which can decide NVIDIA-led deals ([Chapter 34](34-nvidia-ecosystem.md)). The simplest rival is the "free" one: a DGX already ships with ~31 TB of local NVMe, and LMCache can use it at no extra licence cost.
 
-**Everpure's case.** FlashBlade already holds the shared, multi-tenant, high-bandwidth position in many accounts, and PureKVA reuses it rather than adding a silo; its MLPerf v3.0 KV results are the only neutral evidence any vendor has published. Options a strategy team might evaluate, based on public information: an upstream NIXL backend and LMCache/llm-d connectors so PureKVA reaches every serving stack; positioning EXA as the software layer for STX/CMX racks rather than a rival to them; and pricing KV capacity by GB-hour or tokens served, matching how inference buyers already think about cache hits.
+**Everpure's case.** PureKVA reuses FlashBlade's existing shared, multi-tenant, high-bandwidth position rather than adding a silo, and its MLPerf v3.0 KV results are benchmark evidence, not a marketing multiplier. Options a strategy team might evaluate, based on public information: an upstream NIXL backend and LMCache/llm-d connectors so PureKVA reaches every serving stack; positioning EXA as the software layer for STX/CMX racks rather than a rival to them; and pricing KV capacity by GB-hour or tokens served, as inference buyers already price cache hits.
 
 ## History and trajectory
 
@@ -167,39 +167,39 @@ Three forces point forward. **Standardization:** NVIDIA named the tiers and ship
 
 **Questions for a PM**
 
-1. *"What hit rate and context length does PureKVA's 20× TTFT figure assume, and what is the baseline: recompute, local NVMe or LMCache on DRAM?"* A strong answer gives the model, context, concurrency and the baseline. It also says where the benefit disappears, typically below ~8K tokens or at low reuse.
-2. *"Are we a supplier to NVIDIA's CMX racks, a competitor to them, or the G4 tier behind them?"* A strong answer gives a clear position for each NVIDIA deal type and says what Everpure contributes that a BlueField-4 flash shelf does not, such as sharing, tenancy or reduction.
-3. *"How would we price a KV tier: per TB, per GB-hour or per token served?"* A strong answer ties the price to the customer's recompute cost, which can be read off API prompt-cache pricing.
+1. *"What hit rate and context length does PureKVA's 20× TTFT figure assume, and what is the baseline: recompute, local NVMe or LMCache on DRAM?"* Strong: model, context, concurrency and baseline, plus where the benefit vanishes (short contexts, low reuse).
+2. *"Are we a supplier to NVIDIA's CMX racks, a competitor to them, or the G4 tier behind them?"* Strong: a position per NVIDIA deal type and what Everpure adds beyond a BlueField-4 flash shelf (sharing, tenancy, operations).
+3. *"How would we price a KV tier: per TB, per GB-hour or per token served?"* Strong: anchors price to the customer's recompute cost, visible in API prompt-cache pricing.
 
 **Questions for an engineer**
 
-1. *"What restore bandwidth per GPU, and what p99 latency per KV block, does PureKVA deliver at 1,000 concurrent sessions?"* A strong answer gives GB/s per GPU above the ~2–5 GB/s break-even, the block size, and tail latency under mixed offload and onload.
-2. *"What happens to the cache when the model is updated or a node restarts?"* A strong answer covers cache keys that include the model version, invalidation, warm-up behaviour, and the fact that loss means recompute, not data loss.
-3. *"Do we have an upstream NIXL backend, and does PureKVA work with LMCache and llm-d without our own client?"* A strong answer names the plugin, its upstream status and the supported engine versions.
+1. *"What restore bandwidth per GPU, and what p99 latency per KV block, does PureKVA deliver at 1,000 concurrent sessions?"* Strong: GB/s per GPU well above the ~2–5 GB/s break-even, block size, and tail latency under mixed offload and onload.
+2. *"What happens to the cache when the model is updated or a node restarts?"* Strong: model version in the cache key, invalidation, warm-up, and loss meaning recompute, not data loss.
+3. *"Do we have an upstream NIXL backend, and does PureKVA work with LMCache and llm-d without our own client?"* Strong: names the plugin, upstream status and supported engine versions.
 
 **Don't say this:**
 
-- "Storage extends GPU memory." It holds inactive KV. Decode cannot run from flash: every active token is reread on every step.
+- "Storage extends GPU memory." It holds inactive KV; decode rereads every active token each step and cannot run from flash.
 - "KV cache needs enterprise-grade durability." It is recomputable. Value comes from throughput, sharing and cost per GB-hour, not eleven nines.
-- "Local NVMe is enough." Sometimes it is, but it is visible only to its own node. It caps hit rates and, in the worked example, restores slower than eight 400G NICs.
+- "Local NVMe is enough." Sometimes, but only its own node sees it, which caps hit rates; it also restores slower than eight 400G NICs.
 - "20× faster TTFT" without stating the baseline, context length and hit rate.
 - "CXL solves this." CXL memory is DRAM at DRAM prices: faster, but roughly 20× the GB-hour cost of flash.
 
 ## Going deeper (optional, L3 pointers)
 
-- NVIDIA Dynamo KVBM design document (tier policies, block layout, NIXL backends)[^21] and the NIXL repository[^23].
-- Qin et al., "Mooncake," USENIX FAST 2025: the reference production design for a disaggregated KV pool[^11].
-- Kwon et al., PagedAttention (SOSP 2023)[^12], and the LMCache paper on cross-engine KV sharing and hit-rate pitfalls[^14].
-- MLCommons Storage `kv_cache_benchmark` README: three closed workloads (Llama 3.1 8B with 200 users, 8B with 100 users plus 4 GB of CPU memory, 70B with 70 users), each run three times; scored on tokens/s, read/write GiB/s and p95 read latency[^38].
+- Dynamo's KVBM design document[^21] and the NIXL repository[^23].
+- Mooncake (FAST 2025), the reference production design for a disaggregated KV pool[^11].
+- PagedAttention[^12] and the LMCache paper on cross-engine sharing and hit-rate pitfalls[^14].
+- MLCommons `kv_cache_benchmark` README: three closed workloads (Llama 3.1 8B with 200 users; 8B with 100 users plus 4 GB CPU memory; 70B with 70 users), scored on tokens/s, GiB/s and p95 read latency[^38].
 
 ## Key terms
 
-- **KV cache** — per-token attention keys and values kept so they are not recomputed.
-- **Prefill / decode** — the compute-bound prompt phase and the memory-bound generation phase.
-- **TTFT** — time to first token, set mainly by prefill or KV restore.
-- **Prefix caching** — reusing KV blocks for identical leading tokens across requests.
+- **KV cache** — stored per-token attention keys and values.
+- **Prefill / decode** — compute-bound prompt phase; memory-bound generation phase.
+- **TTFT** — time to first token.
+- **Prefix caching** — reusing KV for identical leading tokens.
 - **GQA / MLA** — attention designs that shrink KV per token.
-- **KVBM, NIXL, CMX** — Dynamo's tier manager, NVIDIA's transfer library, NVIDIA's pod context-memory tier.
+- **KVBM, NIXL, CMX** — Dynamo's tier manager, transfer library, pod context-memory tier.
 - See the [glossary](../glossary.md) for the rest.
 
 ## Sources
