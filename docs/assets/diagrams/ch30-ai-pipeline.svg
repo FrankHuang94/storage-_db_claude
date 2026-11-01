@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 720" width="1000" height="720" font-family="Inter, Helvetica, Arial, sans-serif">
+  <title>The AI data pipeline in eight stages, each annotated with its dominant storage I/O pattern</title>
+  <defs><marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#555555"/></marker><marker id="arv" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D55E00"/></marker></defs>
+  <rect x="0" y="0" width="1000" height="720" fill="#FFFFFF"/>
+  <text x="18" y="32" font-size="19" font-weight="bold" fill="#222222">The AI data pipeline: one pipeline, eight different storage workloads</text>
+  <text x="18" y="54" font-size="13" fill="#555555">Indicative dominant I/O pattern per stage. Read/write mixes are illustrative, not measurements.</text>
+  <rect x="18" y="74" width="222" height="214" rx="8" fill="#FAFAFA" stroke="#009E73" stroke-width="2"/>
+  <path d="M18,82 a8,8 0 0 1 8,-8 h206 a8,8 0 0 1 8,8 v26 h-222 z" fill="#009E73"/>
+  <text x="28" y="97" font-size="15" font-weight="bold" fill="#FFFFFF">1. Ingest</text>
+  <text x="28" y="128" font-size="12" fill="#222222"><tspan font-weight="bold">Access:</tspan> Sequential appends</text>
+  <text x="28" y="147" font-size="12" fill="#222222"><tspan font-weight="bold">Via:</tspan> S3 PUT, multipart upload</text>
+  <text x="28" y="166" font-size="12" fill="#222222"><tspan font-weight="bold">Sizes:</tspan> MB to GB objects</text>
+  <text x="28" y="185" font-size="12" fill="#222222"><tspan font-weight="bold">Bound:</tspan> Throughput and $/TB</text>
+  <text x="28" y="204" font-size="12" fill="#222222"><tspan font-weight="bold">Tier:</tspan> Object lake, HDD or QLC</text>
+  <rect x="28" y="219" width="202" height="14" fill="#D55E00"/>
+  <rect x="28" y="219" width="20" height="14" fill="#56B4E9"/>
+  <text x="28" y="249" font-size="12" fill="#222222">Read ~10% / write ~90%</text>
+  <rect x="122" y="238" width="108" height="16" rx="8" fill="#0072B2"/>
+  <text x="176" y="250" font-size="12" fill="#FFFFFF" text-anchor="middle">Throughput-bound</text>
+  <rect x="263" y="74" width="222" height="214" rx="8" fill="#FAFAFA" stroke="#009E73" stroke-width="2"/>
+  <path d="M263,82 a8,8 0 0 1 8,-8 h206 a8,8 0 0 1 8,8 v26 h-222 z" fill="#009E73"/>
+  <text x="273" y="97" font-size="15" font-weight="bold" fill="#FFFFFF">2. Curate and preprocess</text>
+  <text x="273" y="128" font-size="12" fill="#222222"><tspan font-weight="bold">Access:</tspan> Full scans, rewrites</text>
+  <text x="273" y="147" font-size="12" fill="#222222"><tspan font-weight="bold">Via:</tspan> S3 + Parquet, Iceberg</text>
+  <text x="273" y="166" font-size="12" fill="#222222"><tspan font-weight="bold">Sizes:</tspan> 100 MB to 1 GB shards</text>
+  <text x="273" y="185" font-size="12" fill="#222222"><tspan font-weight="bold">Bound:</tspan> Throughput, CPU or GPU</text>
+  <text x="273" y="204" font-size="12" fill="#222222"><tspan font-weight="bold">Tier:</tspan> Lake + flash scratch</text>
+  <rect x="273" y="219" width="202" height="14" fill="#D55E00"/>
+  <rect x="273" y="219" width="121" height="14" fill="#56B4E9"/>
+  <text x="273" y="249" font-size="12" fill="#222222">Read ~60% / write ~40%</text>
+  <rect x="367" y="238" width="108" height="16" rx="8" fill="#0072B2"/>
+  <text x="421" y="250" font-size="12" fill="#FFFFFF" text-anchor="middle">Throughput-bound</text>
+  <rect x="508" y="74" width="222" height="214" rx="8" fill="#FAFAFA" stroke="#0072B2" stroke-width="2"/>
+  <path d="M508,82 a8,8 0 0 1 8,-8 h206 a8,8 0 0 1 8,8 v26 h-222 z" fill="#0072B2"/>
+  <text x="518" y="97" font-size="15" font-weight="bold" fill="#FFFFFF">3. Train: data loading</text>
+  <text x="518" y="128" font-size="12" fill="#222222"><tspan font-weight="bold">Access:</tspan> Random shard reads</text>
+  <text x="518" y="147" font-size="12" fill="#222222"><tspan font-weight="bold">Via:</tspan> POSIX, NFS, pFS or S3</text>
+  <text x="518" y="166" font-size="12" fill="#222222"><tspan font-weight="bold">Sizes:</tspan> KB samples, GB shards</text>
+  <text x="518" y="185" font-size="12" fill="#222222"><tspan font-weight="bold">Bound:</tspan> Throughput + tail latency</text>
+  <text x="518" y="204" font-size="12" fill="#222222"><tspan font-weight="bold">Tier:</tspan> Hot flash + local NVMe</text>
+  <rect x="518" y="219" width="202" height="14" fill="#D55E00"/>
+  <rect x="518" y="219" width="202" height="14" fill="#56B4E9"/>
+  <text x="518" y="249" font-size="12" fill="#222222">Read ~100% / write ~0%</text>
+  <rect x="612" y="238" width="108" height="16" rx="8" fill="#CC79A7"/>
+  <text x="666" y="250" font-size="12" fill="#FFFFFF" text-anchor="middle">Both</text>
+  <rect x="753" y="74" width="222" height="214" rx="8" fill="#FAFAFA" stroke="#0072B2" stroke-width="2"/>
+  <path d="M753,82 a8,8 0 0 1 8,-8 h206 a8,8 0 0 1 8,8 v26 h-222 z" fill="#0072B2"/>
+  <text x="763" y="97" font-size="15" font-weight="bold" fill="#FFFFFF">4. Checkpoint</text>
+  <text x="763" y="128" font-size="12" fill="#222222"><tspan font-weight="bold">Access:</tspan> Bursty sequential writes</text>
+  <text x="763" y="147" font-size="12" fill="#222222"><tspan font-weight="bold">Via:</tspan> Parallel FS or S3</text>
+  <text x="763" y="166" font-size="12" fill="#222222"><tspan font-weight="bold">Sizes:</tspan> GBs per rank, TBs total</text>
+  <text x="763" y="185" font-size="12" fill="#222222"><tspan font-weight="bold">Bound:</tspan> Burst write GB/s</text>
+  <text x="763" y="204" font-size="12" fill="#222222"><tspan font-weight="bold">Tier:</tspan> NVMe, then flash, object</text>
+  <rect x="763" y="219" width="202" height="14" fill="#D55E00"/>
+  <rect x="763" y="219" width="10" height="14" fill="#56B4E9"/>
+  <text x="763" y="249" font-size="12" fill="#222222">Read ~5% / write ~95%</text>
+  <rect x="857" y="238" width="108" height="16" rx="8" fill="#0072B2"/>
+  <text x="911" y="250" font-size="12" fill="#FFFFFF" text-anchor="middle">Throughput-bound</text>
+  <rect x="18" y="362" width="222" height="214" rx="8" fill="#FAFAFA" stroke="#0072B2" stroke-width="2"/>
+  <path d="M18,370 a8,8 0 0 1 8,-8 h206 a8,8 0 0 1 8,8 v26 h-222 z" fill="#0072B2"/>
+  <text x="28" y="385" font-size="15" font-weight="bold" fill="#FFFFFF">5. Fine-tune, post-train</text>
+  <text x="28" y="416" font-size="12" fill="#222222"><tspan font-weight="bold">Access:</tspan> Many small jobs</text>
+  <text x="28" y="435" font-size="12" fill="#222222"><tspan font-weight="bold">Via:</tspan> File, object, model hub</text>
+  <text x="28" y="454" font-size="12" fill="#222222"><tspan font-weight="bold">Sizes:</tspan> GB to TB base weights</text>
+  <text x="28" y="473" font-size="12" fill="#222222"><tspan font-weight="bold">Bound:</tspan> Per-job throughput</text>
+  <text x="28" y="492" font-size="12" fill="#222222"><tspan font-weight="bold">Tier:</tspan> Shared flash + object</text>
+  <rect x="28" y="507" width="202" height="14" fill="#D55E00"/>
+  <rect x="28" y="507" width="141" height="14" fill="#56B4E9"/>
+  <text x="28" y="537" font-size="12" fill="#222222">Read ~70% / write ~30%</text>
+  <rect x="122" y="526" width="108" height="16" rx="8" fill="#0072B2"/>
+  <text x="176" y="538" font-size="12" fill="#FFFFFF" text-anchor="middle">Throughput-bound</text>
+  <rect x="263" y="362" width="222" height="214" rx="8" fill="#FAFAFA" stroke="#E69F00" stroke-width="2"/>
+  <path d="M263,370 a8,8 0 0 1 8,-8 h206 a8,8 0 0 1 8,8 v26 h-222 z" fill="#E69F00"/>
+  <text x="273" y="385" font-size="15" font-weight="bold" fill="#222222">6. Inference</text>
+  <text x="273" y="416" font-size="12" fill="#222222"><tspan font-weight="bold">Access:</tspan> Weight loads + KV I/O</text>
+  <text x="273" y="435" font-size="12" fill="#222222"><tspan font-weight="bold">Via:</tspan> File or S3; KV over RDMA</text>
+  <text x="273" y="454" font-size="12" fill="#222222"><tspan font-weight="bold">Sizes:</tspan> TB weights, KB-MB KV</text>
+  <text x="273" y="473" font-size="12" fill="#222222"><tspan font-weight="bold">Bound:</tspan> Latency: time to 1st token</text>
+  <text x="273" y="492" font-size="12" fill="#222222"><tspan font-weight="bold">Tier:</tspan> HBM, DRAM, NVMe, flash</text>
+  <rect x="273" y="507" width="202" height="14" fill="#D55E00"/>
+  <rect x="273" y="507" width="162" height="14" fill="#56B4E9"/>
+  <text x="273" y="537" font-size="12" fill="#222222">Read ~80% / write ~20%</text>
+  <rect x="367" y="526" width="108" height="16" rx="8" fill="#D55E00"/>
+  <text x="421" y="538" font-size="12" fill="#FFFFFF" text-anchor="middle">Latency-bound</text>
+  <rect x="508" y="362" width="222" height="214" rx="8" fill="#FAFAFA" stroke="#E69F00" stroke-width="2"/>
+  <path d="M508,370 a8,8 0 0 1 8,-8 h206 a8,8 0 0 1 8,8 v26 h-222 z" fill="#E69F00"/>
+  <text x="518" y="385" font-size="15" font-weight="bold" fill="#222222">7. RAG retrieval</text>
+  <text x="518" y="416" font-size="12" fill="#222222"><tspan font-weight="bold">Access:</tspan> Small random reads</text>
+  <text x="518" y="435" font-size="12" fill="#222222"><tspan font-weight="bold">Via:</tspan> Vector DB, lakehouse</text>
+  <text x="518" y="454" font-size="12" fill="#222222"><tspan font-weight="bold">Sizes:</tspan> 1 to 6 KB vectors</text>
+  <text x="518" y="473" font-size="12" fill="#222222"><tspan font-weight="bold">Bound:</tspan> Latency, ms per query</text>
+  <text x="518" y="492" font-size="12" fill="#222222"><tspan font-weight="bold">Tier:</tspan> DRAM or flash index</text>
+  <rect x="518" y="507" width="202" height="14" fill="#D55E00"/>
+  <rect x="518" y="507" width="192" height="14" fill="#56B4E9"/>
+  <text x="518" y="537" font-size="12" fill="#222222">Read ~95% / write ~5%</text>
+  <rect x="612" y="526" width="108" height="16" rx="8" fill="#D55E00"/>
+  <text x="666" y="538" font-size="12" fill="#FFFFFF" text-anchor="middle">Latency-bound</text>
+  <rect x="753" y="362" width="222" height="214" rx="8" fill="#FAFAFA" stroke="#E69F00" stroke-width="2"/>
+  <path d="M753,370 a8,8 0 0 1 8,-8 h206 a8,8 0 0 1 8,8 v26 h-222 z" fill="#E69F00"/>
+  <text x="763" y="385" font-size="15" font-weight="bold" fill="#222222">8. Agents</text>
+  <text x="763" y="416" font-size="12" fill="#222222"><tspan font-weight="bold">Access:</tspan> Small, metadata-heavy</text>
+  <text x="763" y="435" font-size="12" fill="#222222"><tspan font-weight="bold">Via:</tspan> APIs, MCP, file, DB</text>
+  <text x="763" y="454" font-size="12" fill="#222222"><tspan font-weight="bold">Sizes:</tspan> KB records, logs</text>
+  <text x="763" y="473" font-size="12" fill="#222222"><tspan font-weight="bold">Bound:</tspan> Latency + governance</text>
+  <text x="763" y="492" font-size="12" fill="#222222"><tspan font-weight="bold">Tier:</tspan> All tiers + catalog</text>
+  <rect x="763" y="507" width="202" height="14" fill="#D55E00"/>
+  <rect x="763" y="507" width="141" height="14" fill="#56B4E9"/>
+  <text x="763" y="537" font-size="12" fill="#222222">Read ~70% / write ~30%</text>
+  <rect x="857" y="526" width="108" height="16" rx="8" fill="#D55E00"/>
+  <text x="911" y="538" font-size="12" fill="#FFFFFF" text-anchor="middle">Latency-bound</text>
+  <line x1="242" y1="181.0" x2="260" y2="181.0" stroke="#555555" stroke-width="2.5" marker-end="url(#ar)"/>
+  <line x1="487" y1="181.0" x2="505" y2="181.0" stroke="#555555" stroke-width="2.5" marker-end="url(#ar)"/>
+  <line x1="732" y1="181.0" x2="750" y2="181.0" stroke="#555555" stroke-width="2.5" marker-end="url(#ar)"/>
+  <line x1="242" y1="469.0" x2="260" y2="469.0" stroke="#555555" stroke-width="2.5" marker-end="url(#ar)"/>
+  <line x1="487" y1="469.0" x2="505" y2="469.0" stroke="#555555" stroke-width="2.5" marker-end="url(#ar)"/>
+  <line x1="732" y1="469.0" x2="750" y2="469.0" stroke="#555555" stroke-width="2.5" marker-end="url(#ar)"/>
+  <path d="M864.0,290 V325 H129.0 V358" fill="none" stroke="#555555" stroke-width="2.5" marker-end="url(#ar)"/>
+  <text x="500" y="319" font-size="12" fill="#555555" text-anchor="middle">trained base model hands off to adaptation and serving</text>
+  <path d="M864.0,578 V606 H8 V181.0 H16" fill="none" stroke="#D55E00" stroke-width="2.5" stroke-dasharray="7 5" marker-end="url(#arv)"/>
+  <text x="500" y="599" font-size="12" fill="#D55E00" text-anchor="middle">feedback loop: prompts, logs, ratings and synthetic data flow back into the lake</text>
+  <rect x="18" y="680" width="16" height="12" fill="#56B4E9"/><text x="40" y="691" font-size="12" fill="#222222">read share</text>
+  <rect x="118" y="680" width="16" height="12" fill="#D55E00"/><text x="140" y="691" font-size="12" fill="#222222">write share</text>
+  <rect x="232" y="680" width="16" height="12" fill="#009E73"/><text x="254" y="691" font-size="12" fill="#222222">data preparation</text>
+  <rect x="372" y="680" width="16" height="12" fill="#0072B2"/><text x="394" y="691" font-size="12" fill="#222222">model building</text>
+  <rect x="502" y="680" width="16" height="12" fill="#E69F00"/><text x="524" y="691" font-size="12" fill="#222222">model serving and use</text>
+  <text x="982" y="691" font-size="12" fill="#555555" text-anchor="end">pFS = parallel file system; KV = key-value attention cache</text>
+</svg>
