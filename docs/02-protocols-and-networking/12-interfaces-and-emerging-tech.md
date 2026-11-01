@@ -5,11 +5,11 @@
 
 ## TL;DR
 
-- **PCIe doubles every generation, and the drive link is rarely the bottleneck.** A PCIe 6.0 x4 SSD link carries ~29.5 GB/s each way. In shared storage, the network and the software set throughput.
-- **CXL turns PCIe wires into a load/store memory bus.** Memory expanders ship. Switched pooling is just starting. Coherent multi-host sharing is still a lab feature.
-- **EDSFF replaced the 2.5-inch drive in hyperscale and AI servers.** Each form factor fixes watts and NAND per bay. Everpure's proprietary DirectFlash Module (DFM) sidesteps some of those limits.
-- **FDP is the commodity industry catching up with host-managed flash.** It cuts write amplification without breaking existing software. Purity has managed raw NAND directly since 2017.
-- **Optane is the case study for any new memory tier.** It had good physics but a thin price gap, a CPU-locked ecosystem and a single fab. CXL memory and KV-cache tiers face the same three tests.
+- **PCIe doubles every generation; the drive link is rarely the bottleneck.** A PCIe 6.0 x4 link carries ~29.5 GB/s each way, so in shared storage the network and software set throughput.
+- **CXL turns PCIe wires into a load/store memory bus.** Expanders ship; pooling is starting; multi-host sharing is still in labs.
+- **EDSFF replaced the 2.5-inch drive in hyperscale and AI servers,** fixing watts and NAND per bay. Everpure's proprietary DirectFlash Module (DFM) sidesteps some of those limits.
+- **FDP is commodity flash catching up with host-managed flash.** It cuts write amplification without breaking software; Purity has managed raw NAND since 2017.
+- **Optane is the case study for any new memory tier:** good physics, but a thin price gap, a CPU-locked ecosystem and one fab. CXL memory and KV-cache tiers face the same tests.
 
 ## Why this matters for Everpure strategy
 
@@ -85,9 +85,9 @@ flowchart LR
 
 **The spec runs well ahead of deployment.** CXL 4.0 (November 2025) reached 128 GT/s on the PCIe 7.0 PHY, up to 768 GB/s per direction on x16[^14]. Deployment lags:
 
-- **Direct-attached expansion:** Azure's M-series preview, announced November 2025, uses Astera Labs' CXL 2.0 controllers at up to 2 TB each[^15].
-- **Switched pooling:** Marvell lists a CXL 2.0 switch in production and its next switch sampling in Q3 2026[^16].
-- **Rack-scale pooling for AI:** still demonstrations, such as Samsung with AMD at OCP 2026[^17].
+- **Direct attach:** Azure's M-series preview (November 2025) uses Astera Labs' CXL 2.0 controllers, up to 2 TB each[^15].
+- **Pooling:** Marvell has a CXL 2.0 switch in production and its next one sampling in Q3 2026[^16].
+- **Rack-scale AI pooling:** demonstrations, such as Samsung with AMD at OCP 2026[^17].
 
 The economics are modest: Pond estimated a 16-socket pool trims DRAM needs by about 7%[^18]. CXL memory is DRAM at DRAM prices.
 
@@ -105,7 +105,7 @@ SNIA's EDSFF family replaced the 2.5-inch U.2 shape with ones designed for airfl
 
 *Table 12.2 — EDSFF replaced one universal bay with shapes sized to their power envelope; capacity now concentrates in E3.L and U.2, density in E1.S.*
 
-Two constraints bind at the top end. One is **controller DRAM.** A conventional SSD's flash translation layer keeps ~4 bytes of map per 4 KiB page, so it needs 1 GB of DRAM per TB. A 245 TB drive would need ~245 GB on board. Big QLC drives therefore map in coarser units, and small random writes pay in read-modify-write amplification. The other is the standard's **power and volume per bay**.
+Two constraints bind at the top end. First, **controller DRAM**: A conventional SSD's flash translation layer keeps ~4 bytes of map per 4 KiB page, so it needs 1 GB of DRAM per TB. A 245 TB drive would need ~245 GB on board. Big QLC drives therefore map in coarser units, and small random writes pay in read-modify-write amplification. Second, the standard's **power and volume per bay**.
 
 Everpure's **DirectFlash Module** escapes both because it is not an SSD. Purity runs one global FTL in the controller and treats modules as raw NAND ([Chapter 26](../04-everpure/26-purity-and-directflash.md)). The module needs no drive-sized DRAM map, and Everpure sets its shape and thermal design. DFMs reached 300 TB by 2026[^25], on a roadmap first set in 2023[^26], while the largest standard drives ship at 245.76 TB. The price: only Purity can drive a DFM. Meanwhile the standard moves: in July 2025 the SFF TA reopened the E1/E3 power and thermal specs, with Micron leading the work[^27].
 
@@ -141,14 +141,14 @@ flowchart TB
 
 ### Computational storage: why it stalled
 
-Computational storage puts FPGAs or Arm cores in or beside the drive to filter, compress or search data before it crosses PCIe. SNIA defined an architecture for it, and NVM Express added computational-program command sets [VERIFY: SNIA CS architecture v1.0 (2022) and NVMe computational command sets (2024)]. Outside transparent in-drive compression, adoption is thin:
+Computational storage puts FPGAs or Arm cores in the drive to filter, compress or search data before it crosses PCIe. SNIA defined an architecture for it, and NVM Express added computational-program command sets [VERIFY: SNIA CS architecture v1.0 (2022) and NVMe computational command sets (2024)]. Outside transparent in-drive compression, adoption is thin:
 
 1. **Data is striped.** Erasure coding spreads a record across 10 or more drives, so no single drive can evaluate a filter on it.
 2. **Fragmentation.** Every vendor shipped its own accelerator and toolchain.
 3. **Procurement.** Drive buyers pay for $/TB and reliability, not lock-in features.
 4. **Compute moved up a level.** Array controllers, DPUs and GPUs took the offload. NVIDIA's BlueField-4 context-memory storage platform is computational storage at system level[^30].
 
-Near-data compute wins when software cannot see it and it sits where the whole object is visible: in the array or the DPU, not the drive.
+Near-data compute wins when it is invisible to software and sees whole objects: in the array or DPU, not the drive.
 
 ### Optane: the lessons for any new memory tier
 
@@ -190,21 +190,13 @@ The 2015–2021 milestones above come from background knowledge [VERIFY: Optane 
 
 *Table 12.3 — Everpure is the only major vendor that owns the flash module; that buys capacity, power and write-amplification advantages at the cost of a non-standard part.*
 
-**Steelman the standard route.** EDSFF plus FDP gives a hyperscaler much of DirectFlash's benefit with four NAND suppliers and no licence. The toll is per-drive DRAM and controller cost. The 300 TB versus 245 TB lead must be re-earned each generation, and Sandisk's roadmap shows 512 TB in 2027[^37]. **Steelman DirectFlash.** The global FTL removes per-drive DRAM, controllers and over-provisioning, and schedules GC system-wide. Because the DRAM problem worsens with capacity, the advantage compounds. Two top-five hyperscalers have signed[^1].
+**Steelman the standard route.** EDSFF plus FDP gives much of DirectFlash's benefit with four suppliers and no licence; the toll is per-drive DRAM and controllers. The 300 TB versus 245 TB lead must be re-earned each generation, and Sandisk's roadmap shows 512 TB in 2027[^37]. **Steelman DirectFlash.** A global FTL removes per-drive DRAM, controllers and over-provisioning, an edge that compounds as capacity grows. Two top-five hyperscalers have signed[^1].
 
 ## History and trajectory
 
 NVMe flash arrays, DirectFlash included, grew up on PCIe 3.0; GPUs then pulled the 2017–2025 sprint. Optane rose and fell in that window, and Intel redirected its memory-tier ambitions to CXL[^32]. CXL itself went from direct attach (1.x), to switching and pooling (2.0), to fabrics and sharing (3.x) [VERIFY: CXL 1.0–3.1 release dates], and reached 4.0 in November 2025[^14]. FDP displaced ZNS at hyperscale after 2022.
 
-**Watch through 2027:**
-
-- Gen6 platform volume.
-- CXL 3.x switches leaving sampling.
-- A bigger E3 power envelope.
-- Standard drives at 512 TB.
-- KV-cache tiers converging on NVIDIA's interfaces.
-
-See [Chapter 53](../07-history-and-future/53-future-trends.md).
+Watch through 2027: Gen6 platform volume, CXL 3.x switches leaving sampling, a bigger E3 power envelope, 512 TB standard drives, and KV tiers converging on NVIDIA's interfaces ([Chapter 53](../07-history-and-future/53-future-trends.md)).
 
 ## Numbers that matter
 
@@ -240,8 +232,8 @@ See [Chapter 53](../07-history-and-future/53-future-trends.md).
 
 - "PCIe 6.0 doubles array performance." The network and software usually bind first.
 - "CXL makes memory cheap." It makes memory *poolable*. The bits are still DRAM.
-- "Optane failed because the technology didn't work." It failed on economics, ecosystem and supply.
-- "DFMs are just big SSDs." They have no drive FTL, and that is the point.
+- "Optane failed technically." It failed on economics, ecosystem and supply.
+- "DFMs are just big SSDs." They have no drive FTL.
 - "ZNS is the placement standard." Hyperscalers chose FDP.
 
 ## Going deeper (optional, L3 pointers)
@@ -254,7 +246,6 @@ See [Chapter 53](../07-history-and-future/53-future-trends.md).
 
 - **PAM4** — four-level signalling, two bits per symbol.
 - **FLIT** — fixed 256-byte PCIe 6.0+ transfer unit with FEC and CRC.
-- **Retimer** — chip that re-clocks a high-speed link to extend reach.
 - **CXL Type 1/2/3** — caching device, accelerator with memory, memory expander.
 - **CXL.mem / HDM** — load/store protocol and the device memory it maps.
 - **Back-invalidate** — CXL 3.0 mechanism enabling multi-host sharing.
@@ -262,7 +253,6 @@ See [Chapter 53](../07-history-and-future/53-future-trends.md).
 - **EDSFF** — data-centre SSD form factors (E1.S/E1.L/E3.S/E3.L).
 - **FDP / ZNS** — NVMe placement hints / sequential-write zones.
 - **WAF** — NAND writes per host write.
-- **Computational storage** — compute in or near the drive.
 - **SCM** — persistent media between DRAM and NAND, such as Optane.
 
 ## Sources
