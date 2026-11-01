@@ -370,3 +370,86 @@
 | 40 | Huawei、NetApp、Everpure、HPE 的 2Q25 厂商份额由 2Q26 收入/增速推算，而非读自 IDC 表格；2Q18 来源 URL（StorageNewsletter p=193184）未逐页核查 | 厂商份额图表中的对比点。 |
 | 40 | Everpure 自己在 2026-09-23 金融分析师大会上给出的 TAM/SAM 数字 | 公司自述的规模估算应作为 TAM 表的锚点。 |
 | 41 | NetApp AFX 1K 的确切 GA 日期（2025 年 10 月 Insight 大会上宣布；据 ONTAP 9.18.1/9.19.1 报道，已于 2026 年出货） | 为表 41.3 中在位厂商的追赶标注日期。 |
+| 41 | DDN 2024 年（约 US$400M）与 2025 年（约 US$500M）收入，仅见于 Forbes 2026-08-06 文章的搜索摘要 | 驱动合并估值/收入比的算术以及 DDN 12.5x 的标题级倍数。 |
+| 41 | IDC 外部企业级存储追踪数据是否计入在合作伙伴服务器上销售的 VAST/WEKA 软件 | 决定"约占市场 3%"的对比在多大程度上低估了挑战者。 |
+| 41 | Dell AI Factory 客户数量（据 Dell 2026 年 5 月博客 >5,000；后来一个二手来源报道为 6,500） | 企业 AI 向在位厂商采购的证据。 |
+| 42 | InsightEngine 的 GA 日期（2024 年 10 月宣布；有一个来源称是 2025 年 3 月） | 产品成熟度表的准确性。 |
+| 42 | Event Broker"每秒 5 亿条消息"的说法（仅见于搜索摘要） | 协议一节中引用的厂商性能说法。 |
+| 42 | VAST FY2026 的财年结束月份（新闻稿称"exiting fiscal year 2026"时 CARR >US$500M；报道称为 2026 年 1 月） | 60x CARR 估值倍数的基础。 |
+| 42 | VAST A 轮与 B 轮各轮的投资方与金额（2019 年 2 月结束隐身模式时合计约 US$80M） | 融资表与图表的完整性。 |
+| 42 | VAST 员工人数（约 1,200 人，约 1/3 在以色列，2026 年 3 月报道） | 人均 CARR 与规模对比。 |
+| 42 | VAST AI OS 的 Azure Native ISV Service 正式供货（2025 年 11 月宣布；截至 2026-11-01 未找到 GA 确认） | VAST 是有两条还是一条已上线的超大规模云渠道。 |
+| 42 | VAST 的 Lenovo OEM 状态（2025 年 7 月有销售培训，未找到正式推出） | OEM 渠道的广度以及与 Everpure 合作伙伴的重叠。 |
+| 42 | Jeff Denworth 目前的职位与职责范围（Calcalist 在 2026 年对其角色提出疑问；2026 年 1 月他仍在向媒体做简报） | 关键人物风险，以及由谁代表 VAST 阐述战略。 |
+| 42 | NetApp–DataPelago 收购的日期与条款（2026 年 7 月报道） | 作为向上层栈延伸的并购选项所引用的先例。 |
+| 42 | 基于 DFM 的 FlashBlade//EXA 数据节点的 GA 状态 | 与 VAST 介质经济性的对比表。 |
+| 43 | WEKApod 3 单机架带宽（10.2 TB/s）与 IOPS（210M）数字，仅见于二手报道（Unite.AI、NAND Research） | 用于第 43/45 章中与 FlashBlade//EXA 和 VAST 的密度/性能对比。 |
+| 43 | WEKA 的 NVIDIA STX 验证（GTC 2026）使用的是 BlueField-3 还是 BlueField-4 硬件；StorageReview 与 WEKA 新闻稿似乎相互矛盾 | 决定 WEKA 的"DPU 承载存储"说法当前是现实还是路线图。 |
+| 43 | SHI 经销商对 Lenovo 品牌 WEKA XPS 版的标价为 US$339/TB/年（单一列表） | WEKA 软件定价唯一的公开锚点；用于 ARR 与容量换算。 |
+| 43 | Calcalist 报道 Zvibel 预计 2025 年收入将增长两倍（变为三倍）、每月烧钱约 US$0.5M，该报道的日期与背景 | 是判断 WEKA 当前规模与估值倍数的关键输入。 |
+| 43 | Memorial Sloan Kettering 在 WEKA 上的 IO500 结果（得分 665.49），需对照官方 io500.org 榜单 | 表 43.2 中引用的客户与基准测试参考。 |
+| 43 | NeuralMesh 6 GA 与 WEKApod 3 首批出货（承诺于 2026 年下半年 / 2026 年秋季；截至 2026-11-01 未找到 GA 或出货公告） | 执行力信号；WEKA 开始销售硬件后，延期的影响更大。 |
+| 43 | 2024 年 5 月 E 轮之后 WEKA 的任何融资、老股转让或战略交易（截至 2026-11-01 未找到） | 会对第 43 章与第 54 章使用的 US$1.6B 参考估值重新定价。 |
+| 43 | E 轮新股/老股的拆分（常被引用为 US$100M/US$40M；WEKA 新闻稿只说"primary and secondary"） | 公司募集的资本与流向原股东的现金之分。 |
+| 44 | DDN 收入基数：Blocks & Files（2025 年 1 月）称 2023 年为 $500M、2024 年估计为 $750M；Forbes（2026 年 8 月，转载版）给出 $400M（2024）与 $500M（2025）；Forbes 英文原文称历史上约每年 $300M。需获取完整的 Forbes 英文文章。（B&F 的 2023/2024 数字已在 2026-11-01 的第二次搜索摘要中再次确认。） | 驱动隐含估值倍数与增长叙事；这些数字不可能全都正确。 |
+| 44 | Infinia 的租户隔离是否包括按租户的加密密钥（一份非正式第三方说明称仅限访问层；该说法因无来源已从正文删除） | 在为新兴 GPU 云（neocloud）买家比较 Infinia 多租户与 FlashBlade//EXA 多租户时很重要。 |
+| 44 | 29 GB / 约 14 GB/s 算例中使用的 Qwen3-32B KV 缓存几何参数（64 层、8 个 KV 头、头维度 128） | 支撑对 DDN 27x KV 缓存说法的合理性检验。 |
+| 44 | AI400X3 MLPerf Storage v2.0 各工作负载的模拟加速器数量（DDN 与二手文章不一致：CosmoFlow 上 52 对 135；ResNet-50 上 208 对 640）以及 AI400X3 数据手册吞吐量（经销商列为读取 140 GB/s；DDN 产品页列为 190 GB/s，可能指 AI400X3M） | 与 FlashBlade//EXA 做同口径密度对比所需。 |
+| 44 | DDN 客户数量（资料中有 5,000+ 与 11,000+ 两种说法）与员工人数（据 Revelio Labs 估计约 1,334 人） | 规模与人均收入对比。 |
+| 44 | DDN 计划中的 2026 年战略融资是否已完成，以及投资方与估值 | 若有战略投资者（NVIDIA、超大规模云厂商、主权基金）入局，将改变 DDN 相对 Everpure 的渠道地位。 |
+| 44 | xAI Colossus 的存储在 DDN（EXAScaler 与 Infinia，声称有 350 PB Infinia 集群）与 VAST 之间的划分 | 两家厂商都声称担当主要角色；影响竞争性交易中如何使用客户参考。 |
+| 45 | Purity//DN 上 FlashBlade//EXA 数据节点的纠删码几何结构与数据缩减比（截至 2026-11-01 未公开） | EXA 与 VAST $/TB 对比中最大的未知数（保护开销 2.7% 对约 20%，在 50 PB 可用容量下相差约 11 PB 原始容量）。 |
+| 45 | VAST Azure Native ISV Service 的正式供货状态（2025 年 11 月 Ignite 大会宣布） | 决定 VAST 云可用性单元格写"两家超大规模云厂商"还是"一家 + 已宣布"。 |
+| 45 | WEKA 标价 US$339/TB/年来自单一 SHI 经销商列表（1–2.5 PB 档） | 四家软件订阅中唯一的公开价格点；用于消费模式一行。 |
+| 45 | Everpure 于 2026 年 3 月宣布将 NVCS 验证扩展至 EXA 后，FlashBlade//EXA 是否已完成任何 NVIDIA-Certified Storage 级别或 NCP 认证（B&F 报道 NCP 认证"later this year"；在 NVIDIA 认证存储列表的搜索摘录中未见 EXA 条目，截至 2026-11-01 无确认来源；第 27、34、45 章措辞现已统一） | 改变雷达图中的 NVIDIA 地位评分以及 SuperPOD/新兴 GPU 云交易各行。 |
+| 45 | NeuralMesh 6 的 GA 日期（2026-07-21 宣布于 2026 年下半年推出；未找到 GA 确认）以及多租户的租户数量（来源分别引用 50,000 个逻辑租户与 >1,000 个隔离租户） | 影响 WEKA 容量经济性与多租户对比。 |
+| 46 | HPE GreenLake for File Storage（运行在 Alletra MP 上的 VAST 软件）在 2026 年是否仍与 X10000 原生文件服务一同积极销售 | 决定第 16、46、49 章如何描述 HPE 对 VAST 的依赖。 |
+| 46 | Huawei 2025 年 ICT 基础设施收入（CNY 375.0B，+2.6%）仅见于搜索摘要；需核对 Huawei 2025 年年报分部表 | 用于衡量 Huawei 存储业务所属母业务的规模。 |
+| 46 | HPE Q3 FY26 存储收入（$1.29B，+10.2%）：约 $1.3B/+10.2% 已于 2026-11-01 由 Constellation Research 与 Blocks & Files 的摘要佐证；确切的 $1.29B 仍需 8-K Ex. 99.1 表格确认 | 为第 46 章收入图表与"关键数字"表提供数据。 |
+| 46 | NetApp AI Data Engine 的正式供货日期（发布报道预计为 2026 自然年 Q1） | 影响在正面对比中是否将 AIDE 描述为已出货。 |
+| 46 | IDC 2Q26 中 IBM 与 Hitachi Vantara 的份额（未获取） | 补全在位厂商份额全貌，以及"两者均在前五之外"的说法所需。 |
+| 46 | Dell Lightning FS 的 GA 日期（Dell GTC 博客称 2026-03-16 可用；新闻稿称 2026 年 4 月；NAND Research 将 GA 与 Dell Technologies World 挂钩） | 第 46 章与第 17 章时间线的准确性。 |
+| 47 | 自 2020 年 7 月 US$125M E 轮以来 Qumulo 的融资或股权变动 | 决定当前估值，以及 Qumulo 是合理的收购标的还是困境资产。 |
+| 47 | VDURA（原 Panasas）的融资总额及任何 2025–2026 年融资轮（CB Insights 称约 US$133M，含贷款；Caplight 称约 US$75M） | 判断 VDURA 在 HPC/AI 交易中的持久力所需。 |
+| 47 | Nutanix 2026 财年 Q2 新客户数（>1,000）及"大多来自 VMware"的归因——仅来自电话会议摘要 | 后 Broadcom 时代 VMware 迁移顺风的关键证据。 |
+| 47 | Google Cloud Parallelstore 逐步退役、转向 Managed Lustre——仅有一个合作伙伴（innFactory）页面；Google 文档站点无法访问 | 影响对超大规模云 AI 文件存储格局的描述。 |
+| 47 | Hammerspace "Series B-II"（2026-02-23，TGC Square，未披露金额）——单一聚合网站（CB Insights） | 将更新 Hammerspace 的融资与估值轨迹。 |
+| 48 | 单一厂商（VDURA）给出的 SSD/HDD $/TB 溢价读数 22.6x（2026 年 Q1）与 18.6x（2026 年 Q3）；需找到 TrendForce 或 Coughlin 的佐证 | 驱动 HDD 与 QLC 的经济性论证以及"约 20x 溢价"的谈话要点 |
+| 48 | TrendForce 1Q26 修订后的预测（NAND +55-60%，企业级 SSD +53-58%）与 2Q26 预测（+70-75%），仅见于中文二手报道 | 图 48.2 中最大的两根柱子以及 4.7x 复合指数的算术 |
+| 48 | TrendForce 修订后的 4Q25 NAND 综合预测 +20-25%（中文二手报道） | 为图 48.2 与复合指数提供数据 |
+| 48 | Sandisk LTA 覆盖 FY27 超过 50% 的 bit 量（TIKR/二手来源；2026 年 5 月一手报道的数字为"over one-third"） | 衡量有多少 NAND 供应已被远期锁定，这会影响阵列厂商的现货可得性 |
+| 48 | Kioxia 到 2028 年 50% 出货量纳入 LTA 的目标（仅见于搜索摘要） | 供应商侧对 LTA 的意愿，与 Everpure 的供应协议选项相关 |
+| 48 | Everpure Q2 FY27 预付费用增加约 $577M（第三方对 10-Q 的解读） | 衡量 Everpure 的远期 NAND 头寸与库存风险 |
+| 48 | NetApp 内存成本上涨传导到定价的"三个季度"滞后（仅见于 Earnings Whispers 摘要） | 校准阵列厂商产品毛利率滞后于 NAND 上行周期的时长 |
+| 48 | 合作伙伴报告的 Everpure 价格调整：Evergreen//One 约 +5%，Evergreen//Forever 报价 30%+（Daymark 博客） | 衡量订阅业务账本上的 NAND 空头敞口 |
+| 48 | YMTC Xtacking 4.0 产品当前的 3D NAND 层数 | 补全供应商概况表 |
+| 48 | Counterpoint 2Q26 Kioxia（14%）、Micron（13%）与 Sandisk（11%）的 bit 份额，仅见于 Herald Corp 报道 | 图 48.1 右侧面板 |
+| 49 | Dell（PowerScale 上的 NIXL）、NetApp（LMCache 卸载文档）与 IBM（Storage Scale KV Redbook）的 KV 缓存方案仅经搜索摘要确认 | 它们决定能力热力图中的三个 ◐ 单元格以及"16 家厂商中约 10 家"的计数。 |
+| 49 | FlashBlade//EXA 面向新兴 GPU 云（neocloud）的多租户与 QoS 来自 Accelerate 2026 的二手摘要 | 支撑表 49.7 中的新兴 GPU 云（neocloud）选项。 |
+| 49 | 所有象限坐标与热力图单元格都属于本图谱的判断；有争议的单元格（VAST 数据服务广度、Everpure 超大规模 ●、WEKA 介质经济性、超大规模云 KV 缓存 ◐）应请 Everpure 竞争情报人员做合理性核查 | 矩阵会在对话中被引用；某个单元格出错会损害可信度。 |
+| 50 | SHI 经销商对 WEKA 软件的标价 US$339/TB/年（单一列表） | 评分卡算例中 WEKA 单位经济性唯一的公开锚点。 |
+| 50 | MinIO 与 WEKA 2023 年许可证纠纷的细节及是否已解决（B&F 与 WEKA 页面仅经搜索摘要读取） | 在代码/团队维度中用作开源许可证风险的例子。 |
+| 50 | NeuralMesh 6 是否如计划于 2026 年下半年 GA | 会使 WEKA 路线图可信度评分上调或下调。 |
+| 51 | RAMAC 每 MB 约 US$10,000 的成本（History of Information；IBM 估计每台驱动器 US$50,000），仅见于搜索摘要 | 为 $/GB 图表的 1956 年数据点及每年约 26% 降幅的算术提供锚点。 |
+| 51 | SunDisk 1991 年 20 MB 闪存盘约 US$1,000（ETHW/Computer Hope；Wikipedia），仅见于搜索摘要 | 为 1991 年闪存数据点及闪存每年约 35% 降幅的算术提供锚点。 |
+| 51 | 仅见于搜索摘要的图表数据点：1981 年小容量硬盘约 US$500,000/GB（Backblaze）、2003 年 1 月零售 US$1/GB（Slashdot/PriceWatch）、2008 年 Q4 MLC NAND 约 US$0.90/GB（MacTech）、2012 年 12 月消费级 SSD 中位数 US$1.02/GB（TechSpot） | 在图 51.2 中以空心标记绘制；若网络允许，用 McCallum（jcmit.net）或 OWID 序列替换。 |
+| 51 | IBM 3380 标价区间 US$81,000–142,400（StorageNewsletter 给出的上限为 US$142,200） | 用于 1980 年约 US$32,000/GB 的数据点。 |
+| 51 | Isilon 的创立年份 2001 年来自经搜索摘要读取的 Wikipedia | 时间线日期。 |
+| 51 | 1995 年 Symmetrix 占大型机磁盘 TB 41% 对 IBM 35%，仅来自一篇 Register 采访文章 | 支撑"初创公司击败了发明者"的说法。 |
+| 52 | 1990 年代中期约 $1,250/GB 的回忆（Design News 2022）与 2005 年约 $45/GB 的批量价格（Semico/iSuppli，经 MacDailyNews）——仅见于搜索摘要 | 闪存成本曲线图（图 52.2）的锚点。 |
+| 52 | iSuppli 2008 年 Q4 消费级 NAND $0.90/GB（MacTech 2010）——仅见于搜索摘要 | 成本曲线图数据点；也支撑"2009 年约 $1/GB"的说法。 |
+| 52 | Objective Analysis 2011–2015 年 NAND $/GB 读数（EE Times Japan，数值读自图表） | 成本曲线图数据点。 |
+| 52 | TechTarget 文章 252470220 的发布日期（假定为 2019 年）以及 2019 年约 5¢/GB 的现货数字 | 2018–19 年价格崩盘的成本曲线图数据点。 |
+| 52 | TrendForce 2026 年 512Gb TLC 晶圆现货读数（3 月 US$20.586、8 月 US$21.208、10 月初 US$18.833）——来自 TrendForce 标签页的搜索摘要 | 界定图 52.2 与"关键数字"表中的"约 13–15× 飙升"及 2026 年水平。 |
+| 52 | Applied Materials 的 3D NAND 数字（32→64 层 bit 增长约 100%，96→128 层约 33%；单位投片资本开支为平面 NAND 的 1.5×→2.2×）以及约 30% 的长期 bit 需求增长 | bit 增长与晶圆产能之争论证的核心。 |
+| 52 | TrendForce 2008 年全年 NAND 份额（Samsung 40.4%、Toshiba 28.1%、Hynix 15.1%、Micron 7.9%、Intel 5.8%）——仅见于搜索摘要 | 2008 年 HHI（约 2,750）与 2Q26 对比的依据。 |
+| 52 | Coughlin ">85% of data-centre data on HDD"——由 Solidigm 赞助的来源 | 支撑"磁盘守住了大容量层"的说法。 |
+| 53 | 归于联合创始人 John Colgrove 的 600 TB 及 1 PB 以上 DFM 目标（网络研讨会"Eliminating Disk for Good"，仅见于搜索摘要；无日期） | 支撑趋势 1 的时间判断以及 Everpure 容量领先的论点。 |
+| 53 | Gartner 预测目前 <1% 的存储负责人采用智能体（agentic）存储管理，到 2028 年将升至 20%（Blocks & Files 2025-12-02 搜索摘要） | 趋势 12 唯一引用的独立预测。 |
+| 53 | Meta 称计划采用最高 512 TB 的 QLC SSD（TechRadar，沿用自第 26 章） | 趋势 1 中通用产品追赶的信号。 |
+| 53 | Kioxia 1,000 层 NAND 的日期说法相互矛盾（技术路径为 2027 年，其他报道中的产品目标为 2031 年） | 影响 PLC/层数的时间判断。 |
+| 55 | Everpure 当前客户总数（Fusion 附加率算术中使用约 14,500–15,000） | 任何附加率计算的基数 |
+| 56 | Rob Lee 目前的职位与职责范围（官方简介为 Chief Technology and Growth Officer；2026 年其他来源称 CTO 或"VP, CTO & Chief Growth Officer"；仅见于搜索摘要） | 决定由谁负责长期技术押注，以及 CTO 办公室与增长/企业发展部门的关系 |
+| 60 | FlashArray NVMe/TCP 的正式供货日期（Purity//FA 6.4.2+ 是有证据的最早版本；第 2 部分审阅发现来源在 2022 与 2023 年之间存在矛盾，第 7 章现写为 2022） | 协议海报按传输方式标注 Everpure 的支持情况；该日期是"NVMe/TCP 发展轨迹"谈话要点的锚点 |
+| 60 | FlashBlade//S 的 S3-over-RDMA 正式供货（2025 年 3 月 GTC 大会宣布） | 对象存储专业厂商（MinIO、Cloudian、Dell、HPE）已出货；海报将其标注为仅已宣布 |
+
