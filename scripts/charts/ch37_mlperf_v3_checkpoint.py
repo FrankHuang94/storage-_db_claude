@@ -42,7 +42,9 @@ def build(out_dir: Path) -> Path:
                 va="center", fontsize=8, color="#444444")
     ax.set_yticks(list(ys))
     ax.set_yticklabels([r["label"] for r in rows], fontsize=10)
-    ax.set_xlim(0, 1500)
+    ax.set_xlim(0, 1900)
+    ax.set_axisbelow(True)
+    ax.set_xticks([0, 250, 500, 750, 1000])
     ax.set_xlabel("Checkpoint write bandwidth (GiB/s), mean of 10 checkpoints")
     ax.grid(axis="y", visible=False)
     ax.set_title("MLPerf Storage v3.0 checkpoint write, selected submissions (vendor-reported; "

@@ -4,7 +4,7 @@
 
 ## Status
 - **Phase:** 1 — batch drafting
-- **Next step:** QA Ch 16 exemplar → launch Part 1 + Part 2 batches
+- **Next step:** finish Parts 5–6 drafting; Part 3a review running; launch reviews per Part as each completes; Part 4 review must trim to ≤11,000 words
 
 ## Phase checklist
 - [x] Phase 0.1 — skeleton, CLAUDE.md, style guide, scripts, mkdocs.yml, workflow

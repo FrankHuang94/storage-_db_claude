@@ -20,7 +20,7 @@ NAME = "ch32-kv-size"
 MODEL_STYLE = {
     "DeepSeek-V3 671B (MLA)": ("#009E73", "D"),
     "Llama 3.1 8B (GQA)": ("#56B4E9", "^"),
-    "Llama 3 70B (GQA)": ("#0072B2", "o"),
+    "Llama 3.1 70B (GQA)": ("#0072B2", "o"),
     "Llama 3.1 405B (GQA)": ("#D55E00", "s"),
 }
 
@@ -95,7 +95,7 @@ def build(out_dir: Path) -> Path:
     ax2.set_xticklabels([f"{x:,}" for x in xs])
     ax2.yaxis.set_major_formatter(FuncFormatter(_gb_label))
     ax2.set_ylim(10, 2e7)
-    ax2.set_xlabel("Retained sessions (Llama 3 70B, 128K tokens each)")
+    ax2.set_xlabel("Retained sessions (Llama 3.1 70B, 128K tokens each)")
     ax2.set_ylabel("Total KV cache to keep warm")
     ax2.set_title("B. A fleet: retained context outgrows a node fast", fontsize=12)
     ax2.grid(axis="x", visible=False)
