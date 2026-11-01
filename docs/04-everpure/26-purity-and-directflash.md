@@ -91,7 +91,7 @@ flowchart LR
 
 **Density.** Without a per-drive DRAM map, module capacity is limited by NAND packages and power, not controller memory, which is why DFMs have led the largest standard SSD at each step (Figure 26.4).
 
-**Power.** Everpure's CTO put the 75 TB DFM under 10 W, against a 25 W maximum for a 61.44 TB Solidigm SSD[^14]: about 0.13 W/TB against 0.41 W/TB, though comparing a typical draw with a maximum flatters the DFM. At system level, Everpure claims HDD-based and 15.36 TB-SSD systems need 2.4× the power of its 75 TB-DFM system and 4.8× that of its 150 TB-DFM system[^16], and up to 75% less power than disk in hyperscale use[^17]. NetApp's rebuttal is fair: compare whole systems, not modules[^18].
+**Power.** Everpure's CTO put the 75 TB DFM under 10 W, against a 25 W maximum for a 61.44 TB Solidigm SSD[^22]: about 0.13 W/TB against 0.41 W/TB, though comparing a typical draw with a maximum flatters the DFM. At system level, Everpure claims HDD-based and 15.36 TB-SSD systems need 2.4× the power of its 75 TB-DFM system and 4.8× that of its 150 TB-DFM system[^16], and up to 75% less power than disk in hyperscale use[^17]. NetApp's rebuttal is fair: compare whole systems, not modules[^18].
 
 **Endurance and QLC viability.** With one GC that knows which data is cold, Purity can group data by lifetime so whole blocks die together. That makes low-endurance QLC usable for enterprise primary storage.
 
@@ -196,9 +196,9 @@ Signals to watch: a date for 600 TB DFMs, standard SSDs reaching 512 TB, FDP ado
 
 ## Going deeper (optional, L3 pointers)
 
-- Colgrove et al., SIGMOD 2015[^7]: Purity's monotonic writes, predicate deletion and metadata design.
-- Yang et al., INFLOW 2014[^12]: the log-on-log argument.
-- Bjørling et al., FAST 2017[^38]: open-channel SSDs, the precursor of ZNS and FDP.
+- Colgrove et al., SIGMOD 2015[^9]: Purity's monotonic writes, predicate deletion and metadata design.
+- Yang et al., INFLOW 2014[^14]: the log-on-log argument.
+- Bjørling et al., FAST 2017[^39]: open-channel SSDs, the precursor of ZNS and FDP.
 
 ## Key terms
 
