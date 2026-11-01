@@ -97,6 +97,6 @@ Each architecture chapter: component diagram + read & write sequence (★), stat
 | 55 | `55-talking-with-pms.md` | 1,600 | PM mental-model diagram; question sets by product line table; meeting-prep flow |
 | 56 | `56-talking-with-engineering-and-cto.md` | 1,600 | Architecture-review flow; good-answer/red-flag table; credibility ladder |
 | 57 | `57-question-bank.md` | 1,800 | Topic×audience coverage table; tag legend; 150 questions |
-| 58 | `58-explain-in-30-seconds.md` | 1,500 | Topic map; 60 one-liners in tables by theme |
+| 58 | `58-explain-in-30-seconds.md` | 1,500 | Topic map; 66 one-liners by theme |
 | 59 | `59-self-test-flashcards.md` | 1,500 | Card-distribution chart/table; 200 `<details>` flashcards |
 | 60 | `60-cheat-sheets.md` | 1,000 | Acronym sheet; ★ protocol poster; ★ architecture poster; ★ product-lineup poster |

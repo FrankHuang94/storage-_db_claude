@@ -15,15 +15,15 @@ It is written for a corporate-development / strategy professional with a semicon
 |---|---|
 | **10 minutes** | Read [0.2 The one-page map](00-start-here/00b-one-page-map.md): the domain mindmap and "Everpure in 10 diagrams". |
 | **2 hours** | Follow the **crash course** in [0.1 How to use this atlas](00-start-here/00a-how-to-use-this-atlas.md): TL;DRs of the key chapters plus the signature figures. |
-| **2 days** | Follow the **2-day ramp** in 0.1: Parts 1–4 on day 1, Parts 5–6 on day 2. |
-| **2 weeks** | Follow the **2-week mastery plan** in 0.1, with the [question bank](08-conversation-toolkit/57-question-bank.md) and [200 flashcards](08-conversation-toolkit/59-self-test-flashcards.md). |
+| **2 days** | Follow the **2-day ramp** in 0.1: the core of Parts 1–4 on day 1; the core of Parts 5–6 plus Ch 53–57 on day 2. |
+| **2 weeks** | Follow the **2-week mastery plan** in 0.1, with the [question bank](08-conversation-toolkit/57-question-bank.md) and [279 flashcards](08-conversation-toolkit/59-self-test-flashcards.md). |
 | **A meeting tomorrow** | Use the [Conversation Toolkit](08-conversation-toolkit/55-talking-with-pms.md) and the conversation playbook at the end of each relevant chapter. |
 
 ### Learning paths at a glance
 
-- **2-hour crash course:** [0.2 map](00-start-here/00b-one-page-map.md) → TL;DRs of [Ch 2 media](01-storage-fundamentals/02-media-physics.md), [Ch 13 storage stack](03-system-architecture/13-storage-stack.md), [Ch 16 DASE](03-system-architecture/16-disaggregated-shared-everything.md), [Ch 24 decision matrix](03-system-architecture/24-architecture-decision-matrix.md), [Ch 26 DirectFlash](04-everpure/26-purity-and-directflash.md), [Ch 30 AI pipeline](05-ai-storage/30-ai-data-pipeline.md), [Ch 32 KV cache](05-ai-storage/32-inference-and-kv-cache.md), [Ch 41 why AI-native vendors won](06-industry-and-competition/41-why-ai-native-vendors-won.md) and [Ch 45 head-to-head](06-industry-and-competition/45-head-to-head.md) → [Ch 58 explain it in 30 seconds](08-conversation-toolkit/58-explain-in-30-seconds.md).
-- **2-day ramp:** Day 1 covers Parts 1–4 (fundamentals, protocols, architectures, Everpure). Day 2 covers Parts 5–6 (AI storage, industry and competition) plus Ch 53–54.
-- **2-week mastery:** every chapter in order, with daily flashcards, the question bank and two "whiteboard rehearsals" per week. The full day-by-day schedule is in [0.1](00-start-here/00a-how-to-use-this-atlas.md).
+- **2-hour crash course:** [0.2 map](00-start-here/00b-one-page-map.md) → TL;DRs of [Ch 2 media](01-storage-fundamentals/02-media-physics.md), [Ch 13 storage stack](03-system-architecture/13-storage-stack.md), [Ch 16 DASE](03-system-architecture/16-disaggregated-shared-everything.md), [Ch 24 decision matrix](03-system-architecture/24-architecture-decision-matrix.md), [Ch 26 DirectFlash](04-everpure/26-purity-and-directflash.md), [Ch 30 AI pipeline](05-ai-storage/30-ai-data-pipeline.md), [Ch 32 KV cache](05-ai-storage/32-inference-and-kv-cache.md), [Ch 41 why AI-native vendors won](06-industry-and-competition/41-why-ai-native-vendors-won.md) and [Ch 45 head-to-head](06-industry-and-competition/45-head-to-head.md) → [Ch 58 explain it in 30 seconds](08-conversation-toolkit/58-explain-in-30-seconds.md). The full list (12 TL;DRs plus six signature figures) is in [0.1](00-start-here/00a-how-to-use-this-atlas.md).
+- **2-day ramp:** Day 1 covers the core of Parts 1–4 (fundamentals, protocols, architectures, Everpure). Day 2 covers the core of Parts 5–6 (AI storage, industry and competition) plus Ch 53–57. About six hours on day 1 and five on day 2.
+- **2-week mastery:** every chapter, with daily flashcards, the question bank and two "whiteboard rehearsals" per week. The full day-by-day schedule is in [0.1](00-start-here/00a-how-to-use-this-atlas.md).
 
 ## Map of the atlas
 
@@ -52,7 +52,7 @@ flowchart LR
 | **5 — AI Storage** | Pipeline, training/checkpointing, inference and KV cache, RAG/vector/lakehouse, NVIDIA ecosystem, neoclouds, hyperscalers, benchmarks, power, agentic AI | [Ch 30](05-ai-storage/30-ai-data-pipeline.md) |
 | **6 — Industry & Competition** | Market sizing, why AI-native vendors won, VAST / WEKA / DDN deep dives, head-to-head, incumbents, challengers, NAND cycle, matrices, diligence framework | [Ch 40](06-industry-and-competition/40-market-structure.md) |
 | **7 — History & Future** | Storage history 1956–2026, flash economics, trends 2026–2032, strategic option map | [Ch 51](07-history-and-future/51-history-of-storage.md) |
-| **8 — Conversation Toolkit** | Talking with PMs and engineers/CTO office, 150-question bank, 60 one-liners, 200 flashcards, cheat sheets | [Ch 55](08-conversation-toolkit/55-talking-with-pms.md) |
+| **8 — Conversation Toolkit** | Talking with PMs and engineers/CTO office, 150-question bank, 66 one-liners, 279 flashcards, cheat sheets | [Ch 55](08-conversation-toolkit/55-talking-with-pms.md) |
 | **Glossary** | Every term, A–Z, with an L1 definition and chapter links | [glossary.md](https://github.com/FrankHuang94/storage-_db_claude/blob/claude/affectionate-gates-srw7gi/glossary.md) |
 
 ## Progress

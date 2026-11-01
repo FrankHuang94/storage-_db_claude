@@ -54,7 +54,7 @@ Chapters follow one template, so you always know where to look.
 
 *Table 0.1.2 — The template puts the remember-this material first and the evidence last, so a ten-minute skim and a two-hour study use the same page.*
 
-The deep dives (Chapters 42–44) add five business sections, from financials to strategic relevance. Every figure's italic caption states its takeaway, so captions alone make a usable summary. Signature (★) diagrams are the ones worth redrawing from memory.
+The deep dives (Chapters 42–44) add five business sections, from financials to strategic relevance. Every figure's italic caption states its takeaway, so captions alone make a usable summary. Signature diagrams, marked ★ in `meta/outline.md` rather than in the chapters, are the ones worth redrawing from memory.
 
 ### Three learning paths
 
@@ -67,8 +67,8 @@ flowchart TD
     A1 --> A2["12 TL;DRs plus six signature figures"]
     A2 --> A3["Ch 58 one-liners and the ten numbers"]
     B --> B1["Day 1: Parts 1 to 4"]
-    B1 --> B2["Day 2: Parts 5 to 8"]
-    C --> C1["Every chapter in order, 3 to 4 hours a day"]
+    B1 --> B2["Day 2: Parts 5 and 6, Ch 53 to 57"]
+    C --> C1["Every chapter, ten days of 3 to 4 hours"]
     C1 --> C2["Daily flashcards, two whiteboard rehearsals a week"]
     A3 --> M["Before any meeting: chapter playbooks plus Part 8"]
     B2 --> M
@@ -87,7 +87,7 @@ flowchart TD
 
 #### 2-day ramp
 
-About seven hours a day; header reading times count prose only, so budget about 1.5× for visuals.
+About six hours on day 1 and five on day 2; header reading times count prose only, so these estimates budget 1.5× for visuals.
 
 - **Day 1, morning:** Part 1 in full ([Ch 1–6](../01-storage-fundamentals/01-what-storage-does.md)), then Chapters [7](../02-protocols-and-networking/07-block-protocols.md), [8](../02-protocols-and-networking/08-file-protocols.md), [9](../02-protocols-and-networking/09-object-storage-and-s3.md) and [11](../02-protocols-and-networking/11-gpu-data-path.md) from Part 2.
 - **Day 1, afternoon:** Part 3 core ([Ch 13–17](../03-system-architecture/13-storage-stack.md), [23](../03-system-architecture/23-consumption-models.md), [24](../03-system-architecture/24-architecture-decision-matrix.md)) and all of Part 4 ([Ch 25–29](../04-everpure/25-company-history-and-strategy.md)). Close with 30 minutes of flashcards for Parts 1–4.
@@ -96,20 +96,20 @@ About seven hours a day; header reading times count prose only, so budget about 
 
 #### 2-week mastery plan
 
-Ten working days of 3–4 hours: 15 minutes of review flashcards ([Ch 59](../08-conversation-toolkit/59-self-test-flashcards.md), organised by Part), the reading, then 30–45 minutes of practice.
+Ten working days of 3–4 hours: 15 minutes of review flashcards ([Ch 59](../08-conversation-toolkit/59-self-test-flashcards.md), organised by Part), the reading (about 1–2 hours at 1.5× header times; days 9 and 10 run longest), then 30–45 minutes of practice, including two whiteboard rehearsals a week.
 
 | Day | Read | Practice | Output |
 |---|---|---|---|
 | 1 | 0.1, 0.2, Ch 1–4 | Part 1 flashcards | Redraw the media pyramid from memory |
 | 2 | Ch 5–9 | Redo the Ch 4 TCO and Ch 5 data-reduction checks | One-paragraph "why the ratio belongs to the data" |
-| 3 | Ch 10–15 | Part 2 flashcards | Whiteboard an NVMe-oF read and the GPUDirect path |
-| 4 | Ch 16–21 | **Rehearsal 1:** dual-controller write vs. DASE write | Compare four architectures on one page |
+| 3 | Ch 10–15 | Part 2 flashcards; **Rehearsal 1:** an NVMe-oF read and the GPUDirect path | One-page protocol summary in your own words |
+| 4 | Ch 16–21 | **Rehearsal 2:** dual-controller write vs. DASE write | Compare four architectures on one page |
 | 5 | Ch 22–24, 51–52 | Part 3 flashcards; 30 random cards from week 1 | Apply the Ch 24 decision tree to three workloads |
 | 6 | Ch 25–29, 55 | Read the latest Everpure earnings release and prepared remarks | One-page company memo with sourced numbers |
-| 7 | Ch 30–34 | Part 4–5 flashcards; redo checkpoint and KV-cache arithmetic | Size a 405B checkpoint and a 128K-token session |
-| 8 | Ch 35–39, 56 | **Rehearsal 2:** EXA read path vs. VAST read path | Seven questions for an engineering meeting |
+| 7 | Ch 30–34 | Part 4–5 flashcards; **Rehearsal 3:** a checkpoint write from GPU memory to flash | Size a 405B checkpoint and a 128K-token session |
+| 8 | Ch 35–39, 56, 57 | **Rehearsal 4:** EXA read path vs. VAST read path | Seven questions for an engineering meeting |
 | 9 | Ch 40–45 | Part 6 flashcards; 30-second answers from Ch 58 aloud | Steelman one competitor against Everpure |
-| 10 | Ch 46–50, 53–54, 57, 60 | Full 200-card pass; mock PM meeting | Write the ten numbers and five open questions from memory |
+| 10 | Ch 46–50, 53–54, 60 | Ch 59's 50-card timed mixed test; mock PM meeting | Write the ten numbers and five open questions from memory |
 
 *Table 0.1.3 — The mastery plan alternates reading with output; the outputs, not the reading, are what make the material usable in a meeting.*
 
@@ -189,7 +189,7 @@ The atlas is a snapshot as of 2026-11-01, covering Pure Storage from 2009 and Ev
 
 ### How to keep it current
 
-- **VERIFY tags** sit inline where the doubt lives. `scripts/build_meta.py` collects them, with staged questions, into `meta/open-questions.md`; about 200 were open at writing.
+- **VERIFY tags** sit inline where the doubt lives. `scripts/build_meta.py` collects them, with staged questions, into `meta/open-questions.md`; about 200 were open at drafting and 177 after the independent review pass.
 - **Per-chapter staging files** (`meta/open-questions-staging/`, `meta/glossary-staging/`) hold new VERIFY items, questions and terms; `scripts/build_glossary.py` merges terms into the [glossary](../glossary.md).
 - **The "Last verified" date** says when a chapter was last checked. Re-verify "Numbers that matter" first: that is what gets copied into slides.
 - **`meta/sources.md`** traces any superseded source to every chapter citing it.
@@ -198,14 +198,14 @@ The atlas is a snapshot as of 2026-11-01, covering Pure Storage from 2009 and Ev
 
 | Metric | Value | Context | Source / date |
 |---|---|---|---|
-| Atlas size | >130,000 prose words, 62 chapter files in 9 Parts | Prose only; tables, code and sources excluded | Atlas count, `scripts/wordcount.py`, 2026-11-01 (worked example) |
-| Straight-through reading time | ≈10 hours | ~137,000 words ÷ 230 words per minute ≈ 595 minutes, before visuals | Worked example |
-| Glossary | ≈790 terms | Merged from per-chapter staging, A–Z | Atlas count, 2026-11-01 |
-| Question bank | 154 questions in 14 topics | Tagged by audience | [Ch 57](../08-conversation-toolkit/57-question-bank.md), atlas count |
-| One-liners | 64 | Four-beat 30-second answers | [Ch 58](../08-conversation-toolkit/58-explain-in-30-seconds.md), atlas count |
-| Flashcards | 200 | Organised by Part | [Ch 59](../08-conversation-toolkit/59-self-test-flashcards.md), atlas plan |
+| Atlas size | ≈156,000 prose words, 62 chapter files in 9 Parts | Prose only; tables, code and sources excluded; Ch 59's flashcard deck alone is ≈12,400 | Atlas count, `scripts/wordcount.py`, 2026-11-01 |
+| Straight-through reading time | ≈11 hours | ~156,000 words ÷ 230 words per minute ≈ 680 minutes before visuals; ≈10.4 hours without the flashcard deck | Worked example |
+| Glossary | ≈870 terms | Merged from per-chapter staging, A–Z | Atlas count, 2026-11-01 |
+| Question bank | 150 questions in 14 topics | Tagged by audience | [Ch 57](../08-conversation-toolkit/57-question-bank.md), atlas count |
+| One-liners | 66 | Four-beat 30-second answers | [Ch 58](../08-conversation-toolkit/58-explain-in-30-seconds.md), atlas count |
+| Flashcards | 279 | Organised by Part plus a strategy mix; the chapter title still says 200 | [Ch 59](../08-conversation-toolkit/59-self-test-flashcards.md), atlas count |
 | Unique sources | 1,243 | Deduplicated by URL | `meta/sources.md`, 2026-11-01 |
-| Open VERIFY markers | ≈200 | Each also logged with why it matters | `meta/open-questions.md`, 2026-11-01 |
+| Open VERIFY markers | ≈180 | 177 inline after review; `meta/open-questions.md` shows 200 until regenerated | Atlas count, 2026-11-01 |
 
 ## Conversation playbook
 
@@ -225,7 +225,7 @@ The atlas is a snapshot as of 2026-11-01, covering Pure Storage from 2009 and Ev
 
 - A private company's figure without its label: "VAST has $2B of ARR" is press speculation; the company-stated figure is above US$500M of committed ARR[^3].
 - "Pure Storage" for post-February-2026 events, or "PSTG" for today's ticker.
-- "We're #1 in MLPerf" without adding that VAST, WEKA and DDN skipped that round ([Ch 37](../05-ai-storage/37-reading-benchmarks.md)).
+- "We're #1 in MLPerf" without adding that VAST, WEKA, DDN, Dell, IBM and NetApp skipped that round ([Ch 27](../04-everpure/27-flasharray-and-flashblade.md), [Ch 37](../05-ai-storage/37-reading-benchmarks.md)).
 - An L3 assertion you cannot defend; ask it instead.
 - An atlas number without its date; much of Parts 4–6 will be stale within two quarters.
 

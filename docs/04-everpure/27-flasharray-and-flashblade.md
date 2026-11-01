@@ -45,7 +45,7 @@ flowchart LR
     end
 ```
 
-*Figure 27.1 — Two families have forked into performance (TLC) and capacity (QLC) tiers on shared software. //ST (dotted) is the only FlashArray that leaves DirectFlash, and EXA is the only FlashBlade that adds third-party hardware.*
+*Figure 27.1 — Both families now span performance and capacity tiers on shared software; media by model is in Table 27.1. //ST (dotted) is the only FlashArray that leaves DirectFlash, and EXA is the only FlashBlade that adds third-party hardware.*
 
 Sources for the nodes: FA-300 and //m[^8]; //XL[^9]; //E, //X R4 and //C R4[^10]; //XL R5, //ST and //S R2[^11]; //X R5 and //C R5[^12]; //XL190[^13]; EXA[^14].
 

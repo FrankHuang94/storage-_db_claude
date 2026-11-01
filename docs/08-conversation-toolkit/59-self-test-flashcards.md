@@ -1,4 +1,4 @@
-# 59. Self-test: 200 flashcards
+# 59. Self-test: 279 flashcards
 
 > **Depth:** L1–L2 · **Reading time:** ~54 min · **Last verified:** 2026-11-01
 > **Prerequisites:** None to start, but the deck pays off most after a first pass through Parts 1–7. Begin with [What storage does](../01-storage-fundamentals/01-what-storage-does.md); pair it with the [Question bank](57-question-bank.md) and [Explain it in 30 seconds](58-explain-in-30-seconds.md).
