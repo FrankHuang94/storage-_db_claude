@@ -6,9 +6,9 @@
 ## TL;DR
 
 - **WEKA sells software, not boxes.** Its product is a parallel, shared-nothing file system for NVMe flash. It was called WekaFS, became NeuralMesh in June 2025, and NeuralMesh 6 was announced in July 2026. It runs on commodity servers, inside GPU servers, or in AWS, Azure, Google Cloud and OCI. Its technical signature is a kernel-bypass data path with metadata sharded across every node.
-- **It was the first vendor to make KV-cache offload a product.** Augmented Memory Grid (AMG) became commercially available on 2025-11-18, with OCI as launch partner. WEKA claims up to 20x faster time to first token (TTFT). That is physically plausible but has not been independently audited.
+- **It was among the first vendors to make KV-cache offload a commercial product.** Augmented Memory Grid (AMG) became commercially available on 2025-11-18, with OCI as launch partner. WEKA claims up to 20x faster time to first token (TTFT). That is physically plausible but has not been independently verified.
 - **The business is smaller than the noise around it.** WEKA passed US$100M ARR in 2024 *(company-stated)* and has raised about US$415M in total. Its last priced round valued it at US$1.6B in May 2024, and it has not raised since. VAST has repriced to US$30B in the meantime.
-- **The risks are scale, channel and proof.** WEKA turned over its executive team in 2024–25, and HPE stopped reselling its software in March 2026. It has no MLPerf Storage results since 2024. Demand is concentrated in NVIDIA-driven neocloud spending.
+- **The risks are scale, channel and proof.** WEKA turned over its executive team in 2024–25, and HPE stopped reselling its software in March 2026 (announced November 2025). It has no MLPerf Storage results since 2024. Demand is concentrated in NVIDIA-driven neocloud spending.
 - **For Everpure, WEKA is the cleanest "software-anywhere" foil to FlashBlade//EXA.** The contrasts are a proprietary client versus pNFS, any hardware versus DirectFlash, and a KV-cache head start versus PureKVA.
 
 ## Why this matters for Everpure strategy
@@ -44,7 +44,7 @@ Three design choices define WEKA:
 
 *Semiconductor bridge:* this is address interleaving across DRAM channels and banks. A hashed address map stops any one access pattern from hammering one bank. The cost is also the same: an operation spanning many buckets, such as a cross-directory rename, becomes a distributed transaction.
 
-**3. Protection is distributed erasure coding.** Each stripe holds 3–16 data strips plus 2 or 4 parity strips. Stripes are spread any-to-any across servers, and the stripe shape is fixed when the cluster is formed[^9]. A 16+4 stripe keeps 16/20 = **80%** of raw capacity as data, while 5+2 keeps ≈ **71%**. WEKA's guidance keeps stripe width under about a quarter of the cluster, so 16+4 implies roughly 80+ backend servers. Small clusters therefore pay more for parity, the usual shared-nothing trade.
+**3. Protection is distributed erasure coding.** Each stripe holds data strips plus 2 or 4 parity strips; older (4.1) docs give 3–16 data strips, current docs a total stripe width of 5–20. N+2 is the default. Stripes are spread any-to-any across servers, and the stripe shape is fixed when the cluster is formed[^9]. A 16+4 stripe keeps 16/20 = **80%** of raw capacity as data, while 5+2 keeps ≈ **71%**. The full stripe must fit within the number of failure domains, with headroom for spare capacity, so 16+4 needs at least 20 servers (or racks, if racks are the failure domain); one docs example runs 16+2 on 20 servers. Small clusters therefore pay more for parity, the usual shared-nothing trade.
 
 ### The kernel-bypass data path
 
@@ -126,7 +126,7 @@ Dynamo's KV Block Manager labels the tiers G1 (HBM), G2 (host DRAM), G3 (local S
 
 **Worked example (illustrative, Llama-3-70B geometry, FP16 KV).** Each token's KV state takes 2 × 80 layers × 8 KV heads × 128 dims × 2 bytes = **327,680 bytes ≈ 320 KiB**. A 128,000-token context is therefore ≈ **42 GB**, more than half an 80 GB H100. Recomputing that prefill costs ≈ 2 × 70×10⁹ × 128,000 ≈ 1.8×10¹⁶ FLOPs, ignoring attention's quadratic term. Eight H100s at ~400 TFLOP/s each (≈40% of dense FP16 peak) need ~5.6 s for it. Reading the 42 GB from a tier delivering 100 GB/s per server takes ~0.4 s. That ≈ **13x** gap is why "up to 20x faster TTFT" at 128K context is plausible. Short prompts gain little.
 
-**Claims and evidence.** At launch WEKA claimed up to 20x faster TTFT at 128K tokens versus a standard vLLM baseline on OCI[^15]. In June 2026, WEKA and Oracle reported results from a nine-node, 72-GPU H100 cluster with 100K-token contexts: about 2M tokens/s versus under 200K for DRAM-only, about 5,000 versus 600 concurrent users, and the cache grown from 8.64 TiB of DRAM to 287 TiB of NVMe *(vendor-run joint test)*[^19]. At 42 GB per context, 287 TiB holds ~7,500 contexts against ~225 in DRAM. The capacity grew ~33x but throughput only ~10x, which shows the bottleneck moved to decode or the network. And 5,000 ÷ 600 is ~8x, not the headline 10x. NAND Research noted that WEKA's 10x claims lack a reproducible methodology[^20]. WEKA did not enter MLPerf Storage v3.0, the first round with an audited KV-cache workload (September 2026)[^21].
+**Claims and evidence.** At launch WEKA claimed up to 20x faster TTFT at 128K tokens versus a standard vLLM baseline on OCI[^15]. In June 2026, WEKA and Oracle reported results from a nine-node, 72-GPU H100 cluster with 100K-token contexts: about 2M tokens/s versus under 200K for DRAM-only, about 5,000 versus 600 concurrent users, and the cache grown from 8.64 TiB of DRAM to 287 TiB of NVMe *(vendor-run joint test)*[^19]. At 100K tokens and the 70B geometry above (~33 GB per context; the test model's geometry may differ), 287 TiB holds ~9,600 contexts against ~290 in DRAM. The capacity grew ~33x but throughput only ~10x, which shows the bottleneck moved to decode or the network. And 5,000 ÷ 600 is ~8x, not the headline 10x. NAND Research noted that WEKA's 10x claims lack a reproducible methodology[^20]. WEKA did not enter MLPerf Storage v3.0, the first round with a peer-reviewed KV-cache workload (September 2026)[^21].
 
 ### NeuralMesh 6 and WEKApod 3: closing feature gaps
 
@@ -136,17 +136,17 @@ NeuralMesh 6 reads as a catch-up list for neoclouds and enterprises[^6]:
 - **Data reduction:** always-on dedupe, similarity hashing and compression. WEKA claims up to 6x on AI training data at under 5% write overhead and *contractually guarantees* both. This is the feature on which VAST built its business, and WEKA had lacked it.
 - **Native object, replication, remote caching and Kubernetes-native operations.**
 
-**WEKApod 3** is WEKA's first chassis designed from the ground up for its own software. It comes in three configurations, Nitro, Prime and Prime Max, with deliveries starting in fall 2026[^6]. Prime Max claims 1.1 EB *effective* per rack from 441.5 PB raw, using about 1,800 Micron 245.76 TB SSDs[^11]. Checking the arithmetic: 1,800 × 245.76 TB ≈ 442 PB raw, so "1.1 EB" assumes **~2.5:1** reduction. The rack is also quoted at 10.2 TB/s[^22] [VERIFY: 10.2 TB/s and 210M IOPS per rack from secondary coverage only]. The exabyte is therefore a reduction assumption, not a capacity spec.
+**WEKApod 3** is WEKA's first chassis designed from the ground up for its own software. It comes in three configurations, Nitro, Prime and Prime Max, with deliveries starting in fall 2026[^6]. Prime Max claims 1.1 EB *effective* per rack from 441.5 PB raw, using about 1,800 Micron 245.76 TB SSDs[^11]. Checking the arithmetic: 1,800 × 245.76 TB ≈ 442 PB raw, so "1.1 EB" assumes **~2.5:1** reduction on raw capacity (coverage describes it as about 3:1 on usable capacity after protection)[^22]. The rack is also quoted at 10.2 TB/s[^23] [VERIFY: 10.2 TB/s and 210M IOPS per rack from secondary coverage only]. The exabyte is therefore a reduction assumption, not a capacity spec.
 
 ### BlueField-4 and NVIDIA STX: storage moving onto the DPU
 
-In October 2025 WEKA said its next NeuralMesh would run *directly on* NVIDIA BlueField-4 DPUs, which offer 800 Gb/s networking and ~6x BlueField-3's compute. It projected over 100x better tokens per watt than CPU-attached storage, an expectation rather than a measurement[^23]. In March 2026 NVIDIA launched **BlueField-4 STX**, a storage reference architecture whose first rack-scale implementation is the CMX context-memory platform. WEKA, Everpure, VAST and DDN were among the named storage partners[^24]. WEKA positioned AMG as STX's shared KV layer and claimed 4–10x higher context-memory throughput[^25] [VERIFY: whether validation used BlueField-3 or BlueField-4; sources conflict].
+In October 2025 WEKA said its next NeuralMesh would run *directly on* NVIDIA BlueField-4 DPUs, which offer 800 Gb/s networking and ~6x BlueField-3's compute. It projected over 100x better tokens per watt than CPU-attached storage, an expectation rather than a measurement[^24]. In March 2026 NVIDIA launched **BlueField-4 STX**, a storage reference architecture whose first rack-scale implementation is the CMX context-memory platform. WEKA, Everpure, VAST and DDN were among the named storage partners[^25]. WEKA positioned AMG as STX's shared KV layer and claimed 4–10x higher context-memory throughput[^26] [VERIFY: whether validation used BlueField-3 or BlueField-4; sources conflict].
 
 This cuts both ways for WEKA. Its poll-mode, user-space design already resembles DPU firmware, so porting is natural. But STX makes the KV tier a *standard NVIDIA slot* that every partner can fill, which erodes AMG's 2025 head start.
 
 ## Business model & financials
 
-**Model.** WEKA sells capacity-based software subscriptions. The hardware comes from partners, from WEKApod or from the cloud provider. One reseller lists a Lenovo-branded edition at US$339 per TB per year in the 1–2.5 PB band[^26] [VERIFY: single reseller listing]. At that list price, 10 PB is about US$3.4M a year. US$100M of ARR at list would imply ~295 PB under subscription.
+**Model.** WEKA sells capacity-based software subscriptions. The hardware comes from partners, from WEKApod or from the cloud provider. One reseller lists a Lenovo-branded edition at US$339 per TB per year in the 1–2.5 PB band[^27] [VERIFY: single reseller listing]. At that list price, 10 PB is about US$3.4M a year. US$100M of ARR at list would imply ~295 PB under subscription.
 
 ```mermaid
 timeline
@@ -162,91 +162,91 @@ timeline
 
 *Figure 43.4 — WEKA's product cadence accelerated in 2025–26, but it has raised no new money since May 2024.*
 
-**Funding.** WEKA said it had raised US$66.7M in total after a US$31.7M Series C in May 2019, a round that included NVIDIA, Mellanox, HPE, Seagate, Western Digital Capital and Qualcomm[^27]. A US$73M round led by Hitachi Ventures followed in January 2022. Outlets disagree on whether it was a C extension or a Series D[^28]. In November 2022 came a US$135M Series D led by Generation Investment Management, at ~US$750M *(reported by Calcalist, not disclosed by WEKA)*[^29]. The May 2024 Series E raised US$140M at US$1.6B post-money: US$100M primary and US$40M in secondary sales by long-serving employees. Valor Equity Partners led, joined by NVIDIA, Atreides, Generation, Qualcomm Ventures and Hitachi Ventures[^16]. The rounds sum to ≈ US$415M, which matches PitchBook's estimate[^30]. No later priced round was found, and a 2026 Globes interview still treated the Series E as the latest[^31].
+**Funding.** WEKA said it had raised US$66.7M in total after a US$31.7M Series C in May 2019, a round that included NVIDIA, Mellanox, HPE, Seagate, Western Digital Capital and Qualcomm[^28]. A US$73M round led by Hitachi Ventures followed in January 2022. Outlets disagree on whether it was a C extension or a Series D[^29]. In November 2022 came a US$135M Series D led by Generation Investment Management, at ~US$750M *(reported by Calcalist, not disclosed by WEKA)*[^30]. The May 2024 Series E raised US$140M at US$1.6B post-money, combining primary and secondary transactions[^31]; the split often cited is US$100M primary and US$40M in secondary sales by long-serving employees [VERIFY: primary/secondary split not in WEKA's release]. Valor Equity Partners led, joined by NVIDIA, Atreides, Generation, Qualcomm Ventures and Hitachi Ventures[^16]. The rounds sum to ≈ US$415M, which matches PitchBook's estimate[^32]. No later priced round was found, and a 2026 Globes interview still treated the Series E as the latest[^33].
 
 ![Two-panel chart. Left: WEKA capital raised by round — implied pre-Series C rounds about $35M (2013–2018), Series C $32M (May 2019), a $73M later-stage round (Jan 2022), Series D $135M at $0.75B (Nov 2022), Series E $140M at $1.6B of which $40M secondary (May 2024), with cumulative raised rising to about $415M. Right: latest private valuations — WEKA $1.6B (May 2024), DDN $5B (Jan 2025), VAST Data $30B (Apr 2026).](../assets/charts/ch43-funding.svg)
 
 *Figure 43.5 — WEKA has raised about US$415M, but its US$1.6B mark is now a third of DDN's and about 5% of VAST's.*
 Data: `data/ch43_funding.csv`
 
-**Revenue and burn.** In February 2025 Zvibel wrote that WEKA passed US$100M ARR in 2024, after more than doubling revenue for three straight years *(company-stated)*[^32]. The same month, WEKA cut about 50 go-to-market roles while still planning about 120 hires[^33]. Calcalist reported Zvibel expecting revenue to triple in 2025, with burn of about US$0.5M a month *(reported by press)*[^34] [VERIFY: date and context of tripling and burn figures]. Globes later cited estimates of US$100–150M ARR *(estimated)*[^31]. No company-stated figure for 2025 or 2026 was found.
+**Revenue and burn.** In February 2025 Zvibel wrote that WEKA passed US$100M ARR in 2024, after more than doubling revenue for three straight years *(company-stated)*[^34]. The same month, WEKA cut about 50 go-to-market roles while still planning about 120 hires[^35]. Calcalist reported Zvibel expecting revenue to triple in 2025, with burn of about US$0.5M a month *(reported by press)*[^36] [VERIFY: date and context of tripling and burn figures]. Globes later cited estimates of US$100–150M ARR *(estimated)*[^33]. No company-stated figure for 2025 or 2026 was found.
 
-**Valuation arithmetic.** At the Series E, US$1.6B on about US$100M ARR was ≈ **16x ARR**. VAST's April 2026 round priced it at US$30B on more than US$500M of committed ARR *(company-stated)*, ≈ **60x**[^35]. If WEKA did triple in 2025, its 2024 mark would now be a single-digit multiple.
+**Valuation arithmetic.** At the Series E, US$1.6B on about US$100M ARR was ≈ **16x ARR**. VAST's April 2026 round priced it at US$30B on more than US$500M of committed ARR *(company-stated)*, ≈ **60x**[^37]. If WEKA did triple in 2025, its 2024 mark would now be a single-digit multiple.
 
-**Leadership churn.** In December 2024, WEKA parted with its president, CFO and CRO while describing itself as being in a pre-IPO growth phase[^36]. The replacement CFO left after four months. April 2025 brought a new CRO (Brian Froehling) and CPO (Ajay Singh), and the previous CPO moved to strategy and corporate development[^37]. A new CMO followed in July 2026 as messaging shifted to inference at scale[^38].
+**Leadership churn.** In December 2024, WEKA parted with its president, CFO and CRO while describing itself as being in a pre-IPO growth phase[^38]. The replacement CFO left after four months. April 2025 brought a new CRO (Brian Froehling) and CPO (Ajay Singh), and the previous CPO moved to strategy and corporate development[^39]. A new CMO followed in July 2026 as messaging shifted to inference at scale[^40].
 
 ## Customers & go-to-market
 
-WEKA sells direct and through partners. Hardware partners include Supermicro, Dell, Lenovo and Hitachi[^10], and Hitachi Vantara OEM'd WekaFS from 2020[^39]. The biggest channel change went against WEKA. HPE told partners in November 2025 that it would stop selling WEKA, Qumulo and Scality software from 2026-03-03, in favour of its own Alletra MP[^40]. That came months after WEKA on HPE Alletra 4110 servers had topped all five SPECstorage Solution 2020 workloads[^41].
+WEKA sells direct and through partners. Hardware partners include Supermicro, Dell, Lenovo and Hitachi[^10], and Hitachi Vantara OEM'd WekaFS from 2020[^41]. The biggest channel change went against WEKA. HPE told partners in November 2025 that it would stop selling WEKA, Qumulo and Scality software, with quoting ending on 31 January and orders no longer accepted from 2026-03-03, in favour of its own Alletra MP[^42]. HPE resellers can still sell WEKA on standard HPE servers, and WEKA said only the transaction route changed[^42]. That came months after WEKA on HPE Alletra 4110 servers had topped all five SPECstorage Solution 2020 workloads[^43].
 
 | Customer or partner | Relationship (as publicly described) | Evidence label |
 |---|---|---|
 | Oracle Cloud Infrastructure | AMG launch partner; joint inference validation in 2026[^15][^19] | Company-stated, joint releases |
-| CoreWeave | Lists WEKA NeuralMesh as a dedicated-storage option; Axon launch reference[^42][^5] | Company-stated by both |
+| CoreWeave | Lists WEKA NeuralMesh as a dedicated-storage option; Axon launch reference[^44][^5] | Company-stated by both |
 | Cohere | Deployed Axon in public cloud, then on CoreWeave[^5] | Company-stated |
-| Nebius | WEKA chosen for premium AI Cloud storage tier, June 2025[^43] | Company-stated |
+| Nebius | WEKA chosen for premium AI Cloud storage tier, June 2025[^45] | Company-stated |
 | Stability AI | Converged mode on AWS reference[^12] | Company-stated |
-| Midjourney, Yotta (Shakti Cloud) | Listed on WEKA customer page[^44] | Company-stated, no detail |
-| Memorial Sloan Kettering | IO500 submission on WEKA[^45] | Company-stated [VERIFY: against io500.org list] |
-| Tesla | Named as a customer in Globes coverage[^31] | Reported by press |
-| "30% of the Fortune 50" | WEKA marketing claim[^44] | Company-stated, unverifiable |
+| Midjourney, Yotta (Shakti Cloud) | Listed on WEKA customer page[^46] | Company-stated, no detail |
+| Memorial Sloan Kettering | IO500 submission on WEKA[^47] | Company-stated [VERIFY: against io500.org list] |
+| Tesla | Named as a customer in Globes coverage[^33] | Reported by press |
+| "30% of the Fortune 50" | WEKA marketing claim[^46] | Company-stated, unverifiable |
 
 *Table 43.2 — WEKA's visible references skew to AI labs, neoclouds and one hyperscaler partner (OCI); few are independently corroborated.*
 
-Since 2023, WEKA's growth has come from AI-native buyers: model builders, GPU clouds and OCI. Its older HPC, EDA and media base is stickier but slower-growing. Two things are missing: anything like VAST's reported US$1.17B CoreWeave deal[^46], and a flagship NVIDIA-internal reference like DDN's.
+Since 2023, WEKA's growth has come from AI-native buyers: model builders, GPU clouds and OCI. Its older HPC, EDA and media base is stickier but slower-growing. Two things are missing: anything like VAST's reported US$1.17B CoreWeave deal[^48], and a flagship NVIDIA-internal reference like DDN's.
 
 ## Why it gained traction
 
 1. **It solved GPU starvation early.** WEKA bet that flash plus kernel bypass could beat local NVMe for shared data. When GPU clusters arrived, that made it the default "fast file system that isn't Lustre".
 2. **Software-only suits neocloud economics.** Converged mode turns flash the neocloud already owns into a file system, and marketplace listings fit cloud billing.
 3. **Portability is real.** Few high-performance file systems run the same code on-premises and natively in four clouds. That matters to labs that train wherever GPUs are free.
-4. **Sharded metadata handles small files.** Datasets of images and checkpoint shards can run into a metadata-server ceiling, and WEKA's buckets avoid it. WEKA led SPECstorage in early 2025[^41].
+4. **Sharded metadata handles small files.** Datasets of images and checkpoint shards can run into a metadata-server ceiling, and WEKA's buckets avoid it. WEKA led SPECstorage in early 2025[^43].
 5. **It productised KV cache first.** AMG gave WEKA an inference story as the market pivoted, months before NVIDIA standardised the tier.
 
 ## Risks & open questions
 
-- **Scale and capital asymmetry.** VAST's company-stated committed ARR is several times WEKA's, and its valuation is ~19x[^35]. That lets VAST outspend WEKA on R&D, field engineering and neocloud terms. A flat mark also complicates retention and any IPO.
+- **Scale and capital asymmetry.** VAST's company-stated committed ARR is several times WEKA's, and its valuation is ~19x[^37]. That lets VAST outspend WEKA on R&D, field engineering and neocloud terms. A flat mark also complicates retention and any IPO.
 - **One demand cycle.** WEKA's customers cluster in GPU clouds and AI labs whose spend follows NVIDIA cycles and their own financing.
-- **NVIDIA gives and takes.** NVIDIA is an investor and certifier. But STX/CMX turns the KV tier into a slot any partner can fill, and Dynamo decides which tiers matter[^18][^24].
-- **Hardware-agnostic support burden.** Supporting many servers, NICs, kernels and four clouds is costly, and partners can defect, as HPE showed[^40]. WEKApod 3 eases the burden by moving WEKA toward appliances.
-- **Benchmark posture.** WEKA entered MLPerf Storage v0.5 (2023)[^47] and v1.0 (2024)[^48], then skipped v2.0 and v3.0, including v3.0's KV-cache test[^21]. FlashBlade//EXA displaced the HPE–WEKA configuration at the top of SPECstorage AI_IMAGE in 2026[^49]. Skipping rounds proves nothing about performance, but WEKA's inference claims now rest on vendor-run tests.
+- **NVIDIA gives and takes.** NVIDIA is an investor and certifier. But STX/CMX turns the KV tier into a slot any partner can fill, and Dynamo decides which tiers matter[^18][^25].
+- **Hardware-agnostic support burden.** Supporting many servers, NICs, kernels and four clouds is costly, and partners can defect, as HPE showed[^42]. WEKApod 3 eases the burden by moving WEKA toward appliances.
+- **Benchmark posture.** WEKA entered MLPerf Storage v0.5 (2023)[^49] and v1.0 (2024)[^50], then skipped v2.0 (per StorageReview's submitter history[^51]) and v3.0, including v3.0's KV-cache test[^21]. FlashBlade//EXA displaced the HPE–WEKA configuration at the top of SPECstorage AI_IMAGE in 2026[^52]. Skipping rounds proves nothing about performance, but WEKA's inference claims now rest on vendor-run tests.
 - **Open questions.** Did NeuralMesh 6 reach GA on time? What share of revenue is now WEKApod hardware? Did revenue triple? Is there an unannounced financing or strategic process?
 
 ## Strategic relevance to Everpure
 
 These are options a strategy team might evaluate, based on public information:
 
-1. **WEKA as an EXA competitor.** WEKA's portability and converged mode attack where EXA is weakest: storage on hardware buyers already own, in a cloud, or inside GPU servers. EXA's counters are a standard pNFS client, Purity's metadata engine, DirectFlash on the metadata tier, appliance-grade support and audited MLPerf v3.0 results[^21].
-2. **WEKA as a signal about software-only storage.** Pure software can win AI share but struggles to capture value at scale. WEKA has had to build appliances, add data reduction and absorb a partner exit. That supports Everpure's integrated thesis without making it unassailable.
+1. **WEKA as an EXA competitor.** WEKA's portability and converged mode attack where EXA is weakest: storage on hardware buyers already own, in a cloud, or inside GPU servers. EXA's counters are a standard pNFS client, Purity's metadata engine, DirectFlash on the metadata tier, appliance-grade support and peer-reviewed MLPerf v3.0 results in a round WEKA skipped[^21].
+2. **WEKA as a signal about software-only storage.** Pure software can win AI share but struggles to capture value at scale. WEKA has had to build appliances, add data reduction and absorb a partner exit. That is consistent with Everpure's integrated thesis, but VAST's company-stated cash generation on a software-only model points the other way, so it is a signal, not proof.
 3. **WEKA as a corporate-development reference.** WEKA brings a US$1.6B last mark, about US$415M raised, NVIDIA and Qualcomm Ventures on the cap table, a KV-cache product, cloud-native code and Israeli engineering. An acquirer would weigh overlap with its own stack, client-agent support liabilities, neocloud concentration and the preference stack at a flat valuation. For Everpure the overlap with Purity//FB and EXA is large. Lighter options include interoperability, such as Everpure object storage as a WEKA tier, or competing head-on with PureKVA.
 
 ## How Everpure approaches it vs. competitors
 
 | Dimension | WEKA NeuralMesh | VAST Data AI OS | Everpure FlashBlade//EXA |
 |---|---|---|---|
-| Architecture class | Shared-nothing parallel file system; metadata hashed into buckets on all nodes[^8] | Disaggregated shared-everything: stateless CNodes over shared SCM + QLC enclosures ([Ch 16](../03-system-architecture/16-disaggregated-shared-everything.md)) | Metadata/data split: Purity//FB metadata core on DFM blades plus Linux/NVMe data nodes[^50] |
+| Architecture class | Shared-nothing parallel file system; metadata hashed into buckets on all nodes[^8] | Disaggregated shared-everything: stateless CNodes over shared SCM + QLC enclosures ([Ch 16](../03-system-architecture/16-disaggregated-shared-everything.md)) | Metadata/data split: Purity//FB metadata core on DFM blades plus Linux/NVMe data nodes[^53] |
 | Hardware model | Software on qualified servers, GPU servers, clouds, or WEKApod | Software on certified partner hardware and OEMs | Everpure metadata blades plus third-party data nodes at launch |
-| Client access | WEKA POSIX client with DPDK; NFS/SMB/S3 gateways | Standard NFS (including over RDMA), SMB, S3 | Standard pNFS (NFSv4.1); data over RDMA[^50] |
-| Data reduction | New in NeuralMesh 6 (claimed up to 6x, guaranteed)[^6] | Core design feature (similarity-based, global) | Not a headline EXA claim; PureKVA compresses KV cache[^51] |
-| Public cloud | Native on AWS, Azure, GCP, OCI since 2022[^2] | Google Cloud managed service, Azure listing (2025) | No public-cloud EXA offering found |
-| KV-cache product | AMG, commercially available Nov 2025[^15] | BlueField-4-hosted CNodes in GPU servers (CES 2026)[^52] | PureKVA on FlashBlade incl. EXA (Oct 2026)[^51] |
+| Client access | WEKA POSIX client with DPDK; NFS/SMB/S3 gateways | Standard NFS (including over RDMA), SMB, S3 | Standard pNFS (NFSv4.1); data over RDMA[^53] |
+| Data reduction | New in NeuralMesh 6 (claimed up to 6x, guaranteed)[^6] | Core design feature (similarity-based, global) | Not a headline EXA claim; PureKVA compresses KV cache[^54] |
+| Public cloud | Native on AWS, Azure, GCP, OCI since 2022[^2] | Google Cloud managed service (2025); Azure offering announced Nov 2025 | No public-cloud EXA offering found |
+| KV-cache product | AMG, commercially available Nov 2025[^15] | VUA (open source, Apr 2025)[^55]; BlueField-4-hosted CNodes in GPU servers (announced CES 2026)[^56] | PureKVA on FlashBlade incl. EXA (availability announced for Oct 2026)[^54] |
 | MLPerf Storage | v0.5, v1.0; absent v2.0 and v3.0 | Never submitted | First entry v3.0; top checkpoint and KV results among entrants[^21] |
-| NVIDIA alignment | Investor; SuperPOD-certified WEKApod; STX partner | Investor; STX partner; CNode-X | STX partner; NVIDIA-Certified Storage (Mar 2026)[^53] |
-| Scale signal | >US$100M ARR 2024 (company-stated); US$1.6B valuation | >US$500M CARR (company-stated); US$30B valuation[^35] | Part of a public company; first enterprise EXA customer in Q4 FY26 |
+| NVIDIA alignment | Investor; SuperPOD-certified WEKApod; STX partner | Investor; STX partner; CNode-X | STX partner; NVIDIA-Certified Storage (Mar 2026)[^57] |
+| Scale signal | >US$100M ARR 2024 (company-stated); US$1.6B valuation | >US$500M CARR (company-stated); US$30B valuation[^37] | Part of a public company; first enterprise EXA customer in Q4 FY26 |
 
-*Table 43.3 — WEKA leads on deployment flexibility and KV-cache maturity; EXA leads on standard clients and audited benchmarks; VAST leads on scale and data reduction.*
+*Table 43.3 — WEKA leads on deployment flexibility and KV-cache maturity; EXA leads on standard clients and 2026 public benchmark results; VAST leads on scale and data reduction.*
 
-**Steelman WEKA.** WEKA is the only one of the three that follows a customer anywhere: into GPU servers, four clouds, customer-chosen hardware and, next, onto DPUs. Its kernel-bypass path and sharded metadata are serious engineering, not marketing. It shipped a KV tier a year before NVIDIA standardised one.
+**Steelman WEKA.** WEKA is the only one of the three that follows a customer anywhere: into GPU servers, four clouds, customer-chosen hardware and, next, onto DPUs. Its kernel-bypass path and sharded metadata are serious engineering, not marketing. It unveiled a KV tier a year before NVIDIA's STX standardised one and had it commercially available months ahead.
 
-**Where EXA's trade is better.** EXA needs no client agent, runs its metadata on Everpure's own hardware with mature Purity software, scales data nodes independently, and has audited MLPerf v3.0 numbers in the very workloads WEKA skipped. It trails WEKA on cloud reach, converged deployment and KV-cache track record ([Chapter 27](../04-everpure/27-flasharray-and-flashblade.md)).
+**Where EXA's trade is better.** EXA needs no client agent, runs its metadata on Everpure's own hardware with mature Purity software, scales data nodes independently, and has peer-reviewed MLPerf v3.0 numbers in the very workloads WEKA skipped. It trails WEKA on cloud reach, converged deployment and KV-cache track record ([Chapter 27](../04-everpure/27-flasharray-and-flashblade.md)).
 
 ## History and trajectory
 
 WEKA's arc has three phases:
 
-- **2013–2019, the HPC file system that wasn't Lustre.** About US$67M from VCs and strategics including NVIDIA, Mellanox and HPE funded the core technology[^27].
-- **2020–2024, cloud and AI scale-up.** WEKA signed a Hitachi Vantara OEM deal[^39], went multicloud[^2] and won converged-mode AI labs[^12]. It raised US$275M in two rounds, reaching a US$1.6B valuation[^29][^16].
-- **2025–2026, the inference pivot under pressure.** WEKA restructured[^33], rebuilt as NeuralMesh[^3] and shipped AMG[^15]. It aligned with BlueField-4 and STX[^23][^25] and filled feature gaps with NeuralMesh 6[^6]. It also lost HPE as a reseller[^40].
+- **2013–2019, the HPC file system that wasn't Lustre.** About US$67M from VCs and strategics including NVIDIA, Mellanox and HPE funded the core technology[^28].
+- **2020–2024, cloud and AI scale-up.** WEKA signed a Hitachi Vantara OEM deal[^41], went multicloud[^2] and won converged-mode AI labs[^12]. It raised about US$348M in three rounds (January 2022, November 2022 and May 2024), reaching a US$1.6B valuation[^29][^30][^16].
+- **2025–2026, the inference pivot under pressure.** WEKA restructured[^35], rebuilt as NeuralMesh[^3] and shipped AMG[^15]. It aligned with BlueField-4 and STX[^24][^26] and filled feature gaps with NeuralMesh 6[^6]. It also lost HPE as a reseller[^42].
 
 Signals to watch through 2027:
 
@@ -261,16 +261,16 @@ Signals to watch through 2027:
 | Metric | Value | Context | Source / date |
 |---|---|---|---|
 | Founded | 2013, Israel | HQ now Campbell, California | StorageNewsletter, 2016[^1] |
-| Total capital raised | ≈ US$415M | Includes US$40M secondary in Series E | Derived from rounds; PitchBook estimate[^30] |
+| Total capital raised | ≈ US$415M | Includes US$40M secondary in Series E | Derived from rounds; PitchBook estimate[^32] |
 | Last priced valuation | US$1.6B post-money | Series E, May 2024; none since found | WEKA, 2024-05-15[^16] |
-| ARR | >US$100M in 2024 *(company-stated)*; US$100–150M *(estimated)* | Revenue more than doubled three years running | WEKA CEO letter, 2025-02[^32]; Globes, 2026[^31] |
-| Valuation / ARR at Series E | ≈ 16x | vs ≈ 60x for VAST in April 2026 | Worked example from cited figures[^16][^35] |
+| ARR | >US$100M in 2024 *(company-stated)*; US$100–150M *(estimated)* | Revenue more than doubled three years running | WEKA CEO letter, 2025-02[^34]; Globes, 2026[^33] |
+| Valuation / ARR at Series E | ≈ 16x | vs ≈ 60x for VAST in April 2026 | Worked example from cited figures[^16][^37] |
 | Erasure-code range | 3–16 data + 2 or 4 parity | 16+4 = 80% efficiency | WEKA docs[^9] |
 | AMG TTFT claim | Up to 20x faster at 128K tokens | Vendor-run on OCI vs vLLM baseline | WEKA, 2025-11-18[^15] |
 | OCI inference validation | ~2M vs <200K tokens/s; 287 TiB NVMe vs 8.64 TiB DRAM cache | 9 nodes, 72 H100s, 100K-token contexts | WEKA/Oracle, 2026-06-09[^19] |
 | KV cache per token (70B, FP16) | ≈ 320 KiB; ≈ 42 GB per 128K context | Why KV cache needs a storage tier | Worked example |
 | WEKApod 3 Prime Max | 441.5 PB raw, 1.1 EB effective per rack | Implies ~2.5:1 reduction | StorageReview, 2026-07[^11] |
-| List software price | US$339/TB/year (1–2.5 PB band) | One reseller listing; deals are custom | SHI, n.d.[^26] |
+| List software price | US$339/TB/year (1–2.5 PB band) | One reseller listing; deals are custom | SHI, n.d.[^27] |
 
 ## Conversation playbook
 
@@ -279,8 +279,8 @@ Signals to watch through 2027:
 1. *"When we lose an EXA deal to WEKA, is it portability, converged mode or KV cache?"* A strong answer separates the three:
    - **Cloud losses** are structural, because EXA has no cloud SKU.
    - **Converged losses** come down to capex optics, and a TCO that includes the CPU tax and failure-domain coupling can counter them.
-   - **KV-cache losses** should shrink now that PureKVA and audited MLPerf KV results exist.
-2. *"How do we answer NeuralMesh 6's guaranteed data reduction?"* A strong answer treats the guarantee as a commercial instrument, since AI training data is often already compressed. It asks what the guarantee excludes and compares audited, workload-specific effective capacity.
+   - **KV-cache losses** may narrow once PureKVA ships and buyers weigh MLPerf KV results, but WEKA has a year of production references that Everpure does not yet have.
+2. *"How do we answer NeuralMesh 6's guaranteed data reduction?"* A strong answer treats the guarantee as a commercial instrument, since AI training data is often already compressed. It asks what the guarantee excludes and compares measured, workload-specific effective capacity.
 3. *"Does HPE's exit from reselling WEKA help us?"* A strong answer is cautious: HPE left to push Alletra MP, but resellers with WEKA practices may want another AI file platform.
 
 **Three questions for an engineer**
@@ -295,14 +295,14 @@ Signals to watch through 2027:
 - "WEKA is a hardware company now." WEKApod exists, but WEKA's revenue is still mostly software subscriptions running on partner hardware.
 - "AMG gives 20x faster inference." The 20x is TTFT at very long context in vendor tests. Throughput gains in the OCI test were nearer 8–10x.
 - "WEKA is worth US$1.6B." That was the May 2024 mark, and today's price is unknown in either direction.
-- "WEKA avoids MLPerf because it would lose." It did submit in 2023 and 2024. It simply has no audited results from 2025 or 2026.
+- "WEKA avoids MLPerf because it would lose." It did submit in 2023 and 2024. It simply has no peer-reviewed results from 2025 or 2026.
 
 ## Going deeper (optional, L3 pointers)
 
 - **WEKA's internals:** the "Architecture Key Concepts" paper (buckets and hashing)[^8], and the docs on networking and on redundancy[^7][^9].
 - **Where AMG plugs in:** NVIDIA Dynamo's KVBM design doc, which covers the NIXL integration point[^18].
 - **The OCI evidence:** the June 2026 WEKA/OCI validation, read against MLPerf Storage v3.0's KV-cache rules[^19][^21].
-- **The SPECstorage record:** the HPE Alletra 4110 + WEKA results (January 2025) versus FlashBlade//EXA (2026)[^41][^49].
+- **The SPECstorage record:** the HPE Alletra 4110 + WEKA results (January 2025) versus FlashBlade//EXA (2026)[^43][^52].
 
 ## Key terms
 
@@ -339,35 +339,39 @@ See the [glossary](../glossary.md).
 [^19]: AAP (Cision release), "WEKA and Oracle Cloud Infrastructure Validate 10x Throughput Gains for Long-Context AI Inference," 2026-06-09. https://www.aap.com.au/aapreleases/cision20260609ae77787/ (retrieved 2026-11-01); StorageNewsletter, same title, 2026-06-11. https://www.storagenewsletter.com/2026/06/11/weka-and-oracle-cloud-infrastructure-validate-10x-throughput-gains-for-long-context-ai-inference/ (retrieved 2026-11-01).
 [^20]: NAND Research, "WEKA NeuralMesh 6 & WEKApod 3: Density, KV Cache, and AI Economics," 2026-07. https://nand-research.com/weka-neuralmesh-6-and-wekapod-3-density-kv-cache-and-ai-economics/ (retrieved 2026-11-01).
 [^21]: MLCommons via GlobeNewswire, "MLCommons Releases New MLPerf Storage v3.0 Benchmark Results," 2026-09-01. https://www.globenewswire.com/news-release/2026/09/01/3354412/0/en/mlcommons-releases-new-mlperf-storage-v3-0-benchmark-results.html (retrieved 2026-11-01); StorageReview, "MLPerf Storage v3.0: 877 GiB/s Checkpoints, a Cloud First, and a Leaderboard Turned Over," 2026-09. https://www.storagereview.com/news/mlperf-storage-v3-0-877-gib-s-checkpoints-a-cloud-first-and-a-leaderboard-turned-over (retrieved 2026-11-01).
-[^22]: Unite.AI, "WEKA Launches NeuralMesh 6 and WEKApod 3 as AI Infrastructure Shifts Toward Inference," 2026-07. https://www.unite.ai/weka-launches-neuralmesh-6-and-wekapod-3-as-ai-infrastructure-shifts-toward-inference/ (retrieved 2026-11-01).
-[^23]: AAP (Cision release), "WEKA Announces New NeuralMesh Architecture Built for NVIDIA BlueField-4," 2025-10-28. https://www.aap.com.au/aapreleases/cision20251028ae08469 (retrieved 2026-11-01); StorageNewsletter, "Nvidia GTC DC 2025: WEKA Unveils New NeuralMesh Architecture Built for Nvidia BlueField-4," 2025-10-30. https://www.storagenewsletter.com/2025/10/30/nvidia-gtc-dc-2025-weka-unveils-new-neuralmesh-architecture-built-for-nvidia-bluefield-4/ (retrieved 2026-11-01).
-[^24]: NVIDIA Investor Relations, "NVIDIA Launches BlueField-4 STX Storage Architecture With Broad Industry Adoption," 2026-03-16. https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Launches-BlueField-4-STX-Storage-Architecture-With-Broad-Industry-Adoption/default.aspx (retrieved 2026-11-01).
-[^25]: StorageReview, "WEKA Integrates NeuralMesh with NVIDIA STX to Address AI Inference Memory Bottlenecks," 2026-03. https://www.storagereview.com/news/weka-integrates-neuralmesh-with-nvidia-stx-to-address-ai-inference-memory-bottlenecks (retrieved 2026-11-01); AAP (Cision release), "WEKA Maximizes Token Output With Lower Cost Per Token on NVIDIA BlueField-4 STX," 2026-03-16. https://www.aap.com.au/aapreleases/cision20260316ae10377 (retrieved 2026-11-01).
-[^26]: SHI, "WEKA Extreme Performance and Scale (XPS) Edition" (reseller listing), n.d. https://www.shi.com/product/45872663 (retrieved 2026-11-01).
-[^27]: StorageNewsletter, "WekaIO Raises $31.7 Million in Series C Funding," 2019-05-15. https://www.storagenewsletter.com/2019/05/15/wekaio-raises-31-7-million-in-series-c-funding (retrieved 2026-11-01).
-[^28]: Blocks & Files, "WekaIO ramps up its funding to $140 million," 2022-01-04. https://www.blocksandfiles.com/file/2022/01/04/wekaio-ramps-up-its-funding-to-140-million/1609553 (retrieved 2026-11-01).
-[^29]: SiliconANGLE, "Distributed file system startup WekaIO closes bumper $135M Series D funding round," 2022-11-15. https://siliconangle.com/2022/11/15/distributed-file-system-startup-wekaio-closes-bumper-135m-series-d-funding-round/ (retrieved 2026-11-01); Calcalist, "Data management platform WEKA raises $135 million at $750 million valuation," 2022-11. https://www.calcalistech.com/ctechnews/article/h1tlqcx8o (retrieved 2026-11-01).
-[^30]: PitchBook, "WEKA 2026 Company Profile," 2026. https://pitchbook.com/profiles/company/160815-16 (retrieved 2026-11-01).
-[^31]: Globes, "Chip industry headache is this Israeli co's opportunity," 2026. https://en.globes.co.il/en/article-1001542294 (retrieved 2026-11-01).
-[^32]: WEKA, "A Strategic Step Forward for WEKA: An Open Letter From Our CEO," 2025-02. https://www.weka.io/article/a-strategic-step-forward-for-weka-an-open-letter-from-our-ceo (retrieved 2026-11-01).
-[^33]: Blocks & Files, "WEKA restructures for the GenAI era," 2025-02-07. https://www.blocksandfiles.com/ai-ml/2025/02/07/weka-restructures-for-the-genai-era/1599204 (retrieved 2026-11-01).
-[^34]: Calcalist, "AI data platform WEKA achieves unicorn status with $140 million Series E at $1.6B valuation" (and later interview), 2024–2025. https://www.calcalistech.com/ctechnews/article/bkdbx4gmc (retrieved 2026-11-01).
-[^35]: CNBC, "Nvidia backs AI company Vast Data at $30 billion valuation," 2026-04-22. https://www.cnbc.com/2026/04/22/nvidia-backs-ai-company-vast-data.html (retrieved 2026-11-01); Futuriom, "VAST Data Hits $30 Billion Valuation Amid 'AI Revolution'," 2026-04. https://www.futuriom.com/articles/news/vast-data-hits-30-billion-valuation-amid-ai-revolution/2026/04 (retrieved 2026-11-01).
-[^36]: Blocks & Files, "WEKA replaces president, chief financial and revenue officers as it doubles down on late stage, pre-IPO growth," 2024-12-13. https://www.blocksandfiles.com/file/2024/12/13/weka-replaces-president-chief-financial-and-revenue-officers-as-it-doubles-down-on-late-stage-pre-ipo-growth/1596903 (retrieved 2026-11-01).
-[^37]: WEKA, "WEKA Bolsters Executive Leadership Team With New CRO, CPO and CSO Appointments," 2025-04-23. https://www.weka.io/news/weka-bolsters-executive-leadership-team-with-new-cro-cpo-and-cso-appointments (retrieved 2026-11-01); Blocks & Files, "WEKA CFO exits four months into role," 2025-04-30. https://www.blocksandfiles.com/ai-ml/2025/04/30/weka-cfo-exits-four-months-into-role/1601839 (retrieved 2026-11-01).
-[^38]: Blocks & Files, "WEKA changes marketing head as messaging moves to AI inferencing at scale," 2026-07-15. https://www.blocksandfiles.com/file/2026/07/15/weka-changes-marketing-head-as-messaging-moves-to-ai-inferencing-at-scale/5271663 (retrieved 2026-11-01).
-[^39]: StorageNewsletter, "WekaIO Signs With Hitachi Vantara," 2020-07-27. https://www.storagenewsletter.com/2020/07/27/wekaio-signs-with-hitachi-vantara/ (retrieved 2026-11-01).
-[^40]: Blocks & Files, "HPE stops selling Qumulo, Scality and WEKA software," 2025-11-07. https://www.blocksandfiles.com/file/2025/11/07/hpe-stops-selling-qumulo-scality-and-weka-software/1721655 (retrieved 2026-11-01).
-[^41]: Blocks & Files, "WEKA tops SPECstorage Solution 2020 benchmark," 2025-02-11. https://www.blocksandfiles.com/ai-ml/2025/02/11/weka-tops-specstorage-solution-2020-benchmark/1595764 (retrieved 2026-11-01).
-[^42]: CoreWeave, "Storage" (product page), n.d. https://coreweave.com/products/storage (retrieved 2026-11-01).
-[^43]: WEKA, "WEKA and Nebius Partner to Deliver High-Performance AI Data Infrastructure," 2025-06. https://www.weka.io/news/weka-nebius-partner-high-performance-ai-data-infrastructure (retrieved 2026-11-01); StorageNewsletter, "WEKA and Nebius Partner to Deliver GPU-as-a-Service (GPUaaS) Solution," 2025-06-11. https://www.storagenewsletter.com/2025/06/11/weka-and-nebius-partner-to-delivers-gpu-as-a-service-gpuaas-solution/ (retrieved 2026-11-01).
-[^44]: WEKA, "Our Customers," n.d. https://www.weka.io/customers/ (retrieved 2026-11-01).
-[^45]: WEKA, "Revolutionizing Research: WEKA's IO500 Benchmark Success…," n.d. https://www.weka.io/?p=39859 (retrieved 2026-11-01).
-[^46]: StorageNewsletter, "Vast Data Secures Commercial Partnership Deal with CoreWeave for $1.17 Billion…," 2025-11-07. https://www.storagenewsletter.com/2025/11/07/vast-data-secures-commercial-partnership-deal-with-coreweave-for-1-17-billion-to-power-the-next-generation-of-ai/ (retrieved 2026-11-01).
-[^47]: Blocks & Files, "MLCommons publishes storage benchmark for AI," 2023-09-18. https://www.blocksandfiles.com/ai-ml/2023/09/18/mlcommons-publishes-storage-benchmark-for-ai/1586446 (retrieved 2026-11-01); WEKA, "WEKA Sets New Records with Unofficial MLPerf Storage v0.5 Benchmark," 2023. https://www.weka.io/article/weka-sets-new-records-with-unofficial-mlperf-storage-v0-5-benchmark (retrieved 2026-11-01).
-[^48]: MLCommons, "New MLPerf Storage v1.0 Benchmark Results Show Storage Systems Play a Critical Role in AI Model Training Performance," 2024-09-25. https://mlcommons.org/2024/09/mlperf-storage-v1-0-benchmark-results/ (retrieved 2026-11-01); Blocks & Files, "MLPerf AI benchmark tests how storage systems keep GPUs busy," 2024-09-26. https://www.blocksandfiles.com/ai-ml/2024/09/26/mlperf-ai-benchmark-tests-how-storage-systems-keep-gpus-busy/1605043 (retrieved 2026-11-01).
-[^49]: Blocks & Files, "Everpure tops SPECstorage Solution 2020 AI IMAGE benchmark charts," 2026-03-13. https://www.blocksandfiles.com/flash/2026/03/13/everpure-tops-specstorage-solution-2020-ai-image-benchmark-charts/5209245 (retrieved 2026-11-01).
-[^50]: SiliconANGLE, "FlashBlade//EXA: Pure Storage helps enterprises avoid starving data-hungry GPUs," 2025-03-11. https://siliconangle.com/2025/03/11/flashblade-exa-pure-storage-helps-enterprises-avoid-starving-data-hungry-gpus-accelerate-ai-workloads/ (retrieved 2026-11-01); Blocks & Files, "How Pure Storage developed its disaggregated FlashBlade//EXA system," 2025-04-17. https://blocksandfiles.com/2025/04/17/how-pure-storage-developed-its-disaggregated-flashblade-exa-system/ (retrieved 2026-11-01).
-[^51]: StorageReview, "Everpure Adds PureKVA to FlashBlade, Claims Up to 20x Faster Time to First Token, and Makes DeepReduce Always-On," 2026. https://www.storagereview.com/news/everpure-purekva-flashblade-20x-time-to-first-token-always-on-deepreduce (retrieved 2026-11-01).
-[^52]: StorageNewsletter, "CES 2026: Vast Data Redesigns AI Inference Architecture for the Agentic Era with Nvidia," 2026-01-07. https://www.storagenewsletter.com/2026/01/07/ces-2026-vast-data-redesigns-ai-inference-architecture-for-the-agentic-era-with-nvidia/ (retrieved 2026-11-01).
-[^53]: Blocks & Files, "Everpure dives deeper into AI," 2026-03-16. https://www.blocksandfiles.com/ai-ml/2026/03/16/everpure-dives-deeper-into-ai/5209351 (retrieved 2026-11-01).
+[^22]: TechRadar, "Weka's new pod claims 1000PB in a 56U rack using 1,800 Micron 245.76TB SSDs and a decades-old compression trick," 2026-07. https://techradar.com/pro/wekas-new-pod-claims-1000pb-in-a-56u-rack-using-1-800-micron-245-76tb-ssds-and-a-decades-old-compression-trick (retrieved 2026-11-01).
+[^23]: Unite.AI, "WEKA Launches NeuralMesh 6 and WEKApod 3 as AI Infrastructure Shifts Toward Inference," 2026-07. https://www.unite.ai/weka-launches-neuralmesh-6-and-wekapod-3-as-ai-infrastructure-shifts-toward-inference/ (retrieved 2026-11-01).
+[^24]: AAP (Cision release), "WEKA Announces New NeuralMesh Architecture Built for NVIDIA BlueField-4," 2025-10-28. https://www.aap.com.au/aapreleases/cision20251028ae08469 (retrieved 2026-11-01); StorageNewsletter, "Nvidia GTC DC 2025: WEKA Unveils New NeuralMesh Architecture Built for Nvidia BlueField-4," 2025-10-30. https://www.storagenewsletter.com/2025/10/30/nvidia-gtc-dc-2025-weka-unveils-new-neuralmesh-architecture-built-for-nvidia-bluefield-4/ (retrieved 2026-11-01).
+[^25]: NVIDIA Investor Relations, "NVIDIA Launches BlueField-4 STX Storage Architecture With Broad Industry Adoption," 2026-03-16. https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Launches-BlueField-4-STX-Storage-Architecture-With-Broad-Industry-Adoption/default.aspx (retrieved 2026-11-01).
+[^26]: StorageReview, "WEKA Integrates NeuralMesh with NVIDIA STX to Address AI Inference Memory Bottlenecks," 2026-03. https://www.storagereview.com/news/weka-integrates-neuralmesh-with-nvidia-stx-to-address-ai-inference-memory-bottlenecks (retrieved 2026-11-01); AAP (Cision release), "WEKA Maximizes Token Output With Lower Cost Per Token on NVIDIA BlueField-4 STX," 2026-03-16. https://www.aap.com.au/aapreleases/cision20260316ae10377 (retrieved 2026-11-01).
+[^27]: SHI, "WEKA Extreme Performance and Scale (XPS) Edition" (reseller listing), n.d. https://www.shi.com/product/45872663 (retrieved 2026-11-01).
+[^28]: StorageNewsletter, "WekaIO Raises $31.7 Million in Series C Funding," 2019-05-15. https://www.storagenewsletter.com/2019/05/15/wekaio-raises-31-7-million-in-series-c-funding (retrieved 2026-11-01).
+[^29]: Blocks & Files, "WekaIO ramps up its funding to $140 million," 2022-01-04. https://www.blocksandfiles.com/file/2022/01/04/wekaio-ramps-up-its-funding-to-140-million/1609553 (retrieved 2026-11-01).
+[^30]: SiliconANGLE, "Distributed file system startup WekaIO closes bumper $135M Series D funding round," 2022-11-15. https://siliconangle.com/2022/11/15/distributed-file-system-startup-wekaio-closes-bumper-135m-series-d-funding-round/ (retrieved 2026-11-01); Calcalist, "Data management platform WEKA raises $135 million at $750 million valuation," 2022-11. https://www.calcalistech.com/ctechnews/article/h1tlqcx8o (retrieved 2026-11-01).
+[^31]: WEKA via PR Newswire (French edition), "WEKA sécurise 140 millions de dollars lors de sa levée de fonds de série E…," 2024-05-15. https://www.prnewswire.com/fr/communiques-de-presse/weka-securise-140-millions-de-dollars-lors-de-sa-levee-de-fonds-de-serie-e-portant-sa-valorisation-a-1-6-milliard-de-dollars-302145553.html (retrieved 2026-11-01).
+[^32]: PitchBook, "WEKA 2026 Company Profile," 2026. https://pitchbook.com/profiles/company/160815-16 (retrieved 2026-11-01).
+[^33]: Globes, "Chip industry headache is this Israeli co's opportunity," 2026. https://en.globes.co.il/en/article-1001542294 (retrieved 2026-11-01).
+[^34]: WEKA, "A Strategic Step Forward for WEKA: An Open Letter From Our CEO," 2025-02. https://www.weka.io/article/a-strategic-step-forward-for-weka-an-open-letter-from-our-ceo (retrieved 2026-11-01).
+[^35]: Blocks & Files, "WEKA restructures for the GenAI era," 2025-02-07. https://www.blocksandfiles.com/ai-ml/2025/02/07/weka-restructures-for-the-genai-era/1599204 (retrieved 2026-11-01).
+[^36]: Calcalist, "AI data platform WEKA achieves unicorn status with $140 million Series E at $1.6B valuation" (and later interview), 2024–2025. https://www.calcalistech.com/ctechnews/article/bkdbx4gmc (retrieved 2026-11-01).
+[^37]: CNBC, "Nvidia backs AI company Vast Data at $30 billion valuation," 2026-04-22. https://www.cnbc.com/2026/04/22/nvidia-backs-ai-company-vast-data.html (retrieved 2026-11-01); Futuriom, "VAST Data Hits $30 Billion Valuation Amid 'AI Revolution'," 2026-04. https://www.futuriom.com/articles/news/vast-data-hits-30-billion-valuation-amid-ai-revolution/2026/04 (retrieved 2026-11-01).
+[^38]: Blocks & Files, "WEKA replaces president, chief financial and revenue officers as it doubles down on late stage, pre-IPO growth," 2024-12-13. https://www.blocksandfiles.com/file/2024/12/13/weka-replaces-president-chief-financial-and-revenue-officers-as-it-doubles-down-on-late-stage-pre-ipo-growth/1596903 (retrieved 2026-11-01).
+[^39]: WEKA, "WEKA Bolsters Executive Leadership Team With New CRO, CPO and CSO Appointments," 2025-04-23. https://www.weka.io/news/weka-bolsters-executive-leadership-team-with-new-cro-cpo-and-cso-appointments (retrieved 2026-11-01); Blocks & Files, "WEKA CFO exits four months into role," 2025-04-30. https://www.blocksandfiles.com/ai-ml/2025/04/30/weka-cfo-exits-four-months-into-role/1601839 (retrieved 2026-11-01).
+[^40]: Blocks & Files, "WEKA changes marketing head as messaging moves to AI inferencing at scale," 2026-07-15. https://www.blocksandfiles.com/file/2026/07/15/weka-changes-marketing-head-as-messaging-moves-to-ai-inferencing-at-scale/5271663 (retrieved 2026-11-01).
+[^41]: StorageNewsletter, "WekaIO Signs With Hitachi Vantara," 2020-07-27. https://www.storagenewsletter.com/2020/07/27/wekaio-signs-with-hitachi-vantara/ (retrieved 2026-11-01).
+[^42]: Blocks & Files, "HPE stops selling Qumulo, Scality and WEKA software," 2025-11-07. https://www.blocksandfiles.com/file/2025/11/07/hpe-stops-selling-qumulo-scality-and-weka-software/1721655 (retrieved 2026-11-01).
+[^43]: Blocks & Files, "WEKA tops SPECstorage Solution 2020 benchmark," 2025-02-11. https://www.blocksandfiles.com/ai-ml/2025/02/11/weka-tops-specstorage-solution-2020-benchmark/1595764 (retrieved 2026-11-01).
+[^44]: CoreWeave, "Storage" (product page), n.d. https://coreweave.com/products/storage (retrieved 2026-11-01).
+[^45]: WEKA, "WEKA and Nebius Partner to Deliver High-Performance AI Data Infrastructure," 2025-06. https://www.weka.io/news/weka-nebius-partner-high-performance-ai-data-infrastructure (retrieved 2026-11-01); StorageNewsletter, "WEKA and Nebius Partner to Deliver GPU-as-a-Service (GPUaaS) Solution," 2025-06-11. https://www.storagenewsletter.com/2025/06/11/weka-and-nebius-partner-to-delivers-gpu-as-a-service-gpuaas-solution/ (retrieved 2026-11-01).
+[^46]: WEKA, "Our Customers," n.d. https://www.weka.io/customers/ (retrieved 2026-11-01).
+[^47]: WEKA, "Revolutionizing Research: WEKA's IO500 Benchmark Success…," n.d. https://www.weka.io/?p=39859 (retrieved 2026-11-01).
+[^48]: StorageNewsletter, "Vast Data Secures Commercial Partnership Deal with CoreWeave for $1.17 Billion…," 2025-11-07. https://www.storagenewsletter.com/2025/11/07/vast-data-secures-commercial-partnership-deal-with-coreweave-for-1-17-billion-to-power-the-next-generation-of-ai/ (retrieved 2026-11-01).
+[^49]: Blocks & Files, "MLCommons publishes storage benchmark for AI," 2023-09-18. https://www.blocksandfiles.com/ai-ml/2023/09/18/mlcommons-publishes-storage-benchmark-for-ai/1586446 (retrieved 2026-11-01); WEKA, "WEKA Sets New Records with Unofficial MLPerf Storage v0.5 Benchmark," 2023. https://www.weka.io/article/weka-sets-new-records-with-unofficial-mlperf-storage-v0-5-benchmark (retrieved 2026-11-01).
+[^50]: MLCommons, "New MLPerf Storage v1.0 Benchmark Results Show Storage Systems Play a Critical Role in AI Model Training Performance," 2024-09-25. https://mlcommons.org/2024/09/mlperf-storage-v1-0-benchmark-results/ (retrieved 2026-11-01); Blocks & Files, "MLPerf AI benchmark tests how storage systems keep GPUs busy," 2024-09-26. https://www.blocksandfiles.com/ai-ml/2024/09/26/mlperf-ai-benchmark-tests-how-storage-systems-keep-gpus-busy/1605043 (retrieved 2026-11-01).
+[^51]: StorageReview, "Best storage arrays" buyer's guide (MLPerf Storage submitter history, updated 2026-09-01). https://www.storagereview.com/best/storage-arrays (retrieved 2026-11-01).
+[^52]: Blocks & Files, "Everpure tops SPECstorage Solution 2020 AI IMAGE benchmark charts," 2026-03-13. https://www.blocksandfiles.com/flash/2026/03/13/everpure-tops-specstorage-solution-2020-ai-image-benchmark-charts/5209245 (retrieved 2026-11-01).
+[^53]: SiliconANGLE, "FlashBlade//EXA: Pure Storage helps enterprises avoid starving data-hungry GPUs," 2025-03-11. https://siliconangle.com/2025/03/11/flashblade-exa-pure-storage-helps-enterprises-avoid-starving-data-hungry-gpus-accelerate-ai-workloads/ (retrieved 2026-11-01); Blocks & Files, "How Pure Storage developed its disaggregated FlashBlade//EXA system," 2025-04-17. https://blocksandfiles.com/2025/04/17/how-pure-storage-developed-its-disaggregated-flashblade-exa-system/ (retrieved 2026-11-01).
+[^54]: StorageReview, "Everpure Adds PureKVA to FlashBlade, Claims Up to 20x Faster Time to First Token, and Makes DeepReduce Always-On," 2026. https://www.storagereview.com/news/everpure-purekva-flashblade-20x-time-to-first-token-always-on-deepreduce (retrieved 2026-11-01).
+[^55]: Blocks & Files, "VAST's VUA flash caching virtually expands GPU server memory for AI token generation," 2025-04-25. https://blocksandfiles.com/2025/04/25/vasts-vua-flash-caching-virtually-expands-gpu-server-memory-for-ai-token-generation/ (retrieved 2026-11-01).
+[^56]: StorageNewsletter, "CES 2026: Vast Data Redesigns AI Inference Architecture for the Agentic Era with Nvidia," 2026-01-07. https://www.storagenewsletter.com/2026/01/07/ces-2026-vast-data-redesigns-ai-inference-architecture-for-the-agentic-era-with-nvidia/ (retrieved 2026-11-01).
+[^57]: Blocks & Files, "Everpure dives deeper into AI," 2026-03-16. https://www.blocksandfiles.com/ai-ml/2026/03/16/everpure-dives-deeper-into-ai/5209351 (retrieved 2026-11-01).

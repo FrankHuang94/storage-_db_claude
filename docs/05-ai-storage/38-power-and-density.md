@@ -1,6 +1,6 @@
 # 38. Power, density and the AI datacenter
 
-> **Depth:** L2 · **Reading time:** ~9 min · **Last verified:** 2026-11-01
+> **Depth:** L2 · **Reading time:** ~10 min · **Last verified:** 2026-11-01
 > **Prerequisites:** [Media physics](../01-storage-fundamentals/02-media-physics.md) · [Performance and economics metrics](../01-storage-fundamentals/04-performance-and-economics-metrics.md) · [Purity and DirectFlash](../04-everpure/26-purity-and-directflash.md) · [AI factories and neoclouds](35-ai-factories-and-neoclouds.md)
 
 ## TL;DR
@@ -8,7 +8,7 @@
 - **AI datacenters are power-limited, not chip-limited.** NVIDIA, Microsoft, AWS, Meta and CoreWeave have all said so publicly. A site's grid connection caps its GPUs, so every storage watt is a watt that cannot run a GPU.
 - **QLC flash beats disk about 2× per watt at the drive** (~8.2 against ~4.4 TB/W for the best of each). At system level the gap depends on drive size and on what sits in the box. A 2022-era flash enclosure can lose to a modern disk JBOD.
 - **Density is where flash pulls away.** A rack of 245 TB QLC drives holds roughly 5× the raw petabytes of a rack of 44 TB disks. It also needs 2–3× the power per rack, which many halls cannot feed.
-- **At grid prices, power savings never pay for the flash premium.** Storing 100 PB for five years on QLC rather than disk saves about 1.2 GWh, or roughly $170K, against a media premium of $8–37M. Flash wins when bandwidth per TB is required or when NAND is bought at hyperscaler cost; turning freed watts into GPUs helps but rarely closes the gap on its own.
+- **At grid prices, power savings never pay for the flash premium.** Storing 100 PB for five years on QLC rather than disk saves about 1.2 GWh, or roughly $170K, against a media premium of $8–37M on Chapter 4's inputs, and more at index prices. Flash wins when bandwidth per TB is required or when NAND is bought at hyperscaler cost; turning freed watts into GPUs helps but rarely closes the gap on its own.
 - **Disk still wins cold data at rest,** on $/TB and on embodied carbon. HAMR roadmaps (100 TB by 2029) improve disk's TB/W every generation. Vendor power claims from both camps need system-level, same-basis checks.
 
 ## Why this matters for Everpure strategy
@@ -96,33 +96,35 @@ Two caveats keep this honest. A full flash rack at ~32 kW exceeds the 10–15 kW
 | Facility power at PUE 1.3 | 59.1 kW | 31.1 kW | Assumption for a new AI-class hall |
 | Energy, 5 years | 2.59 GWh | 1.36 GWh | × 43,800 h |
 | Energy cost at $0.1385/kWh | $359K | $189K | US commercial average[^20]; at Chapter 4's PUE of 1.54 the saving is ~$200K |
-| Media cost, 2026 prices | $2.9M ($22/TB) | $40.3M ($302/TB) | HDD[^21]; QLC[^22] |
+| Media cost, 2026 prices | $2.9M ($22/TB, Q1); ~$5.4M (~$40/TB, Q3) | $40.3M ($302/TB) | HDD[^21][^22]; QLC[^23]; a 13.7× premium versus the 22.6× index |
 | Media cost, mid-2025 prices | $2.2M ($16.50/TB) | $10.7M ($80/TB) | [^21] |
-| Embodied carbon, media | ~2.7 kt CO2e | ~21.3 kt CO2e | 0.16 kg/GB flash, about 1/8 for disk[^23] |
+| Embodied carbon, media | ~2.7 kt CO2e | ~21.3 kt CO2e | 0.16 kg/GB flash, about 1/8 for disk[^24] |
 
 *Table 38.3 — Illustrative: QLC halves the power and cuts racks 5×, but the ~$170K energy saving is two orders of magnitude smaller than the media premium.*
 
+The media inputs are the same as Chapter 4's and are kind to flash. $302 against $22 per TB is a 13.7× premium, below the 22.6× index headline, because a 122 TB drive's street price per TB sits under the index's 30 TB QLC drive (about $504/TB in Q1 2026)[^25]. At that index price the QLC media would cost ~$67M. Disk moved too: the same index put a 30 TB HDD at about $1,216 (~$40/TB) by Q3 2026[^22], which lifts the HDD media line to ~$5.4M and leaves the 2026 premium at ~$35M. Every variant leaves the energy saving two orders of magnitude below the premium.
+
 The flash case has three escape routes from that table.
 
-**1. Freed watts become GPUs.** The 21.6 kW of IT power saved is about 13 GPU slots at 1.7 kW each. At CoreWeave's US$6.16 H100 list price per GPU-hour[^24], 13 GPUs would bill about $3.5M over five years. That is gross rental, before the GPUs' own capex, financing and operating cost, and it prices a GB200-class power slot at an H100 rate, so treat it as an upper bound. [Chapter 4](../01-storage-fundamentals/04-performance-and-economics-metrics.md) values a freed kilowatt at an assumed $15,000 a year, which puts the slot at about $1.6M. Either figure beats the electricity saving many times over. Neither covers the ~$37M premium at 2026 NAND prices, and even the upper bound covers under half of the ~$8.5M premium at mid-2025 prices. Premium and freed watts both scale with capacity, so scale alone does not close the gap: this route works only alongside routes 2 or 3.
+**1. Freed watts become GPUs.** The 21.6 kW of IT power saved is about 13 GPU slots at 1.7 kW each. At CoreWeave's US$6.16 H100 list price per GPU-hour[^26], 13 GPUs would bill about $3.5M over five years. That is gross rental, before the GPUs' own capex, financing and operating cost, and it prices a GB200-class power slot at an H100 rate, so treat it as an upper bound. [Chapter 4](../01-storage-fundamentals/04-performance-and-economics-metrics.md) values a freed kilowatt at an assumed $15,000 a year, which puts the slot at about $1.6M. Either figure beats the electricity saving many times over. Neither covers the ~$37M premium at 2026 NAND prices, and even the upper bound covers under half of the ~$8.5M premium at mid-2025 prices. Premium and freed watts both scale with capacity, so scale alone does not close the gap: this route works only alongside routes 2 or 3.
 
-**2. Bandwidth per TB is required.** Meta's argument for QLC is that disk bandwidth per TB keeps falling as drives grow[^25]. Meta places QLC at workloads needing about 10 MB/s per TB. For 100 PB usable that means 1 TB/s. A nearline disk streams perhaps 250 MB/s at best and far less under mixed access. At an assumed 125 MB/s effective, you need about 8,000 drives instead of 3,030, roughly 120 kW. That is 5× the flash option's power, the regime where vendor claims of "75% less power" become plausible.
+**2. Bandwidth per TB is required.** Meta's argument for QLC is that disk bandwidth per TB keeps falling as drives grow[^27]. Meta places QLC at workloads needing about 10 MB/s per TB. For 100 PB usable that means 1 TB/s. A nearline disk streams perhaps 250 MB/s at best and far less under mixed access. At an assumed 125 MB/s effective, you need about 8,000 drives instead of 3,030, roughly 120 kW. That is 5× the flash option's power, the regime where vendor claims of "75% less power" become plausible.
 
-**3. NAND at hyperscaler cost.** In Everpure's second hyperscaler deal the customer buys its own NAND[^26]. The NAND then reaches the buyer near contract price, not array street price, which shrinks the media premium. That is why hyperscalers move first.
+**3. NAND at hyperscaler cost.** In Everpure's second hyperscaler deal the customer buys its own NAND[^28]. The NAND then reaches the buyer near contract price, not array street price, which shrinks the media premium. That is why hyperscalers move first.
 
 ### Where disk still wins
 
-Disk wins cold data at rest: archives, backup copies and data lakes read rarely. There the bandwidth requirement is low and $/TB dominates. It also wins on embodied carbon. Tannu and Nair estimated about 0.16 kg CO2e per GB to manufacture flash, about 8× disk per unit of capacity[^23]. In the example above, the embodied gap (~18.6 kt) dwarfs the operational savings (1.23 GWh, or 120–620 t at any grid intensity from 0.1 to 0.5 kg/kWh). That 2022 figure predates today's denser NAND, so treat it as an order of magnitude. Flash's carbon case leans on longer service life and on avoided racks and buildings.
+Disk wins cold data at rest: archives, backup copies and data lakes read rarely. There the bandwidth requirement is low and $/TB dominates. It also wins on embodied carbon. Tannu and Nair estimated about 0.16 kg CO2e per GB to manufacture flash, about 8× disk per unit of capacity[^24]. In the example above, the embodied gap (~18.6 kt) dwarfs the operational savings (1.23 GWh, or 120–620 t at any grid intensity from 0.1 to 0.5 kg/kWh). That 2022 figure predates today's denser NAND, so treat it as an order of magnitude. Flash's carbon case leans on longer service life and on avoided racks and buildings.
 
 ## How Everpure approaches it vs. competitors
 
 | Camp | Headline power/density claim | Basis | Steelman or caveat |
 |---|---|---|---|
-| Everpure | DFMs use up to 75% less power than disk in hyperscale (*company-stated*)[^27]; disk and 15 TB-SSD systems draw 2.4× its 75 TB-DFM system and 4.8× its 150 TB-DFM system (*company-stated*)[^28]; watts/TiB guarantee on Evergreen//One[^29] | Own system models; guarantee is contractual | Strongest when DFM size leads commodity SSDs; guarantee assumes data reduction on most tiers ([Chapter 4](../01-storage-fundamentals/04-performance-and-economics-metrics.md)) |
-| Commodity QLC (Micron, Solidigm) | ~8.2 vs ~4.4 TB/W drive-level (*vendor*)[^10]; 1 EB study: 77% less power, 90% less space than HDD on Ceph (*vendor*)[^30] | Drive max watts; 10-year model | Credible at drive level; system results depend on the software vendor |
-| VAST | ~500 W per PB with 30 TB QLC (*company-stated*, 2021)[^31] | DBox plus CNodes | Pioneered QLC at scale; the 61 TB-drive DBox in Figure 38.2 trails 245 TB-class designs, and its TB/W rises with larger drives |
-| HDD vendors (Seagate, WD) | Disk more cost- and energy-efficient per TB for mass data (Seagate CEO)[^32]; Mozaic 3+ cuts power per TB 40% and embodied carbon per TB 55%, the latter against a 16 TB PMR drive (*vendor*)[^33] | Per-drive, own baseline | Right on $/TB and embodied carbon; weak on bandwidth per TB |
-| VDURA (hybrid) | HDD systems lower total carbon (*vendor*)[^34]; QLC at 22.6× HDD $/TB in Q1 2026[^35] | Hybrid flash plus HDD | Price data is real; argues mixed fleets |
+| Everpure | DFMs use up to 75% less power than disk in hyperscale (*company-stated*)[^29]; disk and 15 TB-SSD systems draw 2.4× its 75 TB-DFM system and 4.8× its 150 TB-DFM system (*company-stated*)[^30]; watts/TiB guarantee on Evergreen//One[^31] | Own system models; guarantee is contractual | Strongest when DFM size leads commodity SSDs; guarantee assumes data reduction on most tiers ([Chapter 4](../01-storage-fundamentals/04-performance-and-economics-metrics.md)) |
+| Commodity QLC (Micron, Solidigm) | ~8.2 vs ~4.4 TB/W drive-level (*vendor*)[^10]; 1 EB study: 77% less power, 90% less space than HDD on Ceph (*vendor*)[^32] | Drive max watts; 10-year model | Credible at drive level; system results depend on the software vendor |
+| VAST | ~500 W per PB with 30 TB QLC (*company-stated*, 2021)[^33] | DBox plus CNodes | Pioneered QLC at scale; the 61 TB-drive DBox in Figure 38.2 trails 245 TB-class designs, and its TB/W rises with larger drives |
+| HDD vendors (Seagate, WD) | Disk more cost- and energy-efficient per TB for mass data (Seagate CEO)[^34]; Mozaic 3+ cuts power per TB 40% and embodied carbon per TB 55%, the latter against a 16 TB PMR drive (*vendor*)[^35] | Per-drive, own baseline | Right on $/TB and embodied carbon; weak on bandwidth per TB |
+| VDURA (hybrid) | HDD systems lower total carbon (*vendor*)[^36]; QLC at 22.6× HDD $/TB in Q1 2026[^25] | Hybrid flash plus HDD | Price data is real; argues mixed fleets |
 
 *Table 38.4 — Every camp's power claim is true at its chosen scope; the counter-question is always "whole system, same watts basis, same drive generation, your bandwidth per TB".*
 
@@ -130,7 +132,7 @@ Everpure's structural edge is that it owns the flash translation layer, so its m
 
 ## History and trajectory
 
-In 2021, flash vendors like VAST argued density per rack unit[^31]. In 2023, Pure Storage added a watts-per-TiB SLA[^29] and showed roughly 1 W/TB with FlashBlade//E[^15]. In 2024–25 power entered the CEO vocabulary: Zuckerberg[^4], Huang[^1], Jassy[^2]. Meta published its QLC case[^25], widely read as pointing to DirectFlash, and Pure's hyperscaler revenue began. In 2026, 245 TB QLC drives shipped[^10] while NAND prices rose every quarter[^36]. That widened the $/TB gap just as the power argument peaked.
+In 2021, flash vendors like VAST argued density per rack unit[^33]. In 2023, Pure Storage added a watts-per-TiB SLA[^31] and showed roughly 1 W/TB with FlashBlade//E[^15]. In 2024–25 power entered the CEO vocabulary: Zuckerberg[^4], Huang[^1], Jassy[^2]. Meta published its QLC case[^27], widely read as pointing to DirectFlash, and Pure's hyperscaler revenue began. In 2026, 245 TB QLC drives shipped[^10] while NAND prices rose every quarter[^37]. That widened the $/TB gap just as the power argument peaked.
 
 Disk is not standing still. Western Digital targets HAMR at 100 TB by 2029[^19]. At constant ~10 W per drive that is ~10 TB/W, about today's best QLC at the drive. Expect flash to answer with 512 TB-class drives and larger modules ([Chapter 53](../07-history-and-future/53-future-trends.md)), and the contest to shift from TB/W to GB/s per kW, where disk cannot follow.
 
@@ -144,7 +146,7 @@ Disk is not standing still. Western Digital targets HAMR at 100 TB by 2029[^19].
 | CoreWeave active / contracted power | 1.5 GW / 3.7 GW | Q2 2026 | Results, 2026-08-11[^5] |
 | 100 PB × 5 years, energy saved by QLC | ~1.23 GWh (~$170K) | vs $8–37M media premium | Worked example |
 | PB per rack, 245 TB QLC vs 44 TB HDD | ~177 vs ~33 | ~32 vs ~11 kW per rack | Worked example; Micron[^10] |
-| Flash embodied carbon | ~0.16 kg CO2e/GB, ~8× HDD | 2022 estimate | Tannu & Nair[^23] |
+| Flash embodied carbon | ~0.16 kg CO2e/GB, ~8× HDD | 2022 estimate | Tannu & Nair[^24] |
 | HAMR roadmap | 100 TB by 2029 | ~10 TB/W at ~10 W | Western Digital, 2026-02-03[^19] |
 
 ## Conversation playbook
@@ -170,8 +172,8 @@ Disk is not standing still. Western Digital targets HAMR at 100 TB by 2029[^19].
 
 ## Going deeper (optional, L3 pointers)
 
-- Meta's QLC case and E2 form-factor work[^25][^6]: bandwidth per TB as the tiering criterion.
-- Tannu and Nair, "The Dirty Secret of SSDs"[^23]: embodied-carbon method and its sensitivity to refresh cycles.
+- Meta's QLC case and E2 form-factor work[^27][^6]: bandwidth per TB as the tiering criterion.
+- Tannu and Nair, "The Dirty Secret of SSDs"[^24]: embodied-carbon method and its sensitivity to refresh cycles.
 - [Chapter 48](../06-industry-and-competition/48-media-suppliers-and-nand-cycle.md) for how NAND pricing moves the break-even.
 
 ## Key terms
@@ -208,19 +210,20 @@ Disk is not standing still. Western Digital targets HAMR at 100 TB by 2029[^19].
 [^18]: StorageReview, "DDN launches AI400X3M and Dynamo-integrated KV cache acceleration at ISC 2026," 2026-06. https://www.storagereview.com/news/ddn-launches-ai400x3m-and-dynamo-integrated-kv-cache-acceleration-at-isc-2026 (retrieved 2026-11-01; read via search summary).
 [^19]: Western Digital, "Western Digital Accelerates Storage Innovation for AI Era," 2026-02-03. https://www.westerndigital.com/company/newsroom/press-releases/2026/2026-02-03-western-digital-accelerates-storage-innovation-for-ai-era (retrieved 2026-11-01).
 [^20]: U.S. Energy Information Administration, "Electric Power Monthly, Table 5.3" (commercial sector, 12 months to July 2026), 2026-09. https://www.eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_5_3 (retrieved 2026-11-01). [VERIFY: search-summary only]
-[^21]: ServNet UK, "All-flash vs nearline HDD TCO 2026" (30 TB HDD $668 in Q1 2026, $495 in Q2 2025; 30 TB QLC $2,450 in Q2 2025), 2026. https://www.servnetuk.com/insights/all-flash-vs-nearline-hdd-tco-2026 (retrieved 2026-11-01). [VERIFY: search-summary only]
-[^22]: TechRadar Pro, "World's largest SSD has tripled in price in just nine months and now costs more than a new car," 2026. https://www.techradar.com/pro/worlds-largest-ssd-has-tripled-in-price-in-just-nine-months-and-now-costs-more-than-a-new-car (retrieved 2026-11-01). $37,128 for 122.88 TB (~$302/TB).
-[^23]: S. Tannu and P. J. Nair, "The Dirty Secret of SSDs: Embodied Carbon," HotCarbon 2022. https://arxiv.org/abs/2207.10793 (retrieved via search 2026-11-01); coverage in Network World, "Are HDDs greener than SSDs?" https://www.networkworld.com/article/3706371/are-hdds-greener-than-ssds.html (retrieved 2026-11-01).
-[^24]: CoreWeave, "Pricing," n.d. (2026); 8× HGX H100 at US$49.24/hr. https://www.coreweave.com/pricing (retrieved 2026-11-01).
-[^25]: Meta Engineering, "A case for QLC SSDs in the data center," 2025-03-04. https://engineering.fb.com/2025/03/04/data-center-engineering/a-case-for-qlc-ssds-in-the-data-center/ (retrieved via search 2026-11-01); The Register, "Quad goals: Meta proposes QLC SSDs as a new storage tier in datacenters," 2025-03-07. https://www.theregister.com/2025/03/07/meta_proposes_qlc_ssds_as/ (retrieved 2026-11-01).
-[^26]: Everpure, "Everpure Lands New Design Win with Second Top-Five Hyperscaler," 2026-08-10. https://www.everpuredata.com/company/newsroom/press-releases/everpure-lands-new-design-win-with-second-top-five-hyperscaler.html (retrieved 2026-11-01).
-[^27]: Pure Storage, "Hyperscaler," n.d. https://purestorage.com/pure-advantage/platform/hyperscaler.html (retrieved 2026-11-01).
-[^28]: Blocks & Files, "Pure Storage claims its flash beats SSDs and disks on power and carbon metrics," 2025-08-11. https://blocksandfiles.com/2025/08/11/pure-storage-flash-beats-ssds-and-disks-on-power-and-carbon-metrics/ (retrieved via search 2026-11-01).
-[^29]: Pure Storage, "With Industry-First Energy Efficiency Guarantee, Pure Storage Further Expands SLA Offerings for Evergreen//One," 2023-01-18. https://www.everpuredata.com/company/newsroom/press-releases/pure-expands-sla-offerings-evergreen-one.html (retrieved 2026-11-01).
-[^30]: Solidigm, "The Economics of Exabyte Storage," n.d. https://www.solidigm.com/products/technology/economics-of-exabyte-data-storage.html (retrieved via search 2026-11-01).
-[^31]: StorageNewsletter, "VAST Data Universal Storage All-Flash Platforms Double Storage Density With Intel QLC 30TB SSDs," 2021-12-23. https://www.storagenewsletter.com/2021/12/23/vast-data-universal-storage-all-flash-platforms-double-storage-density-with-intel-qlc-30tb-ssds/ (retrieved 2026-11-01).
-[^32]: Insider Monkey, "Seagate Technology Holdings plc (NASDAQ:STX) Q3 2026 Earnings Call Transcript," 2026-04. https://www.insidermonkey.com/blog/seagate-technology-holdings-plc-nasdaqstx-q3-2026-earnings-call-transcript-1749863/ (retrieved via search 2026-11-01).
-[^33]: Seagate, "Seagate's Breakthrough 30TB+ Hard Drives Ramp Volume…," 2024-01-17. https://www.businesswire.com/news/home/20240117730823/en (retrieved via search 2026-11-01).
-[^34]: Blocks & Files, "VDURA argues HDD systems are greener than flash arrays," 2024-08-01. https://blocksandfiles.com/2024/08/01/vdura-hdd-storage-is-greener-than-flash/ (retrieved via search 2026-11-01).
-[^35]: Blocks & Files, "VDURA says 30 TB QLC SSD capacity now costs 22.6x more than HDD," 2026-04-08. https://www.blocksandfiles.com/flash/2026/04/08/vdura-says-30-tb-qlc-ssd-capacity-now-costs-226x-more-than-hdd/5214761 (retrieved via search 2026-11-01).
-[^36]: TrendForce, "AI Server Demand Sustains Memory Contract Price Increases in 4Q26, While Consumer-Side Pressure Persists," 2026-09-30. https://www.trendforce.com/presscenter/news/20260930-13258.html (retrieved 2026-11-01).
+[^21]: ServNet UK, "All-flash vs nearline HDD TCO 2026" (30 TB HDD $668 in Q1 2026, $495 in Q2 2025; 30 TB QLC $2,450 in Q2 2025), 2026. https://www.servnetuk.com/insights/all-flash-vs-nearline-hdd-tco-2026 (retrieved 2026-11-01). Consistent with the VDURA index ratios reported by Blocks & Files (4.9× and 22.6×).
+[^22]: StorageReview, "Enterprise SSD prices run at 6.5x last year; Vdura pegs a 30TB TLC drive at $22,600," 2026-08. https://storagereview.com/news/enterprise-ssd-prices-run-at-6-5x-last-year-vdura-pegs-a-30tb-tlc-drive-at-22600 (retrieved via search 2026-11-01). 18.6× TLC-to-HDD multiple implies a 30 TB HDD at ~$1,216.
+[^23]: TechRadar Pro, "World's largest SSD has tripled in price in just nine months and now costs more than a new car," 2026. https://www.techradar.com/pro/worlds-largest-ssd-has-tripled-in-price-in-just-nine-months-and-now-costs-more-than-a-new-car (retrieved 2026-11-01). $37,128 for 122.88 TB (~$302/TB).
+[^24]: S. Tannu and P. J. Nair, "The Dirty Secret of SSDs: Embodied Carbon," HotCarbon 2022. https://arxiv.org/abs/2207.10793 (retrieved via search 2026-11-01); coverage in Network World, "Are HDDs greener than SSDs?" https://www.networkworld.com/article/3706371/are-hdds-greener-than-ssds.html (retrieved 2026-11-01).
+[^25]: Blocks & Files, "VDURA says 30 TB QLC SSD capacity now costs 22.6x more than HDD," 2026-04-08. https://www.blocksandfiles.com/flash/2026/04/08/vdura-says-30-tb-qlc-ssd-capacity-now-costs-226x-more-than-hdd/5214761 (retrieved via search 2026-11-01). VDURA index: 30 TB QLC SSD at $15,121 in Q1 2026 (~$504/TB); VDURA sells hybrid flash/disk systems.
+[^26]: CoreWeave, "Pricing," n.d. (2026); 8× HGX H100 at US$49.24/hr. https://www.coreweave.com/pricing (retrieved 2026-11-01).
+[^27]: Meta Engineering, "A case for QLC SSDs in the data center," 2025-03-04. https://engineering.fb.com/2025/03/04/data-center-engineering/a-case-for-qlc-ssds-in-the-data-center/ (retrieved via search 2026-11-01); The Register, "Quad goals: Meta proposes QLC SSDs as a new storage tier in datacenters," 2025-03-07. https://www.theregister.com/2025/03/07/meta_proposes_qlc_ssds_as/ (retrieved 2026-11-01).
+[^28]: Everpure, "Everpure Lands New Design Win with Second Top-Five Hyperscaler," 2026-08-10. https://www.everpuredata.com/company/newsroom/press-releases/everpure-lands-new-design-win-with-second-top-five-hyperscaler.html (retrieved 2026-11-01).
+[^29]: Pure Storage, "Hyperscaler," n.d. https://purestorage.com/pure-advantage/platform/hyperscaler.html (retrieved 2026-11-01).
+[^30]: Blocks & Files, "Pure Storage claims its flash beats SSDs and disks on power and carbon metrics," 2025-08-11. https://blocksandfiles.com/2025/08/11/pure-storage-flash-beats-ssds-and-disks-on-power-and-carbon-metrics/ (retrieved via search 2026-11-01).
+[^31]: Pure Storage, "With Industry-First Energy Efficiency Guarantee, Pure Storage Further Expands SLA Offerings for Evergreen//One," 2023-01-18. https://www.everpuredata.com/company/newsroom/press-releases/pure-expands-sla-offerings-evergreen-one.html (retrieved 2026-11-01).
+[^32]: Solidigm, "The Economics of Exabyte Storage," n.d. https://www.solidigm.com/products/technology/economics-of-exabyte-data-storage.html (retrieved via search 2026-11-01).
+[^33]: StorageNewsletter, "VAST Data Universal Storage All-Flash Platforms Double Storage Density With Intel QLC 30TB SSDs," 2021-12-23. https://www.storagenewsletter.com/2021/12/23/vast-data-universal-storage-all-flash-platforms-double-storage-density-with-intel-qlc-30tb-ssds/ (retrieved 2026-11-01).
+[^34]: Insider Monkey, "Seagate Technology Holdings plc (NASDAQ:STX) Q3 2026 Earnings Call Transcript," 2026-04. https://www.insidermonkey.com/blog/seagate-technology-holdings-plc-nasdaqstx-q3-2026-earnings-call-transcript-1749863/ (retrieved via search 2026-11-01).
+[^35]: Seagate, "Seagate's Breakthrough 30TB+ Hard Drives Ramp Volume…," 2024-01-17. https://www.businesswire.com/news/home/20240117730823/en (retrieved via search 2026-11-01).
+[^36]: Blocks & Files, "VDURA argues HDD systems are greener than flash arrays," 2024-08-01. https://blocksandfiles.com/2024/08/01/vdura-hdd-storage-is-greener-than-flash/ (retrieved via search 2026-11-01).
+[^37]: TrendForce, "AI Server Demand Sustains Memory Contract Price Increases in 4Q26, While Consumer-Side Pressure Persists," 2026-09-30. https://www.trendforce.com/presscenter/news/20260930-13258.html (retrieved 2026-11-01).

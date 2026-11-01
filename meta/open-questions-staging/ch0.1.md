@@ -1,0 +1,5 @@
+- ASK | 0.1 | PM | Which row of the atlas's positioning table for your product line is wrong, and which lost deal proves it?
+- ASK | 0.1 | PM | Which internal metric best predicts renewal or expansion that the public metrics (ARR, NDR, customer counts) hide?
+- ASK | 0.1 | Eng | Here is my L2 model of the Purity write path; which step is wrong for current releases?
+- ASK | 0.1 | CTO | Which of the atlas's "Don't say this" misconceptions do you hear most often from people new to storage?
+- ASK | 0.1 | CTO | Which benchmark or analyst figure about Everpure's market do you trust least, and what would you use instead?

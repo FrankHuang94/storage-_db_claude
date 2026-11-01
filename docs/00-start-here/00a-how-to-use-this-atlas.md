@@ -5,23 +5,23 @@
 
 ## TL;DR
 
-- **The atlas is a briefing book, not a textbook.** It exists so a strategy and corporate-development hire can hold credible conversations with Everpure product managers, engineering leaders and the Office of the CTO. It explains how storage works, why the trade-offs exist and what they mean for strategy.
-- **Default depth is L2: mechanism.** You should be able to whiteboard how a design works and say why it wins for a workload. L3 (code paths, on-disk formats) appears only in short "Going deeper" boxes.
-- **Every chapter has the same ten sections.** Read the TL;DR and "Why this matters" first. Read "Core concepts" when you need the mechanism, and the "Conversation playbook" the night before a meeting.
-- **Pick a path by time available.** A 2-hour crash course, a 2-day ramp and a 2-week mastery plan are laid out below with chapter lists and timings.
+- **The atlas is a briefing book, not a textbook.** It prepares a strategy hire for credible conversations with Everpure PMs, engineering leaders and the Office of the CTO: how storage works, why the trade-offs exist, what they mean.
+- **Default depth is L2: mechanism.** Whiteboard the design and say why it wins for a workload. L3 detail lives only in "Going deeper" boxes.
+- **Every chapter has the same ten sections.** TL;DR first, "Core concepts" for the mechanism, the "Conversation playbook" the night before a meeting.
+- **Pick a path by time available.** A 2-hour crash course, a 2-day ramp and a 2-week mastery plan are laid out below.
 - **Every number carries a label.** *Filed*, *company-stated*, *reported by press*, *tracker estimate*, *atlas judgment* or *worked example*. Unconfirmed items are given an inline VERIFY tag and collected in one list. Quote a number with its label and date, or not at all.
 
 ## Why this matters for Everpure strategy
 
-A new strategy hire at Everpure (NYSE: P, formerly PSTG)[^1] is judged quickly by people who have spent careers inside storage. A PM will notice if you confuse a FlashBlade//EXA data node with a DirectFlash Module. An engineer will notice if you call write amplification a marketing term. The CTO's office will notice if you quote a competitor's valuation as if it were revenue. In each case the damage is the same: the conversation drops to a level where you learn nothing. This atlas is meant to prevent that. It front-loads the mechanisms, numbers and vocabulary that make a first meeting useful.
+A new strategy hire at Everpure (NYSE: P, formerly PSTG)[^1] is judged quickly by career storage people. PMs notice if you confuse an EXA data node with a DirectFlash Module; engineers, if you call write amplification marketing; the CTO's office, if you quote a valuation as if it were revenue. Each slip drops the conversation to a level where you learn nothing; the atlas front-loads what prevents that.
 
-The reader it assumes is specific: CFA, MBA and legal training, semiconductor M&A experience, comfortable with NAND, HBM, PCIe and fab economics, but new to storage *systems* and storage *software*. That is why chapters lean on semiconductor bridges (the flash translation layer as a memory controller's address map; metadata servers as tag RAM) and why business consequences sit next to every mechanism.
+The assumed reader knows NAND, HBM, PCIe and fab economics from semiconductor M&A but is new to storage *systems* and *software*. Hence the semiconductor bridges and a business consequence beside every mechanism.
 
 ## Core concepts
 
 ### What the atlas covers
 
-The atlas runs from physics to strategy in nine Parts. Part 1 covers media and storage fundamentals; Part 2 protocols and networks; Part 3 the seven system architectures and the services around them. Part 4 is Everpure itself; Part 5 AI storage workload by workload; Part 6 the industry, including deep dives on VAST Data, WEKA and DDN. Part 7 covers history and future trends, and Part 8 the conversation toolkit. Parts 1–3 are deliberately vendor-neutral, so that Parts 4–6 can be read as applications of mechanisms you already hold rather than as competing sales pitches.
+Nine Parts run from physics to strategy: fundamentals, protocols and architectures (1–3), Everpure (4), AI storage (5), competition (6), history and future (7) and the conversation toolkit (8). Parts 1–3 are vendor-neutral, so Parts 4–6 read as applications of mechanisms you already hold, not as competing sales pitches.
 
 ### Depth labels
 
@@ -33,7 +33,7 @@ The atlas runs from physics to strategy in nine Parts. Part 1 covers media and s
 
 *Table 0.1.1 — Aim for L2 everywhere and L1 on the long tail; treat L3 as territory you ask engineers about, not territory you claim.*
 
-The labels set the bar for credibility. At L2 you can put a number on a mechanism and invite correction ("a 4 KB write on a networked array is ~100–250 µs, mostly network and controller software; is that your profile?"). That is the level at which engineers start teaching you, which is the point of the meeting. [Chapter 56](../08-conversation-toolkit/56-talking-with-engineering-and-cto.md) calls this the credibility ladder.
+At L2 you can put a number on a mechanism and invite correction ("a 4 KB write on a networked array is ~100–250 µs, mostly network and controller software; is that your profile?"). That is when engineers start teaching you: the credibility ladder of [Chapter 56](../08-conversation-toolkit/56-talking-with-engineering-and-cto.md).
 
 ### How every chapter is built
 
@@ -54,7 +54,7 @@ Chapters follow one template, so you always know where to look.
 
 *Table 0.1.2 — The template puts the remember-this material first and the evidence last, so a ten-minute skim and a two-hour study use the same page.*
 
-The three company deep dives (Chapters 42–44) add five sections between Core concepts and the competitor comparison: business model and financials, customers and go-to-market, why it gained traction, risks, and strategic relevance to Everpure. Figures are numbered by chapter ("Figure 26.2"), and each carries an italic caption that states its takeaway, so the captions alone make a usable summary. Visuals marked ★ in the outline are the signature diagrams. They are the ones worth being able to redraw from memory.
+The deep dives (Chapters 42–44) add five business sections, from financials to strategic relevance. Every figure's italic caption states its takeaway, so captions alone make a usable summary. Signature (★) diagrams are the ones worth redrawing from memory.
 
 ### Three learning paths
 
@@ -79,26 +79,24 @@ flowchart TD
 
 #### 2-hour crash course
 
-Use this when the meeting is tomorrow.
-
-1. **0:00–0:15. The map.** Read [0.2](00b-one-page-map.md): the domain mindmap, "Everpure in 10 diagrams" and the ten numbers.
-2. **0:15–0:50. Twelve TL;DRs, plus "Why this matters".** Fundamentals: [Ch 2](../01-storage-fundamentals/02-media-physics.md), [3](../01-storage-fundamentals/03-inside-an-ssd.md), [13](../03-system-architecture/13-storage-stack.md). Architecture: [16](../03-system-architecture/16-disaggregated-shared-everything.md), [24](../03-system-architecture/24-architecture-decision-matrix.md). Everpure: [25](../04-everpure/25-company-history-and-strategy.md), [26](../04-everpure/26-purity-and-directflash.md), [29](../04-everpure/29-hyperscaler-ecosystem-financials.md). AI: [30](../05-ai-storage/30-ai-data-pipeline.md), [32](../05-ai-storage/32-inference-and-kv-cache.md). Competition: [41](../06-industry-and-competition/41-why-ai-native-vendors-won.md), [45](../06-industry-and-competition/45-head-to-head.md). Allow about three minutes each.
-3. **0:50–1:30. Six figures, about seven minutes each.** Figure 2.1 (the media hierarchy and its ~1,000× latency cliff), Figure 13.1 (which layer holds the intelligence), Figure 26.2 (DirectFlash versus a commodity SSD), Figure 30.1 (the eight-stage AI pipeline), Figure 32.3 (the KV-cache tiers) and Figure 45.1 (four AI architectures in one grammar). For each, read the caption, then try to explain the figure aloud without looking.
-4. **1:30–1:50. Words and numbers.** The "Everpure's model" and "Competition" one-liners in [Ch 58](../08-conversation-toolkit/58-explain-in-30-seconds.md), then the ten-numbers table in 0.2. Say each number with its date.
-5. **1:50–2:00. Behaviour.** The credibility ladder in [Ch 56](../08-conversation-toolkit/56-talking-with-engineering-and-cto.md) and the "Don't say this" list of whichever chapter matches the meeting.
+1. **0:00–0:15. The map.** [0.2](00b-one-page-map.md): mindmap, ten diagrams, ten numbers.
+2. **0:15–0:50. Twelve TL;DRs, plus "Why this matters".** Fundamentals: [Ch 2](../01-storage-fundamentals/02-media-physics.md), [3](../01-storage-fundamentals/03-inside-an-ssd.md), [13](../03-system-architecture/13-storage-stack.md). Architecture: [16](../03-system-architecture/16-disaggregated-shared-everything.md), [24](../03-system-architecture/24-architecture-decision-matrix.md). Everpure: [25](../04-everpure/25-company-history-and-strategy.md), [26](../04-everpure/26-purity-and-directflash.md), [29](../04-everpure/29-hyperscaler-ecosystem-financials.md). AI: [30](../05-ai-storage/30-ai-data-pipeline.md), [32](../05-ai-storage/32-inference-and-kv-cache.md). Competition: [41](../06-industry-and-competition/41-why-ai-native-vendors-won.md), [45](../06-industry-and-competition/45-head-to-head.md).
+3. **0:50–1:30. Six figures, about seven minutes each.** Figures 2.1 (media hierarchy), 13.1 (where the intelligence lives), 26.2 (DirectFlash vs. SSD), 30.1 (AI pipeline), 32.3 (KV-cache tiers) and 45.1 (four AI architectures). Read each caption, then explain the figure aloud without looking.
+4. **1:30–1:50. Words and numbers.** The "Everpure's model" and "Competition" one-liners in [Ch 58](../08-conversation-toolkit/58-explain-in-30-seconds.md), then the 0.2 numbers table, each said with its date.
+5. **1:50–2:00. Behaviour.** The credibility ladder in [Ch 56](../08-conversation-toolkit/56-talking-with-engineering-and-cto.md) and the matching chapter's "Don't say this" list.
 
 #### 2-day ramp
 
-Roughly seven hours a day. Header reading times count prose only. With diagrams and tables, budget about 1.5× the stated minutes.
+About seven hours a day; header reading times count prose only, so budget about 1.5× for visuals.
 
 - **Day 1, morning:** Part 1 in full ([Ch 1–6](../01-storage-fundamentals/01-what-storage-does.md)), then Chapters [7](../02-protocols-and-networking/07-block-protocols.md), [8](../02-protocols-and-networking/08-file-protocols.md), [9](../02-protocols-and-networking/09-object-storage-and-s3.md) and [11](../02-protocols-and-networking/11-gpu-data-path.md) from Part 2.
 - **Day 1, afternoon:** Part 3 core ([Ch 13–17](../03-system-architecture/13-storage-stack.md), [23](../03-system-architecture/23-consumption-models.md), [24](../03-system-architecture/24-architecture-decision-matrix.md)) and all of Part 4 ([Ch 25–29](../04-everpure/25-company-history-and-strategy.md)). Close with 30 minutes of flashcards for Parts 1–4.
 - **Day 2, morning:** Part 5 core ([Ch 30–32](../05-ai-storage/30-ai-data-pipeline.md), [34](../05-ai-storage/34-nvidia-ecosystem.md), [35](../05-ai-storage/35-ai-factories-and-neoclouds.md), [37](../05-ai-storage/37-reading-benchmarks.md)).
-- **Day 2, afternoon:** Part 6 core ([Ch 40](../06-industry-and-competition/40-market-structure.md), [41](../06-industry-and-competition/41-why-ai-native-vendors-won.md), [45](../06-industry-and-competition/45-head-to-head.md), [46](../06-industry-and-competition/46-incumbents.md), [49](../06-industry-and-competition/49-competitive-matrices.md)). Read only the TL;DR and business-model sections of the three deep dives (42–44). Then [53](../07-history-and-future/53-future-trends.md) and [54](../07-history-and-future/54-strategic-option-map.md), and [Ch 55–56](../08-conversation-toolkit/55-talking-with-pms.md). Finish by choosing ten questions from [Ch 57](../08-conversation-toolkit/57-question-bank.md).
+- **Day 2, afternoon:** Part 6 core ([Ch 40](../06-industry-and-competition/40-market-structure.md), [41](../06-industry-and-competition/41-why-ai-native-vendors-won.md), [45](../06-industry-and-competition/45-head-to-head.md), [46](../06-industry-and-competition/46-incumbents.md), [49](../06-industry-and-competition/49-competitive-matrices.md)). Deep dives 42–44: TL;DR and business sections only. Then [53](../07-history-and-future/53-future-trends.md) and [54](../07-history-and-future/54-strategic-option-map.md), and [Ch 55–56](../08-conversation-toolkit/55-talking-with-pms.md). Finish with ten questions from [Ch 57](../08-conversation-toolkit/57-question-bank.md).
 
 #### 2-week mastery plan
 
-Ten working days of 3–4 hours each: 15 minutes of review flashcards from earlier days, the reading, then 30–45 minutes of active practice. Flashcards ([Ch 59](../08-conversation-toolkit/59-self-test-flashcards.md)) are organised by Part, so each day's deck matches what you have read.
+Ten working days of 3–4 hours: 15 minutes of review flashcards ([Ch 59](../08-conversation-toolkit/59-self-test-flashcards.md), organised by Part), the reading, then 30–45 minutes of practice.
 
 | Day | Read | Practice | Output |
 |---|---|---|---|
@@ -138,23 +136,23 @@ flowchart LR
 
 *Figure 0.1.2 — Parts 1–3 are the foundation; Everpure and AI storage can be read in either order, but competition and strategy need both.*
 
-Three dependencies matter most. [Chapter 3](../01-storage-fundamentals/03-inside-an-ssd.md) (the FTL) is needed before [Chapter 26](../04-everpure/26-purity-and-directflash.md), or DirectFlash looks like a marketing claim. [Chapter 11](../02-protocols-and-networking/11-gpu-data-path.md) (the GPU data path) is needed before all of Part 5. [Chapters 14–17](../03-system-architecture/14-scale-up-dual-controller.md) are needed before [Chapter 45](../06-industry-and-competition/45-head-to-head.md), which compares four architectures in that vocabulary. The history chapters (51–52) need only Part 1 and work well as lighter reading between dense days.
+Three dependencies matter most. Read [Chapter 3](../01-storage-fundamentals/03-inside-an-ssd.md) (the FTL) before [Chapter 26](../04-everpure/26-purity-and-directflash.md), or DirectFlash looks like marketing. Read [Chapter 11](../02-protocols-and-networking/11-gpu-data-path.md) before Part 5, and [Chapters 14–17](../03-system-architecture/14-scale-up-dual-controller.md) before [Chapter 45](../06-industry-and-competition/45-head-to-head.md). History (51–52) needs only Part 1 and makes good light reading between dense days.
 
 ### Using the conversation toolkit before a meeting
 
-Part 8 is built for the 24 hours before a meeting. A good routine:
+For the 24 hours before a meeting:
 
-1. **Identify the audience and the product line.** PMs, engineers and the CTO office want different things ([Ch 55](../08-conversation-toolkit/55-talking-with-pms.md), [Ch 56](../08-conversation-toolkit/56-talking-with-engineering-and-cto.md)).
-2. **Do the public homework.** Read the latest earnings release and the relevant chapter's "Numbers that matter". Never spend meeting time on something a 10-Q answers.
-3. **Pick five to seven questions,** not thirty, from [Ch 57](../08-conversation-toolkit/57-question-bank.md) and the chapter playbooks. Write one hypothesis with a number for each.
-4. **Rehearse two 30-second answers** from [Ch 58](../08-conversation-toolkit/58-explain-in-30-seconds.md) in case the conversation turns to the board or investors.
-5. **Re-read "Don't say this"** for each chapter in scope. Then glance at the [cheat sheets](../08-conversation-toolkit/60-cheat-sheets.md) for acronyms.
+1. **Identify the audience and the product line.** ([Ch 55](../08-conversation-toolkit/55-talking-with-pms.md), [Ch 56](../08-conversation-toolkit/56-talking-with-engineering-and-cto.md)).
+2. **Do the public homework.** Latest earnings release plus the chapter's "Numbers that matter"; never spend meeting time on what a 10-Q answers.
+3. **Pick five to seven questions,** not thirty, from [Ch 57](../08-conversation-toolkit/57-question-bank.md) and the chapter playbooks. Give each a hypothesis with a number.
+4. **Rehearse two 30-second answers** from [Ch 58](../08-conversation-toolkit/58-explain-in-30-seconds.md)
+5. **Re-read "Don't say this"** for each chapter in scope, and the [cheat sheets](../08-conversation-toolkit/60-cheat-sheets.md) for acronyms.
 
-Afterwards, write down what you learned that contradicts the atlas. Those notes are the most valuable updates it can get.
+Afterwards, note what contradicted the atlas; those are its most valuable updates.
 
 ### Sourcing, labels and VERIFY
 
-Every time-sensitive or vendor-specific claim has a footnote with the publisher, the publication date and the retrieval date. Engineering facts that are well established, and arithmetic shown on the page, carry none. Labels tell you how much weight a number bears:
+Every time-sensitive or vendor-specific claim has a footnote with publisher, publication date and retrieval date; established engineering facts and on-page arithmetic carry none. Labels say how much weight a number bears:
 
 | Label | Meaning | Example | How to say it |
 |---|---|---|---|
@@ -168,11 +166,11 @@ Every time-sensitive or vendor-specific claim has a footnote with the publisher,
 
 *Table 0.1.4 — The label is part of the number; dropping it is how a private company's claim turns into "fact" in a deck.*
 
-Two rules follow. Private-company figures are never compared with public ones without the label, so a VAST valuation is never set against Everpure revenue as like for like. Charts plot only sourced or clearly illustrative data, and each chart's CSV in `data/` records its `source` and `as_of` date.
+Private figures are never set against public ones without the label. Charts plot only sourced or clearly illustrative data, and each chart's CSV in `data/` records its `source` and `as_of` date.
 
 ## How Everpure approaches it vs. competitors
 
-The atlas holds Everpure and its competitors to the same standard of evidence. It does not cheerlead for anyone, including Everpure.
+Everpure and its competitors face the same standard of evidence; no cheerleading, including for Everpure.
 
 | Subject | Main evidence | Typical weakness | How the atlas compensates |
 |---|---|---|---|
@@ -183,18 +181,18 @@ The atlas holds Everpure and its competitors to the same standard of evidence. I
 
 *Table 0.1.5 — Different competitors leave different evidence trails; the atlas labels each rather than pretending they are comparable.*
 
-Strategy content is always framed as *options a strategy team might evaluate, based on public information*. Nothing here relies on, or speculates about, non-public Everpure plans.
+Strategy content is framed as *options a strategy team might evaluate, based on public information*, never as non-public Everpure plans.
 
 ## History and trajectory
 
-The atlas is a snapshot as of 2026-11-01. It covers the Pure Storage era from 2009 and Everpure from the February 2026 rebrand. The ticker change from PSTG to P took effect on 2026-04-17[^1]. Some content will age fast. Each quarterly earnings release moves ARR, RPO, margins and guidance. Each MLPerf Storage round reshuffles benchmark claims. NVIDIA's certification lists change the AI shortlist. NAND contract prices move product margins. Private funding rounds reset valuations. Mechanisms (Parts 1–3) and history (Part 7) age slowly. Parts 4–6 date fastest.
+The atlas is a snapshot as of 2026-11-01, covering Pure Storage from 2009 and Everpure from the February 2026 rebrand (ticker P since 2026-04-17[^1]). Mechanisms (Parts 1–3) and history age slowly; Parts 4–6 date fastest. Each earnings release moves ARR, RPO, margins and guidance; so do MLPerf rounds, NVIDIA certification lists, NAND prices and private funding rounds.
 
 ### How to keep it current
 
-- **VERIFY tags** sit inline where the doubt lives. `scripts/build_meta.py` collects them, together with every chapter's staged questions, into `meta/open-questions.md`. About 200 were open at writing.
-- **Per-chapter staging files** (`meta/open-questions-staging/`, `meta/glossary-staging/`) hold new VERIFY items, questions for Everpure people and glossary terms. `scripts/build_glossary.py` merges the terms into the [glossary](../glossary.md).
-- **The "Last verified" date** in each header says when the chapter was last checked. Re-verify the "Numbers that matter" table first, because that is what people copy into slides.
-- **`meta/sources.md`** is the deduplicated bibliography, so a superseded source can be traced to every chapter that cites it.
+- **VERIFY tags** sit inline where the doubt lives. `scripts/build_meta.py` collects them, with staged questions, into `meta/open-questions.md`; about 200 were open at writing.
+- **Per-chapter staging files** (`meta/open-questions-staging/`, `meta/glossary-staging/`) hold new VERIFY items, questions and terms; `scripts/build_glossary.py` merges terms into the [glossary](../glossary.md).
+- **The "Last verified" date** says when a chapter was last checked. Re-verify "Numbers that matter" first: that is what gets copied into slides.
+- **`meta/sources.md`** traces any superseded source to every chapter citing it.
 
 ## Numbers that matter
 
@@ -213,40 +211,40 @@ The atlas is a snapshot as of 2026-11-01. It covers the Pure Storage era from 20
 
 **Three questions for a PM**
 
-1. *"Which row of the atlas's positioning table for your product line is wrong?"* A strong answer names a workload, a competitor and a deciding attribute, such as "we lose //E deals to disk on $/TB below 2 PB". A weak answer defends the product.
-2. *"What metric do you report upward, and what does it hide?"* A strong answer separates the public metric (ARR, attach, customer counts) from the operational one it masks, such as time-to-deploy or renewal mix.
-3. *"Which competitor claim do customers repeat most, and is it true?"* A strong answer concedes the true part first. That tells you the PM has a real win/loss loop.
+1. *"Which row of the atlas's positioning table for your product line is wrong?"* A strong answer names a workload, a competitor and the deciding attribute; a weak one defends the product.
+2. *"What metric do you report upward, and what does it hide?"* A strong answer separates the public metric (ARR, customer counts) from the operational one it masks, such as time-to-deploy.
+3. *"Which competitor claim do customers repeat most, and is it true?"* A strong answer concedes the true part first, a sign of a real win/loss loop.
 
 **Three questions for an engineer**
 
 1. *"Here is my L2 model of the write path. Where is it wrong for your system?"* A strong answer corrects a specific step and gives a number, not an adjective.
 2. *"What would you want a non-engineer to understand before we evaluate a target in your area?"* A strong answer names a wall (metadata, rebuild time, client management) rather than a feature.
-3. *"Which benchmark result in our space do you trust least, and why?"* A strong answer explains the configuration or the normalisation that flatters the result ([Ch 37](../05-ai-storage/37-reading-benchmarks.md)).
+3. *"Which benchmark result in our space do you trust least, and why?"* A strong answer names the configuration or normalisation that flatters it ([Ch 37](../05-ai-storage/37-reading-benchmarks.md)).
 
 **Don't say this:**
 
 - A private company's figure without its label: "VAST has $2B of ARR" is press speculation; the company-stated figure is above US$500M of committed ARR[^3].
-- "Pure Storage announced…" for events after February 2026, or "PSTG" for the current ticker.
+- "Pure Storage" for post-February-2026 events, or "PSTG" for today's ticker.
 - "We're #1 in MLPerf" without adding that VAST, WEKA and DDN skipped that round ([Ch 37](../05-ai-storage/37-reading-benchmarks.md)).
-- Any L3 assertion you cannot defend. Ask it as a question instead.
-- A number from the atlas without its date. Most of Parts 4–6 will be stale within two quarters.
+- An L3 assertion you cannot defend; ask it instead.
+- An atlas number without its date; much of Parts 4–6 will be stale within two quarters.
 
 ## Going deeper (optional, L3 pointers)
 
-- `meta/research/` holds the research-sweep notes behind Parts 4–6 (Everpure; VAST, WEKA and DDN; the ecosystem). Cite the underlying sources, not the notes.
-- The SNIA Dictionary (snia.org) is the industry's reference vocabulary. Use it when a vendor's term and the atlas's term disagree.
-- Each chapter's "Going deeper" box points to the specifications, papers and conference talks (USENIX FAST, Hot Chips, FMS) behind its L3 detail.
+- `meta/research/` holds the research notes behind Parts 4–6; cite their underlying sources, not the notes.
+- The SNIA Dictionary (snia.org) is the reference vocabulary when vendor and atlas terms disagree.
+- Each chapter's "Going deeper" box lists the specs, papers and talks (USENIX FAST, Hot Chips, FMS) behind its L3 detail.
 
 ## Key terms
 
-- **Depth label (L1/L2/L3)** — vocabulary, mechanism and implementation levels of understanding. See [glossary](../glossary.md#d).
+- **Depth label (L1/L2/L3)** — vocabulary, mechanism and implementation levels ([glossary](../glossary.md#d)).
 - **Company-stated** — a private company's own unaudited figure.
 - **Reported by press** — a figure published by journalists, often from unnamed sources.
 - **Atlas judgment** — the atlas's synthesis of public facts, such as quadrant placements.
 - **Worked example** — arithmetic on stated assumptions, shown on the page.
 - **VERIFY tag** — an inline marker for a claim not yet confirmed by a primary or second source.
 - **Signature visual (★)** — a diagram worth being able to redraw from memory.
-- **Conversation playbook** — the per-chapter section of questions, strong answers and misconceptions.
+- **Conversation playbook** — each chapter's questions, strong answers and misconceptions.
 
 ## Sources
 

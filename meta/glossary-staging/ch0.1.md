@@ -1,0 +1,14 @@
+- **Depth label** — the atlas's three levels of understanding: L1 vocabulary, L2 mechanism and L3 implementation. | 0.1
+- **L1 (vocabulary)** — the depth at which you can define a term and use it correctly in a sentence. | 0.1
+- **L2 (mechanism)** — the atlas's default depth: you can whiteboard how something works, name its trade-offs and say why one design wins for a workload. | 0.1
+- **L3 (implementation)** — code paths, on-disk formats and kernel internals, covered only as pointers in "Going deeper" boxes. | 0.1
+- **Company-stated** — a label for a private company's own unaudited figure. | 0.1
+- **Reported by press** — a label for a figure published by journalists, often from unnamed sources. | 0.1
+- **Tracker estimate** — a market figure from an analyst tracker such as IDC's, valid only on that tracker's definitions. | 0.1
+- **Atlas judgment** — a label for the atlas's own synthesis of public facts, such as quadrant placements or threat rankings. | 0.1
+- **Worked example** — arithmetic on stated assumptions, shown on the page so it can be checked. | 0.1
+- **Illustrative chart** — a chart of modelled rather than measured data, labelled "Illustrative" in its title. | 0.1
+- **VERIFY tag** — an inline marker for a claim not yet confirmed by a primary or second source, collected in the open-questions list. | 0.1
+- **Signature visual** — a diagram marked ★ in the outline that a reader should be able to redraw from memory. | 0.1
+- **Conversation playbook** — the section of every chapter with questions for PMs and engineers, strong-answer sketches and misconceptions to avoid. | 0.1
+- **Credibility ladder** — the progression from L1 to L3 knowledge that sets how far an expert will engage with you. | 0.1

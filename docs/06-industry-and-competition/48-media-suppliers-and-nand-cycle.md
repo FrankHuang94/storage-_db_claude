@@ -5,11 +5,11 @@
 
 ## TL;DR
 
-- **Five companies take about 88% of NAND revenue.** Top-five revenue hit $68.87B in 2Q26, up 77% in a quarter[^1]. YMTC ships as many bits as Kioxia but earns far less[^2].
+- **Five companies take about 88% of NAND revenue.** Top-five revenue hit $68.87B in 2Q26, up 77% in a quarter[^1]. YMTC ships as many bits as Kioxia but earns less per bit[^2].
 - **2026 is a supply-side super-cycle.** Enterprise SSDs took ~48% of NAND bits[^2], wafer additions stayed thin and the HDD shortage pushed cloud buyers to QLC[^3]. Compounded TrendForce forecasts put contract prices ~4.7× their mid-2025 level by 4Q26.
 - **Array vendors feel the cycle as a lag.** Costs reprice quarterly; price lists and contracts reprice slower. Product gross margin dips then recovers, revenue inflates, and cash goes into inventory and prepayments.
 - **Everpure's exposure is split three ways.** Arrays carry NAND on its books, Evergreen//One carries it at fixed contracted prices, and hyperscale DirectFlash carries none because the customer buys the NAND[^4].
-- **HDD vs QLC is now about allocation as much as price.** Flash's $/TB premium widened to ~15–22× [VERIFY: single-vendor index][^5], far above the ~3× cloud buyers need[^3], but nearline HDD lead times passed 52 weeks.
+- **HDD vs QLC is now about allocation as much as price.** Flash's $/TB premium widened to ~19–23× [VERIFY: single-vendor index][^5], far above the ~3× cloud buyers need[^3], but nearline HDD lead times passed 52 weeks.
 
 ## Why this matters for Everpure strategy
 
@@ -23,10 +23,10 @@ The strategy questions follow. How long until an upcycle hits product gross marg
 
 ![Two-panel horizontal bar chart for 2Q26. Left, TrendForce share of NAND revenue: Samsung 29.3% ($23.06B), SK hynix Group including Solidigm 18.2% ($14.27B), Micron 15.1% ($11.85B), Kioxia 13.6% ($10.72B), Sandisk 11.4% ($8.97B), and a derived "all others including YMTC" 12.4%. Right, Counterpoint share of NAND bits shipped: Samsung 25%, SK hynix 22%, YMTC 14%, Kioxia 14%, Micron 13%, Sandisk 11%.](../assets/charts/ch48-nand-share.svg)
 
-*Figure 48.1 — Samsung leads on both measures, but YMTC ships as many bits as Kioxia while earning far less per bit, because its mix is still mostly consumer.*
+*Figure 48.1 — Samsung leads on both measures, but YMTC ships as many bits as Kioxia while earning less per bit, because its mix is still mostly consumer. All makers outside the top five together took 12.4% of revenue, so YMTC's revenue share is at most that, against Kioxia's 13.6%.*
 Data: `data/ch48_nand_share.csv`
 
-Revenue share rewards mix, because enterprise SSD bits sell at a large premium. Micron grew 99% in a quarter and passed Kioxia for third[^1]. Counterpoint puts YMTC fifth by revenue because data-centre SSDs are a small part of its mix, and calls 15% share the level at which a NAND maker can self-fund capex[^2]; YMTC is close.
+Revenue share rewards mix, because enterprise SSD bits sell at a large premium. Micron grew 99% in a quarter and passed Kioxia for third[^1]. Counterpoint puts YMTC fifth by revenue (TrendForce's brand ranking, which leaves YMTC out of its top five, puts Sandisk fifth) because data-centre SSDs are a small part of its mix, and calls 15% share the level at which a NAND maker can self-fund capex[^2]; YMTC is close.
 
 **Semiconductor bridge.** This is the DRAM playbook: a handful of IDMs, each node a capex cliff (more decks, hybrid bonding), so wafer starts are the swing factor. Kioxia and Sandisk share fabs through Japanese joint ventures: two brands on one manufacturing base.
 

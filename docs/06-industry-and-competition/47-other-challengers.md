@@ -103,8 +103,8 @@ flowchart TB
 MinIO, a single fast, free binary, became the default S3-compatible store for developers, Kubernetes and many neoclouds. It raised US$103M at a US$1B valuation in January 2022, led by Intel Capital[^15]. Then it withdrew the community edition in stages:
 
 1. **June 2025:** the admin console was removed, leaving a basic object browser; administration moved to the CLI or paid AIStor[^16].
-2. **Late 2025:** official binaries and images stopped updating [VERIFY: reported as October 2025]. On 3 December 2025 the project entered maintenance mode, with security fixes only case by case[^17].
-3. **2026:** the README was changed to say the repository is no longer maintained (reportedly 12 February [VERIFY: date]). GitHub shows `minio/minio` **archived on 25 April 2026**. The AGPLv3 source remains readable, and the README points to AIStor Free and AIStor Enterprise[^18].
+2. **Late 2025:** official binaries and images stopped updating, reportedly in October 2025; the README now says the community edition ships as source code only. On 3 December 2025 the project entered maintenance mode, with security fixes only case by case[^17].
+3. **2026:** the README was changed to say the repository is no longer maintained (12 February, per a fork maintainer's account[^19]). GitHub shows `minio/minio` **archived on 25 April 2026**. The AGPLv3 source remains readable, and the README points to AIStor Free and AIStor Enterprise[^18].
 
 **Semiconductor bridge:** a licensor changing terms after an ecosystem standardized on its architecture. Licensees pay, fork[^19] or port, here to Ceph RGW or commercial S3.
 
@@ -242,7 +242,7 @@ Three signals stand out. **Capital went elsewhere.** Hammerspace's US$100M is th
 [^14]: VDURA via Business Wire, "VDURA Powers One of the World's Largest Defense GPU Installations," 2025-10-02. https://www.businesswire.com/news/home/20251002832210/en/VDURA-Powers-One-of-the-Worlds-Largest-Defense-GPU-Installations (retrieved 2026-11-01).
 [^15]: SiliconANGLE, "MinIO raises $103M to expand multicloud data object store," 2022-01-26. https://siliconangle.com/2022/01/26/minio-raises-103m-expand-multicloud-data-object-store/ (retrieved 2026-11-01).
 [^16]: Blocks & Files, "MinIO removes management features from basic community edition object storage code," 2025-06-19. https://blocksandfiles.com/2025/06/19/minio-removes-management-features-from-basic-community-edition-object-storage-code/ (retrieved 2026-11-01).
-[^17]: Linuxiac, "MinIO Ends Active Development, Steers Users Toward Paid AIStor," 2025-12. https://linuxiac.com/minio-ends-active-development/ (retrieved 2026-11-01).
+[^17]: Linuxiac, "MinIO Ends Active Development, Steers Users Toward Paid AIStor," 2025-12. https://linuxiac.com/minio-ends-active-development/ (retrieved 2026-11-01); Pinggy, "MinIO Just Got Archived. Here's What Self-Hosters Are Running Instead," 2026. https://pinggy.io/blog/minio_archived_self_hosted_s3_alternatives/ (retrieved via search 2026-11-01; source for the October 2025 binary/image stop, secondary only).
 [^18]: GitHub, "minio/minio" repository page (archive banner dated 2026-04-25; README notice "no longer maintained"), n.d. https://github.com/minio/minio (retrieved 2026-11-01).
 [^19]: Vonng, "MinIO Is Dead, Long Live MinIO" (community fork pgsty/minio), n.d. https://blog.vonng.com/en/db/minio-resurrect/ (retrieved 2026-11-01).
 [^20]: Blocks & Files, "MinIO releases AIStor with GPUDirect-like S3 over RDMA," 2024-11-13. https://blocksandfiles.com/2024/11/13/minio-releases-aistor-with-gpudirect-like-s3-over-rdma/ (retrieved 2026-11-01).

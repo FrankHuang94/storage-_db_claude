@@ -40,8 +40,8 @@ quadrantChart
     NetApp: [0.92, 0.54]
     HPE: [0.72, 0.48]
     IBM: [0.68, 0.62]
-    Hitachi: [0.54, 0.32]
-    Huawei: [0.60, 0.68]
+    Hitachi: [0.54, 0.30]
+    Huawei: [0.60, 0.66]
     Hammerspace: [0.44, 0.58]
     Qumulo: [0.38, 0.30]
     MinIO: [0.14, 0.48]
@@ -184,8 +184,8 @@ Caution: IDC's 2Q26 market grew 33.6%, mostly from NAND price pass-through ([Cha
 
 | Column | Evidence behind the ratings |
 |---|---|
-| KV-cache offer | Everpure PureKVA GA October 2026[^20]; WEKA Augmented Memory Grid first, November 2025[^21]; DDN Dynamo integration June 2026[^22]; Dell NIXL on PowerScale[^23]; NetApp LMCache offload to ONTAP and StorageGRID[^24]; IBM Storage Scale KV reference design[^25] [VERIFY: Dell, NetApp and IBM KV-cache items read from search summaries only]; HPE evidence sponsored[^26]; Huawei M900[^27]; VAST ◐ because its BlueField-4 design ships 2H 2026 |
-| NVIDIA cert depth | ● = DGX SuperPOD plus certified storage: Everpure (FlashBlade//S500)[^28], VAST, WEKA, DDN, NetApp, Dell, IBM. ◐ = narrower: HPE (X10000 Foundation), Hitachi (BasePOD), Nutanix[^29], Cloudian (Foundation)[^30]. ○ = Hammerspace[^31]; Huawei is outside NVIDIA's programmes. Per [Chapter 34](../05-ai-storage/34-nvidia-ecosystem.md) |
+| KV-cache offer | Everpure Pure KVA with Dynamo since 2025, productised as PureKVA with availability announced for October 2026[^20] (● rests partly on audited MLPerf v3.0 KV results; by the legend's "new" test it is borderline); WEKA Augmented Memory Grid first, November 2025[^21]; DDN Dynamo integration June 2026[^22]; Dell NIXL on PowerScale[^23]; NetApp LMCache offload to ONTAP and StorageGRID[^24]; IBM Storage Scale KV reference design[^25] [VERIFY: Dell, NetApp and IBM KV-cache items read from search summaries only]; HPE evidence sponsored[^26]; Huawei M900[^27]; VAST ◐ because its KV software (VUA, open source since April 2025) is a library rather than a product and its BlueField-4 design ships 2H 2026 |
+| NVIDIA cert depth | ● = DGX SuperPOD plus certified storage: Everpure (FlashBlade//S500; FlashBlade//EXA had no completed NVIDIA certification by 2026-11-01)[^28], VAST, WEKA, DDN, NetApp, Dell, IBM. ◐ = narrower: HPE (X10000 Foundation), Hitachi (BasePOD), Nutanix[^29], Cloudian (Foundation)[^30]. ○ = Hammerspace[^31]; Huawei is outside NVIDIA's programmes. Per [Chapter 34](../05-ai-storage/34-nvidia-ecosystem.md) |
 | STaaS | Vendor owns hardware, bills for consumption: Evergreen//One, Dell APEX, NetApp Keystone, HPE GreenLake[^32]; IBM[^33] and Hitachi EverFlex[^34] narrower and block-centred |
 | Cloud availability | ● = native or first-party service in several clouds (NetApp; WEKA[^35]). Everpure ◐: Azure Native and Cloud Dedicated cover block, no managed EXA[^36] |
 | Data intelligence | Everpure ◐: Data Intelligence (ex-1touch) GA only in June 2026[^37] |
@@ -283,7 +283,7 @@ Four signals to watch in 2027:
 
 - "We're top-right on every chart." No vendor is, including Everpure.
 - "Huawei doesn't matter." It is #2 by IDC share and a Gartner Leader[^47].
-- "NVIDIA certification is our moat." Twelve STX partners share it.
+- "NVIDIA certification is our moat." Most rivals hold the same badges, EXA does not yet, and twelve vendors share the STX reference design.
 - "Hyperscalers are customers, not competitors." Both statements are true at once.
 
 ## Going deeper (optional, L3 pointers)
