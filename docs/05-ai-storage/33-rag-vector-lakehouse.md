@@ -210,7 +210,7 @@ The arc runs from DRAM-resident specialist databases (2019–2023), through stor
 **Questions for a PM**
 
 1. *"When a customer runs RAG on FlashBlade, where does the vector index live, and whose software is it?"* Strong: validated engines named, DRAM- or SSD-resident, who owns support, and where Data Stream ends and a partner begins.
-2. *"Which lakehouse engines read Iceberg on FlashBlade S3 in production, and what is our small-object GET latency and LIST rate against AWS S3 Tables?"* Strong: named engines, measured numbers, and a view on managed compaction.
+2. *"Which engines read Iceberg on FlashBlade S3 in production, and how do our small-object GET latency and LIST rate compare with S3 Tables?"* Strong: named engines, measured numbers, a compaction view.
 3. *"How does Data Intelligence's metadata make us harder to replace than an S3 endpoint?"* Strong: a concrete workflow (classification feeding RAG access filters) and Unity or Polaris integration.
 
 **Questions for an engineer**
@@ -223,16 +223,15 @@ The arc runs from DRAM-resident specialist databases (2019–2023), through stor
 
 - "Vector databases are a new storage tier." They are software indexes; storage holds their files.
 - "RAG is bandwidth-hungry." Retrieval is latency-bound; ingest and re-embedding need the bandwidth.
-- "HNSW runs fine on network storage." Each hop is a dependent read; use SSD-native or clustered indexes.
+- "HNSW runs fine on network storage." Each hop is a dependent read.
 - "Iceberg is a storage product." It is a table format; the catalog, not the bucket, holds the power.
 - "Quantization ruins recall." With full-precision re-ranking, 64× compression typically loses little.
 
 ## Going deeper (optional, L3 pointers)
 
-- Subramanya et al., DiskANN (NeurIPS 2019), and Chen et al., SPANN (NeurIPS 2021): the two canonical SSD-resident designs.
-- Malkov and Yashunin, HNSW (arXiv 1603.09320), and Jégou et al., "Product Quantization for Nearest Neighbor Search" (IEEE TPAMI, 2011).
-- Pace et al., "Lance: Efficient Random Access in Columnar Storage through Adaptive Structural Encodings" (arXiv 2504.15247).
-- The Apache Iceberg table spec (v2 and v3) and the Iceberg REST catalog OpenAPI definition.
+- DiskANN (NeurIPS 2019) and SPANN (NeurIPS 2021): the canonical SSD-resident designs.
+- Malkov and Yashunin, HNSW (arXiv 1603.09320); Jégou et al., product quantization (IEEE TPAMI, 2011).
+- Pace et al., the Lance paper (arXiv 2504.15247); the Apache Iceberg v3 spec and REST catalog API.
 
 ## Key terms
 

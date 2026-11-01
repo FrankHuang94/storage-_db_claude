@@ -59,7 +59,7 @@ For AI, **Rapid Bucket** (GA April 2026) is a zonal Cloud Storage bucket on Colo
 
 ### Meta Tectonic
 
-Tectonic is Meta's exabyte-scale, multitenant file system, described at USENIX FAST '21[^7]. One cluster serves an entire datacenter. It replaced separate systems for photo and video blobs (Haystack and f4) and many HDFS clusters for the data warehouse[^7][^8]. Consolidation cut the number of warehouse clusters by 10×[^8].
+Tectonic, Meta's exabyte-scale multitenant file system (USENIX FAST '21[^7]), runs one cluster per datacenter. It replaced separate systems for photo and video blobs (Haystack and f4) and many HDFS clusters for the data warehouse[^7][^8]. Warehouse clusters fell 10×[^8].
 
 ```mermaid
 flowchart TB
@@ -200,7 +200,7 @@ Two signals point forward. **Storage is moving next to the GPUs**: zonal buckets
 
 **Don't say this:**
 
-- "Hyperscalers buy storage arrays." For their own workloads they buy media and occasional IP; arrays appear only inside partner cloud services.
+- "Hyperscalers buy storage arrays." Internally they buy media and occasional IP.
 - "Meta replaced its disks with Pure." Meta adds QLC as a middle tier alongside HDDs and also uses standard QLC SSDs.
 - "We compete with Colossus or Tectonic." They are internal; we compete with services built on them, such as Rapid Bucket.
 - "3FS proves storage software is worthless." A lab with a narrow workload can build its own; enterprises still pay for support and features.

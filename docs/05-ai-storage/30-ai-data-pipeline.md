@@ -120,7 +120,7 @@ Data: `data/ch30_data_funnel.csv`
 
 **From crawl to weights.** DataComp-LM's pool holds 240T tokens of Common Crawl text[^11]. FineWeb filtered and deduplicated 96 snapshots into 15T tokens, about 44 TB on disk[^12][^13] [VERIFY: 44 TB from search summaries only], with a 1.3T-token educational subset[^12]. Llama 3 trained on about 15.6T tokens[^14]; as 4-byte token IDs that is 15.6e12 × 4 ≈ 62 TB. Filtering, not tokenization, does the shrinking, so curation is where the lake's capacity and scan bandwidth earn their keep.
 
-**Tokens are cheap to stream.** Llama 3's batch grew to 16M tokens per step[^13]: 64 MB at 4 bytes per token, so even one step per second is about 64 MB/s for the whole cluster. Multimodal is different; video can need GB/s per node.
+**Tokens are cheap to stream.** Llama 3's batch grew to 16M tokens per step[^14]: 64 MB at 4 bytes per token, so even one step per second is about 64 MB/s for the whole cluster. Multimodal is different; video can need GB/s per node.
 
 **Checkpoints are not cheap.** A 405B model at 14–16 bytes per parameter (weights plus Adam state) needs 5.7–6.5 TB. Meta built Llama 3's storage on its Tectonic file system at 240 PB across 7,500 SSD servers, sustaining 2 TB/s with 7 TB/s peaks, and named bursty checkpoint writes a major challenge[^14]. At 2 TB/s, 6.5 TB takes about 3.3 s; at 100 GB/s, 65 s, with a 16K-GPU job like Llama 3's[^14] idle throughout.
 

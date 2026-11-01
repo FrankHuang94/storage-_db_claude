@@ -99,13 +99,13 @@ flowchart TB
 
 *Figure 34.2 — NVIDIA supplies GPUs, DPUs, network and retrieval software; the partner's differentiated layer, data services and metadata, is the middle of the sandwich.*
 
-The bargain has a cost. Partners get a ready-made answer to "how do I do RAG on my data" ([Chapter 33](33-rag-vector-lakehouse.md)); NVIDIA gets GPUs and software subscriptions in every storage rack; and every partner's AI story converges on the same NVIDIA components, differing only in data services.
+The bargain cuts both ways: partners get a ready-made RAG answer ([Chapter 33](33-rag-vector-lakehouse.md)), NVIDIA gets GPUs and software subscriptions in every storage rack, and every partner's AI story converges on the same NVIDIA parts.
 
 ### STX and CMX: the reference storage server
 
 NVIDIA went a step further at CES in January 2026 with the Inference Context Memory Storage platform, a BlueField-4-powered KV-cache tier inside each pod[^14]. At GTC in March 2026 it widened this into **BlueField-4 STX**, a modular storage reference architecture built on Vera Rubin, BlueField-4 and Spectrum-X. The first rack-scale implementation is the **CMX** context memory storage platform[^15]. Twelve storage vendors, including Everpure, VAST, WEKA, DDN, Dell and NetApp, are co-design partners; AIC, Supermicro and QCT build hardware; CoreWeave, Lambda, Nebius, OCI and four others are early adopters[^16]. STX is a blueprint NVIDIA distributes, not a box it sells[^17]. KV-cache mechanics are in [Chapter 32](32-inference-and-kv-cache.md), and the DPU's place in the network is in [Chapter 10](../02-protocols-and-networking/10-datacenter-networking.md).
 
-The strategic point is where value moves. If the controller is a BlueField-4 running NVIDIA's DOCA software on ODM-built servers, storage software becomes a tenant on NVIDIA's controller silicon, as fabless designs build on a foundry's process and IP. One analyst firm argues vendors not optimized for inference and context memory face margin pressure as NVIDIA standardizes the data path, while noting those vendors are STX partners[^18]. Opinion, but the right risk to watch.
+The strategic point is where value moves. If the controller is a BlueField-4 running NVIDIA's DOCA software on ODM-built servers, storage software becomes a tenant on NVIDIA's controller silicon, as fabless designs build on a foundry's process and IP. One analyst firm argues vendors not optimized for inference and context memory face margin pressure as NVIDIA standardizes the data path, while noting those vendors are STX partners[^18]. Opinion, but the right risk.
 
 ### How deals flow through NVIDIA
 
@@ -213,7 +213,7 @@ Supermicro has shown a prototype CMX server and is validating STX SSD requiremen
 
 **Don't say this:**
 
-- "We're NVIDIA-certified, so we're as good as VAST." Everyone is certified. Certification is the entry ticket.
+- "We're NVIDIA-certified, so we're as good as VAST." Everyone is; it is the entry ticket.
 - "SuperPOD certification proves top performance." It proves a floor of about 0.5 GB/s per GPU on B200 enhanced.
 - "NVIDIA picks the storage winner." NVIDIA usually lists a dozen. OEMs, integrators and neocloud bake-offs decide most deals.
 - "STX means NVIDIA is entering storage." It is a partner-built reference architecture; the risk is a commoditized controller, not an NVIDIA storage brand (yet).
