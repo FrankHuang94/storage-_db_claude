@@ -112,8 +112,8 @@
 |---|
 | v0.5,2023-09,n/a [VERIFY],n/a,UNet3D;BERT,首轮,A100 [VERIFY] |
 | v1.0,2024-09-25,13,>100,UNet3D;ResNet50;CosmoFlow,新增 ResNet50+CosmoFlow；移除 BERT,A100;H100 |
-| v2.0,2025-08-04,26,>200,UNet3D;ResNet50;CosmoFlow;Checkpointing(Llama3 8B/70B/405B/1T),检查点保存,加速器数量约为 v1.0 的 2 倍 |
-| v3.0,2026-09-01,19 (11 new),143 (per StorageReview),训练;检查点保存;KV 缓存;向量数据库,KV 缓存;向量数据库;S3 访问,KV 指标 = tokens/s |
+| v2.0,2025-08-04,26,>200,UNet3D;ResNet50;CosmoFlow;检查点保存(Llama3 8B/70B/405B/1T),检查点保存,加速器数量约为 v1.0 的 2 倍 |
+| v3.0,2026-09-01,19（其中 11 家首次参加）,143（据 StorageReview）,训练;检查点保存;KV 缓存;向量数据库,KV 缓存;向量数据库;S3 访问,KV 指标 = tokens/s |
 
 ---
 

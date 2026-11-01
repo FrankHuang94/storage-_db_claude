@@ -136,3 +136,181 @@
 
 *表 60.1 — 104 个缩略语，每个都链接到解释它的章节。*
 
+### 速查表 2：协议海报
+
+![表格式海报，将十一种协议分为三个区段进行对比。块：FC、iSCSI、FC-NVMe、NVMe over RoCE 和 NVMe over TCP。文件：NFSv3、带 pNFS 的 NFSv4.1、SMB3 以及专有并行文件系统客户端。对象：S3 和 S3 over RDMA。各列给出传输方式、典型延迟增量、使用者以及 Everpure 支持情况，其中 Everpure 一列以蓝色底纹标出。](../assets/diagrams/ch60-protocol-poster.svg)
+
+*图 60.1 — 协议族决定语义，传输层决定延迟；除专有并行客户端外，Everpure 覆盖了每一行。*
+
+三条阅读规则。第一，命令集与传输层是相互独立的两层：NVMe 可以运行在 PCIe、Fibre Channel、RDMA 或 TCP 之上，延迟代价主要来自传输层。
+
+第二，文件和对象协议会增加服务器端的处理工作，因此评判它们更多看并行度，而不是微秒级延迟。在 100 GbE 上，单个基于 TCP 的 NFS 挂载最高约 2–2.5 GB/s，而使用 RDMA 约为 8 GB/s（厂商实测）[^5]。要喂饱一台 100 GB/s 的 GPU 服务器，大约需要 100 ÷ 2.25 ≈ 44 条 TCP 流，这正是 `nconnect`、pNFS 和并行客户端存在的原因。
+
+第三，协议覆盖范围取决于阵列产品族。FlashArray 提供所有块传输方式，外加 NFS、SMB，以及自 2025 年 6 月起支持的 S3[^6]。FlashBlade 提供 NFS、SMB 和 S3；FlashBlade//EXA 通过 pNFS 和标准 Linux 客户端获得并行带宽[^7]。
+
+| 协议族 | 协议 | 传输方式 | 典型延迟增量 | 使用者 | Everpure 支持情况 |
+|---|---|---|---|---|---|
+| 块 | FC (SCSI) | 无损 FC 网络、HBA | 低；由 HBA 卸载的 SAN 基准 | FC 存量环境、一级数据库 | FlashArray 产品族 |
+| 块 | iSCSI | 基于 TCP/IP 的 SCSI | 块协议中最高：TCP 加 SCSI 转换 | 中端市场、分支机构、已部署的 SAN | FlashArray 产品族 |
+| 块 | FC-NVMe | 在现有 FC 上运行 NVMe | 低；比 SCSI-FC 低约 50%（厂商声称）[^8] | 原地升级改造的 FC 用户 | FlashArray，Purity 6.1，2021 年 2 月[^8] |
+| 块 | NVMe/RoCE | 以太网上基于 RDMA 的 NVMe | 相对本地 NVMe 约 ~5–15 µs[^1] | AI 后端、新兴 GPU 云、对延迟敏感的数据库 | FlashArray，Purity 5.2，2019 年[^9] |
+| 块 | NVMe/TCP | 基于 TCP 的 NVMe，任意网卡 | 早期测试约 ~20–35 µs；负载下更大[^2] | 新建以太网 SAN、VMware/Nutanix | FlashArray，Purity 6.4.2+[^10] [VERIFY: 正式发布（GA）日期] |
+| 文件 | NFSv3 | 无状态；TCP 或 RDMA；每个挂载对应一台服务器 | TCP 协议栈加服务器端文件操作；每个 TCP 挂载约 ~2–2.5 GB/s[^5] | Linux 应用、传统 NAS、pNFS 数据通路 | FlashBlade；FlashArray 文件服务 |
+| 文件 | NFSv4.1 / pNFS | 有状态；从元数据服务器获取布局，数据直连 | 一次元数据往返，随后并行直接 I/O | 使用标准客户端的大规模 AI | FlashBlade NFSv4.1；FlashBlade//EXA pNFS，数据走 RDMA[^7] |
+| 文件 | SMB3 | 有状态；Multichannel、SMB Direct | 与 NFS 类似；仍是每个共享对应一台服务器 | Windows 共享、VDI、媒体 | FlashBlade；FlashArray 文件服务 |
+| 文件 | 并行文件系统客户端 | 内核模块或代理；IB/RoCE | 客户端直接向服务器条带化读写 | 最大规模的 HPC 和 AI 集群 | 无；EXA 改用 pNFS |
+| 对象 | S3 | HTTPS REST，签名请求 | AWS S3 Standard 首字节约 ~100–200 ms[^11]；Express One Zone 为个位数毫秒[^12] | 数据湖、备份、AI 流水线 | FlashBlade S3；FlashArray S3（2025 年）[^6] |
+| 对象 | S3 over RDMA | HTTP 控制通路，RDMA 数据通路 | 加载 16 GiB 用时 0.65 s，而 HTTP 为 12.16 s（MinIO，厂商数据）[^13] | GPU 数据加载、检查点、KV 层级 | FlashBlade//S，2025 年 3 月发布[^14] [VERIFY: 正式发布（GA）日期] |
+
+*表 60.2 — 图 60.1 的无障碍文本版本，来源标注在单元格中。*
+
+### 速查表 3：架构海报
+
+![六面板海报。每个面板包含一张迷你示意图，以及关于优势、瓶颈墙和示例产品的要点：纵向扩展双控制器、横向扩展无共享、分解式全共享、并行文件系统（含 pNFS）、对象存储，以及 SDS 与 HCI。每个面板中的 Everpure 产品以蓝色标出。](../assets/diagrams/ch60-architecture-poster.svg)
+
+*图 60.2 — 每种架构都是以一堵墙换另一堵墙；Everpure 在六行中的五行都有产品，并有意在 DASE 上不布局。*
+
+这张海报沿用[第 24 章](../03-system-architecture/24-architecture-decision-matrix.md)的矩阵，但去掉了云块存储——后者本质上是由超大规模云厂商运营的软件定义存储。有两个标签需要谨慎使用。Pure Storage 将 Purity//FB 称为"分区写入者（partitioned-writer）"：各刀片（blade）拥有命名空间的分片，而 Purity 在全局层面管理闪存[^15][^16]，更接近无共享，而非 DASE。FlashBlade//EXA 将元数据与数据分离，但客户端先获取布局，然后直接访问数据节点。这是运行在横向扩展元数据引擎之上的并行文件系统，而不是 DASE（[第 16 章](../03-system-architecture/16-disaggregated-shared-everything.md)）。
+
+**半导体类比。** 纵向扩展相当于一个内存控制器加一个热备；无共享相当于 NUMA；DASE 相当于跨网络架构的 UMA；并行文件系统相当于先做一次 tag 查找，再进行直接 DMA。
+
+| 架构 | 优势 | 瓶颈墙 | 示例产品（Everpure 以粗体标出） |
+|---|---|---|---|
+| 纵向扩展双控制器 | 跳数最少，块存储亚毫秒级；更换控制器是一次计划内故障切换 | 单个控制器对的 CPU 和内存 | **FlashArray**；Dell PowerStore、PowerMax；NetApp AFF/ASA；HPE Alletra MP B10000；IBM FlashSystem |
+| 横向扩展无共享 | 容量和带宽随节点增长；通过计算确定数据放置；自愈 | 捆绑式扩展、东西向流量、重建风暴 | Dell PowerScale、WEKA、Ceph、Qumulo、Nutanix；**FlashBlade//S、//E**（分区写入者） |
+| DASE | 计算与介质独立扩展；任意节点可访问任意字节 | 后端网络多一跳、机柜级故障域、最小规模大 | VAST Data、NetApp AFX、HPE Alletra MP X10000；Everpure **无** |
+| 并行文件系统（含 pNFS） | 客户端直接条带化访问：以 TB/s 写入单一命名空间 | 元数据、小文件、客户端生命周期管理 | Lustre（DDN EXAScaler、HPE Cray）、IBM Storage Scale、BeeGFS；**FlashBlade//EXA**、Hammerspace |
+| 对象 | 每 TB 成本最低、规模巨大、跨地域纠删码 | 对象数量、小对象、LIST 操作、不支持 POSIX | AWS S3、MinIO、Cloudian、Scality、Dell ObjectScale、NetApp StorageGRID；**FlashBlade 与 FlashArray S3** |
+| SDS / HCI | 通用服务器或云；统一的 IT 资产 | 耦合扩展导致计算或容量闲置 | Nutanix、VMware vSAN、Ceph；**Portworx**；Nutanix AHV 背后的 **FlashArray** |
+
+*表 60.3 — 图 60.2 的无障碍文本版本；详细内容和来源见第 14–19 章及第 24 章。*
+
+### 速查表 4：产品线海报
+
+![Everpure 产品组合的分层海报。顶层：Everpure Platform 总品牌。数据与 AI 服务：Data Intelligence、Data Stream、PureKVA。控制平面与延伸：Fusion、Pure1、Portworx、Everpure Cloud。阵列：运行 Purity FA 的 FlashArray XL、X、ST、C 和 E；运行 Purity FB 的 FlashBlade S、E 和 EXA。Purity 操作系统层。DirectFlash 介质：TLC DFM，75、150 和 300 TB 的 QLC DFM，DFMD，超大规模云厂商授权。底层：Evergreen Forever、Flex 和 One。](../assets/diagrams/ch60-product-lineup.svg)
+
+*图 60.3 — 两大阵列产品族之下是同一套介质策略和同一个操作系统家族；软件层的覆盖范围超出 Everpure 硬件。*
+
+自下而上阅读。DFM 容量已达 300 TB[^17]，高于已确认出货的最大标准 SSD（245.76 TB）[^18]。FlashArray 各型号的差别主要在于介质和控制器规格；FlashBlade 分为性能型（//S）、容量型（//E）和 AI 规模型（//EXA），后者的数据节点是第三方服务器[^19]。控制平面与延伸类产品位于其上，最顶层是来自 US$125.0M 1touch 交易的数据智能层[^4]。Evergreen 是商业包装；Q2 FY27 订阅 ARR 达到 US$2.13B[^20]。
+
+| 层级 | 产品 | 一句话定位 |
+|---|---|---|
+| 介质 | DirectFlash Modules（TLC；QLC 75/150/300 TB；DFMD） | 由 Purity 全局 FTL 管理的裸 NAND；密度高于标准 SSD[^17] |
+| 操作系统 | Purity//FA、//FB；Purity//DN | 一个日志结构操作系统家族，覆盖 FlashArray 和 FlashBlade，包括 EXA 的元数据核心；Purity//DN 是管理 EXA 第三方 Linux 数据节点的软件栈[^19] |
+| FlashArray | //XL（R5、XL190） | 顶级纵向扩展块存储，按假定 5:1 缩减率计算有效容量最高 7.4 PB；Purity Turbo 在备用控制器上处理读取[^21][^22] |
+| FlashArray | //X（R5） | 基于 TLC DFM 的主流一级块存储和文件存储 |
+| FlashArray | //ST | 基于商用 SSD 的延迟专用型号，无数据缩减，每 5RU >10M IOPS（公司自述）[^23] |
+| FlashArray | //C（R5） | 基于 //X 控制器的 QLC 容量层 |
+| FlashArray | //E | 磁盘替代型号，入门容量约 1 PB[^24] |
+| FlashBlade | //S（R2） | 性能型文件与对象存储；S500 已获 DGX SuperPOD 认证[^25]；FlashBlade 还获得了 NCP 高性能存储认证（第 27 章） |
+| FlashBlade | //E | 容量型文件与对象存储，配有纯存储机箱[^26] |
+| FlashBlade | //EXA | Purity//FB 元数据核心加通过 pNFS 访问的第三方数据节点；MLPerf v3.0 检查点写入 877.5 GiB/s[^27] |
+| 控制平面 | Fusion、Pure1 | 设备群策略与数据放置；遥测与 AIOps；两者均提供 MCP 服务器 |
+| 延伸 | Portworx | 可运行于任何基础设施的 Kubernetes 与 KubeVirt 虚拟机数据服务[^28] |
+| 延伸 | Everpure Cloud Dedicated / Azure Native | 在客户自己的 AWS 或 Azure 账户中运行 Purity；完全托管的 Azure 服务[^29][^30] |
+| 服务 | Everpure Data Intelligence、Data Stream、PureKVA | 数据分类与治理（2026 年 6 月正式发布）[^3]；AI 数据摄取与向量化[^31]；KV 缓存卸载[^32] |
+| 商业模式 | Evergreen//Forever、//Flex、//One | 买断并享受原地更新；买断、按用量付费；带 SLA 的 STaaS，包括 99.9999% 可用性[^33] |
+
+*表 60.4 — 图 60.3 的无障碍文本版本，使用第 26–28 章中的现行名称。*
+
+## Everpure 的做法与竞争对手对比
+
+| 海报 | Everpure 覆盖范围 | 对手更强之处 |
+|---|---|---|
+| 协议 | 所有块传输方式；NFS、SMB、pNFS；两大产品族均支持 S3 | 专有客户端（WEKA、Lustre）提供更精细的客户端控制；对象存储专业厂商目前已在交付 S3 over RDMA |
+| 架构 | 六行中的五行，阵列共用一个操作系统家族 | VAST、NetApp AFX 和 HPE X10000 占据 DASE 一行；Dell PowerScale 拥有横向扩展 NAS 的装机基础 |
+| 产品线 | 自有介质、一个操作系统、一个控制平面 | Dell 和 HPE 可在一张采购订单上同时销售服务器和网络；NetApp 在三家超大规模云厂商上以第一方服务形式运行 |
+
+*表 60.5 — Everpure 以组合广度换取统一堆栈；它的短板位于每张海报的边缘。*
+
+最强版本论证（steelman）：广度适合追求一站式采购的 AI 工厂买家；一致性适合精简的存储团队。战略团队基于公开信息可能评估的选项，就藏在海报中空白或尚未核实的单元格里：S3 over RDMA 的实证案例、基于 DFM 的 EXA 数据节点，以及将 Data Intelligence 延伸到 Everpure 阵列之外（[第 54 章](../07-history-and-future/54-strategic-option-map.md)）。
+
+## 历史与发展轨迹
+
+这些海报是 2026 年 11 月的快照。变化最快的有三类单元格：GPU 数据通路（NVIDIA 面向 S3 的 RDMA 服务器库于 2026 年 1 月发布 1.0 版[^34]）；EXA 硬件（基于 DFM 的数据节点已在规划中，GA 尚未确认；[第 27 章](../04-everpure/27-flasharray-and-flashblade.md)）；以及命名（2025 年的 Enterprise Data Cloud，2026 年的 Data Primacy[^3]）。再次使用海报前，请重新核实这些内容。
+
+## 关键数字
+
+| 指标 | 数值 | 背景 | 来源 / 日期 |
+|---|---|---|---|
+| NVMe/RoCE 延迟增量 | ~5–15 µs | 每次 I/O，相对本地 NVMe | SNIA, 2016[^1] |
+| NVMe/TCP 延迟增量 | ~20–35 µs | 早期 Linux 测试 | SNIA, 2019[^2] |
+| S3 Standard 首字节延迟 | ~100–200 ms | AWS 指导值，并非保证 | AWS docs[^11] |
+| 单个 NFS/TCP 挂载，100 GbE | ~2–2.5 GB/s（RDMA 约 ~8 GB/s） | 厂商实测 | VAST KB[^5] |
+| 喂饱 100 GB/s 所需 TCP 流数 | ~44 | 100 ÷ 2.25 | 算例 |
+| 最大 DFM 对最大 SSD | 300 TB 对 245.76 TB | 介质密度领先 | B&F 2026-08[^17]; Micron 2026-05[^18] |
+| FlashBlade//EXA 检查点写入 | 877.5 GiB/s | MLPerf Storage v3.0，30 个数据节点 | 2026-09[^27] |
+| 订阅 ARR | US$2.13B（+20%） | Q2 FY27 | Everpure, 2026-08-26[^20] |
+| 速查表 1 中的缩略语数量 | 104 | 表 60.1 计数 | 算例 |
+
+## 对话手册
+
+**向产品经理提的问题**
+
+1. *"新的 FlashArray 交易主要落在哪种块传输方式上，结构如何变化？"* 高质量回答：按细分市场拆分，NVMe/TCP 与 VMware 和 Nutanix 的更新换代相关，并坦承 FC 依然顽强。
+2. *"新兴 GPU 云交易从产品线海报的哪个位置切入，又靠什么扩展？"* 高质量回答：训练用 EXA，推理用 PureKVA，消费模式用 Evergreen//One，并说明门槛事项（NCP 认证、数据节点供应来源）。
+3. *"哪个软件层能在不搭配阵列的情况下拿到预算？"* 高质量回答：给出 Portworx 或 Data Intelligence 独立销售的数字，或坦率地说"大多仍随阵列销售"。
+
+**向工程师提的问题**
+
+1. *"在 EXA 上，布局被召回或元数据核心变慢时会发生什么？"* 高质量回答：LAYOUTGET 走 TCP，数据直接走 RDMA，召回与回退行为，元数据随刀片数量扩展。
+2. *"为什么不做专有并行客户端？"* 高质量回答：无需管理内核模块生命周期，代价是客户端控制较少，并将其作为一种权衡来表述。
+3. *"在 FlashBlade 上支持 S3 over RDMA，服务器端有什么变化？"* 高质量回答：GA 状态、cuObject 兼容性、令牌处理、HTTP 回退。
+
+**不要这样说：**
+
+- "FlashBlade//S 和 VAST 一样是全共享架构。"它是分区写入者。
+- "EXA 就是 Everpure 的 DASE。"它是带有直接 pNFS 通路的元数据/数据分离架构。
+- "NVMe/TCP 太慢了。"它只增加几十微秒。
+- "Pure Cloud Block Store。"现在叫 Everpure Cloud Dedicated。
+- 在财务会议上说"RPO"却不说明是哪一个。
+
+## 深入阅读（可选，L3 指引）
+
+- [第 24 章](../03-system-architecture/24-architecture-decision-matrix.md)：完整的工作负载矩阵；[第 49 章](../06-industry-and-competition/49-competitive-matrices.md)：厂商对比矩阵。
+- [第 58 章](58-explain-in-30-seconds.md)和[第 59 章](59-self-test-flashcards.md)：一句话说明与自测；完整定义见[术语表](../glossary.md)。
+
+## 关键术语
+
+- **延迟增量（latency adder）** — 传输层或软件层为每次 I/O 额外增加的时间。
+- **分区写入者（partitioned-writer）** — Everpure 对 FlashBlade 的称呼：各刀片拥有命名空间的分片；介质在全局层面管理。
+- **元数据/数据分离（metadata/data split）** — 客户端从元数据服务器获取布局，然后直接传输数据。
+- **单挂载上限（single-mount ceiling）** — 单个客户端挂载在需要并行路径之前所能达到的吞吐量。
+- **标准客户端（stock client）** — 操作系统内置的协议客户端。
+
+## 资料来源
+
+[^1]: R. Davis (Mellanox), "Demonstrating NVMe Performance over Ethernet," SNIA Data Storage Innovation Conference, 2016. https://www.snia.org/sites/default/files/DSI/2016/presentations/stor_networks/Rob_Davis_Demonstrating_NVMe_Performance_Ethernet.pdf (retrieved 2026-11-01).
+[^2]: SNIA, "Author of NVMe/TCP Spec Answers Your Questions," 2019. https://snia.org/blog/2019/author-nvmetm-tcp-spec-answers-your-questions (retrieved 2026-11-01).
+[^3]: HPCwire, "Everpure Wants to Improve Data Management for the Coming AI Wave," 2026-06-20. https://www.hpcwire.com/aiwire/2026/06/20/everpure-wants-to-improve-data-management-for-the-coming-ai-wave/ (retrieved 2026-11-01); Everpure Support, "White Paper: Everpure Cloud Dedicated for AWS," n.d. https://support.everpuredata.com/r/bHp_RInmbnRr219God~wDA/vvUbjhwU28Xj07IMH9rE6w (retrieved 2026-11-01).
+[^4]: SEC, "Everpure, Inc. Form 10-Q for the quarter ended May 3, 2026," 2026-06. https://www.sec.gov/Archives/edgar/data/0001474432/000147443226000061/pstg-20260503.htm (retrieved 2026-11-01).
+[^5]: VAST Data, "NFS Features for Enhanced Performance" (knowledge base), n.d. https://kb.vastdata.com/documentation/docs/nfs-features-for-enhanced-performance (retrieved 2026-11-01).
+[^6]: Techzine, "Pure surprises: FlashArray gets S3 support, FlashArray//ST without DFMs," 2025-06. https://www.techzine.eu/blogs/infrastructure/132388/pure-surprises-flasharray-gets-s3-support-flasharray-st-without-dfms/ (retrieved 2026-11-01).
+[^7]: Everpure, "Technical Brief: FlashBlade//EXA," n.d. (2025). https://www.everpuredata.com/content/dam/pdf/en/technical-briefs/tb-flashblade-exa.pdf (retrieved 2026-11-01); Blocks & Files, "How Pure Storage developed its disaggregated FlashBlade//EXA system," 2025-04-17. https://blocksandfiles.com/2025/04/17/how-pure-storage-developed-its-disaggregated-flashblade-exa-system/ (retrieved 2026-11-01).
+[^8]: Blocks & Files, "Pure Storage ramps up enterprise creds with ransomware and DR support" (Purity 6.1, NVMe/FC), 2021-02-16. https://www.blocksandfiles.com/flash/2021/02/16/pure-storage-ramps-up-enterprise-creds-with-ransomware-and-dr-support/1591949 (retrieved 2026-11-01); C. Hosterman, "What's New in Purity 6.1: NVMe-oF/Fibre Channel," 2021-02. https://www.codyhosterman.com/2021/02/whats-new-in-purity-6-1-nvme-of-fibre-channel/ (retrieved 2026-11-01).
+[^9]: Techzine, "Pure Storage introduces NVMe-oF RoCE with DirectFlash Fabric," 2019-02. https://www.techzine.eu/news/data-management/38963/pure-storage-introduces-nvme-of-roce-with-directflash-fabric/ (retrieved 2026-11-01).
+[^10]: Pure Storage, "Purity//FA 6.4 Release Highlights," n.d. https://blog.purestorage.com/purity-fa-releases/current-active-release-purity-fa-6-4-0 (retrieved 2026-11-01); OpenStack Cinder, "[Pure Storage] Add TCP transport type to NVMe driver" (requires Purity 6.4.2+), n.d. https://gitea09.opendev.org:3081/openstack/cinder/commit/dc77207e4c73950f1cacee5c9022586821ea6b59 (retrieved 2026-11-01).
+[^11]: AWS, "Best practices design patterns: optimizing Amazon S3 performance," Amazon S3 User Guide, n.d. https://docs.aws.amazon.com/AmazonS3/latest/userguide/optimizing-performance.html (retrieved via search 2026-11-01).
+[^12]: AWS What's New, "Announcing the Amazon S3 Express One Zone storage class," 2023-11-28. https://aws.amazon.com/about-aws/whats-new/2023/11/amazon-s3-express-one-zone-storage-class (retrieved 2026-11-01).
+[^13]: MinIO, "Introducing S3 over RDMA in AIStor: Object Storage at the Speed of Memory," n.d. https://www.min.io/blog/introducing-s3-over-rdma-in-aistor-object-storage-at-the-speed-of-memory (retrieved 2026-11-01).
+[^14]: StorageNewsletter, "NVIDIA GTC 2025: Pure Storage Integrates NVIDIA AI Data Platform into FlashBlade," 2025-03-19. https://www.storagenewsletter.com/2025/03/19/nvidia-gtc-2025-pure-storage-integrates-nvidia-ai-data-platform-into-flashblade/ (retrieved 2026-11-01).
+[^15]: J. Emerson (Pure Storage), "The Storage Architecture Spectrum: Why 'Shared-nothing' Means Nothing," n.d. https://blog.everpuredata.com/perspectives/the-storage-architecture-spectrum-why-shared-nothing-means-nothing/ (retrieved 2026-11-01; seen via search summary, host not fetchable).
+[^16]: StorageNewsletter, "Pure Accelerate Techfest22: Pure Storage FlashBlade//S Platform," 2022-06-10. https://www.storagenewsletter.com/2022/06/10/pure-accelerate-techfest22-pure-storage-flashblade-s-platform/ (retrieved 2026-11-01).
+[^17]: Blocks & Files, "Second hyperscaler plumps for Everpure's flash technology," 2026-08-11. https://www.blocksandfiles.com/flash/2026/08/11/second-hyperscaler-plumps-for-everpures-flash-technology/5285903 (retrieved 2026-11-01).
+[^18]: Micron Technology, "Industry-Leading 245TB Micron 6600 ION Data Center SSD Now Shipping," 2026-05-05. https://investors.micron.com/news/press-release/2026/Industry-Leading-245TB-Micron-6600-ION-Data-Center-SSD-Now-Shipping/default.aspx (retrieved 2026-11-01).
+[^19]: Everpure, "FlashBlade//EXA Terms of Use," n.d. https://www.everpuredata.com/legal/flashblade-exa-terms-of-use.html (retrieved 2026-11-01).
+[^20]: Everpure, "Everpure Announces Second Quarter Fiscal 2027 Financial Results," 2026-08-26. https://investor.everpuredata.com/news-and-events/press-releases/press-release-details/2026/Everpure-Announces-Second-Quarter-Fiscal-2027-Financial-Results/default.aspx (retrieved 2026-11-01).
+[^21]: Pure Storage, "FlashArray//XL datasheet," n.d. (R5 edition). https://www.purestorage.com/content/dam/pdf/en/datasheets/ds-flasharray-xl.pdf (retrieved 2026-11-01).
+[^22]: Everpure, "Pure Launch Blog: January 2026 Edition," 2026-01. https://blog.everpuredata.com/products/pure-launch-blog-january-2026-edition/ (retrieved 2026-11-01).
+[^23]: Pure Storage, "FlashArray//ST" product page and datasheet, 2025. https://www.purestorage.com/products/unified-block-file-storage/flasharray-st.html (retrieved 2026-11-01).
+[^24]: Pure Storage, "Pure Storage Expands Pure//E Family, Enabling Customers to Choose Flash For Any Workload," 2023-06. https://investor.everpuredata.com/news-and-events/press-releases/press-release-details/2023/Pure-Storage-Expands-PureE-Family-Enabling-Customers-to-Choose-Flash-For-Any-Workload/default.aspx (retrieved 2026-11-01).
+[^25]: Blocks & Files, "Pure Storage's FlashBlade//S500 gains Nvidia SuperPOD certification," 2024-11-18. https://www.blocksandfiles.com/ai-ml/2024/11/18/pure-storages-flashblade/s500-gains-nvidia-superpod-certification/1598641 (retrieved 2026-11-01).
+[^26]: StorageNewsletter, "Pure Storage Ushers in New Era of Unstructured Storage with FlashBlade//E," 2023-03-02. https://www.storagenewsletter.com/2023/03/02/pure-storage-ushers-in-new-era-of-unstructured-storage-with-flashblade-e/ (retrieved 2026-11-01).
+[^27]: HPCwire (Everpure release), "Everpure Leads MLPerf Storage Tests for Large Model Checkpointing and KV Cache," 2026-09-02. https://hpcwire.com/off-the-wire/everpure-leads-mlperf-storage-tests-for-large-model-checkpointing-and-kv-cache (retrieved 2026-11-01).
+[^28]: IT Brief New Zealand, "Everpure adds VM storage tools for Kubernetes estates," 2026-03. https://itbrief.co.nz/story/everpure-adds-vm-storage-tools-for-kubernetes-estates (retrieved 2026-11-01).
+[^29]: Pure Community, "Pure Cloud Block Store is now Pure Storage Cloud Dedicated," n.d. https://purecommunity.purestorage.com/tag/cloud (retrieved 2026-11-01).
+[^30]: Blocks & Files, "Pure Enterprise Data Cloud updates," 2025-09-26. https://blocksandfiles.com/2025/09/26/pure-enterprise-data-cloud-updates/ (retrieved 2026-11-01).
+[^31]: BigDATAwire / HPCwire, "Everpure Announces Data Stream to Expand AI-Ready Data Offerings," 2026-06-17. https://www.hpcwire.com/bigdatawire/this-just-in/everpure-announces-data-stream-to-expand-ai-ready-data-offerings/ (retrieved 2026-11-01).
+[^32]: Blocks & Files, "Everpure bulks up AI offer," 2026-09-30. https://blocksandfiles.com/flash/2026/09/30/everpure-bulks-up-ai-offer/5300162 (retrieved 2026-11-01).
+[^33]: Everpure, "Evergreen//One Advanced SLAs" (solution brief), n.d. https://www.everpuredata.com/content/dam/pdf/en/solution-briefs/sb-evergreen-one-advanced-slas.pdf (retrieved 2026-11-01).
+[^34]: NVIDIA, "NVIDIA cuObject server v1.0.0 Release Notes," 2026-01-12. https://docs.nvidia.com/gpudirect-storage/cuobject/cuobject-server-release-notes/index.html (retrieved 2026-11-01).
