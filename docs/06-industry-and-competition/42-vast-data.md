@@ -267,7 +267,7 @@ VAST's direct team chases the largest deals (neoclouds and labs), while OEMs ext
 
 *Table 42.4 — Most of VAST's risks are the flip side of choices that made it successful: software-only, NVIDIA-aligned, neocloud-first and platform-ambitious.*
 
-Open questions worth tracking: how much of CARR is CoreWeave; whether the BlueField-4 CNode ships in 2H 2026 as announced; whether DataBase wins workloads that do not start as storage; and and Jeff Denworth's role: one Israeli outlet questioned it in 2026[^72], though he was still briefing press for VAST in January 2026[^19] [VERIFY: Denworth's current title and remit].
+Open questions worth tracking: how much of CARR is CoreWeave; whether the BlueField-4 CNode ships in 2H 2026 as announced; whether DataBase wins workloads that do not start as storage; and Jeff Denworth's role: one Israeli outlet questioned it in 2026[^72], though he was still briefing press for VAST in January 2026[^19] [VERIFY: Denworth's current title and remit].
 
 ## Strategic relevance to Everpure
 
