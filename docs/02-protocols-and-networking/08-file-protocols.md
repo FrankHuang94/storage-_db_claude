@@ -5,31 +5,31 @@
 
 ## TL;DR
 
-- **A file protocol carries operations on names, not blocks.** The server owns the directory tree, permissions, locks and byte placement. NFS is the default on Linux and AI clusters, SMB on Windows.
-- **NFSv3 is stateless; NFSv4.x is stateful.** NFSv4 added opens, leases, delegations and integrated locks. v4.1 added sessions and **pNFS**, and v4.2 added server-side copy and sparse files.
+- **File protocols carry operations on names, not blocks.** The server owns the namespace, locks and byte placement. NFS rules Linux and AI clusters; SMB rules Windows.
+- **NFSv3 is stateless; NFSv4.x is stateful**, with leases, delegations and integrated locks. v4.1 added sessions and **pNFS**; v4.2 added server-side copy and sparse files.
 - **Classic NAS has a "single head" problem.** Each mount goes to one server, so every byte crosses one controller. The fixes, from least to most disruptive: `nconnect`, RDMA, client multipath, pNFS, a proprietary parallel client.
 - **pNFS separates the control path from the data path.** The client gets a *layout* from a metadata server, then does I/O directly and in parallel to the data servers. The Flex Files layout (2018) lets those data servers be plain NFSv3 servers.
-- **Vendors are converging on "parallel, with the stock Linux client."** Hammerspace, Everpure FlashBlade//EXA, Dell and NetApp are betting on pNFS. VAST uses its own multipath NFS client. Lustre, GPFS and WEKA keep proprietary clients.
+- **Vendors are converging on "parallel, with the stock Linux client."** Hammerspace, Everpure FlashBlade//EXA, Dell and NetApp bet on pNFS; VAST on its multipath NFS client; Lustre, GPFS and WEKA on proprietary clients.
 
 ## Why this matters for Everpure strategy
 
-GPU servers mount training data, checkpoints and home directories as a POSIX file system, which on Linux usually means NFS, the main front door for FlashBlade. That makes the protocol a gate on who can win the deal. A proprietary parallel client is fastest but costs an install, kernel lock-in and a security review on every GPU node. Standard NFS is easy to adopt but tops out at the server head.
+GPU servers mount data, checkpoints and home directories as a POSIX file system, which on Linux usually means NFS, FlashBlade's main front door. The protocol therefore gates the deal. A proprietary parallel client is fastest but costs an install, kernel lock-in and a security review on every GPU node. Standard NFS is easy to adopt but tops out at the server head.
 
-FlashBlade//EXA (March 2025) is Pure Storage's (now Everpure's) bet on a middle path. It speaks pNFS, with metadata over NFSv4.1/TCP to a FlashBlade metadata core and data over NFSv3/RDMA directly to data nodes, and needs no proprietary client[^1]. Rivals are making the same bet. In September 2026 NetApp agreed to buy PEAK:AIO to bring parallel NFS to ONTAP[^2], and Dell is adding pNFS Flex Files to PowerScale[^3]. Judging EXA's positioning means knowing where pNFS beats VAST's multipath NFS or a Lustre client, and where it falls short. Architecture details are in [Chapter 17](../03-system-architecture/17-parallel-file-systems.md) and [Chapter 16](../03-system-architecture/16-disaggregated-shared-everything.md).
+FlashBlade//EXA (March 2025) is Pure Storage's (now Everpure's) bet on a middle path. It speaks pNFS, with metadata over NFSv4.1/TCP to a FlashBlade metadata core and data over NFSv3/RDMA directly to data nodes, and needs no proprietary client[^1]. Rivals are making the same bet. In September 2026 NetApp agreed to buy PEAK:AIO to bring parallel NFS to ONTAP[^2], and Dell is adding pNFS Flex Files to PowerScale[^3]. Judging EXA means knowing where pNFS beats VAST's multipath NFS or a Lustre client, and where it falls short; see [Chapter 17](../03-system-architecture/17-parallel-file-systems.md) and [Chapter 16](../03-system-architecture/16-disaggregated-shared-everything.md).
 
 ## Core concepts
 
 ### What a file protocol actually carries
 
-A [block protocol](07-block-protocols.md) says "read 8 blocks at LBA 1,000,000", and the host's own file system decides what they mean. A file protocol says "look up `shard-00042.tar` in this directory" and "read 1 MiB at offset 64 MiB". Because the server owns the namespace and the locks, many clients can share it safely. That is the point of NAS. The cost is that every client depends on the server to turn names into bytes.
+A [block protocol](07-block-protocols.md) says "read 8 blocks at LBA 1,000,000" and leaves meaning to the host's file system. A file protocol says "look up `shard-00042.tar`" and "read 1 MiB at offset 64 MiB". Because the server owns namespace and locks, many clients can share data safely, which is the point of NAS. The cost: every client depends on the server to turn names into bytes.
 
-**Semiconductor bridge.** In directory-based cache coherence, a home node tracks where each line lives, and its lookup rate caps the system. A file server is that home node. Classic NAS also pushes the data itself through the home node. pNFS tells the requester where the line is and lets it fetch the line peer-to-peer.
+**Semiconductor bridge.** In directory-based cache coherence, a home node tracks where each line lives. A file server is that home node, and classic NAS also pushes the data through it. pNFS tells the requester where the line is and lets it fetch peer-to-peer.
 
 ### NFSv3: stateless by design
 
-NFSv3 (RFC 1813, 1995)[^4] runs over Sun RPC. Each request carries an opaque **file handle** and stands alone: the server doesn't track who has which file open, and after a server reboot clients just retry. That makes NFSv3 robust and simple, and it is still the most widely deployed version. Statelessness has three costs:
+NFSv3 (RFC 1813, 1995)[^4] runs over Sun RPC. Each request carries an opaque **file handle** and stands alone; the server tracks no opens, so after a reboot clients just retry. That simplicity keeps v3 the most widely deployed version. Statelessness has three costs:
 
-- **Locking sits outside the protocol**, in the NLM/NSM side protocols, which are fragile across failures and firewalls.
+- **Locking sits outside the protocol**, in fragile NLM/NSM side protocols.
 - **Consistency is "close-to-open".** Clients cache attributes for a few seconds, revalidate on `open()` and flush on `close()`. Another client is guaranteed to see your writes only after you close the file and it reopens it.
 - **Every path component costs a round trip.** A `LOOKUP` per component, plus `GETATTR`s, comes before the first `READ`.
 
@@ -54,17 +54,17 @@ sequenceDiagram
 
 ### NFSv4.0, 4.1 and 4.2: state, sessions, layouts
 
-**NFSv4.0** (RFC 3530 in 2003, revised as RFC 7530)[^5] made NFS stateful. Clients `OPEN` files under renewable **leases**, and locking became part of the protocol. **Delegations** give one client exclusive caching rights to a file until the server recalls them. **COMPOUND** bundles several operations, such as LOOKUP, GETATTR and READ, into one round trip. Everything runs on port 2049, with Kerberos and rich ACLs. The price is a recovery grace period after a server restart while clients reclaim their state.
+**NFSv4.0** (RFC 3530 in 2003, revised as RFC 7530)[^5] made NFS stateful. Clients `OPEN` files under renewable **leases**, and locking became part of the protocol. **Delegations** give one client exclusive caching rights to a file until the server recalls them. **COMPOUND** bundles several operations, such as LOOKUP, GETATTR and READ, into one round trip. It runs on one port with Kerberos and ACLs. The price is a grace period after restarts while clients reclaim state.
 
 **NFSv4.1** (RFC 5661 in 2010, now RFC 8881)[^6] added **sessions**, which make retries exactly-once; **trunking**, which spreads one session over several connections; and **pNFS**. **NFSv4.2** (RFC 7862, 2016)[^7] added server-side copy, sparse files, I/O hints, labeled NFS, and layout statistics and error reporting that pNFS servers use to steer clients. The **Flex Files layout** (RFC 8435, 2018)[^8] lets data servers speak plain NFSv3 and lets clients mirror writes.
 
 ### The single-head bottleneck and the escalation ladder
 
-Each end of a TCP connection is handled by roughly one CPU core and one NIC queue. VAST's documentation puts a plain NFS/TCP mount on a 100 Gb/s NIC at about 2–2.5 GB/s[^9] [VERIFY: search-summary only]. **Worked example:** a GPU server with two 400 Gb/s storage ports can absorb 2 × 50 = 100 GB/s, the equivalent of 100 ÷ 2.25 ≈ 44 such connections. Across 500 servers that is 50 TB/s, far beyond any controller pair. Scale-out NAS spreads mounts across nodes, but those nodes often relay data east-west behind the scenes. Five fixes, in order of how much they change (Figure 8.2):
+Each end of a TCP connection is served by roughly one core and one NIC queue. VAST's documentation puts a plain NFS/TCP mount on a 100 Gb/s NIC at about 2–2.5 GB/s[^9] [VERIFY: search-summary only]. **Worked example:** a GPU server with two 400 Gb/s storage ports can absorb 2 × 50 = 100 GB/s, the equivalent of 100 ÷ 2.25 ≈ 44 such connections. Across 500 servers that is 50 TB/s, far beyond any controller pair, and scale-out NAS nodes often relay data east-west behind the scenes. Five fixes, in rising order of disruption (Figure 8.2):
 
-1. **`nconnect`** (Linux 5.3, 2019) opens up to 16 TCP connections per mount to the same server address[^10]. VAST cites about 11 GB/s on one 100 Gb/s NIC with it[^9]. That is more pipes into the same head.
+1. **`nconnect`** (Linux 5.3, 2019) opens up to 16 TCP connections per mount to the same server address[^10]. VAST cites about 11 GB/s on one 100 Gb/s NIC[^9]: more pipes, same head.
 2. **NFS over RDMA** (RFC 8166/8267, 2017)[^11] has the server place bulk data directly into client memory, which saves copies and CPU. It is also how [GPUDirect Storage](11-gpu-data-path.md) runs over NFS: NVIDIA's GDS driver supports NFS/RDMA[^12]. VAST cites about 8–8.5 GB/s per RDMA connection on 100 GbE[^9].
-3. **Client multipath** spreads one mount over many local NICs and many server IPs. VAST ships its own build of the Linux NFS client for this, covering NFSv3 and NFSv4.1 over TCP or RDMA, and reported 162 GiB/s into one DGX A100 with eight 200 Gb/s NICs and GDS (*company-stated*)[^13]. The wire protocol stays standard, but the client module is VAST's. It works because in [DASE](../03-system-architecture/16-disaggregated-shared-everything.md) any front-end node can serve any file.
+3. **Client multipath** spreads one mount over many local NICs and many server IPs. VAST ships its own build of the Linux NFS client for this, covering NFSv3 and NFSv4.1 over TCP or RDMA, and reported 162 GiB/s into one DGX A100 with eight 200 Gb/s NICs and GDS (*company-stated*)[^13]. The wire protocol is standard; the client module is VAST's. It works because in [DASE](../03-system-architecture/16-disaggregated-shared-everything.md) any node can serve any file.
 4. **pNFS** changes the protocol so that data bypasses the head (Figure 8.3).
 5. **Proprietary parallel clients** (Lustre, IBM Storage Scale/GPFS, WEKA, BeeGFS) replace NFS on the client entirely.
 
@@ -101,17 +101,17 @@ sequenceDiagram
 
 *Figure 8.3 — pNFS touches the metadata server once per file or range, then streams data from many servers in parallel, so throughput scales with the number of data servers, not with the metadata server.*
 
-Three properties matter. First, **the client does the striping arithmetic**: from the stripe unit and server list it works out which server holds offset X, as a [Lustre](../03-system-architecture/17-parallel-file-systems.md) client does with its stripe map. Second, **layouts are recallable leases**. A rebalance, a failure or a conflicting writer triggers a recall, and the client either fetches a new layout or sends I/O through the metadata server. Third, **layout types differ**. The "files" layout needs data servers that speak NFSv4.1, and the block and SCSI layouts point at LUNs. Flex Files accepts plain NFSv3 servers, which is why Hammerspace and FlashBlade//EXA use NFSv3 on the data leg[^1][^8].
+Three properties matter. First, **the client does the striping arithmetic**: from the stripe unit and server list it works out which server holds offset X, as a [Lustre](../03-system-architecture/17-parallel-file-systems.md) client does with its stripe map. Second, **layouts are recallable leases**: a rebalance, failure or conflicting writer triggers a recall, and the client re-fetches or sends I/O via the metadata server. Third, **layout types differ**. The "files" layout needs data servers that speak NFSv4.1, and the block and SCSI layouts point at LUNs. Flex Files accepts plain NFSv3 servers, which is why Hammerspace and FlashBlade//EXA use NFSv3 on the data leg[^1][^8].
 
 ### SMB3: the Windows side
 
-SMB 3.0 (Windows Server 2012) added **Multichannel**, which spreads one session over several NICs automatically; **SMB Direct**, SMB over RDMA on iWARP, InfiniBand or RoCE; and transparent failover[^14][^15]. Multichannel is also what detects RDMA adapters, and without it SMB falls back to TCP. SMB Direct has supported encryption since Windows Server 2022[^14]. SMB3 is capable but rare on Linux GPU nodes. It matters for media, engineering and Windows analytics, and as a multiprotocol checkbox.
+SMB 3.0 (Windows Server 2012) added **Multichannel**, which spreads one session over several NICs automatically; **SMB Direct**, SMB over RDMA on iWARP, InfiniBand or RoCE; and transparent failover[^14][^15]. Multichannel also detects RDMA adapters, and SMB Direct gained encryption in Windows Server 2022[^14]. SMB3 is capable but rare on Linux GPU nodes; it matters for media, Windows analytics and as a multiprotocol checkbox.
 
 ### POSIX semantics, and why AI loaders want them
 
-AI software is written against POSIX: `open`, random-offset `read`, `mmap`, `fsync`, atomic `rename`. Data loaders read random samples inside shard files. Checkpoint libraries write a temporary file, then rename it. NVIDIA's NIXL and Dynamo KV tiers use a POSIX backend for disk, and NVIDIA's cloud-partner rules require NFSv4 home directories with POSIX access control[^16]. S3 is gaining ground: about one-sixth of MLPerf Storage v3.0 submissions (September 2026) used its new S3 path[^17]. But S3 has no rename, append or partial overwrite, so most training code still expects a mount ([Chapter 9](09-object-storage-and-s3.md)).
+AI software is written against POSIX: `open`, random-offset `read`, `mmap`, `fsync`, atomic `rename`. Loaders read random samples inside shards; checkpointers write a temp file and rename it. NVIDIA's NIXL and Dynamo KV tiers use a POSIX backend for disk, and NVIDIA's cloud-partner rules require NFSv4 home directories with POSIX access control[^16]. S3 is gaining: about one-sixth of MLPerf Storage v3.0 submissions (September 2026) used S3[^17]. But S3 has no rename, append or partial overwrite, so most training code still expects a mount ([Chapter 9](09-object-storage-and-s3.md)).
 
-How much POSIX matters depends on the access pattern. Read-mostly datasets and write-then-rename checkpoints are safe under close-to-open. **Many processes writing one shared file at once** are not, for example 1,024 ranks writing a single checkpoint file. That needs byte-range locks and immediate cross-client visibility, which Lustre, GPFS and WEKA provide through distributed lock managers in their clients. That is what the proprietary install buys.
+How much POSIX matters depends on the access pattern. Read-mostly datasets and write-then-rename checkpoints are safe under close-to-open. **Many processes writing one shared file at once** are not, for example 1,024 ranks writing a single checkpoint file. That needs byte-range locks and immediate cross-client visibility, which Lustre, GPFS and WEKA clients provide via distributed lock managers. That is what the proprietary install buys.
 
 ### Comparison
 
@@ -125,7 +125,7 @@ How much POSIX matters depends on the access pattern. Read-mostly datasets and w
 
 *Table 8.1 — Only pNFS and proprietary clients remove the server head from the data path; pNFS does it with the client already in the kernel.*
 
-The proprietary route has a real cost. The Lustre client was dropped from the Linux staging tree in 2018 and has been maintained out of tree since[^18], so every kernel update on a GPU fleet waits for a matching client build. WEKA's client can bypass the kernel network stack with DPDK[^19], which buys speed at the price of dedicated cores.
+The proprietary route has a cost. The Lustre client left the Linux staging tree in 2018 and lives out of tree[^18], so every GPU-fleet kernel update waits for a matching client build. WEKA's client can bypass the kernel network stack with DPDK[^19], trading dedicated cores for speed.
 
 ## How Everpure approaches it vs. competitors
 
@@ -141,9 +141,9 @@ The proprietary route has a real cost. The Lustre client was dropped from the Li
 
 *Table 8.2 — Three answers to the single head: a better client on standard NFS (VAST), the pNFS standard (Everpure EXA, Hammerspace, Dell, NetApp), or a proprietary client (WEKA, DDN, IBM).*
 
-**Steelmen.** *Proprietary clients* are still the safest choice for shared-file writes and run many of the largest HPC systems. *VAST's multipath* gets most of pNFS's bandwidth without putting a metadata server in charge of every open, and its client is a much lighter install than Lustre's. *pNFS* is the only option that takes the head out of the data path using the client already in the distro. Hammerspace cites a 10-node production IO500 result on the upstream NFSv4.2 client (*company-stated*)[^25].
+**Steelmen.** *Proprietary clients* remain safest for shared-file writes. *VAST's multipath* gets most of pNFS's bandwidth without a metadata server on every open, with a far lighter client than Lustre's. *pNFS* is the only option that takes the head out of the data path using the client already in the distro. Hammerspace cites a 10-node production IO500 result on the upstream NFSv4.2 client (*company-stated*)[^25].
 
-**Where pNFS is weaker.** It is only as good as the Linux client in each distro and kernel. The upstream NFS client maintainer is also Hammerspace's CTO[^26]. Layout recalls under churn can stall clients, and the metadata service becomes the scaling point. Options a strategy team might evaluate, based on public information:
+**Where pNFS is weaker.** It is only as good as each distro's Linux client, whose upstream maintainer is Hammerspace's CTO[^26]. Layout recalls under churn can stall clients, and metadata becomes the scaling point. Options a strategy team might evaluate, based on public information:
 
 - whether EXA's NFSv3/RDMA data leg delivers GDS into GPU memory, which would let it meet VAST's GDS story head-on;
 - whether FlashBlade//S should add pNFS, giving one protocol story from enterprise to EXA;
@@ -170,7 +170,7 @@ timeline
 
 *Figure 8.4 — The pNFS standard existed from 2010, but AI-scale adoption came only after Flex Files (2018) and an upstream Linux client matured; 2024–2026 is when the major vendors committed.*
 
-For 15 years pNFS was a standard in search of a market, while HPC sites ran Lustre or GPFS. Two things changed. Flex Files and a better upstream client removed the need for special data servers. And AI buyers, especially neoclouds running thousands of GPU nodes, resisted proprietary kernel modules. Watch three things: upstream NFSv4.2 client work (attribute delegations, faster failover and client-side erasure coding were listed as in progress in 2024[^26]), GDS on pNFS data legs, and whether S3-over-RDMA takes enough checkpoint and KV-cache traffic to soften the file-versus-object debate ([Chapter 32](../05-ai-storage/32-inference-and-kv-cache.md)).
+For 15 years pNFS was a standard in search of a market while HPC ran Lustre or GPFS. Then Flex Files and a better upstream client removed the need for special data servers, and AI buyers, especially neoclouds with thousands of GPU nodes, resisted proprietary kernel modules. Watch upstream NFSv4.2 client work (attribute delegations, faster failover and client-side erasure coding were in progress in 2024[^26]), GDS on pNFS data legs, and whether S3-over-RDMA absorbs checkpoint and KV-cache traffic ([Chapter 32](../05-ai-storage/32-inference-and-kv-cache.md)).
 
 ## Numbers that matter
 
@@ -189,13 +189,13 @@ For 15 years pNFS was a standard in search of a market, while HPC sites ran Lust
 
 **Questions for a PM**
 
-1. *"Why pNFS for EXA rather than a proprietary or multipath client?"* Strong: frames it as adoption friction (no kernel module on GPU nodes, faster neocloud security review) and is honest about the costs: shared-file write semantics and dependence on distro clients.
-2. *"Which distros and kernels do we validate, and what happens on an older RHEL?"* Strong: gives minimum versions, known client bugs and the fallback path.
+1. *"Why pNFS for EXA rather than a proprietary or multipath client?"* Strong: adoption friction (no kernel module on GPU nodes, faster neocloud security review), plus candour on costs: shared-file writes and distro-client dependence.
+2. *"Which distros and kernels do we validate, and what happens on older RHEL?"* Strong: minimum versions, known client bugs, fallback path.
 3. *"Against VAST, where does multipath NFS match us and where does the direct path win?"* Strong: per-client and aggregate numbers, with GDS on or off stated for both.
 
 **Questions for an engineer**
 
-1. *"A data node fails mid-checkpoint: what happens to in-flight I/O?"* Strong: covers layout recall, retry or fallback, time to a new layout, and how the writes were protected.
+1. *"A data node fails mid-checkpoint: what happens to in-flight I/O?"* Strong: layout recall, retry or fallback, time to a new layout, and how writes were protected.
 2. *"Which layout type do we hand out, and who does striping and redundancy?"* Strong: names Flex Files or the files layout, gives the stripe unit, and says whether the client mirrors.
 3. *"What create/open rate can the metadata core sustain, and what saturates first?"* Strong: a per-chassis number, plus whether opens, layouts or directory locks hit the limit first ([Chapter 21](../03-system-architecture/21-metadata.md)).
 
@@ -203,8 +203,8 @@ For 15 years pNFS was a standard in search of a market, while HPC sites ran Lust
 
 - "pNFS is new." It was standardized in 2010. Flex Files, a mature client and AI demand are new.
 - "NFS can't do RDMA." NFS/RDMA is standardized and is a common GDS path.
-- "nconnect makes NFS parallel." It adds connections to the *same* server.
-- "NFS is POSIX." It is close-to-open consistent, which is fine for reads but not for concurrent shared-file writes.
+- "nconnect makes NFS parallel." Same server, more connections.
+- "NFS is POSIX." It is close-to-open: fine for reads, not for concurrent shared-file writes.
 - "VAST uses pNFS." Its parallelism comes from multipath into a shared-everything back end.
 
 ## Going deeper (optional, L3 pointers)
