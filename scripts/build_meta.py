@@ -102,11 +102,35 @@ def refresh_tracker() -> None:
     prog.write_text(text)
 
 
+def refresh_readme() -> None:
+    readme = ROOT / "README.md"
+    if not readme.exists():
+        return
+    rows = ["| Part | Chapters drafted | Prose words / budget | Visuals |", "|---|---|---|---|"]
+    tw = tb = tv = td = tn = 0
+    for part in load_registry():
+        w = b = v = d = 0
+        for ch in part["chapters"]:
+            b += ch["budget"]
+            if ch["path"].exists():
+                md = ch["path"].read_text()
+                w += count_words(md); v += count_visuals(md)["total"]; d += 1
+        n = len(part["chapters"])
+        rows.append(f"| {part['title']} | {d}/{n} | {w:,} / {b:,} | {v} |")
+        tw += w; tb += b; tv += v; td += d; tn += n
+    rows.append(f"| **Total** | **{td}/{tn}** | **{tw:,} / {tb:,}** | **{tv}** |")
+    text = readme.read_text()
+    text = re.sub(r"<!-- README-TABLE -->.*<!-- /README-TABLE -->",
+                  "<!-- README-TABLE -->\n" + "\n".join(rows) + "\n<!-- /README-TABLE -->", text, flags=re.S)
+    readme.write_text(text)
+
+
 def main() -> int:
     (META / "open-questions-staging").mkdir(exist_ok=True)
     s = build_sources()
     v, a = build_open_questions()
     refresh_tracker()
+    refresh_readme()
     print(f"sources: {s} unique · inline VERIFY: {v} · questions: {a} · PROGRESS tracker refreshed")
     return 0
 
