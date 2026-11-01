@@ -5,17 +5,17 @@
 
 ## TL;DR
 
-- **NVIDIA runs the approved-vendor list for AI storage.** Its reference designs (DGX BasePOD, DGX SuperPOD, NVIDIA Cloud Partner reference architectures, Enterprise reference architectures) each name storage that has passed NVIDIA's tests. A storage vendor missing from the list is usually not in the deal at all.
+- **NVIDIA runs the approved-vendor list for AI storage.** Each of its reference designs (BasePOD, SuperPOD, NVIDIA Cloud Partner, Enterprise) names storage that passed NVIDIA's tests. A vendor missing from the list is usually not in the deal.
 - **The program is a set of tiers ordered by scale.** NVIDIA-Certified Storage has Foundation (up to 128 simulated GPUs), Enterprise (about 1,000) and NCP (up to 10,000) levels. SuperPOD certification adds per-GPU-generation throughput tiers. NCP certification adds cloud-grade uptime, durability and delivery-time rules.
 - **Certification sets a floor. It does not rank vendors.** The SuperPOD B200 "enhanced" tier works out to under 0.5 GB/s of read per GPU. Around a dozen vendors pass it. Certification proves interoperability and minimum throughput. It says nothing about price, data reduction, operations or failure behaviour.
-- **NVIDIA keeps moving up the storage stack.** The AI Data Platform (2025) put GPUs and NVIDIA retrieval software inside storage. BlueField-4 STX and the CMX context-memory platform (2026) standardize the KV-cache tier on NVIDIA silicon. All 12 major storage vendors signed on as co-design partners.
+- **NVIDIA keeps moving into the storage box.** The AI Data Platform (2025) put GPUs and NVIDIA retrieval software inside storage. BlueField-4 STX and CMX (2026) standardize the KV-cache tier on NVIDIA silicon, with 12 storage vendors as co-design partners.
 - **NVIDIA invests in some of the vendors it certifies.** It holds equity in VAST and WEKA, and DDN runs NVIDIA's own clusters. Everpure has every major certification for FlashBlade//S. It has none NVIDIA-granted yet for FlashBlade//EXA, and it has no NVIDIA equity tie.
 
 ## Why this matters for Everpure strategy
 
-Storage is typically a small slice of an AI cluster's bill of materials, but the GPU vendor sets the architecture, chooses the reference partners and often owns the customer conversation. For Everpure (NYSE: P, formerly PSTG), certification is a necessary gate to compete, and the real competition happens after it. The strategic questions are how fast each new product clears NVIDIA's gates, how much of the deal flow passes through channels Everpure doesn't control (server OEMs that sell their own storage), and what happens to array economics if NVIDIA's own reference storage (STX) takes over functions that storage software performs today.
+Storage is a small slice of an AI cluster's bill of materials, but the GPU vendor sets the architecture, picks the reference partners and often owns the customer conversation. For Everpure (NYSE: P, formerly PSTG), certification is the gate to compete; the competition happens after it. The strategic questions: how fast each new product clears NVIDIA's gates, how much deal flow runs through server OEMs that sell their own storage, and what happens to array economics if NVIDIA's reference storage (STX) absorbs functions storage software performs today.
 
-The semiconductor parallel is close. Getting on a foundry's IP ecosystem list (TSMC's Open Innovation Platform), or onto the approved vendor list of a reference board like Qualcomm's phone reference designs or NVIDIA's HGX baseboard, does not win a socket. Staying off the list loses it. The platform owner also decides when the list is re-qualified, usually every product generation.
+The semiconductor parallel is close. Being on a foundry's IP ecosystem list (TSMC's Open Innovation Platform) or a reference board's approved vendor list does not win a socket, but being off it loses one. The platform owner also decides when the list is re-qualified: usually every product generation.
 
 ## Core concepts
 
@@ -23,11 +23,11 @@ The semiconductor parallel is close. Getting on a foundry's IP ecosystem list (T
 
 NVIDIA publishes five overlapping structures that matter for storage:
 
-1. **DGX BasePOD.** A reference architecture for enterprise clusters of a few DGX systems up to dozens. NVIDIA describes designs scaling from two nodes upward[^1]. Storage partners go through a validation-and-approval process. BasePOD launched with storage partners in September 2022[^2].
-2. **DGX SuperPOD.** NVIDIA's turnkey large cluster, built from 32-node scalable units (SUs). Each GPU generation's reference architecture publishes its own storage performance table. Storage gets certified against that table[^3].
-3. **NVIDIA Cloud Partner (NCP) reference architectures.** Blueprints for GPU clouds. Storage vendors earn "high-performance storage" (HPS) certification. NCPs must also meet NVIDIA's *Requirements for AI Clouds*[^4].
-4. **NVIDIA-Certified Storage (NVCS).** Launched at GTC in March 2025, this program covers enterprise AI factories built on NVIDIA-Certified servers and Enterprise reference architectures[^5]. Its levels, ordered by simulated scale, are Foundation, Enterprise and NCP[^6].
-5. **AI Data Platform and STX.** These are reference *designs* for what storage itself should contain, not test suites. NVIDIA describes NVCS as the prerequisite for building on the AI Data Platform[^5].
+1. **DGX BasePOD.** Enterprise clusters from two DGX nodes to dozens[^1]; storage partners pass a validation-and-approval process. Launched with storage partners in September 2022[^2].
+2. **DGX SuperPOD.** NVIDIA's turnkey large cluster, built from 32-node scalable units (SUs). Each GPU generation's reference architecture publishes a storage performance table to certify against[^3].
+3. **NVIDIA Cloud Partner (NCP) reference architectures.** GPU-cloud blueprints; storage earns "high-performance storage" (HPS) certification, and NCPs must meet NVIDIA's *Requirements for AI Clouds*[^4].
+4. **NVIDIA-Certified Storage (NVCS).** Launched at GTC in March 2025 for enterprise AI factories on NVIDIA-Certified servers[^5], with Foundation, Enterprise and NCP levels[^6].
+5. **AI Data Platform and STX.** Reference *designs* for what storage itself should contain, not test suites. NVCS is the prerequisite for building on the AI Data Platform[^5].
 
 ```mermaid
 flowchart LR
@@ -38,17 +38,17 @@ flowchart LR
     S --> N["NCP HPS and NVCS NCP level: up to 10,000 GPUs, uptime, durability, early delivery"]
 ```
 
-*Figure 34.1 — The certification ladder: each rung simulates or deploys more GPUs and adds tests. The programs run in parallel and are not formal prerequisites of each other, but buyers read them as a ladder.*
+*Figure 34.1 — Each rung simulates or deploys more GPUs and adds tests; the programs are parallel, not formal prerequisites, but buyers read them as a ladder.*
 
 ### What the tests actually require
 
-Most of the test details are only on partner portals. Three public anchors show the bar:
+Most test details sit on partner portals. Three public anchors show the bar:
 
 - **NVCS scale.** Foundation tests simulate workloads of up to 128 GPUs, Enterprise about 1,000 and NCP up to 10,000[^6] [VERIFY: search-summary only, Enterprise and NCP counts]. NVIDIA's framework covers training, fine-tuning, inference, KV cache and retrieval I/O profiles, including synchronous and asynchronous checkpoints[^6].
-- **SuperPOD throughput.** The DGX B200 reference architecture specifies, per 256-GPU SU, 40 GB/s read and 20 GB/s write at the "standard" tier, and 125 GB/s read and 62 GB/s write at "enhanced". It also specifies 160/80 and 500/250 GB/s for a four-SU (1,024-GPU) system[^3]. The DGX B300 version raises the bar to 640 GB/s standard and 2,000 GB/s enhanced read for eight SUs[^7].
-- **NCP operations.** NCPs need high-speed file storage with roughly 99.5% uptime and 99.999% annual durability per PB, NFSv4 home directories, and storage delivered with API integration eight weeks *before* the GPUs arrive[^4] [VERIFY: thresholds quoted from v2.2; current is v2.4]. The detailed GB300 NVL72 storage design sits on NVIDIA's non-public partner portal[^8].
+- **SuperPOD throughput.** The DGX B200 reference architecture asks, per 256-GPU SU, 40/20 GB/s read/write at "standard" and 125/62 GB/s at "enhanced", scaling linearly to four SUs[^3]. The B300 version asks 640 and 2,000 GB/s read for eight SUs[^7].
+- **NCP operations.** High-speed file storage at roughly 99.5% uptime and 99.999% annual durability per PB, NFSv4 home directories, and storage live with API integration eight weeks *before* the GPUs arrive[^4] [VERIFY: thresholds quoted from v2.2; current is v2.4]. The detailed GB300 NVL72 storage design is on NVIDIA's non-public partner portal[^8].
 
-**Worked example: how high is the floor?** Enhanced B200 read is 125 GB/s ÷ 256 GPUs ≈ **0.49 GB/s per GPU**. Standard is 40 ÷ 256 ≈ 0.16 GB/s. NVIDIA's own guidance says read-dominant workloads (image or video training, for example) want about 4 GB/s per GPU[^3]. That is eight times the enhanced tier, or about 1 TB/s per SU. For comparison, WEKA claimed 720 GB/s of read from an eight-node WEKApod at its 2024 SuperPOD certification[^9]. One small appliance therefore beats the four-SU enhanced target. The certification tells a buyer the system won't starve a text-LLM training job. It does not separate the top vendors from each other. They compete on everything else.
+**Worked example: how high is the floor?** Enhanced B200 read is 125 GB/s ÷ 256 GPUs ≈ **0.49 GB/s per GPU**; standard is 40 ÷ 256 ≈ 0.16 GB/s. NVIDIA's own guidance says read-dominant work (image or video training) wants about 4 GB/s per GPU[^3], eight times the enhanced tier, or ~1 TB/s per SU. WEKA claimed 720 GB/s of read from one eight-node WEKApod at its 2024 SuperPOD certification[^9], beating the four-SU enhanced target with a single small appliance. Certification tells a buyer the system won't starve a text-LLM training job; it does not separate the top vendors, who compete on everything else.
 
 **What certification does and doesn't prove**
 
@@ -64,7 +64,7 @@ Most of the test details are only on partner portals. Three public anchors show 
 
 ### The AI Data Platform: NVIDIA's blueprint for the storage box itself
 
-In March 2025 NVIDIA presented the AI Data Platform as a customizable reference design. Storage vendors put accelerated compute and AI agents into the storage layer, so that data is extracted, embedded and indexed where it lives, without being copied to a separate RAG pipeline. NVIDIA named DDN, Dell, HPE, Hitachi Vantara, IBM, NetApp, Nutanix, Pure Storage, VAST and WEKA as launch partners[^10]. The hardware recipe pairs RTX PRO 6000 Blackwell Server Edition GPUs with BlueField DPUs and Spectrum-X Ethernet. The software recipe is the AI-Q blueprint, which calls NeMo Retriever microservices for extraction and retrieval[^11]. Later implementations go further: Hammerspace's platform (GA March 2026) bundles NIM and NeMo Retriever[^12], and Everpure's Data Stream (June 2026) is an ingest-to-inference pipeline on the same design[^13].
+In March 2025 NVIDIA presented the AI Data Platform, a reference design that puts accelerated compute and AI agents into the storage layer so data is extracted, embedded and indexed where it lives rather than copied to a separate RAG pipeline. NVIDIA named ten launch partners, Pure Storage among them[^10]. The hardware recipe pairs RTX PRO 6000 Blackwell Server Edition GPUs with BlueField DPUs and Spectrum-X Ethernet. The software recipe is the AI-Q blueprint, which calls NeMo Retriever microservices for extraction and retrieval[^11]. Later implementations go further: Hammerspace's platform (GA March 2026) bundles NIM and NeMo Retriever[^12], and Everpure's Data Stream (June 2026) is an ingest-to-inference pipeline on the same design[^13].
 
 ```mermaid
 flowchart TB
@@ -97,15 +97,15 @@ flowchart TB
     NET --- BF
 ```
 
-*Figure 34.2 — In the AI Data Platform, NVIDIA supplies the GPUs, DPUs, network and retrieval software, and the storage partner supplies the data services and metadata. The partner's differentiated layer is the middle of the sandwich.*
+*Figure 34.2 — NVIDIA supplies GPUs, DPUs, network and retrieval software; the partner's differentiated layer, data services and metadata, is the middle of the sandwich.*
 
-The design is a bargain with a cost. Partners get a ready-made answer to "how do I do RAG on my data" ([Chapter 33](33-rag-vector-lakehouse.md)). NVIDIA gets GPUs and software subscriptions placed in every storage rack. Every partner's AI story converges on the same NVIDIA components. Only the data-services layer differs.
+The bargain has a cost. Partners get a ready-made answer to "how do I do RAG on my data" ([Chapter 33](33-rag-vector-lakehouse.md)); NVIDIA gets GPUs and software subscriptions in every storage rack; and every partner's AI story converges on the same NVIDIA components, differing only in data services.
 
 ### STX and CMX: the reference storage server
 
-NVIDIA went a step further at CES in January 2026 with the Inference Context Memory Storage platform, a BlueField-4-powered KV-cache tier inside each pod[^14]. At GTC in March 2026 it widened this into **BlueField-4 STX**, a modular storage reference architecture built on Vera Rubin, BlueField-4 and Spectrum-X. The first rack-scale implementation is the **CMX** context memory storage platform[^15]. The co-design partners are Cloudian, DDN, Dell, Everpure, Hitachi Vantara, HPE, IBM, MinIO, NetApp, Nutanix, VAST and WEKA. AIC, Supermicro and QCT manufacture the hardware, and CoreWeave, Crusoe, IREN, Lambda, Mistral AI, Nebius, OCI and Vultr are early adopters[^16]. STX is a blueprint NVIDIA distributes, not a box it sells[^17]. KV-cache mechanics are in [Chapter 32](32-inference-and-kv-cache.md), and the DPU's place in the network is in [Chapter 10](../02-protocols-and-networking/10-datacenter-networking.md).
+NVIDIA went a step further at CES in January 2026 with the Inference Context Memory Storage platform, a BlueField-4-powered KV-cache tier inside each pod[^14]. At GTC in March 2026 it widened this into **BlueField-4 STX**, a modular storage reference architecture built on Vera Rubin, BlueField-4 and Spectrum-X. The first rack-scale implementation is the **CMX** context memory storage platform[^15]. Twelve storage vendors, including Everpure, VAST, WEKA, DDN, Dell and NetApp, are co-design partners; AIC, Supermicro and QCT build hardware; CoreWeave, Lambda, Nebius, OCI and four others are early adopters[^16]. STX is a blueprint NVIDIA distributes, not a box it sells[^17]. KV-cache mechanics are in [Chapter 32](32-inference-and-kv-cache.md), and the DPU's place in the network is in [Chapter 10](../02-protocols-and-networking/10-datacenter-networking.md).
 
-For strategy, the important part is where the value moves. If the controller is a BlueField-4 running NVIDIA's DOCA software on ODM-built servers, storage vendors' software runs on NVIDIA's controller silicon, much as fabless chip vendors build on a foundry's process and IP. One analyst firm argues that vendors not optimized for inference and context memory face margin pressure as NVIDIA standardizes the data path. The same firm notes that those vendors are STX partners[^18]. That is an opinion, but it is the right risk to watch.
+The strategic point is where value moves. If the controller is a BlueField-4 running NVIDIA's DOCA software on ODM-built servers, storage software becomes a tenant on NVIDIA's controller silicon, as fabless designs build on a foundry's process and IP. One analyst firm argues vendors not optimized for inference and context memory face margin pressure as NVIDIA standardizes the data path, while noting those vendors are STX partners[^18]. Opinion, but the right risk to watch.
 
 ### How deals flow through NVIDIA
 
@@ -126,15 +126,15 @@ flowchart TB
     GSI["Integrators: WWT, SHI, ePlus, AHEAD"] --> P2
 ```
 
-*Figure 34.3 — Storage is chosen at three points. In the NVIDIA-led path the certified list sets the field. In the OEM path the server vendor's own storage starts ahead. In the neocloud path buyers run their own tests.*
+*Figure 34.3 — Storage is chosen at three points: the certified list sets the field in NVIDIA-led deals, the OEM's own storage starts ahead in OEM deals, and neoclouds run their own tests.*
 
-The paths have different economics. **Dell** bundles PowerScale, ObjectScale and its new Lightning parallel file system into the Dell AI Data Platform with NVIDIA[^19], so an independent storage vendor in a Dell-led deal starts behind. **HPE** sells its own X10000 alongside GreenLake for File, which runs VAST software[^20]. **Cisco** has no storage of its own, so its Secure AI Factory with NVIDIA lists partners: Pure Storage, Hitachi Vantara, NetApp and VAST at launch, with Nutanix added later[^21]. That is why Everpure's FlashStack CVD in the Cisco AI PODs matters[^22]. **Neoclouds** usually qualify several vendors. CoreWeave lists VAST, WEKA, DDN, IBM Storage Scale and Pure Storage as dedicated-storage options[^23], and its US$1.17 billion VAST agreement shows how large a single neocloud decision can be[^24]. Neocloud buying is covered in [Chapter 35](35-ai-factories-and-neoclouds.md).
+The paths have different economics. **Dell** bundles PowerScale, ObjectScale and its Lightning parallel file system into its AI Data Platform with NVIDIA[^19], so an independent vendor in a Dell-led deal starts behind. **HPE** sells its own X10000 alongside GreenLake for File, which runs VAST software[^20]. **Cisco** has no storage, so its Secure AI Factory with NVIDIA lists partners (Pure Storage, Hitachi Vantara, NetApp, VAST, later Nutanix)[^21], which is why Everpure's FlashStack CVD in the Cisco AI PODs matters[^22]. **Neoclouds** qualify several vendors: CoreWeave lists VAST, WEKA, DDN, IBM and Pure Storage[^23], and its US$1.17 billion VAST agreement shows how large one decision can be[^24]. See [Chapter 35](35-ai-factories-and-neoclouds.md).
 
 ### Kingmaker or toll booth? NVIDIA's investments
 
-NVIDIA is also an investor in some of the vendors on the lists. It participated in VAST's 2021 Series D[^25] and its 2026 Series F at a US$30 billion valuation (*company-stated*)[^26]. Secondary sources also list NVIDIA in VAST's December 2023 Series E, but VAST's own release names other investors [VERIFY: NVIDIA in VAST Series E]. NVIDIA was in WEKA's US$140 million Series E in 2024 (*company-stated*)[^27]. NVIDIA has no reported equity in DDN. DDN's tie is operational: its appliances run NVIDIA's Selene and Eos clusters, with Eos using 48 AI400X2 units at about 4 TB/s (*company-stated*)[^28]. No public evidence shows NVIDIA's certifications favour its portfolio companies. Its pass lists include almost every vendor. The investments still buy something less formal: early roadmap access, joint launches (VAST's CNode-X, February 2026) and the "NVIDIA-backed" label on every press article.
+NVIDIA also invests in some listed vendors. It participated in VAST's 2021 Series D[^25] and its 2026 Series F at a US$30 billion valuation (*company-stated*)[^26]. Secondary sources also list NVIDIA in VAST's December 2023 Series E, but VAST's own release names other investors [VERIFY: NVIDIA in VAST Series E]. NVIDIA was in WEKA's US$140 million Series E in 2024 (*company-stated*)[^27]. DDN has no reported NVIDIA equity; its tie is operational, running NVIDIA's Selene and Eos clusters (Eos: 48 AI400X2 units, ~4 TB/s, *company-stated*)[^28]. No public evidence shows certifications favour NVIDIA's portfolio companies; the pass lists include almost everyone. The investments buy something less formal: early roadmap access, joint launches (VAST's CNode-X, February 2026) and the "NVIDIA-backed" label in every press article.
 
-Read honestly, NVIDIA is less a kingmaker than a toll booth with favoured lanes. It rarely picks one winner. It sets the entry fee (re-certifying every GPU generation, adopting each new NVIDIA interface) and benefits from a crowded field of compliant suppliers. That is the economics of a platform owner who wants its complements to be commodities.
+Read honestly, NVIDIA is less a kingmaker than a toll booth with favoured lanes. It rarely picks one winner; it sets the entry fee (re-certify every GPU generation, adopt each new NVIDIA interface) and profits from a crowded field of compliant suppliers. That is a platform owner commoditizing its complements.
 
 ## How Everpure approaches it vs. competitors
 
@@ -152,11 +152,19 @@ Read honestly, NVIDIA is less a kingmaker than a toll booth with favoured lanes.
 | **Nutanix** | None found | None found | None found | Enterprise level, Jun 2026[^43] [VERIFY: date] | ADP launch; STX partner |
 | **Hammerspace** | None | None | None | None as of Sep 2026[^44] | AIDP on NVIDIA reference design, GA Mar 2026[^12]; GDS self-certified Feb 2024 |
 
-*Table 34.2 — Nearly every vendor holds nearly every badge. The differences are timing (who certifies first on each GPU generation) and coverage (which product lines are certified). "None found" means no public source located, not confirmed absence.*
+*Table 34.2 — Nearly every vendor holds nearly every badge; the differences are timing and product-line coverage. "None found" means no public source located, not confirmed absence.*
 
-**Everpure's position.** FlashBlade//S holds the full set. The gap is FlashBlade//EXA, the product aimed at the largest AI and neocloud deals. In March 2026 Everpure said it was extending NVCS validation to EXA as a step toward the NCP level and aligning EXA with STX[^31]. Until NVIDIA certifies EXA, competitors can say it isn't certified in exactly the deals it targets. Everpure's distinctive move is independent benchmarking: it submitted to MLPerf Storage v3.0 in September 2026, while VAST, WEKA and DDN did not[^45].
+**Everpure's position.** FlashBlade//S holds the full set. The gap is FlashBlade//EXA, aimed at the largest AI and neocloud deals. In March 2026 Everpure said it was extending NVCS validation to EXA toward the NCP level and aligning EXA with STX[^31]. Until then, competitors can call EXA uncertified in exactly the deals it targets. Everpure's distinctive move is independent benchmarking: it submitted to MLPerf Storage v3.0 in September 2026, while VAST, WEKA and DDN did not[^45].
 
-**Steelmanning the others.** DDN's claim is the strongest: NVIDIA runs its own clusters on DDN, which no certificate can match. VAST and WEKA have equity ties and are usually first to ship NVIDIA's new interfaces. Dell and HPE own the server sale and can bundle storage into it. Everpure's counter is the parts certification doesn't measure: Evergreen economics, power and density per TB ([Chapter 38](38-power-and-density.md)), and enterprise data services.
+**Steelmanning the others.** DDN's claim is strongest: NVIDIA runs its own clusters on DDN, which no certificate matches. VAST and WEKA have equity ties and usually ship NVIDIA's new interfaces first. Dell and HPE own the server sale. Everpure's counter is what certification doesn't measure: Evergreen economics, power and density ([Chapter 38](38-power-and-density.md)) and enterprise data services.
+
+**Options a strategy team might evaluate, based on public information:**
+
+1. **Certification velocity as a KPI.** Treat "days from NVIDIA GPU launch to certified on each tier" as a product metric, with EXA at the NCP level as the near-term gap.
+2. **Be an early STX/CMX implementer** so Purity's data services run on whatever controller NVIDIA standardizes, rather than defending x86 controllers.
+3. **Diversify routes to market** beyond NVIDIA-led deals: Cisco, integrators, hyperscaler marketplaces, and non-NVIDIA accelerator and Ultra Ethernet ecosystems as hedges.
+4. **Compete on what certificates don't measure**: independent benchmarks, effective $/TB, TB per watt and non-disruptive upgrades.
+5. **Weigh a deeper NVIDIA commercial or equity tie** against the cost: dependence on one supplier's roadmap and less neutrality with AMD and hyperscaler buyers.
 
 ## History and trajectory
 
@@ -174,7 +182,7 @@ timeline
 
 *Figure 34.4 — The gate has moved from "does your file system feed GPUs" (2020–2023), to "can you run inside a GPU cloud" (2024), to "will you build on NVIDIA's storage silicon" (2026).*
 
-NVIDIA's certifications expanded from one cluster type (SuperPOD) to every buyer segment: enterprise (BasePOD, NVCS), clouds (NCP) and the storage box itself (AI Data Platform, STX). Supermicro has shown a prototype CMX server and is validating STX SSD requirements with Micron, Samsung and Phison, with shipments expected in the second half of 2026[^46]. The signal to watch for 2027 is whether NCP reference designs make CMX-class context storage a required line item, and whether CMX nodes come from storage vendors or straight from ODMs.
+Supermicro has shown a prototype CMX server and is validating STX SSD requirements with Micron, Samsung and Phison, for 2H 2026 shipments[^46]. The 2027 signal: whether NCP designs make CMX-class context storage a required line item, and whether CMX nodes come from storage vendors or straight from ODMs.
 
 ## Numbers that matter
 
@@ -193,13 +201,13 @@ NVIDIA's certifications expanded from one cluster type (SuperPOD) to every buyer
 
 **Questions for a PM**
 
-1. *"When will FlashBlade//EXA appear on NVIDIA's certified list, at which level, and which deals are we losing until then?"* A strong answer gives a level (Foundation, Enterprise, NCP), a GPU generation, a target quarter, and names the deal types where the missing certification is used against EXA.
-2. *"In a Dell- or HPE-led AI factory, how do we get in?"* A strong answer separates customer-mandated storage from OEM default, cites Cisco and integrator routes, and puts a rough share on each path.
-3. *"What does STX/CMX do to our bill of materials and gross margin?"* A strong answer says whether Purity would run on BlueField-4, who builds the hardware, and whether CMX is a new revenue line or a replacement for array capacity.
+1. *"When will FlashBlade//EXA appear on NVIDIA's certified list, at which level, and which deals are we losing until then?"* Strong: a level, a GPU generation, a target quarter, and the deal types where the gap is used against EXA.
+2. *"In a Dell- or HPE-led AI factory, how do we get in?"* Strong: separates customer-mandated storage from OEM default, cites Cisco and integrator routes, and sizes each path.
+3. *"What does STX/CMX do to our bill of materials and gross margin?"* Strong: whether Purity runs on BlueField-4, who builds the hardware, and whether CMX is new revenue or cannibalizes array capacity.
 
 **Questions for an engineer**
 
-1. *"How much headroom do we have over the SuperPOD enhanced tier per SU, and what limits us first?"* Strong: a multiple (for example 3× or 5×), and the bottleneck (front-end ports, metadata, back-end fabric).
+1. *"How much headroom do we have over the SuperPOD enhanced tier per SU, and what limits us first?"* Strong: a multiple (say 3× or 5×) and the first bottleneck (front-end ports, metadata, back-end fabric).
 2. *"What did certification testing *not* exercise that customers hit in production?"* Strong: rebuild under load, full-system behaviour, multi-tenant QoS, upgrade under load.
 3. *"What would it take to run our data path on a BlueField-4 controller?"* Strong: core-count and memory constraints, which Purity services fit on the DPU, and what stays on x86.
 
@@ -208,25 +216,24 @@ NVIDIA's certifications expanded from one cluster type (SuperPOD) to every buyer
 - "We're NVIDIA-certified, so we're as good as VAST." Everyone is certified. Certification is the entry ticket.
 - "SuperPOD certification proves top performance." It proves a floor of about 0.5 GB/s per GPU on B200 enhanced.
 - "NVIDIA picks the storage winner." NVIDIA usually lists a dozen. OEMs, integrators and neocloud bake-offs decide most deals.
-- "STX means NVIDIA is entering storage." It is a reference architecture built by partners. The risk is commoditization of the controller, not a new NVIDIA storage brand (yet).
-- "NVIDIA owns VAST." It is a minority investor among several.
+- "STX means NVIDIA is entering storage." It is a partner-built reference architecture; the risk is a commoditized controller, not an NVIDIA storage brand (yet).
 
 ## Going deeper (optional, L3 pointers)
 
-- NVIDIA's DGX SuperPOD reference architectures (B200, B300, GB200, Rubin), "Storage Architecture" sections: the per-SU performance tables and file-format caveats.
-- NVIDIA-Certified Storage documentation: workload descriptions (checkpoint modes, KV cache, retrieval) and the certified-systems list.
-- NVIDIA *Requirements for AI Clouds* (storage chapter) for NCP operating rules.
-- Vendor reference architectures, such as Everpure's "High-Performance Storage for NVIDIA Cloud Partners" and IBM's SuperPOD guides with Storage Scale System 6000, to compare node counts against NVIDIA's tiers.
+- DGX SuperPOD reference architectures (B200, B300, GB200, Rubin), "Storage Architecture" sections.
+- NVIDIA-Certified Storage docs: workload descriptions and the certified-systems list.
+- NVIDIA *Requirements for AI Clouds*, storage chapter.
+- Vendor RAs (Everpure's NCP design, IBM's SuperPOD guides) to compare node counts with NVIDIA's tiers.
 
 ## Key terms
 
-- **DGX BasePOD / DGX SuperPOD** — NVIDIA's enterprise and large-cluster reference architectures. Both have storage validation.
+- **DGX BasePOD / SuperPOD** — enterprise and large-cluster reference architectures.
 - **Scalable unit (SU)** — the 32-node building block of a SuperPOD.
 - **NCP / HPS** — NVIDIA Cloud Partner program, and its high-performance storage certification.
-- **NVIDIA-Certified Storage (Foundation / Enterprise / NCP)** — the tiered storage certification program launched in 2025.
+- **NVIDIA-Certified Storage** — tiered storage certification (Foundation, Enterprise, NCP).
 - **AI Data Platform** — NVIDIA's reference design for GPU-accelerated retrieval inside storage.
 - **BlueField-4 STX / CMX** — NVIDIA's storage reference architecture, and its context-memory rack implementation.
-- **AI-Q, NeMo Retriever, NIM** — NVIDIA's agent blueprint, retrieval microservices and inference microservices.
+- **AI-Q, NeMo Retriever, NIM** — agent blueprint, retrieval and inference microservices.
 - See the [glossary](../glossary.md) for the rest.
 
 ## Sources

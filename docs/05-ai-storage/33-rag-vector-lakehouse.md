@@ -5,27 +5,27 @@
 
 ## TL;DR
 
-- **RAG turns a company's documents into an LLM's working memory.** Text is chunked and embedded into vectors. At question time, the closest chunks are found and pasted into the prompt. Three of the seven steps touch storage: vector search, chunk fetch and, increasingly, KV-cache reuse.
-- **Vector indexes are a memory-capacity problem.** One billion 1,024-dimension vectors are about 4.1 TB raw. In DRAM that costs roughly 16× more media than an SSD-resident design such as DiskANN. That is why billion-scale indexes are moving onto flash and object storage.
-- **AI-native formats change the I/O pattern.** Parquet is built for scans. Lance is built for scans *and* random row reads, which suits shuffled training, embeddings and multimodal blobs. Iceberg adds transactions and a catalog on top of plain files in object storage.
+- **RAG turns a company's documents into an LLM's working memory.** Chunks are embedded as vectors; at question time the closest chunks are pasted into the prompt. Storage sits on three steps: vector search, chunk fetch and, increasingly, KV-cache reuse.
+- **Vector indexes are a memory-capacity problem.** One billion 1,024-dimension vectors are ~4.1 TB raw. Held in DRAM, that costs ~16× more media than an SSD-resident design such as DiskANN, so billion-scale indexes are moving to flash and object storage.
+- **AI-native formats change the I/O pattern.** Parquet is built for scans; Lance for scans *and* random row reads (shuffled training, embeddings, multimodal blobs). Iceberg adds transactions and a catalog over plain files in object storage.
 - **Every storage vendor now ships a "data engine".** VAST, NetApp, Dell, Everpure and AWS have all moved embedding, vector search or table management into or next to storage. Meanwhile vector search has become a *feature* of Postgres, Elastic, Databricks, Snowflake and S3 itself.
-- **The strategic question is who owns the control point.** Bytes are necessary but replaceable. Catalogs, metadata and governance are sticky. Value accrues to whoever owns the metadata and the query, unless the data cannot leave the building.
+- **The strategic question is who owns the control point.** Bytes are replaceable; catalogs, metadata and governance are sticky. Value accrues to whoever owns the metadata and the query, unless the data cannot leave the building.
 
 ## Why this matters for Everpure strategy
 
-Enterprise AI is mostly *inference over private data*, and RAG is the default way to connect the two. That creates a new storage workload with an unusual profile: small random reads against huge indexes, plus a lakehouse of Parquet, Lance and Iceberg files in S3 buckets. It also creates a land grab. AWS put vector search and Iceberg tables inside S3 itself[^1][^2]. VAST added a vector-capable database to its storage platform[^3]. NetApp's AI Data Engine generates embeddings "at the storage layer"[^4], and Dell bundled Elastic and Starburst engines into its AI Data Platform[^5]. Everpure's answer includes FlashBlade as the object and file substrate, Data Stream (ingest-to-vector pipeline, GA June 2026)[^6] and Data Intelligence (ex-1touch). Whether these moves capture value or merely defend share depends on a market where the data platforms are far larger than any storage vendor's data-services business. Databricks reported a >US$7 billion revenue run-rate at a US$190 billion valuation (company-stated, August 2026)[^7], and Snowflake booked US$4.47 billion of product revenue in FY2026[^8].
+Enterprise AI is mostly *inference over private data*, and RAG is the default way to connect the two. That creates a storage workload of small random reads against huge indexes, plus a lakehouse of Parquet, Lance and Iceberg files in S3 buckets. It also creates a land grab. AWS put vector search and Iceberg tables inside S3[^1][^2]. VAST added a vector-capable database[^3]. NetApp's AI Data Engine generates embeddings "at the storage layer"[^4], and Dell bundled Elastic and Starburst engines into its AI Data Platform[^5]. Everpure's answer is FlashBlade as substrate, Data Stream (ingest-to-vector pipeline, GA June 2026)[^6] and Data Intelligence (ex-1touch). Whether these moves capture value or merely defend share depends on a market where data platforms dwarf any storage vendor's data-services business: Databricks reported a >US$7 billion run-rate at a US$190 billion valuation (company-stated, August 2026)[^7], and Snowflake booked US$4.47 billion of FY2026 product revenue[^8].
 
 ## Core concepts
 
 ### Embeddings in one paragraph
 
-An **embedding model** maps a chunk of text, an image or a video frame to a fixed-length vector, say 1,024 floating-point numbers. The model is trained so that similar meanings land close together. "Similarity" is then just geometry: a cosine or dot product between two vectors. For a semis reader, an embedding is a learned fingerprint. A similarity search is a giant matrix-vector multiply (GEMV) of the query against every stored vector, unless an index lets you skip most of them.
+An **embedding model** maps a chunk of text, an image or a video frame to a fixed-length vector, say 1,024 floats, trained so that similar meanings land close together. Similarity is then geometry: a cosine or dot product. For a semis reader, an embedding is a learned fingerprint, and search is a giant matrix-vector multiply (GEMV) against every stored vector, unless an index lets you skip most of them.
 
-Embeddings can outweigh the source data. A 512-token chunk of English text is about 2 KB (roughly 4 bytes per token), but its 1,024-dim fp32 embedding is 4 KB. A 10 TB text corpus chunked that way becomes ~5 billion chunks and ~20 TB of vectors, **twice the source**, before any index structure. For images and video the ratio flips, because the raw object dwarfs its vector.
+Embeddings can outweigh the source. A 512-token text chunk is about 2 KB (~4 bytes per token), but its 1,024-dim fp32 embedding is 4 KB. A 10 TB text corpus becomes ~5 billion chunks and ~20 TB of vectors, **twice the source**, before any index. For images and video the ratio flips.
 
 ### The RAG request path
 
-RAG, named in a 2020 paper from Facebook AI[^9], works like this. Documents are chunked, embedded and indexed offline. At query time the system embeds the question, retrieves the nearest chunks and conditions the LLM on them.
+RAG was named in a 2020 Facebook AI paper[^9]. Documents are chunked, embedded and indexed offline; at query time the system embeds the question, retrieves the nearest chunks and conditions the LLM on them.
 
 ```mermaid
 sequenceDiagram
@@ -56,11 +56,11 @@ sequenceDiagram
 
 *Figure 33.1 — Illustrative latency budget: in a well-built RAG stack, storage-bound steps take 10–30% of time-to-first-token, but a cold object-store index can make retrieval the single largest step.*
 
-The budget is a worked illustration, not a benchmark. Ranges for object-native search come from vendor documentation: Databricks quotes ~250 ms for its storage-optimized endpoints[^10], AWS cites ~100 ms for frequently queried S3 Vectors indexes and sub-second otherwise[^11], and turbopuffer quotes hundreds of milliseconds cold versus under 10 ms from its NVMe cache[^12]. The storage lesson is that **retrieval is latency-bound, not bandwidth-bound**. Fifty 2 KB chunks is 100 KB, trivial bandwidth, but each GET pays a full request round trip. On an all-flash object store that costs about a millisecond. On a disk-based cloud tier it can cost tens of milliseconds.
+The budget is a worked illustration, not a benchmark. Object-native search ranges come from vendor documentation: Databricks quotes ~250 ms for storage-optimized endpoints[^10], AWS ~100 ms for frequently queried S3 Vectors indexes and sub-second otherwise[^11], and turbopuffer hundreds of milliseconds cold versus under 10 ms from its NVMe cache[^12]. The lesson: **retrieval is latency-bound, not bandwidth-bound**. Fifty 2 KB chunks is 100 KB, but each GET pays a full round trip: about a millisecond on all-flash object storage, tens of milliseconds on a disk-based cloud tier.
 
 ### Vector indexes: trading memory for recall
 
-Comparing a query with every vector (a *flat* scan) is exact but costs O(N). **Approximate nearest neighbour (ANN)** indexes give up a few percent of *recall*, the share of true nearest neighbours returned, for orders-of-magnitude speed-ups.
+A *flat* scan of every vector is exact but O(N). **Approximate nearest neighbour (ANN)** indexes give up a few percent of *recall* (the share of true neighbours returned) for orders-of-magnitude speed-ups.
 
 | Index | How it works | Memory footprint (1B × 1,024-dim) | Recall / latency | SSD-friendly? |
 |---|---|---|---|---|
@@ -72,7 +72,7 @@ Comparing a query with every vector (a *flat* scan) is exact but costs O(N). **A
 
 *Table 33.1 — Index choice is a placement decision: which bytes must sit in DRAM and which can live on flash.*
 
-**Worked example (the 4 TB problem).** 1 billion vectors × 1,024 dimensions × 4 bytes = 4.1 × 10¹² bytes ≈ **4.1 TB** raw. An HNSW graph with M = 32 stores up to 64 four-byte neighbour IDs per vector at its base layer, or ~264 GB more. At ~US$14.5/GB for 2026 server DRAM[^15], one in-memory replica carries about US$63,000 of DRAM. DiskANN keeps only 64-byte PQ codes in DRAM (64 GB, ~US$900) and the 4.4 TB graph on SSD at ~US$0.75/GB[^16] (~US$3,300). That is **~US$66k versus ~US$4k of media per replica**, before replicas for query throughput.
+**Worked example (the 4 TB problem).** 1 billion vectors × 1,024 dimensions × 4 bytes = 4.1 × 10¹² bytes ≈ **4.1 TB** raw. An HNSW graph (M = 32) adds up to 64 four-byte neighbour IDs per vector, ~264 GB. At ~US$14.5/GB for 2026 server DRAM[^15], an in-memory replica carries ~US$63,000 of DRAM. DiskANN keeps only 64-byte PQ codes in DRAM (64 GB, ~US$900) and the 4.4 TB graph on SSD at ~US$0.75/GB[^16] (~US$3,300). That is **~US$66k versus ~US$4k of media per replica**, before replicas for query throughput.
 
 ![Two-panel bar chart for 1 billion 1024-dimension vectors. Left panel, log scale, shows DRAM and SSD gigabytes per index design: HNSW fp32 in DRAM needs 4,360 GB DRAM; HNSW int8 needs 1,288 GB DRAM plus 4,096 GB SSD; IVF-PQ needs 72 GB DRAM plus 4,096 GB SSD; DiskANN needs 64 GB DRAM plus 4,352 GB SSD. Right panel shows media cost per replica at 2026 prices: about $66k, $22k, $4.1k and $4.2k.](../assets/charts/ch33-vector-memory.svg)
 
@@ -93,21 +93,21 @@ flowchart LR
 
 *Figure 33.3 — DiskANN hides SSD latency by issuing a small batch of reads per hop, the same trick an out-of-order core uses to keep several cache misses in flight.*
 
-**Semiconductor bridge.** An HNSW walk is a linked-list traversal: the next address depends on data you have not loaded yet. Prefetchers cannot help, so the walk is bound by *latency*, not bandwidth. This is the irregular-access profile of graph analytics that GPUs and caches handle badly. DiskANN's beam width W is memory-level parallelism. With ~30 dependent rounds at ~100 µs per NVMe read, a query takes ~3 ms, consistent with the paper's sub-3 ms result. At 5,000 queries/s, 30 × 4 nodes × two 4 KB sectors means ~1.2 million random reads per second, a load a few data-centre NVMe SSDs can carry. Put the same graph behind a networked array adding ~0.5 ms per round trip and a query becomes ~15 ms. Behind a 20 ms object GET it becomes ~600 ms. That is why object-storage-native engines (turbopuffer, Pinecone serverless) prefer **clustered** IVF/SPANN-style layouts, which need a few large reads instead of dozens of dependent small ones[^12][^17].
+**Semiconductor bridge.** An HNSW walk is a linked-list traversal: the next address depends on data not yet loaded, so prefetchers cannot help and the walk is bound by *latency*. It is the irregular-access profile of graph analytics that caches handle badly. DiskANN's beam width W is memory-level parallelism. With ~30 dependent rounds at ~100 µs per NVMe read, a query takes ~3 ms, consistent with the paper. At 5,000 queries/s, 30 × 4 nodes × two 4 KB sectors is ~1.2 million random reads per second, within reach of a few data-centre NVMe SSDs. Behind a networked array adding ~0.5 ms per round trip, a query takes ~15 ms; behind a 20 ms object GET, ~600 ms. That is why object-storage-native engines (turbopuffer, Pinecone serverless) prefer **clustered** IVF/SPANN-style layouts, which need a few large reads instead of dozens of dependent small ones[^12][^17].
 
-**PQ is weight quantization for vectors.** Product quantization splits a 1,024-dim vector into, say, 64 sub-vectors and replaces each with a 1-byte codebook index: 4,096 bytes → 64 bytes, a 64× compression. Distances come from table look-ups, much as palettized or INT4 weights trade accuracy for memory in inference. As with LLM quantization, the fix for lost accuracy is a second pass: re-rank the top candidates with full-precision vectors fetched from SSD. Elastic's "BBQ" pushes this to 1 bit per dimension and claims ~95% memory reduction[^18].
+**PQ is weight quantization for vectors.** Product quantization splits a 1,024-dim vector into 64 sub-vectors and replaces each with a 1-byte codebook index: 4,096 bytes → 64 bytes. Distances come from table look-ups, as palettized or INT4 weights trade accuracy for memory in inference. The fix for lost accuracy is re-ranking top candidates with full-precision vectors from SSD. Elastic's "BBQ" pushes this to 1 bit per dimension and claims ~95% memory reduction[^18].
 
-Production systems combine these. Milvus offers a DiskANN index type[^19]. Pinecone's serverless design keeps immutable "slabs" in object storage and caches them on executor SSDs[^17]. AWS S3 Vectors scales to 2 billion vectors per index and 20 trillion per bucket[^1]. The direction is unambiguous: **DRAM for steering, flash for the index, object storage for durability**.
+Production systems combine these. Milvus offers a DiskANN index[^19]; Pinecone serverless keeps immutable "slabs" in object storage, cached on executor SSDs[^17]; S3 Vectors scales to 2 billion vectors per index and 20 trillion per bucket[^1]. The direction is clear: **DRAM for steering, flash for the index, object storage for durability**.
 
 ### File formats: Parquet versus Lance
 
-Parquet groups rows into large *row groups* and stores each column in compressed *pages* of roughly a megabyte. That is ideal for "sum revenue by region" scans, but fetching one row means decompressing a whole page per column. Reading 1 million random 4 KB embeddings that way could drag ~1 TB off storage to deliver 4 GB: 250× read amplification. It is the DRAM problem of activating a whole row to read one cache line.
+Parquet groups rows into large *row groups* and stores each column in compressed *pages* of roughly a megabyte. That suits scans, but fetching one row means decompressing a whole page per column. Reading 1 million random 4 KB embeddings that way could drag ~1 TB off storage to deliver 4 GB: 250× read amplification. It is the DRAM problem of activating a whole row to read one cache line.
 
-**Lance** is an open columnar format, created by the founders of LanceDB, that adapts its encoding to the data's width. Wide values such as embeddings and image bytes are laid out so a single row can be fetched with about one I/O. Narrow values are packed into small blocks for fast scans. The authors' 2025 paper reports that Parquet can get >60× better random access than its defaults with careful tuning, at a cost in scan speed and memory, while Lance aims to match tuned Parquet's random reads without those costs[^20]. Lance also versions datasets and can add a column (for example, a new embedding model's output) without rewriting the table. That suits shuffled training loaders and RAG stores, which issue the small random reads NVMe flash is good at. LanceDB raised a US$30 million Series A in June 2025 led by Theory Ventures, with Databricks Ventures participating, and positions itself as a "multimodal lakehouse"[^21] (*company-stated*).
+**Lance**, an open columnar format from LanceDB's founders, adapts its encoding to the data's width. Wide values such as embeddings and image bytes are laid out so one row costs about one I/O; narrow values are packed into small blocks for fast scans. The authors' 2025 paper reports that tuned Parquet can get >60× better random access than its defaults, at a cost in scan speed and memory, and that Lance targets that random-read performance without those costs[^20]. Lance also versions datasets and adds columns (say, a new embedding model's output) without rewriting the table, suiting shuffled training loaders and RAG stores whose small random reads NVMe flash serves well. LanceDB raised a US$30 million Series A in June 2025 led by Theory Ventures, with Databricks Ventures participating, and positions itself as a "multimodal lakehouse"[^21] (*company-stated*).
 
 ### Table formats, catalogs and the lakehouse
 
-A folder of Parquet files is not a database: it has no transactions, no schema enforcement and no safe concurrent writers. **Apache Iceberg** (and its rivals Delta Lake and Hudi) adds a metadata tree. A table points to a current snapshot, which lists manifests, which list data files with column statistics. A commit writes new files and then atomically swaps one pointer in a **catalog**. That compare-and-swap on a root pointer gives snapshot isolation, time travel and engine independence. It also avoids slow LIST calls ([Chapter 9](../02-protocols-and-networking/09-object-storage-and-s3.md)). Iceberg v3 added deletion vectors and a variant type for semi-structured data[^22].
+A folder of Parquet files has no transactions, schema enforcement or safe concurrent writers. **Apache Iceberg** (like rivals Delta Lake and Hudi) adds a metadata tree: a table points to a snapshot, which lists manifests, which list data files with column statistics. A commit writes new files, then atomically swaps one pointer in a **catalog**. That compare-and-swap on a root pointer gives snapshot isolation, time travel and engine independence, and avoids slow LIST calls ([Chapter 9](../02-protocols-and-networking/09-object-storage-and-s3.md)). Iceberg v3 added deletion vectors and a variant type for semi-structured data[^22].
 
 ```mermaid
 flowchart TB
@@ -124,7 +124,7 @@ flowchart TB
 
 *Figure 33.4 — In a lakehouse, storage is the bottom layer behind a standard S3 contract; the catalog above it is where lock-in and governance concentrate.*
 
-The catalog is the prize, which explains the 2024 manoeuvring. Snowflake announced Polaris as an open Iceberg catalog, and a day later Databricks bought Tabular, the company founded by Iceberg's creators, for a reported US$1–2 billion[^23]. Databricks then open-sourced Unity Catalog[^24]. In 2026 SAP agreed to buy Dremio to make its Business Data Cloud Iceberg-native[^25]. Storage's part in this layer is real but narrow: fast small-object GETs and PUTs, high LIST and metadata rates, and, as AWS showed with S3 Tables (claimed up to 3× faster queries and 10× more transactions per second than self-managed Iceberg), automatic compaction of the small files that streaming writers leave behind[^2].
+The catalog is the prize. In June 2024 Snowflake announced Polaris as an open Iceberg catalog, and a day later Databricks bought Tabular, founded by Iceberg's creators, for a reported US$1–2 billion[^23], then open-sourced Unity Catalog[^24]. In 2026 SAP agreed to buy Dremio to make its Business Data Cloud Iceberg-native[^25]. Storage's part is real but narrow: fast small-object GETs and PUTs, high LIST rates and, as S3 Tables showed (claimed up to 3× faster queries and 10× more transactions per second than self-managed Iceberg), automatic compaction of the small files streaming writers leave behind[^2].
 
 ## How Everpure approaches it vs. competitors
 
@@ -167,11 +167,11 @@ quadrantChart
 
 *Figure 33.5 — Illustrative judgment, not measured data: storage vendors cluster on the left and climb, data platforms own the upper right, and pure vector databases are squeezed from both sides.*
 
-**Does value accrue to storage or to data vendors?** The steelman for data vendors is strong. Vector search became a feature within about two years: in Postgres, Elastic, Databricks, Snowflake and S3. The best-funded specialist, Pinecone (US$100 million Series B at a US$750 million valuation in 2023[^31]), replaced its founder-CEO in September 2025[^32] and was reported to be weighing options including a sale[^33] [VERIFY: date and status of the reported Pinecone sale exploration]. Revenue pools differ by an order of magnitude. Catalogs, not bytes, carry permissions and lineage ([Chapter 39](39-agentic-ai-and-data-intelligence.md)).
+**Does value accrue to storage or to data vendors?** The steelman for data vendors is strong. Vector search became a feature within about two years, in Postgres, Elastic, Databricks, Snowflake and S3. The best-funded specialist, Pinecone (US$100 million Series B at a US$750 million valuation in 2023[^31]), replaced its founder-CEO in September 2025[^32] and was reported to be weighing options including a sale[^33] [VERIFY: date and status of the reported Pinecone sale exploration]. Revenue pools differ by an order of magnitude, and catalogs, not bytes, carry permissions and lineage ([Chapter 39](39-agentic-ai-and-data-intelligence.md)).
 
-The steelman for storage vendors: most enterprise unstructured data sits on file and object systems on-premises, often where sovereignty or cost keeps it. Embedding it where it lives avoids a copy, and the copy is the expensive part. Billion-scale indexes on SSD also expand flash demand. Everpure's own reading of AWS's 2025 S3 moves was that enterprise AI is converging on object storage[^34].
+The steelman for storage vendors: most enterprise unstructured data sits on on-premises file and object systems, kept there by sovereignty or cost. Embedding it in place avoids the expensive copy, and SSD-resident indexes expand flash demand. Everpure read AWS's 2025 S3 moves as evidence that enterprise AI is converging on object storage[^34].
 
-Options a strategy team might evaluate, based on public information: (1) make FlashBlade the best on-prem target for Iceberg and Lance, with S3 Tables-style managed compaction, published small-object and LIST performance, and MLPerf Storage v3.0's new vector-database workload[^35]; (2) partner with engines and catalogs rather than build a database, because Snowflake external tables on FlashBlade (2022)[^36] and Dremio briefs show the pattern; (3) treat Data Intelligence's metadata as the control point that makes FlashBlade the system of record for *what the data is*, not just where it sits; (4) watch format companies. LanceDB's size makes it an ecosystem partner or investment-scale asset, not a platform bet.
+Options a strategy team might evaluate, based on public information: (1) make FlashBlade the best on-prem target for Iceberg and Lance, with managed compaction, published small-object and LIST performance, and results on MLPerf Storage v3.0's new vector-database workload[^35]; (2) partner with engines and catalogs rather than build a database, as Snowflake external tables on FlashBlade (2022) and Dremio briefs already did[^36]; (3) treat Data Intelligence's metadata as the control point that makes FlashBlade the system of record for *what the data is*; (4) watch format companies, where LanceDB's size makes it a partner- or investment-scale asset, not a platform bet.
 
 ## History and trajectory
 
@@ -190,7 +190,7 @@ timeline
 
 *Figure 33.6 — Research ideas from 2016–2021 became products in 2024–2026, and the products then migrated from standalone databases into storage platforms and data platforms.*
 
-The arc runs from DRAM-resident specialist databases (2019–2023), through separation of storage and compute onto object stores (2024), to absorption (2025–2026), where vectors became a column type, a bucket type or a storage feature. Two signals to watch: GPU-accelerated indexing (NVIDIA cuVS in VAST, Dell and the NVIDIA AI Data Platform, [Chapter 34](34-nvidia-ecosystem.md)), and IBM's demonstration of a 100-billion-vector database on its content-aware storage[^37], which pushes index sizes into territory only flash can hold economically.
+The arc runs from DRAM-resident specialist databases (2019–2023), through storage-compute separation onto object stores (2024), to absorption (2025–2026), where vectors became a column type, a bucket type or a storage feature. Watch GPU-accelerated indexing (NVIDIA cuVS in VAST, Dell and the AI Data Platform, [Chapter 34](34-nvidia-ecosystem.md)) and IBM's 100-billion-vector demonstration on content-aware storage[^37], a scale only flash holds economically.
 
 ## Numbers that matter
 
@@ -209,20 +209,20 @@ The arc runs from DRAM-resident specialist databases (2019–2023), through sepa
 
 **Questions for a PM**
 
-1. *"When a customer runs RAG on FlashBlade, where does the vector index live, and whose software is it?"* A strong answer names the engines validated today, says whether the index is DRAM- or SSD-resident, and says who owns support. It should be candid about where Data Stream ends and a partner begins.
+1. *"When a customer runs RAG on FlashBlade, where does the vector index live, and whose software is it?"* Strong: validated engines named, DRAM- or SSD-resident, who owns support, and where Data Stream ends and a partner begins.
 2. *"Which lakehouse engines read Iceberg on FlashBlade S3 in production, and what is our small-object GET latency and LIST rate against AWS S3 Tables?"* Strong: named engines, measured numbers, and a view on managed compaction.
-3. *"How does Data Intelligence's metadata make us harder to replace than an S3 endpoint?"* Strong: a concrete workflow (classification feeding RAG access filters) and a catalog-integration story with Unity or Polaris.
+3. *"How does Data Intelligence's metadata make us harder to replace than an S3 endpoint?"* Strong: a concrete workflow (classification feeding RAG access filters) and Unity or Polaris integration.
 
 **Questions for an engineer**
 
-1. *"For a 1B-vector DiskANN index on FlashBlade, what is the per-hop read latency and how many queries per second can one chassis sustain?"* Strong: latency in µs, IOPS per TB, and the effect of the network round trip on 30 dependent hops.
-2. *"How do we serve Lance-style random row reads and Parquet scans from the same bucket without one starving the other?"* Strong: QoS, per-request overhead, and small-I/O efficiency on the data path.
+1. *"For a 1B-vector DiskANN index on FlashBlade, what is per-hop read latency and sustainable queries per second per chassis?"* Strong: µs, IOPS per TB, and the network round trip's effect on 30 dependent hops.
+2. *"How do we serve Lance-style random reads and Parquet scans from one bucket without one starving the other?"* Strong: QoS, per-request overhead, small-I/O efficiency.
 3. *"Where does embedding run in Data Stream, and what happens when the customer changes embedding model?"* Strong: GPU placement, re-embedding throughput, and versioned columns rather than full rewrites.
 
 **Don't say this:**
 
 - "Vector databases are a new storage tier." They are software indexes; storage holds their files.
-- "RAG is bandwidth-hungry." Retrieval is latency- and IOPS-bound; ingest and re-embedding are the bandwidth events.
+- "RAG is bandwidth-hungry." Retrieval is latency-bound; ingest and re-embedding need the bandwidth.
 - "HNSW runs fine on network storage." Each hop is a dependent read; use SSD-native or clustered indexes.
 - "Iceberg is a storage product." It is a table format; the catalog, not the bucket, holds the power.
 - "Quantization ruins recall." With full-precision re-ranking, 64× compression typically loses little.
@@ -237,12 +237,9 @@ The arc runs from DRAM-resident specialist databases (2019–2023), through sepa
 ## Key terms
 
 - **Embedding** — fixed-length vector representing the meaning of a chunk of data.
-- **ANN index** — approximate nearest-neighbour structure (IVF, HNSW, DiskANN) that trades recall for speed.
-- **Product quantization (PQ)** — vector compression into small codebook indices.
-- **Lance** — columnar file format built for fast random row access.
-- **Apache Iceberg** — open table format adding snapshots and transactions to files in object storage.
-- **Catalog** — service that maps table names to current metadata and enforces access.
-- See the [glossary](../glossary.md) for the rest.
+- **ANN index** — approximate nearest-neighbour structure (IVF, HNSW, DiskANN).
+- **Product quantization (PQ)** — compression into codebook indices.
+- **Lance**, **Apache Iceberg**, **catalog** — see the [glossary](../glossary.md).
 
 ## Sources
 

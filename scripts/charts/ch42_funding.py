@@ -49,7 +49,7 @@ def build(out_dir: Path) -> Path:
     ax1.set_ylim(0, 1150)
     ax1.grid(axis="x", visible=False)
     ax1.set_title("A. Amount raised per round", loc="left", fontsize=12)
-    ax1.text(5, 560, "~half secondary\n(reported)", ha="center", fontsize=8.5, color="#333333")
+    ax1.text(5, 500, "~half\nsecondary\n(reported)", ha="center", fontsize=8.5, color="white", fontweight="bold")
 
     # Panel B: valuation, log scale
     pts = [(x, float(r["valuation_usd_b"]), r["label"]) for x, r in zip(xs, rows) if r["valuation_usd_b"]]
