@@ -1,0 +1,9 @@
+row_type,label,k,m,mttr_hours,value_pct,note,source,as_of
+scheme,RAID 6 (8+2) classic rebuild,8,2,42,,"Single-spare rebuild of a 30 TB drive at 200 MB/s = 30e12/2e8 s = 41.7 h (Ch6 worked example)","Illustrative model, Everpure Tech Atlas Ch20 (not vendor data): independent-failure Markov approximation MTTDL_group = mu^m / (n(n-1)...(n-m) lambda^(m+1)), lambda = AFR/8766 h, mu = 1/MTTR; system = 10 PB usable on 30 TB drives split into independent groups; ignores unrecoverable read errors and latent sector errors",2026-11-01
+scheme,EC 8+2 declustered,8,2,4,,"Declustered rebuild across many drives, assumed 4 h","Illustrative model, Everpure Tech Atlas Ch20 (not vendor data): same formula as above",2026-11-01
+scheme,EC 16+4 declustered,16,4,4,,"Declustered rebuild across many drives, assumed 4 h","Illustrative model, Everpure Tech Atlas Ch20 (not vendor data): same formula as above",2026-11-01
+scheme,3-way replication,1,2,4,,"Re-replication from surviving copies, assumed 4 h","Illustrative model, Everpure Tech Atlas Ch20 (not vendor data): same formula as above",2026-11-01
+scheme_corr,EC 16+4 with 10x correlated failures during rebuild,16,4,4,,"Each subsequent failure during a rebuild assumed 10x more likely than baseline (shared batch, firmware, power); MTTDL falls by 10^m","Illustrative model, Everpure Tech Atlas Ch20 (not vendor data): MTTDL_corr = MTTDL / c^m with c = 10",2026-11-01
+afr_ref,Everpure DFM (company-stated),,,,0.15,"Company-stated annual failure rate for DirectFlash Modules","Pure Storage blog, blog.purestorage.com/?p=143164 (retrieved via search 2026-11-01)",2026-11-01
+afr_ref,Backblaze SSD lifetime,,,,0.9,"Boot SSDs Q4 2018 to Q2 2023","The Register, 'SSD failure report Backblaze', 2023-09-26",2023-09-26
+afr_ref,Backblaze HDD 2025,,,,1.36,"Full-year 2025 AFR across 344,196 data drives","Backblaze, 'Backblaze Drive Stats for 2025', 2026-02-12; StorageReview 2026-02",2026-02-12

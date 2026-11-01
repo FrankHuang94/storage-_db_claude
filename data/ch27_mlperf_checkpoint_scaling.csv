@@ -1,0 +1,5 @@
+data_nodes,checkpoint_write_gib_s,per_node_gib_s,source,as_of
+10,327.65,32.77,"MLPerf Storage v3.0 (closed), Everpure FlashBlade//EXA checkpoint write; Everpure release via HPCwire 2026-09-02 and StorageReview 2026-09; per-node = total / data nodes (atlas arithmetic)",2026-11-01
+15,484.1,32.27,"MLPerf Storage v3.0, Everpure FlashBlade//EXA checkpoint write; intermediate point reported by StorageReview 2026-09 only; per-node = total / data nodes (atlas arithmetic)",2026-11-01
+20,655.6,32.78,"MLPerf Storage v3.0, Everpure FlashBlade//EXA checkpoint write; intermediate point reported by StorageReview 2026-09 only; per-node = total / data nodes (atlas arithmetic)",2026-11-01
+30,877.52,29.25,"MLPerf Storage v3.0 (closed), Everpure FlashBlade//EXA checkpoint write, 30 metadata blades + 30 Linux/NVMe data nodes; Everpure release via HPCwire 2026-09-02 and StorageReview 2026-09; per-node = total / data nodes (atlas arithmetic)",2026-11-01
