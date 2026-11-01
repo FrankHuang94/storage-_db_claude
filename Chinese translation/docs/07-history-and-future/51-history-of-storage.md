@@ -144,3 +144,135 @@ flowchart LR
 **2. 为什么存储*系统*从未像介质那样整合。** 资本密集度集中在介质上：晶圆厂以及磁头/盘片工厂。阵列厂商类似无晶圆厂（fabless）芯片公司：它们采购 NAND 或硬盘，加上控制器软件，然后销售整套系统。进入成本是几轮风险投资，而不是一座数十亿美元的晶圆厂，所以每一次技术转变都会催生一批新进入者。Everpure 的 DirectFlash 战略直接采购原始 NAND 并用自有软件管理，好比一家 fabless 公司自主设计内存控制器：无需拥有晶圆厂就能获取介质的经济性。
 
 **3. 为什么软件定义浪潮会反复出现。** 每当通用 CPU 和网络追上专有控制器，就会有人在标准服务器上以软件形式运行存储：2000 年代的横向扩展，2010 年代的 HCI 与云，2020 年代的 Kubernetes 原生存储以及 VAST 在 2021 年退出硬件业务[^39]。这些浪潮很少取代阵列。阵列吸收了这些模式（订阅、云版本、容器集成），而纯软件的大奖则留给了超大规模云厂商。**对 AI 时代的启示：** 预计当前的 AI 原生领导者也会面临同样的周期。它们会先被验证，再被传统厂商模仿（NetApp AFX、HPE X10000 和 Everpure EXA 已经推出了分解式设计），随后被整合或被迫平台化。悬而未决的问题是：由谁来整合。
+
+## Everpure 的做法与竞争对手对比
+
+每一家主要厂商至今仍带着其诞生时代的架构印记。
+
+| 厂商 | 诞生时代 | 架构传承 | AI 时代的回应 | 最强版本论证（steelman） |
+|---|---|---|---|---|
+| Dell（EMC 血统） | 阵列（Symmetrix，1990） | Symmetrix 血统（PowerMax）、Isilon（PowerScale） | PowerScale 上的 Parallel NFS[^40]；产品组合广泛 | 最大的装机基础和渠道；份额第一[^29] |
+| NetApp | 阵列，1992 | ONTAP 统一文件/块操作系统 | AFX 分解式 ONTAP（2025）[^41] | 数十年积累的企业级数据管理功能 |
+| HPE | 阵列，通过收购 3PAR/Nimble | Alletra（3PAR、Nimble 血统） | X10000 全共享架构；GreenLake for File 运行 VAST 软件[^42] | 服务器 + 存储 + GreenLake 的捆绑组合 |
+| Everpure | 闪存，2009 | Purity、DirectFlash、Evergreen 订阅 | FlashBlade//EXA 元数据/数据分离 | 一套操作系统、一种升级模式；原始 NAND 的经济性 |
+| DDN | HPC，1998 | 基于 Lustre 的 EXAScaler | Infinia 对象平台；AI400X3 | 大型 GPU 集群部署，例如 xAI Colossus（公司自述）[^43]；HPC 经验 |
+| VAST Data | AI/分解式，2016 | 基于共享 QLC 与 SCM 的 DASE | 自我定位为"AI 操作系统"[^44] | 从一开始就为这个时代而构建 |
+| WEKA | 软件定义，2013 | 以软件形式实现的并行文件系统 | NeuralMesh（2025）[^45]；云与 neocloud 交易 | 与硬件无关；在公有云中实力强 |
+
+*表 51.2 — 诞生时代决定架构；在 AI 时代，"生于此时"的优势属于 VAST 和 WEKA，而不是 Everpure。*
+
+坦率地说：Everpure 所处的位置，就像 2012 年前后的 EMC——上一波浪潮中成功的在位者，拥有足以应对下一波浪潮的现金和装机基础。EMC 的回应是在硬件换代业务之上叠加收购。Everpure 的回应则是自研（EXA）、以订阅为主导（Evergreen），并通过授权 DirectFlash 延伸进超大规模数据中心（2024 年的 Meta，2026 年 8 月第二家前五大超大规模云厂商）[^46]。这更接近当年让 Pure 自身在 2012–2016 年得以存活的商业模式防御。挑战者一方的最强论证是：VAST 和 WEKA 没有对任何东西进行改装，而存储史表明，与稀缺资源的架构契合度通常会在一个换代周期内胜过装机基础。基于公开信息，战略团队可以评估的选项包括：EXA 在哪些场景能完胜、哪些能力应该收购而非自建（Portworx 是范本），以及如何避免 EMC 式的结局（[第 54 章](54-strategic-option-map.md)）。
+
+## 历史与发展轨迹
+
+三个有明确日期的信号，勾勒出这段历史的下一章：
+
+- **成本逆转。** 企业级 SSD 从 US$185/TB（Q2 2020）升至 Q3 2026 的指数价格 US$753/TB，近线 HDD 从 US$19/TB 升至约 US$40/TB[^34][^35]。此前每个时代都以介质价格下降为前提；NAND 供应紧张，反而让 Pure Storage 头十年赖以起家的数据缩减更有价值（[第 48 章](../06-industry-and-competition/48-media-suppliers-and-nand-cycle.md)）。
+- **市场随周期增长。** 在 2Q26，外置存储收入达到 US$10.3B（同比 +33.6%），其中全闪存阵列占 52.1%。Everpure 以 8.1% 的份额排名第 4，同比增长 +50.0%，是前五大厂商中增长最快的[^29]。
+- **基准测试与生态系统成为把关者。** MLPerf Storage v3.0 有 19 家提交方，其中 11 家首次参与，Everpure 在列[^47]。与 Fibre Channel 和 VMware 时代一样，主导平台（如今是 NVIDIA）的认证决定了谁能进入考虑范围（[第 34 章](../05-ai-storage/34-nvidia-ecosystem.md)）。
+
+至于下一步走向——CXL、KV 缓存层和 PLC NAND——见[第 53 章](53-future-trends.md)。
+
+## 关键数字
+
+| 指标 | 数值 | 背景 | 来源 / 日期 |
+|---|---|---|---|
+| IBM 350 RAMAC 容量 / 成本 | ~3.75 MB；~US$10,000 per MB | 首款商用磁盘，1956 年 | CHM；History of Information[^1][^23] |
+| IBM 3380 | 2.52 GB；US$81,000–142,400 | 首款 GB 级硬盘，1980 年 6 月（≈US$32k/GB） | MSDN / StorageNewsletter[^2] |
+| RAID 论文中的 $/MB | 3380 US$18–10 vs PC 硬盘 US$10–7 | 阵列背后的经济学，1988 年 | SIGMOD 1988[^3] |
+| 磁盘 $/GB 降幅 | 每年 ~26%，1956–2022 | 10,000,000 → 0.0144 US$/GB，名义值 | 算例[^23][^32] |
+| 闪存 $/GB 降幅 | 每年 ~35%，1991–2020 | 50,000 → 0.185 US$/GB，口径不一 | 算例[^33][^34] |
+| 企业级 SSD vs HDD，Q3 2026 | 每 TB 18.6× | US$753/TB vs US$40.5/TB，单一厂商指数 | Hardware Busters[^35] |
+| Dell–EMC | ~US$67B；2016-09-07 完成 | 传统厂商以被收购的方式退场 | PCWorld / TweakTown[^16] |
+| DRAM 前三份额 | ~90.5%（4Q25） | 介质整合的对照 | TrendForce via Evertiq[^37] |
+| Dell 外置存储份额 | 23.8%（2Q26）；Everpure 8.1% | 传统厂商仍居第一 | IDC via StorageReview[^29] |
+
+## 对话手册
+
+**向产品经理提的问题**
+
+1. *"我们的价值主张中，哪一部分是介质速度，哪一部分是经济性或商业模式？"* 高质量回答会把两者分开，承认速度优势会在一代产品之内被侵蚀，并点出持久的部分：缩减比、Evergreen 续约经济性、每 TB 功耗。
+2. *"什么因素可能让 AI 原生架构变得无关紧要，就像闪存把 Violin 的速度领先商品化那样？"* 高质量回答会指出一个具体转变（KV 缓存迁移到 CXL 内存、存储服务运行在 DPU 上），以及产品将如何顺势而为。
+3. *"哪笔历史交易是我们的范本，Portworx 还是 EMC 收购 XtremIO？"* 高质量回答以整合而非价格来判断：这项技术是融入了平台，还是始终是一条独立的产品线？
+
+**向工程师提的问题**
+
+1. *"当前的瓶颈在哪里：介质、网络、CPU 还是元数据？"* 高质量回答会给出数字（网络架构的 µs 对比闪存的 µs、每秒元数据操作数），以及这会把钟摆推向哪个方向。
+2. *"哪些设计决策是以 NAND 价格下降为前提的？"* 高质量回答：预留空间、纠删码条带宽度、缩减假设，以及如果 $/TB 连续两年上涨会有什么变化。
+3. *"Purity 2012 年的设计中，哪些部分会被 2026 年从零开始的设计保留？"* 高质量回答：日志结构写入、全局缩减、不停机升级，以及它会舍弃什么。
+
+**不要这样说：**
+
+- "闪存杀死了磁盘。"磁盘仍然存储着大部分字节；闪存拿下的是主存储（[第 52 章](52-history-of-flash.md)）。
+- "EMC 失败了。"它以约 US$67B 被出售，而且其产品在 Dell 旗下仍领跑市场。
+- "分解式是新东西。"SAN 几十年前就实现了存储池化；新的是 NVMe-oF 让远端闪存几乎和本地一样快。
+- "存储价格总是下降。"2026 年在两条曲线上都是反例。
+- "软件定义存储将取代阵列。"已经有三波浪潮尝试过；阵列吸收了每一波。
+
+## 深入阅读（可选，L3 指引）
+
+- Patterson、Gibson 与 Katz 1988 年的 RAID 论文：Table I 以及其中关于可靠性的论证。
+- Computer History Museum 的"Storage Engine"时间线及其 IBM 3380 口述历史。
+- Ghemawat 等，"The Google File System"（SOSP 2003），横向扩展的范本。
+- Clayton Christensen，*The Innovator's Dilemma*（1997）：硬盘驱动器在位者在每次尺寸规格转换中落败。
+
+## 关键术语
+
+- **DASD** — 直接存取存储设备（direct-access storage device），IBM 对大型机磁盘的称谓。
+- **SLED** — 单一大型昂贵磁盘（single large expensive disk），RAID 论文中的对照物。
+- **缓存磁盘阵列（Cached disk array）** — 在磁盘前面配置大容量 RAM 缓存的阵列（EMC Symmetrix）。
+- **Filer / NAS 设备** — 专用文件服务器（NetApp）。
+- **SAN** — 存储区域网络（storage area network），一种块存储网络，例如 Fibre Channel。
+- **架构钟摆（Architectural pendulum）** — 存储在集中式、分布式与分解式之间反复摆动的现象。
+- **软件定义浪潮（Software-defined wave）** — 存储软件迁移到通用服务器上运行的时期。
+- 其余术语见[术语表](../glossary.md)。
+
+## 资料来源
+
+[^1]: Computer History Museum, "1956: First commercial hard disk drive shipped," n.d. https://www.computerhistory.org/storageengine/first-commercial-hard-disk-drive-shipped/ (retrieved 2026-11-01).
+[^2]: A. Thomas (Microsoft MSDN blog), "History of Data Storage," 2008-04-10. https://blogs.msdn.microsoft.com/alfredth/2008/04/10/history-of-data-storage/ (retrieved 2026-11-01); StorageNewsletter, "History 1992: Key dates on mainframes DASD technology," 2020-05-29. https://storagenewsletter.com/2020/05/29/history-1992-key-dates-on-mainframes-dasd-technology (retrieved 2026-11-01). Price range seen via search summary; StorageNewsletter gives the upper bound as US$142,200.
+[^3]: D. Patterson, G. Gibson, R. Katz, "A Case for Redundant Arrays of Inexpensive Disks (RAID)," SIGMOD 1988, Table I. https://dl.acm.org/doi/10.1145/50202.50214 ; copy at https://web.mit.edu/6.033/2015/wwwdocs/papers/Patterson88.pdf (retrieved 2026-11-01).
+[^4]: StorageNewsletter, "History 1990: EMC Symmetrix 4200," 2018-08-24. https://www.storagenewsletter.com/2018/08/24/history-1990-emc-symmetrix-4200/ (retrieved 2026-11-01).
+[^5]: NetApp, "Our history," n.d. https://www.netapp.com/en/company/history/ (retrieved 2026-11-01); FundingUniverse, "Network Appliance, Inc. History," n.d. https://www.fundinguniverse.com/company-histories/network-appliance-inc-history/ (retrieved 2026-11-01).
+[^6]: ANSI, "ANSI X3.230-1994, Fibre Channel Physical and Signaling Interface (FC-PH)," 1994. https://webstore.ansi.org/standards/incits/ansiincits2301994am1996r2001 (retrieved 2026-11-01).
+[^7]: eWeek, "EMC Acquires Scale-Out NAS Maker Isilon for $2.25 Billion," 2010-11-15. https://www.eweek.com/storage/emc-acquires-scale-out-nas-maker-isilon-for-2.25-billion/ (retrieved 2026-11-01); EMC/Isilon joint press release (Exhibit 99.1), 2010-11-15. https://www.sec.gov/Archives/edgar/data/1373671/000119312510259827/dex991.htm (retrieved 2026-11-01). Founding year 2001 per Wikipedia, "Dell EMC Isilon," https://en.wikipedia.org/wiki/Dell_EMC_Isilon (retrieved 2026-11-01; via search summary).
+[^8]: Amazon Web Services, "Announcing Amazon S3 - Simple Storage Service," 2006-03-14. https://aws.amazon.com/about-aws/whats-new/2006/03/announcing-amazon-s3---simple-storage-service (retrieved 2026-11-01).
+[^9]: Nutanix, Inc., "Form S-1 Registration Statement," 2015-12. https://www.sec.gov/Archives/edgar/data/0001618732/000119312515411021/d937439ds1.htm (retrieved 2026-11-01).
+[^10]: University of New Hampshire InterOperability Laboratory, "Emerging NVM Express spec has busy year," 2014-12-15. https://iol.unh.edu/news/2014/12/15/emerging-nvm-express-spec-has-busy-year (retrieved 2026-11-01); EE Times Japan, NVM Express 1.0 report, 2011-03-10. https://eetimes.itmedia.co.jp/ee/articles/1103/10/news116.html (retrieved 2026-11-01).
+[^11]: TechPowerUp, "Fusion-io ioDrive" (DEMOfall 2007 unveiling), 2007-10-10. https://www.techpowerup.com/41779/ (retrieved 2026-11-01); StorageMojo, "Fusion-io does the hard part," 2008-01-02. https://storagemojo.com/2008/01/02/fusion-io-does-the-hard-part/ (retrieved 2026-11-01).
+[^12]: Pure Storage, Inc., "Form S-1 Registration Statement," 2015-08-27. https://www.sec.gov/Archives/edgar/data/0001474432/000119312515287576/d895532ds1.htm (retrieved 2026-11-01).
+[^13]: Globes, "EMC buys XtremIO for $430m," 2012-05. https://en.globes.co.il/en/article-1000747655 (retrieved 2026-11-01). EMC did not disclose terms; price as reported by press.
+[^14]: Violin Memory, Inc., "Form 8-K, Exhibit 99.1 (Chapter 11 filing)," 2016-12-14. https://www.sec.gov/Archives/edgar/data/0001407190/000119312516797241/d313497dex991.htm (retrieved 2026-11-01); The Register, "Violin Memory share collapse as Chapter 11 filing made," 2016-12-15. https://www.theregister.com/2016/12/15/violin_memory_share_collapse_as_chapter_11_filing_made/ (retrieved 2026-11-01).
+[^15]: Fortune (Reuters), "Hewlett Packard Enterprise to buy Nimble Storage," 2017-03-07. https://fortune.com/2017/03/07/hewlett-packard-enterprise-nimble-storage (retrieved 2026-11-01).
+[^16]: PCWorld, "Say hello to old friend Dell Technologies on Sept. 7," 2016-08. https://www.pcworld.com/article/3114143/say-hello-to-old-friend-dell-technologies-on-sept-7.html (retrieved 2026-11-01); TweakTown, "Dell buys EMC for $67 billion, largest tech deal in history," 2015-10-12. https://www.tweaktown.com/news/47956/dell-buys-firm-emc-67-billion-largest-tech-deal-history/index.html (retrieved 2026-11-01).
+[^17]: Blocks & Files, "VAST Data's business sitrep," 2019-02-26. https://blocksandfiles.com/2019/02/26/vast-datas-business-sitrep/ (retrieved 2026-11-01); Blocks & Files, "VAST Data's universal filesystem," 2019-02-26. https://blocksandfiles.com/2019/02/26/vast-datas-universal-filesystem/ (retrieved 2026-11-01).
+[^18]: SiliconANGLE, "Pure Storage buys Portworx to expand cloud-native storage," 2020-09-16. https://siliconangle.com/2020/09/16/pure-storage-buys-portworx-expand-cloud-native-storage/ (retrieved 2026-11-01).
+[^19]: Blocks & Files, "MLCommons publishes storage benchmark for AI," 2023-09-18. https://blocksandfiles.com/2023/09/18/mlcommons-storage-benchmark/ (retrieved 2026-11-01).
+[^20]: Blackstone, "Blackstone Invests $300 Million at a $5 Billion Valuation in DDN," 2025-01. https://www.blackstone.com/news/press/blackstone-invests-300-million-at-a-5-billion-valuation-in-ddn-ai-and-data-intelligence-solutions-leader-to-fuel-further-rapid-growth/ (retrieved 2026-11-01).
+[^21]: World Wide Technology, "Pure Storage Rebrands To Everpure And Announces Intent To Acquire 1touch," 2026-02-23. https://www.wwt.com/news/pure-storage-rebrands-to-everpure-and-announces-intent-to-acquire-1touch (retrieved 2026-11-01).
+[^22]: CNBC, "Nvidia backs AI company Vast Data at $30 billion valuation," 2026-04-22. https://www.cnbc.com/2026/04/22/nvidia-backs-ai-company-vast-data.html (retrieved 2026-11-01).
+[^23]: History of Information, "The IBM 305 RAMAC, the First Computer with a Hard Drive: $10,000 per Megabyte," n.d. https://historyofinformation.com/detail.php?entryid=952 (retrieved 2026-11-01; figure seen via search summary) [VERIFY: search-summary only].
+[^24]: The Register, "Symmetrix daddy Moshe Yanai on chair-throwing and storage," 2017-04-10. https://www.theregister.com/2017/04/10/moshe_the_storage_mensch/?page=2 (retrieved 2026-11-01).
+[^25]: S. Ghemawat, H. Gobioff, S.-T. Leung, "The Google File System," SOSP 2003. https://www.cs.rochester.edu/meetings/sosp2003/papers/p125-ghemawat.pdf (retrieved 2026-11-01).
+[^26]: AWS News Blog, "Celebrate Amazon S3's 17th birthday at AWS Pi Day 2023," 2023-03. https://aws.amazon.com/blogs/aws/celebrate-amazon-s3s-17th-birthday-at-aws-pi-day-2023/ (retrieved 2026-11-01).
+[^27]: Fusion-io, Inc., "Schedule TO-C (SanDisk merger agreement)," 2014-06. https://www.sec.gov/Archives/edgar/data/0001383729/000110465914046106/a14-15500_18k.htm (retrieved 2026-11-01); Bloomberg, "SanDisk to Buy Fusion-io for $1.1 Billion," 2014-06-16. https://www.bloomberg.com/news/articles/2014-06-16/sandisk-to-buy-fusion-io-in-deal-valued-at-about-1-1-billion (retrieved 2026-11-01).
+[^28]: Pure Storage, Inc., "Form 8-K (settlement with Dell/EMC)," 2016-10. https://www.sec.gov/Archives/edgar/data/1474432/000119312516741316/d275548d8k.htm (retrieved 2026-11-01).
+[^29]: StorageReview, "IDC External Storage Tracker: $10.3 Billion in Q2 2026 as Server Market Tops $166 Billion on AI Demand," 2026-09. https://www.storagereview.com/news/idc-external-storage-tracker-q2-2026-10-3-billion-as-server-market-tops-166-billion (retrieved 2026-11-01).
+[^30]: StorageNewsletter, "Start-up profile: Weka.io," 2016-12-26. https://www.storagenewsletter.com/2016/12/26/start-up-profile-weka-io (retrieved 2026-11-01).
+[^31]: Forbes Italia, "Chi è Alex Bouzari, il miliardario che rende più veloci i supercomputer dell'IA," 2026-08-10. https://forbes.it/2026/08/10/chi-e-alex-bouzari-il-miliardario-che-rende-piu-veloci-i-supercomputer-dellia/ (retrieved 2026-11-01).
+[^32]: Backblaze, "Hard Drive Cost Per Gigabyte," 2022-11. https://www.backblaze.com/blog/hard-drive-cost-per-gigabyte/ (retrieved 2026-11-01); corroborated by Blocks & Files, "Backblaze predicts HDD prices will fall to 1¢/GB by mid-2025," 2022-12-12. https://www.blocksandfiles.com/disk/2022/12/12/backblaze-predicts-hdd-prices-will-fall-to-1/gb-by-mid-2025/1604477 (retrieved 2026-11-01).
+[^33]: IEEE ETHW, "Sanjay Mehrotra," n.d. https://ethw.org/Sanjay_Mehrotra (retrieved 2026-11-01); Computer Hope, "SanDisk history," n.d. https://www.computerhope.com/comp/sandisk.htm (retrieved 2026-11-01). Price seen via search summary [VERIFY: search-summary only].
+[^34]: Blocks & Files, "Enterprise SSDs cost ten times more than nearline disk drives," 2020-08-24. https://blocksandfiles.com/2020/08/24/10x-enterprise-ssd-price-premium-over-nearline-disk-drives/ (retrieved 2026-11-01).
+[^35]: Hardware Busters, "Enterprise SSD Prices Now Run 18.6x Hard Drives, and the Cheap Alternative Is Sold Out Until 2027," 2026. https://hwbusters.com/news/enterprise-ssd-prices-now-run-18-6x-hard-drives-and-the-cheap-alternative-is-sold-out-until-2027/ (retrieved 2026-11-01).
+[^36]: Micron Technology, Inc., "Form 10-K for fiscal year 2013," 2013-10. https://www.sec.gov/Archives/edgar/data/0000723125/000072312513000228/a2013q4.htm (retrieved 2026-11-01).
+[^37]: Evertiq (citing TrendForce), "Price rally lifts 4Q25 DRAM revenue 29.4% QoQ," 2026-02-26. https://evertiq.com/news/2026-02-26-price-rally-lifts-4q25-dram-revenue-294-qoq (retrieved 2026-11-01).
+[^38]: Electronic Design, "Hard Disk Vendors - And Then There Were Three," n.d. https://www.electronicdesign.com/technologies/embedded/article/21793116/hard-disk-vendors-and-then-there-were-three (retrieved 2026-11-01).
+[^39]: Blocks & Files, "VAST Data exits hardware business, pivots to software subscriptions," 2021-04-06. https://blocksandfiles.com/2021/04/06/vast-data-software-subscriptions-pivot/ (retrieved 2026-11-01).
+[^40]: Blocks & Files, "Dell PowerScale gets struck by Lightning and goes parallel," 2025-11-17. https://www.blocksandfiles.com/ai-ml/2025/11/17/dell-powerscale-gets-struck-by-lightning-and-goes-parallel/1711291 (retrieved 2026-11-01).
+[^41]: Blocks & Files, "NetApp disaggregates ONTAP storage and provides an AI Data Engine," 2025-10-14. https://blocksandfiles.com/2025/10/14/netapp-disaggregates-ontap-storage-and-provides-an-ai-data-engine/ (retrieved 2026-11-01).
+[^42]: Blocks & Files, "HPE Alletra X10000 analysis," 2025-02-13. https://blocksandfiles.com/2025/02/13/hpe-alletra-x10000-analysis/ (retrieved 2026-11-01); HPCwire, "HPE taps VAST Data for fast file storage on GreenLake," 2023-04-04. https://www.hpcwire.com/2023/04/04/hpe-taps-vast-data-for-fast-file-storage-on-greenlake/ (retrieved 2026-11-01).
+[^43]: Benzinga, "Blackstone invests $300 million in AI data firm that powers Elon Musk's xAI supercomputer," 2025-01. https://www.benzinga.com/news/25/01/42892338/blackstone-invests-300-million-in-ai-data-firm-that-powers-elon-musks-xai-supercomputer (retrieved 2026-11-01).
+[^44]: Blocks & Files, "VAST Data launches AI operating system," 2025-05-21. https://www.blocksandfiles.com/ai-ml/2025/05/21/vast-data-launches-ai-operating-system/1613219 (retrieved 2026-11-01).
+[^45]: Blocks & Files, "WEKA builds NeuralMesh for exascale AI," 2025-06-18. https://blocksandfiles.com/2025/06/18/weka-builds-neuralmesh-for-exascale-ai/ (retrieved 2026-11-01).
+[^46]: Everpure, "Everpure Lands New Design Win with Second Top-Five Hyperscaler," 2026-08-10. https://www.everpuredata.com/company/newsroom/press-releases/everpure-lands-new-design-win-with-second-top-five-hyperscaler.html (retrieved 2026-11-01).
+[^47]: MLCommons via GlobeNewswire, "MLCommons Releases New MLPerf Storage v3.0 Benchmark Results," 2026-09-01. https://www.globenewswire.com/news-release/2026/09/01/3354412/0/en/mlcommons-releases-new-mlperf-storage-v3-0-benchmark-results.html (retrieved 2026-11-01).
