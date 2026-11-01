@@ -24,7 +24,7 @@ For a strategy team, that framing sorts the options. Architecture gaps can be cl
 The scoreboard has four kinds of evidence, and they should not be blended:
 
 - **Contracts.** VAST's US$1.17B multi-year CoreWeave agreement (reported by Reuters on 2025-11-06, confirmed by VAST)[^1]. DDN says it supports more than 500,000 NVIDIA GPUs, including xAI's Colossus (*company-stated*)[^3]. WEKA lists Nebius, Cohere, Midjourney and Stability AI as customers[^4].
-- **Capital.** VAST's valuation rose from US$1.2B in 2020[^5] to US$30B in April 2026 (*company-stated*)[^2]. Blackstone put US$300M into DDN at US$5B in January 2025, DDN's first institutional money[^6]. WEKA reached US$1.6B in May 2024[^7].
+- **Capital.** VAST's valuation rose from US$1.2B in 2020[^5] to US$30B in April 2026 (*company-stated*)[^2]. Blackstone put US$300M into DDN at US$5B in January 2025, which Blackstone called DDN's first institutional investment[^6]. (DDN did take about US$12M of venture money around 2002 and later bought those investors out; see [Chapter 44](44-ddn.md).) WEKA reached US$1.6B in May 2024[^7].
 - **Revenue signals.** All are self-reported. VAST cites more than US$500M of committed ARR (CARR)[^8]. WEKA said it passed US$100M of ARR in 2024[^9]. DDN is reported to be targeting about US$1B of revenue in 2026 (*reported by Forbes*)[^10].
 - **Analyst recognition.** Gartner named VAST a Leader in its 2024 Magic Quadrant for File and Object Storage, the same edition that dropped DDN and NetApp from the report[^11].
 
@@ -81,7 +81,7 @@ flowchart LR
 
 **Evidence.** VAST reports positive free cash flow despite rapid growth (*company-stated*)[^8]. WEKA runs natively on Nebius servers and in four public clouds ([Chapter 43](43-weka.md)).
 
-**Rating: moderate.** The counter-evidence is that hardware still sells. DDN, self-funded and profitable for about 25 years by its own account[^6], sells appliances. WEKA launched WEKApod 3, its first chassis-up hardware, in July 2026[^21]. In the 2026 NAND shortage, owning supply became an advantage (see below).
+**Rating: moderate.** The counter-evidence is that hardware still sells. DDN, self-funded and profitable for about 25 years by its own account[^6], sells appliances. WEKA announced WEKApod 3, appliances on its own hardware design, in July 2026, with deliveries from fall 2026[^21]. In the 2026 NAND shortage, owning supply became an advantage (see below).
 
 ### Driver 5: HPC heritage and talent
 
@@ -95,7 +95,7 @@ flowchart LR
 
 **Mechanism.** AI workloads changed every 12–18 months: training, then checkpointing, then RAG, then KV cache for inference. Single-product, venture-funded firms can ship a new tier faster than an incumbent juggling five product lines and a large installed base.
 
-**Evidence.** WEKA shipped Augmented Memory Grid, a KV-cache tier, in November 2025, months before NVIDIA standardised that tier[^25]. VAST added GPU-equipped CNodes and two new engines in February 2026[^26]. It also launched VAST Amplify in January 2026, a programme to reuse customers' installed SSDs, competitors' included, during the shortage[^27]. DDN shipped Infinia 2.0, AI400X3 and DDN CORE within one year[^28].
+**Evidence.** WEKA shipped Augmented Memory Grid, a KV-cache tier, in November 2025, months before NVIDIA standardised that tier[^25]. VAST announced GPU-equipped CNodes (CNode-X) and two new engines in February 2026[^26]. It also launched VAST Amplify in January 2026, a programme to reuse customers' installed SSDs, competitors' included, during the shortage[^27]. DDN shipped Infinia 2.0, AI400X3 and DDN CORE within one year[^28].
 
 **Rating: moderate.** Launches are not adoption, and most claims are vendor-tested.
 
@@ -119,7 +119,7 @@ flowchart TD
 
 *Figure 41.2 — Incumbents did not misjudge the technology so much as the customer: the early AI buyer looked unprofitable until it became the fastest-growing segment, and by then challengers held the reference accounts.*
 
-**Evidence.** Most of it is indirect, so read this as inference from behaviour. The response launches all arrive in 2024–2026 (Table 41.3). The channel motive became visible when HPE stopped reselling WEKA, Qumulo and Scality in favour of its own Alletra MP line[^29].
+**Evidence.** Most of it is indirect, so read this as inference from behaviour. The response launches all arrive in 2024–2026 (Table 41.3). The channel motive became visible when HPE told partners in November 2025 that it would stop reselling WEKA, Qumulo and Scality in favour of its own Alletra MP line, with orders no longer accepted from 3 March 2026[^29]. Partners can still sell those products on standard HPE servers.
 
 **Rating: moderate, and fading.** The blind spot was real. It is now being closed.
 
@@ -127,13 +127,13 @@ flowchart TD
 
 | Driver | Best evidence (dated) | Rating | Counter-evidence |
 |---|---|---|---|
-| 1. Architecture fit | DDN in NVIDIA Eos at ~4 TB/s (2024)[^12]; WEKA SPECstorage sweep (Jan 2025)[^13] | Strong, eroding | Everpure EXA topped MLPerf v3.0 checkpointing (Sep 2026)[^30] and SPECstorage AI_IMAGE (Mar 2026)[^31] |
+| 1. Architecture fit | DDN in NVIDIA Eos at ~4 TB/s (2024)[^12]; WEKA SPECstorage sweep (Jan 2025)[^13] | Strong, eroding | Everpure EXA topped MLPerf v3.0 checkpointing among entrants, a round VAST, WEKA and DDN skipped (Sep 2026)[^30], and SPECstorage AI_IMAGE (Mar 2026)[^31] |
 | 2. NVIDIA alignment | NVIDIA equity in VAST (2021) and WEKA (2024)[^14][^7] | Strong, non-exclusive | Seven-plus SuperPOD vendors by 2025[^16]; 12 STX partners (2026)[^17] |
 | 3. Neocloud buyers | VAST–CoreWeave US$1.17B (Nov 2025)[^1]; WEKA–Nebius (Jun 2025)[^18] | Strong | CoreWeave runs a five-vendor shelf plus its own object store[^19] |
 | 4. Software on commodity | VAST software-only since 2021, FCF positive (*company-stated*)[^20][^8] | Moderate | DDN appliances; WEKApod 3 (2026)[^21]; NAND shortage favours flash buyers |
 | 5. HPC heritage, talent | DDN's Whamcloud team (2018)[^22]; ex-XIV and ex-XtremIO founders | Moderate | VAST won without HPC roots |
-| 6. Iteration speed | WEKA AMG GA (Nov 2025)[^25]; VAST CNode-X (Feb 2026)[^26] | Moderate | Few independent audits; launches are not adoption |
-| 7. Incumbent blind spots | All incumbent responses dated 2024–2026; HPE drops WEKA (Nov 2025)[^29] | Moderate, fading | Incumbents grew faster than the market in 2Q26[^32] |
+| 6. Iteration speed | WEKA AMG GA (Nov 2025)[^25]; VAST CNode-X announced (Feb 2026)[^26] | Moderate | Few independent audits; launches are not adoption |
+| 7. Incumbent blind spots | All incumbent responses dated 2024–2026; HPE ends WEKA resale (announced Nov 2025, effective Mar 2026)[^29] | Moderate, fading | Incumbents grew faster than the market in 2Q26[^32] |
 
 *Table 41.1 — The strongest drivers (fit, NVIDIA, neoclouds) explain where challengers won; the weaker ones explain how fast, and every row now has dated counter-evidence.*
 
@@ -171,9 +171,9 @@ Data: `data/ch41_valuations.csv`
 
 **Incumbents caught up architecturally.** See Table 41.3. Each launch removes a talking point the challengers had in 2023.
 
-**MLPerf absences.** VAST, WEKA and DDN all skipped MLPerf Storage v3.0, the first round with a KV-cache test. Everpure entered for the first time and posted the top checkpoint result[^37][^30]. Absence proves nothing about performance, but it leaves the challengers' inference claims vendor-tested ([Chapter 37](../05-ai-storage/37-reading-benchmarks.md)).
+**MLPerf absences.** VAST, WEKA and DDN all skipped MLPerf Storage v3.0, the first round with a KV-cache test. Their histories differ: DDN entered v0.5, v1.0 and v2.0, WEKA entered v0.5 and v1.0, and VAST has never submitted ([Chapters 42](42-vast-data.md)–[44](44-ddn.md)). Everpure entered for the first time and posted the top checkpoint result among entrants[^37][^30]. Absence proves nothing about performance, but it leaves the challengers' inference claims vendor-tested ([Chapter 37](../05-ai-storage/37-reading-benchmarks.md)).
 
-**The NAND shortage cuts against software-only vendors.** TrendForce forecast another 15–20% rise in NAND contract prices for 4Q26[^38]. VAST passes hardware through at cost, so its customers and server partners carry the price spike and the allocation risk. Its response, Amplify, is about reusing flash, not securing it[^27]. Everpure, by contrast, used about US$577M of prepayments for strategic NAND and component purchases in Q2 FY27[^39]. That is the IDM-with-capacity position in a foundry shortage.
+**The NAND shortage cuts against software-only vendors.** TrendForce forecast another 15–20% rise in NAND contract prices for 4Q26[^38]. VAST passes hardware through at cost, so its customers and server partners carry the price spike and the allocation risk. Its response, Amplify, is about reusing flash, not securing it[^27]. Everpure, by contrast, made strategic NAND and component purchases in Q2 FY27 that pushed free cash flow negative; analysts read a ~US$577M rise in prepaid expenses as advance NAND buying (third-party reading, not an Everpure disclosure)[^39] ([Chapter 26](../04-everpure/26-purity-and-directflash.md)). That is the IDM-with-capacity position in a foundry shortage, bought with working capital.
 
 ## How Everpure approaches it vs. competitors
 
@@ -181,10 +181,10 @@ Everpure's answer to drivers 1, 2 and 7 is FlashBlade//EXA. Pure Storage launche
 
 | Vendor and product | Date | Design | What it closes | What it does not (yet) |
 |---|---|---|---|---|
-| Everpure FlashBlade//EXA | Mar 2025[^40] | Metadata core plus direct-path data nodes, standard pNFS | Throughput and metadata scale; audited MLPerf v3.0 lead[^30] | No NVIDIA certification for EXA itself yet ([Chapter 34](../05-ai-storage/34-nvidia-ecosystem.md)); no large neocloud anchor |
-| NetApp AFX | Oct 2025[^41] | Disaggregated ONTAP, optional GPU data node | ONTAP data services at scale-out | GA timing and neocloud references [VERIFY: AFX GA date] |
-| Dell Lightning File System | Mar 2026[^42] | Parallel file system inside Dell AI Data Platform | A "Tier 0" parallel FS sold through Dell's channel | New code with an unproven field record |
-| HPE Alletra MP X10000 | Nov 2024; native file 2026[^43] | Object-first, 16 compute plus 16 storage nodes, 23 PB raw | NVIDIA-certified object at Foundation level | Scale ceiling well below multi-exabyte neocloud pools |
+| Everpure FlashBlade//EXA | Mar 2025[^40] | Metadata core plus direct-path data nodes, standard pNFS | Throughput and metadata scale; peer-reviewed MLPerf v3.0 lead among entrants[^30] | NVIDIA-Certified Storage claimed for EXA in March 2026, but no NCP or SuperPOD certification yet ([Chapter 27](../04-everpure/27-flasharray-and-flashblade.md)); no large neocloud anchor |
+| NetApp AFX | Oct 2025[^41] | Disaggregated ONTAP, optional GPU data node | ONTAP data services at scale-out | Shipping by 2026 (ONTAP 9.18.1 onward, AFX 2K added)[^42], but no neocloud references found [VERIFY: AFX 1K GA date] |
+| Dell Lightning File System | Mar 2026[^43] | Parallel file system inside Dell AI Data Platform | A "Tier 0" parallel FS sold through Dell's channel | New code with an unproven field record |
+| HPE Alletra MP X10000 | Nov 2024; native file 2026[^44] | Object-first, 16 compute plus 16 storage nodes, 23 PB raw | NVIDIA-certified object at Foundation level | Scale ceiling well below multi-exabyte neocloud pools |
 
 *Table 41.3 — By 2026 every major incumbent ships an AI-scale design; the challengers' remaining edge is installed base, NVIDIA intimacy and neocloud references, not architecture.*
 
@@ -206,7 +206,7 @@ timeline
 
 *Figure 41.4 — Challengers built the category from 2018 to 2023; from 2024 the timeline fills with incumbent responses and the contest shifts from architecture to accounts.*
 
-Signals to watch in 2026–2027: whether VAST files for an IPO, which would be the first audited test of the thesis[^35]; whether DDN closes the strategic round it said it wants by year-end[^44]; whether WEKA raises again or becomes an acquisition target; whether neoclouds keep shifting capacity to in-house object stores; and whether any challenger re-enters MLPerf with a KV-cache result.
+Signals to watch in 2026–2027: whether VAST files for an IPO, which would be the first audited test of the thesis[^35]; whether DDN closes the strategic round it said it wants by year-end[^45]; whether WEKA raises again or becomes an acquisition target; whether neoclouds keep shifting capacity to in-house object stores; and whether any challenger re-enters MLPerf with a KV-cache result.
 
 ## Numbers that matter
 
@@ -242,7 +242,7 @@ Signals to watch in 2026–2027: whether VAST files for an IPO, which would be t
 - "VAST's valuation proves its technology is superior." It proves investors expect a dominant share. The audited test is still to come.
 - "NVIDIA picked VAST." NVIDIA invests in and certifies several vendors, and its own clusters run on DDN.
 - "Software-only is always the better model." In a NAND shortage, owning supply wins deals.
-- "They avoid MLPerf because they'd lose." Absence is not evidence either way. Say "their inference claims are not audited."
+- "They avoid MLPerf because they'd lose." Absence is not evidence either way. Say "their inference claims are not independently benchmarked."
 
 ## Going deeper (optional, L3 pointers)
 
@@ -292,7 +292,7 @@ Signals to watch in 2026–2027: whether VAST files for an IPO, which would be t
 [^26]: HPCwire, "VAST Data Expands AI Data Stack, Keeps Eye on North Star," 2026-02-25. https://www.hpcwire.com/2026/02/25/vast-data-expands-ai-data-stack-keeps-eye-on-north-star/ (retrieved 2026-11-01).
 [^27]: Blocks & Files, "VAST Amplify scheme," 2026-01-27. https://blocksandfiles.com/2026/01/27/vast-amplify-scheme/ ; HPCwire/AIwire, "VAST Data Launches VAST Amplify Program to Boost Effective Flash Storage Capacity," 2026-01-28. https://www.hpcwire.com/aiwire/2026/01/28/vast-data-launches-vast-amplify-program-to-boost-effective-flash-storage-capacity/ (retrieved 2026-11-01).
 [^28]: Blocks & Files, "DDN goes hard CORE," 2025-11-18. https://www.blocksandfiles.com/ai-ml/2025/11/18/ddn-goes-hard-core/1718766 ; DDN, "DDN launches AI400X3 and Infinia 2.1 at ISC 2025" (blog), 2025-06. https://www.ddn.com/blog/ddn-launches-ai400x3-and-infinia-2.1-at-isc-2025/ (retrieved 2026-11-01).
-[^29]: Blocks & Files, "HPE stops selling Qumulo, Scality and WEKA software," 2025-11-07. https://www.blocksandfiles.com/file/2025/11/07/hpe-stops-selling-qumulo-scality-and-weka-software/1721655 (retrieved 2026-11-01).
+[^29]: Blocks & Files, "HPE stops selling Qumulo, Scality and WEKA software," 2025-11-07. https://www.blocksandfiles.com/file/2025/11/07/hpe-stops-selling-qumulo-scality-and-weka-software/1721655 (retrieved 2026-11-01). Quoting ended 31 January 2026; orders not accepted from 3 March 2026 (per the article and a Scality statement quoted in follow-up coverage).
 [^30]: Everpure Blog, "Everpure FlashBlade//EXA Tops MLPerf Storage v3.0 Checkpointing and KV cache Benchmarks," 2026-09. https://blog.everpuredata.com/purely-technical/everpure-flashblade-exa-tops-mlperf-storage-v3-benchmarks/ (retrieved 2026-11-01).
 [^31]: Blocks & Files, "Everpure tops SPECstorage Solution 2020 AI IMAGE benchmark charts," 2026-03-13. https://www.blocksandfiles.com/flash/2026/03/13/everpure-tops-specstorage-solution-2020-ai-image-benchmark-charts/5209245 (retrieved 2026-11-01).
 [^32]: IDC, "2Q2026 ESS Tracker" (press release), 2026-09-10. https://www.idc.com/resource-center/press-releases/2q2026-ess-tracker/ ; StorageReview, "IDC External Storage Tracker Q2 2026: $10.3 Billion as Server Market Tops $166 Billion," 2026-09. https://www.storagereview.com/news/idc-external-storage-tracker-q2-2026-10-3-billion-as-server-market-tops-166-billion (retrieved 2026-11-01).
@@ -305,6 +305,7 @@ Signals to watch in 2026–2027: whether VAST files for an IPO, which would be t
 [^39]: Yahoo Finance, "Everpure (P) Grew Revenue 38% but Free Cash Flow Was Negative," 2026-08. https://finance.yahoo.com/markets/stocks/articles/everpure-p-grew-revenue-38-023544268.html (retrieved 2026-11-01).
 [^40]: SiliconANGLE, "FlashBlade//EXA: Pure Storage helps enterprises avoid starving data-hungry GPUs," 2025-03-11. https://siliconangle.com/2025/03/11/flashblade-exa-pure-storage-helps-enterprises-avoid-starving-data-hungry-gpus-accelerate-ai-workloads/ (retrieved 2026-11-01).
 [^41]: Blocks & Files, "NetApp disaggregates ONTAP storage and provides an AI Data Engine," 2025-10-14. https://blocksandfiles.com/2025/10/14/netapp-disaggregates-ontap-storage-and-provides-an-ai-data-engine/ (retrieved 2026-11-01).
-[^42]: Dell Technologies, "Dell AI Data Platform with NVIDIA Supercharges Enterprise AI with Breakthrough Data Orchestration and Storage Innovations" (press release), 2026-03-16. https://www.dell.com/en-us/dt/corporate/newsroom/announcements/detailpage.press-releases~usa~2026~03~dell-ai-data-platform-with-nvidia-supercharges-enterprise-ai-with-breakthrough-data-orchestration-and-storage-innovations.htm (retrieved 2026-11-01).
-[^43]: Blocks & Files, "HPE announces object storage software for Alletra MP," 2024-11-20. https://www.blocksandfiles.com/storage-management/2024/11/20/hpe-announces-object-storage-software-for-alletra-mp/1607549 ; Blocks & Files, "HPE updates Alletras X and B10000, Zerto and Data Fabric in GreenLake private cloud update blast," 2026-05-12. https://www.blocksandfiles.com/file/2026/05/12/hpe-updates-alletras-x-and-b10000-zerto-and-data-fabric-in-greenlake-private-cloud-update-blast/5239011 (retrieved 2026-11-01).
-[^44]: Bloomberg, "AI Data Firm DDN Eyeing a Fresh Funding Round by End of Year," 2026-06-10. https://www.bloomberg.com/news/articles/2026-06-10/ai-data-firm-ddn-eyeing-a-fresh-funding-round-by-end-of-year (retrieved 2026-11-01).
+[^42]: World Wide Technology, "NetApp AFX 2K: What's New in AFX for Scalable AI Storage" (blog), 2026. https://www.wwt.com/blog/netapp-afx-2k-whats-new-in-afx-for-scalable-ai-storage (retrieved 2026-11-01; search extract only).
+[^43]: Dell Technologies, "Dell AI Data Platform with NVIDIA Supercharges Enterprise AI with Breakthrough Data Orchestration and Storage Innovations" (press release), 2026-03-16. https://www.dell.com/en-us/dt/corporate/newsroom/announcements/detailpage.press-releases~usa~2026~03~dell-ai-data-platform-with-nvidia-supercharges-enterprise-ai-with-breakthrough-data-orchestration-and-storage-innovations.htm (retrieved 2026-11-01).
+[^44]: Blocks & Files, "HPE announces object storage software for Alletra MP," 2024-11-20. https://www.blocksandfiles.com/storage-management/2024/11/20/hpe-announces-object-storage-software-for-alletra-mp/1607549 ; Blocks & Files, "HPE updates Alletras X and B10000, Zerto and Data Fabric in GreenLake private cloud update blast," 2026-05-12. https://www.blocksandfiles.com/file/2026/05/12/hpe-updates-alletras-x-and-b10000-zerto-and-data-fabric-in-greenlake-private-cloud-update-blast/5239011 (retrieved 2026-11-01).
+[^45]: Bloomberg, "AI Data Firm DDN Eyeing a Fresh Funding Round by End of Year," 2026-06-10. https://www.bloomberg.com/news/articles/2026-06-10/ai-data-firm-ddn-eyeing-a-fresh-funding-round-by-end-of-year (retrieved 2026-11-01).
