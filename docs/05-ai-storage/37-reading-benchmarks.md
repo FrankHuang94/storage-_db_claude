@@ -1,6 +1,6 @@
 # 37. Reading benchmarks critically
 
-> **Depth:** L2 · **Reading time:** ~10 min · **Last verified:** 2026-11-01
+> **Depth:** L2 · **Reading time:** ~11 min · **Last verified:** 2026-11-01
 > **Prerequisites:** [Performance and economics metrics](../01-storage-fundamentals/04-performance-and-economics-metrics.md) · [Training storage](31-training-storage.md) · [Inference and KV cache](32-inference-and-kv-cache.md) · [FlashArray and FlashBlade](../04-everpure/27-flasharray-and-flashblade.md)
 
 ## TL;DR

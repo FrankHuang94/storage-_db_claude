@@ -1,6 +1,6 @@
 # 35. AI factories and neoclouds
 
-> **Depth:** L2 · **Reading time:** ~9 min · **Last verified:** 2026-11-01
+> **Depth:** L2 · **Reading time:** ~10 min · **Last verified:** 2026-11-01
 > **Prerequisites:** [The GPU data path](../02-protocols-and-networking/11-gpu-data-path.md) · [Consumption models](../03-system-architecture/23-consumption-models.md) · [Training storage](31-training-storage.md) · [NVIDIA's ecosystem and certifications](34-nvidia-ecosystem.md)
 
 ## TL;DR
