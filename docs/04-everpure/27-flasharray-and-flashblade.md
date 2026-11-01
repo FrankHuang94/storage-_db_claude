@@ -176,7 +176,7 @@ Everpure is strongest where one OS stretches across tiers (FlashArray from //ST 
 
 The portfolio grew by forking, not acquiring (Figure 27.1), and the forks track the NAND roadmap: QLC density made //C and //E viable, and the 75 → 150 → 300 TB DFM progression ([Chapter 26](26-purity-and-directflash.md)) lets the capacity tiers compete with disk.
 
-Signals for 2026–2027: in March 2026 Everpure said it was extending NVIDIA-Certified Storage validation to EXA, a step toward the NCP level that Blocks & Files reported for "later this year"[^41]. Neither an EXA entry on NVIDIA's certified-storage list nor an NCP certification had been found by 2026-11-01, and aligned EXA with NVIDIA's BlueField-4 STX reference architecture[^42]. PureKVA and always-on DeepReduce were announced on 30 September 2026[^18]. The first enterprise EXA customer was reported in Q4 FY26[^43]. Watch for three things: DFM data-node GA, NCP and SuperPOD badges for EXA, and an MLPerf v4.0 round that VAST, WEKA or DDN actually enter.
+Signals for 2026–2027: in March 2026 Everpure said it was extending NVIDIA-Certified Storage validation to EXA, a step toward the NCP level that Blocks & Files reported for "later this year"[^41], and aligned EXA with NVIDIA's BlueField-4 STX reference architecture[^42]. Neither an EXA entry on NVIDIA's certified-storage list nor an NCP certification had been found by 2026-11-01. PureKVA and always-on DeepReduce were announced on 30 September 2026[^18]. The first enterprise EXA customer was reported in Q4 FY26[^43]. Watch for three things: DFM data-node GA, NCP and SuperPOD badges for EXA, and an MLPerf v4.0 round that VAST, WEKA or DDN actually enter.
 
 ## Numbers that matter
 

@@ -154,7 +154,7 @@ timeline
 
 *Figure 2.6 — Flash capacity per device overtook disk by roughly 5× in 2026, while HDD's new technology, HAMR, is only now reaching volume.*
 
-Pre-2020 milestones are background knowledge [VERIFY: background dates for RAMAC, Toshiba NAND and Samsung V-NAND]. Looking forward: Layer roadmaps target ~500 layers, though vendor timelines conflict[^26]. PLC remains research[^21]. HDD capacity roadmaps (WD: 100 TB by 2029) depend on HAMR ramping on schedule[^30]. Meanwhile the 2026 price shock is a supply-discipline event, not a physics event. AI servers absorbed bits, and TrendForce reported most new supply already committed[^3]. Its length matters for 2027 pricing.
+The RAMAC date is from the Computer History Museum[^40]; Toshiba's NAND paper (Masuoka et al., IEDM 1987) and Samsung's 24-layer V-NAND (2013) are standard history, and the 2016–2022 layer points in Figure 2.4 are background only. Looking forward: Layer roadmaps target ~500 layers, though vendor timelines conflict[^26]. PLC remains research[^21]. HDD capacity roadmaps (WD: 100 TB by 2029) depend on HAMR ramping on schedule[^30]. Meanwhile the 2026 price shock is a supply-discipline event, not a physics event. AI servers absorbed bits, and TrendForce reported most new supply already committed[^3]. Its length matters for 2027 pricing.
 
 ## Numbers that matter
 
@@ -252,3 +252,4 @@ Pre-2020 milestones are background knowledge [VERIFY: background dates for RAMAC
 [^37]: Pure Storage, "Hyperscaler," n.d. https://purestorage.com/pure-advantage/platform/hyperscaler.html (retrieved 2026-11-01).
 [^38]: VAST Data Knowledge Base, "DBox DF-3015V2/DF-3060V2 Ceres Datasheet," n.d. https://kb.vastdata.com/docs/dbox-df-3015v2df-3060v2-ceres-datasheet (retrieved 2026-11-01).
 [^39]: Blocks & Files, "Pure qualifies Micron's 276-layer flash," 2025-01-08. https://blocksandfiles.com/2025/01/08/pure-qualifies-microns-276-layer-flash/ (retrieved 2026-11-01); Blocks & Files, "Kioxia 2 terabit NAND," 2024-07-03. https://blocksandfiles.com/2024/07/03/kioxia-2-terabit-nand/ (retrieved 2026-11-01).
+[^40]: Computer History Museum, "1956: First commercial hard disk drive shipped," n.d. https://www.computerhistory.org/storageengine/first-commercial-hard-disk-drive-shipped/ (retrieved 2026-11-01).

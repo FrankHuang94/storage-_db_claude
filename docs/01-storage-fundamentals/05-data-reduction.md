@@ -212,7 +212,7 @@ timeline
 
 *Figure 5.5 — Reduction moved from backup (2000s) to primary flash (2010s) to unstructured and AI data (2020s), and the guarantees followed it.*
 
-Deduplication grew up in backup, where Data Domain showed it could run at disk speed[^5]; flash's raw $/TB then made it a primary-storage feature. Guarantees followed in 2016 from Pure Storage[^30] and NetApp[^31]. Pure bought StorReduce in 2018 for US$20.5 million in cash, net of cash acquired, to bring deduplication to cloud object storage[^32]. VAST launched in 2019 with similarity reduction[^33]. WEKA added post-process similarity reduction in its 4.2 release in 2023[^16] and kept it in NeuralMesh 6, launched in July 2026[^34]. In 2026 Everpure followed on unstructured and AI data with DeepReduce on FlashBlade[^13]. Next is format awareness: codecs that understand tensors, token streams and KV-cache blocks[^20].
+Deduplication grew up in backup, where Data Domain showed it could run at disk speed[^5]; flash's raw $/TB then made it a primary-storage feature. Guarantees followed in 2016 from Pure Storage[^30] and NetApp[^31]. Pure bought StorReduce in 2018 for US$20.5 million in cash, net of cash acquired, to bring deduplication to cloud object storage[^32]. VAST launched in 2019 with similarity reduction[^33]. WEKA added post-process similarity reduction in its 4.2 release in 2023[^16] and featured data reduction again in NeuralMesh 6, launched in July 2026[^34]. In 2026 Everpure followed on unstructured and AI data with DeepReduce on FlashBlade[^13]. Next is format awareness: codecs that understand tensors, token streams and KV-cache blocks[^20].
 
 ## Numbers that matter
 
