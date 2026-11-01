@@ -1,0 +1,6 @@
+label,submitter,model,deployment,config_note,checkpoint_write_gib_s,source,as_of
+"Everpure FlashBlade//EXA, 30 data nodes",Everpure,Llama 3 1T-class,on-premises,"30 metadata blades (120 DFMs) + 30 Linux/NVMe data nodes, ~866 TB usable",877.52,"Everpure release via HPCwire 2026-09-02; StorageReview 2026-09 (vendor-submitted MLPerf Storage v3.0 result)",2026-11-01
+"Azure Managed Lustre, 4,096 TiB",Azure,Llama 3 1T-class,cloud service,"4,096 TiB provisioned file system, 128 clients",642.2,"Microsoft Learn, Azure Managed Lustre MLPerf Storage v3.0 results; StorageReview 2026-09",2026-11-01
+"Everpure FlashBlade//EXA, 10 data nodes",Everpure,Llama 3 1T-class,on-premises,"same design, 10 data nodes",327.65,"Everpure release via HPCwire 2026-09-02; StorageReview 2026-09",2026-11-01
+"Alluxio on Amazon S3",Alluxio,Llama 3 405B,cloud (cache over S3),"distributed cache in front of S3; node count not captured",147.03,"Alluxio blog 2026-09 (search summary only)",2026-11-01
+"NVIDIA AIStore, 12 nodes",NVIDIA,Llama 3 1T,cloud bare metal,"12 AIStore nodes, 16 checkpoint clients; ~95% of nominal NIC bandwidth",133.27,"NVIDIA AIStore blog 2026-09-01; StorageReview 2026-09 (133.3)",2026-11-01
