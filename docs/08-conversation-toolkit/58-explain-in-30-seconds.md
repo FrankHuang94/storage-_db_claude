@@ -229,15 +229,15 @@ The pitch has had three versions: flash at disk-like effective prices at the Oct
 
 **Three questions for a PM**
 
-1. *"Explain your product to our CFO in one sentence."* Strong: buyer, problem, number.
-2. *"Which board question worries you most?"* Strong: names a real gap.
+1. *"Explain your product to our CFO in one sentence."* Strong: buyer, problem and one dated number, with no adjectives.
+2. *"Which board question worries you most?"* Strong: names a real gap, such as EXA's pending NCP certification, and the plan.
 3. *"Which number belongs on one slide?"* Strong: a customer outcome, not a peak benchmark.
 
 **Three questions for an engineer**
 
 1. *"What do skeptics get wrong about DirectFlash?"* Strong: system-level, not datasheet, gains.
 2. *"Where does my disaggregation one-liner break?"* Strong: fabric and minimum size.
-3. *"Is the KV-cache opportunity storage or memory?"* Strong: only idle cache leaves GPU memory.
+3. *"Is the KV-cache opportunity storage or memory?"* Strong: only cache not being decoded can leave GPU memory, so it is a bandwidth tier.
 
 **Don't say this:**
 
