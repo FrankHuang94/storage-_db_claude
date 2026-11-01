@@ -924,3 +924,336 @@ MinIO 大幅削减了免费版功能，并于 2026 年 4 月将其代码仓库�
 
 *图 59.15 — 第 7 部分 — 历史与未来：3 章共 16 张卡片（5 张 L1、11 张 L2），编号 Q250–Q265；可按卡片编号分章记录答错的题目。*
 
+<details>
+<summary><strong>Q250.</strong> 说出存储历史的六个时代。</summary>
+
+专属磁盘、阵列与网络、横向扩展与云、闪存、软件定义，以及 AI。每个时代都围绕当时最昂贵的资源来组织。（[第 51 章](../07-history-and-future/51-history-of-storage.md)）
+
+</details>
+
+<details>
+<summary><strong>Q251.</strong> 磁盘成本下降了多少？</summary>
+
+从约 US$10,000/MB（IBM RAMAC，1956 年）降至 US$0.014/GB（2022 年），年均下降约 26%。2026 年，磁盘和闪存的成本曲线都在上行。（[第 51 章](../07-history-and-future/51-history-of-storage.md)）
+
+</details>
+
+<details>
+<summary><strong>Q252.</strong> (L2) 为什么 Pure Storage 活了下来，而 Violin 失败了？</summary>
+
+Pure Storage 卖的是数据缩减和一种商业模式，因此由软件获取了闪存的经济收益。Violin 卖的是速度，最终申请了 Chapter 11 破产保护。（[第 51 章](../07-history-and-future/51-history-of-storage.md)）
+
+</details>
+
+<details>
+<summary><strong>Q253.</strong> (L2) 存储业的在位者通常如何退场？</summary>
+
+很少是消亡：它们通过收购进入新浪潮，然后自己被收购。EMC 收购了 Isilon 和 XtremIO，之后于 2016 年被 Dell 以约 US$67B 收购。（[第 51 章](../07-history-and-future/51-history-of-storage.md)）
+
+</details>
+
+<details>
+<summary><strong>Q254.</strong> (L2) 什么是"架构钟摆"？</summary>
+
+存储在集中式与分布式设计之间来回摆动；每当通用 CPU 和网络追上专有控制器时，软件定义浪潮就会再次出现。AI 时代的分解式架构是最新一次摆动，而不是最后一次。（[第 51 章](../07-history-and-future/51-history-of-storage.md)）
+
+</details>
+
+<details>
+<summary><strong>Q255.</strong> 什么是 SLED？</summary>
+
+单一大型昂贵磁盘（single large expensive disk），是 1988 年 RAID 论文的对照对象；该论文认为由廉价 PC 磁盘组成的阵列可以胜过它。（[第 51 章](../07-history-and-future/51-history-of-storage.md)）
+
+</details>
+
+<details>
+<summary><strong>Q256.</strong> (L2) 谁为闪存的学习曲线买了单？</summary>
+
+消费者：从 2000 年代中期起，音乐播放器和手机为 NAND 的规模化提供了资金。NAND 价格从 2005 年的 ~$45/GB 降至 2023 年谷底的 ~2¢/GB，年均降幅约 35%。（[第 52 章](../07-history-and-future/52-history-of-flash.md)）
+
+</details>
+
+<details>
+<summary><strong>Q257.</strong> (L2) 每单元每增加一个比特，每比特成本下降了多少？</summary>
+
+SLC 到 MLC 下降 50%，MLC 到 TLC 下降 33%，TLC 到 QLC 下降 25%。这种边际收益递减，使降本杠杆在 Samsung 于 2013 年推出 24 层 V-NAND 之后转移到了 3D 层数上。（[第 52 章](../07-history-and-future/52-history-of-flash.md)）
+
+</details>
+
+<details>
+<summary><strong>Q258.</strong> (L2) 闪存在 $/TB 上是否曾胜过近线磁盘？</summary>
+
+没有。它在大约 2011 年至 2015 年间，在有效 $/GB 上胜过了性能型磁盘（15K/10K RPM），因为在线数据缩减在闪存上成本低，在磁盘上成本高。（[第 52 章](../07-history-and-future/52-history-of-flash.md)）
+
+</details>
+
+<details>
+<summary><strong>Q259.</strong> (L2) 为什么 NAND 的周期比 DRAM 更剧烈？</summary>
+
+DRAM 通过破产整合为三家，占据约 ~88% 的收入。NAND 则通过易主（Solidigm、Kioxia、Sandisk）完成整合，至今仍有五家大型供应商。（[第 52 章](../07-history-and-future/52-history-of-flash.md)）
+
+</details>
+
+<details>
+<summary><strong>Q260.</strong> 对比 NOR 闪存与 NAND 闪存。</summary>
+
+NOR 将存储单元并联，以实现快速随机读取；NAND 将存储单元串联，密度更高、每比特成本更低。（[第 52 章](../07-history-and-future/52-history-of-flash.md)）
+
+</details>
+
+<details>
+<summary><strong>Q261.</strong> (L2) 最确定的趋势是什么？Everpure 的主要杠杆是什么？</summary>
+
+单设备容量：DFM 达 300 TB，标准 SSD 达 245.76 TB，512 TB 的硬盘已列入 2027 年路线图。稀缺的资源是重建时间、NAND 供应和电力，而不是盘位。（[第 53 章](../07-history-and-future/53-future-trends.md)）
+
+</details>
+
+<details>
+<summary><strong>Q262.</strong> (L2) 磁盘会在这十年内消亡吗？</summary>
+
+不会。HAMR 将在约 2029 年前把近线硬盘从 44 TB 推向 100 TB；闪存拿下性能型和受电力约束的 AI 容量，磁盘则保留冷数据大容量存储。（[第 53 章](../07-history-and-future/53-future-trends.md)）
+
+</details>
+
+<details>
+<summary><strong>Q263.</strong> 什么是上下文内存（context memory）？</summary>
+
+介于 GPU 内存与共享存储之间、存放推理 KV 缓存的存储层；自 2H 2026 起，借助 NVIDIA 的 KVBM 和 BlueField-4 STX/CMX，它成为一个可采购的品类。（[第 53 章](../07-history-and-future/53-future-trends.md)）
+
+</details>
+
+<details>
+<summary><strong>Q264.</strong> (L2) 哪些未来趋势需要校准预期？</summary>
+
+CXL 内存池化（Azure 的研究显示可节省约 ~7% 的 DRAM）、存储中的共封装光学（CPO）以及 PLC 闪存都是真实的，但来得比厂商演示文稿暗示的更晚、规模更小。DNA 和玻璃归档仍处于商业化之前。（[第 53 章](../07-history-and-future/53-future-trends.md)）
+
+</details>
+
+<details>
+<summary><strong>Q265.</strong> (L2) 为什么 1 PB 的模块会引出重建问题？</summary>
+
+以 20 GB/s 计，重建需要约 ~13.9 小时，而 300 TB 模块约为 ~4.2 小时，这拉长了暴露于第二次故障的时间窗口。（[第 53 章](../07-history-and-future/53-future-trends.md)）
+
+</details>
+
+### 战略综合题
+
+战略卡片把不同部分的事实结合起来。它们没有唯一正确的标准句；高质量回答应点出机制、给出一个数字，并说明业务后果。把这些放在最后做，并且要大声说出来。
+
+| 所依据的章节 | 引用该章的战略卡片数 | 卡片编号 |
+|---|---|---|
+| [第 3 章](../01-storage-fundamentals/03-inside-an-ssd.md) | 1 | Q268 |
+| [第 4 章](../01-storage-fundamentals/04-performance-and-economics-metrics.md) | 1 | Q274 |
+| [第 11 章](../02-protocols-and-networking/11-gpu-data-path.md) | 1 | Q269 |
+| [第 12 章](../02-protocols-and-networking/12-interfaces-and-emerging-tech.md) | 1 | Q268 |
+| [第 22 章](../03-system-architecture/22-control-planes.md) | 1 | Q276 |
+| [第 23 章](../03-system-architecture/23-consumption-models.md) | 1 | Q275 |
+| [第 25 章](../04-everpure/25-company-history-and-strategy.md) | 1 | Q278 |
+| [第 26 章](../04-everpure/26-purity-and-directflash.md) | 2 | Q267, Q268 |
+| [第 27 章](../04-everpure/27-flasharray-and-flashblade.md) | 2 | Q270, Q277 |
+| [第 28 章](../04-everpure/28-platform-and-software.md) | 1 | Q279 |
+| [第 29 章](../04-everpure/29-hyperscaler-ecosystem-financials.md) | 4 | Q266, Q267, Q275, Q278 |
+| [第 31 章](../05-ai-storage/31-training-storage.md) | 1 | Q269 |
+| [第 32 章](../05-ai-storage/32-inference-and-kv-cache.md) | 1 | Q269 |
+| [第 33 章](../05-ai-storage/33-rag-vector-lakehouse.md) | 1 | Q272 |
+| [第 34 章](../05-ai-storage/34-nvidia-ecosystem.md) | 1 | Q271 |
+| [第 35 章](../05-ai-storage/35-ai-factories-and-neoclouds.md) | 1 | Q273 |
+| [第 37 章](../05-ai-storage/37-reading-benchmarks.md) | 1 | Q270 |
+| [第 38 章](../05-ai-storage/38-power-and-density.md) | 1 | Q274 |
+| [第 39 章](../05-ai-storage/39-agentic-ai-and-data-intelligence.md) | 2 | Q272, Q279 |
+| [第 40 章](../06-industry-and-competition/40-market-structure.md) | 2 | Q266, Q278 |
+| [第 41 章](../06-industry-and-competition/41-why-ai-native-vendors-won.md) | 1 | Q273 |
+| [第 43 章](../06-industry-and-competition/43-weka.md) | 1 | Q277 |
+| [第 47 章](../06-industry-and-competition/47-other-challengers.md) | 1 | Q276 |
+| [第 48 章](../06-industry-and-competition/48-media-suppliers-and-nand-cycle.md) | 1 | Q266 |
+| [第 53 章](../07-history-and-future/53-future-trends.md) | 1 | Q272 |
+
+*图 59.16 — 14 张战略卡片引用了 25 个章节；大多数卡片结合了不止一个部分的事实，因此最能检验各个思维模型是否已融会贯通。*
+
+<details>
+<summary><strong>Q266.</strong> (L2) 为什么 Everpure 2026 年的收入增长可能被美化，而利润率却被低估？</summary>
+
+NAND 成本传导推高了收入（2Q26 阵列市场增长 33.6%，主要来自价格），而产品毛利率滞后于投入成本（Q2 FY27 非 GAAP 为 66.2%）。应结合成本传导的滞后，把增长和利润率放在一起看。（[第 40 章](../06-industry-and-competition/40-market-structure.md)、[第 29 章](../04-everpure/29-hyperscaler-ecosystem-financials.md)、[第 48 章](../06-industry-and-competition/48-media-suppliers-and-nand-cycle.md)）
+
+</details>
+
+<details>
+<summary><strong>Q267.</strong> (L2) 把 DirectFlash 与 Everpure 的三条收入来源联系起来。</summary>
+
+它让阵列密度更高（产品）；让 Evergreen 能够原地换代（订阅）；它也是授权给 Meta 和第二家超大规模云厂商、不涉及 NAND 的 IP（超大规模业务）。（[第 26 章](../04-everpure/26-purity-and-directflash.md)、[第 29 章](../04-everpure/29-hyperscaler-ecosystem-financials.md)）
+
+</details>
+
+<details>
+<summary><strong>Q268.</strong> (L2) 为什么"谁来运行 FTL"是一个战略问题，而不仅是工程问题？</summary>
+
+掌握 FTL 可以消除重复的垃圾回收、映射 DRAM 和备用闪存，使模块容量更大，IP 也可对外授权。但这也意味着每一代 NAND 都要自己认证；FDP 则是通用闪存的反制手段。（[第 3 章](../01-storage-fundamentals/03-inside-an-ssd.md)、[第 12 章](../02-protocols-and-networking/12-interfaces-and-emerging-tech.md)、[第 26 章](../04-everpure/26-purity-and-directflash.md)）
+
+</details>
+
+<details>
+<summary><strong>Q269.</strong> (L2) 在 AI 交易中，哪三个存储时刻比训练数据读取更重要？</summary>
+
+检查点写入、故障后的恢复，以及推理时的 KV 缓存拉取。文本训练读取在整个集群范围内也只有 MB/s 量级。（[第 11 章](../02-protocols-and-networking/11-gpu-data-path.md)、[第 31 章](../05-ai-storage/31-training-storage.md)、[第 32 章](../05-ai-storage/32-inference-and-kv-cache.md)）
+
+</details>
+
+<details>
+<summary><strong>Q270.</strong> (L2) 你会如何对任何厂商（包括 Everpure）的"基准测试第一"说法进行压力测试？</summary>
+
+问清提交了多少硬件；按买方所需容量点，以每机架单元、每 kW 或每美元做归一化；再核实谁没有参赛。Everpure 在 MLPerf v3.0 中的领先，取得于 VAST、WEKA 和 DDN 缺席的一轮。（[第 37 章](../05-ai-storage/37-reading-benchmarks.md)、[第 27 章](../04-everpure/27-flasharray-and-flashblade.md)）
+
+</details>
+
+<details>
+<summary><strong>Q271.</strong> (L2) 为什么 NVIDIA 认证不能作为 AI 存储评估的终点？</summary>
+
+它只是证明互操作性和最低吞吐量的底线，B200 enhanced 级别要求每块 GPU 不到 0.5 GB/s。它对价格、数据缩减、运维或故障行为只字未提，而且 NVIDIA 持有部分认证厂商的股权。（[第 34 章](../05-ai-storage/34-nvidia-ecosystem.md)）
+
+</details>
+
+<details>
+<summary><strong>Q272.</strong> (L2) 随着数据路径商品化，控制点正在向哪里转移？</summary>
+
+向上转移到数据服务（目录、治理、向量搜索、策略控制平面），向下转移到网络结构（DPU、Ultra Ethernet、S3 over RDMA）。（[第 53 章](../07-history-and-future/53-future-trends.md)、[第 33 章](../05-ai-storage/33-rag-vector-lakehouse.md)、[第 39 章](../05-ai-storage/39-agentic-ai-and-data-intelligence.md)）
+
+</details>
+
+<details>
+<summary><strong>Q273.</strong> (L2) 为什么 neocloud 交易所看重的优势与企业交易不同？</summary>
+
+neocloud 要加价转售存储，而存储又可能让所有 GPU 闲置，因此多租户、API 配置、可靠性、部署速度和与 NVIDIA 的契合度比价格和企业级功能更重要。正是这种契合，让 AI 原生厂商率先在这里胜出。（[第 35 章](../05-ai-storage/35-ai-factories-and-neoclouds.md)、[第 41 章](../06-industry-and-competition/41-why-ai-native-vendors-won.md)）
+
+</details>
+
+<details>
+<summary><strong>Q274.</strong> (L2) 对"闪存比磁盘便宜吗？"的诚实回答是什么？</summary>
+
+2026 年按采购价算并不便宜（企业级 SSD 对近线 HDD，每 TB 约 ~18.6×）。闪存胜在性能、密度和运维；其节电收益很少能抵消溢价，主要只在必须满足每 TB 带宽要求或能以超大规模云厂商成本采购 NAND 的场景下才行。（[第 4 章](../01-storage-fundamentals/04-performance-and-economics-metrics.md)、[第 38 章](../05-ai-storage/38-power-and-density.md)）
+
+</details>
+
+<details>
+<summary><strong>Q275.</strong> (L2) 应结合哪些指标来解读 Everpure 公布的增长？</summary>
+
+订阅 ARR（$2.13B）、RPO（$4.1B）和 STaaS TCV——随着按期确认收入的业务占比提升，这些指标会上升，同时压低报告的产品增长；此外还有订阅净美元留存率（FY26 为 113%）和自由现金流。（[第 23 章](../03-system-architecture/23-consumption-models.md)、[第 29 章](../04-everpure/29-hyperscaler-ecosystem-financials.md)）
+
+</details>
+
+<details>
+<summary><strong>Q276.</strong> (L2) 为什么 Hammerspace 的威胁比其体量所显示的更大？</summary>
+
+一个凌驾于所有阵列之上的命名空间，加上 Tier 0 GPU 本地 NVMe，可能让阵列变得可以互相替代，并把控制点从阵列厂商的控制平面上移走。（[第 47 章](../06-industry-and-competition/47-other-challengers.md)、[第 22 章](../03-system-architecture/22-control-planes.md)）
+
+</details>
+
+<details>
+<summary><strong>Q277.</strong> (L2) FlashBlade//EXA 与 WEKA 最明显的区别是什么？</summary>
+
+标准 pNFS 客户端和基于 DirectFlash 的元数据核心，对比 WEKA 可运行在任意硬件上的专有客户端；此外还有 WEKA 在 KV 缓存上的先发优势（Augmented Memory Grid）对比 PureKVA。（[第 43 章](../06-industry-and-competition/43-weka.md)、[第 27 章](../04-everpure/27-flasharray-and-flashblade.md)）
+
+</details>
+
+<details>
+<summary><strong>Q278.</strong> 哪三个数字最能勾勒 Everpure 在 2026 年末的规模？</summary>
+
+FY2027 收入指引 $5.03–5.07B、2Q26 外部存储份额 8.1%（第 4 名），以及 $2.13B 的订阅 ARR。（[第 25 章](../04-everpure/25-company-history-and-strategy.md)、[第 40 章](../06-industry-and-competition/40-market-structure.md)、[第 29 章](../04-everpure/29-hyperscaler-ecosystem-financials.md)）
+
+</details>
+
+<details>
+<summary><strong>Q279.</strong> (L2) 为什么战略团队可能认为 1touch 交易的价值超出其价格？</summary>
+
+智能体把元数据变成了产品，而对不在 Everpure 阵列上的数据进行分类，是存储厂商通过中立性检验的唯一途径。（[第 39 章](../05-ai-storage/39-agentic-ai-and-data-intelligence.md)、[第 28 章](../04-everpure/28-platform-and-software.md)）
+
+</details>
+
+## Everpure 的做法与竞争对手对比
+
+可把本节当作对比类卡片的答案要点。同一主题通常既有 Everpure 的立场，也有最强的反驳，可信的回答应两者兼顾。
+
+| 主题 | Everpure 立场 | 竞争对手最强反驳 | 卡片 |
+|---|---|---|---|
+| 闪存管理 | 在裸 NAND DirectFlash Module 上运行一个全局 FTL | FDP SSD 和超大规模云厂商自研设计在通用硬盘上缩小差距 | Q18, Q74, Q134, Q137 |
+| AI 规模文件存储 | FlashBlade//EXA：元数据核心加 pNFS 直达数据节点，标准客户端 | VAST DASE 拥有 10,000+ GPU 级参考客户；WEKA 的专有客户端可在任意环境运行；DDN Lustre 部署在 NVIDIA 内部 | Q92, Q142, Q231, Q232 |
+| 基准测试 | MLPerf Storage v3.0 检查点和 KV 缓存成绩第一 | 最强的对手没有参加那一轮 | Q143, Q198 |
+| 与 NVIDIA 的契合 | FlashBlade//S 已全面认证；EXA 的 NCP 认证待定；STX 合作伙伴 | NVIDIA 持有 VAST 和 WEKA 的股权，并在 DDN 上运行自有集群 | Q144, Q183, Q184 |
+| 商业模式 | 自 2015 年起基于无状态控制器的 Evergreen 订阅 | Dell、NetApp 和 HPE 如今已提供同等合同条款 | Q129, Q81, Q123 |
+| 数据智能 | 基于 1touch 的 Data Intelligence，自 2026 年起 | 目录和数据安全厂商能看到所有厂商的存储 | Q149, Q206, Q279 |
+
+*图 59.17 — 六个反复出现的主题上 Everpure 的立场与最强版本的反驳（steelman），以及检验各主题的卡片。*
+
+## 历史与发展轨迹
+
+本卡组反映的是本图谱截至 2026-11-01 最后核实时的状态，各张卡片过时的速度不同。物理与协议类卡片（NAND 磨损、Little 定律、pNFS 布局、法定人数计算）可以多年不变。产品类卡片（DFM 容量、EXA 认证状态、WEKA 的命名）随每次发布而变化。财务与市场类卡片（ARR、RPO、IDC 份额、NAND 合约价、私募估值）每个季度都会变，基准测试类卡片则随每一轮 MLPerf 而变。
+
+| 卡片类型 | 示例 | 变化频率 | 更新触发事件 |
+|---|---|---|---|
+| 物理与协议 | NAND 磨损、Little 定律、pNFS 布局、法定人数 | 几乎不变 | 图谱新版本 |
+| 架构瓶颈 | DASE 最小规模、重建窗口、元数据上限 | 随产品换代 | 厂商重大发布 |
+| 产品与认证 | DFM 容量、EXA 认证、WEKA 命名 | 每次发布 | 厂商发布或 NVIDIA 计划更新 |
+| 财务与份额 | ARR、RPO、毛利率、IDC 份额 | 每个季度 | 财报发布、IDC 跟踪报告 |
+| 基准测试与私募估值 | MLPerf 成绩、VAST 和 WEKA 融资轮次 | 每轮测试或每次融资 | MLPerf 新一轮、融资新闻 |
+
+*图 59.18 — 卡片过时的速度各不相同；最后两行需要每个季度重新核对。*
+
+一条实用规则：每次 Everpure 发布财报、IDC 发布季度跟踪报告、MLPerf Storage 完成新一轮测试之后，都要对照更新后的章节重新核实引用这些来源的卡片，并淘汰已被取代的内容。当本图谱新增或重写某一章时，应根据新的要点速览（TL;DR）和"关键数字"表重新生成该部分的卡片，而不是逐张修改。
+
+## 关键数字
+
+| 指标 | 数值 | 背景 | 来源 / 日期 |
+|---|---|---|---|
+| 闪卡总数 | 279 | Q1–Q279，连续编号 | 本章，2026-11-01 |
+| L1（定义）卡片 | 111 (40%) | 题目行中不加标签 | 本章，2026-11-01 |
+| L2（机制 / 权衡）卡片 | 168 (60%) | 标注"(L2)" | 本章，2026-11-01 |
+| 第 1 部分 — 存储基础 卡片 | 37 | 17 L1 / 20 L2，Q1–Q37 | 本章，2026-11-01 |
+| 第 2 部分 — 协议与网络 卡片 | 37 | 17 L1 / 20 L2，Q38–Q74 | 本章，2026-11-01 |
+| 第 3 部分 — 系统架构 卡片 | 52 | 22 L1 / 30 L2，Q75–Q126 | 本章，2026-11-01 |
+| 第 4 部分 — Everpure 卡片 | 31 | 14 L1 / 17 L2，Q127–Q157 | 本章，2026-11-01 |
+| 第 5 部分 — AI 存储 卡片 | 50 | 19 L1 / 31 L2，Q158–Q207 | 本章，2026-11-01 |
+| 第 6 部分 — 行业与竞争 卡片 | 42 | 16 L1 / 26 L2，Q208–Q249 | 本章，2026-11-01 |
+| 第 7 部分 — 历史与未来 卡片 | 16 | 5 L1 / 11 L2，Q250–Q265 | 本章，2026-11-01 |
+| 战略综合题卡片 | 14 | 1 L1 / 13 L2，Q266–Q279 | 本章，2026-11-01 |
+| 至少有一张卡片的章节 | 53 | 第 1–7 部分的每一章，唯独第 54 章（战略选项图）除外——该章在卡组完成之后才写成，目前尚无卡片 | 本章，2026-11-01 |
+
+## 对话手册
+
+**借助本卡组，向产品经理提的 3 个问题**
+
+1. *"哪个 Evergreen 层级增长最快？这在 ARR 与报告的产品收入上分别如何体现？"* 高质量回答会区分 //Forever、//Flex 和 //One，解释按期确认收入的 STaaS 占比上升会压低报告增长、同时推高 ARR、RPO 和 TCV，并能主动说出最新数字（Q147、Q122、Q154）。
+2. *"FlashBlade//EXA 目前在哪些场景胜出？怎样才能补上参考客户的缺口？"* 高质量回答会提到经同行评审的基准测试吞吐量、标准客户端和现有客户关系，然后坦承仍缺少 10,000-GPU 参考客户、NCP 认证和公有云版 EXA（Q142、Q144、Q232、Q233）。
+3. *"Fusion 的采用进展如何？它是否提高了转换成本？"* 高质量回答会给出 >1,200 家客户这一数字，指出它还不到客户总数的十分之一，并解释为什么预设和自动化流程的生命周期比硬件换代更长（Q146）。
+
+**借助本卡组，向工程师提的 3 个问题**
+
+1. *"请带我走一遍 FlashArray 上一次 4 KB 写入从主机到 NAND 的全过程。"* 高质量回答会依次讲到在机箱共享 NVRAM 中完成确认、日志结构写入、在线数据缩减和全局 FTL，且不存在每块盘各自的垃圾回收（Q79、Q133、Q134）。
+2. *"一块 300 TB 的 DFM 重建需要多长时间？是什么让二次故障窗口保持在可接受范围内？"* 高质量回答会用容量除以重建带宽来计算，对比单一热备盘重建与分散式（declustered）重建，并提出 1 PB 模块的问题（Q33、Q32、Q265）。
+3. *"KV 缓存位于层级结构的哪一层？什么时候拉取比重算更划算？"* 高质量回答会说出 G1–G4 和 G3.5，使用约 ~2–5 GB/s 每 GPU 的盈亏平衡点，并解释为什么只有不在解码中的 KV 才能离开 HBM（Q170、Q171、Q172）。
+
+**不要这样说**：
+
+- "现在闪存比磁盘便宜了。"按 2026 年的采购价并非如此（Q12、Q274）。
+- "我们是 MLPerf 第一，没有之一。"应说是参赛者中第一，而且那一轮 VAST、WEKA 和 DDN 都没有参加（Q143、Q198）。
+- "NVIDIA 认证证明我们是最快的。"认证只是底线（Q183）。
+- "持久性有十一个九，所以不可能丢数据。"持久性的"几个九"是模型推算出来的（Q111）。
+- "DirectFlash 不过是一块大 SSD。"它去掉了硬盘自身的 FTL，在 Purity 中运行一个全局 FTL（Q134、Q135）。
+- "AI 存储就是给训练喂数据。"决定规格的是检查点、恢复和 KV 缓存（Q163、Q269）。
+
+## 深入阅读（可选，L3 指引）
+
+- 自建卡组：把问答对导出到任意间隔重复应用中；在本章的当前版本内，卡片编号保持稳定。
+- 想加大回忆难度，可以先遮住答案，把 L2 回答画成白板草图，再对照章节中的图表核对。
+- 本章可与[问题库](57-question-bank.md)（要*提出*的问题）和[速查表](60-cheat-sheets.md)（单页摘要）配合使用；卡片中出现但未定义的术语，请查阅[术语表](../glossary.md)。
+
+## 关键术语
+
+- **间隔重复**（spaced repetition）— 以逐渐拉长的间隔复习材料，时间点恰好安排在即将遗忘之前。
+- **莱特纳盒**（Leitner box）— 一种纸质间隔重复系统：答对的卡片移入复习频率更低的盒子，答错的卡片退回 1 号盒。
+- **主动回忆**（active recall）— 先凭记忆给出答案再核对，而不是反复重读。
+- **交错练习**（interleaving）— 在一次复习中混合多个主题，而不是一次只集中练一个主题。
+- **L1 / L2 卡片** — 词汇卡与机制及权衡卡之分，对应本图谱的深度标签。
+- 卡片中用到的所有存储术语，请参见[术语表](../glossary.md)。
+
+## 资料来源
+
+所有答案均出自所链接的本图谱各章。本章未引用任何外部来源；每张卡片所链接的章节载有其所用数据的原始脚注。
