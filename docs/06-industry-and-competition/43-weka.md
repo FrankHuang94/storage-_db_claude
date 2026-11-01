@@ -5,50 +5,50 @@
 
 ## TL;DR
 
-- **WEKA sells software, not boxes.** Its product is a parallel, shared-nothing file system for NVMe flash. It began as WekaFS, was re-architected and renamed NeuralMesh in June 2025, and NeuralMesh 6 was announced in July 2026. It runs on commodity servers, on the GPU servers themselves, or in AWS, Azure, Google Cloud and OCI. Its technical signature is a user-space, kernel-bypass data path and metadata sharded across every node.
-- **It was first to turn KV-cache offload into a product.** Augmented Memory Grid (AMG) was unveiled at GTC in March 2025 and became commercially available on 2025-11-18, with Oracle Cloud Infrastructure as launch partner. WEKA claims up to 20x faster time to first token (TTFT). The physics make that plausible, but no independent audit exists.
-- **The business is real but smaller than the noise around it.** WEKA was founded in Israel in 2013 and has raised about US$415M. It passed US$100M ARR in 2024 *(company-stated)*. Its last priced round, in May 2024, valued it at US$1.6B. Since then VAST Data has repriced to US$30B and WEKA has raised nothing new.
-- **The risks are scale, focus and channel.** WEKA replaced its president, CFO and CRO between December 2024 and April 2025. HPE stopped reselling WEKA software in March 2026. Its fortunes track NVIDIA and neocloud capex. It has not submitted to MLPerf Storage since v1.0 in 2024.
-- **For Everpure, WEKA is the cleanest "software-anywhere" foil to FlashBlade//EXA.** The contrasts are a proprietary client versus standard pNFS, any hardware versus DirectFlash, and a KV-cache head start versus PureKVA. At a modest last valuation, WEKA is also a name any strategy team will be asked about.
+- **WEKA sells software, not boxes.** Its product is a parallel, shared-nothing file system for NVMe flash. It was called WekaFS, became NeuralMesh in June 2025, and NeuralMesh 6 was announced in July 2026. It runs on commodity servers, inside GPU servers, or in AWS, Azure, Google Cloud and OCI. Its technical signature is a kernel-bypass data path with metadata sharded across every node.
+- **It was the first vendor to make KV-cache offload a product.** Augmented Memory Grid (AMG) became commercially available on 2025-11-18, with OCI as launch partner. WEKA claims up to 20x faster time to first token (TTFT). That is physically plausible but has not been independently audited.
+- **The business is smaller than the noise around it.** WEKA passed US$100M ARR in 2024 *(company-stated)* and has raised about US$415M in total. Its last priced round valued it at US$1.6B in May 2024, and it has not raised since. VAST has repriced to US$30B in the meantime.
+- **The risks are scale, channel and proof.** WEKA turned over its executive team in 2024–25, and HPE stopped reselling its software in March 2026. It has no MLPerf Storage results since 2024. Demand is concentrated in NVIDIA-driven neocloud spending.
+- **For Everpure, WEKA is the cleanest "software-anywhere" foil to FlashBlade//EXA.** The contrasts are a proprietary client versus pNFS, any hardware versus DirectFlash, and a KV-cache head start versus PureKVA.
 
 ## Why this matters for Everpure strategy
 
-Every GPU-cluster storage deal Everpure (NYSE: P, formerly PSTG) contests with FlashBlade//EXA has a shortlist. WEKA is usually on it, beside VAST Data and DDN. WEKA wins differently from both. VAST sells a shared-everything platform with aggressive data reduction (see [Chapter 42](42-vast-data.md)). DDN sells Lustre heritage and NVIDIA's own reference installs (see [Chapter 44](44-ddn.md)). WEKA sells portability and latency: the same file system on a neocloud's GPU servers, on a customer's own servers or in four public clouds, with a data path tuned for microseconds. Understanding where that pitch is strong tells Everpure where EXA's standard-client, appliance-anchored design wins and loses.
+WEKA sits on most GPU-cluster shortlists that Everpure (NYSE: P, formerly PSTG) contests with FlashBlade//EXA, next to VAST and DDN. It wins differently from both. VAST sells shared-everything plus data reduction ([Chapter 42](42-vast-data.md)), and DDN sells Lustre heritage and NVIDIA reference installs ([Chapter 44](44-ddn.md)). WEKA sells portability and latency: the same file system on a neocloud's GPU servers, a customer's own hardware or four public clouds.
 
-WEKA also matters to corporate development as a reference point. It is a sub-scale, venture-backed AI storage software company. It has meaningful NVIDIA alignment, a first-mover KV-cache product and a valuation that has not moved in two and a half years. Whether that is a buying opportunity, a partner, or a cautionary tale about software-only storage is a live question, and only public information is used here to frame it. The head-to-head with all three rivals is in [Chapter 45](45-head-to-head.md). [Chapter 50](50-diligence-framework.md) gives the diligence checklist.
+WEKA is also a corporate-development reference point. It is a sub-scale, NVIDIA-aligned AI storage software company with a first-mover KV-cache product and a valuation unchanged for two and a half years. [Chapter 45](45-head-to-head.md) has the four-way comparison, and [Chapter 50](50-diligence-framework.md) has the diligence checklist.
 
 ## Core concepts
 
 ### What the product is, and what the names mean
 
-WEKA's founders, Liran Zvibel (CEO), Maor Ben-Dayan and Omri Palmon, started WekaIO in Israel in 2013 to build a file system for flash that would beat local disk[^1]. The company is now headquartered in Campbell, California, and calls itself WEKA. The product names have shifted three times, and buyers still use them interchangeably:
+Liran Zvibel (CEO), Maor Ben-Dayan and Omri Palmon founded WekaIO in Israel in 2013 to build a flash-native file system faster than local disk[^1]. The company is now based in Campbell, California, and calls itself WEKA. Buyers use its product names interchangeably:
 
-- **WekaFS / WEKA Data Platform (to mid-2025).** A POSIX parallel file system with an integrated S3-compatible object tier. WEKA 4, in June 2022, made the same software deployable natively on AWS, Google Cloud, Azure and OCI[^2].
-- **NeuralMesh (June 2025).** WEKA describes NeuralMesh as a re-architecture, not just a rebrand. Each node runs containerised microservices for data access, metadata, auditing and observability, which join a dynamically connected mesh. WEKA pitches it as getting more resilient as it grows[^3]. It started in limited release, with GA planned for fall 2025[^4].
-- **NeuralMesh Axon (July 2025).** The same software packaged to run *inside* GPU servers on their local NVMe. Cohere and CoreWeave were the launch references[^5].
-- **NeuralMesh 6 (announced 2026-07-21).** This release adds native multi-tenancy, always-on data reduction, native object access, replication and an enhanced AMG. GA is due in 2H 2026, and existing customers upgrade at no extra cost[^6].
+- **WekaFS / WEKA Data Platform (to mid-2025):** a POSIX parallel file system with an S3 object tier. WEKA 4 (June 2022) ran it natively on AWS, Google Cloud, Azure and OCI[^2].
+- **NeuralMesh (June 2025):** a re-architecture into containerised microservices for data, metadata, auditing and observability, forming a self-healing mesh[^3]. It shipped in limited release first, with GA planned for fall 2025[^4].
+- **NeuralMesh Axon (July 2025):** the same software running *inside* GPU servers on their local NVMe. Cohere and CoreWeave were the launch references[^5].
+- **NeuralMesh 6 (announced 2026-07-21):** adds multi-tenancy, data reduction, native object and an enhanced AMG. GA is planned for 2H 2026 and is a free upgrade[^6].
 
-The engine underneath is still the WekaFS lineage. Shared-nothing scale-out ([Chapter 15](../03-system-architecture/15-scale-out-shared-nothing.md)) and parallel file system mechanics ([Chapter 17](../03-system-architecture/17-parallel-file-systems.md)) both apply, and are not re-derived here. This chapter covers what WEKA does differently inside those patterns.
+Shared-nothing ([Chapter 15](../03-system-architecture/15-scale-out-shared-nothing.md)) and parallel-file-system ([Chapter 17](../03-system-architecture/17-parallel-file-systems.md)) mechanics apply; this chapter covers only what WEKA does differently.
 
 ### The architecture in one picture
 
 ![Diagram of WEKA NeuralMesh: GPU-server clients running the WEKA POSIX driver and user-space frontend, plus NFS/SMB/S3 gateways, connect over an Ethernet or InfiniBand fabric using DPDK to a shared-nothing backend cluster; every backend server runs compute processes holding metadata buckets, drive processes doing user-space NVMe I/O and a management process, over local SSDs; cold data tiers to an S3-compatible object store.](../assets/diagrams/ch43-weka-architecture.svg)
 
-*Figure 43.1 — WEKA runs the same set of user-space services on every backend server; metadata and data are both spread across all of them, so there is no metadata server to saturate.*
+*Figure 43.1 — WEKA runs the same user-space services on every backend server and spreads both metadata and data across all of them, so there is no metadata server to saturate.*
 
-Three design choices define WEKA.
+Three design choices define WEKA:
 
-**1. Everything runs as user-space processes in containers.** WEKA's documentation lists the roles. *Frontend* processes serve client I/O. *Compute* processes run file-system logic and cluster functions. *Drive* processes own NVMe devices. A *management* process handles control. NFS, SMB and S3 services run as separate containers[^7]. A small cluster can put all roles on every server. A large one can separate them.
+**1. Everything is a user-space process.** WEKA defines four process roles. *Frontend* processes serve clients, *compute* processes run file-system logic, *drive* processes own NVMe devices and a *management* process handles control. NFS, SMB and S3 run as separate containers[^7].
 
-**2. Metadata is sharded, not centralised.** Lustre-style systems keep the namespace on dedicated metadata servers (MDS), which become the bottleneck at millions of small files ([Chapter 21](../03-system-architecture/21-metadata.md)). WEKA splits its metadata plane into thousands of small "buckets". Each bucket is handled by a virtual metadata server running inside the compute processes, spread across all nodes. A hash of each operation, not just the inode, decides which bucket owns it. Different block ranges of one file therefore land on different owners, so even one hot file spreads its load. Bucket owners journal to WEKA's own protected storage for durability[^8].
+**2. Metadata is sharded, not centralised.** Lustre-style systems keep the namespace on dedicated metadata servers, which choke on millions of small files ([Chapter 21](../03-system-architecture/21-metadata.md)). WEKA splits metadata into thousands of "buckets", each run by a virtual metadata server inside the compute processes on every node. A hash of each operation, not just the inode, picks the owning bucket, so even block ranges of one hot file spread across owners. Buckets journal to WEKA's own protected storage[^8].
 
-*Semiconductor bridge:* this is address interleaving across DRAM channels and banks. A hashed physical-address map keeps any one access pattern from hammering one bank. WEKA's bucket hash keeps any one directory or file from hammering one metadata core. The cost is the same in both worlds: an operation that touches many buckets, such as a rename across directories, becomes a distributed transaction.
+*Semiconductor bridge:* this is address interleaving across DRAM channels and banks. A hashed address map stops any one access pattern from hammering one bank. The cost is also the same: an operation spanning many buckets, such as a cross-directory rename, becomes a distributed transaction.
 
-**3. Protection is distributed erasure coding.** A stripe is 3 to 16 data strips plus 2 or 4 parity strips. Protection groups are spread "any-to-any" across servers rather than fixed to sets of hosts, and the geometry is set when the cluster is formed[^9]. Worked efficiency: 16+4 stores 16/20 = **80%** of raw capacity as data, while 5+2 stores 5/7 ≈ **71%**. WEKA's own guidance keeps stripe width under about a quarter of the cluster, so a 16+4 stripe implies roughly 80 or more backend servers. Small clusters therefore pay a higher parity tax. That is the usual shared-nothing trade, covered in [Chapter 15](../03-system-architecture/15-scale-out-shared-nothing.md).
+**3. Protection is distributed erasure coding.** Each stripe holds 3–16 data strips plus 2 or 4 parity strips. Stripes are spread any-to-any across servers, and the stripe shape is fixed when the cluster is formed[^9]. A 16+4 stripe keeps 16/20 = **80%** of raw capacity as data, while 5+2 keeps ≈ **71%**. WEKA's guidance keeps stripe width under about a quarter of the cluster, so 16+4 implies roughly 80+ backend servers. Small clusters therefore pay more for parity, the usual shared-nothing trade.
 
 ### The kernel-bypass data path
 
-WEKA's latency claims come from refusing to use the operating system's I/O plumbing. Backend servers run **DPDK**, which maps the NIC into user space with SR-IOV so packets never traverse the kernel network stack. Clients use DPDK too, or fall back to kernel UDP where DPDK is unavailable, for example on some AWS instance types. In *performance-optimised* mode, WEKA processes take dedicated CPU cores and busy-poll. A *CPU-optimised* mode added in release 5.0 uses receive interrupts and does not pin cores[^7]. Drive processes talk to NVMe directly from user space, in the style of SPDK.
+WEKA's latency comes from bypassing the operating system's I/O plumbing. Backend servers run **DPDK**, which maps the NIC into user space via SR-IOV. Clients use DPDK too, falling back to kernel UDP where it is unavailable, such as some AWS instance types. In *performance* mode, WEKA processes busy-poll on dedicated cores. A *CPU-optimised* mode, added in release 5.0, uses interrupts instead[^7]. Drive processes reach NVMe from user space, in the style of SPDK.
 
 ```mermaid
 sequenceDiagram
@@ -70,38 +70,36 @@ sequenceDiagram
     Note over B,N: Writes reverse this - the owner cuts data into N plus 2 or 4 strips across failure domains and acks once they are durable
 ```
 
-*Figure 43.2 — A WEKA read never enters the kernel network or block stack; the price is CPU cores dedicated to polling. Simplified: the exact hop order inside WEKA is not public.*
+*Figure 43.2 — A WEKA read never enters the kernel network or block stack; the price is CPU cores dedicated to polling. Simplified: WEKA does not publish the exact internal hop order.*
 
-Why it matters, with an **illustrative** budget (orders of magnitude, not WEKA measurements): suppose a kernel path burns ~5 µs of CPU per small I/O on syscalls, interrupts, context switches and copies, and a polled user-space path burns ~1 µs. Then 1 million IOPS needs ~5 cores in the kernel model and ~1 core polled. The polled design also cuts tail latency, because no interrupt coalescing or scheduler jitter sits between the NIC and the SSD. The catch is that a polling core is busy even when idle. On a dedicated storage server that is fine. On a GPU server running converged mode, each pinned core is one the training job's data loaders cannot use.
+**Illustrative budget** (orders of magnitude, not WEKA measurements): if a kernel path spends ~5 µs of CPU per small I/O on syscalls, interrupts and copies, and a polled user-space path spends ~1 µs, then 1M IOPS needs ~5 cores in the first case and ~1 in the second. Polling also removes scheduler jitter, so tail latency tightens. The catch is that a polling core stays busy even when there is no work. On a GPU server in converged mode, that is a core taken from the data loaders.
 
-*Semiconductor bridge:* this is the difference between an interrupt-driven peripheral and a dedicated DMA or command engine that spins on a doorbell. You spend silicon (here, cores) to make latency deterministic. NVMe already moved the SSD side this way with deep submission queues and polled completions ([Chapter 7](../02-protocols-and-networking/07-block-protocols.md)). WEKA extends the same idea across the network.
+*Semiconductor bridge:* this is the trade between an interrupt-driven peripheral and a command engine spinning on a doorbell register. You spend silicon to make latency deterministic. NVMe made the same move on the SSD side ([Chapter 7](../02-protocols-and-networking/07-block-protocols.md)), and WEKA extends it across the network.
 
-One consequence buyers notice is that the full-performance path needs the **WEKA client** installed on every compute node. That is a kernel module plus user-space agent. Agentless access goes through NFS, SMB or S3 gateways, at lower performance. In locked-down GPU images, or where the platform team refuses third-party kernel modules, this is friction. Everpure's EXA and VAST both lean on standard NFS or pNFS clients instead.
+One consequence buyers notice: the fast path needs the **WEKA client**, a kernel module plus agent, on every compute node. Agentless access goes through NFS, SMB or S3 gateways at lower performance. EXA and VAST both use standard NFS or pNFS clients instead.
 
 ### Four ways to deploy the same software
 
-Portability is the strategic core of WEKA's pitch. The table shows how one binary becomes four products.
-
 | Mode | Where WEKA runs | Who buys the hardware | Best for | Main cost or risk |
 |---|---|---|---|---|
-| Dedicated (on-premises) | Qualified storage servers from Supermicro, Dell, Lenovo, Hitachi and others[^10] | Customer, via OEM or reseller | Enterprise and HPC clusters wanting a separate storage tier | Customer integrates and supports a multi-vendor stack |
-| WEKApod appliance | WEKA-branded servers, now WEKApod 3 (Nitro, Prime, Prime Max)[^11] | Customer, from WEKA | Buyers wanting one throat to choke and NVIDIA SuperPOD certification | WEKA takes on hardware margin and supply risk |
-| Converged / Axon | Inside GPU servers, on their local NVMe and spare cores[^5] | Already bought with the GPUs | Neoclouds and large training fleets | Storage shares failure domains, CPU and NICs with compute |
-| Public cloud | AWS, Azure, Google Cloud and OCI instances with local NVMe, plus marketplace listings[^2] | Cloud provider | Cloud-native AI and burst capacity | Instance NVMe is ephemeral, so durability depends on EC and object tiering |
+| Dedicated (on-premises) | Qualified servers from Supermicro, Dell, Lenovo, Hitachi and others[^10] | Customer, via OEM or reseller | Separate enterprise/HPC storage tier | Customer integrates a multi-vendor stack |
+| WEKApod appliance | WEKA-branded servers, now WEKApod 3 (Nitro, Prime, Prime Max)[^11] | Customer, from WEKA | One-vendor support, SuperPOD certification | WEKA takes hardware margin and supply risk |
+| Converged / Axon | Inside GPU servers, on local NVMe and spare cores[^5] | Already bought with the GPUs | Neoclouds, large training fleets | Shares failure domains, CPU and NICs with compute |
+| Public cloud | AWS, Azure, Google Cloud, OCI instances, plus marketplace listings[^2] | Cloud provider | Cloud-native AI, burst capacity | Ephemeral instance NVMe; durability rests on EC and object tiering |
 
-*Table 43.1 — One software stack, four packaging models: this flexibility is WEKA's moat and also its support burden.*
+*Table 43.1 — One software stack, four packaging models: this flexibility is WEKA's moat and its support burden.*
 
-**Worked example: converged economics.** A DGX H100-class server ships with eight 3.84 TB NVMe drives, about 30.7 TB of local flash that many training clusters use only as scratch. Across 128 servers that is 128 × 30.7 ≈ **3.9 PB raw**, or about **3.1 PB usable** at 16+4. That is a parallel file system that needed no storage-server capex, rack space or extra power. WEKA's first converged reference, Stability AI on AWS, claimed a 95% storage-cost reduction and 93% GPU utilisation *(company-stated)*[^12]. At the Axon launch, CoreWeave reported more than 30 GB/s read, 12 GB/s write and 1 million IOPS to a single GPU server *(vendor-supplied)*[^5].
+**Worked example: converged economics.** A DGX H100-class server carries eight 3.84 TB NVMe drives, about 30.7 TB that many clusters use only as scratch. Across 128 servers that is ≈ **3.9 PB raw**, or ≈ **3.1 PB usable** at 16+4, with no storage-server capex, rack space or power. Stability AI, WEKA's first converged reference, claimed a 95% storage-cost cut and 93% GPU utilisation *(company-stated)*[^12]. At Axon's launch, CoreWeave reported more than 30 GB/s read, 12 GB/s write and 1M IOPS to a single GPU server *(vendor-supplied)*[^5].
 
-The risks are equally concrete. A GPU server reboot for a driver update is now also a storage-node failure that triggers rebuild traffic. Rebuild traffic shares the NICs with the collective operations that keep GPUs in lockstep. And the "free" flash is only free until the job needs it for something else. Axon's answer is static pre-allocation of cores, memory, NVMe and NIC bandwidth per workload[^5]. That is a partitioning fix, not a physics fix.
+The risks are equally concrete. A GPU server reboot becomes a storage-node failure. Rebuild traffic then shares NICs with the collectives that keep GPUs in lockstep. Axon answers with static per-workload allocation of cores, memory, NVMe and NIC bandwidth[^5]. That is a partitioning fix, not a physics fix.
 
 ### NVIDIA plumbing: GPUDirect Storage, Spectrum-X, NIXL
 
-WEKA was among the file systems supporting **GPUDirect Storage (GDS)** when NVIDIA finalised GDS 1.0 in 2021[^13]. GDS DMAs data from the NIC or NVMe straight into GPU memory, skipping the CPU bounce buffer ([Chapter 11](../02-protocols-and-networking/11-gpu-data-path.md)). NVIDIA's Spectrum-X storage tests named WEKA alongside DDN and VAST, with NVIDIA claiming up to 48% faster reads from adaptive routing and congestion control[^14]. For inference, WEKA open-sourced a plugin for **NIXL**, NVIDIA's data-movement library, which lets Dynamo-based serving stacks treat WEKA as a KV-cache tier[^15]. NVIDIA also invested in the Series E[^16]. All of this counts for a lot in neocloud procurement, where "certified with NVIDIA" often outranks benchmark detail.
+WEKA supported **GPUDirect Storage (GDS)** when NVIDIA finalised GDS 1.0 in 2021[^13]. GDS DMAs data straight into GPU memory, skipping the CPU bounce buffer ([Chapter 11](../02-protocols-and-networking/11-gpu-data-path.md)). NVIDIA's Spectrum-X storage tests included WEKA and claimed up to 48% faster reads[^14]. WEKA also open-sourced a plugin for **NIXL**, NVIDIA's data-movement library, so Dynamo-based serving can use WEKA as a KV tier[^15]. NVIDIA invested in WEKA's Series E[^16].
 
 ### Augmented Memory Grid: KV cache as a storage product
 
-[Chapter 32](../05-ai-storage/32-inference-and-kv-cache.md) explains why the attention key/value (KV) cache, not model weights, is the memory problem of long-context and agentic inference. AMG is WEKA's productisation of the answer. KV blocks evicted from GPU memory are written to a NeuralMesh-managed "token warehouse" on pooled NVMe. When a later request shares the prefix, the blocks are streamed back over RDMA and GDS instead of being recomputed. WEKA unveiled AMG at GTC in March 2025[^17] and made it commercially available on 2025-11-18 as a NeuralMesh feature, with OCI as exclusive launch partner through Oracle Cloud Marketplace[^15].
+[Chapter 32](../05-ai-storage/32-inference-and-kv-cache.md) explains why the attention key/value (KV) cache is the memory problem of long-context inference. AMG is WEKA's productised answer. KV blocks evicted from GPU memory go to a NeuralMesh "token warehouse" on pooled NVMe. When a later request shares the prefix, the blocks stream back over RDMA and GDS instead of being recomputed. WEKA unveiled AMG at GTC in March 2025[^17] and made it commercially available on 2025-11-18, with OCI as exclusive launch partner via Oracle Cloud Marketplace[^15].
 
 ```mermaid
 flowchart TB
@@ -122,33 +120,33 @@ flowchart TB
     W -.->|tiering| O
 ```
 
-*Figure 43.3 — AMG sits where NVIDIA's Dynamo KV Block Manager puts shared storage. Its value is that a prefix computed on one GPU server can be reused by any other, instead of being trapped in one server's DRAM.*
+*Figure 43.3 — AMG fills the shared-storage slot in NVIDIA Dynamo's tier model; its value is that a prefix computed on one GPU server can be reused by any other.*
 
-Dynamo's KV Block Manager names the tiers G1 (HBM), G2 (host DRAM), G3 (local SSD) and G4 (remote storage)[^18]. AMG is a G4 that aims to behave like a fast G3, and NVIDIA's later CMX platform calls the same slot "G3.5" (see below).
+Dynamo's KV Block Manager labels the tiers G1 (HBM), G2 (host DRAM), G3 (local SSD) and G4 (remote storage)[^18]. AMG is a G4 built to perform like a fast G3.
 
-**Worked example (illustrative, Llama-3-70B geometry, FP16 KV).** Per token, KV size = 2 (K and V) × 80 layers × 8 KV heads × 128 head dim × 2 bytes = **327,680 bytes ≈ 320 KiB**. A 128,000-token context is therefore about **42 GB**, more than half of one 80 GB H100 before weights. Recomputing that prefill costs roughly 2 × 70×10⁹ parameters × 128,000 tokens ≈ 1.8×10¹⁶ FLOPs, ignoring attention's quadratic term. Eight H100s sustaining ~400 TFLOP/s each (about 40% of dense FP16 peak) take ~5.6 s. Reading 42 GB from a storage tier delivering 100 GB/s to the server takes ~0.4 s. That ratio of about **13x** is why vendor claims of "up to 20x faster TTFT" at 128K context are physically plausible. They are also highly workload-dependent: short prompts and low prefix reuse shrink the gain toward zero.
+**Worked example (illustrative, Llama-3-70B geometry, FP16 KV).** Each token's KV state takes 2 × 80 layers × 8 KV heads × 128 dims × 2 bytes = **327,680 bytes ≈ 320 KiB**. A 128,000-token context is therefore ≈ **42 GB**, more than half an 80 GB H100. Recomputing that prefill costs ≈ 2 × 70×10⁹ × 128,000 ≈ 1.8×10¹⁶ FLOPs, ignoring attention's quadratic term. Eight H100s at ~400 TFLOP/s each (≈40% of dense FP16 peak) need ~5.6 s for it. Reading the 42 GB from a tier delivering 100 GB/s per server takes ~0.4 s. That ≈ **13x** gap is why "up to 20x faster TTFT" at 128K context is plausible. Short prompts gain little.
 
-**What WEKA has claimed, and on what evidence.** The November 2025 launch claimed up to 20x faster TTFT at 128K tokens against a standard vLLM baseline on OCI, a "1000x" GPU memory extension and more concurrent users[^15]. In June 2026, WEKA and Oracle published a larger validation on a nine-node, 72-GPU bare-metal H100 cluster with 100,000-token contexts. The headline numbers were about 2 million tokens/s versus under 200,000 for a DRAM-only baseline, roughly 5,000 versus 600 concurrent users, and an active cache that grew from 8.64 TiB of DRAM to 287 TiB of NVMe *(vendor-run joint test)*[^19]. Using the 42 GB figure above, 287 TiB holds about 7,500 full 128K-token contexts against about 225 in 8.64 TiB of DRAM. The capacity ratio (~33x) is far larger than the throughput ratio (~10x). That tells you the bottleneck moved from cache capacity to something else, such as GPU decode or network. Note also that 5,000 ÷ 600 is ~8x, not the "10x" in the headline. NAND Research flagged that WEKA's later 10x claims came without a reproducible methodology[^20]. MLPerf Storage v3.0 added an audited KV-cache workload in September 2026, and WEKA did not enter it[^21].
+**Claims and evidence.** At launch WEKA claimed up to 20x faster TTFT at 128K tokens versus a standard vLLM baseline on OCI[^15]. In June 2026, WEKA and Oracle reported results from a nine-node, 72-GPU H100 cluster with 100K-token contexts: about 2M tokens/s versus under 200K for DRAM-only, about 5,000 versus 600 concurrent users, and the cache grown from 8.64 TiB of DRAM to 287 TiB of NVMe *(vendor-run joint test)*[^19]. At 42 GB per context, 287 TiB holds ~7,500 contexts against ~225 in DRAM. The capacity grew ~33x but throughput only ~10x, which shows the bottleneck moved to decode or the network. And 5,000 ÷ 600 is ~8x, not the headline 10x. NAND Research noted that WEKA's 10x claims lack a reproducible methodology[^20]. WEKA did not enter MLPerf Storage v3.0, the first round with an audited KV-cache workload (September 2026)[^21].
 
 ### NeuralMesh 6 and WEKApod 3: closing feature gaps
 
-NeuralMesh 6 reads as a catch-up list aimed at neoclouds and enterprises[^6]:
+NeuralMesh 6 reads as a catch-up list for neoclouds and enterprises[^6]:
 
-- **Multi-tenancy:** "composable clusters" for hardware isolation, plus virtual tenancy with private VLANs, per-tenant encryption keys and separate authentication. Coverage cites up to 50,000 logical tenants per cluster[^6].
-- **Data reduction:** fingerprinting, similarity hashing, dedupe and compression, always on. WEKA claims up to 6x savings on AI training data with under 5% write overhead and contractually guarantees both[^6]. VAST built its business on reduction, and WEKA had lacked it.
-- **Native object, replication, remote caching and Kubernetes-native operations**[^6].
+- **Multi-tenancy:** hardware-isolated "composable clusters" plus virtual tenants with private VLANs, per-tenant keys and separate authentication. Coverage cites up to 50,000 logical tenants per cluster.
+- **Data reduction:** always-on dedupe, similarity hashing and compression. WEKA claims up to 6x on AI training data at under 5% write overhead and *contractually guarantees* both. This is the feature on which VAST built its business, and WEKA had lacked it.
+- **Native object, replication, remote caching and Kubernetes-native operations.**
 
-**WEKApod 3** is WEKA's first hardware designed chassis-up for its software. It comes in three configurations: Nitro (performance), Prime (balanced) and Prime Max (density). Deliveries start in fall 2026[^6][^11]. The density claim is the eye-catcher: 1.1 EB *effective* per rack from 441.5 PB raw, built from about 1,800 Micron 245.76 TB SSDs[^11]. Check the arithmetic: 1,800 × 245.76 TB ≈ 442 PB raw, so "1.1 EB" assumes **~2.5:1** data reduction. Bandwidth is quoted at 10.2 TB/s per rack[^22] [VERIFY: 10.2 TB/s and 210M IOPS per rack from secondary coverage only]. The effective-capacity number is a reduction assumption, not a capacity spec. Everpure, which also quotes effective capacity, should hold WEKA to the same standard it holds itself.
+**WEKApod 3** is WEKA's first chassis designed from the ground up for its own software. It comes in three configurations, Nitro, Prime and Prime Max, with deliveries starting in fall 2026[^6]. Prime Max claims 1.1 EB *effective* per rack from 441.5 PB raw, using about 1,800 Micron 245.76 TB SSDs[^11]. Checking the arithmetic: 1,800 × 245.76 TB ≈ 442 PB raw, so "1.1 EB" assumes **~2.5:1** reduction. The rack is also quoted at 10.2 TB/s[^22] [VERIFY: 10.2 TB/s and 210M IOPS per rack from secondary coverage only]. The exabyte is therefore a reduction assumption, not a capacity spec.
 
 ### BlueField-4 and NVIDIA STX: storage moving onto the DPU
 
-At GTC Washington in October 2025, WEKA said its next NeuralMesh release would run *directly on* NVIDIA BlueField-4 DPUs rather than on x86 storage servers. It cited BlueField-4's 800 Gb/s networking and about 6x the compute of BlueField-3, and projected over 100x better tokens per watt than CPU-attached storage. That figure is an expectation, not a measurement[^23]. At GTC in March 2026, NVIDIA launched **BlueField-4 STX**, a storage reference architecture whose first rack-scale implementation is the CMX context-memory platform. WEKA was among a dozen named storage partners, alongside Everpure, VAST, DDN and others[^24]. WEKA integrated NeuralMesh with STX, positioning AMG as the shared KV-cache layer and claiming 4–10x higher context-memory token throughput on Vera Rubin NVL72 configurations[^25] [VERIFY: whether validation used BlueField-3 or BlueField-4 hardware; sources conflict].
+In October 2025 WEKA said its next NeuralMesh would run *directly on* NVIDIA BlueField-4 DPUs, which offer 800 Gb/s networking and ~6x BlueField-3's compute. It projected over 100x better tokens per watt than CPU-attached storage, an expectation rather than a measurement[^23]. In March 2026 NVIDIA launched **BlueField-4 STX**, a storage reference architecture whose first rack-scale implementation is the CMX context-memory platform. WEKA, Everpure, VAST and DDN were among the named storage partners[^24]. WEKA positioned AMG as STX's shared KV layer and claimed 4–10x higher context-memory throughput[^25] [VERIFY: whether validation used BlueField-3 or BlueField-4; sources conflict].
 
-The strategic reading cuts both ways. A software-only vendor ports to a DPU more easily than an appliance vendor does, and WEKA's user-space, poll-mode design already resembles DPU firmware. But STX makes the KV tier a *standard NVIDIA slot* that every partner can fill. That erodes the first-mover advantage AMG enjoyed in 2025.
+This cuts both ways for WEKA. Its poll-mode, user-space design already resembles DPU firmware, so porting is natural. But STX makes the KV tier a *standard NVIDIA slot* that every partner can fill, which erodes AMG's 2025 head start.
 
 ## Business model & financials
 
-**Model.** WEKA sells capacity-based software subscriptions. Hardware comes from partners, from WEKApod or from the cloud provider. Most deals are custom-quoted. One reseller lists a Lenovo-branded WEKA edition at US$339 per TB per year in the 1–2.5 PB band[^26] [VERIFY: single reseller listing]. At that list price, 10 PB is about US$3.4M a year. Read the other way, US$100M of ARR at list would be ~295 PB under subscription, so with typical discounting the real installed base is plausibly well above that. Software-only revenue means high gross margin, but the company still carries the support cost of the hardware it does not sell.
+**Model.** WEKA sells capacity-based software subscriptions. The hardware comes from partners, from WEKApod or from the cloud provider. One reseller lists a Lenovo-branded edition at US$339 per TB per year in the 1–2.5 PB band[^26] [VERIFY: single reseller listing]. At that list price, 10 PB is about US$3.4M a year. US$100M of ARR at list would imply ~295 PB under subscription.
 
 ```mermaid
 timeline
@@ -162,24 +160,24 @@ timeline
     2026 : HPE resale ends in March : STX integration at GTC : NeuralMesh 6 and WEKApod 3 in July
 ```
 
-*Figure 43.4 — WEKA's product cadence accelerated in 2025–26 while its funding clock stopped in May 2024.*
+*Figure 43.4 — WEKA's product cadence accelerated in 2025–26, but it has raised no new money since May 2024.*
 
-**Funding.** The company stated a cumulative US$66.7M after a US$31.7M Series C in May 2019. NVIDIA, Mellanox, HPE, Seagate, Western Digital Capital and Qualcomm participated in that round[^27]. A US$73M round led by Hitachi Ventures followed in January 2022, taking the total to about US$140M. Outlets disagree on whether it was a Series C extension or a Series D[^28]. In November 2022 came a US$135M Series D led by Generation Investment Management, at a ~US$750M valuation *(reported by Calcalist; WEKA did not disclose it)*[^29]. The May 2024 Series E raised US$140M at US$1.6B post-money: US$100M primary and US$40M of secondary share sales by long-serving employees. Valor Equity Partners led, with NVIDIA, Atreides, Generation, Qualcomm Ventures and Hitachi Ventures participating[^16]. The sum, about US$415M, matches PitchBook's estimate[^30]. No priced round since then was found. A 2026 Globes interview still treated the Series E as the latest[^31].
+**Funding.** WEKA said it had raised US$66.7M in total after a US$31.7M Series C in May 2019, a round that included NVIDIA, Mellanox, HPE, Seagate, Western Digital Capital and Qualcomm[^27]. A US$73M round led by Hitachi Ventures followed in January 2022. Outlets disagree on whether it was a C extension or a Series D[^28]. In November 2022 came a US$135M Series D led by Generation Investment Management, at ~US$750M *(reported by Calcalist, not disclosed by WEKA)*[^29]. The May 2024 Series E raised US$140M at US$1.6B post-money: US$100M primary and US$40M in secondary sales by long-serving employees. Valor Equity Partners led, joined by NVIDIA, Atreides, Generation, Qualcomm Ventures and Hitachi Ventures[^16]. The rounds sum to ≈ US$415M, which matches PitchBook's estimate[^30]. No later priced round was found, and a 2026 Globes interview still treated the Series E as the latest[^31].
 
 ![Two-panel chart. Left: WEKA capital raised by round — implied pre-Series C rounds about $35M (2013–2018), Series C $32M (May 2019), a $73M later-stage round (Jan 2022), Series D $135M at $0.75B (Nov 2022), Series E $140M at $1.6B of which $40M secondary (May 2024), with cumulative raised rising to about $415M. Right: latest private valuations — WEKA $1.6B (May 2024), DDN $5B (Jan 2025), VAST Data $30B (Apr 2026).](../assets/charts/ch43-funding.svg)
 
-*Figure 43.5 — WEKA has raised about US$415M in total, but its US$1.6B mark is now a fifth of DDN's and about 5% of VAST's.*
+*Figure 43.5 — WEKA has raised about US$415M, but its US$1.6B mark is now a third of DDN's and about 5% of VAST's.*
 Data: `data/ch43_funding.csv`
 
-**Revenue and burn.** In February 2025, Zvibel wrote that WEKA passed US$100M ARR in 2024 and more than doubled revenue for the third year running *(company-stated)*[^32]. The same month WEKA cut about 50 go-to-market roles while still planning about 120 hires[^33]. Calcalist reported Zvibel expecting revenue to triple in 2025 and burn of about US$0.5M a month, near break-even *(reported by press)*[^34] [VERIFY: date and context of the tripling and burn figures]. Globes later cited AI-market executives estimating ARR at US$100–150M *(estimated)*[^31]. No audited or company-stated 2025 or 2026 figure has been found.
+**Revenue and burn.** In February 2025 Zvibel wrote that WEKA passed US$100M ARR in 2024, after more than doubling revenue for three straight years *(company-stated)*[^32]. The same month, WEKA cut about 50 go-to-market roles while still planning about 120 hires[^33]. Calcalist reported Zvibel expecting revenue to triple in 2025, with burn of about US$0.5M a month *(reported by press)*[^34] [VERIFY: date and context of tripling and burn figures]. Globes later cited estimates of US$100–150M ARR *(estimated)*[^31]. No company-stated figure for 2025 or 2026 was found.
 
-**Valuation arithmetic.** At the Series E, US$1.6B on roughly US$100M ARR was about **16x ARR**. VAST's April 2026 round priced it at US$30B against over US$500M of committed ARR *(company-stated)*, about **60x**[^35]. If WEKA really tripled in 2025, its 2024 mark would now be single-digit ARR multiples. That gap is either the market's verdict on scale and momentum, or an unpriced option, depending on whose numbers you believe.
+**Valuation arithmetic.** At the Series E, US$1.6B on about US$100M ARR was ≈ **16x ARR**. VAST's April 2026 round priced it at US$30B on more than US$500M of committed ARR *(company-stated)*, ≈ **60x**[^35]. If WEKA did triple in 2025, its 2024 mark would now be a single-digit multiple.
 
-**Leadership churn.** In December 2024, WEKA parted with its president, CFO and CRO while describing itself as in late-stage, pre-IPO growth[^36]. The replacement CFO left after about four months. In April 2025, WEKA hired a new CRO (Brian Froehling) and a new chief product officer (Ajay Singh), and moved the previous CPO into strategy and corporate development[^37]. A new CMO arrived in July 2026 as messaging shifted to "AI inferencing at scale"[^38]. Turnover at this rate is common before an IPO or a sale. It is also common when a growth plan misses.
+**Leadership churn.** In December 2024, WEKA parted with its president, CFO and CRO while describing itself as being in a pre-IPO growth phase[^36]. The replacement CFO left after four months. April 2025 brought a new CRO (Brian Froehling) and CPO (Ajay Singh), and the previous CPO moved to strategy and corporate development[^37]. A new CMO followed in July 2026 as messaging shifted to inference at scale[^38].
 
 ## Customers & go-to-market
 
-**Channels.** WEKA sells direct and through partners. Hardware partners include Supermicro, Dell, Lenovo and Hitachi[^10]. Hitachi Vantara first OEM'd WekaFS in 2020[^39]. There are cloud marketplace listings, and WEKApod is sold through distributors. The biggest channel change cut the other way. In November 2025, HPE told partners it would stop selling WEKA (along with Qumulo and Scality) software from 2026-03-03 to favour its own Alletra MP line, though resellers could still pair WEKA with HPE servers[^40]. This came only months after WEKA on HPE Alletra 4110 servers had topped all five SPECstorage Solution 2020 workloads[^41].
+WEKA sells direct and through partners. Hardware partners include Supermicro, Dell, Lenovo and Hitachi[^10], and Hitachi Vantara OEM'd WekaFS from 2020[^39]. The biggest channel change went against WEKA. HPE told partners in November 2025 that it would stop selling WEKA, Qumulo and Scality software from 2026-03-03, in favour of its own Alletra MP[^40]. That came months after WEKA on HPE Alletra 4110 servers had topped all five SPECstorage Solution 2020 workloads[^41].
 
 | Customer or partner | Relationship (as publicly described) | Evidence label |
 |---|---|---|
@@ -195,33 +193,32 @@ Data: `data/ch43_funding.csv`
 
 *Table 43.2 — WEKA's visible references skew to AI labs, neoclouds and one hyperscaler partner (OCI); few are independently corroborated.*
 
-The pattern is clear. WEKA's growth engine since 2023 has been AI-native buyers: model builders (Stability, Cohere, Midjourney), GPU clouds (CoreWeave, Nebius, Yotta) and OCI. These buyers value speed of deployment and cloud portability over enterprise data services. Its HPC and life-sciences base (genomics, EDA, media) is older and stickier but grows more slowly. Note what is missing: no announced deal of the size of VAST's reported US$1.17B CoreWeave agreement[^46], and no flagship NVIDIA-internal reference like DDN's.
+Since 2023, WEKA's growth has come from AI-native buyers: model builders, GPU clouds and OCI. Its older HPC, EDA and media base is stickier but slower-growing. Two things are missing: anything like VAST's reported US$1.17B CoreWeave deal[^46], and a flagship NVIDIA-internal reference like DDN's.
 
 ## Why it gained traction
 
-1. **It solved the right problem early.** In 2014–2019 the GPU-starvation problem looked like a niche HPC issue. WEKA's bet that flash plus kernel bypass could beat local NVMe for shared data made it the default "fast file system that isn't Lustre" when GPU clusters arrived.
-2. **Software-only fits the neocloud build pattern.** Neoclouds buy GPU servers by the thousand and hate stranded capex. Converged mode turns flash they already own into a file system. Marketplace listings let them buy capacity in the same billing motion as their cloud.
-3. **Cloud portability is real.** Few high-performance file systems run the same code on-premises and natively in four clouds. For AI labs that train wherever GPUs are available, one namespace across sites matters.
-4. **Metadata scaling beats classic parallel file systems on small files.** Sharded buckets avoid the MDS ceiling, which matters for image datasets and checkpoint shards ([Chapter 17](../03-system-architecture/17-parallel-file-systems.md)). WEKA backed this with SPECstorage leadership in early 2025[^41].
-5. **It productised KV cache before anyone else.** AMG gave WEKA an inference story in 2025, when the market narrative pivoted from training to inference, months before NVIDIA standardised the tier with STX.
+1. **It solved GPU starvation early.** WEKA bet that flash plus kernel bypass could beat local NVMe for shared data. When GPU clusters arrived, that made it the default "fast file system that isn't Lustre".
+2. **Software-only suits neocloud economics.** Converged mode turns flash the neocloud already owns into a file system, and marketplace listings fit cloud billing.
+3. **Portability is real.** Few high-performance file systems run the same code on-premises and natively in four clouds. That matters to labs that train wherever GPUs are free.
+4. **Sharded metadata handles small files.** Datasets of images and checkpoint shards can run into a metadata-server ceiling, and WEKA's buckets avoid it. WEKA led SPECstorage in early 2025[^41].
+5. **It productised KV cache first.** AMG gave WEKA an inference story as the market pivoted, months before NVIDIA standardised the tier.
 
 ## Risks & open questions
 
-- **Scale and capital asymmetry.** VAST's company-stated committed ARR is several times WEKA's last stated ARR, and its valuation is roughly 19x WEKA's[^35]. VAST can outspend WEKA on R&D, field engineering and neocloud credit terms. WEKA's flat valuation since May 2024 also complicates employee retention and any IPO path.
-- **Dependence on one demand cycle.** WEKA's customer list is concentrated in GPU-cloud and AI-lab buyers whose spending follows NVIDIA product cycles and their own financing. A neocloud capex pause would hit WEKA harder than a diversified vendor.
-- **NVIDIA giveth and taketh.** NVIDIA is an investor and certifier. But STX/CMX turns the KV-cache tier into a reference design every partner fills, and NVIDIA's own Dynamo KV Block Manager decides which tiers matter[^18][^24].
-- **The hardware-agnostic support burden.** Supporting many server SKUs, NICs, kernels and four clouds is expensive, and partners can defect, as HPE showed[^40]. WEKApod 3 reduces that burden by pulling WEKA toward the appliance model it used to differentiate against.
-- **Benchmark posture.** WEKA submitted to MLPerf Storage v0.5 in 2023[^47] and v1.0 in 2024[^48], but not to v2.0 (2025) or v3.0 (2026). The v3.0 round was the first to include a KV-cache workload, WEKA's flagship use case[^21]. Everpure's EXA displaced the HPE–WEKA configuration at the top of SPECstorage AI_IMAGE in 2026[^49]. Absence proves nothing about performance, but it leaves WEKA's inference claims resting on vendor-run tests.
-- **Client friction.** The high-performance path needs WEKA's client stack on every GPU node. Rivals with standard NFS or pNFS clients can sell the absence of an agent as an operational advantage.
-- **Open questions.** Did NeuralMesh 6 reach GA on schedule? What share of revenue now comes from WEKApod hardware versus software? Has WEKA tripled revenue as projected? Is there a new round, secondary or strategic process that has not surfaced publicly?
+- **Scale and capital asymmetry.** VAST's company-stated committed ARR is several times WEKA's, and its valuation is ~19x[^35]. That lets VAST outspend WEKA on R&D, field engineering and neocloud terms. A flat mark also complicates retention and any IPO.
+- **One demand cycle.** WEKA's customers cluster in GPU clouds and AI labs whose spend follows NVIDIA cycles and their own financing.
+- **NVIDIA gives and takes.** NVIDIA is an investor and certifier. But STX/CMX turns the KV tier into a slot any partner can fill, and Dynamo decides which tiers matter[^18][^24].
+- **Hardware-agnostic support burden.** Supporting many servers, NICs, kernels and four clouds is costly, and partners can defect, as HPE showed[^40]. WEKApod 3 eases the burden by moving WEKA toward appliances.
+- **Benchmark posture.** WEKA entered MLPerf Storage v0.5 (2023)[^47] and v1.0 (2024)[^48], then skipped v2.0 and v3.0, including v3.0's KV-cache test[^21]. FlashBlade//EXA displaced the HPE–WEKA configuration at the top of SPECstorage AI_IMAGE in 2026[^49]. Skipping rounds proves nothing about performance, but WEKA's inference claims now rest on vendor-run tests.
+- **Open questions.** Did NeuralMesh 6 reach GA on time? What share of revenue is now WEKApod hardware? Did revenue triple? Is there an unannounced financing or strategic process?
 
 ## Strategic relevance to Everpure
 
-WEKA matters to Everpure in three ways. These are options a strategy team might evaluate, based on public information.
+These are options a strategy team might evaluate, based on public information:
 
-1. **As a competitor in EXA deals.** WEKA's portability and converged mode attack exactly where EXA is weakest: buyers who want storage on hardware they already own, in a cloud, or inside GPU servers. EXA's counters are a standard pNFS client, Purity's metadata engine, DirectFlash economics on the metadata tier, an Everpure-supported appliance experience and now audited MLPerf v3.0 results[^21]. A deal-desk playbook might lead with operational simplicity and audited numbers against WEKA, and with independent scaling against VAST.
-2. **As a signal about software-only storage.** WEKA shows that pure software can win AI share, but also that it struggles to capture value at scale. It has had to build appliances (WEKApod 3), add data reduction and absorb the cost of partner defections. That supports Everpure's integrated hardware-software thesis without making it unassailable.
-3. **As a corporate-development reference.** WEKA has a US$1.6B last mark, about US$415M raised, investors including NVIDIA and Qualcomm Ventures, a KV-cache product, cloud-native code and an engineering base in Israel. Any acquirer would weigh technology overlap with its own stack, client-agent and support liabilities, customer concentration in neoclouds, and how preference stacks behave at a flat valuation. For Everpure specifically, the overlap with Purity//FB and EXA is large. Lighter-weight alternatives include interoperability (for example, Everpure object storage as a WEKA tier) or competing directly on KV cache with PureKVA.
+1. **WEKA as an EXA competitor.** WEKA's portability and converged mode attack where EXA is weakest: storage on hardware buyers already own, in a cloud, or inside GPU servers. EXA's counters are a standard pNFS client, Purity's metadata engine, DirectFlash on the metadata tier, appliance-grade support and audited MLPerf v3.0 results[^21].
+2. **WEKA as a signal about software-only storage.** Pure software can win AI share but struggles to capture value at scale. WEKA has had to build appliances, add data reduction and absorb a partner exit. That supports Everpure's integrated thesis without making it unassailable.
+3. **WEKA as a corporate-development reference.** WEKA brings a US$1.6B last mark, about US$415M raised, NVIDIA and Qualcomm Ventures on the cap table, a KV-cache product, cloud-native code and Israeli engineering. An acquirer would weigh overlap with its own stack, client-agent support liabilities, neocloud concentration and the preference stack at a flat valuation. For Everpure the overlap with Purity//FB and EXA is large. Lighter options include interoperability, such as Everpure object storage as a WEKA tier, or competing head-on with PureKVA.
 
 ## How Everpure approaches it vs. competitors
 
@@ -239,21 +236,25 @@ WEKA matters to Everpure in three ways. These are options a strategy team might 
 
 *Table 43.3 — WEKA leads on deployment flexibility and KV-cache maturity; EXA leads on standard clients and audited benchmarks; VAST leads on scale and data reduction.*
 
-**Steelman WEKA.** WEKA is the only one of the three that can follow a customer anywhere: into a neocloud's GPU servers, into four clouds, onto customer-chosen hardware, and next onto a DPU. Its kernel-bypass path and bucket-sharded metadata are a serious latency and small-file architecture, not marketing. It had a production KV-cache tier a year before NVIDIA standardised one. For an AI lab that changes clouds every funding round, WEKA's portability can be worth more than any single benchmark.
+**Steelman WEKA.** WEKA is the only one of the three that follows a customer anywhere: into GPU servers, four clouds, customer-chosen hardware and, next, onto DPUs. Its kernel-bypass path and sharded metadata are serious engineering, not marketing. It shipped a KV tier a year before NVIDIA standardised one.
 
-**Where EXA's trade is better.** EXA needs no client agent. Its metadata runs on Everpure's own DFM hardware with Purity's maturity, and its data nodes scale independently. It also has independently audited MLPerf v3.0 numbers in exactly the workloads WEKA skipped. Its weaknesses against WEKA are cloud reach, converged deployment and a shorter KV-cache track record. [Chapter 27](../04-everpure/27-flasharray-and-flashblade.md) covers EXA in depth.
+**Where EXA's trade is better.** EXA needs no client agent, runs its metadata on Everpure's own hardware with mature Purity software, scales data nodes independently, and has audited MLPerf v3.0 numbers in the very workloads WEKA skipped. It trails WEKA on cloud reach, converged deployment and KV-cache track record ([Chapter 27](../04-everpure/27-flasharray-and-flashblade.md)).
 
 ## History and trajectory
 
-WEKA's arc has three phases. **2013–2019: the HPC file system that wasn't Lustre.** A small Israeli team built a user-space, flash-native parallel file system, financed by about US$67M from VCs and strategic investors including NVIDIA, Mellanox, HPE and the SSD makers[^27]. **2020–2024: cloud and AI scale-up.** Hitachi Vantara signed an OEM deal[^39], WEKA 4 went multicloud[^2], converged mode landed AI labs[^12], and two rounds totalling US$275M took the valuation to US$1.6B[^29][^16]. **2025–2026: inference pivot under pressure.** WEKA disclosed US$100M ARR and restructured[^32][^33], rebuilt the product as NeuralMesh[^3], launched AMG[^15], aligned with BlueField-4 and STX[^23][^25], and filled feature gaps with NeuralMesh 6[^6]. Meanwhile it lost HPE as a reseller[^40] and saw VAST's valuation run to US$30B[^35].
+WEKA's arc has three phases:
+
+- **2013–2019, the HPC file system that wasn't Lustre.** About US$67M from VCs and strategics including NVIDIA, Mellanox and HPE funded the core technology[^27].
+- **2020–2024, cloud and AI scale-up.** WEKA signed a Hitachi Vantara OEM deal[^39], went multicloud[^2] and won converged-mode AI labs[^12]. It raised US$275M in two rounds, reaching a US$1.6B valuation[^29][^16].
+- **2025–2026, the inference pivot under pressure.** WEKA restructured[^33], rebuilt as NeuralMesh[^3] and shipped AMG[^15]. It aligned with BlueField-4 and STX[^23][^25] and filled feature gaps with NeuralMesh 6[^6]. It also lost HPE as a reseller[^40].
 
 Signals to watch through 2027:
 
-- **NeuralMesh 6 GA and WEKApod 3 shipments** (promised 2H 2026 and fall 2026). Slippage would matter more for a company now selling hardware.
-- **A financing event.** A new priced round, a structured or secondary deal, or a strategic sale. Each would reprice the US$1.6B mark.
-- **MLPerf Storage v4.0 participation**, especially the KV-cache workload.
-- **STX/CMX deployments** naming WEKA as the shipped software, not just a design partner.
-- **Neocloud wins at CoreWeave or Nebius scale**, or losses to VAST.
+- NeuralMesh 6 GA and WEKApod 3 shipments.
+- Any financing event that reprices the US$1.6B mark.
+- MLPerf Storage participation, especially the KV-cache workload.
+- STX/CMX deployments that name WEKA as the shipped software.
+- Large neocloud wins, or losses to VAST.
 
 ## Numbers that matter
 
@@ -275,44 +276,45 @@ Signals to watch through 2027:
 
 **Three questions for a PM**
 
-1. *"When we lose an EXA deal to WEKA, is it portability, converged mode or the KV-cache story?"* A strong answer separates the cases. Cloud-portability losses are structural, because EXA has no cloud SKU. Converged-mode losses are about capex optics and can be countered with TCO that includes failure-domain coupling and CPU tax. KV-cache losses should shrink now that PureKVA and audited MLPerf v3.0 KV numbers exist.
-2. *"How do we position against NeuralMesh 6's guaranteed data reduction?"* A strong answer notes that a guaranteed ratio on AI training data, which is often already compressed, is a commercial instrument as much as a technical one. It asks what the guarantee excludes, and compares on audited, workload-specific effective capacity, as Everpure would want done for its own claims.
-3. *"Does HPE's exit from reselling WEKA open a door for Everpure with HPE-centric buyers or resellers?"* A strong answer is cautious. HPE exited to push Alletra MP, not to make room for Everpure. But resellers that built WEKA practices may want another AI file platform, and that is a channel question worth tracking.
+1. *"When we lose an EXA deal to WEKA, is it portability, converged mode or KV cache?"* A strong answer separates the three:
+   - **Cloud losses** are structural, because EXA has no cloud SKU.
+   - **Converged losses** come down to capex optics, and a TCO that includes the CPU tax and failure-domain coupling can counter them.
+   - **KV-cache losses** should shrink now that PureKVA and audited MLPerf KV results exist.
+2. *"How do we answer NeuralMesh 6's guaranteed data reduction?"* A strong answer treats the guarantee as a commercial instrument, since AI training data is often already compressed. It asks what the guarantee excludes and compares audited, workload-specific effective capacity.
+3. *"Does HPE's exit from reselling WEKA help us?"* A strong answer is cautious: HPE left to push Alletra MP, but resellers with WEKA practices may want another AI file platform.
 
 **Three questions for an engineer**
 
-1. *"What does WEKA's kernel bypass buy that EXA's pNFS-over-RDMA path doesn't?"* A strong answer: both avoid the kernel on the data path where RDMA is used. WEKA's edge is polled user-space handling of *metadata and small I/O* across a sharded namespace. EXA's edge is a standard client and a metadata engine that is not on the data path. The deciding question is the workload's metadata-to-data ratio.
-2. *"How does WEKA's bucket-sharded metadata compare with Purity//FB's metadata core under a million-file listing or a rename storm?"* A strong answer covers hash distribution versus a dedicated metadata tier, cross-bucket transactions, and where each design's tail latency comes from, with data from tests, not datasheets.
-3. *"In converged deployments, what is the real cost of putting storage on GPU servers?"* A strong answer quantifies pinned cores, memory and NIC bandwidth per node. It covers rebuild behaviour when GPU servers reboot for maintenance, and the blast radius when a GPU server fails, versus a disaggregated tier.
+1. *"What does WEKA's kernel bypass buy that EXA's pNFS-over-RDMA path doesn't?"* A strong answer: both keep bulk data out of the kernel. WEKA's edge is polled handling of metadata and small I/O across a sharded namespace. EXA's edge is a standard client and metadata kept off the data path. The workload's metadata-to-data ratio decides it.
+2. *"How does bucket-sharded metadata compare with Purity//FB's metadata core under a rename storm or a million-file listing?"* A strong answer covers hash distribution versus a dedicated tier, the cost of cross-bucket transactions, and where tail latency comes from. It cites test data, not datasheets.
+3. *"What does converged mode really cost?"* A strong answer counts pinned cores, memory and NIC bandwidth per node, then covers rebuilds during GPU maintenance and the blast radius when a node fails.
 
 **Don't say this:**
 
-- "WEKA is just another Lustre." It has no dedicated MDS, runs in user space and is deployed very differently. See [Chapter 17](../03-system-architecture/17-parallel-file-systems.md).
-- "WEKA is a hardware company now." WEKApod exists, but the business model is still software subscriptions on mostly partner hardware.
-- "AMG gives 20x faster inference." The claim is up to 20x faster *time to first token* in vendor-run tests at very long context. Throughput gains in the OCI test were nearer 8–10x, and short-prompt workloads gain little.
-- "WEKA is worth US$1.6B." That was the May 2024 post-money mark. No one outside the company knows today's price, in either direction.
-- "WEKA doesn't do MLPerf because it would lose." It did submit in 2023 and 2024. The fair statement is that it has no audited results in the 2025 or 2026 rounds, including the KV-cache workload.
+- "WEKA is just another Lustre." It has no dedicated metadata server, runs in user space and deploys differently ([Chapter 17](../03-system-architecture/17-parallel-file-systems.md)).
+- "WEKA is a hardware company now." WEKApod exists, but WEKA's revenue is still mostly software subscriptions running on partner hardware.
+- "AMG gives 20x faster inference." The 20x is TTFT at very long context in vendor tests. Throughput gains in the OCI test were nearer 8–10x.
+- "WEKA is worth US$1.6B." That was the May 2024 mark, and today's price is unknown in either direction.
+- "WEKA avoids MLPerf because it would lose." It did submit in 2023 and 2024. It simply has no audited results from 2025 or 2026.
 
 ## Going deeper (optional, L3 pointers)
 
-- WEKA's architecture white paper and "Architecture Key Concepts" PDF cover buckets, virtual metadata servers and the hashing scheme[^8]. The docs pages on networking (DPDK, core pinning, UDP fallback) and on capacity and redundancy (stripe geometry, failure domains) are useful too[^7][^9].
-- NVIDIA Dynamo's KV Block Manager design doc, for where AMG plugs in through NIXL[^18].
-- The WEKA/Oracle June 2026 validation release and the OCI methodology blog it cites. Compare its baseline with MLPerf Storage v3.0's KV-cache rules[^19][^21].
-- SPECstorage Solution 2020 result pages for the HPE Alletra 4110 + WEKA submissions (January 2025) versus FlashBlade//EXA (2026)[^41][^49].
+- **WEKA's internals:** the "Architecture Key Concepts" paper (buckets and hashing)[^8], and the docs on networking and on redundancy[^7][^9].
+- **Where AMG plugs in:** NVIDIA Dynamo's KVBM design doc, which covers the NIXL integration point[^18].
+- **The OCI evidence:** the June 2026 WEKA/OCI validation, read against MLPerf Storage v3.0's KV-cache rules[^19][^21].
+- **The SPECstorage record:** the HPE Alletra 4110 + WEKA results (January 2025) versus FlashBlade//EXA (2026)[^41][^49].
 
 ## Key terms
 
-- **NeuralMesh** — WEKA's current name for its software-defined storage platform (June 2025 onward), successor to WekaFS / WEKA Data Platform.
-- **NeuralMesh Axon** — WEKA's packaging of NeuralMesh to run inside GPU servers on their local NVMe.
-- **Augmented Memory Grid (AMG)** — WEKA's KV-cache offload tier on NeuralMesh.
-- **Converged mode** — running storage backends on the same servers as the applications or GPUs.
-- **DPDK / kernel bypass** — user-space packet processing that skips the operating system's network stack.
-- **Metadata bucket** — a WEKA shard of the namespace owned by one virtual metadata server.
-- **WEKApod** — WEKA's branded appliance line.
-- **Token warehouse** — WEKA's term for the pooled NVMe store of KV-cache blocks.
-- **NVIDIA STX / CMX** — NVIDIA's BlueField-4 storage reference architecture and its context-memory rack implementation.
+- **NeuralMesh / NeuralMesh Axon** — WEKA's platform since June 2025; Axon runs it inside GPU servers.
+- **Augmented Memory Grid (AMG)** — WEKA's KV-cache offload tier.
+- **Converged mode** — storage backends on the application or GPU servers.
+- **DPDK / kernel bypass** — user-space networking that skips the OS stack.
+- **Metadata bucket** — a WEKA namespace shard owned by one virtual metadata server.
+- **WEKApod** — WEKA's appliance line.
+- **NVIDIA STX / CMX** — NVIDIA's BlueField-4 storage reference architecture and its context-memory rack.
 
-See the [glossary](../glossary.md) for full definitions.
+See the [glossary](../glossary.md).
 
 ## Sources
 
