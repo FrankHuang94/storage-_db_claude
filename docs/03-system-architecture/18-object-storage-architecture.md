@@ -15,7 +15,7 @@
 
 [Chapter 9](../02-protocols-and-networking/09-object-storage-and-s3.md) showed S3 becoming the default AI data interface. Behind the API, systems differ sharply: a fast endpoint over a slow index still lists a billion keys slowly. When an AI buyer weighs FlashBlade against MinIO AIStor, Cloudian or Dell ObjectScale, deals turn on internals: objects per bucket, LIST rate, the cost of a small PUT, and what happens when a node dies.
 
-Pure Storage built FlashBlade as all-flash file and object while object storage still meant disk archives. With every rival now on flash, the question is whether FlashBlade's metadata engine still differentiates.
+Pure Storage built FlashBlade as all-flash object while object still meant disk archives. Now that rivals are on flash too, does its metadata engine still differentiate?
 
 ## Core concepts
 
@@ -26,8 +26,8 @@ Pure Storage built FlashBlade as all-flash file and object while object storage 
 *Figure 18.1 — Gateways, index and data nodes scale independently: gateways for request rate, the index for object count and LIST, data nodes for capacity and bandwidth.*
 
 - **Gateways** terminate HTTPS, check SigV4 and policy, choose placement and erasure-code; they hold no durable state.
-- **The index** is a replicated, sharded table keyed by bucket + key + version. It stores the size, ETag and fragment map, sorted so that LIST is a range scan.
-- **Data nodes** run a local engine that maps fragments to disk extents. AWS's engine, **ShardStore**, is a key-value store of roughly 40,000 lines of Rust, validated with lightweight formal methods[^1]. It is LSM-based but keeps shard data outside the tree to limit write amplification[^2].
+- **The index** is a replicated, sharded table keyed by bucket + key + version, holding size, ETag and fragment map, sorted so LIST is a range scan.
+- **Data nodes** map fragments to disk extents with a local engine. AWS's engine, **ShardStore**, is a key-value store of roughly 40,000 lines of Rust, validated with lightweight formal methods[^1]. It is LSM-based but keeps shard data outside the tree to limit write amplification[^2].
 
 S3's index design is unpublished; its scale is not: over 500 trillion objects and 200 million requests per second (March 2026)[^3].
 
@@ -95,7 +95,7 @@ sequenceDiagram
 
 *Figure 18.3 — A GET waits for the slowest of k fragment reads, so tail latency comes from the wide stripe, not the average drive.*
 
-**Worked example (tail latency).** Suppose each node stalls 1% of the time. If a GET must wait for 8 specific fragments, 1 − 0.99⁸ ≈ 7.7% of GETs stall. If it asks 9 nodes and uses the first 8, it stalls only when two nodes are slow at once: 1 − (0.99⁹ + 9 × 0.01 × 0.99⁸) ≈ 0.34%. Spending 12% more reads buys a roughly 20× better tail.
+**Worked example (tail latency).** Suppose each node stalls 1% of the time. Waiting on 8 specific fragments, 1 − 0.99⁸ ≈ 7.7% of GETs stall. Asking 9 nodes and using the first 8, a GET stalls only if two are slow: 1 − (0.99⁹ + 9 × 0.01 × 0.99⁸) ≈ 0.34%. Spending 12% more reads buys a roughly 20× better tail.
 
 ### Erasure coding across nodes and sites
 
@@ -127,7 +127,7 @@ flowchart TB
 
 *Table 18.1 — Worked example: geo-EC saves 15 PB raw per 10 PB usable, but leaves data unprotected during a multi-day rebuild.*
 
-StorageGRID documents the 1.5× figure for 6+3 over three sites, requires at least three sites, and advises against it above 100 ms of inter-site latency[^14][^15]. A site rebuild pulls twice the lost data over the WAN[^16]. In case C, rebuilding 5 PB means moving 10 PB, which takes 800,000 s (**~9.3 days**) at 100 Gb/s. AWS spreads S3 Standard across at least three Availability Zones, targeting eleven nines[^17]; metro distances keep the penalty small.
+StorageGRID documents 1.5× for 6+3 over three sites and advises against it above 100 ms inter-site latency[^14][^15]. A site rebuild pulls twice the lost data over the WAN[^16]. In case C, rebuilding 5 PB moves 10 PB: 800,000 s (**~9.3 days**) at 100 Gb/s. AWS spreads S3 Standard across at least three Availability Zones, targeting eleven nines[^17]; metro distances keep the penalty small.
 
 ### How it scales and where it hits walls
 
@@ -161,7 +161,7 @@ StorageGRID documents the 1.5× figure for 6+3 over three sites, requires at lea
 
 *Table 18.3 — Object storage trades rich semantics for scale and capacity efficiency.*
 
-**Best fit:** AI datasets packed into large shards, checkpoints, lakehouse tables, backup and archive, media libraries. **Worst fit:** databases and VMs that need in-place writes, millions of tiny files that are often renamed, and POSIX tools that rely on directories.
+**Best fit:** sharded AI datasets, checkpoints, lakehouse tables, backup, archive, media. **Worst fit:** in-place-write databases and VMs, tiny files renamed often, POSIX tools that need directories.
 
 ### From cheap-and-deep to fast
 
@@ -196,7 +196,7 @@ Software-defined object storage on dense HDD servers is still the lowest $/TB. I
 
 *Table 18.5 — Every vendor now has a flash object story; they differ in where the index lives and how protection crosses failure domains.*
 
-FlashBlade bets that object metadata is a database problem, solved in flash and NVRAM, shared with file. An analyst report describes writes mirrored to NVRAM on two other blades before the acknowledgement[^8] [VERIFY: current Purity//FB write path]. Steelman for software-defined rivals: cheaper capacity, geo-EC and free choice of servers. FlashBlade's multi-site protection appears to be replication between arrays rather than geo-EC [VERIFY: FlashBlade multi-site object options in 2026]. Options a strategy team might evaluate, based on public information: publishing LIST and small-object benchmarks, and testing whether FlashBlade//E with DeepReduce wins capacity deals now lost to Ceph or MinIO on HDD.
+FlashBlade bets that object metadata is a database problem, solved in flash and NVRAM, shared with file. An analyst report describes writes mirrored to NVRAM on two other blades before acknowledgement[^8] [VERIFY: current Purity//FB write path]. Steelman for software-defined rivals: cheaper capacity, geo-EC and free choice of servers. FlashBlade's multi-site protection appears to be replication between arrays rather than geo-EC [VERIFY: FlashBlade multi-site object options in 2026]. Options a strategy team might evaluate, based on public information: publishing LIST and small-object benchmarks, and testing whether FlashBlade//E with DeepReduce wins capacity deals now lost to Ceph or MinIO on HDD.
 
 ## History and trajectory
 

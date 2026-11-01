@@ -43,7 +43,7 @@ timeline
 
 ### Era 1, 2009–2015: the all-flash disruptor
 
-The company was incorporated in Delaware in October 2009 as OS76, Inc. and renamed Pure Storage in January 2010[^1]. Its founders, John Colgrove (from Veritas) and John Hayes (from Yahoo), were incubated by Sutter Hill Ventures[^2]. In 2009, enterprise flash meant expensive SLC drives for a few hot databases. Pure's bet was that consumer MLC flash, managed by software that deduplicated, compressed and wrote in a way that spared the cells, could replace disk for primary storage. Illustratively, if a 5:1 data-reduction ratio turns raw flash at five times disk's $/TB into parity per *effective* terabyte, the speed comes almost free ([Chapter 5](../01-storage-fundamentals/05-data-reduction.md)).
+The company was incorporated in Delaware in October 2009 as OS76, Inc. and renamed Pure Storage in January 2010[^1]. Its founders, John Colgrove (from Veritas) and John Hayes (from Yahoo), were incubated by Sutter Hill Ventures[^2]. In 2009 enterprise flash meant expensive SLC drives for a few hot databases. Pure bet that consumer MLC flash, managed by software that deduplicated, compressed and spared the cells, could replace disk for primary storage. Illustratively, if a 5:1 data-reduction ratio turns raw flash at five times disk's $/TB into parity per *effective* terabyte, the speed comes almost free ([Chapter 5](../01-storage-fundamentals/05-data-reduction.md)).
 
 The semiconductor analogy is a fabless start-up that wins with design on a mature, cheap process node rather than paying for the leading edge. After a two-year beta, the FlashArray 300 series reached general availability in May 2012, running the Purity operating environment[^3]. It shipped with "All Software Included" licensing[^1].
 
@@ -65,13 +65,13 @@ Three acquisitions followed in 26 months. Table 25.1 shows how they turned out.
 
 *Table 25.1 — Everpure buys capabilities, not revenue. Disclosed consideration across four acquisitions totals about $594M, and the one clear miss (StorReduce) was also the cheapest.*
 
-The arithmetic: 20.5 + 47.9 + 15.9 + 352.9 + 32.2 + 125.0 ≈ $594M over eight years. FY2026 free cash flow alone was $616M[^21]. That restraint is a choice. The company has never bought a large installed base. Every deal had to fit Purity or sit beside it.
+The arithmetic: 20.5 + 47.9 + 15.9 + 352.9 + 32.2 + 125.0 ≈ $594M over eight years, against FY2026 free cash flow of $616M[^21]. The company has never bought a large installed base; every deal had to fit Purity or sit beside it.
 
 ### Era 3, 2020–2023: subscription and the first Meta relationship
 
 FY2021 revenue grew only 2%, which the company attributed to COVID-19. FY2022 then rose 29% to $2.18B[^22]. Part of that rise came from Meta. Its AI Research SuperCluster, unveiled in January 2022, used 175 PB of FlashArray and 10 PB of FlashBlade[^23]. In June 2022 Pure reorganised Evergreen into //Forever (owned arrays), //Flex (pay-per-use on owned hardware) and //One (storage-as-a-service)[^24]. The economics are covered in [Chapter 23](../03-system-architecture/23-consumption-models.md).
 
-In May 2023 a Pure executive predicted that no new hard drives would be sold after 2028. Analysts such as Coughlin Associates disputed it[^25][^26]. It was a marketing line, but it pointed to the real strategy: QLC DirectFlash at hyperscale.
+In May 2023 a Pure executive predicted that no new hard drives would be sold after 2028. Analysts such as Coughlin Associates disputed it[^25][^26]. It was a marketing line that pointed to the real strategy: QLC DirectFlash at hyperscale.
 
 ### Era 4, 2024–2025: from array vendor to IP licensor
 
@@ -117,9 +117,9 @@ Worked numbers: FY2016 revenue was $440.3M and FY2026 was $3,662.8M[^35][^36]. T
 
 **Worked:** Evergreen. It turned a hardware company into one where subscription ARR ($1,924M at FY2026) equals about 52% of revenue, and subscription services were $1,691M, or 46% of FY2026 revenue[^36]. Purity's single code base across FlashArray and FlashBlade worked too. So did the hyperscaler licence, which moved from a December 2024 announcement to volume shipments within the next fiscal year.
 
-**Took longer or landed narrower:** FlashBlade's GA took ten months after unveiling. Native file on FlashArray took a year from the Compuverde deal to Purity 6.0. One report says it needed two more years to mature [VERIFY: Purity//FA 6.4 as the release in which file services matured]. Portworx kept its separate identity and has not shown up as a disclosed revenue line. Its story moved from containers to VM migration off VMware. Hyperscaler revenue was described as small in Q1 FY2027 and back-half-weighted[^38]. The 2028 "end of disk" call is still unproven.
+**Took longer or landed narrower:** FlashBlade's GA took ten months after unveiling. Native file on FlashArray took a year from the Compuverde deal to Purity 6.0. One report says it needed two more years to mature [VERIFY: Purity//FA 6.4 as the release in which file services matured]. Portworx has no disclosed revenue line, and its pitch moved from containers to VM migration off VMware. Hyperscaler revenue was described as small in Q1 FY2027 and back-half-weighted[^38]. The 2028 "end of disk" call is still unproven.
 
-**What the rebrand signals:** the old name tied the company to flash media just when its pitch moved to software, data services and IP licensing. Options a strategy team might evaluate, based on public information: whether data-intelligence revenue can be disclosed separately enough to support a platform multiple; whether further 1touch-sized deals (governance, vector, lakehouse connectors) are needed to make "data primacy" credible against VAST's AI OS; and how to keep the array franchise funding all of this while NAND costs rise. Everpure raised prices in February 2026[^39], and FY2027 Q2 free cash flow was −$238M because the company prepaid for NAND[^40].
+**What the rebrand signals:** the old name tied the company to flash media just as its pitch moved to software, data services and licensing. Options a strategy team might evaluate, based on public information: whether data-intelligence revenue can be disclosed separately enough to support a platform multiple; whether further 1touch-sized deals (governance, vector, lakehouse connectors) are needed to make "data primacy" credible against VAST's AI OS; and how to keep the array franchise funding all of this while NAND costs rise. Everpure raised prices in February 2026[^39], and FY2027 Q2 free cash flow was −$238M because the company prepaid for NAND[^40].
 
 ## How Everpure approaches it vs. competitors
 
@@ -133,11 +133,11 @@ Worked numbers: FY2016 revenue was $440.3M and FY2026 was $3,662.8M[^35][^36]. T
 
 *Table 25.2 — Everyone is converging on "data platform for AI". Everpure is unusual in reaching it through one OS and a subscription base rather than through a portfolio (Dell) or a clean-sheet AI design (VAST).*
 
-The steelman for the alternatives matters. VAST's single-namespace, database-in-storage design was built for AI pipelines. Everpure is adding equivalent functions after the fact, through EXA and Data Stream. Dell and NetApp own larger installed bases and channel reach, and NetApp's ONTAP served file and block from one OS long before Purity 6.0. Everpure's counter-argument is consistency: one OS, one upgrade model and fleet telemetry across 14 years of installed systems ([Chapter 46](../06-industry-and-competition/46-incumbents.md), [Chapter 42](../06-industry-and-competition/42-vast-data.md)).
+The steelman for the alternatives: VAST's single-namespace, database-in-storage design was built for AI pipelines. Everpure is adding equivalent functions after the fact, through EXA and Data Stream. Dell and NetApp own larger installed bases and channel reach, and NetApp's ONTAP served file and block from one OS long before Purity 6.0. Everpure's counter-argument is consistency: one OS, one upgrade model and fleet telemetry across 14 years of installed systems ([Chapter 46](../06-industry-and-competition/46-incumbents.md), [Chapter 42](../06-industry-and-competition/42-vast-data.md)).
 
 ## History and trajectory
 
-The signals to watch through 2027 are dated and public:
+Dated, public signals to watch through 2027:
 
 - **Q3 FY2027** results, due late November 2026, are the first quarter in which management expects hyperscale revenue to rise significantly[^38].
 - **Second hyperscaler** revenue is expected from FY2028[^34]. A third win would show a repeatable model rather than one customer relationship.
@@ -162,15 +162,15 @@ The signals to watch through 2027 are dated and public:
 
 **Questions for a PM**
 
-1. *"Which Evergreen promise costs us the most in a NAND upcycle, and how is it priced?"* Strong: names the specific entitlement (controller refresh, capacity guarantees, //One effective-capacity metering). It quantifies exposure and explains contract-term protections.
-2. *"What would make Data Intelligence a separately disclosed line, and when?"* Strong: gives attach rates, standalone versus bundled pricing, and a metric the company could report. It does not just say "platform".
+1. *"Which Evergreen promise costs us the most in a NAND upcycle, and how is it priced?"* Strong: names the entitlement (controller refresh, capacity guarantees, //One effective-capacity metering), quantifies exposure and cites contract protections.
+2. *"What would make Data Intelligence a separately disclosed line, and when?"* Strong: gives attach rates, standalone versus bundled pricing and a reportable metric, not just "platform".
 3. *"Where did Portworx win in FY2026: containers, VM migration or both?"* Strong: separates KubeVirt and VMware-exit deals from cloud-native ones and cites customer counts.
 
 **Questions for an engineer**
 
 1. *"What changed in Purity to serve a hyperscaler that owns the hardware?"* Strong: describes the split between licensed firmware/software and customer-built systems, and who owns failure analysis.
 2. *"How much of the Compuverde code still runs in FlashArray file services?"* Strong: candid about the rewrite share and what was kept.
-3. *"What did the StorReduce/ObjectEngine exit teach about integrating acquired data paths?"* Strong: names the integration cost and the partner overlap (backup ISVs) that made the product redundant.
+3. *"What did the StorReduce/ObjectEngine exit teach about integrating acquired data paths?"* Strong: names the integration cost and the backup-ISV overlap that made it redundant.
 
 **Don't say this:**
 

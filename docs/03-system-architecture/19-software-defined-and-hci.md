@@ -35,7 +35,7 @@ In the **appliance** model ([Chapter 14](14-scale-up-dual-controller.md)) one ve
 
 **Worked example: stranded resources.** An illustrative node has 64 cores and 8 × 15.36 TB SSDs (123 TB raw, ~61 TB usable at RF2). An estate needs 400 cores and 2 PB usable. Sized for compute, ⌈400 ÷ 64⌉ = 7 nodes give only ~430 TB. Sized for capacity, ⌈2,000 ÷ 61⌉ = 33 nodes give 2,112 cores, 81% idle. Under per-core subscriptions such as VMware Cloud Foundation (VCF), idle cores still need licences; VCF's bundled 1 TiB of vSAN per core[^4] [VERIFY: search-summary only] softens this without fixing it. The fix is un-converging: Nutanix storage-only and compute-only nodes; vSAN Max (2023), a storage-only cluster of up to 8.6 PB that other clusters mount[^5]; or an external array behind HCI compute[^2]. Each concedes HCI's one-building-block promise.
 
-Two more walls follow. **East-west amplification:** at RF2 every write crosses the cluster network again, and rebuilding a failed 123 TB node at ~5 GB/s of spare bandwidth takes 123,000 ÷ 5 ≈ 6.8 hours. **Noisy neighbours:** busy VMs starve the storage service on their own node.
+Two more walls follow. **East-west amplification:** at RF2 every write crosses the cluster network again, and rebuilding a failed 123 TB node at ~5 GB/s of spare bandwidth takes 123,000 ÷ 5 ≈ 6.8 hours. **Noisy neighbours:** busy VMs starve their node's storage service.
 
 | Failure | HCI (Nutanix / vSAN-style) | EBS-style cloud block |
 |---|---|---|
@@ -124,7 +124,7 @@ Block Express internals are public only at a high level, so the read diagram lea
 
 *Table 19.3 — Software-only maximizes margin percentage and iteration speed; appliances maximize gross profit per deal and media control.*
 
-**Worked example (illustrative split).** On a US$1M system, an appliance vendor books US$1M at 66%: **US$660k gross profit**. A software-only vendor might book US$400k at 88%: **US$352k**, with the OEM taking US$600k of hardware. In exchange it carries no inventory or NAND risk and ships on new CPUs and NICs as soon as OEMs do. Open source caps pricing from below; a free tier that is good enough must be fenced, as MinIO did with AGPLv3 in 2021[^16], a stripped community console in 2025[^17] and maintenance mode in December 2025[^18].
+**Worked example (illustrative split).** On a US$1M system, an appliance vendor books US$1M at 66%: **US$660k gross profit**. A software-only vendor might book US$400k at 88%: **US$352k**, with the OEM taking US$600k of hardware. In exchange it carries no inventory or NAND risk and ships on new CPUs as soon as OEMs do. Open source caps pricing from below; a free tier that is good enough must be fenced, as MinIO did with AGPLv3 in 2021[^16], a stripped community console in 2025[^17] and maintenance mode in December 2025[^18].
 
 ## How Everpure approaches it vs. competitors
 
@@ -172,21 +172,21 @@ Storage felt it. Gartner expects over a third of VMware workloads to move by 202
 **Questions for a PM**
 
 1. *"In a VMware renewal, when do we win behind Nutanix rather than against vSAN?"* Strong: capacity-heavy estates, stranded-core licence cost, data reduction; concedes edge and small clusters to HCI.
-2. *"What is our gross profit per deal, not margin %, against a software-only rival?"* Strong: splits software and hardware dollars and says who carries NAND risk.
+2. *"What is our gross profit per deal, not margin %, against a software-only rival?"* Strong: splits software and hardware dollars and NAND risk.
 3. *"What breaks first if Purity ships as software on customer-chosen servers?"* Strong: HCL support cost, lost DirectFlash density, Evergreen economics.
 
 **Questions for an engineer**
 
 1. *"What happens to a database VM's p99 latency during an HCI node rebuild?"* Strong: rebuild bandwidth caps, throttling policy, time to full redundancy.
 2. *"How does a cloud block service avoid a re-mirroring storm?"* Strong: reserved spare capacity, rate-limited repair, a small-blast-radius configuration service.
-3. *"What does NVMe/TCP to an external array cost versus local HCI reads?"* Strong: tens of microseconds, weighed against avoided replica writes and data reduction.
+3. *"What does NVMe/TCP to an external array cost versus local HCI reads?"* Strong: tens of microseconds, offset by avoided replica writes.
 
 **Don't say this:**
 
 - "HCI is just SDS." It is SDS sharing nodes with applications; that coupling is its defining weakness.
 - "Software-only is always better economics." Higher percentage, smaller revenue base, support shifted to the HCL.
 - "EBS is a SAN in the cloud." It is a replicated service with a separate configuration plane, scoped to one zone.
-- "Broadcom killed vSAN." VCF bundles vSAN capacity; some customers left VMware, others now own more vSAN.
+- "Broadcom killed vSAN." VCF bundles vSAN capacity, so many customers now own more of it.
 - "Ceph is free." The software is; people, testing and hardware qualification are not.
 
 ## Going deeper (optional, L3 pointers)

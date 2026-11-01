@@ -69,7 +69,7 @@ A strong whiteboard answer makes three points. **Terms** are a logical clock: a 
 
 ### Quorum math: N, W, R
 
-Leaderless, Dynamo-style systems use quorums directly[^2]: with N replicas, writes wait for W acknowledgements and reads query R. **W + R > N** makes every read overlap the latest write (N=3, W=2, R=2 is classic). **W > N/2** stops two conflicting writes both succeeding. N=3, W=1, R=1 is fast but only eventually consistent.
+Leaderless, Dynamo-style systems use quorums directly[^2]. With N replicas, writes wait for W acknowledgements and reads query R. **W + R > N** makes every read overlap the latest write (N=3, W=2, R=2 is classic). **W > N/2** stops two conflicting writes both succeeding. N=3, W=1, R=1 is fast but only eventually consistent.
 
 Surviving f failures needs 2f+1 voters, so four voters are no better than three[^5]. Without a majority you get **split brain**: both halves of a partitioned pair accept writes and diverge. Two-site clusters add a **witness** (or **mediator**): a data-less third vote, outside both sites' failure domains, that decides which side keeps serving.
 
@@ -96,7 +96,7 @@ Data: `data/ch20_durability.csv`
 
 ### Correlated failures and failure domains
 
-The model assumes independence. If each further failure during a rebuild is ten times likelier, because drives share a batch, firmware or power feed, MTTDL falls by 10ᵐ: the dashed line in Figure 20.2 shows 16+4 losing four nines. In 2019 HPE warned that certain SAS SSDs would die at exactly 32,768 power-on hours without a firmware fix[^16]: drives installed together fail together. Google's 2010 fleet study named planned kernel upgrades a major source of correlated failure[^17]. Random replica placement compounds it; copyset placement cut modelled data-loss probability in a 5,000-node power outage from 99.99% to 0.15%[^18].
+The model assumes independence. If each further failure during a rebuild is ten times likelier, because drives share a batch, firmware or power feed, MTTDL falls by 10ᵐ: the dashed line in Figure 20.2 shows 16+4 losing four nines. In 2019 HPE warned that certain SAS SSDs would die at exactly 32,768 power-on hours without a firmware fix[^16]. Drives installed together fail together. Google's 2010 fleet study named planned kernel upgrades a major source of correlated failure[^17]. Random replica placement compounds it; copyset placement cut modelled data-loss probability in a 5,000-node power outage from 99.99% to 0.15%[^18].
 
 ```mermaid
 flowchart LR
