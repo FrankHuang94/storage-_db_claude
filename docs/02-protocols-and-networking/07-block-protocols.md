@@ -194,8 +194,8 @@ FC's survival is organizational as much as technical: a separate lossless fabric
 | Vendor / array | NVMe/RoCE | NVMe/FC | NVMe/TCP | Notable angle |
 |---|---|---|---|---|
 | Everpure FlashArray | 2019, Purity 5.2 "DirectFlash Fabric"[^13] | Feb 2021, Purity 6.1[^12] | Purity 6.4.2, 2022 [VERIFY: exact GA month; sources conflict][^22] | NVMe end to end internally (DirectFlash); Nutanix AHV over NVMe/TCP[^1] |
-| NetApp ONTAP (AFF/ASA) | Not supported on ONTAP, which offers NVMe/FC and NVMe/TCP only[^26]; the separate E-Series/EF line has RDMA options | ONTAP 9.4, 2018[^27] | ONTAP 9.10.1, late 2021[^23] | Unified file+block; large FC base |
-| Dell PowerStore | Not found in public PowerStore material; Dell chose NVMe/TCP for Ethernet hosts[^28] | PowerStoreOS 2.0, 2021[^29] | PowerStoreOS 2.1, early 2022[^24] | SmartFabric Storage Software for NVMe/TCP discovery[^18] |
+| NetApp ONTAP (AFF/ASA) | Not supported on ONTAP, which offers NVMe/FC and NVMe/TCP only[^23]; the separate E-Series/EF line has RDMA options | ONTAP 9.4, 2018[^24] | ONTAP 9.10.1, late 2021[^25] | Unified file+block; large FC base |
+| Dell PowerStore | Not found in public PowerStore material; Dell chose NVMe/TCP for Ethernet hosts[^26] | PowerStoreOS 2.0, 2021[^27] | PowerStoreOS 2.1, early 2022[^28] | SmartFabric Storage Software for NVMe/TCP discovery[^18] |
 
 *Figure 7.7 — Everpure shipped RoCE early and followed on TCP; by 2026 the three vendors are at parity on NVMe/FC and NVMe/TCP (only Everpure offers RoCE on these lines), so differentiation sits in the internal data path and the automation around discovery.*
 
@@ -219,7 +219,7 @@ timeline
 
 *Figure 7.8 — The command set changed once in 25 years (SCSI to NVMe); transports keep multiplying because each buyer segment brings its own fabric.*
 
-A command set is born on a local bus, then re-ridden across every network: SCSI from ribbon cable to FC to TCP, NVMe from PCIe to RDMA and FC to TCP. The June 2021 NVMe 2.0 refactor made each transport its own specification[^25].
+A command set is born on a local bus, then re-ridden across every network: SCSI from ribbon cable to FC to TCP, NVMe from PCIe to RDMA and FC to TCP. The June 2021 NVMe 2.0 refactor made each transport its own specification[^29].
 
 Signals to watch: NVMe/TCP offload on DPUs (erasing its CPU penalty), better Ethernet RDMA congestion control (making RoCE easier outside AI), FC's move to 128G, and whether hyperscaler-style block services (see [Chapter 19](../03-system-architecture/19-software-defined-and-hci.md)) pull enterprise buyers toward NVMe/TCP-only designs.
 
@@ -299,10 +299,10 @@ Signals to watch: NVMe/TCP offload on DPUs (erasing its CPU penalty), better Eth
 [^20]: Crehan Research (via GlobeNewswire), "Fibre Channel Networking Sales Grew 6% in 2025, Reports Crehan Research," 2026-03-23. https://www.globenewswire.com/news-release/2026/03/23/3260519/0/en/Fibre-Channel-Networking-Sales-Grew-6-in-2025-Reports-Crehan-Research.html (retrieved 2026-11-01).
 [^21]: Broadcom, "Broadcom introduces the world's first quantum-safe Gen 8 128G SAN switch portfolio," 2025-11-19. https://investors.broadcom.com/news-releases/news-release-details/broadcom-introduces-worlds-first-quantum-safe-gen-8-128g-san (retrieved 2026-11-01).
 [^22]: Pure Storage, "Purity//FA 6.4 Release Highlights," n.d. https://blog.purestorage.com/purity-fa-releases/current-active-release-purity-fa-6-4-0 (retrieved 2026-11-01); OpenStack Cinder, "[Pure Storage] Add TCP transport type to NVMe driver" (requires Purity 6.4.2+), n.d. https://gitea09.opendev.org:3081/openstack/cinder/commit/dc77207e4c73950f1cacee5c9022586821ea6b59 (retrieved 2026-11-01).
-[^23]: TechTarget, "NetApp OnTap 9.10.1 adds ransomware protection, NVMe/TCP," 2021. https://www.techtarget.com/searchstorage/news/252508661/NetApp-OnTap-9101-adds-ransomware-protection-NVMe-TCP (retrieved 2026-11-01).
-[^24]: Blocks & Files, "More power for PowerStore: Dell adds NVMe/TCP networking to unified file/block array," 2021-09-28. https://blocksandfiles.com/2021/09/28/more-power-for-powerstore-dell-adds-nvme-tcp-networking-to-unified-fileblock-array/ (retrieved 2026-11-01); Dell Info Hub, "What's New with the Dell PowerStoreOS 2.1 Release?" 2022. https://infohub.delltechnologies.com/en-au/p/what-s-new-with-the-dell-powerstoreos-2-1-release (retrieved 2026-11-01).
-[^25]: NVM Express, "Which specifications are included in the refactored NVMe 2.0 specifications?" (FAQ), n.d. https://nvmexpress.org/?p=5558 (retrieved 2026-11-01).
-[^26]: NetApp Knowledge Base, "Is NVMe over RoCE supported with ONTAP?" n.d. https://kb.netapp.com/on-prem/ontap/da/SAN/SAN-KBs/Is_NVME_over_ROCE_supported_with_Ontap (retrieved 2026-11-01; search-summary only).
-[^27]: NetApp, "NVMe configuration, support and limitations" (ONTAP 9 documentation), n.d. https://docs.netapp.com/us-en/ontap/nvme/support-limitations.html (retrieved 2026-11-01; search-summary only).
-[^28]: WWT, "PowerStore 2.1: NVMe over TCP and SmartFabric Storage Software," n.d. (2022). https://www.wwt.com/article/powerstore-2-1-nvme-over-tcp-smartfabric-storage-software (retrieved 2026-11-01; search-summary only).
-[^29]: Channelbuzz, "Dell upgrades PowerStore software and unveils entry-level PowerStore 500 model," 2021-04. https://channelbuzz.ca/2021/04/dell-upgrades-powerstore-software-and-unveils-entry-level-powerstore-500-model-36437/ (retrieved 2026-11-01).
+[^23]: NetApp Knowledge Base, "Is NVMe over RoCE supported with ONTAP?" n.d. https://kb.netapp.com/on-prem/ontap/da/SAN/SAN-KBs/Is_NVME_over_ROCE_supported_with_Ontap (retrieved 2026-11-01; search-summary only).
+[^24]: NetApp, "NVMe configuration, support and limitations" (ONTAP 9 documentation), n.d. https://docs.netapp.com/us-en/ontap/nvme/support-limitations.html (retrieved 2026-11-01; search-summary only).
+[^25]: TechTarget, "NetApp OnTap 9.10.1 adds ransomware protection, NVMe/TCP," 2021. https://www.techtarget.com/searchstorage/news/252508661/NetApp-OnTap-9101-adds-ransomware-protection-NVMe-TCP (retrieved 2026-11-01).
+[^26]: WWT, "PowerStore 2.1: NVMe over TCP and SmartFabric Storage Software," n.d. (2022). https://www.wwt.com/article/powerstore-2-1-nvme-over-tcp-smartfabric-storage-software (retrieved 2026-11-01; search-summary only).
+[^27]: Channelbuzz, "Dell upgrades PowerStore software and unveils entry-level PowerStore 500 model," 2021-04. https://channelbuzz.ca/2021/04/dell-upgrades-powerstore-software-and-unveils-entry-level-powerstore-500-model-36437/ (retrieved 2026-11-01).
+[^28]: Blocks & Files, "More power for PowerStore: Dell adds NVMe/TCP networking to unified file/block array," 2021-09-28. https://blocksandfiles.com/2021/09/28/more-power-for-powerstore-dell-adds-nvme-tcp-networking-to-unified-fileblock-array/ (retrieved 2026-11-01); Dell Info Hub, "What's New with the Dell PowerStoreOS 2.1 Release?" 2022. https://infohub.delltechnologies.com/en-au/p/what-s-new-with-the-dell-powerstoreos-2-1-release (retrieved 2026-11-01).
+[^29]: NVM Express, "Which specifications are included in the refactored NVMe 2.0 specifications?" (FAQ), n.d. https://nvmexpress.org/?p=5558 (retrieved 2026-11-01).

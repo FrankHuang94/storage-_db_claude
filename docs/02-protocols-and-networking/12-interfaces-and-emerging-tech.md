@@ -52,7 +52,7 @@ Forward error correction (FEC) needs fixed-size blocks, so PCIe 6.0 introduced t
 
 Compute Express Link runs three protocols on the PCIe PHY[^11]: **CXL.io** (ordinary PCIe), **CXL.cache** (a device coherently caches host memory) and **CXL.mem** (the host loads and stores device memory). **Type 1** devices (io + cache) are caching SmartNICs; **Type 2** (all three) are accelerators whose memory joins the coherent space; **Type 3** (io + mem) are memory expanders.
 
-**CXL.mem for the semis reader.** The host's home agent sends 64-byte cache-line reads and writes, and the device returns data or completions. The device's DRAM is mapped into physical address space as *host-managed device memory* (HDM), usually exposed as a CPU-less NUMA node that software reaches with plain loads and stores. Passive expanders are host-coherent (HDM-H). CXL 3.0 added **back-invalidate** (HDM-DB). The device keeps a snoop filter and can recall lines from host caches, which is what lets several hosts share one region coherently[^12]. Microsoft's Pond team measured direct-attached CXL memory at roughly 70–90 ns over local DRAM. That is a NUMA-hop penalty, not a storage one, and switches add more[^13].
+**CXL.mem for the semis reader.** The host's home agent sends 64-byte cache-line reads and writes, and the device returns data or completions. The device's DRAM is mapped into physical address space as *host-managed device memory* (HDM), usually exposed as a CPU-less NUMA node that software reaches with plain loads and stores. Passive expanders are host-coherent (HDM-H). CXL 3.0 added **back-invalidate** (HDM-DB). The device keeps a snoop filter and can recall lines from host caches, which is what lets several hosts share one region coherently[^11]. Microsoft's Pond team measured direct-attached CXL memory at roughly 70–90 ns over local DRAM. That is a NUMA-hop penalty, not a storage one, and switches add more[^12].
 
 ```mermaid
 flowchart LR
@@ -79,13 +79,13 @@ flowchart LR
 
 *Figure 12.2 — Direct-attached expansion ships, switched pooling is starting, and multi-host sharing (which needs CXL 3.x back-invalidate) is the frontier.*
 
-**The spec runs well ahead of deployment.** CXL 4.0 (November 2025) reached 128 GT/s on the PCIe 7.0 PHY, up to 768 GB/s per direction on x16[^14]. Deployment lags:
+**The spec runs well ahead of deployment.** CXL 4.0 (November 2025) reached 128 GT/s on the PCIe 7.0 PHY, or 256 GB/s per direction on a x16 link, and added *bundled ports* that gang several links into one logical port (the consortium's white paper illustrates 768 GB/s per direction)[^13]. Deployment lags:
 
-- **Direct attach:** Azure's M-series preview (November 2025) uses Astera Labs' CXL 2.0 controllers, up to 2 TB each[^15].
-- **Pooling:** Marvell has a CXL 2.0 switch in production and its next one sampling in Q3 2026[^16].
-- **Rack-scale AI pooling:** demonstrations, such as Samsung with AMD at OCP 2026[^17].
+- **Direct attach:** Azure's M-series preview (November 2025) uses Astera Labs' CXL 2.0 controllers, up to 2 TB each[^14].
+- **Pooling:** Marvell has a CXL 2.0 switch in production and its next one sampling in Q3 2026[^15].
+- **Rack-scale AI pooling:** demonstrations, such as Samsung with AMD at OCP 2026[^16].
 
-The economics are modest: Pond estimated a 16-socket pool trims DRAM needs by about 7%[^18]. CXL memory is DRAM at DRAM prices.
+The economics are modest: Pond estimated a 16-socket pool trims DRAM needs by about 7%[^17]. CXL memory is DRAM at DRAM prices.
 
 ### EDSFF: the form factor is a power contract
 
@@ -93,17 +93,17 @@ SNIA's EDSFF family replaced the 2.5-inch U.2 shape with ones designed for airfl
 
 | Form factor | Size (W × L; thickness) | Max sustained power (air) | Largest capacity seen (2026) | Typical use |
 |---|---|---|---|---|
-| U.2 (2.5-inch) | 70 × 100 mm; 15 mm | ~25 W [VERIFY: U.2 power class] | 245.76 TB (Micron 6600 ION)[^19] | ~24 bays per 2U; legacy servers and arrays |
-| E1.S | 33.75 × 118.75 mm; 9.5 / 15 / 25 mm | up to 25 W (15 mm)[^20] | [VERIFY: largest shipping E1.S] | Dense compute and GPU nodes, e.g. Meta's GenAI clusters[^21] |
-| E1.L ("ruler") | 38.4 × 318.75 mm; 9.5 / 18 mm | ~25–40 W[^22] | 122.88 TB (Solidigm D5-P5336)[^23] | Up to ~32 bays per 1U [VERIFY]; capacity JBOFs |
-| E3.S | 76 × 112.75 mm; 7.5 mm (1T) / 16.8 mm (2T) | 25 W (1T) / 40 W (2T)[^24] | [VERIFY: largest shipping E3.S] | Mainstream PCIe 5/6 servers; CXL memory modules |
-| E3.L | 76 × 142.2 mm; 7.5 / 16.8 mm | 40 W (1T) / 70 W (2T)[^24] | 245.76 TB (Micron 6600 ION)[^19] | Capacity QLC in storage servers |
+| U.2 (2.5-inch) | 70 × 100 mm; 15 mm | ~25 W [VERIFY: U.2 power class] | 245.76 TB (Micron 6600 ION)[^18] | ~24 bays per 2U; legacy servers and arrays |
+| E1.S | 33.75 × 118.75 mm; 9.5 / 15 / 25 mm | ~12 W (5.9 mm) to ~25 W (25 mm heat sink)[^19] | [VERIFY: largest shipping E1.S] | Dense compute and GPU nodes, e.g. Meta's GenAI clusters[^20] |
+| E1.L ("ruler") | 38.4 × 318.75 mm; 9.5 / 18 mm | ~25–40 W[^21] | 122.88 TB (Solidigm D5-P5336)[^22] | Up to ~32 bays per 1U [VERIFY]; capacity JBOFs |
+| E3.S | 76 × 112.75 mm; 7.5 mm (1T) / 16.8 mm (2T) | 25 W (1T) / 40 W (2T)[^23] | [VERIFY: largest shipping E3.S] | Mainstream PCIe 5/6 servers; CXL memory modules |
+| E3.L | 76 × 142.2 mm; 7.5 / 16.8 mm | 40 W (1T) / 70 W (2T)[^23] | 245.76 TB (Micron 6600 ION)[^18] | Capacity QLC in storage servers |
 
 *Table 12.2 — EDSFF replaced one universal bay with shapes sized to their power envelope; capacity now concentrates in E3.L and U.2, density in E1.S.*
 
 Two constraints bind at the top end. First, **controller DRAM**: a conventional SSD's flash translation layer keeps ~4 bytes of map per 4 KiB page, i.e. 1 GB of DRAM per TB, or ~245 GB for a 245 TB drive. Big QLC drives therefore map in coarser units, and small random writes pay in read-modify-write amplification. Second, the standard's **power and volume per bay**.
 
-Everpure's **DirectFlash Module** escapes both because it is not an SSD. Purity runs one global FTL and treats modules as raw NAND, so no drive-sized DRAM map is needed, and Everpure sets the module's shape and thermals ([Chapter 26](../04-everpure/26-purity-and-directflash.md)). DFMs reached 300 TB by 2026[^25], on a roadmap first set in 2023[^26], while the largest standard drives ship at 245.76 TB. The price: only Purity can drive a DFM. Meanwhile, in July 2025 the SFF TA reopened the E1/E3 power and thermal specs[^27].
+Everpure's **DirectFlash Module** escapes both because it is not an SSD. Purity runs one global FTL and treats modules as raw NAND, so no drive-sized DRAM map is needed, and Everpure sets the module's shape and thermals ([Chapter 26](../04-everpure/26-purity-and-directflash.md)). DFMs reached 300 TB by 2026[^24], on a roadmap first set in 2023[^25], while the largest standard drives ship at 245.76 TB. The price: only Purity can drive a DFM. Meanwhile, in July 2025 the SFF TA reopened the E1/E3 power and thermal specs[^26].
 
 ### Data placement: ZNS, FDP and host-managed flash
 
@@ -131,18 +131,18 @@ flowchart TB
 
 *Figure 12.3 — ZNS and FDP move placement knowledge from drive to host by degrees; host-managed flash such as DirectFlash moves all of it.*
 
-**ZNS** [VERIFY: NVMe ZNS ratification, ~2020] exposes zones that must be written sequentially. Software must become zone-aware, so adoption stayed niche. **FDP** (NVMe TP4146, ratified late 2022) was driven by Meta and Google with Samsung. Writes carry a placement identifier, and the drive keeps identifiers in separate reclaim units. A drive that ignores the hints still works[^28][^29], which is why hyperscalers chose FDP.
+**ZNS** (NVMe TP4053, ratified June 2020[^27]) exposes zones that must be written sequentially. Software must become zone-aware, so adoption stayed niche. **FDP** (NVMe TP4146, ratified late 2022) was driven by Meta and Google with Samsung. Writes carry a placement identifier, and the drive keeps identifiers in separate reclaim units. A drive that ignores the hints still works[^28][^29], which is why hyperscalers chose FDP.
 
 **Semis bridge.** ZNS is a software-managed scratchpad; FDP is a hardware cache with hints, like non-temporal stores; DirectFlash is one memory controller managing every bank. For Everpure, FDP gives commodity SSDs much of DirectFlash's WAF benefit while keeping drives multi-sourced.
 
 ### Computational storage: why it stalled
 
-Computational storage puts FPGAs or Arm cores in the drive to filter, compress or search data before it crosses PCIe. SNIA defined an architecture for it, and NVM Express added computational-program command sets [VERIFY: SNIA CS architecture v1.0 (2022) and NVMe computational command sets (2024)]. Outside transparent in-drive compression, adoption is thin:
+Computational storage puts FPGAs or Arm cores in the drive to filter, compress or search data before it crosses PCIe. SNIA defined an architecture for it, and NVM Express added computational-program command sets [VERIFY: SNIA CS architecture v1.0 (2022) and NVMe computational command sets (2024)]. Outside transparent in-drive compression, and vendor-integrated modules such as IBM's FlashCore Modules (compression plus ransomware-detection statistics inside the array's own module[^30]), adoption is thin:
 
 1. **Data is striped.** Erasure coding spreads a record across 10+ drives, so no single drive can filter it.
 2. **Fragmentation.** Every vendor shipped its own accelerator and toolchain.
 3. **Procurement.** Drive buyers pay for $/TB and reliability, not lock-in features.
-4. **Compute moved up.** Controllers, DPUs and GPUs took the offload; NVIDIA's BlueField-4 context-memory platform is computational storage at system level[^30].
+4. **Compute moved up.** Controllers, DPUs and GPUs took the offload; NVIDIA's BlueField-4 context-memory platform is computational storage at system level[^31].
 
 Near-data compute wins in the array or DPU, where whole objects are visible, not in the drive.
 
@@ -162,35 +162,35 @@ timeline
 
 *Figure 12.4 — Optane went from launch to wind-down in about seven years; storage vendors that had a second source survived it.*
 
-The July 2022 wind-down and US$559 million charge are documented[^31][^32]; earlier milestones are from background knowledge [VERIFY: Optane milestone dates 2015–2021]. Optane failed three non-technical tests:
+The July 2022 wind-down and US$559 million charge are documented[^32][^33], as are Micron's March 2021 exit and June 2021 sale of the Lehi fab to Texas Instruments for US$900 million[^34]; the 2015–2019 milestones are from background knowledge [VERIFY: Optane milestone dates 2015–2019]. Optane failed three non-technical tests:
 
 1. **Price gap.** Too dear against NAND, too slow against DRAM, while NAND $/GB kept falling.
 2. **Ecosystem.** The DIMMs needed Intel Xeons, and full value needed software rewritten for persistent memory, which few applications did.
-3. **Single supplier.** One fab, effectively one platform vendor. When Micron left in 2021 there was no second source; VAST had already qualified Kioxia SLC flash[^33].
+3. **Single supplier.** One fab, effectively one platform vendor. When Micron left in 2021 there was no second source; VAST had already qualified Kioxia SLC flash[^35].
 
 **What this implies for CXL memory and KV-cache tiers.**
 
-- **Price gap.** CXL memory is DRAM: a *bigger* tier, not a *cheap* one. Flash keeps a wide gap below DRAM, and TrendForce links part of 4Q26 SSD demand to hyperscalers buying QLC for KV cache[^34]. Synopsys claims CXL offloads KV 3.6× faster than SSDs[^35]; the test is cost per token.
+- **Price gap.** CXL memory is DRAM: a *bigger* tier, not a *cheap* one. Flash keeps a wide gap below DRAM, and TrendForce links part of 4Q26 SSD demand to hyperscalers buying QLC for KV cache[^36]. Synopsys claims CXL offloads KV 3.6× faster than SSDs[^37]; the test is cost per token.
 - **Ecosystem.** CXL runs on Intel and AMD, an improvement. KV-cache frameworks (Dynamo, KVBM, LMCache) are this cycle's persistent-memory rewrite: the tier is only as useful as the software driving it.
-- **Single supplier.** The risk moved from media to platform: NVIDIA's BlueField-4 design sets the KV-tier reference[^30], and every vendor's KV product, PureKVA included[^36], must fit it.
+- **Single supplier.** The risk moved from media to platform: NVIDIA's BlueField-4 design sets the KV-tier reference[^31], and every vendor's KV product, PureKVA included[^38], must fit it.
 
 ## How Everpure approaches it vs. competitors
 
 | Topic | Everpure | VAST | WEKA / DDN | Hyperscaler DIY |
 |---|---|---|---|---|
-| Drive form factor | Proprietary DFM, up to 300 TB[^25] | Standard QLC SSDs in DBoxes | Standard NVMe in partner servers | E1.S / E3 standard drives[^21] |
+| Drive form factor | Proprietary DFM, up to 300 TB[^24] | Standard QLC SSDs in DBoxes | Standard NVMe in partner servers | E1.S / E3 standard drives[^20] |
 | Data placement | Purity global FTL on raw NAND | SCM write buffer, then wide sequential stripes | File-system layout over drive FTLs | FDP hints on commodity drives[^28] |
-| SCM / Optane exposure | Not Optane-dependent today [VERIFY: Pure DirectMemory cache used Optane SSDs, 2019] | Optane at first; Kioxia SLC second source since 2021[^33] | None | DRAM + flash |
-| KV-cache tier | PureKVA on FlashBlade, RDMA into GPU memory[^36] | CNode software on BlueField-4 DPUs[^30] | WEKA Augmented Memory Grid; DDN Infinia | Local NVMe; CXL pilots (Azure)[^15] |
+| SCM / Optane exposure | DirectMemory Cache (2019) used Intel Optane SSDs as an optional read cache in FlashArray//X70/X90[^39]; not Optane-dependent today | Optane at first; Kioxia SLC second source since 2021[^35] | None | DRAM + flash |
+| KV-cache tier | PureKVA on FlashBlade, RDMA into GPU memory[^38] | CNode software on BlueField-4 DPUs[^31] | WEKA Augmented Memory Grid; DDN Infinia | Local NVMe; CXL pilots (Azure)[^14] |
 | Supply chain | NAND from Micron and Kioxia; licence model at hyperscalers[^1] | Partner hardware, multi-vendor SSDs | Any qualified server/SSD | Multi-sourced standard SSDs |
 
-*Table 12.3 — Everpure is the only major vendor that owns the flash module; that buys capacity, power and write-amplification advantages at the cost of a non-standard part.*
+*Table 12.3 — Everpure is the only major vendor whose own flash module has no drive-level FTL (IBM also designs its FlashCore Modules, but they keep an in-module controller); that buys capacity, power and write-amplification advantages at the cost of a non-standard part.*
 
-**Steelman the standard route.** EDSFF plus FDP gives much of DirectFlash's benefit with four suppliers and no licence; the toll is per-drive DRAM and controllers. The 300 TB versus 245 TB lead must be re-earned each generation, and Sandisk's roadmap shows 512 TB in 2027[^37]. **Steelman DirectFlash.** A global FTL removes per-drive DRAM, controllers and over-provisioning, an edge that compounds as capacity grows. Two top-five hyperscalers have signed[^1].
+**Steelman the standard route.** EDSFF plus FDP gives much of DirectFlash's benefit with four suppliers and no licence; the toll is per-drive DRAM and controllers. The 300 TB versus 245 TB lead must be re-earned each generation, and Sandisk's roadmap shows 512 TB in 2027[^40]. **Steelman DirectFlash.** A global FTL removes per-drive DRAM, controllers and over-provisioning, an edge that compounds as capacity grows. Two top-five hyperscalers have signed[^1].
 
 ## History and trajectory
 
-NVMe flash arrays, DirectFlash included, grew up on PCIe 3.0; GPUs then pulled the 2017–2025 sprint. Optane rose and fell in that window, and Intel redirected its memory-tier ambitions to CXL[^32]. CXL went from direct attach (1.x) to pooling (2.0) and fabrics/sharing (3.x) [VERIFY: CXL 1.0–3.1 release dates], reaching 4.0 in November 2025[^14]. FDP displaced ZNS at hyperscale after 2022.
+NVMe flash arrays, DirectFlash included, grew up on PCIe 3.0; GPUs then pulled the 2017–2025 sprint. Optane rose and fell in that window, and Intel redirected its memory-tier ambitions to CXL[^33]. CXL went from direct attach (1.0, March 2019) to pooling (2.0, November 2020)[^41] and fabrics/sharing (3.0, August 2022[^42]; 3.1, November 2023 [VERIFY: 3.1 release day]), reaching 4.0 in November 2025[^13]. FDP displaced ZNS at hyperscale after 2022.
 
 Watch through 2027: Gen6 platform volume, CXL 3.x switches leaving sampling, a bigger E3 power envelope, 512 TB standard drives, and KV tiers converging on NVIDIA's interfaces ([Chapter 53](../07-history-and-future/53-future-trends.md)).
 
@@ -203,12 +203,12 @@ Watch through 2027: Gen6 platform volume, CXL 3.x switches leaving sampling, a b
 | PCIe 8.0 target | 256 GT/s, ~1 TB/s x16, by 2028 | Pathfinding | The Register, 2025-08-08[^7] |
 | x4 Gen6 link, per direction | ~29.5 GB/s | 4 × 64 Gb/s ÷ 8 × 236/256 | Worked example |
 | First Gen6 SSD in volume | 28 GB/s read, 5.5M IOPS | Micron 9650 | Tom's Hardware via Borecraft, 2026-02-14[^8] |
-| CXL 4.0 x16 | 768 GB/s per direction | 128 GT/s, Nov 2025 | CXL Consortium[^14] |
-| CXL direct-attach latency adder | ~70–90 ns over local DRAM | Switches add more | Pond (Microsoft), ASPLOS '23[^13] |
-| DRAM saved by CXL pooling | ~7% with a 16-socket pool | Azure trace study | Pond, ASPLOS '23[^18] |
-| E3.L 2T power envelope | 70 W | E3.S 1T: 25 W | KIOXIA / SFF-TA-1008[^24] |
-| Largest standard SSD vs DFM | 245.76 TB vs 300 TB | Micron 6600 ION vs Everpure DFM | Micron, 2026-05-05[^19]; B&F, 2026-08-11[^25] |
-| Optane wind-down charge | US$559 M | Q2 2022 | Intel 10-Q[^31] |
+| CXL 4.0 x16 | 256 GB/s per direction raw; more with bundled ports | 128 GT/s, Nov 2025 | CXL Consortium[^13]; worked arithmetic |
+| CXL direct-attach latency adder | ~70–90 ns over local DRAM | Switches add more | Pond (Microsoft), ASPLOS '23[^12] |
+| DRAM saved by CXL pooling | ~7% with a 16-socket pool | Azure trace study | Pond, ASPLOS '23[^17] |
+| E3.L 2T power envelope | 70 W | E3.S 1T: 25 W | KIOXIA / SFF-TA-1008[^23] |
+| Largest standard SSD vs DFM | 245.76 TB vs 300 TB | Micron 6600 ION vs Everpure DFM | Micron, 2026-05-05[^18]; B&F, 2026-08-11[^24] |
+| Optane wind-down charge | US$559 M | Q2 2022 | Intel 10-Q[^32] |
 
 ## Conversation playbook
 
@@ -235,8 +235,8 @@ Watch through 2027: Gen6 platform volume, CXL 3.x switches leaving sampling, a b
 ## Going deeper (optional, L3 pointers)
 
 - PCIe 6.0 flit layout and FEC: Cadence's flit-mode walkthrough[^9] and Lockwood's notes[^10].
-- CXL internals: Das Sharma, Blankenship and Berger[^11]; the Linux back-invalidate work[^12].
-- CXL pooling economics: Pond[^18]. FDP design: the NVM Express blog[^28].
+- CXL internals: Das Sharma, Blankenship and Berger[^43]; the Linux back-invalidate work[^11].
+- CXL pooling economics: Pond[^17]. FDP design: the NVM Express blog[^28].
 
 ## Key terms
 
@@ -263,30 +263,36 @@ Watch through 2027: Gen6 platform volume, CXL 3.x switches leaving sampling, a b
 [^8]: Borecraft (syndicating Tom's Hardware), "First PCIe 6.0 SSD enters mass production with 28GB/s speeds, 5.5 million IOPS and liquid cooling," 2026-02-14. https://borecraft.com/2026/02/14/first-pcie-6-0-ssd-enters-mass-production-with-28gb-s-speeds-5-5-million-iops-and-liquid-cooling-micron-9650-series-ssds-support-air-and-liquid-cooling/ (retrieved 2026-11-01).
 [^9]: Cadence Community Blog, "Unravelling PCIe 6.0 Flit Mode Challenges," n.d. https://community.cadence.com/cadence_blogs_8/b/fv/posts/unravelling-pcie-6-0-flit-mode-challenges (retrieved 2026-11-01).
 [^10]: G. K. Lockwood, "PCIe Gen6," n.d. https://www.glennklockwood.com/garden/pcie-gen6 (retrieved 2026-11-01).
-[^11]: D. Das Sharma, R. Blankenship, D. Berger, "An Introduction to the Compute Express Link (CXL) Interconnect," arXiv 2306.11227, 2023. https://arxiv.org/pdf/2306.11227 (retrieved 2026-11-01).
-[^12]: D. Bueso, "CXL Back-Invalidate," Linux Plumbers Conference 2025. https://lpc.events/event/19/contributions/2062/attachments/1810/3891/lpc25-dbueso-cxl-backinvalidate.pdf (retrieved 2026-11-01).
-[^13]: H. Li et al., "Pond: CXL-Based Memory Pooling Systems for Cloud Platforms" (ASPLOS '23 slides), 2023. https://people.cs.vt.edu/huaicheng/s/asplos23-pond-slides-a.pdf (retrieved 2026-11-01).
-[^14]: CXL Consortium, "CXL 4.0 White Paper," 2025-11. https://computeexpresslink.org/wp-content/uploads/2025/11/CXL_4.0-White-Paper_FINAL.pdf (retrieved 2026-11-01).
-[^15]: Astera Labs, "Astera Labs' Leo CXL Smart Memory Controllers on Microsoft Azure M-series Virtual Machines Overcome the Memory Wall," 2025-11-18. https://www.asteralabs.com/news/astera-labs-leo-cxl-smart-memory-controllers-on-microsoft-azure-m-series-virtual-machines-overcome-the-memory-wall/ (retrieved 2026-11-01).
-[^16]: Marvell, "Marvell Launches Next-generation CXL Switch, Enabling Memory Pooling to Break Through the AI 'Memory Wall'," 2026. https://www.marvell.com/company/newsroom/marvell-next-gen-cxl-switch-memory-pooling-breaks-ai-memory-wall.html (retrieved 2026-11-01). [VERIFY: search-summary only]
-[^17]: StorageReview, "Samsung CXL Memory Pooling Demo With AMD at OCP 2026 Claims 38 Percent Lower TTFT and 3.3x Goodput for Agentic AI," 2026-10. https://www.storagereview.com/news/samsung-cxl-memory-pooling-amd-ocp-2026-cmm-d-agentic-ai (retrieved 2026-11-01).
-[^18]: H. Li et al., "Pond: CXL-Based Memory Pooling Systems for Cloud Platforms," ASPLOS '23, 2023. https://www.microsoft.com/en-us/research/publication/pond-cxl-based-memory-pooling-systems-for-cloud-platforms/ (retrieved 2026-11-01).
-[^19]: Micron Technology, "Industry-Leading 245TB Micron 6600 ION Data Center SSD Now Shipping," 2026-05-05. https://investors.micron.com/news/press-release/2026/Industry-Leading-245TB-Micron-6600-ION-Data-Center-SSD-Now-Shipping/default.aspx (retrieved 2026-11-01).
-[^20]: SNIA, "EDSFF for Storage, Memory and Acceleration," SDC EMEA 2021. https://snia.org/sites/default/files/SDCEMEA/2021/snia-edsff.pdf (retrieved 2026-11-01).
-[^21]: Meta Engineering, "Building Meta's GenAI Infrastructure," 2024-03-12. https://engineering.fb.com/2024/03/12/data-center-engineering/building-metas-genai-infrastructure/ (retrieved 2026-11-01).
-[^22]: J. Hands (Intel), "EDSFF Overview," SNIA, 2018-12-07. https://www.snia.org/sites/default/files/SSSI/2%20-%202018-12-07%20EDSFF%20Overview.pdf (retrieved 2026-11-01).
-[^23]: StorageReview, "Solidigm 122.88TB D5-P5336 Review," 2025. https://www.storagereview.com/review/solidigm-122-88tb-d5-p5336-review-high-capacity-storage-meets-operational-efficiency (retrieved 2026-11-01).
-[^24]: KIOXIA, "EDSFF E3 Form Factor," n.d. https://europe.kioxia.com/en-mea/business/ssd/solution/edsff/e3.html (retrieved 2026-11-01).
-[^25]: Blocks & Files, "Second hyperscaler plumps for Everpure's flash technology," 2026-08-11. https://www.blocksandfiles.com/flash/2026/08/11/second-hyperscaler-plumps-for-everpures-flash-technology/5285903 (retrieved 2026-11-01).
-[^26]: Gigazine, "Pure Storage sets goal of realizing 300 TB SSD by 2026," 2023-03-08. https://gigazine.net/gsc_news/en/20230308-pure-storage-300-tb-ssd (retrieved 2026-11-01).
-[^27]: SNIA, "EDSFF Taking Center Stage in the Data Center," n.d. https://www.snia.org/sites/default/files/SSSI/EDSFF%20Taking%20Center%20Stage%20in%20the%20Data%20Center.pdf (retrieved 2026-11-01).
+[^11]: D. Bueso, "CXL Back-Invalidate," Linux Plumbers Conference 2025. https://lpc.events/event/19/contributions/2062/attachments/1810/3891/lpc25-dbueso-cxl-backinvalidate.pdf (retrieved 2026-11-01).
+[^12]: H. Li et al., "Pond: CXL-Based Memory Pooling Systems for Cloud Platforms" (ASPLOS '23 slides), 2023. https://people.cs.vt.edu/huaicheng/s/asplos23-pond-slides-a.pdf (retrieved 2026-11-01).
+[^13]: CXL Consortium, "CXL 4.0 White Paper," 2025-11. https://computeexpresslink.org/wp-content/uploads/2025/11/CXL_4.0-White-Paper_FINAL.pdf (retrieved 2026-11-01).
+[^14]: Astera Labs, "Astera Labs' Leo CXL Smart Memory Controllers on Microsoft Azure M-series Virtual Machines Overcome the Memory Wall," 2025-11-18. https://www.asteralabs.com/news/astera-labs-leo-cxl-smart-memory-controllers-on-microsoft-azure-m-series-virtual-machines-overcome-the-memory-wall/ (retrieved 2026-11-01).
+[^15]: Marvell, "Marvell Launches Next-generation CXL Switch, Enabling Memory Pooling to Break Through the AI 'Memory Wall'," 2026. https://www.marvell.com/company/newsroom/marvell-next-gen-cxl-switch-memory-pooling-breaks-ai-memory-wall.html (retrieved 2026-11-01). [VERIFY: search-summary only]
+[^16]: StorageReview, "Samsung CXL Memory Pooling Demo With AMD at OCP 2026 Claims 38 Percent Lower TTFT and 3.3x Goodput for Agentic AI," 2026-10. https://www.storagereview.com/news/samsung-cxl-memory-pooling-amd-ocp-2026-cmm-d-agentic-ai (retrieved 2026-11-01).
+[^17]: H. Li et al., "Pond: CXL-Based Memory Pooling Systems for Cloud Platforms," ASPLOS '23, 2023. https://www.microsoft.com/en-us/research/publication/pond-cxl-based-memory-pooling-systems-for-cloud-platforms/ (retrieved 2026-11-01).
+[^18]: Micron Technology, "Industry-Leading 245TB Micron 6600 ION Data Center SSD Now Shipping," 2026-05-05. https://investors.micron.com/news/press-release/2026/Industry-Leading-245TB-Micron-6600-ION-Data-Center-SSD-Now-Shipping/default.aspx (retrieved 2026-11-01).
+[^19]: SNIA, "EDSFF for Storage, Memory and Acceleration," SDC EMEA 2021. https://snia.org/sites/default/files/SDCEMEA/2021/snia-edsff.pdf (retrieved 2026-11-01).
+[^20]: Meta Engineering, "Building Meta's GenAI Infrastructure," 2024-03-12. https://engineering.fb.com/2024/03/12/data-center-engineering/building-metas-genai-infrastructure/ (retrieved 2026-11-01).
+[^21]: J. Hands (Intel), "EDSFF Overview," SNIA, 2018-12-07. https://www.snia.org/sites/default/files/SSSI/2%20-%202018-12-07%20EDSFF%20Overview.pdf (retrieved 2026-11-01).
+[^22]: StorageReview, "Solidigm 122.88TB D5-P5336 Review," 2025. https://www.storagereview.com/review/solidigm-122-88tb-d5-p5336-review-high-capacity-storage-meets-operational-efficiency (retrieved 2026-11-01).
+[^23]: KIOXIA, "EDSFF E3 Form Factor," n.d. https://europe.kioxia.com/en-mea/business/ssd/solution/edsff/e3.html (retrieved 2026-11-01).
+[^24]: Blocks & Files, "Second hyperscaler plumps for Everpure's flash technology," 2026-08-11. https://www.blocksandfiles.com/flash/2026/08/11/second-hyperscaler-plumps-for-everpures-flash-technology/5285903 (retrieved 2026-11-01).
+[^25]: Gigazine, "Pure Storage sets goal of realizing 300 TB SSD by 2026," 2023-03-08. https://gigazine.net/gsc_news/en/20230308-pure-storage-300-tb-ssd (retrieved 2026-11-01).
+[^26]: SNIA, "EDSFF Taking Center Stage in the Data Center," n.d. https://www.snia.org/sites/default/files/SSSI/EDSFF%20Taking%20Center%20Stage%20in%20the%20Data%20Center.pdf (retrieved 2026-11-01).
+[^27]: NVM Express, "New NVMe Command Sets: Zoned Namespace (ZNS) and Key Value (KV)" (presentation; TP4053 ratified June 2020), n.d. https://nvmexpress.org/wp-content/uploads/New-NVMe%C2%AE-Command-Sets-Zoned-Namespace-ZNS-Key-Value-KV.pdf (retrieved 2026-11-01; search-summary only).
 [^28]: NVM Express, "Overcoming the Write Amplification Problem with NVM Express Flexible Data Placement," n.d. https://nvmexpress.org/nvmeflexible-data-placement-fdp-blog/ (retrieved 2026-11-01).
 [^29]: Samsung Semiconductor, "Hyperscalers Embrace Flexible Data Placement (FDP) to Increase Performance and Lower TCO," n.d. https://semiconductor.samsung.com/news-events/tech-blog/hyperscalers-embrace-flexible-data-placement-fdp-to-increase-performance-and-lower-tco/ (retrieved 2026-11-01).
-[^30]: NVIDIA Newsroom, "NVIDIA BlueField-4 Powers New Class of AI-Native Storage Infrastructure for the Next Frontier of AI," 2026-01-05. https://nvidianews.nvidia.com/news/nvidia-bluefield-4-powers-new-class-of-ai-native-storage-infrastructure-for-the-next-frontier-of-ai (retrieved 2026-11-01).
-[^31]: Intel Corporation, "Form 10-Q for the quarter ended July 2, 2022," 2022-07. https://www.sec.gov/Archives/edgar/data/50863/000005086322000030/intc-20220702.htm (retrieved 2026-11-01).
-[^32]: AnandTech, "Intel To Wind Down Optane Memory Business – 3D XPoint Storage Tech Reaches Its End," 2022-07-28. https://www.anandtech.com/show/17515 (retrieved 2026-11-01).
-[^33]: Blocks & Files, "VAST Data lessens Optane SSD dependency," 2021-11-05. https://blocksandfiles.com/2021/11/05/vast-data-lessens-optane-ssd-dependency/ (retrieved 2026-11-01).
-[^34]: TrendForce, "AI Server Demand Sustains Memory Contract Price Increases in 4Q26, While Consumer-Side Pressure Persists," 2026-09-30. https://www.trendforce.com/presscenter/news/20260930-13258.html (retrieved 2026-11-01).
-[^35]: StorageReview, "Synopsys CXL 4.0 IP hits 128 GT/s, claims 3.6x KV cache offload over SSDs," 2025-12. https://www.storagereview.com/news/synopsys-cxl-4-0-ip-hits-128-gt-s-claims-3-6x-kv-cache-offload-over-ssds (retrieved 2026-11-01).
-[^36]: StorageReview, "Everpure Adds PureKVA to FlashBlade, Claims Up to 20x Faster Time to First Token, and Makes DeepReduce Always-On," 2026. https://www.storagereview.com/news/everpure-purekva-flashblade-20x-time-to-first-token-always-on-deepreduce (retrieved 2026-11-01).
-[^37]: Blocks & Files, "Sandisk unveils 256 TB SSD for AI workloads, shipping in 2026," 2025-08-05. https://www.blocksandfiles.com/ai-ml/2025/08/05/sandisk-unveils-256-tb-ssd-for-ai-workloads-shipping-in-2026/1589534 (retrieved 2026-11-01).
+[^30]: IBM, "IBM FlashSystem," product page, n.d. https://www.ibm.com/flashsystem (retrieved 2026-11-01; search-summary only).
+[^31]: NVIDIA Newsroom, "NVIDIA BlueField-4 Powers New Class of AI-Native Storage Infrastructure for the Next Frontier of AI," 2026-01-05. https://nvidianews.nvidia.com/news/nvidia-bluefield-4-powers-new-class-of-ai-native-storage-infrastructure-for-the-next-frontier-of-ai (retrieved 2026-11-01).
+[^32]: Intel Corporation, "Form 10-Q for the quarter ended July 2, 2022," 2022-07. https://www.sec.gov/Archives/edgar/data/50863/000005086322000030/intc-20220702.htm (retrieved 2026-11-01).
+[^33]: AnandTech, "Intel To Wind Down Optane Memory Business – 3D XPoint Storage Tech Reaches Its End," 2022-07-28. https://www.anandtech.com/show/17515 (retrieved 2026-11-01).
+[^34]: TechTarget, "Micron 3D XPoint supply will end with $900M fab sale to TI," 2021-06/07. https://www.techtarget.com/searchstorage/news/252503484/Micron-3D-XPoint-supply-will-end-with-900M-fab-sale-to-TI (retrieved 2026-11-01; search-summary only).
+[^35]: Blocks & Files, "VAST Data lessens Optane SSD dependency," 2021-11-05. https://blocksandfiles.com/2021/11/05/vast-data-lessens-optane-ssd-dependency/ (retrieved 2026-11-01).
+[^36]: TrendForce, "AI Server Demand Sustains Memory Contract Price Increases in 4Q26, While Consumer-Side Pressure Persists," 2026-09-30. https://www.trendforce.com/presscenter/news/20260930-13258.html (retrieved 2026-11-01).
+[^37]: StorageReview, "Synopsys CXL 4.0 IP hits 128 GT/s, claims 3.6x KV cache offload over SSDs," 2025-12. https://www.storagereview.com/news/synopsys-cxl-4-0-ip-hits-128-gt-s-claims-3-6x-kv-cache-offload-over-ssds (retrieved 2026-11-01).
+[^38]: StorageReview, "Everpure Adds PureKVA to FlashBlade, Claims Up to 20x Faster Time to First Token, and Makes DeepReduce Always-On," 2026. https://www.storagereview.com/news/everpure-purekva-flashblade-20x-time-to-first-token-always-on-deepreduce (retrieved 2026-11-01).
+[^39]: Pure Storage, "DirectMemory Cache: Fast Just Got Faster" (blog), 2019. https://blog.purestorage.com/?p=77918 ; Pure Storage, "DirectMemory Cache" (data sheet), n.d. https://www.purestorage.com/content/dam/pdf/en/datasheets/ds-direct-memory-cache.pdf (both retrieved 2026-11-01; search-summary only).
+[^40]: Blocks & Files, "Sandisk unveils 256 TB SSD for AI workloads, shipping in 2026," 2025-08-05. https://www.blocksandfiles.com/ai-ml/2025/08/05/sandisk-unveils-256-tb-ssd-for-ai-workloads-shipping-in-2026/1589534 (retrieved 2026-11-01).
+[^41]: CXL Consortium, "CXL Overview and Evolution," Hot Chips 34 tutorial, 2022-08. https://hc34.hotchips.org/assets/program/tutorials/CXL/Hot%20Chips%202022%20CXL%20Overview%20and%20evolution.pdf (retrieved 2026-11-01; search-summary only).
+[^42]: Phoronix, "CXL 3.0 Specification Released - Doubles The Data Rate Of CXL 2.0," 2022-08-02. https://www.phoronix.com/news/CXL-3.0-Specification-Released (retrieved 2026-11-01).
+[^43]: D. Das Sharma, R. Blankenship, D. Berger, "An Introduction to the Compute Express Link (CXL) Interconnect," arXiv 2306.11227, 2023. https://arxiv.org/pdf/2306.11227 (retrieved 2026-11-01).

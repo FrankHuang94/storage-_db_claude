@@ -5,10 +5,10 @@
 
 ## TL;DR
 
-- **These matrices are the atlas's judgment.** They synthesise the evidence in Chapters 24 and 40–47 into one picture. Use them to structure a conversation, not as a ranking, and expect every coordinate to be argued.
-- **No vendor is top-right on all three quadrant charts.** VAST leads on AI-native depth and momentum but is thin on enterprise data services. Dell and NetApp lead on breadth and scale with retrofitted AI. Hyperscalers lead on scale but mostly serve data already in their cloud.
-- **Everpure's distinctive position is media economics.** It is the most vertically integrated vendor with differentiated flash management (DirectFlash), and the only array vendor selling that IP into hyperscalers. Its weakest cells are cloud availability, sovereign presence and data intelligence, which it has only offered since 2026.
-- **2025–26 moved the whole field upward.** WEKA made KV-cache offload a commercial product in November 2025; by late 2026 nearly every serious vendor had one. NVIDIA's STX programme handed twelve partners the same reference design, so certification now differentiates less.
+- **These matrices are the atlas's judgment,** synthesising Chapters 24 and 40–47. Use them to structure a conversation, not as a ranking.
+- **No vendor is top-right on all three quadrant charts.** VAST leads on AI depth and momentum but is thin on enterprise data services; Dell and NetApp lead on breadth and scale with retrofitted AI; hyperscalers serve mostly data already in their cloud.
+- **Everpure's distinctive position is media economics.** It pairs vertical integration with differentiated flash management (DirectFlash) and is the only array vendor selling that IP into hyperscalers. Its weakest cells are cloud availability, sovereign presence and data intelligence (offered only since 2026).
+- **2025–26 moved the whole field upward.** WEKA made KV-cache offload a commercial product in November 2025; by late 2026 nearly every serious vendor had one. NVIDIA's STX gave twelve partners one reference design, so certification differentiates less.
 - **The matrices point to options a strategy team might evaluate:** convert benchmark leadership into neocloud share, widen cloud reach beyond Azure, make data intelligence a full-strength capability, and decide whether the namespace layer above arrays is a partner or a threat.
 
 ## Why this matters for Everpure strategy
@@ -54,11 +54,11 @@ quadrantChart
 
 The y-axis, shared with Figure 46.5, measures how much of the AI data path runs on architecture the vendor owns and designed for AI: parallel or disaggregated data paths, GPU-direct I/O, KV-cache tiers, in-storage data services. Partner-sourced capability is discounted. The x-axis differs. Figure 46.5 scored total portfolio breadth, including servers and networking; here it scores the data services a buyer gets *on the storage itself*: protocols, snapshots and replication, ransomware recovery, cloud editions, consumption contracts and cataloguing.
 
-That change is why Everpure moves right, from 0.46 in Figure 46.5 to 0.78. It sells no servers, but Purity carries one enterprise data-services stack across FlashArray and FlashBlade ([Chapter 28](../04-everpure/28-platform-and-software.md)). NetApp ranks highest because ONTAP's data services run first-party in all three hyperscalers.
+So Everpure moves from 0.46 to 0.78: it sells no servers, but Purity carries one data-services stack across FlashArray and FlashBlade ([Chapter 28](../04-everpure/28-platform-and-software.md)). NetApp ranks highest because ONTAP runs first-party in all three hyperscalers.
 
 Three placements are contestable:
 
-- **VAST at 0.52 breadth.** VAST would argue that DataBase, DataSpace and DataEngine are broader than any incumbent's catalogue[^2]. The atlas discounts this because VAST's block support only arrived in 2025[^3] and its enterprise replication and ransomware tooling have a shorter public record.
+- **VAST at 0.52 breadth.** VAST would argue DataBase, DataSpace and DataEngine out-range any incumbent catalogue[^2]; the atlas discounts this because block arrived only in 2025[^3] and its replication and ransomware tooling have a shorter record.
 - **DDN at 0.78 depth, despite Lustre being more than 20 years old.** "AI-native" here means designed for the GPU data path, not new.
 - **Hyperscalers at 0.94 breadth.** It applies only to data already in their cloud.
 
@@ -93,17 +93,17 @@ quadrantChart
 
 *Figure 49.2 — There are two routes to media economics: integrate flash management into owned hardware, as Everpure, IBM and Huawei do, or extract it in software from commodity QLC, as VAST does. Most of the field takes neither route.*
 
-The x-axis measures how much of the hardware a vendor designs and supplies. The y-axis asks whether the vendor turns NAND into a cost or density advantage through its own flash modules, raw-NAND management, very wide erasure codes on QLC or global reduction. Everpure is the extreme top-left point. DirectFlash modules and Purity managing raw NAND are the reason two top-five hyperscalers licensed the design[^4] ([Chapter 36](../05-ai-storage/36-hyperscaler-ai-storage.md)). Hyperscalers themselves sit left: they build their own systems and buy components.
+The x-axis measures how much of the hardware a vendor designs and supplies. The y-axis asks whether the vendor turns NAND into a cost or density advantage through its own flash modules, raw-NAND management, very wide erasure codes on QLC or global reduction. Everpure is the extreme top-left point. Purity managing raw NAND on DirectFlash modules is why two top-five hyperscalers licensed the design[^4] ([Chapter 36](../05-ai-storage/36-hyperscaler-ai-storage.md)); hyperscalers sit left because they build their own systems.
 
-The semiconductor bridge is IDM versus fabless. Everpure, like an integrated device maker, captures the margin and controls the bill of materials, but carries supply risk in a NAND shortage ([Chapter 48](48-media-suppliers-and-nand-cycle.md)). VAST is fabless: it passes hardware through at cost, so customers absorb the price spike[^5].
+The semiconductor bridge is IDM versus fabless. Everpure, like an integrated device maker, controls the bill of materials but carries supply risk in a NAND shortage ([Chapter 48](48-media-suppliers-and-nand-cycle.md)). VAST is fabless: hardware passes through at cost, so customers absorb the spike[^5].
 
 Three placements are contestable:
 
 - **Everpure at x = 0.20.** Portworx, Cloud Dedicated and EXA's third-party data nodes would pull it right.
-- **WEKA at y = 0.46.** This rests on NeuralMesh 6's new reduction claim of up to 6x, which is not yet proven in the field[^6].
-- **VAST's position over time.** VAST is drifting left as it ships CNode-X with Supermicro and Cisco.
+- **WEKA at y = 0.46.** It rests on NeuralMesh 6's unproven claim of up to 6x reduction[^6].
+- **VAST** drifts left as it ships CNode-X with Supermicro and Cisco.
 
-The main threat to the top-left corner is not a rival but a standard: Flexible Data Placement (FDP) SSDs could let hyperscalers rebuild DirectFlash-like economics themselves.
+The main threat to the top-left corner is a standard, not a rival: Flexible Data Placement (FDP) SSDs could let hyperscalers rebuild DirectFlash-like economics.
 
 ### Matrix 3: installed scale versus AI momentum
 
@@ -148,13 +148,13 @@ The x-axis is a roughly logarithmic ordering by storage revenue or installed bas
 | DDN | About US$500M revenue *(reported by Forbes)*[^12] |
 | WEKA | More than US$100M ARR *(company-stated)*[^13] |
 
-Huawei is placed by its 11.3% IDC share, which is larger than NetApp's 9.6% in external systems[^14].
+Huawei is placed by its 11.3% IDC share, above NetApp's 9.6%[^14].
 
-The y-axis aggregates 2025–26 evidence: growth, bookings, valuation, design wins, benchmarks and shipping KV-cache products. VAST tripled its valuation to US$30B[^11] and signed a US$1.17B CoreWeave deal[^15]. DDN said bookings were heading past 3x[^16]. Everpure grew revenue 38% in Q2 FY27[^9], won a second hyperscaler[^4] and posted the top checkpoint result in MLPerf Storage v3.0[^17]. WEKA's valuation has not moved since 2024, and HPE stopped reselling its software in March 2026[^18].
+The y-axis aggregates 2025–26 evidence: growth, bookings, valuation, design wins, benchmarks and shipping KV-cache products. VAST tripled its valuation to US$30B[^11] and signed a US$1.17B CoreWeave deal[^15]. DDN said bookings were heading past 3x[^16]. Everpure grew revenue 38% in Q2 FY27[^9], won a second hyperscaler[^4] and posted the top checkpoint result in MLPerf Storage v3.0[^17]. WEKA's valuation is unchanged since 2024, and HPE stopped reselling it in March 2026[^18].
 
 Caution: IDC's 2Q26 market grew 33.6%, mostly from NAND price pass-through ([Chapter 40](40-market-structure.md)), so revenue growth overstates everyone's momentum. Two placements are contestable:
 
-- **Hitachi at y = 0.46.** Its storage revenue grew 45%, but the growth was led by block[^19], so the atlas does not count it as AI momentum.
+- **Hitachi at y = 0.46.** Storage grew 45%, but block-led[^19], so it is not counted as AI momentum.
 - **Dell at y = 0.60.** Dell's storage grew 26% in Q2 FY27 after only 1% for all of FY26[^7].
 
 ### Capability heatmap
@@ -234,7 +234,7 @@ The matrices suggest options a strategy team might evaluate, based on public inf
 
 *Table 49.7 — Most options move a ◐ to a ● rather than change quadrant; the exception is the namespace-layer decision, which determines whether the array remains the control point.*
 
-Steelman the rivals. VAST can argue that its single Element Store spanning files, tables and vectors already occupies the data-intelligence cell Everpure is entering. NetApp can argue that Everpure's cloud ◐ is structural, because ONTAP is first-party on all three clouds and Purity is first-party on one. Dell can argue that segment fit is decided by the server purchase order, a column no storage-only vendor can fill ([Chapter 46](46-incumbents.md)).
+Steelman the rivals. VAST's Element Store, spanning files, tables and vectors, already occupies the data-intelligence cell Everpure is entering. NetApp can call Everpure's cloud ◐ structural: ONTAP is first-party on three clouds, Purity on one. Dell can argue that the server purchase order decides segment fit, a column no storage-only vendor fills ([Chapter 46](46-incumbents.md)).
 
 ## History and trajectory
 
@@ -242,9 +242,9 @@ What moved in 2025–26:
 
 - **KV-cache tiers.** The column filled from one commercial product in late 2025 to most serious vendors by October 2026 ([Chapter 32](../05-ai-storage/32-inference-and-kv-cache.md)).
 - **Certification.** NVIDIA's March 2026 STX programme named twelve storage co-design partners, including Everpure, VAST, WEKA and DDN, and excluded Huawei[^44]. Certification separates vendors less than in 2024.
-- **Incumbent moves.** Incumbents moved up Matrix 1 with new architectures: NetApp AFX, Dell Lightning and HPE X10000. NetApp also bought AI software[^42].
+- **Incumbents** moved up Matrix 1 with NetApp AFX, Dell Lightning and HPE X10000; NetApp also bought AI software[^42].
 - **Open-source object.** MinIO's archived repository (April 2026)[^45] moved it down Matrix 3.
-- **Everpure.** It renamed itself and moved up Matrix 3 through MLPerf results, a second hyperscaler win and PureKVA.
+- **Everpure** moved up Matrix 3 on MLPerf, a second hyperscaler win and PureKVA.
 
 Four signals to watch in 2027:
 
@@ -269,15 +269,15 @@ Four signals to watch in 2027:
 
 **Questions for a PM**
 
-1. *"Which ◐ cell in our row costs the most deals?"* A strong answer names one, usually cloud availability or neocloud fit, and cites lost deals and the plan for each, rather than a feature roadmap.
-2. *"Where would you place us on the AI-native axis, and why not higher than VAST?"* A strong answer concedes that EXA has no DASE design and a shorter field record, then points to the audited MLPerf results that VAST has not entered.
-3. *"Is Hammerspace a partner or a threat?"* A strong answer separates accounts where Hammerspace runs over FlashBlade from accounts where Tier 0 replaces shared storage.
+1. *"Which ◐ cell in our row costs the most deals?"* A strong answer names one (cloud availability or neocloud fit), with lost deals and a plan, not a feature roadmap.
+2. *"Why aren't we higher than VAST on AI-native depth?"* A strong answer concedes EXA's shorter field record, then cites audited MLPerf results VAST has not entered.
+3. *"Is Hammerspace a partner or a threat?"* A strong answer separates accounts where it runs over FlashBlade from those where Tier 0 replaces shared storage.
 
 **Questions for an engineer**
 
-1. *"What would move our data-reduction ● to a measurable lead on AI data?"* A strong answer gives realistic ratios: DeepReduce's median 2:1 on FlashBlade[^20], and why already-compressed AI data reduces less.
-2. *"Does integrating DirectFlash still pay once FDP SSDs exist?"* A strong answer quantifies what host-side raw-NAND management does that placement hints cannot, such as global garbage collection and module density.
-3. *"What makes a KV-cache tier ● rather than ◐?"* A strong answer covers integration with Dynamo, vLLM and LMCache, RDMA into GPU memory, an independent benchmark, and named production users.
+1. *"Is our data-reduction ● a lead on AI data?"* A strong answer cites DeepReduce's expected median 2:1 on FlashBlade[^20] and why compressed AI data reduces less.
+2. *"Does DirectFlash still pay once FDP SSDs exist?"* A strong answer quantifies what host-side NAND management does that placement hints cannot: global garbage collection, module density.
+3. *"What makes a KV-cache tier ● rather than ◐?"* Dynamo, vLLM and LMCache integration, RDMA into GPU memory, an independent benchmark and named production users.
 
 **Don't say this:**
 
@@ -288,7 +288,7 @@ Four signals to watch in 2027:
 
 ## Going deeper (optional, L3 pointers)
 
-- Rebuild a matrix for one deal: pick the two axes the buyer actually weighs, then score only the shortlisted vendors.
+- For one deal, rebuild a matrix on the two axes the buyer weighs, scoring only the shortlist.
 - See the architecture heatmap in [Chapter 24](../03-system-architecture/24-architecture-decision-matrix.md), the NVIDIA certification table in [Chapter 34](../05-ai-storage/34-nvidia-ecosystem.md), the head-to-head in [Chapter 45](45-head-to-head.md), and the diligence scorecard in [Chapter 50](50-diligence-framework.md).
 
 ## Key terms
