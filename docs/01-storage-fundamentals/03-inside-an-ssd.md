@@ -5,17 +5,17 @@
 
 ## TL;DR
 
-- **An SSD is a small computer wrapped around NAND.** A controller SoC with several Arm cores, hardware ECC engines and 8–16 flash channels runs firmware that makes erase-before-write NAND look like a simple disk.
-- **The flash translation layer (FTL) is a page table.** It remaps every logical block to a physical page and keeps that map in on-drive DRAM: about 1 GB per TB of flash at 4 KB granularity. That is why the largest QLC drives map in 16 KB or larger units and penalise small writes.
-- **Garbage collection (GC) is the hidden tax.** Updates go to fresh pages, so stale pages pile up and must be reclaimed by copying live data elsewhere. The extra copies are write amplification (WAF), and the main lever against it is over-provisioning (OP): spare flash the host never sees.
-- **Spare flash buys endurance and steady latency.** In an illustrative random-write model, WAF falls from ~7.8 at 7% OP to ~2.1 at 37%. That is most of the difference between a "read-intensive" and a "mixed-use" drive built from the same NAND.
-- **Under a log-structured array, the drive's FTL is mostly duplicated effort.** The array already writes sequentially and collects its own garbage. The drive still pays for its own DRAM map, spare area and unpredictable GC. ZNS and FDP ([Chapter 12](../02-protocols-and-networking/12-interfaces-and-emerging-tech.md)) and Everpure's DirectFlash ([Chapter 26](../04-everpure/26-purity-and-directflash.md)) are three answers to that waste.
+- **An SSD is a small computer wrapped around NAND.** A controller SoC (Arm cores, ECC engines, 8–16 flash channels) runs firmware that makes erase-before-write NAND look like a simple disk.
+- **The flash translation layer (FTL) is a page table.** Its map lives in on-drive DRAM, about 1 GB per TB at 4 KB granularity, which is why the largest QLC drives map 16 KB+ units and penalise small writes.
+- **Garbage collection (GC) is the hidden tax.** Reclaiming stale pages means copying live data; those extra writes are write amplification (WAF). The main lever against it is over-provisioning (OP), spare flash the host never sees.
+- **Spare flash buys endurance.** In an illustrative random-write model, WAF falls from ~7.8 at 7% OP to ~2.1 at 37%: most of the gap between "read-intensive" and "mixed-use" drives built from the same NAND.
+- **Under a log-structured array, the drive's FTL is mostly duplicated effort:** a second map, second spare area and second, unscheduled GC. ZNS and FDP ([Chapter 12](../02-protocols-and-networking/12-interfaces-and-emerging-tech.md)) and Everpure's DirectFlash ([Chapter 26](../04-everpure/26-purity-and-directflash.md)) are three answers to that waste.
 
 ## Why this matters for Everpure strategy
 
-Everpure's central technical claim is that a storage array should not buy commodity SSDs at all. It should buy raw NAND and run one flash translation layer across the whole system. Whether that claim is a durable moat or a fading advantage depends on what an SSD's internal FTL actually costs. That means its DRAM, its hidden spare flash, its write amplification and its latency spikes. It also depends on how much of that cost standards such as Flexible Data Placement (FDP) can claw back for everyone else. This chapter is the mechanism behind every DirectFlash argument in [Chapter 26](../04-everpure/26-purity-and-directflash.md) and every hyperscaler-licensing conversation in [Chapter 29](../04-everpure/29-hyperscaler-ecosystem-financials.md).
+Everpure's central technical claim is that a storage array should not buy commodity SSDs at all. It should buy raw NAND and run one flash translation layer across the whole system. Whether that is a durable moat depends on what an SSD's internal FTL actually costs (DRAM, hidden spare flash, write amplification, latency spikes) and how much of that cost standards such as Flexible Data Placement (FDP) claw back for everyone else. This chapter is the mechanism behind every DirectFlash argument in [Chapter 26](../04-everpure/26-purity-and-directflash.md) and every hyperscaler-licensing conversation in [Chapter 29](../04-everpure/29-hyperscaler-ecosystem-financials.md).
 
-It also gives you a test for vendor claims. When a competitor says its 245 TB QLC SSD "just works" for primary storage, or Everpure says DirectFlash "eliminates" overhead, the right follow-ups ask about indirection-unit size, over-provisioning, GC isolation and who owns the firmware. By the end of this chapter you should be able to ask them.
+It also gives you a test for vendor claims. When a competitor says its 245 TB QLC SSD "just works" for primary storage, or Everpure says DirectFlash "eliminates" overhead, ask about indirection-unit size, over-provisioning, GC isolation and who owns the firmware.
 
 ## Core concepts
 
@@ -27,19 +27,19 @@ Strip the casing off an enterprise NVMe SSD and you find four things: a controll
 
 *Figure 3.1 — An SSD is an embedded system: Arm cores run the mapping firmware, hardware engines do the error correction, DRAM holds the map, capacitors make it crash-safe, and a slice of the NAND is held back as spare.*
 
-**The controller is an embedded SoC**, much like a baseband modem: general-purpose cores for control flow and fixed-function engines for the heavy maths. Marvell's PCIe Gen5 Bravera SC5, for example, combines Arm Cortex-R8 real-time cores with Cortex-M7 helpers, an LDPC error-correction engine, a DDR4/LPDDR4X interface and 8 or 16 NAND channels[^1]. Silicon Motion's SM8366 also drives 16 channels at up to 2,400 MT/s each[^2]. Controller vendors sell to SSD makers that lack their own, while Samsung, SK hynix/Solidigm, Micron and Kioxia mostly design in-house. That is the classic IDM-versus-merchant-silicon split.
+**The controller is an embedded SoC**, much like a baseband modem: general-purpose cores for control flow, fixed-function engines for the heavy maths. Marvell's PCIe Gen5 Bravera SC5 combines Arm Cortex-R8 real-time cores, an LDPC error-correction engine, a DDR4/LPDDR4X interface and 8 or 16 NAND channels[^1]; Silicon Motion's SM8366 drives 16 channels at up to 2,400 MT/s[^2]. Merchant controller vendors sell to SSD makers without their own, while the NAND IDMs mostly design in-house.
 
-**Channels are memory channels; dies are banks.** One NAND die is slow: a QLC page read takes ~100–160 µs, a program far longer. Bandwidth comes from parallelism. The controller stripes work across 8–16 independent channels, each a shared bus to several dies, and across planes within each die. A semis reader will recognise DRAM bank-level parallelism: throughput is a scheduling problem, and a large drive with few dies per channel can be slower than a smaller one with more.
+**Channels are memory channels; dies are banks.** One die is slow (a QLC page read takes ~100–160 µs), so bandwidth comes from striping work across 8–16 independent channels, each a shared bus to several dies, and across planes within each die. As with DRAM bank-level parallelism, throughput is a scheduling problem.
 
-**DRAM holds the map.** The firmware's core data structure is the logical-to-physical (L2P) table, discussed below. Client drives often skip DRAM to save cost and borrow a slice of host memory (the NVMe Host Memory Buffer) or cache hot entries in on-chip SRAM.
+**DRAM holds the map**, the logical-to-physical (L2P) table discussed below. Client drives often skip DRAM and borrow host memory (the NVMe Host Memory Buffer) or cache hot entries in on-chip SRAM.
 
-**Power-loss protection (PLP)** is a bank of capacitors that keeps the drive alive for milliseconds after power fails. That is long enough to flush buffered writes and map updates to NAND. PLP lets an enterprise drive acknowledge a write from DRAM and still be crash-safe, which matters for latency. Most client drives lack it.
+**Power-loss protection (PLP)** capacitors keep the drive alive long enough after power fails to flush buffered writes and map updates. PLP lets an enterprise drive acknowledge a write from DRAM and stay crash-safe. Most client drives lack it.
 
-**Spare area is NAND that is installed but not sold.** A drive built from 8 TiB of NAND (8.80 TB) and sold as 7.68 TB keeps 1.12 TB, or 14.5% of user capacity, as over-provisioning. Sold as 6.4 TB, the same NAND keeps 37%. That is the usual difference between "read-intensive" and "mixed-use" SKUs. Micron's 7450 PRO at 7.68 TB is rated for 1 drive write per day (DWPD), and its 7450 MAX at 6.4 TB for 3 DWPD[^3][^4] [VERIFY: that both SKUs use the same raw NAND per drive]. Raw NAND also carries extra bits per page for ECC parity, which is separate from OP.
+**Spare area is NAND that is installed but not sold.** A drive built from 8 TiB of NAND (8.80 TB) and sold as 7.68 TB keeps 1.12 TB, or 14.5% of user capacity, as over-provisioning. Sold as 6.4 TB, the same NAND keeps 37%. That is the usual difference between "read-intensive" and "mixed-use" SKUs: Micron's 7450 PRO at 7.68 TB is rated for 1 drive write per day (DWPD), and its 7450 MAX at 6.4 TB for 3 DWPD[^3][^4] [VERIFY: that both SKUs use the same raw NAND per drive].
 
 ### The FTL: a page table for flash
 
-NAND cannot overwrite in place: you program pages (~16 KB) but erase only whole blocks (many MB). So the FTL never updates data where it sits. Every write goes to the next free page of an "open" block, and a table records where each logical block address (LBA) now lives.
+NAND programs pages (~16 KB) but erases only whole blocks (many MB), so the FTL never updates in place. Every write goes to the next free page of an "open" block, and a table records where each logical block address (LBA) now lives.
 
 ```mermaid
 flowchart TD
@@ -59,20 +59,20 @@ flowchart TD
 
 *Figure 3.2 — Every write moves data to a new page and leaves a stale copy behind; garbage collection is the background loop that turns stale pages back into erased blocks, at the cost of extra copies.*
 
-The semis bridge is exact. The L2P table is a **page table**: logical addresses in, physical addresses out, one entry per mapping unit. The slice cached in controller SRAM is the **TLB**. A DRAM-less client drive that keeps its map in host memory takes the equivalent of a TLB miss to main memory on every cold lookup. The mapping unit, called the **indirection unit (IU)**, is the page size. Choosing it is the same trade as huge pages: bigger units shrink the table and widen its reach, but waste work when the access is smaller than the unit.
+The semis bridge is exact. The L2P table is a **page table**, and the slice cached in controller SRAM is the **TLB**; a DRAM-less drive takes a TLB miss to host memory on cold lookups. The mapping unit, the **indirection unit (IU)**, is the page size, and choosing it is the huge-page trade: bigger units shrink the table but waste work on smaller accesses.
 
 The FTL does more than map:
 
 - **Garbage collection** reclaims blocks full of stale pages (next section).
-- **Wear levelling** spreads program/erase (P/E) cycles evenly. Dynamic wear levelling steers new writes to less-worn blocks. Static wear levelling occasionally moves cold data off young blocks so those blocks can share the load. That move is itself extra writing.
-- **TRIM** (Deallocate in NVMe) lets the host say "this LBA is deleted." Without it, the drive treats deleted files as live data and copies them during GC forever. TRIM effectively adds free space, which acts like extra over-provisioning.
+- **Wear levelling** spreads program/erase (P/E) cycles evenly: new writes go to less-worn blocks, and cold data is occasionally moved off young blocks so they share the load (itself extra writing).
+- **TRIM** (Deallocate in NVMe) tells the drive an LBA is deleted. Without it, GC keeps copying dead files as if live; with it, freed space acts like extra over-provisioning.
 - **Bad-block management, read-disturb and retention refresh** retire failing blocks and rewrite data that has been read too often or sat too long ([Chapter 2](02-media-physics.md)).
 
 ### Error correction: LDPC and read retry
 
-Flash is noisy by design. A TLC or QLC cell stores 8 or 16 voltage states in a few volts, and the distributions widen with wear, temperature and time. Raw bit-error rates are high enough that every read goes through strong error correction. Modern controllers use **low-density parity-check (LDPC)** codes in a hardware engine. The first attempt is a fast "hard-decision" decode, which treats each bit as 0 or 1. If that fails, the controller **re-reads** the page with shifted reference voltages. Extra reads give "soft" information about how confident each bit is, which LDPC can use to correct far more errors. Then come stronger fallbacks, such as parity across dies, much like RAID inside the drive.
+Flash is noisy by design: 8 or 16 voltage states share a few volts, and the distributions widen with wear, heat and time. Every read therefore passes through a hardware **low-density parity-check (LDPC)** decoder. The first attempt is a fast "hard" decode. If it fails, the controller **re-reads** the page at shifted reference voltages, giving "soft" confidence information that lets LDPC correct far more errors. The last resort is parity across dies, a RAID inside the drive.
 
-Each retry step costs another full NAND read, so an ordinary ~100 µs read can become several hundred µs or more. This is a large source of **tail latency** on aged or hot QLC. It also explains why two drives with the same headline IOPS behave differently at the 99.99th percentile. The semis analogy is a SerDes receiver re-tuning its equaliser on a marginal link: it works, but slowly. Controllers that track per-block voltage drift and pre-shift thresholds avoid most retries. That is one of the less visible ways an IDM's process data helps its own controllers.
+Each retry costs another full NAND read, so a ~100 µs read can stretch to several hundred µs. This is a major source of **tail latency** on aged QLC, and why drives with equal headline IOPS differ at the 99.99th percentile. Think of a SerDes receiver re-tuning its equaliser on a marginal link. Controllers that track per-block voltage drift avoid most retries, a quiet advantage of IDMs with process data.
 
 ### Garbage collection and write amplification: a worked example
 
@@ -81,7 +81,7 @@ Take a block of 256 pages. When the FTL needs a free block, it picks the "victim
 - If the victim is **25% valid**, GC copies 64 pages and frees 192 for new host data. NAND writes per host write = (192 + 64) / 192 = **1.33**.
 - If the victim is **75% valid**, GC copies 192 pages to free just 64. WAF = 256 / 64 = **4.0**.
 
-In general WAF = 1 / (1 − u), where u is the valid fraction of the average victim block. The question is what sets u. Under uniformly random overwrites on a full drive, a simple model gives a closed answer. Assume blocks are cleaned roughly oldest-first. A block written now is collected after the log has wrapped once through all physical pages. During that pass the host writes N<sub>phys</sub> × (1 − u) pages. Each lands on a given LBA with probability 1 / N<sub>user</sub>, so a page survives with probability exp(−N<sub>phys</sub>(1 − u) / N<sub>user</sub>). Since N<sub>phys</sub> / N<sub>user</sub> = 1 + OP:
+In general WAF = 1 / (1 − u), where u is the valid fraction of the average victim. For uniformly random overwrites on a full drive, a simple model sets u. Assume blocks are cleaned roughly oldest-first, so a block is collected after the log wraps once through all physical pages. During that pass the host writes N<sub>phys</sub> × (1 − u) pages. Each lands on a given LBA with probability 1 / N<sub>user</sub>, so a page survives with probability exp(−N<sub>phys</sub>(1 − u) / N<sub>user</sub>). Since N<sub>phys</sub> / N<sub>user</sub> = 1 + OP:
 
 **u = exp(−(1 − u)(1 + OP)), and WAF = 1 / (1 − u).**
 
@@ -92,11 +92,11 @@ Solving numerically: at 7% OP, u ≈ 0.87 and WAF ≈ 7.8. At 14.5%, u ≈ 0.76 
 *Figure 3.3 — Illustrative model: the first 30 points of over-provisioning cut write amplification by roughly 4×, and returns diminish quickly after that; mixing hot and cold data makes it worse.*
 Data: `data/ch03_waf_op.csv`
 
-Three lessons follow. First, **OP is bought with endurance in mind.** Going from 14.5% to 37% OP halves WAF in the model, so the same NAND absorbs about twice the host writes. The 1-versus-3 DWPD gap between the Micron SKUs above is 2.5× in host bytes, and most of that is this effect. Second, **random small writes are the worst case.** Real workloads are friendlier than uniform random, because data written together tends to die together, and measured WAF is usually below these models[^6]. Third, **data placement beats spare flash.** If hot and cold data share blocks, every victim holds cold pages that must be copied again and again (the skewed series in Figure 3.3). If the writer keeps lifetimes apart, or writes whole blocks that are later invalidated whole, WAF approaches 1 with little OP. That is the whole idea behind log-structured arrays, ZNS and FDP.
+Three lessons follow. **OP buys endurance:** going from 14.5% to 37% OP halves model WAF, so the same NAND absorbs about twice the host writes, most of the Micron SKUs' 2.5× gap in rated host bytes. **Random small writes are the worst case:** real workloads are friendlier, and measured WAF usually sits below these models[^6]. **Placement beats spare flash:** when hot and cold data share blocks, cold pages get copied again and again (the skewed series). A writer that keeps lifetimes apart, or fills whole blocks that later die whole, gets WAF near 1 with little OP. That is the idea behind log-structured arrays, ZNS and FDP.
 
 ### DRAM, indirection units and the small-write penalty
 
-A page-level map needs one entry per 4 KB. With ~4-byte entries, that is 4 B / 4 KB = 1/1,000 of capacity, or **about 1 GB of DRAM per TB of flash**. The ratio was harmless at 1 TB. It is not harmless at 245 TB.
+One ~4-byte entry per 4 KB is 1/1,000 of capacity: **about 1 GB of DRAM per TB of flash**. Harmless at 1 TB; not at 245 TB.
 
 | Drive capacity | Indirection unit | Map entries | Map DRAM at ~4 B/entry |
 |---|---|---|---|
@@ -109,21 +109,21 @@ A page-level map needs one entry per 4 KB. With ~4-byte entries, that is 4 B / 4
 
 *Table 3.1 — Worked arithmetic: mapping a quarter-petabyte drive at 4 KB would need ~240 GB of DRAM, more than many servers carry, so large QLC drives coarsen the indirection unit instead.*
 
-Two more constraints bite. A 32-bit entry can address only 2³² × 4 KB ≈ 17.6 TB, so bigger drives need wider entries, a larger IU, or both. And at the 2026 server-DRAM price of roughly $14.5 per GB[^7], a 240 GB map would add about $3,500 of DRAM to one drive. The industry's answer is a larger IU. Solidigm's 61 TB D5-P5336 uses a 16 KB IU, after its predecessor used 64 KB[^8]. Micron's 245.76 TB 6600 ION uses 16 KB at its top capacity and 4 KB on its 30.72 TB model[^9], and reportedly carries about 64 GB of DRAM, consistent with the table[^10] [VERIFY: DRAM size, single outlet; headline figures differ].
+Two more constraints bite. A 32-bit entry addresses only 2³² × 4 KB ≈ 17.6 TB, so bigger drives need wider entries or a larger IU. And at roughly $14.5 per GB for server DRAM in 2026[^7], a 240 GB map would add about $3,500 per drive. Hence larger IUs. Solidigm's 61 TB D5-P5336 uses a 16 KB IU, after its predecessor used 64 KB[^8]. Micron's 245.76 TB 6600 ION uses 16 KB at its top capacity and 4 KB on its 30.72 TB model[^9], and reportedly carries about 64 GB of DRAM, consistent with the table[^10] [VERIFY: DRAM size, single outlet; headline figures differ].
 
-The price is a **small-write penalty**. A 4 KB host write to a drive with a 16 KB IU forces a read-modify-write: read the 16 KB unit, merge 4 KB, and program 16 KB to a new location. NAND writes are already 4× host writes before garbage collection adds its own multiple. At 64 KB the factor is 16×. Large QLC drives therefore suit workloads that write in large aligned chunks, such as object stores, data lakes, AI datasets and checkpoints, or hosts that coalesce writes first. The huge-page analogy holds: great reach, poor fit for small scattered updates.
+The price is a **small-write penalty**. A 4 KB write to a 16 KB-IU drive forces a read-modify-write of the whole unit: 4× NAND writes before GC adds its own multiple, and 16× at 64 KB. Large QLC drives therefore suit large aligned writes (object stores, data lakes, AI datasets, checkpoints) or hosts that coalesce writes first.
 
 ### Why the FTL is where commodity SSDs lose efficiency
 
-Now put a modern all-flash array on top. Arrays such as Purity, ONTAP-style WAFL designs and VAST's element store are log-structured. They buffer writes in NVRAM, reduce them, and write large sequential segments. They then run **their own** garbage collection when segments fill with stale data. The SSD underneath does not know this and cannot use it. The result is what researchers call "log-on-log"[^11]:
+Most modern all-flash arrays (Purity, WAFL-style designs, VAST's element store) are log-structured: they buffer writes in NVRAM, reduce them, write large sequential segments and run **their own** garbage collection. The SSD underneath cannot see any of this. Researchers call the result "log-on-log"[^11]:
 
-- **Duplicate GC.** Array-level cleaning rewrites live data, and the drive's GC may rewrite it again. The two write amplifications multiply rather than add. Illustratively, 1.5 × 2.0 = 3.0 NAND bytes per host byte.
-- **Hidden OP, paid twice.** Each drive reserves its 7–37% spare area. The array also keeps free space for its own cleaning. Neither can lend spare capacity to the other.
-- **Duplicate DRAM.** Each drive carries ~1 GB per TB of mapping DRAM, about 10 TB across a 10 PB array, to translate addresses the array has already translated.
-- **Unpredictable latency.** Each drive decides on its own when to garbage-collect, retry reads or refresh. The array sees only a device that occasionally stalls, so it must over-design for tail latency.
-- **Lost information.** The array knows which data is cold, which segment it is about to clean and which drive is degrading. Behind a block interface, the drive can use none of that.
+- **Duplicate GC.** The array's cleaning and the drive's GC each rewrite live data, so their amplifications multiply: illustratively 1.5 × 2.0 = 3.0 NAND bytes per host byte.
+- **Hidden OP, paid twice.** Each drive reserves 7–37% spare; the array keeps its own free space too, and neither can lend to the other.
+- **Duplicate DRAM.** ~1 GB per TB per drive, about 10 TB across a 10 PB array, to translate addresses the array already translated.
+- **Unpredictable latency.** Each drive garbage-collects, retries and refreshes on its own schedule, so the array must over-design for tail latency.
+- **Lost information.** The array knows which data is cold and which segment it will clean next; behind a block interface, the drive cannot use that.
 
-There are three ways out. **Zoned Namespaces (ZNS)**, ratified in June 2020, expose zones that must be written sequentially and reset by the host. The drive's GC disappears, but the host must manage zones itself[^12]. **Flexible Data Placement (FDP)**, ratified in late 2022 with Meta, Google and Samsung behind it, is gentler. The host tags writes with placement handles so data of similar lifetime shares erase blocks, while the drive keeps its FTL[^13]. Samsung reported that FDP cut device WAF in Meta's CacheLib from ~1.3 to ~1.0, in a setup that also kept half the drive as host-side spare[^14] [VERIFY: search-summary only]. A FAST '26 study found WAF stays near 1 when lifetimes are classified correctly but degrades when they are not[^15]. Both are covered in [Chapter 12](../02-protocols-and-networking/12-interfaces-and-emerging-tech.md). The third way is to **remove the drive FTL entirely**, which is Everpure's DirectFlash: modules with no logical-address layer of their own, and one FTL in Purity that spans every module[^16]. [Chapter 26](../04-everpure/26-purity-and-directflash.md) covers how it works and what it costs.
+There are three ways out. **Zoned Namespaces (ZNS)**, ratified in June 2020, expose zones the host must write sequentially and reset, removing drive GC[^12]. **Flexible Data Placement (FDP)**, ratified in late 2022 with Meta, Google and Samsung behind it, is gentler: the host tags writes so data of similar lifetime shares erase blocks, and the drive keeps its FTL[^13]. Samsung reported that FDP cut device WAF in Meta's CacheLib from ~1.3 to ~1.0, in a setup that also kept half the drive as host-side spare[^14] [VERIFY: search-summary only]. A FAST '26 study found WAF stays near 1 when lifetimes are classified correctly but degrades when they are not[^15]. Both are covered in [Chapter 12](../02-protocols-and-networking/12-interfaces-and-emerging-tech.md). The third way **removes the drive FTL**: Everpure's DirectFlash modules have no logical-address layer, and one FTL in Purity spans every module[^16] ([Chapter 26](../04-everpure/26-purity-and-directflash.md)).
 
 ## How Everpure approaches it vs. competitors
 
@@ -138,7 +138,7 @@ There are three ways out. **Zoned Namespaces (ZNS)**, ratified in June 2020, exp
 
 *Table 3.2 — Moving left to right, flash-management intelligence migrates from the drive into the host; the cost moves from per-drive DRAM and spare flash into host software and qualification work.*
 
-Steelman the standard drive. Enterprise SSDs are multi-sourced and plug-compatible, and their FTLs are co-designed with the NAND by firms with fab data. A 16 KB-IU QLC drive behind a write-coalescing array (VAST's SCM buffer, [Chapter 16](../03-system-architecture/16-disaggregated-shared-everything.md)) avoids most of the small-write penalty. FDP lets hyperscalers recover most of the WAF benefit without abandoning standard parts. The case for DirectFlash is that it removes DRAM, duplicate spare and duplicate GC from the bill of materials altogether, and lets one scheduler control latency. The case against it is that Everpure must qualify every NAND generation itself. Options a strategy team might evaluate, based on public information: how much of DirectFlash's advantage survives once FDP is widely deployed, and whether the advantage shifts from "lower write amplification" to "less DRAM and spare flash per TB", which matters more as drives grow and DRAM prices stay high.
+Steelman the standard drive: it is multi-sourced and plug-compatible, its FTL is co-designed with the NAND by firms with fab data, and behind a write-coalescing buffer (VAST's SCM, [Chapter 16](../03-system-architecture/16-disaggregated-shared-everything.md)) a 16 KB-IU QLC drive avoids most of the small-write penalty. FDP recovers much of the WAF benefit with standard parts. DirectFlash instead removes map DRAM, duplicate spare and duplicate GC from the bill of materials and puts latency under one scheduler, at the cost of qualifying every NAND generation itself. Options a strategy team might evaluate, based on public information: how much of DirectFlash's advantage survives once FDP is widely deployed, and whether the advantage shifts from "lower write amplification" to "less DRAM and spare flash per TB", which matters more as drives grow and DRAM prices stay high.
 
 ## History and trajectory
 
@@ -156,9 +156,9 @@ timeline
 
 *Figure 3.4 — For fifteen years the industry has been pulling flash management out of the drive, through hints, open-channel designs, zones, placement handles and, at Everpure, by removing the drive FTL altogether.*
 
-Early SSDs imitated hard disks so that existing operating systems would work unchanged. The FTL was the price of that compatibility. Since then the trend has run one way: give the host more control. TRIM let hosts declare deleted data. Open-channel SSDs, supported in Linux from 2017 as LightNVM, exposed raw geometry to the host[^18]. They proved the concept but fragmented, and gave way to the standardised ZNS and FDP[^12][^13]. Pure Storage launched DirectFlash the same year[^19], applying the open-channel idea inside a single vendor's stack where hardware and software could co-evolve.
+The FTL was the price of making SSDs imitate hard disks so existing software worked unchanged. Since then control has moved steadily to the host. Open-channel SSDs (Linux LightNVM, 2017) exposed raw geometry[^18], then fragmented and gave way to standard ZNS and FDP[^12][^13]. Pure Storage launched DirectFlash the same year[^19], applying the idea inside one vendor's stack.
 
-Two forces now push harder. Drive capacity is outrunning DRAM economics: 245.76 TB drives shipped in 2026[^20], and indirection units are rising in step. And AI datacentres are power- and space-bound, so spare flash and DRAM that do no user work are more visible on the bill. Expect larger IUs, wider FDP adoption among hyperscalers, and continued debate over whether the drive should be a smart device or a thin one.
+Two forces now push harder. Capacity is outrunning DRAM economics: 245.76 TB drives shipped in 2026[^20], with IUs rising in step. And power-bound AI datacentres make spare flash and DRAM that do no user work more visible. Expect larger IUs, wider hyperscale FDP adoption, and continued debate over smart versus thin drives.
 
 ## Numbers that matter
 
@@ -176,35 +176,34 @@ Two forces now push harder. Drive capacity is outrunning DRAM economics: 245.76 
 
 **Questions for a PM**
 
-1. *"When we compete against arrays built on 122–245 TB QLC SSDs, what happens to their small-write performance and endurance?"* Strong answer: names the 16 KB indirection unit and the read-modify-write penalty. Explains that competitors mitigate it with write buffers (SCM, NVRAM) and coalescing. Separates where that works (large sequential AI and object data) from where it doesn't (small random database writes).
-2. *"If FDP becomes standard on hyperscale drives, which parts of the DirectFlash advantage remain?"* Strong answer: concedes that FDP narrows the WAF gap, then argues that per-drive DRAM, per-drive spare flash, independent GC timing and module density remain. Has a view on which of those customers actually pay for.
+1. *"When we compete against arrays built on 122–245 TB QLC SSDs, what happens to their small-write performance and endurance?"* Strong answer: names the 16 KB indirection unit and read-modify-write penalty, notes mitigation by SCM/NVRAM write buffers, and separates where that works (large sequential AI and object data) from where it doesn't (small random database writes).
+2. *"If FDP becomes standard on hyperscale drives, which parts of the DirectFlash advantage remain?"* Strong answer: concedes FDP narrows the WAF gap; argues per-drive DRAM, per-drive spare flash, GC timing and module density remain, with a view on which customers pay for.
 3. *"How do we explain to a customer why our usable capacity per raw TB differs from an SSD-based array's?"* Strong answer: separates drive OP, array reserve, RAID overhead and data reduction, and avoids double-counting ([Chapter 4](04-performance-and-economics-metrics.md)).
 
 **Questions for an engineer**
 
-1. *"What WAF does Purity see end to end on a typical customer workload, and how does that compare with the same data on standard SSDs?"* Strong answer: gives measured ranges by workload, explains how lifetime-aware placement keeps segments dying whole, and is candid about workloads where WAF rises.
-2. *"Without an on-module DRAM map, where does the mapping state live, and how does it scale per PB?"* Strong answer: describes metadata tiering across controller DRAM, NVRAM and flash, and how map growth is bounded as modules reach 300 TB.
-3. *"How do you handle read retry and LDPC fallback latency on aged QLC?"* Strong answer: covers per-block threshold tracking, scheduling retries away from foreground I/O, and using array-level parity to reconstruct rather than wait.
+1. *"What WAF does Purity see end to end on a typical customer workload, and how does that compare with the same data on standard SSDs?"* Strong answer: measured ranges by workload, how lifetime-aware placement keeps segments dying whole, and candour about where WAF rises.
+2. *"Without an on-module DRAM map, where does the mapping state live, and how does it scale per PB?"* Strong answer: metadata tiering across controller DRAM, NVRAM and flash, and how map growth stays bounded as modules reach 300 TB.
+3. *"How do you handle read retry and LDPC fallback latency on aged QLC?"* Strong answer: per-block threshold tracking, scheduling retries away from foreground I/O, and reconstructing from array parity rather than waiting.
 
 **Don't say this:**
 
 - "SSDs don't need garbage collection because there's no seek." GC exists because of erase-before-write, not mechanics.
 - "Over-provisioning is wasted capacity." It buys endurance and steady latency; the question is who holds it and whether it is pooled.
-- "WAF of 1 means no overhead." It means no *extra NAND writes*. DRAM, ECC parity and controller cost remain.
 - "TRIM deletes data." It marks LBAs as free so GC can skip them; physical erasure happens later.
 - "Bigger SSDs are just more NAND." Beyond ~30 TB, the map forces coarser indirection units and changes which workloads fit.
 
 ## Going deeper (optional, L3 pointers)
 
-- P. Desnoyers, "Analytic Modeling of SSD Write Performance," SYSTOR 2012: closed-form WAF for greedy and LRU cleaning[^5].
-- J. Yang et al., "Don't Stack Your Log on My Log," INFLOW 2014: measurements of compounding log layers[^11].
-- Bjørling et al., "LightNVM," FAST 2017: the open-channel design that preceded ZNS[^18].
-- WARP, FAST '26: how FDP behaves when lifetime hints are wrong[^15].
-- Topics to explore: hybrid page/block mapping, demand-paged map caching (DFTL), SLC-mode write caches on QLC, multi-stream writes, and LDPC soft-decode architectures.
+- Desnoyers, SYSTOR 2012: closed-form WAF for greedy cleaning[^5].
+- Yang et al., INFLOW 2014: compounding log layers[^11].
+- Bjørling et al., FAST 2017: LightNVM open-channel SSDs[^18].
+- WARP, FAST '26: FDP when lifetime hints are wrong[^15].
+- Also: demand-paged map caching (DFTL), SLC-mode caches on QLC, LDPC soft decoding.
 
 ## Key terms
 
-Controller SoC · Flash translation layer (FTL) · Logical-to-physical (L2P) table · Indirection unit · Garbage collection · Write amplification factor (WAF) · Over-provisioning (OP) · TRIM / Deallocate · Wear levelling · LDPC · Read retry · Power-loss protection (PLP) · Host Memory Buffer (HMB) · Log-on-log · Zoned Namespaces (ZNS) · Flexible Data Placement (FDP). See the [glossary](../glossary.md).
+FTL · L2P table · Indirection unit · Garbage collection · WAF · Over-provisioning · TRIM · Wear levelling · LDPC · Read retry · PLP · HMB · Log-on-log · ZNS · FDP. See the [glossary](../glossary.md).
 
 ## Sources
 

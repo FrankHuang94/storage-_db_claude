@@ -8,12 +8,12 @@
 - **Pure Storage was founded in 2009 on one insight:** consumer-grade flash plus aggressive data reduction could match disk's cost per usable terabyte. FlashArray reached GA in May 2012; the IPO followed in October 2015.
 - **Its durable moat was a business model, not a box.** Forever Flash (2014) and Evergreen (2015) turned controller upgrades into a subscription; subscription ARR was $1.92B at FY2026.
 - **Acquisitions were small and capability-driven.** StorReduce, Compuverde, Portworx and 1touch together cost about $0.6B in disclosed consideration, less than one year of free cash flow. One (StorReduce) produced a product that was quietly withdrawn.
-- **The newest growth leg is selling IP rather than arrays.** DirectFlash licensing wins with Meta (December 2024) and a second top-five hyperscaler (August 2026) arrived as FY2027 revenue guidance rose to $5.03–5.07B, about +38%.
+- **The newest growth leg is selling IP rather than arrays.** DirectFlash licensing wins with Meta (December 2024) and a second top-five hyperscaler (August 2026) are real, but hyperscale is still a small slice of FY2027 revenue guidance of $5.03–5.07B (about +38%).
 - **The February 2026 rebrand to Everpure (NYSE: P, formerly PSTG) is a claim, not yet a result.** It bids for a data-platform valuation while revenue is still mostly arrays and attached subscriptions.
 
 ## Why this matters for Everpure strategy
 
-Strategic conversations inside Everpure carry this history. Product managers defend Evergreen economics because Evergreen built the installed base. Engineers trust Purity because it has survived 14 years of NAND generations. Corporate development inherits a pattern of small, tuck-in deals that bought capabilities rather than revenue. Knowing which bets paid off, which ran late and which died tells you how the organisation weighs a new one.
+Strategic conversations inside Everpure carry this history. PMs defend Evergreen because it built the installed base; engineers trust Purity because it has survived 14 years of NAND generations; corporate development inherits a pattern of small tuck-ins that bought capabilities, not revenue. Which bets paid off, ran late or died tells you how the organisation weighs a new one.
 
 The rebrand, the 1touch acquisition and hyperscaler licensing all move away from "we sell the best flash array". Is that the fifth pivot in a consistent line, or a break? The record suggests the first, with one caveat: past pivots were underwritten by array cash flows, and the newest ones still are.
 
@@ -51,7 +51,7 @@ The second insight was commercial. Incumbents earned much of their margin from f
 
 ### Era 2, 2016–2020: second product, new CEO, first deals
 
-FlashBlade, a scale-out file and object system for unstructured data, was unveiled in March 2016 and reached GA on 25 January 2017[^9]. In August 2017 the board appointed Charles Giancarlo, previously CTO of Cisco, as CEO, succeeding Scott Dietzen[^10]. DirectFlash modules, which put raw NAND under Purity's direct control instead of behind an SSD controller, followed in 2017 [VERIFY: launch date of DirectFlash with FlashArray//X]. See [Chapter 26](26-purity-and-directflash.md).
+FlashBlade, a scale-out file and object system for unstructured data, was unveiled in March 2016 and reached GA on 25 January 2017[^9]. In August 2017 the board appointed Charles Giancarlo, previously CTO of Cisco, as CEO, succeeding Scott Dietzen[^10]. DirectFlash modules, which put raw NAND under Purity's direct control instead of behind an SSD controller, followed with FlashArray//X in April 2017[^46] ([Chapter 26](26-purity-and-directflash.md)).
 
 Three acquisitions followed in 26 months (Table 25.1).
 
@@ -69,13 +69,13 @@ The arithmetic: 20.5 + 47.9 + 15.9 + 352.9 + 32.2 + 125.0 ≈ $594M over eight y
 
 ### Era 3, 2020–2023: subscription and the first Meta relationship
 
-FY2021 revenue grew only 2%, which the company attributed to COVID-19. FY2022 then rose 29% to $2.18B[^22]. Part of that rise came from Meta. Its AI Research SuperCluster, unveiled in January 2022, used 175 PB of FlashArray and 10 PB of FlashBlade[^23]. In June 2022 Pure reorganised Evergreen into //Forever (owned arrays), //Flex (pay-per-use on owned hardware) and //One (storage-as-a-service)[^24]. The economics are covered in [Chapter 23](../03-system-architecture/23-consumption-models.md).
+FY2021 revenue grew only 2%, which the company attributed to COVID-19. FY2022 then rose 29% to $2.18B[^22]. Meta became the showcase AI customer: its AI Research SuperCluster, unveiled in January 2022, used 175 PB of FlashArray and 10 PB of FlashBlade[^23]. In June 2022 Pure reorganised Evergreen into //Forever (owned arrays), //Flex (pay-per-use on owned hardware) and //One (storage-as-a-service)[^24]. The economics are covered in [Chapter 23](../03-system-architecture/23-consumption-models.md).
 
 In May 2023 a Pure executive predicted that no new hard drives would be sold after 2028. Analysts such as Coughlin Associates disputed it[^25][^26]. It was a marketing line that pointed to the real strategy: QLC DirectFlash at hyperscale.
 
 ### Era 4, 2024–2025: from array vendor to IP licensor
 
-On 3 December 2024 Pure announced a DirectFlash design win with a "top-four hyperscaler"[^27]. The FY2025 annual report later named the customer as Meta[^28]. The model is new for the company. The hyperscaler sources its own hardware and NAND, and Pure licenses Purity and DirectFlash technology and provides support[^27]. It is an ARM-style IP licence rather than a fab selling wafers: Pure trades hardware revenue for margin and reach. Volume deployment began in Q2 FY2026, and the CFO targeted 1–2 EB shipped by the end of that year[^29].
+On 3 December 2024 Pure announced a DirectFlash design win with a "top-four hyperscaler"[^27]. The FY2025 10-K later named the customer as Meta[^28]. The hyperscaler sources its own hardware and NAND; Pure licenses Purity and DirectFlash technology and provides support[^27]. It is an Arm-style IP licence: Pure trades hardware revenue for margin and reach. Volume deployment began in Q2 FY2026, and the CFO targeted 1–2 EB shipped by the end of that year[^29].
 
 In 2025 Pure also announced FlashBlade//EXA, a disaggregated system for AI-scale throughput, in March[^30]. In June it launched the *Enterprise Data Cloud*, which uses Pure Fusion to present a whole fleet as one policy-driven pool[^31] ([Chapter 28](28-platform-and-software.md)).
 
@@ -115,11 +115,11 @@ Worked numbers: FY2016 revenue was $440.3M and FY2026 was $3,662.8M[^35][^36]. T
 
 ### What worked, what took longer, what the rebrand signals
 
-**Worked:** Evergreen. It turned a hardware company into one where subscription ARR ($1,924M at FY2026) equals about 52% of revenue, and subscription services were $1,691M, or 46% of FY2026 revenue[^36]. Purity's single code base across FlashArray and FlashBlade worked too. So did the hyperscaler licence, which moved from a December 2024 announcement to volume shipments within the next fiscal year.
+**Worked:** Evergreen. It turned a hardware company into one where subscription ARR ($1,924M at FY2026) equals about 52% of revenue, and subscription services were $1,691M, or 46% of FY2026 revenue[^36]. Purity's single code base across FlashArray and FlashBlade worked too. The hyperscaler licence moved from announcement to volume shipments within a fiscal year, though its revenue is still small.
 
 **Took longer or landed narrower:** FlashBlade's GA took ten months after unveiling. Native file on FlashArray took a year from the Compuverde deal to Purity 6.0. One report says it needed two more years to mature [VERIFY: Purity//FA 6.4 as the release in which file services matured]. Portworx has no disclosed revenue line, and its pitch moved from containers to VM migration off VMware. Hyperscaler revenue was described as small in Q1 FY2027 and back-half-weighted[^38]. The 2028 "end of disk" call is still unproven.
 
-**What the rebrand signals:** the old name tied the company to flash media just as its pitch moved to software, data services and licensing. Options a strategy team might evaluate, based on public information: whether data-intelligence revenue can be disclosed separately enough to support a platform multiple; whether further 1touch-sized deals (governance, vector, lakehouse connectors) are needed to make "data primacy" credible against VAST's AI OS; and how to keep the array franchise funding all of this while NAND costs rise. Everpure raised prices in February 2026[^39], and FY2027 Q2 free cash flow was −$238M because the company prepaid for NAND[^40].
+**What the rebrand signals:** the old name tied the company to flash media just as its pitch moved to software, data services and licensing. Options a strategy team might evaluate, based on public information: whether data-intelligence revenue can be disclosed separately enough to support a platform multiple; whether further 1touch-sized deals (governance, vector, lakehouse connectors) are needed to make "data primacy" credible against VAST's AI OS; and how to keep the array franchise funding all of this while NAND costs rise. Everpure raised prices in February 2026[^39], and Q2 FY2027 free cash flow was −$238M after strategic NAND and component purchases[^40].
 
 ## How Everpure approaches it vs. competitors
 
@@ -128,7 +128,7 @@ Worked numbers: FY2016 revenue was $440.3M and FY2026 was $3,662.8M[^35][^36]. T
 | Everpure | All-flash arrays, one OS (Purity) | Evergreen subscriptions; Fusion/EDC; data intelligence via 1touch | FlashBlade//EXA; DFM licensing to hyperscalers | Public; small tuck-ins funded from FCF |
 | NetApp | Unified file/block (ONTAP), hybrid then flash | Cloud-native ONTAP services | AFX disaggregated ONTAP plus AI Data Engine (Oct 2025)[^41] | Public; history of software acquisitions |
 | Dell | Broadest portfolio after acquiring EMC | Multiple OSes by product line | PowerScale parallel NFS ("Lightning")[^42] | Public conglomerate; channel scale |
-| VAST Data | Disaggregated software platform (2016) | Rebranded as "AI Operating System" (May 2025)[^43] | GPU clouds and neoclouds | Private; $30B valuation (Apr 2026)[^44] |
+| VAST Data | Disaggregated software platform (2016) | Rebranded as "AI Operating System" (May 2025)[^43] | GPU clouds and neoclouds | Private; $30B valuation (Apr 2026, *reported by CNBC*)[^44] |
 | DDN | HPC parallel file systems | "AI and data intelligence" positioning | NVIDIA SuperPOD incumbency | Blackstone $300M at $5B (Jan 2025)[^45] |
 
 *Table 25.2 — Everyone is converging on "data platform for AI". Everpure is unusual in reaching it through one OS and a subscription base rather than through a portfolio (Dell) or a clean-sheet AI design (VAST).*
@@ -155,7 +155,7 @@ Dated, public signals to watch through 2027:
 | Disclosed M&A consideration | ≈$594M across 4 deals | 2018–2026 | Worked example from Table 25.1 |
 | Portworx price | $352.9M + $32.2M retention | Largest deal to date | FY2021 10-K[^13] |
 | 1touch price | $125.0M cash | Closed 2026-05-07 | Q1 FY27 10-Q[^19] |
-| FY2027 revenue guidance | $5.03–5.07B (≈+38%) | Raised from $4.3–4.4B | Q2 FY27 release, 2026-08-26[^37] |
+| FY2027 revenue guidance | $5.03–5.07B (≈+38%) | Initial guide (Feb 2026) $4.3–4.4B | Q2 FY27 release, 2026-08-26[^37] |
 | Meta DirectFlash target | 1–2 EB by end of FY2026 | First volume deployment Q2 FY26 | Blocks & Files, 2025-08-29[^29] |
 
 ## Conversation playbook
@@ -224,7 +224,7 @@ Dated, public signals to watch through 2027:
 [^25]: Blocks & Files, "Pure: no more hard drives will be sold after 2028," 2023-05-09. https://blocksandfiles.com/2023/05/09/pure-no-more-hard-drives-2028/ (retrieved 2026-11-01).
 [^26]: Blocks & Files, "Analyst forecasts continued HDD sales beyond 2028," 2024-05-13. https://blocksandfiles.com/2024/05/13/coughlin-associates-hdd/ (retrieved 2026-11-01).
 [^27]: SiliconANGLE, "Shares of Pure Storage jump on impressive earnings beat and strong guidance," 2024-12-03. https://siliconangle.com/2024/12/03/shares-pure-storage-jump-impressive-earnings-beat-strong-guidance/ (retrieved 2026-11-01).
-[^28]: SEC, "Pure Storage, Inc. Form ARS for fiscal 2025," 2025. https://www.sec.gov/Archives/edgar/data/1474432/000162828025021855/a10kfy2025.htm (retrieved 2026-11-01).
+[^28]: SEC, "Pure Storage, Inc. Form 10-K for fiscal year ended February 2, 2025," 2025-04. https://www.sec.gov/Archives/edgar/data/1474432/000162828025015044/pstg-20250202.htm (retrieved 2026-11-01; Meta named as the December 2024 design win, seen via search summary); also in the FY2025 Form ARS, https://www.sec.gov/Archives/edgar/data/1474432/000162828025021855/a10kfy2025.htm.
 [^29]: Blocks & Files, "Pure knocking it out of the park," 2025-08-29. https://blocksandfiles.com/2025/08/29/pure-knocking-it-out-of-the-park/ (retrieved 2026-11-01).
 [^30]: SiliconANGLE, "FlashBlade//EXA: Pure Storage helps enterprises avoid starving data-hungry GPUs," 2025-03-11. https://siliconangle.com/2025/03/11/flashblade-exa-pure-storage-helps-enterprises-avoid-starving-data-hungry-gpus-accelerate-ai-workloads/ (retrieved 2026-11-01).
 [^31]: Blocks & Files, "Pure debuts Enterprise Data Cloud with Fusion updates and new FlashArray systems," 2025-06-18. https://www.blocksandfiles.com/ai-ml/2025/06/18/pure-debuts-enterprise-data-cloud-with-fusion-updates-and-new-flasharray-systems/100996 (retrieved 2026-11-01).
@@ -242,3 +242,4 @@ Dated, public signals to watch through 2027:
 [^43]: Blocks & Files, "VAST Data launches AI operating system," 2025-05-21. https://www.blocksandfiles.com/ai-ml/2025/05/21/vast-data-launches-ai-operating-system/1613219 (retrieved 2026-11-01).
 [^44]: CNBC, "Nvidia backs AI company Vast Data at $30 billion valuation," 2026-04-22. https://www.cnbc.com/2026/04/22/nvidia-backs-ai-company-vast-data.html (retrieved 2026-11-01).
 [^45]: Blackstone, "Blackstone Invests $300 Million at a $5 Billion Valuation in DDN," 2025-01-08. https://www.blackstone.com/news/press/blackstone-invests-300-million-at-a-5-billion-valuation-in-ddn-ai-and-data-intelligence-solutions-leader-to-fuel-further-rapid-growth/ (retrieved 2026-11-01).
+[^46]: The Register, "Pure becomes a direct flasher," 2017-04-11. https://www.theregister.com/2017/04/11/pure_becomes_a_direct_flasher/ (retrieved 2026-11-01); Pure Storage, "Pure Storage Announces First Enterprise-Class All-NVMe Flash Array, FlashArray//X," 2017-04-11. https://investor.everpuredata.com/news-and-events/press-releases/press-release-details/2017/Pure-Storage-Announces-First-Enterprise-Class-All-NVMe-Flash-Array-FlashArrayX/default.aspx (retrieved 2026-11-01).

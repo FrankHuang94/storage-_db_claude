@@ -7,15 +7,15 @@
 
 - **Purity is a log-structured, database-like storage OS.** It appends instead of overwriting, reduces data inline, and keeps all mappings in a key-value metadata store.
 - **DirectFlash removes the SSD's own brain.** Purity runs one flash translation layer (FTL) across raw-NAND modules. That gives one log, one garbage collector and one pool of spare flash, where an SSD-based array has one per drive.
-- **That is why DFMs ship bigger than SSDs:** 300 TB per module by 2026[^1], against 245.76 TB for the largest standard drive[^2]. Everpure's power advantages are vendor claims, best checked at system level.
+- **That is why DFMs ship bigger than SSDs:** 300 TB per module by 2026[^1], against 245.76 TB for the largest standard SSD confirmed shipping[^2] (Sandisk has announced 256 TB[^24]). Everpure's power advantages are vendor claims, best checked at system level.
 - **Semis frame:** it is the integrated-memory-controller move, made by a fabless-style player. Global scheduling is the gain; qualifying every NAND generation itself, with NAND bought from IDMs that also sell finished SSDs, is the cost.
 - **Exposure cuts both ways.** Everpure buys NAND for its enterprise arrays, and strategic NAND purchases turned Q2 FY27 operating cash flow negative[^3]. It does not buy NAND for hyperscaler licences[^4]. Flexible Data Placement (FDP) SSDs and hyperscaler do-it-yourself designs are the main threats to the moat.
 
 ## Why this matters for Everpure strategy
 
-DirectFlash is the technical root of three things investors pay Everpure (NYSE: P, formerly PSTG) for. The first is product gross margin: fewer components per terabyte, so 66.2% product gross margin in Q2 FY27 even during a NAND price spike[^5]. The second is the hyperscaler licensing business: Meta, then a second unnamed top-five hyperscaler in August 2026[^6]. The third is the power-and-density pitch to replace disk in power-constrained AI datacenters ([Chapter 38](../05-ai-storage/38-power-and-density.md)). If FDP gives commodity SSDs most of the benefit, or a hyperscaler builds its own equivalent, all three weaken together.
+DirectFlash is the technical root of three things investors pay Everpure (NYSE: P, formerly PSTG) for. The first is product gross margin: a lower bill of materials per terabyte is one support for it, though product GM still fell to 66.2% (non-GAAP) in Q2 FY27 from 72.9% in Q3 FY26, a quarter flattered by hyperscale royalties, as NAND costs rose[^5][^45]. The second is the hyperscaler licensing business: Meta, then a second unnamed top-five hyperscaler in August 2026[^6]. The third is the power-and-density pitch to replace disk in power-constrained AI datacenters ([Chapter 38](../05-ai-storage/38-power-and-density.md)). If FDP gives commodity SSDs most of the benefit, or a hyperscaler builds its own equivalent, all three weaken together.
 
-The strategy question is which layer of the moat is durable: software (the global FTL), module design, NAND qualification know-how or supply relationships. Owning the module also makes Everpure a raw-NAND buyer in the 2026 shortage, a position no SSD-buying competitor shares.
+The strategy question is which layer of the moat is durable: software (the global FTL), module design, NAND qualification know-how or supply relationships. Owning the module also makes Everpure a direct raw-NAND buyer in the 2026 shortage, competing for allocation with the IDMs' own SSD businesses.
 
 ## Core concepts
 
@@ -110,11 +110,11 @@ The 75 TB QLC DFM launched with FlashArray//E in 2023[^20]. In March 2023 Pure S
 
 ### NAND supplier exposure and the 2026 shortage
 
-Everpure qualified Micron's G8 QLC for the 150 TB DFM and is taking Micron G9 QLC into future DFMs, including hyperscaler ones[^26]. Kioxia, whose BiCS8 generation includes a 2 Tb QLC die, is a long-standing partner[^27]. Two suppliers give pricing leverage and resilience, but each new die costs months of characterisation work.
+Everpure qualified Micron's G8 QLC for the 150 TB DFM and is taking Micron G9 QLC into future DFMs, including hyperscaler ones[^26]. Kioxia, whose BiCS8 generation includes a 2 Tb QLC die, is a long-standing partner[^27]. Two suppliers give leverage and resilience at the cost of qualifying each new die.
 
-The 2026 shortage tested the model. Everpure raised prices on 9 February 2026, citing component costs[^28]. In Q2 FY27 it made strategic NAND and component purchases. Operating cash flow fell to −$136M and free cash flow to −$238M; a ~$577M build in prepaid expenses has been read as advance NAND buying[^29] [VERIFY: prepaid figure from third-party reading of the 10-Q]. Management said cash flow should normalise over two quarters[^3]. TrendForce reportedly expects enterprise SSD contract prices to rise another 23–28% quarter on quarter in Q4 2026[^30] [VERIFY: search-summary only].
+The 2026 shortage tested the model. Everpure raised prices on 9 February 2026, citing component costs[^28]. In Q2 FY27 it made strategic NAND and component purchases. Operating cash flow fell to −$136M and free cash flow to −$238M; a ~$577M build in prepaid expenses has been read as advance NAND buying[^29] [VERIFY: prepaid figure from third-party reading of the 10-Q]. Management said cash flow should normalise over two quarters[^3]. TrendForce forecasts NAND contract prices up another 15–20% quarter on quarter in Q4 2026, with enterprise SSDs reportedly up 23–28%[^42][^30].
 
-The hyperscaler model sidesteps all this. The customer licenses DirectFlash software and design, and buys its own NAND and hardware[^31][^1]; Everpure does not procure NAND for that business[^4]. That business looks less like a fabless chip vendor and more like Arm.
+The hyperscaler model sidesteps this: the customer licenses the design and buys its own NAND and hardware, so Everpure procures no NAND for it[^1][^4]. That is closer to Arm than to a fabless chip vendor ([Chapter 29](29-hyperscaler-ecosystem-financials.md)).
 
 ## How Everpure approaches it vs. competitors
 
@@ -157,7 +157,7 @@ timeline
 
 *Figure 26.5 — Purity began by taming commodity SSDs, then spent a decade replacing them, and is now licensing the replacement to hyperscalers.*
 
-Pure Storage launched FlashArray in 2012 on commodity SSDs. FlashBlade (2016) put raw NAND directly on its blades [VERIFY: FlashBlade 2016 blades used raw NAND managed by software]. DirectFlash arrived in FlashArray//X in 2017[^39]. QLC DFMs followed in FlashArray//C at 24.7 TB and then 49 TB in 2020[^40][^41], with 75 TB in 2023[^20]. In December 2024 a "top-four hyperscaler" licensed DirectFlash; analysts identified it as Meta[^31]. A second top-five hyperscaler followed in August 2026, with meaningful revenue expected from FY2028[^6].
+Sources for the timeline: FlashBlade's 2016 blades already carried raw NAND chips, not SSDs[^43]; DirectFlash arrived in FlashArray//X in April 2017[^39]; QLC DFMs reached 24.7 TB and then 49 TB in FlashArray//C[^40][^41]. In December 2024 a "top-four hyperscaler" licensed DirectFlash[^31], and the FY2025 10-K later named it as Meta[^44]. The second top-five win (August 2026) is expected to matter from FY2028[^6].
 
 Signals to watch: a date for 600 TB DFMs, standard SSDs reaching 512 TB, FDP adoption, and NAND costs in product margin.
 
@@ -172,7 +172,7 @@ Signals to watch: a date for 600 TB DFMs, standard SSDs reaching 512 TB, FDP ado
 | SSD DRAM at 4 KiB mapping | ~1 GB per TB | 4 B per 4 KiB page | Worked example |
 | Hidden spare in standard SSD | ~15–37% of user capacity | 8 TiB raw sold as 7.68 or 6.4 TB | Worked example |
 | Q2 FY27 operating cash flow | −$136M | Strategic NAND and component buys | Yahoo Finance, 2026-08[^29] |
-| Q2 FY27 product gross margin | 66.2% | Amid NAND inflation | Investing.com, 2026-08[^5] |
+| Q2 FY27 product gross margin | 66.2% (non-GAAP) | Down from 72.9% in Q3 FY26 | Investing.com, 2026-08[^5] |
 
 ## Conversation playbook
 
@@ -255,3 +255,7 @@ Signals to watch: a date for 600 TB DFMs, standard SSDs reaching 512 TB, FDP ado
 [^39]: The Register, "Pure becomes a direct flasher," 2017-04-11. https://www.theregister.com/2017/04/11/pure_becomes_a_direct_flasher/ (retrieved via search 2026-11-01).
 [^40]: TechTarget, "Pure Storage FlashArray//C set sights on hybrid flash market," 2020. https://www.techtarget.com/searchstorage/news/252488188/Pure-Storage-FlashArray-C-set-sights-on-hybrid-flash-market (retrieved via search 2026-11-01).
 [^41]: Everpure blog, "FlashArray//C Capacity: The 49TB Milestone Revisited," n.d. https://blog.everpuredata.com/products/capacity-workloads-49tb-qlc/ (retrieved via search 2026-11-01).
+[^42]: TrendForce, "AI Server Demand Sustains Memory Contract Price Increases in 4Q26, While Consumer-Side Pressure Persists," 2026-09-30. https://www.trendforce.com/presscenter/news/20260930-13258.html (retrieved 2026-11-01; enterprise SSD range from secondary coverage).
+[^43]: The Register, "FlashBlade back story notes," 2016-03-15. https://www.theregister.com/2016/03/15/flashblade_back_story_notes/ (retrieved via search 2026-11-01); Computer Weekly, "Pure Storage drips out more of its all-flash analytics FlashBlade," 2016. https://computerweekly.com/news/450299856/Pure-Storage-drips-out-more-of-its-all-flash-analytics-FlashBlade (retrieved via search 2026-11-01).
+[^44]: SEC, "Pure Storage, Inc. Form 10-K for fiscal year ended February 2, 2025," 2025-04. https://www.sec.gov/Archives/edgar/data/1474432/000162828025015044/pstg-20250202.htm (seen via search summary, 2026-11-01).
+[^45]: Futurum Group, "Pure Storage Q3 FY 2026 Results: Revenue Up 16% YoY, Guidance Raised," 2025-12. https://futurumgroup.com/insights/pure-storage-q3-fy-2026-results-revenue-up-16-yoy-guidance-raised/ (retrieved via search summary 2026-11-01).
