@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 600" width="1000" height="600" font-family="Inter, Helvetica, Arial, sans-serif">
+  <title>Kernel TCP/IP data path versus RDMA data path</title>
+  <rect x="0" y="0" width="1000" height="600" fill="#FFFFFF"/>
+  <defs>
+    <marker id="arr" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#222222"/>
+    </marker>
+    <marker id="arrB" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#0072B2"/>
+    </marker>
+    <marker id="arrV" markerWidth="10" markerHeight="10" refX="8" refY="5" orient="auto">
+      <path d="M0,0 L10,5 L0,10 z" fill="#D55E00"/>
+    </marker>
+  </defs>
+
+  <!-- Titles -->
+  <text x="250" y="36" font-size="20" font-weight="bold" fill="#222222" text-anchor="middle">Kernel TCP/IP (e.g., NFS over TCP)</text>
+  <text x="750" y="36" font-size="20" font-weight="bold" fill="#222222" text-anchor="middle">RDMA (InfiniBand or RoCEv2)</text>
+  <line x1="500" y1="20" x2="500" y2="580" stroke="#DDDDDD" stroke-width="2"/>
+
+  <!-- Layer bands -->
+  <text x="16" y="96" font-size="13" fill="#555555">USER</text>
+  <text x="16" y="112" font-size="13" fill="#555555">SPACE</text>
+  <line x1="10" y1="160" x2="990" y2="160" stroke="#888888" stroke-width="1.5" stroke-dasharray="8,6"/>
+  <text x="16" y="186" font-size="13" fill="#555555">KERNEL</text>
+  <line x1="10" y1="370" x2="990" y2="370" stroke="#888888" stroke-width="1.5" stroke-dasharray="8,6"/>
+  <text x="16" y="396" font-size="13" fill="#555555">NIC</text>
+  <text x="16" y="412" font-size="13" fill="#555555">(HW)</text>
+
+  <!-- LEFT: TCP path -->
+  <rect x="90" y="70" width="320" height="64" rx="8" fill="#56B4E9" fill-opacity="0.25" stroke="#0072B2" stroke-width="1.5"/>
+  <text x="250" y="96" font-size="15" fill="#222222" text-anchor="middle" font-weight="bold">Application buffer</text>
+  <text x="250" y="118" font-size="13" fill="#222222" text-anchor="middle">send() / recv() system calls</text>
+
+  <rect x="90" y="182" width="320" height="56" rx="8" fill="#F0E442" fill-opacity="0.35" stroke="#888888" stroke-width="1.5"/>
+  <text x="250" y="206" font-size="15" fill="#222222" text-anchor="middle" font-weight="bold">Socket buffer</text>
+  <text x="250" y="226" font-size="13" fill="#222222" text-anchor="middle">CPU copies every byte in or out</text>
+
+  <rect x="90" y="252" width="320" height="56" rx="8" fill="#F0E442" fill-opacity="0.35" stroke="#888888" stroke-width="1.5"/>
+  <text x="250" y="276" font-size="15" fill="#222222" text-anchor="middle" font-weight="bold">TCP/IP stack on host CPU</text>
+  <text x="250" y="296" font-size="13" fill="#222222" text-anchor="middle">segmentation, ACKs, retransmit, checksums*</text>
+
+  <rect x="90" y="318" width="320" height="40" rx="8" fill="#F0E442" fill-opacity="0.35" stroke="#888888" stroke-width="1.5"/>
+  <text x="250" y="343" font-size="14" fill="#222222" text-anchor="middle">NIC driver + interrupts</text>
+
+  <rect x="90" y="388" width="320" height="56" rx="8" fill="#FFFFFF" stroke="#222222" stroke-width="1.5"/>
+  <text x="250" y="412" font-size="15" fill="#222222" text-anchor="middle" font-weight="bold">Ethernet NIC</text>
+  <text x="250" y="432" font-size="13" fill="#222222" text-anchor="middle">moves frames; little protocol state</text>
+
+  <line x1="250" y1="134" x2="250" y2="178" stroke="#D55E00" stroke-width="3" marker-end="url(#arrV)"/>
+  <text x="262" y="150" font-size="13" fill="#D55E00">copy #1</text>
+  <line x1="250" y1="238" x2="250" y2="250" stroke="#222222" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="250" y1="308" x2="250" y2="316" stroke="#222222" stroke-width="2" marker-end="url(#arr)"/>
+  <line x1="250" y1="358" x2="250" y2="386" stroke="#D55E00" stroke-width="3" marker-end="url(#arrV)"/>
+  <text x="262" y="386" font-size="13" fill="#D55E00">DMA to NIC</text>
+  <line x1="250" y1="444" x2="250" y2="478" stroke="#222222" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="250" y="498" font-size="14" fill="#222222" text-anchor="middle">wire → remote host repeats it all in reverse</text>
+  <text x="250" y="520" font-size="13" fill="#555555" text-anchor="middle">and the remote CPU must run to receive the data</text>
+
+  <!-- RIGHT: RDMA path -->
+  <rect x="590" y="70" width="320" height="64" rx="8" fill="#56B4E9" fill-opacity="0.25" stroke="#0072B2" stroke-width="1.5"/>
+  <text x="750" y="96" font-size="15" fill="#222222" text-anchor="middle" font-weight="bold">Registered app memory</text>
+  <text x="750" y="118" font-size="13" fill="#222222" text-anchor="middle">verbs: post work request to queue pair</text>
+
+  <rect x="590" y="182" width="320" height="126" rx="8" fill="#FFFFFF" stroke="#BBBBBB" stroke-width="1.5" stroke-dasharray="5,4"/>
+  <text x="750" y="222" font-size="15" fill="#555555" text-anchor="middle" font-weight="bold">Kernel bypassed on the data path</text>
+  <text x="750" y="246" font-size="13" fill="#555555" text-anchor="middle">used only for setup: memory registration,</text>
+  <text x="750" y="266" font-size="13" fill="#555555" text-anchor="middle">queue-pair creation, permissions</text>
+
+  <rect x="590" y="388" width="320" height="56" rx="8" fill="#0072B2" fill-opacity="0.15" stroke="#0072B2" stroke-width="2"/>
+  <text x="750" y="412" font-size="15" fill="#222222" text-anchor="middle" font-weight="bold">RDMA NIC (RNIC)</text>
+  <text x="750" y="432" font-size="13" fill="#222222" text-anchor="middle">transport, ordering, retransmit in silicon</text>
+
+  <path d="M 860 134 C 960 200, 960 330, 870 386" fill="none" stroke="#0072B2" stroke-width="3" marker-end="url(#arrB)"/>
+  <text x="760" y="346" font-size="13" fill="#0072B2" text-anchor="middle">zero-copy DMA straight from app memory</text>
+  <path d="M 640 134 C 560 200, 560 330, 630 386" fill="none" stroke="#0072B2" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrB)"/>
+  <text x="520" y="330" font-size="13" fill="#0072B2">doorbell</text>
+  <line x1="750" y1="444" x2="750" y2="478" stroke="#222222" stroke-width="2" marker-end="url(#arr)"/>
+  <text x="750" y="498" font-size="14" fill="#222222" text-anchor="middle">wire → remote RNIC DMAs straight into</text>
+  <text x="750" y="520" font-size="13" fill="#555555" text-anchor="middle">target memory; one-sided READ/WRITE need no remote CPU</text>
+
+  <!-- Footer -->
+  <rect x="40" y="540" width="920" height="46" rx="6" fill="#F7F7F7" stroke="#DDDDDD"/>
+  <text x="500" y="560" font-size="13" fill="#222222" text-anchor="middle">Semis analogy: RDMA is a DMA engine whose address space spans the fabric; the kernel sets up the descriptors, then gets out of the way.</text>
+  <text x="500" y="578" font-size="12" fill="#555555" text-anchor="middle">* Modern NICs offload checksums and segmentation (TSO/LRO), but the copy, socket and protocol state machine stay on the host CPU.</text>
+</svg>

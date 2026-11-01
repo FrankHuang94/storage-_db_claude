@@ -1,0 +1,13 @@
+year,vendor,layers,label,status,source,as_of
+2013,Samsung,24,Samsung 24L (first V-NAND),background,"Background only, not verified this session (meta research table row marked VERIFY: background)",2026-11-01
+2016,Industry,48,48L,background,"Background only, not verified this session",2026-11-01
+2017,Industry,64,64L,background,"Background only, not verified this session",2026-11-01
+2018,Industry,96,96L,background,"Background only, not verified this session",2026-11-01
+2020,Micron,176,Micron 176L,background,"Background only, not verified this session",2026-11-01
+2022,Micron,232,Micron 232L,background,"Background only, not verified this session",2026-11-01
+2022,SK hynix,238,SK hynix 238L,background,"Background only, not verified this session",2026-11-01
+2024,Samsung,286,Samsung V9 (~286L),background,"Background only; layer count not confirmed by a retrieved source",2026-11-01
+2024,SK hynix,321,SK hynix 321L (mass production Nov 2024),sourced,"Blocks & Files, 'SK hynix begins mass production of 321-layer 3D NAND', 2024-11-21, https://www.blocksandfiles.com/ai-ml/2024/11/21/sk-hynix-begins-mass-production-of-321-layer-3d-nand/1605947",2026-11-01
+2025,Micron,276,Micron G9 276L,sourced,"Tom's Hardware, 'Inside the future of 3D NAND: The roadmap to 500 layers', 2026, https://www.tomshardware.com/pc-components/storage/inside-the-future-of-3d-nand-the-roadmap-to-500-layers",2026-11-01
+2026,Kioxia/Sandisk,332,Kioxia/Sandisk BiCS10 332L,sourced,"Tom's Hardware, 'Kioxia and Sandisk sample world's densest 3D NAND - new 332-Layer beats Samsung's 400-Layer NAND', 2026, https://www.tomshardware.com/pc-components/ssds/kioxia-and-sandisk-sample-worlds-densest-3d-nand-new-332-layer-beats-samsungs-400-layer-nand",2026-11-01
+2026,Samsung,400,Samsung V10 (400+L),sourced,"Tom's Hardware, 'Samsung unveils 10th Gen V-NAND: 400+ layers, 5.6 GT/s and hybrid bonding', 2026, https://www.tomshardware.com/pc-components/ssds/samsung-unveils-10th-gen-v-nand-400-layers-5-6-gt-s-and-hybrid-bonding",2026-11-01

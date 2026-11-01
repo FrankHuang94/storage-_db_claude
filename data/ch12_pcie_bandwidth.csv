@@ -1,0 +1,7 @@
+generation,spec_release,release_year,gt_s_per_lane,signaling,encoding,x4_gbps_raw_per_dir,x4_gbps_effective_per_dir,status,shipping_ssd_x4_read_gbps,shipping_ssd_name,source,as_of
+PCIe 3.0,2010-11-18,2010.88,8,NRZ,128b/130b,4.00,3.94,released,,,"PCI-SIG press release 2010-11-18 (via Design-Reuse); effective = GT/s x 128/130 / 8 x 4 lanes (Atlas worked arithmetic)",2026-11-01
+PCIe 4.0,2017-10-25,2017.82,16,NRZ,128b/130b,8.00,7.88,released,,,"PCI-SIG 'PCIe 4.0 Version 1.0' release Oct 2017 (via Design-Reuse); effective = GT/s x 128/130 / 8 x 4 (Atlas worked arithmetic)",2026-11-01
+PCIe 5.0,2019-05-29,2019.41,32,NRZ,128b/130b,16.00,15.75,released,,,"PCI-SIG press release 2019-05-29 (via Design-Reuse/The FPS Review); effective = GT/s x 128/130 / 8 x 4 (Atlas worked arithmetic)",2026-11-01
+PCIe 6.0,2022-01-11,2022.03,64,PAM4,FLIT 256B,32.00,29.50,released,28,Micron 9650 (seq. read),"PCI-SIG press release 2022-01-11 (Business Wire); FLIT efficiency 236/256 TLP bytes per flit (Cadence/Klockwood); SSD: Micron 9650 via Tom's Hardware syndication 2026-02-14",2026-11-01
+PCIe 7.0,2025-06-11,2025.44,128,PAM4,FLIT 256B,64.00,59.00,released,,,"PCI-SIG press release 2025-06-11 (Business Wire); FLIT efficiency 236/256 (Atlas worked arithmetic)",2026-11-01
+PCIe 8.0,2028 target,2028.0,256,TBD,FLIT (assumed),128.00,118.00,target,,,"PCI-SIG announcement 2025-08-05 (The Register 2025-08-08): 256 GT/s target, release by 2028; effective assumes 236/256 FLIT efficiency (illustrative)",2026-11-01

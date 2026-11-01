@@ -19,7 +19,7 @@
 | 13 | The storage stack, layer by layer | — | — | — | — | not written |
 | 14 | Scale-up dual-controller arrays | — | — | — | — | not written |
 | 15 | Scale-out shared-nothing clusters | — | — | — | — | not written |
-| 16 | Disaggregated shared-everything architectures | — | — | — | — | not written |
+| 16 | Disaggregated shared-everything architectures | 2,299 / 2,000 | 9 (3/2/4) / 4 | 1 | 25 | PASS |
 | 17 | Parallel and distributed file systems | — | — | — | — | not written |
 | 18 | Object storage architecture | — | — | — | — | not written |
 | 19 | Software-defined storage and HCI | — | — | — | — | not written |
@@ -65,4 +65,4 @@
 | 59 | Self-test: 200 flashcards | — | — | — | — | not written |
 | 60 | Cheat sheets | — | — | — | — | not written |
 
-**Totals (written chapters):** 0 words · 0 visuals · 0 VERIFY markers · 0 failing chapter(s)
+**Totals (written chapters):** 2,299 words · 9 visuals · 1 VERIFY markers · 0 failing chapter(s)

@@ -1,0 +1,10 @@
+milestone,category,port_gbps,lane_gbps,date,status,source,as_of
+IEEE 802.3ba 100GbE,IEEE Ethernet standard,100,25,2010-06-17,approved,"IEEE 802.3ba Task Force page https://www.ieee802.org/3/ba/ (approval date from background knowledge; VERIFY)",2026-11-01
+IEEE 802.3bs 200/400GbE,IEEE Ethernet standard,400,50,2017-12-06,approved,"Ethernet Alliance via Lightwave, 'Ethernet Alliance salutes approval of IEEE 802.3bs', 2018-01",2026-11-01
+IEEE 802.3ck 100G-per-lane electrical,IEEE Ethernet standard,400,100,2022-09-21,approved,"IEEE 802.3 100 Gb/s per Lane Electrical Study Group page; approval date per search extract (VERIFY)",2026-11-01
+IEEE 802.3df 400/800GbE,IEEE Ethernet standard,800,100,2024-02-16,approved,"IEEE P802.3df Task Force page https://www.ieee802.org/3/df/",2026-11-01
+IEEE 802.3dj 1.6TbE (draft in ballot),IEEE Ethernet standard,1600,200,2026-10-01,in ballot (not yet approved),"IEEE 802.3 ballot record and Network World 2026-09-11; plotted at as-of date, not an approval date",2026-11-01
+NVIDIA Quantum-2 NDR InfiniBand,NVIDIA InfiniBand product,400,100,2021-11-09,announced,"StorageReview, 'NVIDIA Quantum-2 the next generation of InfiniBand networking announced' (date VERIFY)",2026-11-01
+NVIDIA Quantum-X800 XDR InfiniBand,NVIDIA InfiniBand product,800,200,2024-03-18,announced,"NVIDIA Newsroom, 'NVIDIA Announces New Switches Optimized for Trillion-Parameter GPU Computing and AI Infrastructure', 2024-03-18",2026-11-01
+NVIDIA BlueField-4 DPU,NVIDIA Ethernet/DPU product,800,200,2025-10-28,announced,"ServeTheHome, 'NVIDIA BlueField-4 with 64 Arm cores and 800G networking announced for 2026', 2025-10",2026-11-01
+NVIDIA Spectrum-6 switch ASIC (1.6TbE-capable),NVIDIA Ethernet/DPU product,1600,200,2026-01-05,announced,"SDxCentral, 'Nvidia debuts Spectrum-6 switches to power next-gen AI networking', 2026-01 (secondary; VERIFY)",2026-11-01
