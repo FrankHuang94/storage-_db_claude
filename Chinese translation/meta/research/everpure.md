@@ -110,3 +110,79 @@
 - 2026 年，EXA 被定位于新兴 GPU 云和 AI 原生服务商，并在 Accelerate 2026 上新增多租户和 QoS。Everpure 还公布了高于 7,200 的 SPEC AI 成绩 [VERIFY: 仅来自 vmblog 摘要]，以及 EXA 上的 KVA 可在 PB 级前缀复用中实现 10+ TB/s 的声称。— 来源：Everpure blog, "Meet FlashBlade//EXA: the AI Data Platform for Scale", 2026-06, https://blog.everpuredata.com/products/meet-flashblade-exa-the-ai-data-platform-for-scale/ (retrieved 2026-11-01); Everpure blog, "Everpure KVA Meets FlashBlade//EXA", 2026, https://blog.everpuredata.com/purely-technical/everpure-kva-meets-flashblade-exa-enterprise-kv-caching-at-neocloud-scale/ (retrieved 2026-11-01)
 
 ---
+
+## 4. 财务
+
+### FY2026（于 Feb 1, 2026 结束；于 Feb 25, 2026 公布）
+- 总营收为 **$3,662.8M**（+16%）：产品 $1,971.7M（+16%），订阅服务 $1,691.2M（+15%）。产品约占营收的 54%，订阅约占 46%。— 来源：SEC, "Everpure Form 10-K FY2026", 2026-03-24, https://www.sec.gov/Archives/edgar/data/1474432/000147443226000027/pstg-20260201.htm (retrieved 2026-11-01)
+- 美国营收为 $2.5B（+12%，上年为 $2.2B），其他地区营收为 $1.2B（+25%，上年为 $960.8M）。— 来源：same 10-K
+- 毛利率为 **70.4%（GAAP）和 72.1%（非 GAAP）**。非 GAAP 营业利润率为 **17.3%**。自由现金流为 **$616M**。— 来源：SEC, "Everpure Q4 FY2026 Press Release (Ex. 99.1)", 2026-02-25, https://www.sec.gov/Archives/edgar/data/1474432/000147443226000015/pstg-ex991q4fy2026.htm (retrieved 2026-11-01)
+- 订阅 ARR 为 **$1,924.3M**（+16%，上年为 $1,657.8M）。由于 Evergreen 续约期限拉长，增速由 21% 放缓。订阅净美元留存率为 113%（FY25：117%）。— 来源：Everpure 10-K FY2026 (above)
+- RPO 为 **$3.7B**（+40%，FY25 为 +14%），由大额交易以及 Evergreen//Forever 和 //One 推动。订阅 RPO 增长 34%。— 来源：Everpure Form ARS FY2026, https://www.sec.gov/Archives/edgar/data/0001474432/000147443226000043/a10kfy2026.htm (retrieved 2026-11-01)
+- 客户：FY26 新增客户超过 1,100 家（Q4 为 335 家）。据报道，FY26 Evergreen//One 及存储即服务的合同总价值（TCV）为 $520M（+32%），其中 Q4 为 $179M（+28%）。[VERIFY: TCV 和客户数字来自电话会纪要摘要] FY25 公司客户基数为"13,000+"家，约覆盖 Fortune 500 的 60%。August 2026，公司引用的客户数为 14,500+ 至 15,000 家。[VERIFY: 存在两个不同数字] — 来源：ROIC.ai, "Everpure Q4 FY2026 Earnings Call Transcript", 2026-02-25, https://www.roic.ai/quote/P/transcripts/2026-year/4-quarter (retrieved 2026-11-01); Everpure, "2025 Pure Impact Fact Sheet", 2025, https://www.everpuredata.com/content/dam/pdf/en/misc/sustainability/2025-pure-impact-fact-sheet.pdf (retrieved 2026-11-01)
+- 员工人数约为 6,400 名全职员工（FY26）。[VERIFY: 来自 Yahoo Finance 和 Wikipedia，并非直接从 10-K 中读取] — 来源：Yahoo Finance, "Everpure, Inc. (P) Profile", 2026, https://finance.yahoo.com/quote/P/profile/ (retrieved 2026-11-01)
+- FY26 末现金、现金等价物及有价证券为 $1.5B。— 来源：Everpure 10-K FY2026 (above)
+
+### Q4 FY2026
+- 营收为 **$1.1B（+20%）**，是公司首个营收超过 $1B 的季度：产品 $618M（+25%），订阅服务 $440M（+14%）。毛利率为 69.9%（GAAP）和 71.4%（非 GAAP）。产品毛利率为 67.3%（受产品组合影响提升超过 400 bp）。非 GAAP 营业利润率为 21.3%，自由现金流（FCF）为 $201M。— 来源：Morningstar/PR Newswire, "Everpure Announces Fiscal Fourth Quarter and Full Year 2026 Financial Results", 2026-02-25, https://www.morningstar.com/news/pr-newswire/20260225sf95343/everpure-announces-fiscal-fourth-quarter-and-full-year-2026-financial-results (retrieved 2026-11-01)
+- 由于元器件（NAND）成本飙升，Everpure 于 Feb 9, 2026 提价。公司指引 Q1 产品毛利率处于其 65–70% 区间的低端。— 来源：Alpha Spread, "P Q4-2026 Earnings Call", 2026-02-25, https://www.alphaspread.com/security/nyse/p/investor-relations/earnings-call/q4-2026 (retrieved 2026-11-01)
+- **初始 FY27 指引**：营收 $4.3–4.4B（+17–20%），非 GAAP 营业利润 $780–820M。Q1 指引为 $990M–$1.01B。— 来源：Futurum, 2026-02 (above)
+
+### Q1 FY2027（于 May 3, 2026 结束；于 May 27, 2026 公布）
+- 营收为 **$1,052.9M（+35%）**：产品 $577M（+55%），订阅服务 $476M（+17%，约占营收 45%）。订阅 ARR 为 **$2.036B（+19%）**，RPO 为 $3.8B（+41%）。GAAP 营业利润为 $20M，非 GAAP 营业利润为 $159M。— 来源：Everpure, "Everpure Announces First Quarter Fiscal 2027 Financial Results", 2026-05-27, https://investor.everpuredata.com/news-and-events/press-releases/press-release-details/2026/Everpure-Announces-First-Quarter-Fiscal-2027-Financial-Results/default.aspx (retrieved 2026-11-01); TradingView, "Everpure 1Q 2027 10-Q Summary", 2026-06, https://www.tradingview.com/news/tradingview:335afadce5a54:0-everpure-inc-1q-2027-revenue-1-05b-eps-0-07-10-q-summary/ (retrieved 2026-11-01)
+- 毛利率为 68.7%（GAAP）和 70.1%（非 GAAP）；产品毛利率 65.5%，订阅毛利率 75.6%。Evergreen//One 销售额增长 73%。新增客户 275 家。— 来源：Nasdaq, "Everpure Q1 Earnings Call Highlights", 2026-05, https://www.nasdaq.com/articles/everpure-q1-earnings-call-highlights (retrieved 2026-11-01)
+- FY27 指引上调至营收 $4.41–4.51B，非 GAAP 营业利润 $820–860M。— 来源：StockTitan, "Everpure Q1 2027 8-K", 2026-05-27, https://www.stocktitan.net/sec-filings/P/8-k-everpure-inc-reports-material-event-89335bfe97b2.html (retrieved 2026-11-01)
+
+### Q2 FY2027（于 Aug 2, 2026 结束；于 Aug 26, 2026 公布）。最近一个已公布季度
+- 营收为 **$1.19B（+38%）**：产品 $687M（+54%），订阅服务 $499M（+20%）。订阅 ARR 为 **$2.13B（+20%）**，RPO 为 **$4.1B（+44%）**。— 来源：Everpure, "Everpure Announces Second Quarter Fiscal 2027 Financial Results", 2026-08-26, https://investor.everpuredata.com/news-and-events/press-releases/press-release-details/2026/Everpure-Announces-Second-Quarter-Fiscal-2027-Financial-Results/default.aspx (retrieved 2026-11-01); Investing.com, "Everpure Q2 FY27 slides", 2026-08, https://www.investing.com/news/company-news/everpure-q2-fy27-slides-38-revenue-growth-guidance-raised-sharply-93CH-4878054 (retrieved 2026-11-01)
+- 毛利率为 68.4%（GAAP）和 69.9%（非 GAAP）；产品毛利率 66.2%，订阅毛利率 74.9%。GAAP 营业利润率为 5.3%。非 GAAP 营业利润为 $230M（19.4%）。— 来源：Investing.com (above)
+- 经营现金流为 **–$136M**，自由现金流为 **–$238M**（资本开支 $101M），原因是战略性采购 NAND 和元器件（预付款占用约 $577M）。管理层预计经营现金流将在两个季度内恢复正常，FY27 自由现金流为 $600–800M。— 来源：Yahoo Finance, "Everpure (P) Grew Revenue 38% but Free Cash Flow Was Negative", 2026-08, https://finance.yahoo.com/markets/stocks/articles/everpure-p-grew-revenue-38-023544268.html (retrieved 2026-11-01)
+- 存储即服务 TCV（含 Evergreen//One）为 $277M（+121%）。管理层表示，FY27 Evergreen//One 的 TCV 年化运行率超过 $1B。[VERIFY: 来自电话会摘要] — 来源：Motley Fool transcript, 2026-08-31 (above)
+- **当前 FY27 指引**：营收 **$5.03–5.07B**（中值较 $3.66B 增长约 +38%），非 GAAP 营业利润 $940–960M，Q3 FY27 营收 $1.325–1.335B。截至 2026-11-01，Q3 FY27 尚未公布（预计约于 late November 公布）。— 来源：Everpure Q2 FY27 press release (above)
+
+### 年度营收，FY2016–FY2026（百万美元，来自 10-K 文件）
+| 财年（截止日） | 营收（$M） | 同比 | 备注 |
+|---|---|---|---|
+| FY2016 (Jan 31, 2016) | 440.3 | +152% | FY16 10-K |
+| FY2017 | 728.0 | +65% | 原始 10-K；重述后为 739.2（ASC 606） |
+| FY2018 | 1,023.0 | +41% | 原始 10-K；重述后为 1,024.8 |
+| FY2019 | 1,359.8 | +33% | FY20 10-K |
+| FY2020 | 1,643.4 | +21% | FY20 10-K |
+| FY2021 | 1,684 | +2% | [VERIFY: 来自 Macrotrends，未与 10-K 核对] |
+| FY2022 | 2,181 | +29% | [VERIFY: 来自 Macrotrends，未与 10-K 核对] |
+| FY2023 | 2,753.4 | +26% | FY24 10-K |
+| FY2024 | 2,830.6 | +3% | FY24 10-K |
+| FY2025 (Feb 2, 2025) | ~3,170 | +12% | [VERIFY: 精确到千位的数字待核；报道为 $3.17B] |
+| FY2026 (Feb 1, 2026) | 3,662.8 | +16% | FY26 10-K |
+| FY2027E | 5,030–5,070 | ~+38% | 截至 Aug 26, 2026 的指引 |
+
+来源：SEC 10-Ks FY2016 https://www.sec.gov/Archives/edgar/data/0001474432/000156459016015322/pstg-10k_20160131.htm ; FY2017 https://www.sec.gov/Archives/edgar/data/0001474432/000162828017003034/a10k2017.htm ; FY2018 https://www.sec.gov/Archives/edgar/data/0001474432/000162828018003579/a10k2018.htm ; FY2020 https://www.sec.gov/Archives/edgar/data/1474432/000162828020004133/pstg-20200202.htm ; FY2024 https://www.sec.gov/Archives/edgar/data/1474432/000162828024013860/pstg-20240204.htm ; FY2025 https://www.sec.gov/Archives/edgar/data/1474432/000162828025015044/pstg-20250202.htm ; FY2026 (above); Macrotrends https://new.macrotrends.net/stocks/charts/PSTG/pure-storage/revenue (all retrieved 2026-11-01)
+
+- FY2025 明细：产品 $1.70B（+5%），订阅服务 $1.47B（+22%），ARR $1,657.8M（+21%）。约 48% 的 RPO 将在 12 个月内到期。— 来源：SEC, "Pure Storage Form 10-K FY2025", 2025-04, https://www.sec.gov/Archives/edgar/data/1474432/000162828025015044/pstg-20250202.htm (retrieved 2026-11-01)
+
+---
+
+## 5. 合作伙伴关系
+- **NVIDIA**：DGX SuperPOD（FB//S500，Nov 2024）；NVIDIA-Certified Storage 及 NCP HPS（Mar 2025）；AI Data Platform 集成；Dynamo/KVA（Sept 2025）；基于 AI Data Platform 参考设计的 Data Stream（June 2026）；面向 EXA 的 STX 参考架构合作（2026）。— 来源：Sources in §2 and §1
+- **Cisco（FlashStack）**：自 2014 年以来的融合基础设施合作 [VERIFY: 起始年份凭记忆]。November 2023 推出了 FlashStack for AI CVD 并获得 NVIDIA BasePOD 验证。late October 2025，一个新的 FlashStack CVD 加入 **Cisco Secure AI Factory with NVIDIA** 中的 AI POD，于 Q1 2026 通过 AHEAD、ePlus、SHI 和 WWT GA。— 来源：StorageNewsletter, "Pure Storage and Cisco Deliver AI Factories for the Enterprise with Nvidia", 2025-11-07, https://www.storagenewsletter.com/2025/11/07/pure-storage-and-cisco-deliver-ai-factories-for-the-enterprise-with-nvidia/ (retrieved 2026-11-01); Blocks & Files, 2023-11-13, https://blocksandfiles.com/2023/11/13/pure-storage-gets-new-cisco-flashstack-for-ai-certification-added-to-nvidia-basepod-validation/ (retrieved 2026-11-01)
+- **Microsoft Azure**：Pure Storage Cloud Azure Native，一项联合开发的托管块存储服务（Sept 2025）；Azure 原生 VM 支持 GA（June 2026，[VERIFY]）；AVS 集成。**AWS**：由客户自行管理的 Cloud Dedicated（原 CBS），外加 EVS 集成。— 来源：Sources in §2
+- **Meta**：自 December 2024 设计导入以来采用 DirectFlash 许可加供货模式；自 Q2 FY26 起批量部署；FY26 目标为 1–2 EB。**第二家前 5 大超大规模云厂商**（未具名）：August 2026。— 来源：Sources in §1
+- **CoreWeave**：战略投资及首选存储供应商（Nov 2024）。Evercore 指出，投资者认为其重要性不及一家一线超大规模云厂商的订单。— 来源：TipRanks/The Fly, "Evercore says CoreWeave deal could yield sizable contributions for Pure Storage", 2024-11, https://www.tipranks.com/news/the-fly/evercore-says-coreweave-deal-could-yield-sizable-contributions-for-pure-storage (retrieved 2026-11-01)
+- **Nutanix**：May 2025 宣布合作（FlashArray 通过 NVMe/TCP 作为 AHV 的外部存储，运行于 Cisco、Dell、HPE、Lenovo 和 Supermicro 服务器之上），瞄准 VMware 迁移需求。这是 Nutanix 首个重要的经认证外部存储集成。— 来源：SDxCentral, "Nutanix partners with Pure Storage in latest VMware assault", 2025-05, https://www.sdxcentral.com/news/nutanix-partners-with-pure-storage-in-latest-vmware-assault/ (retrieved 2026-11-01)
+- **NAND 供应商**：Micron（G8 QLC 已通过 150 TB DFM 认证，G9 QLC 用于超大规模云厂商 DFM，2025 年扩大合作）和 Kioxia（长期合作；BiCS8 2 Tb QLC）。— 来源：Sources in §2
+- **数据保护与安全**：Rubrik 和 CrowdStrike 集成是 EDC/Fusion 发布（June 2025）的一部分。[VERIFY: 本次未研究 Veeam、Commvault 和 Cohesity 的具体情况] — 来源：Blocks & Files, 2025-06-18 (above)
+- **Red Hat / OpenShift**：Portworx OpenShift 插件 2.2 和 Portworx for Edge SKU 在 Red Hat Summit 2026 上发布。— 来源：Efficiently Connected, "Portworx at Red Hat Summit 2026", 2026-05, https://www.efficientlyconnected.com/portworx-edge-kubernetes-storage-red-hat-summit-2026/ (retrieved 2026-11-01)
+
+---
+
+## 6. 市场地位
+- **Gartner MQ for Enterprise Storage Platforms 2025**（报告日期 Sept 2, 2025）：领导者（Leader），执行能力（Ability to Execute）最高，愿景完整性（Completeness of Vision）最远。Pure 称这是其连续第 12 年成为 Gartner MQ 领导者，此前在 Primary Storage MQ 中有五年愿景位置最远。— 来源：Pure Storage, "Pure Storage Named a Leader in the 2025 Gartner Magic Quadrant for Enterprise Storage Platforms", 2025-09, https://purestorage.com/company/newsroom/press-releases/pure-storage-named-leader-gartner-magic-quadrant-enterprise-storage-platforms.html (retrieved 2026-11-01)
+- **Gartner MQ for Enterprise Storage Platforms 2026**（报告日期 Aug 19, 2026；Aug 21 公布）：Everpure 再次在两个维度上均位居最高。其他领导者为 Huawei、HPE、NetApp、IBM 和 Dell。Hitachi Vantara 是唯一的远见者（Visionary），IEIT Systems 是唯一的特定领域者（Niche Player）。[VERIFY: 不同新闻稿中此前领导者入选次数的说法不一（第 11 次或第 13 次）] — 来源：Everpure, "Everpure Named a Leader in the 2026 Gartner Magic Quadrant for Enterprise Storage Platforms", 2026-08-21, https://www.everpuredata.com/company/newsroom/press-releases/everpure-named-leader-2026-gmq-enterprise-storage-platforms.html (retrieved 2026-11-01); StorageReview, "Gartner MQ for Enterprise Storage 2026: Everpure tops both axes again as the six leaders hold", 2026-08, https://www.storagereview.com/news/gartner-magic-quadrant-for-enterprise-storage-2026-everpure-tops-both-axes-again-as-the-six-leaders-hold (retrieved 2026-11-01)
+- Pure 还在 2025 Gartner MQ for Infrastructure Platform Consumption Services（Evergreen//One）中被评为领导者。— 来源：Nasdaq/PR Newswire, "Pure Storage Named a Leader in the 2025 Gartner Magic Quadrant for Infrastructure Platform Consumption Services", 2025, https://www.nasdaq.com/press-release/pure-storage-named-leader-2025-gartnerr-magic-quadranttm-infrastructure-platform (retrieved 2026-11-01)
+- **IDC Worldwide Enterprise External Storage Systems tracker**（IDC 全球企业外部存储系统追踪报告）：
+  - Q4 2025（日历年）：第 4 名，份额 **7.1%**，位列 Dell、Huawei 和 NetApp 之后。
+  - Q2 2026：第 4 名，份额 **8.1%**，同比增长 +50.0%，为前五名中增长最快。全闪存系统为 $5.4B，占外部存储营收的 52.1%。
+  - Q1 2026：Blocks & Files 列出的前五名为 Dell、NetApp、Everpure、Huawei、HPE。[VERIFY: 不同媒体对 Q1 排名的说法相互矛盾]
+  - Everpure 还发布其自行"调整"（modified）的 IDC 份额数字，这些并非 IDC 的数字。
+  - 来源：StorageReview, "IDC External Storage Tracker Q2 2026: $10.3 billion as server market tops $166 billion", 2026-09, https://www.storagereview.com/news/idc-external-storage-tracker-q2-2026-10-3-billion-as-server-market-tops-166-billion (retrieved 2026-11-01); IDC, "2Q2026 ESS Tracker" press release, 2026-09-10, https://www.idc.com/resource-center/press-releases/2q2026-ess-tracker/ (retrieved 2026-11-01); Blocks & Files, "IDC ranks Dell, NetApp, Everpure, Huawei and HPE in external storage systems market", 2026-06-16, https://www.blocksandfiles.com/flash/2026/06/16/idc-ranks-dell-netapp-everpure-huawei-and-hpe-in-external-storage-systems-market/5256070 (retrieved 2026-11-01); Blocks & Files, "Everpure says it's outpacing rivals in revenue, capacity growth", 2026-04-02, https://www.blocksandfiles.com/flash/2026/04/02/everpure-says-its-outpacing-rivals-in-revenue-capacity-growth/5213671 (retrieved 2026-11-01)
+- 未找到 2025–2026 年全闪存阵列*厂商*份额的 IDC 数据。[VERIFY]

@@ -145,3 +145,75 @@
 | 27 | CTO | 如果 VAST、WEKA 和 DDN 参加下一轮 MLPerf Storage，Everpure 是否也会提交？针对哪些工作负载？ |
 | 28 | PM | Data Intelligence 订单中，有多大比例覆盖的数据不存放在 Everpure 阵列上？它是否与存储分开定价和报告？ |
 | 28 | PM | 在 1,200+ 家 Fusion 客户中，有多少通过 API 或 Terraform 在生产中运行预设？他们续约或扩容是否更快？ |
+| 28 | CTO | Everpure 打算让 Data Intelligence 与 Unity Catalog、Purview 等数据目录集成还是竞争？为何不加入 Open Semantic Interchange？ |
+| 28 | Eng | 如何从 Purity 写入路径或快照触发内容分类而不影响延迟？哪些在阵列上运行、哪些在 SaaS 中运行？ |
+| 28 | PM | Evergreen//One 的 25% 缓冲在整个设备群上让 Everpure 付出多少已部署容量？FY27 的 NAND 涨价如何改变了定价？ |
+| 29 | PM | 超大规模业务收入如何定价：按部署 TB、按模块，还是按授权档位？DFM 容量翻倍时会如何变化？ |
+| 29 | CTO | DirectFlash 要在超大规模云厂商内部替代 HDD 层（而不只是 SSD 层）需要什么条件？功耗/密度阈值在哪里？ |
+| 29 | PM | Evergreen//One 毛利率的改善中，有多少来自 DFM 密度、多少来自数据缩减、多少来自定价？ |
+| 29 | Eng | 超大规模部署与 FlashArray/FlashBlade 之间共享多少 Purity 代码？谁负责与超大规模云厂商设备群软件的集成？ |
+| 29 | PM | 哪些新兴 GPU 云项目是因 NCP 认证而非价格赢下或丢掉的？面向 EXA 的 Evergreen//One 是否改变了新兴 GPU 云的融资方式？ |
+| 30 | PM | 目前 Everpure 归属于 AI 的订单中，各流水线阶段（数据湖、训练/检查点、推理 KV、RAG/智能体）各占多少？哪一项增长最快？ |
+| 30 | PM | 当客户的 AI 数据湖已在超大规模云厂商的对象存储中时，Everpure 赢下本地热数据层的打法是什么？是否曾把数据湖本身拉回本地？ |
+| 30 | Eng | 在 FlashBlade//EXA 上，16K GPU 规模下一个约 6 TB 检查点造成的 GPU 阻塞时间是多少？其中有多少被主机 DRAM 或本地 NVMe 暂存吸收？ |
+| 30 | CTO | Everpure 是否把智能体记忆/状态视为一种独立的存储工作负载（KV 缓存之外）？Data Intelligence 是否意在成为其元数据层？ |
+| 30 | Eng | 鉴于 MLPerf Storage v3.0 新增了 S3 访问层，在训练数据加载方面，FlashBlade 的 S3 路径与 NFS-over-RDMA 路径相比如何？ |
+| 31 | PM | 在近期训练项目中，客户是以突发写入 GB/s、持续排空速率还是恢复训练时间来规定检查点性能的？他们运行的是哪些框架（同步还是异步、本地检查点）？ |
+| 31 | Eng | 在 FlashBlade//EXA 上，一次冷启动的 16K rank 检查点恢复是什么样子（每秒文件打开数、读 GB/s、最慢客户端的尾部）？为什么 v3.0 检查点读（588 GiB/s）低于写（877 GiB/s）？ |
+| 31 | Eng | 在多 TB 检查点排空途中一个 EXA 数据节点失效时，表现如何：降级后的写带宽以及恢复全速所需时间？ |
+| 31 | CTO | 随着异步、本地 NVMe 和内存内检查点消除了突发需求，Everpure 预期训练存储的差异化将落在哪里：恢复速度、留存经济性，还是把检查点作为资产进行数据管理？ |
+| 31 | PM | 是否有参考规划工具，能把模型规模、GPU 数量、故障率和检查点间隔换算成 EXA 节点数？一线团队是否在用？ |
+| 32 | PM | 典型 PureKVA 客户在生产中看到的每 GPU 恢复带宽和命中率是多少？TTFT 与本地 NVMe 上的 LMCache 相比如何？ |
+| 32 | CTO | Everpure 将 FlashBlade//EXA 定位为 NVIDIA STX/CMX 机柜内的软件层、位于其后的 G4 层，还是它们的替代方案？ |
+| 32 | Eng | 是否有（或将有）面向 FlashBlade 的上游 NIXL 后端和 LMCache/llm-d 连接器？采用哪种传输（NFS over RDMA、S3 over RDMA、GDS）？ |
+| 32 | PM | KV 层应如何定价（按 TB、按 GB·小时、按服务的 token）？DeepReduce 对 fp16/fp8 KV 张量能否带来任何可测量的缩减？ |
+| 32 | Eng | 当客户更新模型权重或更换 tokenizer/推理引擎时，PureKVA 如何为缓存的 KV 设置键、版本并使其失效？ |
+| 33 | PM | 当 FlashBlade 客户用 Data Stream 运行 RAG 时，向量索引放在哪里（DRAM、本地 SSD、FlashBlade）？哪些合作伙伴引擎已通过验证？ |
+| 33 | Eng | FlashBlade 对小型 S3 GET 的单请求延迟和 LIST 速率是多少？以 FlashBlade 作为 SSD 层时，一个 10 亿向量的 DiskANN 或 SPANN 索引表现如何？ |
+| 33 | PM | 哪些湖仓引擎（Spark、Trino/Starburst、Dremio、Snowflake、Databricks）在生产中于 FlashBlade 上读写 Iceberg？托管压缩合并（compaction）是否在路线图讨论之中？ |
+| 33 | CTO | 长期押注是通过 Data Intelligence 掌控元数据/目录层，还是作为 Unity Catalog 和 Polaris 之下的中立底座？ |
+| 33 | Eng | Everpure 是否计划发布 MLPerf Storage v3.0 向量数据库工作负载的结果？ |
+| 34 | PM | FlashBlade//EXA NVIDIA 认证的目标季度和级别（Enterprise 还是 NCP）是什么？目前有哪些项目提到其缺失？ |
+| 34 | CTO | Purity 的数据服务能否在 BlueField-4 STX 控制器上运行？CMX 对 FlashBlade 是机会还是蚕食威胁？ |
+| 34 | PM | FlashBlade AI 商机管道中，经由 NVIDIA 主导、Cisco/OEM 主导和直接新兴 GPU 云渠道的各占多少？ |
+| 34 | Eng | 在 B300/Rubin 上，FlashBlade//S 和 //EXA 每个 SU 相对 SuperPOD 增强层有多少余量？什么最先成为瓶颈？ |
+| 34 | CTO | 每一代 NVIDIA GPU 的重新认证投入多少工程能力？从 GPU 发布起需要多久？ |
+| 35 | PM | 在新兴 GPU 云的比拼测试中，哪些多租户功能（每租户密钥、VRF 隔离、QoS 下限、计量导出、Terraform provider）仍在阻碍 FlashBlade//EXA？何时发布？ |
+| 35 | PM | 在 50% 售出率下，计入数据缩减和 Evergreen//One 条款，新兴 GPU 云在 EXA 与 VAST 上的存储毛利率分别如何？ |
+| 35 | Eng | EXA 数据节点软件能否运行在新兴 GPU 云自己认证的服务器 SKU 上？认证和支持需要什么？ |
+| 35 | CTO | 除认证之外，Everpure 是否力求成为 NVIDIA 面向 GB300 和 Vera Rubin 的 NCP 参考设计中被点名的存储设计？STX 带来什么变化？ |
+| 35 | CTO | 与 CoreWeave 的股权关系如何转化为部署容量？哪些 CoreWeave 层级或区域是与 VAST 并存的现实目标？ |
+| 36 | CTO | 除 Meta 的 Tectonic 外，还有哪些超大规模云厂商内部文件系统面临类似的 HDD 每 TB 带宽瓶颈，使 DirectFlash 授权可以嵌入其 chunk/数据服务器之下？ |
+| 36 | PM | 在超大规模场景下，以机架密度、功耗和写放大衡量，DirectFlash 授权相对 NVMe FDP 加标准 QLC SSD 的可辩护差异化是什么？ |
+| 36 | Eng | 超大规模云厂商集成中，有多少是在其自研主机上运行的 DirectFlash 软件，又有多少是 Everpure 提供的非 NAND 模块硬件？ |
+| 36 | PM | 对于缺少自研 Tectonic 级文件系统的新兴 GPU 云和二线云，是否有相对授权模式而言的产品路径（例如 FlashBlade//EXA）？ |
+| 36 | CTO | Rapid Bucket 和 S3 Express One Zone 等按可用区、紧邻 GPU 的云存储层，是否改变了企业对本地 AI 存储 API（S3 over RDMA、gRPC 流式传输）的期望？ |
+| 37 | PM | 是什么决定了 EXA 参加 MLPerf Storage v3.0 的哪些工作负载？v4.0 是否计划提交训练工作负载或 DFM 数据节点的结果？ |
+| 37 | Eng | 在 30 节点检查点测试中，是什么限制了每数据节点的吞吐量（网卡、SSD、元数据）？基于 DFM 的数据节点会如何改变它？ |
+| 37 | CTO | Everpure 是否（在内部或向客户）发布在标准带宽/容量比下按 RU、kW 和美元归一化的结果？是否会倡导 MLCommons 按这些指标排名？ |
+| 37 | PM | 在由 POC 决定结果的新兴 GPU 云项目中，一线团队如何回应"VAST、WEKA 和 DDN 不需要 MLPerf"？ |
+| 38 | Eng | FlashBlade//EXA 或 FlashArray//E 系统在空闲、以读为主负载和重建时，实测墙插功耗如何分解（NAND、控制器、DRAM、风扇、网卡）？ |
+| 38 | PM | 在功率受限的 AI 项目中，客户要求的是 TB/W、每 kW 的 GB/s，还是都不要？在该指标上我们最常输给哪种竞争配置？ |
+| 38 | CTO | HDD 容量到哪个点（例如 60 TB、100 TB HAMR）时，DirectFlash 相对磁盘的功耗与密度论点在冷数据层不再成立？届时如何应对？ |
+| 38 | PM | 在不可缩减的 AI 数据集上，Evergreen//One 的每 TiB 瓦数保证表现如何？是否已扩展到 FlashBlade//EXA？ |
+| 38 | CTO | Everpure 是否会对照 NVIDIA 参考架构规格，发布经审计的系统级 TB/W 和每 kW GB/s？目前是什么阻止了它？ |
+| 39 | PM | Data Intelligence 订单中，有多大比例覆盖的数据不存放在 Everpure 上？是否单独定价和报告？ |
+| 39 | Eng | Data Intelligence MCP 服务器如何处理用户身份（令牌交换还是服务账号）？权限撤销多快能传播生效？ |
+| 39 | CTO | Everpure 打算与 OSI、Unity Catalog、Polaris 或 Purview 互操作，还是成为权威数据目录（catalog of record）？ |
+| 39 | Eng | 分类是在写入路径上、由 SafeMode 快照还是由定期扫描触发？消耗多少控制器资源？ |
+| 39 | PM | Data Intelligence 的买方是谁（存储管理员、CDO、CISO）？在覆盖非 Everpure 存储的项目中，阵列销售人员如何获得激励？ |
+| 40 | PM | Everpure 如何调和其"修正后"的 IDC 份额与 IDC 公布的份额？内部规划使用哪一个？ |
+| 40 | CTO | 在一份典型 AI 工厂物料清单中，共享存储目前占多大比例？未来两年推理/KV 缓存层将如何改变这一比例？ |
+| 40 | PM | FY27 产品增长中，有多少来自每 TB 价格、多少来自出货容量？如果 NAND 合约价下跌 30%，增长会怎样？ |
+| 40 | CTO | 超大规模云厂商的哪些存储功能在现实中可以授权（而非自建）？每部署 1 EB 的可触达支出是多少？ |
+| 40 | PM | 战略团队对 AI 存储采用哪种 TAM 定义？是否包括超大规模云厂商自建部分？ |
+| 41 | PM | 过去四个季度的 AI 存储丢单中，有多少输给了 VAST、WEKA 或 DDN？分别在哪个买方群体（新兴 GPU 云、AI 实验室、企业）？ |
+| 41 | CTO | 我们把挑战者的哪些优势视为可复制（架构、认证），哪些视为结构性（NVIDIA 股权、新兴 GPU 云锚定客户）？这如何影响自建/合作/收购的选择？ |
+| 41 | PM | 自 1Q26 以来，我们的 NAND 预付款头寸如何改变了相对纯软件厂商的赢单率或交付承诺？ |
+| 41 | Eng | 要让 FlashBlade//EXA 获得 NCP 级别的 NVIDIA 认证需要什么？关键的门槛测试是什么？ |
+| 41 | CTO | 如果 NVIDIA 的 STX/CMX 将 KV 缓存层标准化，存储厂商的差异化会转移到哪里？ |
+| 42 | PM | 过去四个季度 EXA 对 VAST 的项目中，我们赢了多大比例？决定因素是架构、参考客户、认证，还是上层功能？ |
+| 42 | Eng | 在比拼测试中，我们在客户 AI 数据集（检查点、token 化分片、图像）上测得的缩减比，与 VAST 相似性缩减在同一数据上的结果相比如何？ |
+| 42 | CTO | 我们预期到 2028 年买方会要求存储提供 VAST AI OS 的哪些层（DataBase、DataEngine 触发器、AgentEngine）？哪些属于合作伙伴？ |
+| 42 | PM | Everpure 的 NAND 供应地位如何转化为按成本价采购硬件的纯软件厂商无法匹敌的交付时间或价格承诺？ |
+| 42 | CTO | BlueField-4 STX 让每家厂商都有了驻留在 DPU 上的控制器，在 GPU 服务器边缘的 KV 缓存上，Purity 还剩下什么差异化？ |
