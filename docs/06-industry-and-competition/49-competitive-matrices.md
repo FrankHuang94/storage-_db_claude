@@ -50,7 +50,7 @@ quadrantChart
     Hyperscaler: [0.94, 0.72]
 ```
 
-*Figure 49.1 — The top-right quadrant is crowded but shallow: Everpure, Dell, IBM, Huawei and the hyperscalers combine breadth with credible AI architecture, while the AI-native specialists are deeper but narrower.*
+*Figure 49.1 — The top-right is crowded but shallow; the AI-native specialists are deeper but narrower.*
 
 The y-axis, shared with Figure 46.5, measures how much of the AI data path runs on architecture the vendor owns and designed for AI: parallel or disaggregated data paths, GPU-direct I/O, KV-cache tiers, in-storage data services. Partner-sourced capability is discounted. The x-axis differs. Figure 46.5 scored total portfolio breadth, including servers and networking; here it scores the data services a buyer gets *on the storage itself*: protocols, snapshots and replication, ransomware recovery, cloud editions, consumption contracts and cataloguing.
 
@@ -91,7 +91,7 @@ quadrantChart
     Hammerspace: [0.96, 0.10]
 ```
 
-*Figure 49.2 — There are two routes to media economics: integrate flash management into owned hardware, as Everpure, IBM and Huawei do, or extract it in software from commodity QLC, as VAST does. Most of the field takes neither route.*
+*Figure 49.2 — Two routes to media economics: integrate flash management (Everpure, IBM, Huawei) or extract it in software from QLC (VAST); most vendors take neither.*
 
 The x-axis measures how much of the hardware a vendor designs and supplies. The y-axis asks whether the vendor turns NAND into a cost or density advantage through its own flash modules, raw-NAND management, very wide erasure codes on QLC or global reduction. Everpure is the extreme top-left point. Purity managing raw NAND on DirectFlash modules is why two top-five hyperscalers licensed the design[^4] ([Chapter 36](../05-ai-storage/36-hyperscaler-ai-storage.md)); hyperscalers sit left because they build their own systems.
 
@@ -134,7 +134,7 @@ quadrantChart
     Qumulo: [0.05, 0.18]
 ```
 
-*Figure 49.3 — Momentum and scale are inversely related outside the hyperscalers: VAST and DDN rose fastest from a sub-US$1B base, while Everpure is the only mid-scale vendor clearly above the midline.*
+*Figure 49.3 — Outside the hyperscalers, momentum and scale are inversely related; Everpure is the mid-scale vendor furthest above the midline.*
 
 The x-axis is a roughly logarithmic ordering by storage revenue or installed base:
 
@@ -180,11 +180,11 @@ Caution: IDC's 2Q26 market grew 33.6%, mostly from NAND price pass-through ([Cha
 
 **Legend:** ● shipping, mature or a core strength · ◐ partial, new, partner-dependent or limited in scope · ○ absent, or not found in the public sources the atlas reviewed · – not applicable. Ratings are the atlas's judgment as of November 2026.
 
-*Figure 49.4 — Everpure's row is the most complete in the field. Its three ◐ cells (cloud, data intelligence, sovereign) are exactly the columns where VAST, NetApp and DDN are strongest.*
+*Figure 49.4 — Everpure's row is the most complete; its three ◐ cells are where VAST, NetApp and DDN are strongest.*
 
 | Column | Evidence behind the ratings |
 |---|---|
-| KV-cache offer | Everpure PureKVA GA October 2026[^20]; WEKA Augmented Memory Grid first, November 2025[^21]; DDN Dynamo integration June 2026[^22]; Dell NIXL on PowerScale[^23]; NetApp LMCache offload to ONTAP and StorageGRID[^24]; IBM Storage Scale KV reference design[^25]; HPE evidence sponsored[^26]; Huawei M900[^27]; VAST ◐ because its BlueField-4 design ships 2H 2026 |
+| KV-cache offer | Everpure PureKVA GA October 2026[^20]; WEKA Augmented Memory Grid first, November 2025[^21]; DDN Dynamo integration June 2026[^22]; Dell NIXL on PowerScale[^23]; NetApp LMCache offload to ONTAP and StorageGRID[^24]; IBM Storage Scale KV reference design[^25] [VERIFY: Dell, NetApp and IBM KV-cache items read from search summaries only]; HPE evidence sponsored[^26]; Huawei M900[^27]; VAST ◐ because its BlueField-4 design ships 2H 2026 |
 | NVIDIA cert depth | ● = DGX SuperPOD plus certified storage: Everpure (FlashBlade//S500)[^28], VAST, WEKA, DDN, NetApp, Dell, IBM. ◐ = narrower: HPE (X10000 Foundation), Hitachi (BasePOD), Nutanix[^29], Cloudian (Foundation)[^30]. ○ = Hammerspace[^31]; Huawei is outside NVIDIA's programmes. Per [Chapter 34](../05-ai-storage/34-nvidia-ecosystem.md) |
 | STaaS | Vendor owns hardware, bills for consumption: Evergreen//One, Dell APEX, NetApp Keystone, HPE GreenLake[^32]; IBM[^33] and Hitachi EverFlex[^34] narrower and block-centred |
 | Cloud availability | ● = native or first-party service in several clouds (NetApp; WEKA[^35]). Everpure ◐: Azure Native and Cloud Dedicated cover block, no managed EXA[^36] |
@@ -215,24 +215,24 @@ Caution: IDC's 2Q26 market grew 33.6%, mostly from NAND price pass-through ([Cha
 
 **Legend:** ● proven fit with named public references · ◐ credible but limited, regional or partner-led · ○ rarely competes · – self-supply. Hyperscaler fit means selling into hyperscalers' own infrastructure, not running on their marketplaces. Atlas judgment, November 2026.
 
-*Figure 49.6 — Everpure is the only vendor rated ● for both enterprise primary storage and hyperscaler supply; its gaps are neocloud and HPC, where VAST, WEKA and DDN have the reference customers.*
+*Figure 49.6 — Only Everpure is ● for both enterprise primary and hyperscaler supply; its gaps are neocloud and HPC.*
 
 Everpure gets ● for hyperscaler fit because two top-five hyperscalers licensed DirectFlash[^4]; VAST and DDN reach them mainly through marketplace services or a cloud service's engine (Google Cloud Managed Lustre on EXAScaler)[^38]. Hammerspace gets ● because its parallel NFS runs inside Meta's GenAI clusters[^39]. Huawei's enterprise ● applies only outside the US, given its Entity List designation[^40].
 
 ## How Everpure approaches it vs. competitors
 
-The matrices suggest options a strategy team might evaluate, based on public information. None is a statement of Everpure's plans.
+The matrices suggest options a strategy team might evaluate, based on public information; none describes Everpure plans.
 
 | Option | Matrix cell it moves | Public evidence to build on | Main risk |
 |---|---|---|---|
-| Turn benchmark lead into neocloud share | Segment heatmap: neocloud ◐ → ● | MLPerf v3.0 checkpoint and KV-cache results[^17]; EXA multi-tenancy and QoS for neoclouds[^41] | VAST's CoreWeave lock-in; neocloud GPU-financing cycles |
+| Turn benchmark lead into neocloud share | Segment heatmap: neocloud ◐ → ● | MLPerf v3.0 checkpoint and KV-cache results[^17]; EXA multi-tenancy and QoS for neoclouds[^41] [VERIFY: secondary summary only] | VAST's CoreWeave lock-in; neocloud GPU-financing cycles |
 | Widen cloud reach beyond Azure | Capability: cloud ◐ → ● | Pure Storage Cloud Azure Native co-developed with Microsoft[^36] | NetApp's three-cloud first-party position is a decade ahead |
 | Make data intelligence full-strength | Capability: catalog ◐ → ●; Matrix 1 rightward | Data Intelligence GA, MCP support added October 2026[^37][^20] | Competing with VAST DataBase and NetApp's AI Data Engine plus DataPelago[^42] |
 | Extend DirectFlash as merchant IP | Matrix 2 top-left; hyperscaler ● | Meta plus a second top-five design win[^4] | FDP SSDs as a substitute; only two customers |
 | Decide on the namespace layer | Matrix 2 right edge | Hammerspace inside Meta[^39]; EXA uses the same pNFS idea | A namespace that commoditises arrays beneath it |
 | Close sovereign and HPC gaps by partnering | Segment heatmap: HPC/government ◐ | DDN and HPE references show what is required[^43] | Long sales cycles; relationships held by incumbents |
 
-*Table 49.7 — Most options move a ◐ to a ● rather than change quadrant; the exception is the namespace-layer decision, which determines whether the array remains the control point.*
+*Table 49.7 — Most options move a ◐ to a ●; the namespace decision determines whether the array stays the control point.*
 
 Steelman the rivals. VAST's Element Store, spanning files, tables and vectors, already occupies the data-intelligence cell Everpure is entering. NetApp can call Everpure's cloud ◐ structural: ONTAP is first-party on three clouds, Purity on one. Dell can argue that the server purchase order decides segment fit, a column no storage-only vendor fills ([Chapter 46](46-incumbents.md)).
 

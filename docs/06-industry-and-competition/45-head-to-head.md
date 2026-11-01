@@ -9,7 +9,7 @@
 - **No vendor wins every deal.** VAST leads where buyers want a multi-tenant, multiprotocol platform with references at 10,000+ GPUs. DDN leads where Lustre heritage, NVIDIA's own designs and sovereign procurement decide. WEKA leads where storage must follow the GPUs into clouds or into the GPU servers themselves. EXA leads on audited throughput, standard clients and existing Everpure relationships.
 - **EXA's evidence is strong but narrow.** It posted the top MLPerf Storage v3.0 checkpoint-write and KV-cache-read results in September 2026, in a round VAST, WEKA and DDN all skipped.
 - **EXA is behind on references, badges, cloud reach and data-node maturity.** No public 10,000-GPU EXA reference exists. NVIDIA's SuperPOD and NCP badges belong to FlashBlade//S, not EXA. No public-cloud EXA exists, and data-node reduction and protection run on a young release train.
-- **The features are converging, so the next fight is over proof and economics.** Every vendor is an NVIDIA STX partner, every one now has a KV-cache tier, and WEKA and DDN are adding the data reduction VAST built its business on. What separates vendors in 2027 is reference scale, $/TB under NAND inflation, and operations.
+- **The features are converging, so the next fight is over proof and economics.** Every vendor is an NVIDIA STX partner, every one sells or has announced a KV-cache tier, and WEKA and DDN are adding the data reduction VAST built its business on. What separates vendors in 2027 is reference scale, $/TB under NAND inflation, and operations.
 
 ## Why this matters for Everpure strategy
 
@@ -58,7 +58,7 @@ Every scale-out file system has to answer three questions. Where does the namesp
 | Ecosystem | NVIDIA STX partner[^44]; Dynamo/KVA | STX partner; CNode-X with Supermicro and Cisco[^45] | STX partner; NIXL plugin; OCI | STX partner; GPU-initiated access work with NVIDIA |
 | Target customers | Enterprises scaling AI, neoclouds, HPC | Neoclouds, frontier labs, large enterprise data platforms | AI labs, GPU clouds, cloud-native AI | National labs, sovereign AI, NVIDIA-reference buyers, labs |
 
-*Table 45.1 — The matrix in one line: EXA is strongest on audited evidence and standard clients, and weakest on references, cloud reach and certification of the EXA product itself. "[VERIFY]" marks cells not confirmed in public sources.*
+*Table 45.1 — The matrix in one line: EXA is strongest on audited evidence and standard clients, and weakest on references, cloud reach and certification of the EXA product itself. Cells tagged VERIFY are not confirmed in public sources.*
 
 ### Five differences that decide deals
 
@@ -68,9 +68,11 @@ Every scale-out file system has to answer three questions. Where does the namesp
 
 **3. Capacity economics.** Protection overhead compounds at scale. For 50 PB usable: VAST at 146+4 needs 50 ÷ 0.973 ≈ 51.4 PB raw; WEKA at 16+4 or a Lustre OST at 8+2 RAID needs 50 ÷ 0.8 = 62.5 PB. That is about 11 PB of raw flash between them before any data reduction. With NAND contract prices still rising (TrendForce forecast a further 15–20% for 4Q26)[^46], this is where VAST's design pays. EXA's data-node protection and reduction figures are not public. That is the single most important number for Everpure to publish.
 
-**4. KV cache.** All four now sell a shared KV-cache tier ([Chapter 32](../05-ai-storage/32-inference-and-kv-cache.md)). WEKA shipped first: AMG became commercially available in November 2025[^28], and in June 2026 a joint OCI test grew the cache from 8.64 TiB of DRAM to 287 TiB of NVMe (vendor-run)[^47]. EXA has the only audited number: 1,623.4 GiB/s of KV-cache read on 51 hosts[^21]. To put that in tokens: a 70B model's 128K-token context is about 42 GB in FP16 ([Chapter 43](43-weka.md)). 1,623.4 GiB/s ≈ 1,743 GB/s, so the system could reload about 41 such contexts per second (1,743 ÷ 42). But PureKVA itself only became available in October 2026[^26]. NVIDIA's STX reference architecture now names all four as partners[^44], which turns the KV tier into a standard slot and shortens any lead.
+**4. KV cache.** All four now sell, or have announced, a shared KV-cache tier ([Chapter 32](../05-ai-storage/32-inference-and-kv-cache.md)). WEKA shipped first: AMG became commercially available in November 2025[^28], and in June 2026 a joint OCI test grew the cache from 8.64 TiB of DRAM to 287 TiB of NVMe (vendor-run)[^47]. EXA has the only audited number: 1,623.4 GiB/s of KV-cache read on 51 hosts[^21]. To put that in tokens: a 70B model's 128K-token context is about 42 GB in FP16 ([Chapter 43](43-weka.md)). 1,623.4 GiB/s ≈ 1,743 GB/s, so the system could reload about 41 such contexts per second (1,743 ÷ 42). But PureKVA itself only became available in October 2026[^26]. NVIDIA's STX reference architecture now names all four as partners[^44], which turns the KV tier into a standard slot and shortens any lead.
 
 **5. Proof.** Each vendor proves itself differently. DDN points to NVIDIA's own clusters (Eos used 48 AI400X2s for about 4 TB/s[^19]). VAST points to CoreWeave's US$1.17B agreement (reported by Reuters)[^48]. WEKA points to portability and SPECstorage. EXA points to audited benchmarks. [Chapter 37](../05-ai-storage/37-reading-benchmarks.md) explains why "absence is data" cuts both ways. Rivals skipping MLPerf v3.0 means EXA's first place came against a thin field, and a buyer running a 10,000-GPU proof of concept may trust a reference call over a leaderboard.
+
+**Worked example: one checkpoint, two kinds of number.** Take a 405B-parameter model with Adam optimizer state, about 6.5 TB ([Chapter 31](../05-ai-storage/31-training-storage.md)). EXA's audited 877.5 GiB/s is about 942 GB/s from 30 data nodes, so a synchronous save takes 6.5 ÷ 0.942 ≈ 6.9 seconds, or about 31 GB/s per data node. Eight DDN AI400X3 appliances at a reseller-listed 110 GB/s write each give about 880 GB/s, or 7.4 seconds ([Chapter 44](44-ddn.md)). The two times look equivalent, but they are different kinds of number. EXA's is a measured, peer-reviewed system result. DDN's is a sum of datasheet figures, though DDN's Eos install delivered about 93% of its summed datasheets. Neither tells a buyer the cost per usable TB or per kilowatt, which is the comparison that actually decides the purchase. A strategy team should insist that every competitive claim says which kind of number it is.
 
 ```mermaid
 flowchart TD
@@ -112,23 +114,25 @@ Two cautions. The axes are unweighted, so summing them is meaningless: a soverei
 
 *Table 45.2 — Everpure is the likely winner in one archetype of six and a credible runner-up in three more. The pattern says EXA's growth depends on converting the enterprise base and on closing the neocloud reference gap.*
 
+The neocloud row deserves a closer look, because it is the largest pool of spend. Neoclouds rarely single-source. CoreWeave, VAST's largest customer, also lists WEKA and Everpure among its dedicated-storage options[^51], and Everpure holds an equity stake in it[^42]. EXA's realistic entry is therefore a second-source tier, won on per-rack throughput, power and data-node sourcing. The aim is a named reference by 2027, not displacing VAST at CoreWeave.
+
 The table is a base rate, not a forecast. Specific deals flip on price, supply and timing. In a NAND shortage, a vendor that can guarantee delivery of media it designs may beat a cheaper software licence on hardware the buyer cannot source ([Chapter 48](48-media-suppliers-and-nand-cycle.md)). That favours Everpure's DFM supply chain only once data nodes use DFMs.
 
 ## How Everpure approaches it vs. competitors
 
 Everpure's pitch is a parallel-file-system data path without the parallel-file-system client, backed by Purity metadata, Evergreen ownership and audited numbers. Each rival has a credible counter.
 
-**Steelman VAST.** Breadth compounds. One Element Store serves files, objects, tables, block and Kafka streams. Every new engine reuses the same data without copies, and the fleet of neoclouds running it is the largest in the category. VAST's company-stated committed ARR above US$500M and a US$30B valuation[^51] give it currency to outspend everyone on field engineering.
+**Steelman VAST.** Breadth compounds. One Element Store serves files, objects, tables, block and Kafka streams. Every new engine reuses the same data without copies, and the fleet of neoclouds running it is the largest in the category. VAST's company-stated committed ARR above US$500M and a US$30B valuation[^52] give it currency to outspend everyone on field engineering.
 
 **Steelman WEKA.** It is the only one that follows the GPUs anywhere: on-premises, inside GPU servers, in four clouds, and next onto DPUs. Its KV-cache product has been on sale a year longer than anyone's.
 
-**Steelman DDN.** NVIDIA runs its own supercomputers on DDN. Lustre's coherent shared-file writes and open code suit labs and governments, and a profitable, founder-owned supplier passes procurement tests venture-backed rivals sometimes fail. Blackstone's US$300M at a US$5B valuation[^52] and a reported revenue doubling toward about US$1B in 2026 (reported by Forbes)[^53] show momentum.
+**Steelman DDN.** NVIDIA runs its own supercomputers on DDN. Lustre's coherent shared-file writes and open code suit labs and governments, and a profitable, founder-owned supplier passes procurement tests venture-backed rivals sometimes fail. Blackstone's US$300M at a US$5B valuation[^53] and a reported revenue doubling toward about US$1B in 2026 (reported by Forbes)[^54] show momentum.
 
 **Where FlashBlade//EXA is behind, stated plainly:**
 
 | Gap | Evidence | Why it matters | What would close it |
 |---|---|---|---|
-| Scale references | First enterprise EXA customer reported in Q4 FY26[^54]; no public 10K-GPU EXA reference | Buyers ask "who runs this at my scale?" before asking about speed | A named neocloud or lab reference |
+| Scale references | First enterprise EXA customer reported in Q4 FY26[^55]; no public 10K-GPU EXA reference | Buyers ask "who runs this at my scale?" before asking about speed | A named neocloud or lab reference |
 | EXA-level NVIDIA badges | NVCS validation extended in Mar 2026, NCP "later this year"; badges sit on FlashBlade//S[^32] | Gates NVIDIA-led deals | NCP and SuperPOD certification for EXA |
 | Cloud reach | No EXA cloud offering found | Concedes cloud-native and burst buyers to WEKA, VAST, DDN | Partner-hosted EXA or software on cloud instances |
 | Data-node maturity | Third-party NVMe; Purity//DN on its own release train; DFM nodes not confirmed GA[^14] | Weakens $/TB and Everpure's own-media story | DFM data nodes and published EC and reduction ratios |
@@ -154,7 +158,7 @@ timeline
 
 *Figure 45.4 — The four started far apart (appliance Lustre, shared-everything, software-anywhere, Purity) and are converging on the same feature list. Differentiation is moving to proof, economics and operations.*
 
-Three forces shape 2027. **NVIDIA standardisation.** STX and the Dynamo KV tiers make the inference storage slot a commodity interface[^44], and DDN's GPU-initiated access work could move the client into the GPU itself ([Chapter 34](../05-ai-storage/34-nvidia-ecosystem.md)). **Capital events.** A VAST IPO would give the first audited view of AI-native storage economics, DDN is seeking strategic investors[^55], and WEKA's last priced round, US$1.6B, dates from May 2024[^56]. **Media.** NAND inflation rewards vendors with high reduction ratios (VAST) or their own module supply (Everpure, once DFM data nodes ship). Signals to watch: EXA NCP and SuperPOD badges; DFM data-node GA; NeuralMesh 6 GA; VAST's BlueField-4 CNode shipments; and whether VAST, WEKA or DDN enter MLPerf Storage v4.0.
+Three forces shape 2027. **NVIDIA standardisation.** STX and the Dynamo KV tiers make the inference storage slot a commodity interface[^44], and DDN's GPU-initiated access work could move the client into the GPU itself ([Chapter 34](../05-ai-storage/34-nvidia-ecosystem.md)). **Capital events.** A VAST IPO would give the first audited view of AI-native storage economics, DDN is seeking strategic investors[^56], and WEKA's last priced round, US$1.6B, dates from May 2024[^57]. **Media.** NAND inflation rewards vendors with high reduction ratios (VAST) or their own module supply (Everpure, once DFM data nodes ship). Signals to watch: EXA NCP and SuperPOD badges; DFM data-node GA; NeuralMesh 6 GA; VAST's BlueField-4 CNode shipments; and whether VAST, WEKA or DDN enter MLPerf Storage v4.0.
 
 ## Numbers that matter
 
@@ -167,7 +171,7 @@ Three forces shape 2027. **NVIDIA standardisation.** STX and the Dynamo KV tiers
 | WEKA erasure code | 16+4 keeps 80% of raw | 3–16 data + 2 or 4 parity | WEKA docs[^12] |
 | Raw flash for 50 PB usable | 51.4 PB (VAST) vs 62.5 PB (16+4 or 8+2) | ≈11 PB gap before reduction | Worked example |
 | VAST CoreWeave deal | US$1.17B | Multi-year, reported by Reuters | Reuters, 2025-11-06[^48] |
-| Latest valuations | VAST US$30B; DDN US$5B; WEKA US$1.6B | 2026-04, 2025-01, 2024-05 | [^51][^52][^56] |
+| Latest valuations | VAST US$30B; DDN US$5B; WEKA US$1.6B | 2026-04, 2025-01, 2024-05 | [^52][^53][^57] |
 | EXA data-node entitlement | 160 TiB usable per node | Larger capacity licensed per TB | Terms of use[^14] |
 
 ## Conversation playbook
@@ -188,13 +192,13 @@ Three forces shape 2027. **NVIDIA standardisation.** STX and the Dynamo KV tiers
 
 - "EXA beat VAST, WEKA and DDN in MLPerf." They did not enter v3.0.
 - "FlashBlade//EXA is SuperPOD-certified." The public record shows FlashBlade//S, not EXA.
-- "VAST is a hardware company" or "WEKA is an appliance vendor." Both sell software on partner hardware; WEKApod is a sideline.
+- "VAST is a hardware company" or "WEKA is an appliance vendor." Both earn mostly software revenue on partner hardware, even though WEKA now sells WEKApod appliances.
 - "DDN is legacy Lustre." It runs NVIDIA's clusters, sells Lustre as a Google service and ships a second, newer engine.
 - "Everyone has KV cache, so it's a wash." Maturity, evidence and Dynamo integration differ by a year or more.
 
 ## Going deeper (optional, L3 pointers)
 
-- The MLPerf Storage v3.0 results tables and Everpure's disclosure, read with [Chapter 37](../05-ai-storage/37-reading-benchmarks.md)'s checklist[^57].
+- The MLPerf Storage v3.0 results tables and Everpure's disclosure, read with [Chapter 37](../05-ai-storage/37-reading-benchmarks.md)'s checklist[^58].
 - Each vendor's deep-dive "Going deeper" box: VAST's locally decodable codes ([Chapter 42](42-vast-data.md)), WEKA's bucket white paper ([Chapter 43](43-weka.md)), Lustre internals and Bε-trees ([Chapter 44](44-ddn.md)).
 - RFC 8881 (NFSv4.1) for pNFS layouts and recall semantics ([Chapter 8](../02-protocols-and-networking/08-file-protocols.md)).
 
@@ -260,10 +264,11 @@ Three forces shape 2027. **NVIDIA standardisation.** STX and the Dynamo KV tiers
 [^48]: Reuters (via Yahoo Finance), "Exclusive: Nvidia-backed Vast Data inks $1.17 billion AI deal with CoreWeave," 2025-11-06. https://finance.yahoo.com/news/exclusive-nvidia-backed-vast-data-120456403.html (retrieved 2026-11-01).
 [^49]: TechTarget, "7 highlights from Pure Accelerate 2026," 2026-06. https://www.techtarget.com/it-infrastructure/opinion/7-highlights-from-Pure-Accelerate-2026 (retrieved 2026-11-01).
 [^50]: StorageNewsletter, "SC25: DDN Launches Sovereign AI Solutions Based on NVIDIA AI Data Platform Reference Design," 2025-11-21. https://www.storagenewsletter.com/2025/11/21/sc25-ddn-launches-sovereign-ai-solutions-based-on-nvidia-ai-data-platform-reference-design-trusted-tested-and-proven-for-sovereign-grade-ai/ (retrieved 2026-11-01).
-[^51]: VAST Data, "VAST Data Valued at $30 Billion as AI Drives a New Infrastructure Stack" (press release), 2026-04-21. https://www.vastdata.com/press-releases/vast-series-f-financing-at-30-billion-valuation ; CNBC, "Nvidia backs AI company Vast Data at $30 billion valuation," 2026-04-22. https://www.cnbc.com/2026/04/22/nvidia-backs-ai-company-vast-data.html (retrieved 2026-11-01).
-[^52]: Blackstone, "Blackstone Invests $300 Million at a $5 Billion Valuation in DDN, AI and Data Intelligence Solutions Leader, to Fuel Further Rapid Growth," 2025-01-08. https://www.blackstone.com/news/press/blackstone-invests-300-million-at-a-5-billion-valuation-in-ddn-ai-and-data-intelligence-solutions-leader-to-fuel-further-rapid-growth/ (retrieved 2026-11-01).
-[^53]: I. Martin, Forbes, "AI's Latest Rocket Ship Is An Old School, 28-Year-Old Data Company," 2026-08-06. https://www.forbes.com/sites/iainmartin/2026/08/06/ais-latest-rocket-ship-is-an-old-school-28-year-old-data-company/ (retrieved 2026-11-01; read via search extracts).
-[^54]: Futurum, "Everpure Q4 FY 2026 Revenue Passes $1 Billion as Platform Strategy Scales," 2026-02. https://futurumgroup.com/insights/everpure-q4-fy-2026-revenue-passes-1-billion-as-platform-strategy-scales (retrieved 2026-11-01).
-[^55]: Bloomberg, "AI Data Firm DDN Eyeing a Fresh Funding Round by End of Year," 2026-06-10. https://www.bloomberg.com/news/articles/2026-06-10/ai-data-firm-ddn-eyeing-a-fresh-funding-round-by-end-of-year ; Blocks & Files, "DDN wants strategic investors," 2026-06-12. https://www.blocksandfiles.com/ai-ml/2026/06/12/ddn-wants-strategic-investors/5254665 (retrieved 2026-11-01).
-[^56]: WEKA, "WEKA Nets $140M in Series E Funding at $1.6B Valuation," 2024-05-15. https://www.weka.io/news/weka-nets-140m-in-series-e-funding-at-1-6b-valuation (retrieved 2026-11-01).
-[^57]: MLCommons via GlobeNewswire, "MLCommons Releases New MLPerf Storage v3.0 Benchmark Results," 2026-09-01. https://www.globenewswire.com/news-release/2026/09/01/3354412/0/en/mlcommons-releases-new-mlperf-storage-v3-0-benchmark-results.html (retrieved 2026-11-01).
+[^51]: CoreWeave, "Storage" (product page), n.d. https://coreweave.com/products/storage (retrieved 2026-11-01).
+[^52]: VAST Data, "VAST Data Valued at $30 Billion as AI Drives a New Infrastructure Stack" (press release), 2026-04-21. https://www.vastdata.com/press-releases/vast-series-f-financing-at-30-billion-valuation ; CNBC, "Nvidia backs AI company Vast Data at $30 billion valuation," 2026-04-22. https://www.cnbc.com/2026/04/22/nvidia-backs-ai-company-vast-data.html (retrieved 2026-11-01).
+[^53]: Blackstone, "Blackstone Invests $300 Million at a $5 Billion Valuation in DDN, AI and Data Intelligence Solutions Leader, to Fuel Further Rapid Growth," 2025-01-08. https://www.blackstone.com/news/press/blackstone-invests-300-million-at-a-5-billion-valuation-in-ddn-ai-and-data-intelligence-solutions-leader-to-fuel-further-rapid-growth/ (retrieved 2026-11-01).
+[^54]: I. Martin, Forbes, "AI's Latest Rocket Ship Is An Old School, 28-Year-Old Data Company," 2026-08-06. https://www.forbes.com/sites/iainmartin/2026/08/06/ais-latest-rocket-ship-is-an-old-school-28-year-old-data-company/ (retrieved 2026-11-01; read via search extracts).
+[^55]: Futurum, "Everpure Q4 FY 2026 Revenue Passes $1 Billion as Platform Strategy Scales," 2026-02. https://futurumgroup.com/insights/everpure-q4-fy-2026-revenue-passes-1-billion-as-platform-strategy-scales (retrieved 2026-11-01).
+[^56]: Bloomberg, "AI Data Firm DDN Eyeing a Fresh Funding Round by End of Year," 2026-06-10. https://www.bloomberg.com/news/articles/2026-06-10/ai-data-firm-ddn-eyeing-a-fresh-funding-round-by-end-of-year ; Blocks & Files, "DDN wants strategic investors," 2026-06-12. https://www.blocksandfiles.com/ai-ml/2026/06/12/ddn-wants-strategic-investors/5254665 (retrieved 2026-11-01).
+[^57]: WEKA, "WEKA Nets $140M in Series E Funding at $1.6B Valuation," 2024-05-15. https://www.weka.io/news/weka-nets-140m-in-series-e-funding-at-1-6b-valuation (retrieved 2026-11-01).
+[^58]: MLCommons via GlobeNewswire, "MLCommons Releases New MLPerf Storage v3.0 Benchmark Results," 2026-09-01. https://www.globenewswire.com/news-release/2026/09/01/3354412/0/en/mlcommons-releases-new-mlperf-storage-v3-0-benchmark-results.html (retrieved 2026-11-01).
