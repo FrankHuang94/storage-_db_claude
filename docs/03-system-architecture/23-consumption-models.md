@@ -9,11 +9,11 @@
 - **Total cost over five years can be similar; the cash-flow shape, balance-sheet treatment and risk allocation differ.** STaaS turns a lumpy purchase into a usage-tracking fee and moves overprovisioning and refresh risk to the vendor.
 - **For the vendor, STaaS trades upfront product revenue for ratable revenue.** A mix shift toward it depresses reported growth while lifting ARR, RPO and TCV, which is why Everpure leads with those metrics.
 - **The business model is an architecture requirement.** A credible subscription needs non-disruptive upgrades, stateless controllers and fleet telemetry; bolting a subscription onto a forklift-upgrade array just finances the forklift.
-- **Everpure was early (Evergreen, 2015) and has the deepest program.** Dell, NetApp and HPE all now match the contract terms; matching the architecture is harder.
+- **Everpure was early (Evergreen, 2015).** Dell, NetApp and HPE now match the contract terms; matching the architecture is harder.
 
 ## Why this matters for Everpure strategy
 
-Subscription services were 46% of Everpure's FY2026 revenue, and subscription ARR reached $1,924.3M with 113% net dollar retention[^1]. By Q2 FY2027 ARR was $2.13B (+20%) and RPO $4.1B (+44%)[^2]. Evergreen//One TCV grew 121% to $277M in that quarter, a run rate above $1B a year[^3]. Management says this acceleration "dilutes reported near-term revenue growth"[^3]. Reading Everpure's financials, valuing a target with a different model, or pricing a deal against Dell APEX all require knowing what each consumption model does to cash, revenue and architecture.
+Subscription services were 46% of Everpure's FY2026 revenue, and subscription ARR reached $1,924.3M with 113% net dollar retention[^1]. By Q2 FY2027 ARR was $2.13B (+20%) and RPO $4.1B (+44%)[^2]. Storage-as-a-service TCV, led by Evergreen//One, grew 121% to $277M in that quarter, a run rate above $1B a year[^3]. Management says this acceleration "dilutes reported near-term revenue growth"[^3]. Reading Everpure's financials or pricing a deal against Dell APEX requires knowing what each model does to cash, revenue and architecture.
 
 ## Core concepts
 
@@ -28,7 +28,7 @@ Subscription services were 46% of Everpure's FY2026 revenue, and subscription AR
 
 *Table 23.1 — Moving down the table shifts asset ownership, refresh risk and revenue timing from the customer's books to the vendor's.*
 
-The lease-versus-service line is a legal and audit judgment, not a label. Under ASC 842, a contract contains a lease if there is an identified asset the customer directs. A vendor's right to swap hardware is only "substantive" if it is practical and economic for the vendor[^9]. STaaS contracts are written so the customer buys capacity and performance, not specific boxes. One EBITDA nuance: STaaS fees and US GAAP operating-lease cost both sit above EBITDA, whereas purchased hardware depreciation sits below it.
+The lease-versus-service line is an audit judgment. Under ASC 842, a contract contains a lease if there is an identified asset the customer directs. A vendor's right to swap hardware is only "substantive" if it is practical and economic for the vendor[^9]. STaaS contracts sell capacity and performance, not specific boxes. One EBITDA nuance: STaaS fees and US GAAP operating-lease cost both sit above EBITDA, whereas purchased hardware depreciation sits below it.
 
 ### Cash-flow shapes
 
@@ -41,7 +41,7 @@ Data: `data/ch23_cashflow.csv`
 
 ### What the vendor's P&L sees
 
-Take a three-year, $1.2M deal. Sold as capex, perhaps $0.9M is product revenue in the quarter it ships and $0.3M of support is recognized at $25K a quarter, so year-one revenue is about $1.0M. Sold as STaaS, it is roughly $100K a quarter, $0.4M in year one. Same customer, same economics, 60% less year-one revenue. Meanwhile the vendor pays for the hardware up front, so cash and margin dip before they recover. Hence Everpure's emphasis on ARR, RPO and TCV, and its CEO's comment that growth adjusted for the Evergreen//One shift was "well above 40%"[^3]. Its subscription gross margin (74.9% in Q2 FY2027) exceeds product (66.2%)[^10], but STaaS hardware costs sit inside the subscription line.
+Take a three-year, $1.2M deal. Sold as capex, perhaps $0.9M is product revenue in the quarter it ships and $0.3M of support is recognized at $25K a quarter, so year-one revenue is about $1.0M. Sold as STaaS, it is roughly $100K a quarter, $0.4M in year one. Same economics, 60% less year-one revenue, while the vendor pays for hardware up front. Hence Everpure's emphasis on ARR, RPO and TCV, and its CEO's claim that growth adjusted for the Evergreen//One shift exceeded 40%[^3]. Its subscription gross margin (74.9% in Q2 FY2027) exceeds product (66.2%)[^10], but STaaS hardware costs sit inside the subscription line.
 
 ### Why the business model shapes the architecture
 
@@ -62,13 +62,13 @@ flowchart TD
 
 *Figure 23.2 — A subscription is only profitable if upgrades are cheap and risks are measurable, so the contract pushes engineering toward stateless controllers, modular media and telemetry.*
 
-A subscription that promises "never migrate again" is a liability unless swapping controllers is routine. That works only if controllers hold no unique state ([Chapter 14](14-scale-up-dual-controller.md)) and new controllers read old layouts. Think of a CPU socket kept compatible for many generations: the chassis is the motherboard, the controller is the chip. Pure Storage had delivered more than 10,000 non-disruptive controller upgrades to more than 3,000 customers by 2022[^11]. SLAs require measurement, so Evergreen//One's guarantees run on Pure1 telemetry ([Chapter 22](22-control-planes.md)), including a watts-per-TiB energy guarantee introduced in January 2023[^12]. Once the vendor pays for power and hardware, density is margin, which ties DirectFlash to the subscription model ([Chapter 26](../04-everpure/26-purity-and-directflash.md)).
+A subscription that promises "never migrate again" is a liability unless swapping controllers is routine. That works only if controllers hold no unique state ([Chapter 14](14-scale-up-dual-controller.md)) and new controllers read old layouts. Think of a CPU socket kept compatible across generations: chassis as motherboard, controller as chip. Pure Storage had delivered more than 10,000 non-disruptive controller upgrades to more than 3,000 customers by 2022[^11]. SLAs require measurement, so Evergreen//One's guarantees run on Pure1 telemetry ([Chapter 22](22-control-planes.md)), including a watts-per-TiB energy guarantee introduced in January 2023[^12]. Once the vendor pays for power and hardware, density is margin, which ties DirectFlash to the subscription model ([Chapter 26](../04-everpure/26-purity-and-directflash.md)).
 
 ## How Everpure approaches it vs. competitors
 
-Everpure's Evergreen family has three tiers. Evergreen//Forever is owned hardware with a subscription and a controller refresh at each three-year renewal ("Ever Modern"; six years for the //E lines)[^13]. Evergreen//Flex is fleet-level pay-per-use on owned arrays. Evergreen//One is full STaaS, formerly Pure-as-a-Service[^5]. Its SLAs cover performance, availability, capacity, energy and cyber recovery[^14]. Gartner named Pure Storage a Leader in its 2025 consumption-services Magic Quadrant[^15].
+Everpure's Evergreen family has three tiers. Evergreen//Forever is owned hardware with a subscription and a controller refresh at each three-year renewal ("Ever Modern"; six years for the //E lines)[^13]. Evergreen//Flex bills capacity per use across a fleet. Evergreen//One is full STaaS, formerly Pure-as-a-Service[^5]. Its SLAs cover performance, availability, capacity, energy and cyber recovery[^14]. Gartner named Pure Storage a Leader in its 2025 consumption-services Magic Quadrant[^15].
 
-Steelman the competitors. HPE launched GreenLake pay-per-use in 2017[^16], earlier than most, and covers compute and networking as well as storage. NetApp Keystone (2019)[^17] runs across on-premises and hyperscaler ONTAP. Dell APEX (2021)[^18] can wrap the broadest hardware portfolio. On contracts, NetApp's and Dell's controller-refresh programs now mirror Evergreen//Forever[^6][^7]. Everpure's edge lies in architecture and track record, not contract terms: one OS lineage designed for in-place upgrades, and a decade of refreshes delivered. A competitor that must migrate data to refresh carries more cost in each STaaS contract.
+Steelman the competitors. HPE launched GreenLake pay-per-use in 2017[^16], earlier than most, and covers compute and networking as well as storage. NetApp Keystone (2019)[^17] runs across on-premises and hyperscaler ONTAP. Dell APEX (2021)[^18] can wrap the broadest hardware portfolio. On contracts, NetApp's and Dell's controller-refresh programs now mirror Evergreen//Forever[^6][^7]. Everpure's edge lies in architecture and track record, not contract terms: one OS lineage designed for in-place upgrades, and a decade of refreshes delivered. A vendor that must migrate data to refresh carries that cost inside every STaaS contract.
 
 ## History and trajectory
 
@@ -94,7 +94,7 @@ Next: Evergreen//One Overdrive, letting customers burst above their subscribed l
 |---|---|---|---|
 | Subscription ARR | $2.13B (+20%) | Q2 FY2027 | Everpure, 2026-08-26[^2] |
 | RPO | $4.1B (+44%) | Q2 FY2027 | Everpure, 2026-08-26[^2] |
-| Evergreen//One TCV | $277M (+121%) | Q2 FY2027; >$1B run rate | Earnings call, 2026-08[^3] |
+| STaaS TCV (mainly Evergreen//One) | $277M (+121%) | Q2 FY2027; >$1B run rate | Earnings call, 2026-08[^3] |
 | STaaS TCV, FY2026 | $520M (+32%) | [VERIFY: transcript summary only] | Earnings call, 2026-02[^20] |
 | Subscription net dollar retention | 113% | FY2026 (FY2025: 117%) | 10-K[^1] |
 | Non-disruptive controller upgrades | >10,000 for >3,000 customers | Cumulative to 2022 | Blocks & Files[^11] |
