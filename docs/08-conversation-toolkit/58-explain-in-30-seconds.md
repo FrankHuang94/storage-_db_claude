@@ -1,25 +1,25 @@
 # 58. Explain it in 30 seconds
 
 > **Depth:** L1 · **Reading time:** ~8 min · **Last verified:** 2026-11-01
-> **Prerequisites:** None. This is a synthesis of the whole atlas; each line links to the chapter that explains and sources it. See also the [question bank](57-question-bank.md) and [cheat sheets](60-cheat-sheets.md).
+> **Prerequisites:** None. This chapter distils the atlas; every line links to the chapter that explains and sources it. Companions: the [question bank](57-question-bank.md) and [cheat sheets](60-cheat-sheets.md).
 
 ## TL;DR
 
-- **Use these 64 one-liners when a CFO, board member or investor asks "what is X and why should I care?"** Each states what it is, why it matters, and at most one number.
-- **Follow the four-beat shape.** What it is, why it matters, one number, what it means for us. If you need a fifth beat, the answer is no longer 30 seconds.
-- **Quote only numbers you can source.** Every number below links to the chapter that sourced it. Say the date, and say *company-stated* for private vendors.
-- **Translate, don't simplify away the trade-off.** Board members respect "flash costs ~18× more per terabyte, and we still win on power and density" more than "flash is better."
-- **Know the eight numbers in the table at the end.** They answer most board questions about growth, margin, share and AI.
+- **Use these 66 one-liners when a CFO, director or investor asks "what is X, and why should I care?"**
+- **Follow four beats:** what it is, why it matters, one number, what it means for us. A fifth beat breaks the 30 seconds.
+- **Quote only sourced numbers.** Give the date, and say *company-stated* for private vendors.
+- **Keep the trade-off.** "Flash costs ~18× more per terabyte and still wins on power and density" beats "flash is better."
+- **Memorise the eight numbers at the end.** They answer most questions on growth, margin, share and AI.
 
 ## Why this matters for Everpure strategy
 
-Strategy and corporate development teams carry the technology story to people who approve capital: the CFO, the board, bankers and investors. These audiences decide on deals, budgets and valuation narratives, and they rarely get more than half a minute per concept. A strategy professional who can turn "disaggregated shared-everything with NVMe-oF" into "they let customers buy engines and fuel tanks separately" earns the room's trust. One who cannot gets talked over by the engineer.
+Strategy and corporate development carry the technology story to people who approve capital: the CFO, the board, bankers and investors. They rarely give a concept more than half a minute. Turning "disaggregated shared-everything over NVMe-oF" into "buy engines and fuel tanks separately" earns the room.
 
-Everpure (NYSE: P, formerly PSTG) makes this harder than most. Its value rests on a software layer (Purity), its own flash module (DirectFlash), a business model (Evergreen) and an IP-licensing line with hyperscalers. None of those is obvious from the hardware, and the AI story is crowded with louder private competitors.
+Everpure (NYSE: P, formerly PSTG) is harder to explain than most. Its value sits in software (Purity), its own flash module (DirectFlash), a business model (Evergreen) and hyperscaler IP licensing, none of it visible from the hardware.
 
 ## Core concepts
 
-The one-liners are grouped into eight themes and numbered continuously. Each one should survive a skeptical follow-up; the linked chapter has the depth.
+The one-liners are numbered continuously across eight themes. Each should survive one skeptical follow-up; the linked chapter supplies it.
 
 ```mermaid
 mindmap
@@ -56,9 +56,7 @@ mindmap
       Value moves up and down
 ```
 
-*Figure 58.1 — Eight themes cover almost every board-level storage question; most board questions touch two of them at once.*
-
-### The shape of a 30-second answer
+*Figure 58.1 — Eight themes cover almost every board-level storage question; most questions touch two of them.*
 
 ```mermaid
 flowchart LR
@@ -66,107 +64,112 @@ flowchart LR
   B --> C["3. One number<br/>sourced and dated"]
   C --> D["4. Implication<br/>for Everpure"]
   A -.-> E["KV cache is the AI's<br/>short-term memory"]
-  B -.-> F["Rebuilding it burns<br/>GPU time"]
+  B -.-> F["Rebuilding it<br/>burns GPU time"]
   C -.-> G["About 43 GB per<br/>long conversation"]
-  D -.-> H["Storage vendors compete<br/>to hold it"]
+  D -.-> H["Storage vendors<br/>compete to hold it"]
 ```
 
-*Figure 58.2 — Every one-liner follows four beats; the dotted path shows the KV-cache answer built that way.*
+*Figure 58.2 — The structure of a 30-second answer; the dotted path builds the KV-cache answer in four beats.*
 
 ### Media and economics
 
-1. **Why flash and not disk?** Flash is chips, disk is spinning platters. Flash wins on speed, power and space; disk still wins on purchase price for cold data ([Ch 2](../01-storage-fundamentals/02-media-physics.md)).
-2. **How much more does flash cost?** Enterprise SSDs ran about 18.6× nearline disk per terabyte in Q3 2026, against roughly 10× in 2020[^1]. The flash pitch now rests on power, density and operations, not price ([Ch 53](../07-history-and-future/53-future-trends.md)).
-3. **What is NAND?** The memory chip inside every SSD. Five suppliers took $68.87B of NAND revenue in 2Q26[^2], and Everpure buys from companies that also sell competing drives ([Ch 48](../06-industry-and-competition/48-media-suppliers-and-nand-cycle.md)).
-4. **What is the NAND cycle?** Prices swing as chipmakers add or withhold capacity. Compounding TrendForce forecasts put 4Q26 contract prices near 4.7× mid-2025 levels[^3], so revenue inflates before margins recover ([Ch 48](../06-industry-and-competition/48-media-suppliers-and-nand-cycle.md)).
-5. **What is QLC?** Flash storing four bits per cell: cheapest per terabyte but slower and less durable. It works only when software turns small writes into large sequential ones, which is what Purity does ([Ch 2](../01-storage-fundamentals/02-media-physics.md)).
-6. **What is data reduction?** Deduplication and compression let one physical terabyte hold several logical ones. Purity averages about 5:1[^4], but AI data barely shrinks, so ask which data a ratio assumes ([Ch 5](../01-storage-fundamentals/05-data-reduction.md)).
-7. **Raw, usable or effective?** Three prices for one terabyte: before protection, after protection, and after an assumed reduction ratio. Comparing vendors on different bases is the most common pricing trick ([Ch 4](../01-storage-fundamentals/04-performance-and-economics-metrics.md)).
-8. **Why do watts matter?** AI datacenters are power-limited, so every storage watt is a watt not running a GPU. Flash's edge is density: a rack of the largest SSDs holds roughly 5× the raw petabytes of a disk rack ([Ch 38](../05-ai-storage/38-power-and-density.md)).
+1. **Flash vs disk.** Flash is chips; disk is spinning platters. Flash wins on speed, power and space, disk on cold-data price ([Ch 2](../01-storage-fundamentals/02-media-physics.md)).
+2. **Flash price premium.** Enterprise SSDs cost ~18.6× nearline disk per terabyte in Q3 2026, up from ~10× in 2020[^1]. Flash now sells on power and density ([Ch 53](../07-history-and-future/53-future-trends.md)).
+3. **NAND.** The memory chip inside every SSD. Five suppliers earned $68.87B in 2Q26[^2], and they also sell drives competing with Everpure ([Ch 48](../06-industry-and-competition/48-media-suppliers-and-nand-cycle.md)).
+4. **NAND cycle.** Chip prices swing with supply; forecasts compound to ~4.7× mid-2025 contract prices by 4Q26[^3]. Revenue inflates first, margins recover later ([Ch 48](../06-industry-and-competition/48-media-suppliers-and-nand-cycle.md)).
+5. **QLC.** Four bits per cell: the cheapest flash, but slower and less durable. Purity makes it work by writing in large sequential chunks ([Ch 2](../01-storage-fundamentals/02-media-physics.md)).
+6. **Data reduction.** Deduplication and compression fit several logical terabytes into one physical. Purity averages ~5:1[^4]; AI data barely shrinks ([Ch 5](../01-storage-fundamentals/05-data-reduction.md)).
+7. **Raw, usable, effective.** One terabyte, three prices: before protection, after it, and after assumed reduction. Compare vendors on the same one ([Ch 4](../01-storage-fundamentals/04-performance-and-economics-metrics.md)).
+8. **Watts.** AI sites are power-capped, so storage watts displace GPUs. A rack of the largest SSDs holds ~5× a disk rack's petabytes ([Ch 38](../05-ai-storage/38-power-and-density.md)).
 
 ### How storage systems work
 
-9. **Block, file, object?** Three ways to address data: numbered blocks for databases, folders for people and research, flat keys for cloud and AI. Each has a different buyer and budget ([Ch 1](../01-storage-fundamentals/01-what-storage-does.md)).
-10. **What is an array?** A purpose-built computer that pools many drives, protects them and serves them over the network. Customers pay for the software inside, not the drives ([Ch 13](../03-system-architecture/13-storage-stack.md)).
-11. **What is a dual-controller array?** Two servers sharing one set of drives, so one can fail without downtime. FlashArray works this way; the limit is one pair's horsepower ([Ch 14](../03-system-architecture/14-scale-up-dual-controller.md)).
-12. **Scale-up versus scale-out?** Make the box bigger, or add more boxes. Scale-out handles petabytes but moves data across the network for every read and rebuild ([Ch 15](../03-system-architecture/15-scale-out-shared-nothing.md)).
-13. **What is disaggregation?** Buying the engines and the fuel tanks separately: compute nodes and flash shelves scale independently. VAST built a company on it; now every major vendor ships a version ([Ch 16](../03-system-architecture/16-disaggregated-shared-everything.md)).
-14. **What is a parallel file system?** Each client reads from many servers at once after one lookup. Lustre runs on more than 60% of the Top500 supercomputers[^5], which is why AI storage has HPC roots ([Ch 17](../03-system-architecture/17-parallel-file-systems.md)).
-15. **What is metadata?** The card catalogue: names, folders, permissions and locations. AI's millions of small files make it the bottleneck, so ask for file operations per second, not just bandwidth ([Ch 21](../03-system-architecture/21-metadata.md)).
-16. **What is erasure coding?** Insurance math: spread data plus parity so any few drives can fail. Eight data plus two parity costs 25% extra capacity, against 100% for a mirror ([Ch 6](../01-storage-fundamentals/06-data-protection-and-resilience.md)).
-17. **Why is storage a ransomware product now?** Snapshots that even an administrator cannot delete let a company restore instead of pay. Vendors now attach recovery guarantees to the sale ([Ch 6](../01-storage-fundamentals/06-data-protection-and-resilience.md)).
-18. **What is synchronous replication?** Every write lands at two sites before it counts, so a site loss loses nothing. Light adds about a millisecond per 100 km round trip, so it only works across a metro ([Ch 6](../01-storage-fundamentals/06-data-protection-and-resilience.md)).
-19. **What does "eleven nines" mean?** A modelled durability probability, not a measurement. Correlated failures lose data in practice, so ask how the number was calculated ([Ch 20](../03-system-architecture/20-distributed-systems-fundamentals.md)).
-20. **What is a non-disruptive upgrade?** Replacing the array's controllers while it keeps serving data. It is the engineering that makes Evergreen subscriptions possible ([Ch 14](../03-system-architecture/14-scale-up-dual-controller.md)).
-21. **What is a control plane?** The software that manages a fleet: provisioning, policy, telemetry. More installed systems means more failure data, so this moat compounds with scale ([Ch 22](../03-system-architecture/22-control-planes.md)).
+9. **Block, file, object.** Numbered blocks for databases, folders for people and research, flat keys for cloud and AI. Each has its own buyer ([Ch 1](../01-storage-fundamentals/01-what-storage-does.md)).
+10. **Array.** A purpose-built computer that pools, protects and serves drives over a network. Customers are really paying for its software ([Ch 13](../03-system-architecture/13-storage-stack.md)).
+11. **Dual controller.** Two servers share one set of drives, so either can fail without downtime. FlashArray works this way ([Ch 14](../03-system-architecture/14-scale-up-dual-controller.md)).
+12. **Scale-out.** Add boxes rather than enlarge one. It reaches petabytes but sends every read and rebuild across the network ([Ch 15](../03-system-architecture/15-scale-out-shared-nothing.md)).
+13. **Disaggregation.** Buy engines and fuel tanks separately: compute and flash scale independently. VAST pioneered it; every major vendor now ships a version ([Ch 16](../03-system-architecture/16-disaggregated-shared-everything.md)).
+14. **Parallel file system.** One lookup, then each client reads from many servers at once. Lustre runs on more than 60% of the Top500[^5] ([Ch 17](../03-system-architecture/17-parallel-file-systems.md)).
+15. **Metadata.** The card catalogue: names, folders, permissions. AI's millions of small files make it the usual bottleneck ([Ch 21](../03-system-architecture/21-metadata.md)).
+16. **Erasure coding.** Insurance math: data plus parity survives several drive failures. Eight-plus-two costs 25% extra capacity; a mirror costs 100% ([Ch 6](../01-storage-fundamentals/06-data-protection-and-resilience.md)).
+17. **Immutable snapshots.** Copies even an administrator cannot delete, so ransomware victims restore instead of paying. Storage is now a security sale ([Ch 6](../01-storage-fundamentals/06-data-protection-and-resilience.md)).
+18. **Synchronous replication.** Each write lands at two sites before it counts, so losing a site loses nothing. Physics limits it to metro distances ([Ch 6](../01-storage-fundamentals/06-data-protection-and-resilience.md)).
+19. **"Eleven nines."** A modelled durability figure, not a measurement. Correlated failures are what actually lose data ([Ch 20](../03-system-architecture/20-distributed-systems-fundamentals.md)).
+20. **Non-disruptive upgrade.** Swapping controllers while data keeps flowing: the engineering behind Evergreen ([Ch 14](../03-system-architecture/14-scale-up-dual-controller.md)).
+21. **Control plane.** Software that manages a fleet. Telemetry from more systems predicts more failures, so the moat compounds with installed base ([Ch 22](../03-system-architecture/22-control-planes.md)).
 
 ### Protocols and networks
 
-22. **What is a storage protocol?** The language servers and storage speak. Changing it is slow, so protocol support decides which buyers a product can even reach ([Ch 7](../02-protocols-and-networking/07-block-protocols.md)).
-23. **What is NVMe?** The protocol built for flash, with thousands of parallel queues instead of one line. It replaced SCSI and set the speed floor for every modern array ([Ch 7](../02-protocols-and-networking/07-block-protocols.md)).
-24. **What is NVMe over Fabrics?** NVMe stretched across a network so shared flash feels local. The TCP flavour runs on ordinary Ethernet and is becoming the enterprise default ([Ch 7](../02-protocols-and-networking/07-block-protocols.md)).
-25. **What are NFS and pNFS?** NFS is the file language of Linux and AI clusters; pNFS lets one client read from many servers in parallel. FlashBlade//EXA bets on it because it needs no special client software ([Ch 8](../02-protocols-and-networking/08-file-protocols.md)).
-26. **What is S3?** Amazon's object interface, now the industry standard. AWS S3 holds more than 500 trillion objects[^6], and most AI tools read and write through it ([Ch 9](../02-protocols-and-networking/09-object-storage-and-s3.md)).
-27. **What is RDMA?** Network cards copying data straight between machines' memory, skipping the processor. It keeps GPUs fed and is why AI storage is sold with a network design ([Ch 10](../02-protocols-and-networking/10-datacenter-networking.md)).
-28. **Ethernet or InfiniBand?** Ethernet took more than two-thirds of AI back-end switch sales in 2025[^7]. Storage vendors that run well on standard Ethernet face fewer objections ([Ch 10](../02-protocols-and-networking/10-datacenter-networking.md)).
-29. **What is a DPU?** A network card with its own processors that can run storage software. NVIDIA's BlueField-4 STX design named 12 storage co-design partners, Everpure included[^8] ([Ch 34](../05-ai-storage/34-nvidia-ecosystem.md)).
+22. **Protocol.** The language servers and storage speak. Protocol support decides which buyers a product can reach ([Ch 7](../02-protocols-and-networking/07-block-protocols.md)).
+23. **NVMe.** The protocol built for flash, with thousands of parallel queues. It replaced SCSI as the speed standard ([Ch 7](../02-protocols-and-networking/07-block-protocols.md)).
+24. **NVMe over Fabrics.** NVMe across a network, so shared flash feels local. The TCP version on ordinary Ethernet is becoming the default ([Ch 7](../02-protocols-and-networking/07-block-protocols.md)).
+25. **NFS and pNFS.** NFS is Linux's file language; pNFS reads from many servers in parallel. FlashBlade//EXA uses it to avoid special client software ([Ch 8](../02-protocols-and-networking/08-file-protocols.md)).
+26. **S3.** Amazon's object interface, now the industry standard. AWS S3 holds over 500 trillion objects[^6], and most AI tools speak it ([Ch 9](../02-protocols-and-networking/09-object-storage-and-s3.md)).
+27. **RDMA.** Network cards copying memory directly between machines, skipping the CPU. It is how storage keeps GPUs fed ([Ch 10](../02-protocols-and-networking/10-datacenter-networking.md)).
+28. **Ethernet vs InfiniBand.** Ethernet took over two-thirds of AI back-end switch sales in 2025[^7], favouring vendors built on standard networks ([Ch 10](../02-protocols-and-networking/10-datacenter-networking.md)).
+29. **DPU.** A network card with processors that run storage software. NVIDIA's BlueField-4 STX named 12 storage partners, Everpure included[^8] ([Ch 34](../05-ai-storage/34-nvidia-ecosystem.md)).
 
 ### AI and storage
 
-30. **Why does storage matter for AI?** GPUs are the expensive asset; storage's job is keeping them busy. At $2–6 per GPU-hour[^9][^10], a 1,024-GPU cluster waiting on data burns about $0.57–1.75 every second ([Ch 11](../02-protocols-and-networking/11-gpu-data-path.md)).
-31. **Is "AI storage" one market?** No: at least eight workloads, from cheap bulk ingest to latency-critical inference. Ask any vendor which stage they actually win ([Ch 30](../05-ai-storage/30-ai-data-pipeline.md)).
-32. **What is a checkpoint?** Saving the game during training. A 405B-parameter model's full state is about 6.5 TB, so saving it in a minute needs ~108 GB/s ([Ch 31](../05-ai-storage/31-training-storage.md)).
-33. **Why checkpoint so often?** Big clusters fail constantly: Meta's Llama 3 run had 419 unexpected interruptions in 54 days[^11]. Faster saves and restores mean less wasted GPU time ([Ch 31](../05-ai-storage/31-training-storage.md)).
-34. **What is GPUDirect Storage?** Data moving straight into GPU memory, bypassing the CPU. It is table stakes: nearly every vendor claims it, so it no longer differentiates ([Ch 11](../02-protocols-and-networking/11-gpu-data-path.md)).
-35. **What is the KV cache?** The AI's short-term memory of a conversation. One long session on a 70B-class model needs about 43 GB[^12], so fleets of retained sessions reach petabytes ([Ch 32](../05-ai-storage/32-inference-and-kv-cache.md)).
-36. **What is context memory?** A new flash tier between GPU memory and shared storage, standardised by NVIDIA in 2026. Every storage vendor wants to be its backend; it is inference's biggest new storage opportunity ([Ch 53](../07-history-and-future/53-future-trends.md)).
-37. **What is RAG?** Letting an AI look up company documents before answering. It turns storage into a search and governance problem, where catalogs and databases also compete ([Ch 33](../05-ai-storage/33-rag-vector-lakehouse.md)).
-38. **What do AI agents need from storage?** Data they can find, understand and are permitted to use. MCP, the agent tool standard, passed 10,000 servers[^13], making metadata a product ([Ch 39](../05-ai-storage/39-agentic-ai-and-data-intelligence.md)).
-39. **What is NVIDIA certification?** NVIDIA's approved-vendor list for AI storage. Missing from it usually means missing from the deal, but it proves a floor, not a ranking ([Ch 34](../05-ai-storage/34-nvidia-ecosystem.md)).
-40. **What is a neocloud?** A GPU-specialist cloud such as CoreWeave, which guides 2026 capex to $35–39B[^14]. Storage is about 1% of that spend but can idle every GPU, so reliability beats price ([Ch 35](../05-ai-storage/35-ai-factories-and-neoclouds.md)).
-41. **What is MLPerf Storage?** A peer-reviewed benchmark using simulated GPUs. FlashBlade//EXA led v3.0 checkpointing at 877.5 GiB/s[^15], but VAST, WEKA and DDN did not enter[^16] ([Ch 37](../05-ai-storage/37-reading-benchmarks.md)).
+30. **Storage for AI.** Its job is keeping expensive GPUs busy. At $2–6 per GPU-hour[^9][^10], an idle 1,024-GPU cluster burns ~$0.57–1.75 a second ([Ch 11](../02-protocols-and-networking/11-gpu-data-path.md)).
+31. **"AI storage."** At least eight workloads, from bulk ingest to inference. Ask vendors which stage they actually win ([Ch 30](../05-ai-storage/30-ai-data-pipeline.md)).
+32. **Checkpoint.** Saving the game during training. A 405B-parameter model's state is ~6.5 TB; saving it in a minute needs ~108 GB/s ([Ch 31](../05-ai-storage/31-training-storage.md)).
+33. **Failure rate.** Meta's Llama 3 run had 419 unexpected interruptions in 54 days[^11], so save and restore speed is GPU money ([Ch 31](../05-ai-storage/31-training-storage.md)).
+34. **GPUDirect Storage.** Data straight into GPU memory, bypassing the CPU. Nearly everyone claims it, so it no longer differentiates ([Ch 11](../02-protocols-and-networking/11-gpu-data-path.md)).
+35. **KV cache.** The AI's short-term memory of a conversation: ~43 GB per long session on a 70B model[^12]. Fleets of sessions reach petabytes ([Ch 32](../05-ai-storage/32-inference-and-kv-cache.md)).
+36. **Context memory.** NVIDIA's new flash tier between GPU memory and shared storage. Every storage vendor wants to be its backend ([Ch 53](../07-history-and-future/53-future-trends.md)).
+37. **RAG.** An AI looking up company documents before answering. Storage becomes search and governance, where databases also compete ([Ch 33](../05-ai-storage/33-rag-vector-lakehouse.md)).
+38. **Agents and MCP.** Agents need data they can find and may use. MCP passed 10,000 servers[^13], turning metadata into a product ([Ch 39](../05-ai-storage/39-agentic-ai-and-data-intelligence.md)).
+39. **NVIDIA certification.** NVIDIA's approved-vendor list. Absence usually means no deal, but it proves a floor, not a ranking ([Ch 34](../05-ai-storage/34-nvidia-ecosystem.md)).
+40. **Neocloud.** A GPU-specialist cloud; CoreWeave guides 2026 capex to $35–39B[^14]. Storage is ~1% of that spend yet can idle every GPU ([Ch 35](../05-ai-storage/35-ai-factories-and-neoclouds.md)).
+41. **MLPerf Storage.** A peer-reviewed benchmark with simulated GPUs. EXA led v3.0 checkpointing at 877.5 GiB/s[^15]; VAST, WEKA and DDN skipped it[^16] ([Ch 37](../05-ai-storage/37-reading-benchmarks.md)).
 
 ### Everpure's model
 
-42. **What does Everpure sell?** FlashArray for block storage behind databases and VMs, FlashBlade for file and object at scale. Both run Purity and Everpure's own flash modules ([Ch 27](../04-everpure/27-flasharray-and-flashblade.md)).
-43. **What is Purity?** The operating system on every Everpure array. It writes like a database log, which makes cheap flash last and lets one codebase serve the whole portfolio ([Ch 26](../04-everpure/26-purity-and-directflash.md)).
-44. **What is DirectFlash?** Raw flash modules managed by Purity, without each SSD's own controller. Modules reach 300 TB[^17] against 245.76 TB for the largest standard SSD[^18] ([Ch 26](../04-everpure/26-purity-and-directflash.md)).
-45. **What is Evergreen?** Subscribing to an architecture: controllers and media refresh in place, with no data migration. Over 10,000 such upgrades had been done by 2022[^19], which is why customers rarely leave ([Ch 23](../03-system-architecture/23-consumption-models.md)).
-46. **What is Evergreen//One?** Storage on a utility bill: Everpure owns the hardware and charges for use against service levels. It lowers reported growth today while raising contracted future revenue ([Ch 23](../03-system-architecture/23-consumption-models.md)).
-47. **What are ARR and RPO here?** Subscription ARR was $2.13B (+20%) and RPO $4.1B (+44%) at Q2 FY27[^20]. They measure the recurring base the hardware story is built on ([Ch 29](../04-everpure/29-hyperscaler-ecosystem-financials.md)).
-48. **What is the hyperscaler deal?** Everpure licenses DirectFlash design to hyperscalers, who buy their own flash. Meta passed 2 EB in FY26[^21]; a second top-five hyperscaler signed in August 2026[^17] ([Ch 29](../04-everpure/29-hyperscaler-ecosystem-financials.md)).
-49. **What is FlashBlade//EXA?** Everpure's AI-scale system: Purity runs the metadata, third-party servers hold the data, and clients use standard pNFS. It answers VAST and WEKA without proprietary client software ([Ch 27](../04-everpure/27-flasharray-and-flashblade.md)).
-50. **What are Pure1 and Fusion?** Fleet analytics and a policy engine that manage arrays as one pool. Fusion passed 1,200 customers[^22], moving switching costs from hardware into software ([Ch 28](../04-everpure/28-platform-and-software.md)).
-51. **Why Portworx and 1touch?** Portworx extends storage to Kubernetes; 1touch, bought for $125.0M[^23], classifies what data contains. Both bet storage owners can sell software above the array ([Ch 28](../04-everpure/28-platform-and-software.md)).
-52. **What is squeezing margins?** Flash prices. Non-GAAP product gross margin was 66.2% against 74.9% for subscriptions in Q2 FY27[^24], and NAND stockpiling turned free cash flow to −$238M[^25] ([Ch 29](../04-everpure/29-hyperscaler-ecosystem-financials.md)).
-53. **Why the rename to Everpure?** A bid to be valued as a data platform, not an array maker. Revenue is still mostly arrays and attached subscriptions, so it is a claim to prove ([Ch 25](../04-everpure/25-company-history-and-strategy.md)).
+42. **FlashArray and FlashBlade.** Block storage for databases and VMs; file and object at scale. Both run Purity on Everpure's own flash ([Ch 27](../04-everpure/27-flasharray-and-flashblade.md)).
+43. **Purity.** Everpure's storage operating system. It writes like a database log, which makes cheap flash last ([Ch 26](../04-everpure/26-purity-and-directflash.md)).
+44. **DirectFlash.** Raw flash modules run by Purity, with no per-SSD controller. Modules reach 300 TB[^17] versus 245.76 TB for standard SSDs[^18] ([Ch 26](../04-everpure/26-purity-and-directflash.md)).
+45. **Evergreen.** Subscribing to an architecture: hardware refreshes in place without migration. Over 10,000 such upgrades by 2022[^19] explain the stickiness ([Ch 23](../03-system-architecture/23-consumption-models.md)).
+46. **Evergreen//One.** Storage on a utility bill; Everpure owns the hardware. It lowers reported growth while raising contracted revenue ([Ch 23](../03-system-architecture/23-consumption-models.md)).
+47. **ARR and RPO.** Subscription ARR $2.13B (+20%) and RPO $4.1B (+44%) at Q2 FY27[^20]: the recurring base under the hardware ([Ch 29](../04-everpure/29-hyperscaler-ecosystem-financials.md)).
+48. **Hyperscaler licensing.** Hyperscalers license DirectFlash and buy their own NAND. Meta passed 2 EB in FY26[^21]; a second signed in August 2026[^17] ([Ch 29](../04-everpure/29-hyperscaler-ecosystem-financials.md)).
+49. **FlashBlade//EXA.** Purity runs metadata, third-party servers hold data, clients use standard pNFS: Everpure's AI-scale answer to VAST and WEKA ([Ch 27](../04-everpure/27-flasharray-and-flashblade.md)).
+50. **Pure1 and Fusion.** Fleet analytics and policy control. Fusion passed 1,200 customers[^22], moving switching costs into software ([Ch 28](../04-everpure/28-platform-and-software.md)).
+51. **Portworx and 1touch.** Kubernetes storage, and data classification bought for $125.0M[^23]. Both bet on selling software above the array ([Ch 28](../04-everpure/28-platform-and-software.md)).
+52. **Margin squeeze.** Q2 FY27 non-GAAP product margin was 66.2% versus 74.9% for subscription[^24]; NAND stockpiling made free cash flow −$238M[^25] ([Ch 29](../04-everpure/29-hyperscaler-ecosystem-financials.md)).
+53. **The rename.** "Everpure" bids for a data-platform valuation. Revenue is still mostly arrays and subscriptions, so the claim must be proven ([Ch 25](../04-everpure/25-company-history-and-strategy.md)).
 
 ### Competition
 
-54. **Who has share?** In 2Q26, Dell held 23.8%, Huawei 11.3%, NetApp 9.6%, Everpure 8.1% and HPE 6.8% of external storage[^26]. Share moves slowly; one point is a big year ([Ch 40](../06-industry-and-competition/40-market-structure.md)).
-55. **Why are incumbents dangerous?** Dell, NetApp and HPE win on installed base, channel and bundling storage into server and network orders. Their weakness is many operating systems built for the pre-AI era ([Ch 46](../06-industry-and-competition/46-incumbents.md)).
-56. **Who is VAST?** The AI-native leader, valued at $30B in April 2026[^27] on more than $500M of committed ARR (company-stated)[^28]. Its $1.17B CoreWeave deal[^29] is the market's anchor contract ([Ch 42](../06-industry-and-competition/42-vast-data.md)).
-57. **Who is WEKA?** Software-only parallel file system on any hardware or cloud, last valued at $1.6B in 2024[^30]. It led KV-cache products, but is far smaller than its noise ([Ch 43](../06-industry-and-competition/43-weka.md)).
-58. **Who is DDN?** The 28-year-old Lustre incumbent inside NVIDIA's own supercomputers. Blackstone invested at a $5B valuation in 2025[^31] ([Ch 44](../06-industry-and-competition/44-ddn.md)).
-59. **Why do hyperscalers build?** At their volume, owning software beats buying arrays. They buy parts and IP instead, the seam where Everpure's licensing fits ([Ch 36](../05-ai-storage/36-hyperscaler-ai-storage.md)).
-60. **Who is Hammerspace?** A software namespace sitting above everyone's arrays. If it wins, arrays look interchangeable, so it is the commoditisation risk to watch ([Ch 47](../06-industry-and-competition/47-other-challengers.md)).
+54. **Market share.** In 2Q26: Dell 23.8%, Huawei 11.3%, NetApp 9.6%, Everpure 8.1%, HPE 6.8%[^26]. One share point is a big year ([Ch 40](../06-industry-and-competition/40-market-structure.md)).
+55. **Incumbents.** Dell, NetApp and HPE win on installed base, channel and server bundles. Their weakness is pre-AI software estates ([Ch 46](../06-industry-and-competition/46-incumbents.md)).
+56. **VAST.** The AI-native leader, valued at $30B[^27] on over $500M committed ARR (company-stated)[^28]. Its $1.17B CoreWeave deal[^29] anchors the segment ([Ch 42](../06-industry-and-competition/42-vast-data.md)).
+57. **WEKA.** Software-only parallel file system, last valued at $1.6B in 2024[^30]. Early in KV cache, smaller than its profile ([Ch 43](../06-industry-and-competition/43-weka.md)).
+58. **DDN.** The Lustre incumbent inside NVIDIA's own supercomputers; Blackstone invested at a $5B valuation[^31] ([Ch 44](../06-industry-and-competition/44-ddn.md)).
+59. **Hyperscaler self-build.** At their volume, owning the software beats buying arrays. They buy parts and IP, which is Everpure's licensing seam ([Ch 36](../05-ai-storage/36-hyperscaler-ai-storage.md)).
+60. **Hammerspace.** A namespace layer above everyone's arrays. If it wins, arrays look interchangeable ([Ch 47](../06-industry-and-competition/47-other-challengers.md)).
 
 ### Market and financial dynamics
 
-61. **How big is the market?** IDC's external enterprise storage market was $33.0B in 2025[^32], counting branded arrays only; hyperscaler self-builds sit outside it ([Ch 40](../06-industry-and-competition/40-market-structure.md)).
-62. **Why is everyone growing 30%+?** Mostly price. The market grew 33.6% in 2Q26[^33] as flash costs passed through, while customers bought less capacity ([Ch 40](../06-industry-and-competition/40-market-structure.md)).
-63. **How big is AI storage?** No credible public figure exists. Storage is 2.4% of IDC's AI infrastructure spend[^34]; the atlas triangulates roughly $9–25B for 2026 ([Ch 40](../06-industry-and-competition/40-market-structure.md)).
-64. **Will disk die, and where does value go next?** Not this decade: disk makers target 100 TB drives by 2029[^35]. Value is moving up into data services and down into the network, away from the box ([Ch 53](../07-history-and-future/53-future-trends.md)).
+61. **Market size.** IDC's external storage market was $33.0B in 2025[^32], branded arrays only; hyperscaler self-builds sit outside ([Ch 40](../06-industry-and-competition/40-market-structure.md)).
+62. **Price-led growth.** The market grew 33.6% in 2Q26[^33], mostly flash costs passing through, not more capacity ([Ch 40](../06-industry-and-competition/40-market-structure.md)).
+63. **AI storage TAM.** No credible public figure exists. Storage is 2.4% of IDC's AI infrastructure spend[^34]; the atlas estimates ~$9–25B for 2026 ([Ch 40](../06-industry-and-competition/40-market-structure.md)).
+
+### Future
+
+64. **Bigger drives.** 512 TB SSDs are on 2027 roadmaps[^35]. Rebuild time, watts and NAND supply become the limits, not slots ([Ch 53](../07-history-and-future/53-future-trends.md)).
+65. **Disk's future.** Not dying: Western Digital targets 100 TB drives by 2029[^36]. Disk keeps cold bulk; flash takes hot data ([Ch 53](../07-history-and-future/53-future-trends.md)).
+66. **Where value moves.** Up into data services and down into the network, away from the box. Software and metadata are the sticky layers ([Ch 53](../07-history-and-future/53-future-trends.md)).
 
 ### Translating jargon
 
 | Jargon | Board language | Why a director cares |
 |---|---|---|
-| IOPS, latency | How many small requests per second, and how long the slowest ones wait | Database and application speed |
-| Throughput (GB/s) | How fast large files move | GPU utilization on a multi-million-dollar cluster |
+| IOPS, latency | Small requests per second, and how long the slowest wait | Database and application speed |
+| Throughput (GB/s) | How fast large files move | Utilization of a multi-million-dollar GPU cluster |
 | Data reduction ratio | Customer terabytes stored per terabyte bought | Effective price; guarantee risk |
 | Erasure coding | Insurance math against drive failure | Capacity overhead in the bill of materials |
-| Non-disruptive upgrade | Replacing the engine in flight | No migration projects, sticky customers |
+| Non-disruptive upgrade | Replacing the engine in flight | No migration projects; sticky customers |
 | Evergreen//One | Storage on a utility bill | Opex for the customer, ratable revenue for us |
 | DirectFlash | Our own SSD brain, written in software | Density, margin and licensable IP |
 | NVMe-oF | Shared flash that feels local | Pooling without a speed penalty |
@@ -180,36 +183,36 @@ flowchart LR
 
 ### Which one-liners answer which board question
 
-| Board question | Use one-liners | The answer in a sentence |
+| Board question | Chain these one-liners | The answer in a sentence |
 |---|---|---|
-| "Why are we growing ~38% if the market is mature?" | 4, 47, 54, 62 | Price pass-through plus share gain, on a recurring base |
-| "Is AI a real opportunity for us?" | 30, 31, 35, 36, 41, 63 | Yes, but storage is a small, gating slice of AI spend |
-| "Why would a hyperscaler license instead of build?" | 44, 48, 59 | They build software at scale but buy proven flash IP |
-| "How do we compare to VAST?" | 13, 49, 56, 41 | Similar architecture goal, different client and business model |
-| "What does the flash shortage do to us?" | 2, 3, 4, 52 | Revenue up, margins and cash down until prices catch up |
-| "Is disk dead?" | 1, 2, 8, 64 | No; flash wins hot and power-limited data, disk keeps cold bulk |
+| "Why are we growing ~38% in a mature market?" | 4, 47, 54, 62 | Price pass-through plus share gain, on a recurring base |
+| "Is AI a real opportunity for us?" | 30, 31, 35, 36, 63 | Yes, but storage is a small, gating slice of AI spend |
+| "Why would a hyperscaler license rather than build?" | 44, 48, 59 | They build software at scale but buy proven flash IP |
+| "How do we compare with VAST?" | 13, 41, 49, 56 | Similar goal, different client design and business model |
+| "What does the flash shortage do to us?" | 2, 3, 4, 52 | Revenue up; margin and cash down until prices catch up |
+| "Is disk dead?" | 1, 2, 8, 65 | No: flash takes hot and power-capped data, disk keeps cold bulk |
 | "Why does the subscription matter?" | 20, 45, 46, 47 | Upgrades without migration make revenue recurring and customers sticky |
 | "What is our biggest competitive threat?" | 54, 55, 59, 60 | Dell's bundling today; commoditisation by software layers tomorrow |
 
-*Figure 58.5 — Eight recurring board questions each need three or four one-liners chained in order.*
+*Figure 58.4 — Eight recurring board questions each need three to five one-liners chained in order.*
 
 ## How Everpure approaches it vs. competitors
 
-Board members often ask "why us and not them?" Give a fair answer that steelmans the rival.
+When a director asks "why us and not them?", steelman the rival first.
 
 | Rival | Their 30-second pitch | Everpure's 30-second counter | Honest caveat |
 |---|---|---|---|
 | Dell | One vendor for servers, network and storage | One OS and Evergreen versus a portfolio of many | Bundling wins procurement |
 | NetApp | Unified file and block, deep installed base | Simpler operations, denser flash | ONTAP's file features are mature |
-| VAST | AI-native platform at neocloud scale | Standard pNFS client, DirectFlash density, public financials | VAST owns the anchor neocloud deals |
-| WEKA | Software anywhere, KV-cache first | Integrated hardware, MLPerf results | WEKA runs where Everpure hardware cannot |
-| Hyperscalers | Build it yourself at cost | License our flash design instead | They can switch to commodity drives |
+| VAST | AI-native platform at neocloud scale | Standard pNFS client, DirectFlash density, public financials | VAST holds the anchor neocloud deals |
+| WEKA | Software anywhere, KV cache first | Integrated hardware, MLPerf results | WEKA runs where Everpure hardware cannot |
+| Hyperscalers | Build it ourselves at cost | License our flash design instead | They can switch to commodity drives |
 
-*Figure 58.4 — Each rival's best argument is commercial or architectural; Everpure's counters rest on integration and the subscription model.*
+*Figure 58.5 — Each rival's best argument is commercial or architectural; Everpure's counters rest on integration and the subscription model.*
 
 ## History and trajectory
 
-The 30-second Everpure story has changed three times. Pure Storage IPO'd in October 2015[^36] on "flash at disk-like prices through data reduction." The second version was the subscription: Evergreen made upgrades a service. The third, from Meta's December 2024 licensing win[^37] to the 2026 rename, adds hyperscaler IP and data management. Each version sits on the previous one, so a good answer still begins with Purity and DirectFlash.
+The Everpure elevator pitch has had three versions. Pure Storage IPO'd in October 2015[^37] on flash at disk-like effective prices. Next came the subscription: Evergreen made upgrades a service. The third, from Meta's December 2024 licensing win[^38] to the 2026 rename, adds hyperscaler IP and data management. Each layer rests on the last, so good answers still start with Purity and DirectFlash.
 
 ## Numbers that matter
 
@@ -222,36 +225,36 @@ The 30-second Everpure story has changed three times. Pure Storage IPO'd in Octo
 | Non-GAAP gross margin, product vs subscription | 66.2% vs 74.9% | Q2 FY27; NAND squeeze | Investing.com, 2026-08[^24] |
 | Enterprise SSD ÷ nearline HDD $/TB | ~18.6× (~10× in 2020) | Why flash sells on power and density | Hardware Busters, 2026[^1] |
 | VAST valuation vs committed ARR | $30B vs >$500M | Company-stated; AI-native benchmark | CNBC, 2026-04[^27]; Futurum, 2026-04[^28] |
-| Storage share of AI infrastructure spend | 2.4% | 1Q26; storage is small but gates GPUs | IDC, 2026-07-21[^34] |
+| Storage share of AI infrastructure spend | 2.4% | 1Q26; small, but gates GPUs | IDC, 2026-07-21[^34] |
 
 ## Conversation playbook
 
 **Three questions for a PM**
 
-1. *"How would you explain your product to our CFO in one sentence?"* Strong answer: a buyer, a problem and a number, such as "FlashBlade//EXA keeps large GPU clusters fed using standard Linux clients."
-2. *"Which board question about your product worries you most?"* Strong answer: names a real gap, such as certification timing or a missing anchor customer.
-3. *"Which number would you put on one slide?"* Strong answer: a customer-outcome metric, not a peak benchmark.
+1. *"How would you explain your product to our CFO in one sentence?"* Strong: a buyer, a problem and a number.
+2. *"Which board question about your product worries you most?"* Strong: names a real gap, such as certification timing.
+3. *"Which number belongs on one slide?"* Strong: a customer outcome, not a peak benchmark.
 
 **Three questions for an engineer**
 
-1. *"What would a skeptical analyst get wrong about DirectFlash?"* Strong answer: separates real system-level gains from datasheet comparisons.
-2. *"Where does my 30-second version of disaggregation break?"* Strong answer: names the fabric and minimum-size limits.
-3. *"Is the KV-cache opportunity storage, or memory?"* Strong answer: says only cache not being decoded can leave GPU memory.
+1. *"What would a skeptic get wrong about DirectFlash?"* Strong: separates system-level gains from datasheet comparisons.
+2. *"Where does my 30-second version of disaggregation break?"* Strong: names fabric and minimum-size limits.
+3. *"Is the KV-cache opportunity storage or memory?"* Strong: only cache not being decoded can leave GPU memory.
 
 **Don't say this:**
 
 - "Flash is cheaper than disk." Not per raw terabyte in 2026.
 - "We're #1 in MLPerf." Say first among those who entered.
-- "AI storage is a $50B market." No credible public figure supports it.
+- "AI storage is a $50B market." No credible public figure supports that.
 - "Evergreen means free upgrades." It is a paid subscription.
 
 ## Going deeper (optional, L3 pointers)
 
-Build longer answers from the [question bank](57-question-bank.md), test recall with the [flashcards](59-self-test-flashcards.md), and use the [cheat sheets](60-cheat-sheets.md) for acronyms.
+Extend answers with the [question bank](57-question-bank.md), drill with the [flashcards](59-self-test-flashcards.md), and keep the [cheat sheets](60-cheat-sheets.md) handy.
 
 ## Key terms
 
-- **One-liner** — a 30-second answer with one number.
+- **One-liner** — a 30-second answer with one sourced number.
 - **Board language** — jargon translated into cost, risk or revenue.
 - See the [glossary](../glossary.md) for every term above.
 
@@ -291,6 +294,7 @@ Build longer answers from the [question bank](57-question-bank.md), test recall 
 [^32]: IDC, "Worldwide External Enterprise Storage Systems Market Closed with a Solid 3.9% Year-over-Year Growth in Revenue," 2026-03-12. https://www.idc.com/resource-center/press-releases/worldwide-external-enterprise-storage-systems-market-closed-with-a-solid-3-9-year-over-year-growth-in-revenue-according-to-idc/ (retrieved 2026-11-01).
 [^33]: IDC, "2Q2026 ESS Tracker" press release, 2026-09-10. https://www.idc.com/resource-center/press-releases/2q2026-ess-tracker/ (retrieved 2026-11-01).
 [^34]: IDC, "AI Infrastructure Spending Holds Near $90 Billion in Q1 2026 as Arm Overtakes x86 in Accelerated Servers; 2026 Forecast Raised to $497 Billion," 2026-07-21. https://www.idc.com/resource-center/blog/ai-infrastructure-spending-holds-near-90-billion-in-q1-2026-as-arm-overtakes-x86-in-accelerated-servers-2026-forecast-raised-to-497-billion/ (retrieved 2026-11-01).
-[^35]: Western Digital, "Western Digital Accelerates Storage Innovation for AI Era," 2026-02-03. https://www.westerndigital.com/company/newsroom/press-releases/2026/2026-02-03-western-digital-accelerates-storage-innovation-for-ai-era (retrieved 2026-11-01).
-[^36]: Pure Storage / Business Wire, "Pure Storage Prices Initial Public Offering," 2015-10-06. https://investor.purestorage.com/news-and-events/press-releases/press-release-details/2015/Pure-Storage-Prices-Initial-Public-Offering/default.aspx (retrieved 2026-11-01).
-[^37]: SiliconANGLE, "Shares of Pure Storage jump on impressive earnings beat and strong guidance," 2024-12-03. https://siliconangle.com/2024/12/03/shares-pure-storage-jump-impressive-earnings-beat-strong-guidance/ (retrieved 2026-11-01).
+[^35]: Blocks & Files, "Sandisk unveils 256 TB SSD for AI workloads, shipping in 2026," 2025-08-05. https://www.blocksandfiles.com/ai-ml/2025/08/05/sandisk-unveils-256-tb-ssd-for-ai-workloads-shipping-in-2026/1589534 (retrieved 2026-11-01).
+[^36]: Western Digital, "Western Digital Accelerates Storage Innovation for AI Era," 2026-02-03. https://www.westerndigital.com/company/newsroom/press-releases/2026/2026-02-03-western-digital-accelerates-storage-innovation-for-ai-era (retrieved 2026-11-01).
+[^37]: Pure Storage / Business Wire, "Pure Storage Prices Initial Public Offering," 2015-10-06. https://investor.purestorage.com/news-and-events/press-releases/press-release-details/2015/Pure-Storage-Prices-Initial-Public-Offering/default.aspx (retrieved 2026-11-01).
+[^38]: SiliconANGLE, "Shares of Pure Storage jump on impressive earnings beat and strong guidance," 2024-12-03. https://siliconangle.com/2024/12/03/shares-pure-storage-jump-impressive-earnings-beat-strong-guidance/ (retrieved 2026-11-01).

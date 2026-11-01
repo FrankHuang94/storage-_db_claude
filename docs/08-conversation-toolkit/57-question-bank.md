@@ -1,69 +1,63 @@
 # 57. Question bank: 150 questions
 
 > **Depth:** L2 · **Reading time:** ~10 min · **Last verified:** 2026-11-01
-> **Prerequisites:** [Talking with product managers](55-talking-with-pms.md) · [Talking with engineering leaders and the CTO office](56-talking-with-engineering-and-cto.md) · the Conversation playbook in any chapter
+> **Prerequisites:** [Talking with product managers](55-talking-with-pms.md) · [Talking with engineering leaders and the CTO office](56-talking-with-engineering-and-cto.md)
 
 ## TL;DR
 
-- **154 numbered questions across 14 topics, each tagged by audience.** They are harvested from the playbooks of Chapters 1–53 and the ASK lines in the open-questions staging files, then cut down and sharpened.
-- **Bring five to seven questions to a meeting, not thirty.** Pick one audience and one goal, then use the flowchart below.
-- **A strong answer has a number, its conditions and its baseline.** The 40 "Listen for" notes show what that looks like for the questions that matter most.
-- **The questions that tell vendors apart** are DirectFlash versus FDP, EXA versus shared media, pNFS versus a proprietary client, and where Everpure sits relative to NVIDIA's context-memory tier.
-- **These are internal questions for Everpure colleagues.** Many ask for telemetry or win/loss data that is not public. Ask them as a new insider; never use them to fish for competitors' non-public data.
+- **150 questions in 14 topics, each tagged by audience,** distilled from every chapter's playbook and the staged ASK lines.
+- **Bring five to seven to a meeting:** one audience, one goal (Figure 57.4).
+- **Strong answers carry a number, its conditions and its baseline.** Forty "Listen for" notes show what to expect.
+- **Differentiating questions** sit on DirectFlash versus FDP, EXA versus shared media, and NVIDIA's context tier.
+- **These are for colleagues.** Many ask for internal telemetry; never use them to fish for competitors' non-public data.
 
 ## Why this matters for Everpure strategy
 
-In the first 90 days, a strategy hire's credibility rests on the questions they ask more than on the answers they give. "How fast is rebuild?" marks a tourist. "What is time to full redundancy at 80% fill, under production load, and what does the host see?" tells an engineer you know where systems break. It also produces an answer you can put in a model.
-
-The bank also serves as a diligence scaffold. The same questions that test Everpure's own position apply to an acquisition target or partner ([Chapter 50](../06-industry-and-competition/50-diligence-framework.md)): swap "Purity" for the target's software and most still cut.
+A new strategy hire is judged by the questions they ask. "How fast is rebuild?" marks a tourist; "time to full redundancy at 80% fill, under load?" earns an engineer's respect and a number for the model. Most questions also transfer to diligence on a target ([Chapter 50](../06-industry-and-competition/50-diligence-framework.md)).
 
 ## Core concepts
 
-### How the bank is built
+### Tags and coverage
 
-Each question starts with an audience tag. A tag names who can answer best, not the only person you may ask.
+| Tag | Audience | Ask them about | Avoid asking them |
+|---|---|---|---|
+| `[PM]` | Product manager | Win/loss, buyers, pricing, roadmap gates | Code paths |
+| `[Eng]` | Engineering leader or architect | Mechanisms, limits, failure behaviour | List pricing |
+| `[CTO]` | Office of the CTO | Multi-year bets, standards, build/partner/buy | Quarterly pipeline |
+| `[SE]` | Sales engineer or field CTO | Sizing, bake-offs, objections | Corporate strategy |
 
-| Tag | Audience | Typical owner | Ask them about | Avoid asking them |
-|---|---|---|---|---|
-| `[PM]` | Product manager | Product line or product marketing | Win/loss, buyers, pricing, roadmap gates, telemetry | Code paths |
-| `[Eng]` | Engineering leader or architect | Purity, FlashBlade, DirectFlash teams | Mechanisms, limits, failure behaviour, measured numbers | List pricing |
-| `[CTO]` | Office of the CTO | CTO staff, chief architects | Multi-year bets, standards, build/partner/buy | Quarter-level pipeline |
-| `[SE]` | Sales engineer / field CTO | Pre-sales, POC teams | Sizing, bake-offs, objections, deployment friction | Corporate strategy |
-
-*Figure 57.1 — The tag tells you who holds the evidence; a PM question asked of an engineer usually gets an opinion, not data.*
-
-### Coverage
+*Figure 57.1 — The tag names who holds the evidence; ask a PM question of an engineer and you get opinion, not data.*
 
 | Topic | PM | Eng | CTO | SE | Total |
 |---|---|---|---|---|---|
-| 1. Media & NAND | 3 | 4 | 2 | 1 | 10 |
-| 2. SSD / DirectFlash | 3 | 6 | 2 | 1 | 12 |
-| 3. Protocols & networking | 3 | 5 | 1 | 3 | 12 |
-| 4. Architecture | 3 | 6 | 1 | 2 | 12 |
-| 5. Data services & protection | 2 | 6 | 1 | 1 | 10 |
-| 6. Everpure products | 4 | 4 | 2 | 2 | 12 |
-| 7. Platform, Evergreen & consumption | 4 | 3 | 2 | 1 | 10 |
-| 8. AI training & checkpointing | 2 | 5 | 1 | 2 | 10 |
-| 9. Inference & KV cache | 3 | 5 | 1 | 1 | 10 |
-| 10. RAG & data intelligence | 4 | 4 | 2 | 0 | 10 |
-| 11. NVIDIA & ecosystem | 3 | 1 | 3 | 3 | 10 |
-| 12. Competition | 7 | 3 | 1 | 5 | 16 |
-| 13. Market & financials | 8 | 0 | 2 | 0 | 10 |
-| 14. Future & strategy | 2 | 1 | 7 | 0 | 10 |
-| **Total** | **51** | **53** | **28** | **22** | **154** |
+| 1. Media and NAND | 3 | 4 | 2 | 1 | 10 |
+| 2. SSD and DirectFlash | 3 | 5 | 2 | 1 | 11 |
+| 3. Protocols and networking | 4 | 5 | 1 | 2 | 12 |
+| 4. Architecture | 3 | 7 | 1 | 1 | 12 |
+| 5. Data services and protection | 2 | 6 | 1 | 1 | 10 |
+| 6. Everpure products | 5 | 3 | 2 | 2 | 12 |
+| 7. Platform, Evergreen and consumption | 4 | 3 | 2 | 1 | 10 |
+| 8. AI training and checkpointing | 2 | 4 | 1 | 2 | 9 |
+| 9. Inference and KV cache | 3 | 5 | 1 | 1 | 10 |
+| 10. RAG and data intelligence | 4 | 4 | 2 | 0 | 10 |
+| 11. NVIDIA and ecosystem | 3 | 1 | 3 | 3 | 10 |
+| 12. Competition: VAST, WEKA, DDN and incumbents | 6 | 4 | 2 | 3 | 15 |
+| 13. Market and financials | 8 | 0 | 2 | 0 | 10 |
+| 14. Future and strategy | 2 | 1 | 6 | 0 | 9 |
+| **Total** | **52** | **52** | **28** | **18** | **150** |
 
-*Figure 57.2 — Engineers and PMs get most of the questions; CTO questions cluster in future and strategy, where multi-year bets are made.*
+*Figure 57.2 — Engineering and PM questions dominate; CTO questions cluster in future and strategy.*
 
 ```mermaid
 pie showData
     title Questions by audience
-    "PM" : 51
-    "Eng" : 53
+    "PM" : 52
+    "Eng" : 52
     "CTO" : 28
-    "SE" : 22
+    "SE" : 18
 ```
 
-*Figure 57.3 — The mix leans to PM and engineering because those are the meetings a strategy hire has most often.*
+*Figure 57.3 — The mix tracks the meetings a strategy hire attends most.*
 
 ### Picking questions for a meeting
 
@@ -74,325 +68,307 @@ flowchart TD
     A --> CT["CTO office"]
     A --> SE["Sales engineer"]
     PM --> G1["Goal: where we win and lose"]
-    G1 --> Q1["Q40, Q58, Q79, Q119, Q123, Q136, Q151"]
+    G1 --> Q1["Q39, Q57, Q78, Q117, Q121, Q133, Q148"]
     EN --> G2["Goal: limits and failure behaviour"]
-    G2 --> Q2["Q11, Q35, Q42, Q43, Q52, Q81, Q90"]
+    G2 --> Q2["Q11, Q34, Q41, Q42, Q51, Q80"]
     CT --> G3["Goal: multi-year bets"]
-    G3 --> Q3["Q12, Q93, Q105, Q112, Q131, Q147"]
+    G3 --> Q3["Q12, Q91, Q103, Q110, Q129, Q144"]
     SE --> G4["Goal: bake-off reality"]
-    G4 --> Q4["Q18, Q46, Q85, Q96, Q116, Q128, Q132"]
+    G4 --> Q4["Q18, Q45, Q83, Q94, Q114, Q126, Q130"]
 ```
 
-*Figure 57.4 — One audience, one goal, five to seven questions: depth on a few beats coverage of many.*
+*Figure 57.4 — Depth on six questions beats coverage of thirty.*
 
 ### The bank
-
-Questions are written in the first person plural, as an insider would ask them.
-
 #### 1. Media and NAND
 
-1. [PM] At today's flash-over-disk premium, which workloads still convert, and why?
-   ↳ *Listen for:* the binding constraint per segment (power, rack, rebuild) and a break-even premium ([Ch 52](../07-history-and-future/52-history-of-flash.md)).
-2. [PM] How much of the NAND price rise is passed through versus absorbed?
-3. [CTO] Does managing raw NAND let us adopt PLC before SSD-based rivals?
-4. [Eng] How do you handle read disturb on read-mostly AI datasets?
-5. [Eng] What does PLC cost the write path, and is the extra bit worth it?
-6. [Eng] How long does qualifying a new NAND die take, and what fails most?
-7. [CTO] Which components are single-sourced, and what did Optane teach us?
-8. [PM] How many quarters does the strategic NAND purchase cover, at what price?
-   ↳ *Listen for:* the prepaid-versus-inventory split and the contract-price assumption ([Ch 48](../06-industry-and-competition/48-media-suppliers-and-nand-cycle.md)).
-9. [SE] Where nearline disk was unavailable, did QLC win on availability or price?
-10. [Eng] How does a NAND layer jump change DFM cost per TB versus a commodity SSD?
-    ↳ *Listen for:* NAND $/bit (same for everyone) separated from controller, DRAM and over-provisioning savings ([Ch 48](../06-industry-and-competition/48-media-suppliers-and-nand-cycle.md)).
+1. [PM] At today's flash premium, which workloads still convert from disk?
+   ↳ *Listen for:* binding constraint per segment, break-even premium ([Ch 52](../07-history-and-future/52-history-of-flash.md)).
+2. [PM] How much NAND inflation is passed through versus absorbed?
+3. [CTO] Does owning raw NAND management let us adopt PLC first?
+4. [Eng] How do you manage read disturb on read-mostly AI data?
+5. [Eng] What does PLC cost the write path and endurance budget?
+6. [Eng] How long does qualifying a new NAND die take?
+7. [CTO] Which components are single-sourced, and what did Optane teach?
+8. [PM] How many quarters of demand does the strategic NAND buy cover?
+   ↳ *Listen for:* prepaid-versus-inventory split, contract-price assumption ([Ch 48](../06-industry-and-competition/48-media-suppliers-and-nand-cycle.md)).
+9. [SE] Where disk was unavailable, did QLC win on availability?
+10. [Eng] What does a layer jump do to DFM versus SSD cost per TB?
 
 #### 2. SSD and DirectFlash
 
-11. [Eng] What field write amplification does Purity see on QLC, by workload?
-    ↳ *Listen for:* measured ranges near 1, converted into DWPD headroom per module size ([Ch 3](../01-storage-fundamentals/03-inside-an-ssd.md)).
-12. [CTO] If FDP becomes standard on QLC SSDs, which DirectFlash advantages survive?
-    ↳ *Listen for:* conceding the narrower write-amplification gap, then quantifying DRAM avoided, pooled spare flash and W/TB ([Ch 26](../04-everpure/26-purity-and-directflash.md)).
-13. [Eng] Without module DRAM, where does the map live, and how does it scale per PB?
+11. [Eng] What field write amplification does Purity see on QLC?
+    ↳ *Listen for:* measured ranges by workload, converted to DWPD headroom ([Ch 3](../01-storage-fundamentals/03-inside-an-ssd.md)).
+12. [CTO] If FDP goes mainstream, which DirectFlash advantages survive?
+    ↳ *Listen for:* concedes the WAF gap; quantifies DRAM avoided, pooled spare, W/TB ([Ch 26](../04-everpure/26-purity-and-directflash.md)).
+13. [Eng] Without module DRAM, where does the map live, per PB?
 14. [PM] When 512 TB standard SSDs ship, what keeps DFMs ahead?
-    ↳ *Listen for:* a dated next module step and the system-level gap in TB/RU and W/TB ([Ch 26](../04-everpure/26-purity-and-directflash.md)).
-15. [Eng] How are LDPC read retries kept off the tail on aged QLC?
-16. [Eng] What is the blast radius of a DFM firmware or FTL bug?
-17. [PM] Why does FlashArray//ST use commercial SSDs, and when does DirectFlash win?
-18. [SE] How do we explain usable-per-raw-TB differences against an SSD-based array?
-    ↳ *Listen for:* drive over-provisioning, array reserve, parity and reduction separated ([Ch 3](../01-storage-fundamentals/03-inside-an-ssd.md)).
-19. [Eng] How much raw NAND per effective TB do we save, and from where?
+15. [Eng] How are LDPC read retries kept off the latency tail?
+16. [Eng] What is the blast radius of a DFM firmware bug?
+17. [PM] Why does FlashArray//ST use commercial SSDs?
+18. [SE] How do we explain usable-per-raw-TB against SSD-based arrays?
+    ↳ *Listen for:* over-provisioning, reserve, parity and reduction separated ([Ch 3](../01-storage-fundamentals/03-inside-an-ssd.md)).
+19. [Eng] How much raw NAND per effective TB do we save, and where?
 20. [CTO] Could a hyperscaler licensee internalise the global FTL?
-    ↳ *Listen for:* what keeps it dependent (updates, NAND qualification), and conceding that AWS built Nitro SSDs ([Ch 13](../03-system-architecture/13-storage-stack.md)).
-21. [PM] What limits the step to 600 TB modules: dies, packaging, power or rebuild?
-22. [Eng] What changes at 300 TB per module: rebuild time, blast radius, performance per TB?
+    ↳ *Listen for:* what keeps it dependent, and the AWS Nitro precedent ([Ch 13](../03-system-architecture/13-storage-stack.md)).
+21. [PM] What limits 600 TB modules: dies, packaging, power or rebuild?
 
 #### 3. Protocols and networking
 
-23. [PM] What is the FlashArray host-attach mix, and how fast is NVMe/TCP growing?
-24. [Eng] What is the NVMe/TCP versus NVMe/RoCE latency gap at QD1 and saturation?
-25. [Eng] What are our NVMe-oF connection limits with thousands of Kubernetes hosts?
-26. [PM] Why pNFS for EXA rather than a proprietary client, and what does it cost?
-    ↳ *Listen for:* no kernel module on GPU nodes, plus candour on shared-file writes and kernel versions ([Ch 8](../02-protocols-and-networking/08-file-protocols.md)).
-27. [SE] Which distros and kernels are validated for the EXA client?
-28. [Eng] A data node fails mid-write: what happens to the layout and in-flight I/O?
-29. [PM] Is S3 over RDMA generally available, on which models, and cuObject-compatible?
-30. [Eng] In S3 over RDMA, how are tokens scoped, and what replaces TLS?
-31. [SE] Do we require PFC for RoCE, and what happens on a lossy fabric?
-32. [Eng] How does a synchronized checkpoint burst behave at our storage ports?
-33. [PM] How often do we lose because the compute fabric is InfiniBand?
-34. [CTO] How would NFS, NVMe-oF and S3 over RDMA map onto Ultra Ethernet?
+22. [PM] What is the host-attach mix, and how fast is NVMe/TCP growing?
+23. [Eng] What is the NVMe/TCP versus RoCE gap at QD1 and saturation?
+24. [Eng] What are NVMe-oF connection limits with thousands of Kubernetes hosts?
+25. [PM] Why pNFS for EXA, and what does it cost us?
+    ↳ *Listen for:* no kernel module; candour on shared-file writes ([Ch 8](../02-protocols-and-networking/08-file-protocols.md)).
+26. [SE] Which distros and kernels does the EXA client support?
+27. [Eng] A data node fails mid-write: what happens to in-flight I/O?
+28. [PM] Is S3 over RDMA generally available, and cuObject-compatible?
+29. [Eng] In S3 over RDMA, how are tokens scoped without TLS?
+30. [SE] Do we require PFC for RoCE, and what if the fabric drops packets?
+31. [Eng] How do our storage ports absorb synchronized checkpoint incast?
+32. [PM] How often does an InfiniBand compute fabric cost us deals?
+33. [CTO] How would our RDMA protocols map onto Ultra Ethernet?
 
 #### 4. Architecture
 
-35. [Eng] Walk a 4 KB write: where is the persistence point, and each layer's p99?
-    ↳ *Listen for:* the NVRAM mirror point, per-layer microseconds, and which layer degrades first ([Ch 13](../03-system-architecture/13-storage-stack.md)).
-36. [PM] What does a customer lose while one controller is out during an Evergreen swap?
-37. [Eng] With Purity Turbo, how is the secondary's read cache kept coherent?
-38. [PM] When a block customer outgrows one //XL, what do we sell?
-39. [Eng] Is the next FlashArray ceiling CPU, memory bandwidth, PCIe or NVRAM?
-40. [PM] Where does EXA beat a shared-media design, and where does it lose?
-    ↳ *Listen for:* thresholds in throughput, GPU count and namespace size, with credit for VAST's strengths ([Ch 16](../03-system-architecture/16-disaggregated-shared-everything.md)).
-41. [Eng] Trace an EXA write: how many fabric crossings, landing in which failure domains?
-42. [Eng] An EXA data node dies at 80% full mid-checkpoint: what do clients see?
-    ↳ *Listen for:* the named protection scheme, degraded throughput as a percentage and rebuild time ([Ch 27](../04-everpure/27-flasharray-and-flashblade.md)).
-43. [Eng] What happens when 16,384 ranks create files in one directory at once?
-    ↳ *Listen for:* directory hashing, lock granularity, creates per second and p99 ([Ch 21](../03-system-architecture/21-metadata.md)).
-44. [CTO] Is the metadata/data split a permanent bet, or is a shared-media mode conceivable?
-45. [Eng] Which services run consensus, with how many voters, and what stalls without quorum?
-46. [SE] A neocloud says "we'll just run Ceph": what is our TCO counter?
-    ↳ *Listen for:* staff, rebuild windows, free-space reserve and watts per usable TB, not list price ([Ch 15](../03-system-architecture/15-scale-out-shared-nothing.md)).
+34. [Eng] Walk a 4 KB write: persistence point and per-layer p99?
+    ↳ *Listen for:* NVRAM mirror point, per-layer microseconds ([Ch 13](../03-system-architecture/13-storage-stack.md)).
+35. [PM] What does a customer lose during an Evergreen controller swap?
+36. [Eng] Under Purity Turbo, how does the secondary's read cache stay coherent?
+37. [PM] When a block customer outgrows one //XL, what do we sell?
+38. [Eng] Is the next FlashArray ceiling CPU, memory, PCIe or NVRAM?
+39. [PM] Where does EXA beat shared-media designs, and where not?
+    ↳ *Listen for:* throughput, GPU-count and namespace thresholds; credit to VAST ([Ch 16](../03-system-architecture/16-disaggregated-shared-everything.md)).
+40. [Eng] How many fabric crossings precede an EXA write acknowledgement?
+41. [Eng] An EXA data node dies mid-checkpoint: what do clients see?
+    ↳ *Listen for:* protection scheme, degraded-throughput percentage, rebuild time ([Ch 27](../04-everpure/27-flasharray-and-flashblade.md)).
+42. [Eng] 16,384 ranks create files in one directory: what happens?
+    ↳ *Listen for:* directory hashing, lock granularity, creates/s at p99 ([Ch 21](../03-system-architecture/21-metadata.md)).
+43. [CTO] Is the metadata/data split permanent, or could shared media return?
+44. [Eng] Which services run consensus, and what stalls without quorum?
+45. [SE] A neocloud says "we'll run Ceph": what's our TCO counter?
+    ↳ *Listen for:* staff, rebuild windows, free-space reserve, watts per usable TB ([Ch 15](../03-system-architecture/15-scale-out-shared-nothing.md)).
 
 #### 5. Data services and protection
 
-47. [PM] What are fleet median and 25th-percentile reduction ratios by workload?
-    ↳ *Listen for:* a distribution excluding thin provisioning and snapshots, with candour on AI data ([Ch 5](../01-storage-fundamentals/05-data-reduction.md)).
-48. [Eng] How big is the dedupe index per PB, and where does it live?
-49. [Eng] Under what load does inline reduction defer, and how fast does it catch up?
-50. [Eng] What is the read amplification of a random 4 KB read on similarity-encoded data?
-51. [SE] How does the Right-Size Guarantee treat datasets that barely reduce?
-52. [Eng] A large DFM fails outright: what is time to full redundancy at 80% fill under load?
-    ↳ *Listen for:* hours, host-visible impact, and whether rebuild is declustered ([Ch 6](../01-storage-fundamentals/06-data-protection-and-resilience.md)).
-53. [Eng] How does ActiveCluster behave if mediator and inter-site link fail together?
-54. [Eng] What stops a stolen-credential attacker from shortening SafeMode retention?
-    ↳ *Listen for:* out-of-band authentication, multiple approvers and an audit trail ([Ch 6](../01-storage-fundamentals/06-data-protection-and-resilience.md)).
-55. [PM] In a ransomware recovery, what fraction of the RTO is storage?
-56. [CTO] What is in the denominator of our six nines?
+46. [PM] What are fleet median reduction ratios by workload?
+    ↳ *Listen for:* distributions excluding thin provisioning; candour on AI data ([Ch 5](../01-storage-fundamentals/05-data-reduction.md)).
+47. [Eng] How big is the dedupe index per PB, and where?
+48. [Eng] When does inline reduction defer, and how fast does it catch up?
+49. [Eng] What read amplification does similarity encoding add?
+50. [SE] How does the Right-Size Guarantee treat irreducible data?
+51. [Eng] A large DFM dies at 80% fill: time to full redundancy?
+    ↳ *Listen for:* hours under load, host impact, declustered or not ([Ch 6](../01-storage-fundamentals/06-data-protection-and-resilience.md)).
+52. [Eng] What if ActiveCluster's mediator and link fail together?
+53. [Eng] What stops stolen credentials shortening SafeMode retention?
+    ↳ *Listen for:* out-of-band authentication, multiple approvers, audit trail ([Ch 6](../01-storage-fundamentals/06-data-protection-and-resilience.md)).
+54. [PM] In ransomware recovery, how much of the RTO is storage?
+55. [CTO] What is in the denominator of our six nines?
 
 #### 6. Everpure products
 
-57. [PM] Where does //ST win deals that //XL190 with Purity Turbo would lose?
-58. [PM] What share of EXA pipeline waits on DFM data nodes or NCP certification?
-    ↳ *Listen for:* enterprise and neocloud split, with the gating requirement and a date for each ([Ch 27](../04-everpure/27-flasharray-and-flashblade.md)).
-59. [Eng] How are EXA data nodes protected today: HA pairs or erasure coding?
-60. [SE] Which competitor shows up against FlashBlade//E, and on what metric do we lose?
-61. [PM] For VMs moving to KubeVirt, where does Portworx win?
-62. [Eng] When Portworx runs on non-Everpure disks, what do customers lose?
-63. [PM] Is Fusion adoption counted as enabled, or as presets in production?
-    ↳ *Listen for:* "turned on" separated from "automating against it", tied to renewal ([Ch 28](../04-everpure/28-platform-and-software.md)).
-64. [Eng] How does Fusion choose an array for a new workload?
-65. [SE] If Pure1 and Fusion are both unreachable, what still works?
-66. [CTO] What may an agent do through the MCP server without human approval?
-    ↳ *Listen for:* read-only defaults, scoped credentials, approval gates and immutable snapshots underneath ([Ch 22](../03-system-architecture/22-control-planes.md)).
-67. [PM] What share of Sev-1 cases does Pure1 open before the customer notices?
-68. [CTO] Which Purity code came from acquisitions, and how much was rewritten?
+56. [PM] Where does //ST win deals that //XL190 would lose?
+57. [PM] What share of EXA pipeline awaits DFM nodes or certification?
+    ↳ *Listen for:* enterprise and neocloud gates, each with a date ([Ch 27](../04-everpure/27-flasharray-and-flashblade.md)).
+58. [Eng] How are EXA data nodes protected today?
+59. [SE] Who beats FlashBlade//E, and on what metric?
+60. [PM] For VMs moving to KubeVirt, where does Portworx win?
+61. [Eng] What does Portworx lose on non-Everpure disks?
+62. [PM] Is Fusion adoption "enabled" or "presets in production"?
+    ↳ *Listen for:* turned-on versus automating, tied to renewal ([Ch 28](../04-everpure/28-platform-and-software.md)).
+63. [Eng] How does Fusion pick an array for a workload?
+64. [SE] If Pure1 and Fusion are unreachable, what still works?
+65. [CTO] What may an agent do via MCP without human approval?
+    ↳ *Listen for:* read-only defaults, scoped credentials, approval gates ([Ch 22](../03-system-architecture/22-control-planes.md)).
+66. [PM] What share of Sev-1 cases does Pure1 open first?
+67. [CTO] Which Purity code came from acquisitions, and how much was rewritten?
 
 #### 7. Platform, Evergreen and consumption
 
-69. [PM] What is Evergreen//One gross margin by contract year?
-    ↳ *Listen for:* a curve with early hardware drag, later payback, and the utilization assumption ([Ch 23](../03-system-architecture/23-consumption-models.md)).
-70. [PM] How much headroom above commitment do we deploy, and who pays when it idles?
-71. [CTO] What happens to //One margin when reduction falls short of the assumed ratio?
-72. [PM] How is capacity growth inside existing //One contracts priced after NAND inflation?
-    ↳ *Listen for:* the exposure, then offsets: renewal repricing, density and reduction ([Ch 48](../06-industry-and-competition/48-media-suppliers-and-nand-cycle.md)).
-73. [PM] Why do customers choose Evergreen//Forever over //One?
-74. [Eng] What breaks a non-disruptive upgrade at a generation boundary?
-75. [Eng] Is consumption metered on provisioned, written or effective capacity?
-76. [SE] Which //One SLAs need phone-home telemetry, and what happens at dark sites?
-77. [Eng] Is the watts-per-TiB guarantee measured at the wall or modelled?
-    ↳ *Listen for:* the measurement method, the reduction basis and the incompressible case ([Ch 38](../05-ai-storage/38-power-and-density.md)).
-78. [CTO] How does subscription reweight the roadmap between density, watts and peak speed?
+68. [PM] What is Evergreen//One gross margin by contract year?
+    ↳ *Listen for:* early hardware drag, later payback, utilization assumption ([Ch 23](../03-system-architecture/23-consumption-models.md)).
+69. [PM] How much deployed headroom sits idle, at whose cost?
+70. [CTO] What happens to //One margin when reduction underdelivers?
+71. [PM] How is //One capacity growth priced after NAND inflation?
+    ↳ *Listen for:* exposure first, then repricing and density offsets ([Ch 48](../06-industry-and-competition/48-media-suppliers-and-nand-cycle.md)).
+72. [PM] Why do customers pick Evergreen//Forever over //One?
+73. [Eng] What breaks non-disruptive upgrades at generation boundaries?
+74. [Eng] Is consumption metered on provisioned, written or effective capacity?
+75. [SE] Which //One SLAs fail at dark sites?
+76. [Eng] Is the watts-per-TiB guarantee measured or modelled?
+77. [CTO] Does subscription reweight the roadmap toward density and watts?
 
 #### 8. AI training and checkpointing
 
-79. [PM] In lost training deals, was checkpointing specified as burst, drain or time-to-resume?
-    ↳ *Listen for:* the customer's framework (sync or async), checkpoint size and the deciding metric ([Ch 31](../05-ai-storage/31-training-storage.md)).
-80. [Eng] For a ~6 TB checkpoint, where does the burst land, and how long are GPUs blocked?
-81. [Eng] In a cold 16K-rank restore, what are opens/s, read GB/s and time to first step?
-    ↳ *Listen for:* metadata and data numbers kept separate, plus the slowest-client tail ([Ch 31](../05-ai-storage/31-training-storage.md)).
-82. [Eng] Why was EXA's MLPerf Storage v3.0 checkpoint read below its write?[^1]
-    ↳ *Listen for:* the cache-clearing rule, client DRAM sizes and the source of the gap ([Ch 37](../05-ai-storage/37-reading-benchmarks.md)).
-83. [Eng] In the 30-node run, what limited per-node throughput?
-84. [SE] Does a sizing tool turn model size, GPU count and interval into EXA nodes?
-85. [SE] How do we size for a customer checkpointing asynchronously to local NVMe?
-    ↳ *Listen for:* drain rate, restore bandwidth and retained capacity, not peak write ([Ch 31](../05-ai-storage/31-training-storage.md)).
-86. [CTO] As async checkpointing spreads, where does training-storage differentiation move?
-87. [Eng] What happens when billions of small files are reshuffled every epoch?
-88. [PM] Why did we enter checkpointing and KV cache in v3.0, but not training?
+78. [PM] In lost training deals, how was checkpointing specified?
+    ↳ *Listen for:* framework, checkpoint size, burst versus time-to-resume ([Ch 31](../05-ai-storage/31-training-storage.md)).
+79. [Eng] For a ~6 TB checkpoint, how long are GPUs blocked?
+80. [Eng] Cold 16K-rank restore: opens/s, GB/s, time to first step?
+    ↳ *Listen for:* metadata and data separated; slowest-client tail ([Ch 31](../05-ai-storage/31-training-storage.md)).
+81. [Eng] Why was EXA's MLPerf v3.0 checkpoint read below write?[^1]
+    ↳ *Listen for:* cache-clear rule, client DRAM, bottleneck named ([Ch 37](../05-ai-storage/37-reading-benchmarks.md)).
+82. [SE] Which tool turns model size and GPU count into EXA nodes?
+83. [SE] How do we size for async checkpointing to local NVMe?
+    ↳ *Listen for:* drain rate, restore bandwidth, retention, not peak write ([Ch 31](../05-ai-storage/31-training-storage.md)).
+84. [CTO] As async checkpointing spreads, where does differentiation move?
+85. [Eng] What happens when billions of small files reshuffle each epoch?
+86. [PM] Why enter MLPerf checkpointing and KV cache, but not training?
 
 #### 9. Inference and KV cache
 
-89. [PM] What baseline, context length and hit rate sit behind PureKVA's 20× TTFT claim?[^2]
-    ↳ *Listen for:* model, concurrency and baseline named: recompute, local NVMe or DRAM ([Ch 32](../05-ai-storage/32-inference-and-kv-cache.md)).
-90. [Eng] What restore GB/s per GPU and p99 per block at 1,000 concurrent sessions?
-    ↳ *Listen for:* GB/s per GPU above the recompute break-even, and the block size ([Ch 32](../05-ai-storage/32-inference-and-kv-cache.md)).
-91. [Eng] Is there an upstream NIXL backend, and which plugin path does it use?
-92. [Eng] What happens to cached KV when model weights or tokenizer change?
-93. [CTO] Versus NVIDIA's CMX racks, are we supplier, G4 tier behind them, or competitor?[^3]
-    ↳ *Listen for:* a position per deal type and what Everpure adds beyond a flash shelf ([Ch 34](../05-ai-storage/34-nvidia-ecosystem.md)).
-94. [PM] How should a KV tier be priced: per TB, per GB-hour or per token?
-    ↳ *Listen for:* price anchored to the customer's recompute cost ([Ch 32](../05-ai-storage/32-inference-and-kv-cache.md)).
-95. [Eng] Does DeepReduce find anything in fp16 or fp8 KV tensors?
-96. [SE] How do we answer DDN's and WEKA's KV-cache multiples?
-    ↳ *Listen for:* normalising baseline, context length and concurrency before comparing ([Ch 44](../06-industry-and-competition/44-ddn.md)).
-97. [PM] Does PureKVA attach to existing FlashBlade deals or need a new buyer?
-98. [Eng] For a KV fetch, where does the latency budget break first?
+87. [PM] What baseline sits behind PureKVA's 20× TTFT claim?[^2]
+    ↳ *Listen for:* model, context, concurrency; recompute or local NVMe ([Ch 32](../05-ai-storage/32-inference-and-kv-cache.md)).
+88. [Eng] What GB/s per GPU and p99 per block at 1,000 sessions?
+89. [Eng] Is our NIXL backend upstream, and which plugin path?
+90. [Eng] What happens to cached KV when weights change?
+91. [CTO] Versus NVIDIA CMX: supplier, tier behind it, or rival?[^3]
+    ↳ *Listen for:* a position per deal type, value beyond flash ([Ch 34](../05-ai-storage/34-nvidia-ecosystem.md)).
+92. [PM] Price a KV tier per TB, per GB-hour or per token?
+93. [Eng] Does DeepReduce shrink fp8 KV tensors at all?
+94. [SE] How do we answer DDN's and WEKA's KV-cache multiples?
+    ↳ *Listen for:* baseline, context and concurrency normalised first ([Ch 44](../06-industry-and-competition/44-ddn.md)).
+95. [PM] Does PureKVA ride existing FlashBlade deals?
+96. [Eng] Where does a KV fetch's latency budget break first?
 
 #### 10. RAG and data intelligence
 
-99. [PM] In RAG on FlashBlade, where does the vector index live, and whose software is it?
-100. [Eng] For a billion-vector DiskANN index on FlashBlade, what per-hop latency results?
-101. [PM] Which engines read and write Iceberg on FlashBlade in production?
-102. [Eng] How do Lance random reads and Parquet scans share one bucket without starvation?
-103. [PM] What share of Data Intelligence bookings cover data not on Everpure?[^4]
-     ↳ *Listen for:* a number, named estates and separate pricing ([Ch 39](../05-ai-storage/39-agentic-ai-and-data-intelligence.md)).
-104. [PM] Who buys Data Intelligence, and who carries the quota?
-105. [CTO] Catalog of record, or neutral feeder into Unity Catalog and Purview?
-     ↳ *Listen for:* an explicit choice with reasons, and coexistence without rip-out ([Ch 33](../05-ai-storage/33-rag-vector-lakehouse.md)).
-106. [Eng] How does the MCP server handle user identity and revocation?
-     ↳ *Listen for:* token exchange, per-agent scopes and revocation measured in seconds ([Ch 39](../05-ai-storage/39-agentic-ai-and-data-intelligence.md)).
-107. [Eng] Is classification on the write path, snapshot-triggered or scanned?
-108. [CTO] Is agent memory a distinct storage workload beyond KV cache?
+97. [PM] In RAG on FlashBlade, where does the vector index live?
+98. [Eng] How does a billion-vector DiskANN index perform on FlashBlade?
+99. [PM] Which engines run Iceberg on FlashBlade in production?
+100. [Eng] Can random Lance reads and Parquet scans share a bucket?
+101. [PM] What share of Data Intelligence covers non-Everpure data?[^4]
+     ↳ *Listen for:* a number, named estates, separate pricing ([Ch 39](../05-ai-storage/39-agentic-ai-and-data-intelligence.md)).
+102. [PM] Who buys Data Intelligence, and who carries quota?
+103. [CTO] Catalog of record, or neutral feeder to Unity Catalog?
+     ↳ *Listen for:* an explicit choice; coexistence without rip-out ([Ch 33](../05-ai-storage/33-rag-vector-lakehouse.md)).
+104. [Eng] How does the MCP server handle identity and revocation?
+105. [Eng] Is classification on the write path or off it?
+106. [CTO] Is agent memory a storage workload beyond KV cache?
 
 #### 11. NVIDIA and ecosystem
 
-109. [PM] When does EXA reach NVIDIA's certified list, at which level?
-     ↳ *Listen for:* a level, a GPU generation, a quarter and the deals waiting ([Ch 34](../05-ai-storage/34-nvidia-ecosystem.md)).
-110. [SE] What headroom over the SuperPOD storage tier per SU, and what limits first?
-111. [Eng] What did certification not exercise that customers hit in production?
-112. [CTO] Which Purity services could run on a BlueField-4 DPU?
-     ↳ *Listen for:* data path separated from metadata and global dedupe, with core and memory limits ([Ch 53](../07-history-and-future/53-future-trends.md)).
-113. [PM] In a Dell- or HPE-led AI factory, how do we get in?
-114. [PM] What share of AI pipeline arrives NVIDIA-led, OEM-led or direct?
-115. [CTO] How long does re-certifying each NVIDIA GPU generation take?
-116. [SE] Which tenancy features still block EXA in neocloud bake-offs?
-     ↳ *Listen for:* keys, VRF separation, QoS floors, metering and Terraform, each with a date ([Ch 35](../05-ai-storage/35-ai-factories-and-neoclouds.md)).
-117. [SE] How do we stop one tenant's checkpoint starving another's reads?
-118. [CTO] How do we become a named design in NCP references, not just certified?
+107. [PM] When, and at which level, will EXA be NVIDIA-certified?
+     ↳ *Listen for:* level, GPU generation, quarter, waiting deals ([Ch 34](../05-ai-storage/34-nvidia-ecosystem.md)).
+108. [SE] What headroom over SuperPOD storage sizing, and what limits it?
+109. [Eng] What did certification skip that production hits?
+110. [CTO] Which Purity services fit on a BlueField-4 DPU?
+     ↳ *Listen for:* data path versus metadata and dedupe; memory limits ([Ch 53](../07-history-and-future/53-future-trends.md)).
+111. [PM] How do we enter a Dell- or HPE-led AI factory?
+112. [PM] What share of AI pipeline is NVIDIA-led, OEM-led or direct?
+113. [CTO] How long does each GPU-generation recertification take?
+114. [SE] Which tenancy gaps block EXA in neocloud bake-offs?
+     ↳ *Listen for:* keys, VRF, QoS floors, metering, each dated ([Ch 35](../05-ai-storage/35-ai-factories-and-neoclouds.md)).
+115. [SE] How do we stop one tenant's checkpoint starving another?
+116. [CTO] How do we become a named NCP design, not just certified?
 
 #### 12. Competition: VAST, WEKA, DDN and incumbents
 
-119. [PM] In the last ten EXA-versus-VAST deals, what decided each?
-     ↳ *Listen for:* outcomes split by buyer type, each with a deciding factor ([Ch 42](../06-industry-and-competition/42-vast-data.md)).
-120. [Eng] Walk a write on VAST versus EXA: crossings, persistence point, reduction point.
-     ↳ *Listen for:* the back-end traffic multiple and where reduction happens ([Ch 42](../06-industry-and-competition/42-vast-data.md)).
-121. [Eng] Is similarity reduction a real advantage on AI training data?
-122. [CTO] Which VAST AI OS layers will buyers require from storage by 2028?
-123. [PM] When we lose to WEKA, is it portability, converged mode or KV cache?
+117. [PM] In recent EXA-versus-VAST deals, what decided each?
+     ↳ *Listen for:* outcomes by buyer type, one deciding factor each ([Ch 42](../06-industry-and-competition/42-vast-data.md)).
+118. [Eng] VAST versus EXA write: crossings, persistence, reduction point?
+119. [Eng] Does similarity reduction help on AI training data?
+120. [CTO] Which VAST AI OS layers will buyers demand from storage?
+121. [PM] Losses to WEKA: portability, converged mode or KV cache?
      ↳ *Listen for:* the three causes separated, with counts ([Ch 43](../06-industry-and-competition/43-weka.md)).
-124. [Eng] What does converged mode cost per GPU node in cores and NIC bandwidth?
-125. [SE] How do we answer WEKA's guaranteed data reduction?
-126. [PM] Where DDN shipped the first SuperPOD, what wins phase two?
-     ↳ *Listen for:* a named trigger and the Lustre-administrator objection ([Ch 44](../06-industry-and-competition/44-ddn.md)).
-127. [Eng] What does a pNFS client give up versus Lustre on shared-file writes?
-128. [SE] Size EXA against an AI400X3 rack per U, per kW and per usable TB.
-129. [PM] How do we position EXA against NetApp AFX and Dell Lightning FS?
-130. [PM] Which incumbent installed bases produced the most displacements?
-131. [CTO] Which challenger advantages are copyable, and which are structural?
-     ↳ *Listen for:* certification copyable; NVIDIA equity and CoreWeave-scale references structural ([Ch 41](../06-industry-and-competition/41-why-ai-native-vendors-won.md)).
-132. [SE] How do we answer "VAST and WEKA didn't need MLPerf"?
-133. [PM] When Hammerspace runs over FlashBlade, who owns the account?
-134. [SE] How many MinIO community users have we converted, and what decided it?
+122. [Eng] What does WEKA's converged mode cost per GPU node?
+123. [SE] How do we answer WEKA's guaranteed data reduction?
+124. [PM] Where DDN shipped the first SuperPOD, what wins phase two?
+     ↳ *Listen for:* a named trigger; the Lustre-admin objection ([Ch 44](../06-industry-and-competition/44-ddn.md)).
+125. [Eng] What does pNFS concede to Lustre on shared-file writes?
+126. [SE] Size EXA against a DDN AI400X3 rack per U and kW.
+127. [PM] How do we position against NetApp AFX and Dell Lightning?
+128. [PM] Which incumbent bases yield the most displacements?
+129. [CTO] Which challenger advantages are copyable, which structural?
+     ↳ *Listen for:* certification copyable; NVIDIA equity and anchor neoclouds not ([Ch 41](../06-industry-and-competition/41-why-ai-native-vendors-won.md)).
+130. [SE] How do we answer "VAST didn't need MLPerf"?
+131. [PM] With Hammerspace over FlashBlade, who owns the account?
 
 #### 13. Market and financials
 
-135. [PM] When we claim share gains, which tracker, period and definition?
-     ↳ *Listen for:* IDC named, its published versus Everpure's modified figure, four-quarter rolling ([Ch 40](../06-industry-and-competition/40-market-structure.md)).
-136. [PM] How much of product growth is price per TB versus capacity shipped?
-     ↳ *Listen for:* price, mix and units split, with units admitted where down ([Ch 48](../06-industry-and-competition/48-media-suppliers-and-nand-cycle.md)).
-137. [PM] What happens to growth if NAND contract prices fall 30%?
-138. [CTO] What fraction of an AI-factory bill of materials is shared storage?
-139. [PM] How is hyperscale revenue priced: per TB, per module or per licence tier?
-     ↳ *Listen for:* the pricing basis, and what happens as module capacity doubles ([Ch 29](../04-everpure/29-hyperscaler-ecosystem-financials.md)).
-140. [PM] How do the hyperscaler design wins change gross-margin mix?[^5]
-141. [PM] Does our AI-storage TAM include hyperscaler self-build?
-142. [PM] What metric will show Data Intelligence traction, and when?
-143. [CTO] Which hyperscaler storage functions are licensable rather than self-built?
-144. [PM] What is gross profit per deal, not margin %, against a software-only rival?
-     ↳ *Listen for:* dollars split into hardware and software, plus NAND risk ([Ch 19](../03-system-architecture/19-software-defined-and-hci.md)).
+132. [PM] When we claim share gains, which tracker and definition?
+     ↳ *Listen for:* IDC named; published versus modified share; period ([Ch 40](../06-industry-and-competition/40-market-structure.md)).
+133. [PM] How much growth is price per TB versus capacity?
+134. [PM] What happens to growth if NAND falls 30%?
+135. [CTO] What share of an AI-factory bill is shared storage?
+136. [PM] Is hyperscale revenue priced per TB, module or licence?
+137. [PM] How do hyperscaler design wins shift gross-margin mix?[^5]
+138. [PM] Does our AI-storage TAM include hyperscaler self-build?
+139. [PM] Which metric will show Data Intelligence traction?
+140. [CTO] Which hyperscaler storage functions are licensable?
+141. [PM] Gross profit per deal versus a software-only rival?
+     ↳ *Listen for:* hardware and software dollars, plus NAND risk ([Ch 19](../03-system-architecture/19-software-defined-and-hci.md)).
 
 #### 14. Future and strategy
 
-145. [PM] What must be true for a 600 TB DFM to precede 512 TB SSDs?
-146. [Eng] At 1 PB per module, what keeps second-failure exposure acceptable?
-     ↳ *Listen for:* aggregate rebuild GB/s, code geometry and a loss probability ([Ch 53](../07-history-and-future/53-future-trends.md)).
-147. [CTO] Which stack layer commoditizes next, and what does that do to licensing?
-148. [CTO] What could make AI-native architecture irrelevant, as flash erased Violin's lead?
-     ↳ *Listen for:* a concrete shift, such as KV cache in CXL memory, and a response ([Ch 51](../07-history-and-future/51-history-of-storage.md)).
-149. [CTO] Which past deal is our template: Portworx or EMC's XtremIO?
-150. [CTO] What from Purity's 2012 design would a clean sheet keep?
-151. [PM] In sovereign AI deals, what do we lose on today?
-     ↳ *Listen for:* support, air-gap, certification or a domestic partner, with the winner named ([Ch 53](../07-history-and-future/53-future-trends.md)).
-152. [CTO] Is a first-party Purity service on AWS or Google feasible?
-153. [CTO] Does NetApp's DataPelago purchase change our build-versus-buy view?[^6]
-154. [CTO] Does DirectFlash reach archive-adjacent tiers, or stop at warm ones?
+142. [PM] What must be true for 600 TB DFMs to ship first?
+143. [Eng] At 1 PB per module, is second-failure exposure acceptable?
+     ↳ *Listen for:* rebuild GB/s, code geometry, loss probability ([Ch 53](../07-history-and-future/53-future-trends.md)).
+144. [CTO] Which stack layer commoditizes next?
+145. [CTO] What could strand AI-native designs, as flash stranded Violin?
+     ↳ *Listen for:* one concrete shift, such as CXL-resident KV ([Ch 51](../07-history-and-future/51-history-of-storage.md)).
+146. [CTO] Is Portworx or XtremIO our acquisition template?
+147. [CTO] What would a clean-sheet Purity keep from 2012?
+148. [PM] In sovereign AI deals, what do we lose on?
+     ↳ *Listen for:* support, air-gap, certification or partner; winner named ([Ch 53](../07-history-and-future/53-future-trends.md)).
+149. [CTO] Is a first-party Purity cloud service feasible?
+150. [CTO] Does NetApp buying DataPelago change build-versus-buy?[^6]
 
 ## How Everpure approaches it vs. competitors
 
-Some questions get similar answers from every vendor; these get different ones, so they carry the most signal. Asked inside Everpure, the competitor column is the steelman you should expect to hear back.
+These questions draw the most divergent vendor answers. The right column is the steelman to expect back.
 
 | Q | Question | Everpure's answer rests on | Strongest competitor answer |
 |---|---|---|---|
-| 12 | What survives FDP? | System-level FTL, no module DRAM, density | Commodity QLC with FDP plus multi-supplier pricing (VAST, incumbents) |
-| 26 | Why a standard client? | No kernel module, faster security review | Proprietary clients win per-node bandwidth and shared writes (WEKA, DDN) |
-| 40 | Direct path or shared media? | Metadata/data split, independent scaling | Shared media gives any node any byte, wider codes (VAST) |
-| 93 | Position versus CMX? | Shared, reduced, managed KV tier | DPU-resident software inside NVIDIA racks (VAST, WEKA) |
-| 131 | Copyable or structural? | Hardware supply, Evergreen, enterprise base | NVIDIA equity and neocloud anchors (VAST, WEKA) |
+| 12 | What survives FDP? | System-level FTL, no module DRAM, density | Commodity QLC plus multi-supplier pricing (VAST, incumbents) |
+| 25 | Why a standard client? | No kernel module, easier security review | Proprietary clients win per-node bandwidth (WEKA, DDN) |
+| 39 | Direct path or shared media? | Metadata/data split, independent scaling | Any node reaches any byte; wider codes (VAST) |
+| 91 | Position versus CMX? | Shared, reduced, managed KV tier | DPU-resident software inside NVIDIA racks (VAST, WEKA) |
+| 129 | Copyable or structural? | NAND supply, Evergreen, enterprise base | NVIDIA equity, neocloud anchors (VAST, WEKA) |
 
-*Figure 57.5 — The differentiating questions are the ones where an honest Everpure answer has to concede something.*
+*Figure 57.5 — An honest Everpure answer to each of these must concede something.*
 
 ## History and trajectory
 
-The playbooks behind this bank were written in 2026, so their questions skew to that year's issues: NAND inflation, NVIDIA's BlueField-4 STX launch in March[^3] and MLPerf Storage v3.0 in September[^7]. Before 2023, a comparable bank would have been mostly block-array questions on latency, reduction and Evergreen. Expect Q8, Q72 and Q137 to date fastest; the mechanism questions (Q35, Q43, Q52) should keep for years.
+The source playbooks date from 2026, so they skew to NAND inflation, NVIDIA's BlueField-4 STX launch[^3] and MLPerf Storage v3.0[^7]. Q8, Q71 and Q134 will date fastest; mechanism questions (Q34, Q42, Q51) will keep.
 
 ## Numbers that matter
 
 | Metric | Value | Context | Source / date |
 |---|---|---|---|
-| Questions in bank | 154 | Numbered continuously | Worked count, this chapter, 2026-11-01 |
-| PM / Eng / CTO / SE | 51 / 53 / 28 / 22 | Figure 57.2 | Worked count, this chapter |
-| Topics | 14 | Largest: competition (16) | Worked count, this chapter |
-| "Listen for" notes | 40 | One per key question | Worked count, this chapter |
+| Questions | 150 | Numbered continuously | Worked count, this chapter, 2026-11-01 |
+| PM / Eng / CTO / SE | 52 / 52 / 28 / 18 | Figure 57.2 | Worked count, this chapter |
+| Topics | 14 | Largest: competition (15) | Worked count, this chapter |
+| "Listen for" notes | 41 | Key questions only | Worked count, this chapter |
 | Source pool | ~540 | ~300 playbook questions plus 240 ASK lines | Worked count of repo files, 2026-11-01 |
 | Questions per meeting | 5–7 | Figure 57.4 | Editorial guideline |
 
 ## Conversation playbook
 
-**Questions for a PM** (follow-ups for any answer)
+**Questions for a PM** (follow-ups to any answer)
 
-1. *"What's in the denominator?"* Strong: names the population, period and exclusions.
-2. *"Compared with what baseline?"* Strong: names recompute, disk, or a competitor's configuration.
-3. *"Which deals did that decide?"* Strong: gives counts, not anecdotes.
+1. *"What's the denominator?"* Strong: population, period, exclusions.
+2. *"Against what baseline?"* Strong: recompute, disk, or a named rival.
+3. *"Which deals did it decide?"* Strong: counts, not anecdotes.
 
 **Questions for an engineer**
 
-1. *"Under what conditions?"* Strong: fill level, load and failure state stated.
-2. *"What saturates first?"* Strong: names one resource with a number.
-3. *"What happens if it fails halfway?"* Strong: describes recovery and what clients see.
+1. *"Under what conditions?"* Strong: fill, load, failure state.
+2. *"What saturates first?"* Strong: one resource, one number.
+3. *"What if it fails halfway?"* Strong: recovery path and client view.
 
 **Don't say this:**
 
-- Reading questions verbatim from a list; rephrase them in your own words.
-- Accepting a number without asking its conditions.
-- Treating "we don't measure that" as evasion; sometimes it is the finding.
+- Reading questions verbatim from a list.
+- Accepting a number without its conditions.
+- Treating "we don't measure that" as evasion; it may be the finding.
 
 ## Going deeper (optional, L3 pointers)
 
-- [Chapter 50](../06-industry-and-competition/50-diligence-framework.md) turns these questions into a diligence scorecard.
 - [Chapter 59](59-self-test-flashcards.md) tests the answers.
 
 ## Key terms
 
 - **Listen-for note** — what a strong answer contains.
-- **Baseline question** — a follow-up asking what a claim is measured against.
 - See the [glossary](../glossary.md).
 
 ## Sources

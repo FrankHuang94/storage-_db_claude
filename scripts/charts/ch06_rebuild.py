@@ -54,6 +54,6 @@ def build(out_dir: Path) -> Path:
                  loc="left", fontsize=12)
     _style.source_note(fig, "Illustrative model, not vendor data. Rebuild time = capacity / effective rebuild write rate. Single spare: HDD 200 MB/s, "
                             "SSD 1 GB/s (throttled under production load). Declustered: 100 drives x 50 MB/s (HDD) or x 0.5 GB/s (SSD). "
-                            "Ignores read amplification (k strips read per strip rebuilt). Data: data/ch06_rebuild.csv")
+                            "Rates are reconstructed output; survivors must read k times as much (8x for 8+2). Data: data/ch06_rebuild.csv")
     fig.tight_layout()
     return _style.save(fig, out_dir, NAME)
