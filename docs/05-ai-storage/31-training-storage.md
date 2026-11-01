@@ -8,8 +8,8 @@
 - **Checkpoints, not training data, set the performance spec for LLM training storage.** A 405B-parameter model reads roughly 11 MB/s of text tokens across 16,384 GPUs, yet its full training state is about 6.5 TB. Writing that in 60 seconds takes about 108 GB/s.
 - **Size the checkpoint at roughly 14–16 bytes per parameter, not 2.** Mixed-precision Adam keeps fp32 master weights and two fp32 optimizer moments next to the bf16 weights. Weights alone are one-seventh of what gets saved.
 - **Failures set the checkpoint frequency.** Meta's Llama 3 run saw 419 unexpected interruptions in 54 days, about one every 3.1 hours. With synchronous saves, the best interval wastes about 10% of the cluster. At 100,000 GPUs it would waste about a quarter.
-- **Asynchronous and tiered checkpointing turn a peak-bandwidth problem into a sustained-bandwidth one.** GPUs dump state to host DRAM or local NVMe in seconds, and the drain to shared storage runs in the background. Software, not storage hardware, removes most of the stall.
-- **The hardest moment is the restore.** Every GPU reads at once after a failure. At large scale, restart time costs more than save time. Ask vendors about read bandwidth after a cache drop and about metadata storms, not only write GB/s.
+- **Asynchronous and tiered checkpointing turn a peak-bandwidth problem into a sustained-bandwidth one.** GPUs dump state to host DRAM or local NVMe in seconds and drain to shared storage in the background; software removes most of the stall.
+- **The hardest moment is the restore.** Every GPU reads at once after a failure, and at large scale restart time costs more than save time. Ask about cold read bandwidth and metadata storms, not only write GB/s.
 
 ## Why this matters for Everpure strategy
 
@@ -97,9 +97,9 @@ The costs: a node lost mid-drain falls back to the previous checkpoint; host DRA
 
 ### Frequency vs failure rate
 
-Checkpoint frequency is an optimization between two losses: time spent saving, and work redone after a failure. Young's classic approximation gives the optimal interval as **τ ≈ √(2 × C × M)**, where *C* is the GPU stall per checkpoint and *M* is the mean time between job-killing failures[^8]. Overhead is then roughly C/τ + τ/(2M), plus restart time per failure.
+Checkpoint frequency trades time spent saving against work redone after a failure. Young's approximation gives the optimal interval as **τ ≈ √(2 × C × M)**, where *C* is the GPU stall per checkpoint and *M* is the mean time between job-killing failures[^8]. Overhead is then roughly C/τ + τ/(2M), plus restart time per failure.
 
-Real failure rates are high. During a 54-day snapshot of Llama 3 405B pre-training on 16,384 H100s, Meta logged 466 interruptions: 47 planned and **419 unexpected**. About 78% of the unexpected ones were attributed to confirmed or suspected hardware issues, with faulty GPUs and HBM3 the largest categories[^4][^9]. That is one unexpected stop every 54 × 24 ÷ 419 ≈ **3.1 hours**. Meta's research clusters give a steeper view. A 1,024-GPU job's mean time to failure was 7.9 hours, against 47.7 days for an 8-GPU job[^10]. Scaling that linearly predicts about 30 minutes at 16K GPUs; mature fleets like Llama 3's do far better.
+During a 54-day snapshot of Llama 3 405B pre-training on 16,384 H100s, Meta logged 466 interruptions: 47 planned and **419 unexpected**. About 78% of these were attributed to confirmed or suspected hardware, led by faulty GPUs and HBM3[^4][^9]. That is one unexpected stop every 54 × 24 ÷ 419 ≈ **3.1 hours**. In Meta's research clusters a 1,024-GPU job's mean time to failure was 7.9 hours, against 47.7 days for an 8-GPU job[^10]. Scaling that linearly predicts about 30 minutes at 16K GPUs; mature fleets like Llama 3's do far better.
 
 | Scenario (405B, 6.48 TB state) | MTBF *M* | Stall per save *C* | Optimal interval τ | Save + rework overhead | Drain bandwidth needed |
 |---|---|---|---|---|---|
@@ -125,7 +125,7 @@ A useful sizing target is a restore time, not a bandwidth. Reading 6.5 TB of uni
 
 ### Data loading: tokens are cheap, pixels are not
 
-The data-loading requirement is **tokens/s per GPU × bytes per token × GPUs**. Llama 3 405B ran at about 41% of the H100's ~989 dense BF16 TFLOPS on 16,384 GPUs[^4]. At 6 FLOPs per parameter per token, each GPU consumes 989×10¹² × 0.41 ÷ (6 × 405×10⁹) ≈ **167 tokens/s**. At 4 bytes per token ID, that is 0.7 KB/s per GPU and about **11 MB/s for the cluster**. Over 15.6T tokens that implies about 66 days of compute, consistent with the run's length[^4]. Meta's Tectonic-based storage for Llama 3 offered 240 PB across 7,500 SSD servers, with 2 TB/s sustained and 7 TB/s peak throughput[^4]. Meta still called the bursty checkpoint writes "a major challenge"[^4]. The storage was sized for checkpoints, not tokens.
+The data-loading requirement is **tokens/s per GPU × bytes per token × GPUs**. Llama 3 405B ran at about 41% of the H100's ~989 dense BF16 TFLOPS on 16,384 GPUs[^4]. At 6 FLOPs per parameter per token, each GPU consumes 989×10¹² × 0.41 ÷ (6 × 405×10⁹) ≈ **167 tokens/s**. At 4 bytes per token ID, that is 0.7 KB/s per GPU and about **11 MB/s for the cluster**. (Over 15.6T tokens that is ~66 days, consistent with the run[^4].) Yet Meta's Tectonic storage for Llama 3 offered 240 PB on 7,500 SSD servers, 2 TB/s sustained and 7 TB/s peak, and Meta still called bursty checkpoint writes "a major challenge"[^4]. It was sized for checkpoints, not tokens.
 
 | Workload | Per-GPU input rate | Bytes per GPU per second | 1,024 GPUs | Basis |
 |---|---|---|---|---|
@@ -197,7 +197,7 @@ timeline
 
 HPC solved this first: supercomputer restart dumps drove the parallel file systems of the 2000s ([Chapter 17](../03-system-architecture/17-parallel-file-systems.md)). MLPerf Storage made checkpointing a scored workload in v2.0 (August 2025), using Llama 3 8B, 70B, 405B and 1T models[^19]. Its metrics are deliberately pessimistic: duration is the slowest process and throughput is the minimum across processes, over 10 checkpoints written and read[^20].
 
-Three trends point forward. First, **checkpoints are moving closer to the GPU**: host DRAM, local NVMe and peer replicas, with shared storage as the durable backstop. Second, **lower-precision optimizer states** (8-bit moments, FP8 training) will shrink bytes per parameter, while parameter counts and MoE total sizes keep growing. Third, as failures scale with GPU count, **restore speed becomes the bottleneck**, and vendors will be judged on time-to-resume.
+Three trends point forward: **checkpoints move closer to the GPU** (host DRAM, local NVMe, peer replicas), with shared storage as durable backstop; **lower-precision optimizer states** shrink bytes per parameter while total parameter counts keep growing; and as failures scale with GPU count, **time-to-resume becomes the metric** vendors are judged on.
 
 ## Numbers that matter
 
@@ -223,9 +223,9 @@ Three trends point forward. First, **checkpoints are moving closer to the GPU**:
 
 **Questions for an engineer**
 
-1. *"Walk me through a 16K-rank restore after the cache has been dropped: files opened per second, read GB/s and time to first step."* Strong: separate numbers for metadata and data, how broadcast versus per-replica reads were handled, and the slowest-client tail.
-2. *"What happens to a running checkpoint drain when a data node fails?"* Strong: degraded-mode write bandwidth as a percentage, whether in-flight writes stall or retry, and how long until full speed.
-3. *"Where does the checkpoint's write amplification come from on our platform: erasure coding, metadata, reduction?"* Strong: a back-end-bytes-per-client-byte figure and how compressible optimizer state is in practice. Usually it barely compresses, which makes data-reduction claims irrelevant here.
+1. *"Walk me through a 16K-rank restore after the cache has been dropped: files opened per second, read GB/s and time to first step."* Strong: separate metadata and data numbers, broadcast versus per-replica reads, and the slowest-client tail.
+2. *"What happens to a running checkpoint drain when a data node fails?"* Strong: degraded write bandwidth as a percentage, stall-or-retry behaviour, and time to full speed.
+3. *"Where does the checkpoint's write amplification come from on our platform: erasure coding, metadata, reduction?"* Strong: a back-end-bytes-per-client-byte figure, and candour that optimizer state barely compresses.
 
 **Don't say this:**
 
