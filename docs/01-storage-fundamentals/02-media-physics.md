@@ -5,17 +5,17 @@
 
 ## TL;DR
 
-- **Storage is a cache hierarchy with a cliff in the middle.** HBM, DRAM and CXL memory answer in about 100–300 ns. The fastest NAND answers in about 50–150 µs. That jump of roughly 1,000× is the memory–storage wall, and most storage-system design is about hiding it.
-- **NAND is asymmetric by physics.** You read and program a page, but you can only erase a whole block, which is thousands of times larger. Every cell wears out after a finite number of program/erase (P/E) cycles. That is why SSDs need a flash translation layer (FTL), and why "who runs the FTL" is a strategic question (see [Chapter 3](03-inside-an-ssd.md) and [Chapter 26](../04-everpure/26-purity-and-directflash.md)).
-- **Each extra bit per cell halves the voltage margin.** QLC stores 16 states where SLC stores two. It is cheaper per bit but slower to write, less durable and more sensitive to leakage and read disturb. QLC works in enterprise systems only when software turns small random writes into large sequential ones.
+- **Storage is a cache hierarchy with a cliff in the middle.** Memory tiers answer in ~100–300 ns, NAND in ~50–150 µs. Most storage-system design is about hiding that ~1,000× wall.
+- **NAND is asymmetric by physics.** You program pages but erase only whole blocks, and every cell wears out after finite program/erase (P/E) cycles. Hence the flash translation layer (FTL), and why "who runs the FTL" is strategic ([Chapter 3](03-inside-an-ssd.md), [Chapter 26](../04-everpure/26-purity-and-directflash.md)).
+- **Each extra bit per cell halves the voltage margin.** QLC (16 states) is cheaper per bit but slower, less durable and more fragile than SLC (2 states). It works in enterprise only when software turns small random writes into large sequential ones.
 - **Scaling moved from lithography to layers, and from layers to bonding.** Leading 3D NAND went from 24 layers in 2013 to 400+ in 2026. Bit density per mm², not layer count, is the number to ask for.
-- **HDD is not dead, and the 2026 shortage reset the economics.** HAMR is shipping 40–44 TB drives. An enterprise SSD cost roughly 18–23× a nearline HDD per TB in 2026, up from about 6–10× earlier in the decade. The "flash replaces disk" thesis now rests on power, density and operations, not purchase price.
+- **HDD is not dead, and the 2026 shortage reset the economics.** HAMR ships 40–44 TB drives, and in 2026 enterprise flash cost ~18–23× disk per TB, up from ~6–10×. "Flash replaces disk" now rests on power, density and operations, not purchase price.
 
 ## Why this matters for Everpure strategy
 
-Everpure's core technical bet is that whoever manages raw NAND best wins on cost, density and power. Its DirectFlash Modules expose raw NAND to Purity software rather than hiding it behind a per-drive controller, and the same technology underpins its hyperscaler design wins with Meta (December 2024) and a second top-five hyperscaler (August 2026)[^1][^2]. Every claim about endurance, QLC viability or "flash cheaper than disk" traces back to the physics in this chapter. A strategy professional who can say *why* QLC needs a smart write path, or *why* a 44 TB HDD is a weak random-I/O device, can test those claims rather than repeat them.
+Everpure's core technical bet is that whoever manages raw NAND best wins on cost, density and power. Its DirectFlash Modules expose raw NAND to Purity software rather than hiding it behind a per-drive controller, and the same technology underpins its hyperscaler design wins with Meta (December 2024) and a second top-five hyperscaler (August 2026)[^1][^2]. Claims about endurance, QLC viability or "flash cheaper than disk" all trace back to the physics in this chapter; knowing it lets you test them rather than repeat them.
 
-The 2025–26 memory shortage makes this urgent. NAND contract prices rose every quarter of 2026. TrendForce expected another 15–20% rise in 4Q26, with enterprise SSDs up 23–28%[^3]. When flash costs 18× disk per TB instead of 6×, the argument for replacing disk changes from "cheaper to buy" to "cheaper to power, house and run". [Chapter 48](../06-industry-and-competition/48-media-suppliers-and-nand-cycle.md) covers the supply cycle. This chapter covers the physics underneath it.
+The 2025–26 memory shortage makes this urgent. NAND contract prices rose every quarter of 2026. TrendForce expected another 15–20% rise in 4Q26, with enterprise SSDs up 23–28%[^3]. When flash costs 18× disk per TB instead of 6×, the argument for replacing disk changes from "cheaper to buy" to "cheaper to power, house and run". [Chapter 48](../06-industry-and-competition/48-media-suppliers-and-nand-cycle.md) covers the supply cycle.
 
 ## Core concepts
 
@@ -25,17 +25,17 @@ The 2025–26 memory shortage makes this urgent. NAND contract prices rose every
 
 *Figure 2.1 — Every tier down is roughly 10× cheaper and 10× bigger, but the step from memory to flash costs about 1,000× in latency, and that wall shapes storage architecture.*
 
-The figures are order-of-magnitude values for 2026, drawn from these sources. HBM3E contract pricing is estimated at roughly $8–18 per GB[^4]. In 2026, server DDR5 rose to a similar range: a 64 GB RDIMM ended 1Q26 at about $927, or about $14.5/GB[^5]. Analysts expected the HBM premium over DDR5 to narrow sharply in 2026[^6]. A Blackwell Ultra-class GPU carries 288 GB of HBM[^7] [VERIFY: background, not retrieved this session]. Measured CXL memory expanders show load latencies of about 214–271 ns[^8]. They ship as modules of 256 GB[^9] and as boxes of up to 16 TB[^10]. NVMe-oF over RDMA adds about 5–15 µs to a local flash access[^11], and array software adds more. A 30 TB nearline HDD indexed at $1,216 works out to about $0.04/GB[^12]. LTO-10 cartridges hold 30 TB native and sell for about $275–315[^13][^14], or about $0.01/GB for media alone.
+Sources for the 2026 figures: HBM3E contract pricing is estimated at roughly $8–18 per GB[^4]. In 2026, server DDR5 rose to a similar range: a 64 GB RDIMM ended 1Q26 at about $927, or about $14.5/GB[^5]. The HBM premium over DDR5 was expected to narrow in 2026[^6]. A Blackwell Ultra-class GPU carries 288 GB of HBM[^7] [VERIFY: background, not retrieved this session]. Measured CXL memory expanders show load latencies of about 214–271 ns[^8]. They ship as modules of 256 GB[^9] and as boxes of up to 16 TB[^10]. NVMe-oF over RDMA adds about 5–15 µs to a local flash access[^11], and array software adds more. A 30 TB nearline HDD indexed at $1,216 works out to about $0.04/GB[^12]. LTO-10 cartridges hold 30 TB native and sell for about $275–315[^13][^14], or about $0.01/GB for media alone.
 
 Three points for a semis reader:
 
-1. **The wall is architectural, not just quantitative.** Above it, media is byte-addressable and volatile, and the CPU issues loads and stores. Below it, media is block-addressed and persistent, and the OS issues I/O requests through a driver and a queue. Crossing the wall means a software stack, interrupts or polling, and microseconds of overhead. That is why Intel's Optane (about 10 µs) failed commercially despite filling the gap: it needed new software models to exploit, and Intel wound it down in 2022[^15].
-2. **2026 broke the price ladder at the top.** Normally HBM costs several times DRAM per GB. In 2026 the DRAM shortage brought them to the same order of magnitude. DRAM-heavy designs (large metadata caches, in-memory KV caches) became much more expensive, which strengthens the case for pushing KV cache and metadata down to flash ([Chapter 32](../05-ai-storage/32-inference-and-kv-cache.md)).
-3. **Networked flash costs latency, not much else.** The fabric adds microseconds against a ~100 µs media read. The trade is accepted almost everywhere because it buys sharing, data protection and independent scaling ([Chapter 16](../03-system-architecture/16-disaggregated-shared-everything.md)).
+1. **The wall is architectural, not just quantitative.** Above it, the CPU issues loads and stores to volatile, byte-addressable media. Below it, the OS queues block I/O to persistent media through a driver. Crossing it costs a software stack and microseconds of overhead. Intel's Optane partly filled the gap but needed new software models to exploit, and Intel wound it down in 2022[^15].
+2. **2026 broke the price ladder at the top.** HBM normally costs several times DRAM per GB; the 2026 shortage brought them level. DRAM-heavy designs got far costlier, strengthening the case for pushing KV cache and metadata down to flash ([Chapter 32](../05-ai-storage/32-inference-and-kv-cache.md)).
+3. **Networked flash costs latency, not much else.** The fabric adds microseconds against a ~100 µs media read. It buys sharing, protection and independent scaling ([Chapter 16](../03-system-architecture/16-disaggregated-shared-everything.md)).
 
 ### One level deeper on a NAND cell
 
-You know the floating-gate transistor. Modern 3D NAND mostly uses a **charge-trap** cell instead. Electrons are stored in a silicon-nitride layer wrapped around a vertical polysilicon channel. Word lines are horizontal tungsten plates stacked hundreds high, and a "string" is the column of cells sharing one channel between a bit line and a source line.
+Modern 3D NAND mostly replaces the floating gate with a **charge-trap** cell: electrons sit in a silicon-nitride layer wrapped around a vertical polysilicon channel. Word lines are horizontal tungsten plates stacked hundreds high, and a "string" is the column of cells sharing one channel between a bit line and a source line.
 
 ![Three-panel schematic: a vertical NAND string with bit line, select gates, stacked word lines and CMOS logic beneath; a horizontal slice of one charge-trap cell showing concentric word line, blocking oxide, charge-trap layer with electrons, tunnel oxide, channel and core; and threshold-voltage distributions for SLC, TLC and QLC showing 2, 8 and 16 states in the same window.](../assets/diagrams/ch02-nand-cell.svg)
 
@@ -43,13 +43,13 @@ You know the floating-gate transistor. Modern 3D NAND mostly uses a **charge-tra
 
 Four behaviours matter for system design:
 
-**Program/erase asymmetry.** Programming uses incremental step pulses on one word line to move electrons into the trap layer, page by page (pages are tens of kB). Erase pulls charge out by raising the channel or well voltage, which can only be done for a whole **block** of many megabytes in current 3D parts. Programming a page takes hundreds of µs to milliseconds. Erasing a block takes milliseconds. Above all, you cannot overwrite in place. An update goes to a fresh page, and the old page becomes garbage until its whole block is reclaimed. That single fact creates the FTL, garbage collection and write amplification. It is the DRAM-refresh of flash: an unavoidable housekeeping tax set by the cell physics ([Chapter 3](03-inside-an-ssd.md)).
+**Program/erase asymmetry.** Programming uses incremental step pulses on one word line to move electrons into the trap layer, page by page (pages are tens of kB). Erase pulls charge out by raising the channel or well voltage, which can only be done for a whole **block** of many megabytes in current 3D parts. Program takes hundreds of µs or more; erase takes milliseconds. Above all, you cannot overwrite in place: an update goes to a fresh page, and the old page is garbage until its whole block is reclaimed. That creates the FTL, garbage collection and write amplification, the DRAM-refresh of flash: a housekeeping tax set by cell physics ([Chapter 3](03-inside-an-ssd.md)).
 
-**Endurance.** Each P/E cycle pushes electrons through the tunnel oxide and leaves traps and damage behind. The threshold-voltage distributions widen until the controller's error correction (LDPC codes) can no longer separate them. Endurance is usually quoted as drive writes per day (DWPD) over the warranty. Worked example: DWPD ≈ P/E cycles ÷ (write amplification × days of warranty). A QLC part rated for 1,000 cycles, over 5 years (1,825 days), gives 1,000 ÷ 1,825 ≈ 0.55 DWPD if writes arrive perfectly sequential (WAF = 1). The same drive under random small writes at WAF = 3 gives about 0.18 DWPD. On a 122.88 TB drive, that is the difference between ~67 TB and ~22 TB of host writes per day. Write amplification consumes endurance as directly as host writes do.
+**Endurance.** Each P/E cycle pushes electrons through the tunnel oxide and leaves traps and damage behind. The threshold-voltage distributions widen until the controller's error correction (LDPC codes) can no longer separate them. Worked example in drive writes per day (DWPD): DWPD ≈ P/E cycles ÷ (write amplification × days of warranty). A QLC part rated for 1,000 cycles, over 5 years (1,825 days), gives 1,000 ÷ 1,825 ≈ 0.55 DWPD if writes arrive perfectly sequential (WAF = 1). The same drive under random small writes at WAF = 3 gives about 0.18 DWPD. On a 122.88 TB drive, that is the difference between ~67 TB and ~22 TB of host writes per day.
 
-**Retention.** Trapped charge leaks, faster when hot and faster in worn cells. JEDEC's enterprise SSD rating (JESD218) assumes only about three months of unpowered retention at 40 °C at end of life. Powered drives refresh data in the background. The implication: flash is a powered medium. It is a poor shelf archive, which is one reason tape survives.
+**Retention.** Trapped charge leaks, faster when hot and faster in worn cells. JEDEC's enterprise SSD rating (JESD218) assumes only about three months of unpowered retention at 40 °C at end of life. Powered drives refresh data in the background, but flash is a poor shelf archive, one reason tape survives.
 
-**Read disturb.** Cells in a string sit in series, so reading one cell means applying a pass voltage to every other word line in the block. Each read slightly programs the neighbours. After enough reads of a block, the controller must copy its data elsewhere and erase it. For AI training, where the same dataset blocks are reread every epoch, this creates hidden background writes even on a "read-only" workload. A system-level designer schedules that relocation. A naive design lets it collide with foreground reads and inflate tail latency.
+**Read disturb.** Cells in a string sit in series, so reading one cell means applying a pass voltage to every other word line in the block. Each read slightly programs the neighbours. After enough reads the controller must relocate the block. AI training rereads the same blocks every epoch, so even a "read-only" workload creates hidden background writes; a good design schedules them away from foreground reads to protect tail latency.
 
 ### Bits per cell: the cost/quality dial
 
@@ -63,11 +63,11 @@ Four behaviours matter for system design:
 
 *Table 2.1 — Each added bit gives about 33%, 25% then 20% more bits per cell, while doubling the states to resolve. The cost gain shrinks as the physics penalty grows.* Endurance and tR are typical ranges across vendors [VERIFY: confirm ranges against 2025–26 vendor datasheets].
 
-The marginal arithmetic matters. Going TLC→QLC adds one bit to three, so ~33% more capacity per die, minus the extra ECC parity and over-provisioning QLC needs. QLC→PLC adds only 25%, against twice the states and a smaller margin per state. That is why PLC keeps slipping and why the industry adds layers rather than bits.
+TLC→QLC adds ~33% capacity per die, minus extra ECC parity and over-provisioning. QLC→PLC adds only 25% for twice the states, which is why PLC keeps slipping and the industry adds layers rather than bits.
 
 ### Why QLC needs a smart write path
 
-QLC programs slowly, in large units, and wears out quickly. Feed it small random overwrites and the FTL must keep moving valid data out of partly-stale blocks. Write amplification rises, endurance falls and latency becomes erratic. Every serious QLC system therefore puts a write path in front of the NAND:
+QLC programs slowly, in large units, and wears out quickly. Small random overwrites force the FTL to keep moving valid data out of partly-stale blocks, so write amplification rises, endurance falls and latency turns erratic. Serious QLC systems put a write path in front of the NAND:
 
 ```mermaid
 flowchart LR
@@ -81,24 +81,24 @@ flowchart LR
 
 *Figure 2.3 — QLC is viable in enterprise systems only behind a buffer that turns many small writes into few large, lifetime-sorted ones; the further up the stack this happens, the less the NAND sees.*
 
-Commodity QLC SSDs do this inside the drive with an SLC-mode cache, which runs out under sustained writes. Arrays do it one level up: VAST buffers in shared SCM before writing wide QLC stripes ([Chapter 16](../03-system-architecture/16-disaggregated-shared-everything.md)). Everpure's DirectFlash puts the whole job in array software that sees every module's raw NAND ([Chapter 26](../04-everpure/26-purity-and-directflash.md)). Hyperscalers push hints down with NVMe Flexible Data Placement so drives can keep data of similar lifetime together[^20]. The semis analogy is a write-combining buffer in front of a DRAM controller: same media, very different efficiency depending on access shaping.
+Commodity QLC SSDs do this inside the drive with an SLC-mode cache, which runs out under sustained writes. Arrays do it one level up: VAST buffers in shared SCM before writing wide QLC stripes ([Chapter 16](../03-system-architecture/16-disaggregated-shared-everything.md)). Everpure's DirectFlash puts the whole job in array software that sees every module's raw NAND ([Chapter 26](../04-everpure/26-purity-and-directflash.md)). Hyperscalers push hints down with NVMe Flexible Data Placement so drives can keep data of similar lifetime together[^20]. The semis analogy is a write-combining buffer in front of a DRAM controller.
 
 ### 3D NAND scaling: layers, decks and bonding
 
-Planar NAND stopped shrinking around the mid-teens of nanometres, when a cell held too few electrons to count reliably. The industry turned the array on its side. Bit density now grows by stacking more word-line layers, and the key process step is etching a channel hole through the whole stack at an extreme aspect ratio. Long stacks are built as two or three **decks** that are etched separately and aligned. SK hynix's 321-layer part uses three "plugs" and entered mass production in November 2024[^21]. The newest step is **wafer bonding**: building CMOS periphery on a separate wafer and hybrid-bonding it to the array. Samsung's 400+-layer V10 uses it[^22]. Kioxia and Sandisk have used a bonded design since BiCS8.
+Planar NAND stopped shrinking in the mid-teens of nanometres, when cells held too few electrons to count reliably, so the industry turned the array on its side. The critical step is now etching a channel hole through the whole stack at extreme aspect ratio. Long stacks are built as two or three **decks** that are etched separately and aligned. SK hynix's 321-layer part uses three "plugs" and entered mass production in November 2024[^21]. The newest step is **wafer bonding**: building CMOS periphery on a separate wafer and hybrid-bonding it to the array. Samsung's 400+-layer V10 uses it[^22].
 
 ![Step chart of leading 3D NAND layer counts from Samsung's 24 layers in 2013 to Samsung V10 at 400-plus layers in 2026, with 2024–26 points sourced and earlier points shown hollow as background-only.](../assets/charts/ch02-nand-layers.svg)
 
 *Figure 2.4 — Layer count rose roughly 17× in 13 years, but it is a poor proxy for cost per bit; density and wafer cost decide competitiveness.*
 Data: `data/ch02_nand_layers.csv`
 
-Layer count is a marketing number. Kioxia/Sandisk's 332-layer BiCS10 reportedly reaches about 37 Gb/mm² as QLC, which is denser than Samsung's 400+-layer V10 (about 28 Gb/mm² as TLC)[^23][^22]. Micron's 276-layer G9 is about 21 Gb/mm² in TLC[^24]. Comparing QLC with TLC flatters BiCS10, but the lesson stands: ask for Gb/mm², wafer cost and yield, as you would for a logic node. Each added deck adds deposition and etch steps, so capex per wafer rises even as cost per bit falls. That is the memory-industry version of "Moore's Law got expensive", and it is one reason suppliers added almost no wafer capacity in 2026.
+Layer count is a marketing number. Kioxia/Sandisk's 332-layer BiCS10 reportedly reaches about 37 Gb/mm² as QLC, which is denser than Samsung's 400+-layer V10 (about 28 Gb/mm² as TLC)[^23][^22]. Micron's 276-layer G9 is about 21 Gb/mm² in TLC[^24]. Comparing QLC with TLC flatters BiCS10, but the lesson stands: ask for Gb/mm², wafer cost and yield, as for a logic node. Each deck adds deposition and etch steps, so capex per wafer rises even as cost per bit falls, which makes suppliers cautious about adding capacity even in a shortage.
 
 Bigger dies and more layers produce bigger drives. Micron began shipping the 245.76 TB 6600 ION, built on G9 QLC, in May 2026[^16]. Sandisk has a 256 TB drive on 218-layer BiCS8 and shows 512 TB on its roadmap for 2027[^18]. Everpure's DirectFlash Module is reported at up to 300 TB[^25] [VERIFY: GA and ship date of the 300 TB DFM].
 
 ### HDD mechanics: capacity keeps rising, performance does not
 
-A hard drive is a stack of spinning platters with a head on an actuator arm for each surface. Random access needs a seek plus, on average, half a rotation. At 7,200 rpm one rotation takes 60 ÷ 7,200 = 8.33 ms, so average rotational latency is ~4.2 ms. Add ~4–5 ms of seek and a random read costs ~8–10 ms, or roughly 100–125 IOPS per drive. That figure has barely moved in 20 years while capacity has grown more than tenfold. A 30 TB drive therefore delivers ~4 IOPS per TB. Rebuilding one at an assumed ~250 MB/s sustained takes 30 × 10¹² ÷ 250 × 10⁶ ≈ 120,000 s, about **33 hours** at best. Bigger HDDs are excellent for bulk sequential data and progressively worse at everything else. That is why vendors now pitch bandwidth features as well as terabytes[^26].
+Random access on a hard drive needs a head seek plus, on average, half a platter rotation. At 7,200 rpm one rotation takes 60 ÷ 7,200 = 8.33 ms, so average rotational latency is ~4.2 ms. Add ~4–5 ms of seek and a random read costs ~8–10 ms, or roughly 100–125 IOPS per drive. That figure has barely moved in 20 years while capacity has grown more than tenfold. A 30 TB drive therefore delivers ~4 IOPS per TB. Rebuilding one at an assumed ~250 MB/s sustained takes 30 × 10¹² ÷ 250 × 10⁶ ≈ 120,000 s, about **33 hours** at best. Bigger HDDs suit bulk sequential data and get worse at everything else, which is why vendors now pitch bandwidth as well as terabytes[^26].
 
 Capacity growth depends on areal density, which runs into the magnetic **trilemma**. Smaller grains store more bits but become thermally unstable. Stable, high-anisotropy grains need a stronger write field than a head can produce. Three recording technologies work around it:
 
@@ -110,7 +110,7 @@ Capacity growth depends on areal density, which runs into the magnetic **trilemm
 
 *Table 2.2 — HDD makers trade write flexibility (SMR) or manufacturing complexity (HAMR) for capacity; none of it improves random I/O.*
 
-The SMR/NAND parallel is useful in conversation. Both media prefer large sequential writes into zones that must be reclaimed whole, so the same zoned-storage software ideas (ZNS, FDP, log-structured layouts) apply to both ([Chapter 12](../02-protocols-and-networking/12-interfaces-and-emerging-tech.md)).
+Note the SMR/NAND parallel: both prefer large sequential writes into zones that must be reclaimed whole, so the same zoned-storage software ideas (ZNS, FDP, log-structured layouts) apply to both ([Chapter 12](../02-protocols-and-networking/12-interfaces-and-emerging-tech.md)).
 
 ### Cost-per-bit curves: why the gap moved
 
@@ -121,7 +121,7 @@ Data: `data/ch02_hdd_vs_nand_cost.csv`
 
 The HDD curve is slow and steady. Backblaze's purchase cost fell from about $0.11/GB in 2009 to $0.014/GB in November 2022[^30], an average decline of ~0.5% a month, or ~6% a year. NAND's curve is steeper but cyclical. In Q2 2020, TrendForce data put enterprise SSDs at about $185/TB against $19/TB for nearline disk, a 9.7× premium[^31]. Seagate said in 2024 that it expected disk to hold a >6:1 advantage through 2027, averaging 6.6:1 (company-stated)[^32]. Then the shortage hit. One price index put the premium at 22.6× in Q1 2026[^33] and 18.6× in Q3 2026 (30 TB TLC SSD at $22,600 against a 30 TB HDD at $1,216)[^12]. These readings come from a single storage vendor's index, so treat the level with caution [VERIFY: corroborate the 2026 premium with TrendForce or Coughlin data].
 
-Flash still wins on other axes. Micron rates the 245 TB drive at ~8.2 TB/W against ~4.4 TB/W for a 44 TB HDD (vendor comparison)[^17]. Everpure claims DirectFlash cuts power by up to 75% compared with HDD (vendor claim)[^34]. Where power and floor space are the binding constraint, as in AI data centers, TCO can favour flash even at a large purchase-price premium. [Chapter 4](04-performance-and-economics-metrics.md) works the TCO.
+Flash wins elsewhere. Micron rates the 245 TB drive at ~8.2 TB/W against ~4.4 TB/W for a 44 TB HDD (vendor comparison)[^17]. Everpure claims DirectFlash cuts power by up to 75% compared with HDD (vendor claim)[^34]. Where power and space bind, as in AI data centers, TCO can favour flash despite the premium. [Chapter 4](04-performance-and-economics-metrics.md) works the TCO.
 
 ## How Everpure approaches it vs. competitors
 
@@ -135,7 +135,7 @@ Flash still wins on other axes. Micron rates the 245 TB drive at ~8.2 TB/W again
 
 *Table 2.3 — The competitive question is not "flash or disk" but where the flash-management intelligence lives and who pays for it.*
 
-The steelman for commodity SSDs is supply flexibility and speed. When Micron or Solidigm ships a 245 TB drive, a commodity-SSD vendor can qualify it quickly, while a module vendor has to build its own. The steelman for disk is simple: at an 18× gap, exabyte-scale cold data will stay on HDD and tape for years. Everpure's counter-position rests on two things that are public. Its Meta and second-hyperscaler deals license DirectFlash technology, and management has said Everpure does not procure the NAND for the hyperscaler business[^2], which insulates that revenue line from NAND price spikes. It has also qualified multiple NAND sources (Micron G8/G9 QLC, Kioxia BiCS8)[^36]. Options a strategy team might evaluate, based on public information: how much of the 2026 NAND price rise flows through array pricing versus margin, and whether a structurally higher flash premium slows HDD-replacement deals while strengthening the power-and-density argument for AI sites.
+The steelman for commodity SSDs is supply flexibility: a new 245 TB drive can be qualified quickly, while a module vendor must build its own. The steelman for disk: at an 18× gap, exabyte-scale cold data stays on HDD and tape for years. Two public facts shape Everpure's position. Its Meta and second-hyperscaler deals license DirectFlash technology, and management has said Everpure does not procure the NAND for the hyperscaler business[^2], which insulates that revenue line from NAND price spikes. It has also qualified multiple NAND sources (Micron G8/G9 QLC, Kioxia BiCS8)[^36]. Options a strategy team might evaluate, based on public information: how much of the 2026 NAND price rise flows through array pricing versus margin, and whether a structurally higher flash premium slows HDD-replacement deals while strengthening the power-and-density argument for AI sites.
 
 ## History and trajectory
 
@@ -154,7 +154,7 @@ timeline
 
 *Figure 2.6 — Flash capacity per device overtook disk by roughly 5× in 2026, while HDD's new technology, HAMR, is only now reaching volume.*
 
-The pre-2020 milestones are background knowledge rather than sources retrieved for this chapter [VERIFY: background dates for RAMAC, Toshiba NAND and Samsung V-NAND]. Three dated signals point forward. Layer roadmaps target ~500 layers, though vendor timelines conflict[^24]. PLC remains research[^19]. HDD capacity roadmaps (WD: 100 TB by 2029) depend on HAMR ramping on schedule[^27]. Meanwhile the 2026 price shock is a supply-discipline event, not a physics event. Suppliers added almost no new wafer capacity while AI servers absorbed bits[^3]. It will end, as previous NAND cycles have, but its length matters for 2027 pricing.
+Pre-2020 milestones are background knowledge [VERIFY: background dates for RAMAC, Toshiba NAND and Samsung V-NAND]. Looking forward: Layer roadmaps target ~500 layers, though vendor timelines conflict[^24]. PLC remains research[^19]. HDD capacity roadmaps (WD: 100 TB by 2029) depend on HAMR ramping on schedule[^27]. Meanwhile the 2026 price shock is a supply-discipline event, not a physics event. AI servers absorbed bits, and TrendForce reported most new supply already committed[^3]. Its length matters for 2027 pricing.
 
 ## Numbers that matter
 
@@ -175,30 +175,30 @@ The pre-2020 milestones are background knowledge rather than sources retrieved f
 
 **Questions for a PM**
 
-1. *"At today's flash premium over disk, where does an all-flash pitch still win on TCO, and where do we lose?"* A strong answer names the binding constraint per segment (power, rack space, rebuild risk, performance per TB). It quotes a break-even premium rather than "flash is always cheaper", and it knows what share of the bill of materials NAND now represents.
-2. *"How exposed are product margins to the 2026 NAND price rise, and how much is passed through?"* A strong answer separates the array business (Everpure buys NAND) from hyperscaler licensing (customer buys NAND). It also covers contract timing and Evergreen-style commitments that limit repricing.
+1. *"At today's flash premium over disk, where does an all-flash pitch still win on TCO, and where do we lose?"* Strong: names the binding constraint per segment (power, rack space, rebuild risk) and a break-even premium, not "flash is always cheaper".
+2. *"How exposed are product margins to the 2026 NAND price rise, and how much is passed through?"* Strong: separates arrays (Everpure buys NAND) from hyperscaler licensing (customer buys NAND), and covers contract timing and Evergreen commitments that limit repricing.
 3. *"What does QLC let us sell that TLC doesn't, and where would we refuse to put QLC?"* Strong: capacity and power wins for file, object and backup; caution for write-heavy, latency-critical block workloads unless the write path absorbs them.
 
 **Questions for an engineer**
 
-1. *"What effective WAF does Purity see on QLC in the field, and how does that translate into DWPD headroom?"* Strong: a measured number by workload, not a datasheet. It explains how the system-level FTL keeps WAF near 1 for sequential and reduced data.
+1. *"What effective WAF does Purity see on QLC in the field, and how does that translate into DWPD headroom?"* Strong: a measured number by workload, and how the system-level FTL keeps WAF near 1.
 2. *"How do you handle read disturb and retention on read-mostly AI datasets?"* Strong: background scrub and relocation scheduled around foreground I/O, plus telemetry on read-retry rates as a wear signal.
-3. *"What changes when you move from a 75 TB to a 300 TB module: rebuild time, blast radius, performance per TB?"* Strong: quantifies rebuild hours and the protection scheme. It also explains how parallelism within the module keeps performance per TB from collapsing the way it does on large HDDs.
+3. *"What changes when you move from a 75 TB to a 300 TB module: rebuild time, blast radius, performance per TB?"* Strong: rebuild hours, protection scheme, and how in-module parallelism stops performance per TB collapsing as it does on large HDDs.
 
 **Don't say this:**
 
 - "More layers means cheaper flash." Bit density, wafer cost and yield decide cost per bit. A 332-layer part can out-density a 400-layer one.
-- "QLC wears out too fast for enterprise." With a good write path, QLC endurance is adequate for most capacity workloads. It fails only when small random writes reach the NAND unshaped.
+- "QLC wears out too fast for enterprise." Behind a good write path it is adequate for most capacity workloads.
 - "Flash is now cheaper than disk." Not on purchase price in 2026, when the premium is roughly 18× or more by some indices. Argue TCO, power and density instead.
-- "SSDs are a good archive." Unpowered retention is a JEDEC-rated months, not years. Tape and disk exist for a reason.
+- "SSDs are a good archive." JEDEC-rated unpowered retention is months, not years.
 - "HAMR fixes disk performance." It adds capacity. IOPS per drive stay flat, so IOPS per TB keep falling.
 
 ## Going deeper (optional, L3 pointers)
 
-- JEDEC JESD218/JESD219: SSD endurance and retention test conditions, and why enterprise and client ratings differ.
-- IEDM and ISSCC NAND papers each year: tR/tPROG, ISPP step counts and bonding approaches by vendor. The SK hynix multi-site-cell PLC paper (IEDM 2025) is a good current example[^19].
-- NVM Express FDP (TP4146) and ZNS specifications for host-guided placement[^20].
-- Seagate and Western Digital investor-day decks for HAMR areal-density roadmaps and qualification status.
+- JEDEC JESD218/JESD219: SSD endurance and retention test conditions.
+- IEDM/ISSCC NAND papers: tR, tPROG and bonding by vendor, e.g. SK hynix's multi-site-cell PLC (IEDM 2025)[^19].
+- NVM Express FDP (TP4146) and ZNS specifications[^20].
+- Seagate and Western Digital investor-day decks on HAMR roadmaps.
 
 ## Key terms
 
