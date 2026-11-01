@@ -1,0 +1,198 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" role="img" aria-labelledby="t d" font-family="Inter, Helvetica, Arial, sans-serif">
+  <title id="t">Four AI-storage architectures side by side: FlashBlade//EXA, VAST, WEKA and DDN</title>
+  <desc id="d">Four panels drawn with the same grammar: GPU-server clients at the top, a metadata slot in the middle, the data tier at the bottom, an up-stack or second-engine slot below that, and three summary lines. Thick dark arrows are bulk data; dashed arrows are metadata operations; dotted lines are control. FlashBlade//EXA: stock pNFS clients get layouts from a Purity//FB metadata core on DirectFlash blades, then move data directly over RDMA to Purity//DN data nodes on third-party NVMe servers. VAST: stock NFS clients reach stateless CNodes, which reach DBoxes of SCM and QLC over an all-to-all NVMe-oF fabric; metadata lives in the shared SCM. WEKA: clients run the WEKA driver and hash each operation to a metadata bucket that lives on every backend node; there is no metadata server. DDN EXAScaler: Lustre kernel clients get layouts from the MDS and stream data directly to OSS appliances; Infinia, a separate key-value engine, sits alongside under the DDN CORE control plane.</desc>
+  <defs>
+    <marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#222222"/>
+    </marker>
+    <marker id="am" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,0 L10,5 L0,10 z" fill="#555555"/>
+    </marker>
+  </defs>
+  <rect x="0" y="0" width="1000" height="700" fill="#FFFFFF"/>
+
+  <text x="20" y="34" font-size="20" font-weight="700" fill="#222222">Four ways to feed a GPU cluster: same grammar, different splits</text>
+  <text x="20" y="56" font-size="13" fill="#555555">Logical view, not to scale. Original drawing for the Everpure Tech Atlas, Chapter 45 (based on Chapters 27, 42, 43 and 44).</text>
+
+  <!-- Panel backgrounds -->
+  <g fill="#FAFAFA" stroke="#DDDDDD">
+    <rect x="20" y="72" width="225" height="520" rx="8"/>
+    <rect x="265" y="72" width="225" height="520" rx="8"/>
+    <rect x="510" y="72" width="225" height="520" rx="8"/>
+    <rect x="755" y="72" width="225" height="520" rx="8"/>
+  </g>
+
+  <!-- Headers -->
+  <rect x="20" y="72" width="225" height="54" rx="8" fill="#0072B2"/>
+  <text x="132" y="95" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle">Everpure FlashBlade//EXA</text>
+  <text x="132" y="115" font-size="12" fill="#FFFFFF" text-anchor="middle">Metadata/data split, pNFS</text>
+  <rect x="265" y="72" width="225" height="54" rx="8" fill="#E69F00"/>
+  <text x="377" y="95" font-size="15" font-weight="700" fill="#222222" text-anchor="middle">VAST Data</text>
+  <text x="377" y="115" font-size="12" fill="#222222" text-anchor="middle">Disaggregated shared-everything</text>
+  <rect x="510" y="72" width="225" height="54" rx="8" fill="#009E73"/>
+  <text x="622" y="95" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle">WEKA NeuralMesh</text>
+  <text x="622" y="115" font-size="12" fill="#FFFFFF" text-anchor="middle">Shared-nothing parallel FS</text>
+  <rect x="755" y="72" width="225" height="54" rx="8" fill="#CC79A7"/>
+  <text x="867" y="95" font-size="15" font-weight="700" fill="#222222" text-anchor="middle">DDN EXAScaler + Infinia</text>
+  <text x="867" y="115" font-size="12" fill="#222222" text-anchor="middle">Lustre MDS/OSS, plus KV engine</text>
+
+  <!-- Client boxes -->
+  <g fill="#F3F6F9" stroke="#888888">
+    <rect x="30" y="140" width="205" height="44" rx="6"/>
+    <rect x="275" y="140" width="205" height="44" rx="6"/>
+    <rect x="520" y="140" width="205" height="44" rx="6"/>
+    <rect x="765" y="140" width="205" height="44" rx="6"/>
+  </g>
+  <g font-size="13" font-weight="700" fill="#222222" text-anchor="middle">
+    <text x="132" y="158">GPU servers</text>
+    <text x="377" y="158">GPU servers</text>
+    <text x="622" y="158">GPU servers</text>
+    <text x="867" y="158">GPU servers</text>
+  </g>
+  <g font-size="12" fill="#222222" text-anchor="middle">
+    <text x="132" y="176">stock Linux pNFS client</text>
+    <text x="377" y="176">stock NFS client (RDMA)</text>
+    <text x="622" y="176">WEKA driver (DPDK)</text>
+    <text x="867" y="176">Lustre kernel client</text>
+  </g>
+
+  <!-- ===== Panel 1: EXA ===== -->
+  <rect x="30" y="228" width="110" height="70" rx="6" fill="#D6E9F5" stroke="#0072B2" stroke-width="1.5"/>
+  <text x="85" y="248" font-size="12" font-weight="700" fill="#222222" text-anchor="middle">Metadata core</text>
+  <text x="85" y="265" font-size="12" fill="#222222" text-anchor="middle">Purity//FB on</text>
+  <text x="85" y="281" font-size="12" fill="#222222" text-anchor="middle">DFM blades</text>
+  <line x1="70" y1="184" x2="70" y2="226" stroke="#555555" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#am)"/>
+  <text x="76" y="211" font-size="12" fill="#555555">layout</text>
+  <line x1="85" y1="298" x2="85" y2="360" stroke="#888888" stroke-width="1.2" stroke-dasharray="2 3"/>
+  <text x="90" y="336" font-size="12" fill="#777777">control</text>
+  <line x1="190" y1="184" x2="190" y2="358" stroke="#222222" stroke-width="5" marker-end="url(#ah)"/>
+  <text x="198" y="262" font-size="12" fill="#222222">RDMA</text>
+  <text x="198" y="278" font-size="12" fill="#222222">direct</text>
+  <rect x="30" y="360" width="205" height="88" rx="6" fill="#EEEEEE" stroke="#888888"/>
+  <text x="132" y="378" font-size="12" font-weight="700" fill="#222222" text-anchor="middle">Data nodes (Purity//DN)</text>
+  <g fill="#FFFFFF" stroke="#888888">
+    <rect x="38" y="388" width="58" height="50" rx="4"/><rect x="103" y="388" width="58" height="50" rx="4"/><rect x="168" y="388" width="58" height="50" rx="4"/>
+  </g>
+  <g font-size="12" fill="#222222" text-anchor="middle">
+    <text x="67" y="409">Linux</text><text x="67" y="425">NVMe</text>
+    <text x="132" y="409">Linux</text><text x="132" y="425">NVMe</text>
+    <text x="197" y="409">Linux</text><text x="197" y="425">NVMe</text>
+  </g>
+  <rect x="30" y="460" width="205" height="42" rx="6" fill="#FFFFFF" stroke="#0072B2" stroke-dasharray="4 3"/>
+  <text x="132" y="477" font-size="12" font-weight="700" fill="#222222" text-anchor="middle">+ PureKVA (KV cache)</text>
+  <text x="132" y="494" font-size="12" fill="#222222" text-anchor="middle">Evergreen//One for AI</text>
+  <g font-size="12" fill="#222222">
+    <text x="32" y="530">Bulk data: 1 hop to data node</text>
+    <text x="32" y="550">Metadata: Purity core, off path</text>
+    <text x="32" y="570">Scales: blades, nodes apart</text>
+  </g>
+
+  <!-- ===== Panel 2: VAST ===== -->
+  <rect x="275" y="222" width="205" height="80" rx="6" fill="#FBEBD0" stroke="#E69F00" stroke-width="1.5"/>
+  <text x="377" y="239" font-size="12" font-weight="700" fill="#222222" text-anchor="middle">CNodes (stateless)</text>
+  <g fill="#FFFFFF" stroke="#E69F00">
+    <rect x="283" y="248" width="58" height="44" rx="4"/><rect x="348" y="248" width="58" height="44" rx="4"/><rect x="413" y="248" width="58" height="44" rx="4"/>
+  </g>
+  <g font-size="12" fill="#222222" text-anchor="middle">
+    <text x="312" y="275">CNode</text><text x="377" y="275">CNode</text><text x="442" y="275">CNode</text>
+  </g>
+  <line x1="377" y1="184" x2="377" y2="220" stroke="#222222" stroke-width="5" marker-end="url(#ah)"/>
+  <rect x="275" y="318" width="205" height="22" rx="4" fill="#DDDDDD"/>
+  <text x="390" y="334" font-size="12" fill="#222222" text-anchor="middle">NVMe-oF fabric</text>
+  <line x1="305" y1="302" x2="305" y2="358" stroke="#222222" stroke-width="5" marker-end="url(#ah)"/>
+  <line x1="462" y1="302" x2="462" y2="386" stroke="#555555" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#am)"/>
+  <rect x="275" y="360" width="205" height="88" rx="6" fill="#EEEEEE" stroke="#888888"/>
+  <text x="377" y="378" font-size="12" font-weight="700" fill="#222222" text-anchor="middle">DBoxes (shared by all)</text>
+  <g stroke="#888888">
+    <rect x="283" y="388" width="94" height="50" rx="4" fill="#FFFFFF"/><rect x="383" y="388" width="90" height="50" rx="4" fill="#FFFFFF"/>
+    <rect x="283" y="388" width="94" height="20" rx="4" fill="#FBEBD0"/><rect x="383" y="388" width="90" height="20" rx="4" fill="#FBEBD0"/>
+  </g>
+  <g font-size="12" fill="#222222" text-anchor="middle">
+    <text x="330" y="403">SCM: metadata</text><text x="330" y="428">QLC: data</text>
+    <text x="428" y="403">SCM: metadata</text><text x="428" y="428">QLC: data</text>
+  </g>
+  <rect x="275" y="460" width="205" height="42" rx="6" fill="#FFFFFF" stroke="#E69F00" stroke-dasharray="4 3"/>
+  <text x="377" y="477" font-size="12" font-weight="700" fill="#222222" text-anchor="middle">+ Element Store: file,</text>
+  <text x="377" y="494" font-size="12" fill="#222222" text-anchor="middle">object, block, tables, Kafka</text>
+  <g font-size="12" fill="#222222">
+    <text x="277" y="530">Bulk data: 2 hops (CNode, DBox)</text>
+    <text x="277" y="550">Metadata: shared SCM, any CNode</text>
+    <text x="277" y="570">Scales: CNodes, DBoxes apart</text>
+  </g>
+
+  <!-- ===== Panel 3: WEKA ===== -->
+  <rect x="520" y="228" width="120" height="70" rx="6" fill="#FFFFFF" stroke="#009E73" stroke-width="1.5" stroke-dasharray="5 3"/>
+  <text x="580" y="246" font-size="12" font-weight="700" fill="#222222" text-anchor="middle">No metadata</text>
+  <text x="580" y="262" font-size="12" font-weight="700" fill="#222222" text-anchor="middle">server: ops are</text>
+  <text x="580" y="278" font-size="12" fill="#222222" text-anchor="middle">hashed to node</text>
+  <text x="580" y="293" font-size="12" fill="#222222" text-anchor="middle">buckets</text>
+  <line x1="560" y1="184" x2="560" y2="226" stroke="#555555" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#am)"/>
+  <line x1="580" y1="298" x2="560" y2="388" stroke="#555555" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#am)"/>
+  <line x1="680" y1="184" x2="680" y2="358" stroke="#222222" stroke-width="5" marker-end="url(#ah)"/>
+  <text x="688" y="262" font-size="12" fill="#222222">DPDK</text>
+  <text x="688" y="278" font-size="12" fill="#222222">or RDMA</text>
+  <rect x="520" y="360" width="205" height="88" rx="6" fill="#EEEEEE" stroke="#888888"/>
+  <text x="622" y="378" font-size="12" font-weight="700" fill="#222222" text-anchor="middle">Backend nodes (peers)</text>
+  <g stroke="#888888">
+    <rect x="528" y="388" width="58" height="50" rx="4" fill="#FFFFFF"/><rect x="593" y="388" width="58" height="50" rx="4" fill="#FFFFFF"/><rect x="658" y="388" width="58" height="50" rx="4" fill="#FFFFFF"/>
+    <rect x="528" y="388" width="58" height="20" rx="4" fill="#CCEBE1"/><rect x="593" y="388" width="58" height="20" rx="4" fill="#CCEBE1"/><rect x="658" y="388" width="58" height="20" rx="4" fill="#CCEBE1"/>
+  </g>
+  <g font-size="12" fill="#222222" text-anchor="middle">
+    <text x="557" y="403">buckets</text><text x="557" y="428">NVMe</text>
+    <text x="622" y="403">buckets</text><text x="622" y="428">NVMe</text>
+    <text x="687" y="403">buckets</text><text x="687" y="428">NVMe</text>
+  </g>
+  <rect x="520" y="460" width="205" height="42" rx="6" fill="#FFFFFF" stroke="#009E73" stroke-dasharray="4 3"/>
+  <text x="622" y="477" font-size="12" font-weight="700" fill="#222222" text-anchor="middle">+ AMG KV-cache tier</text>
+  <text x="622" y="494" font-size="12" fill="#222222" text-anchor="middle">Axon: runs in GPU servers</text>
+  <g font-size="12" fill="#222222">
+    <text x="522" y="530">Bulk data: owner, then drives</text>
+    <text x="522" y="550">Metadata: hashed, every node</text>
+    <text x="522" y="570">Scales: whole nodes together</text>
+  </g>
+
+  <!-- ===== Panel 4: DDN ===== -->
+  <rect x="765" y="228" width="110" height="70" rx="6" fill="#F5E1EC" stroke="#CC79A7" stroke-width="1.5"/>
+  <text x="820" y="248" font-size="12" font-weight="700" fill="#222222" text-anchor="middle">MDS / MDT</text>
+  <text x="820" y="265" font-size="12" fill="#222222" text-anchor="middle">Lustre</text>
+  <text x="820" y="281" font-size="12" fill="#222222" text-anchor="middle">metadata</text>
+  <line x1="805" y1="184" x2="805" y2="226" stroke="#555555" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#am)"/>
+  <text x="811" y="211" font-size="12" fill="#555555">layout</text>
+  <line x1="820" y1="298" x2="820" y2="360" stroke="#888888" stroke-width="1.2" stroke-dasharray="2 3"/>
+  <text x="825" y="336" font-size="12" fill="#777777">locks</text>
+  <line x1="925" y1="184" x2="925" y2="358" stroke="#222222" stroke-width="5" marker-end="url(#ah)"/>
+  <text x="933" y="262" font-size="12" fill="#222222">LNet</text>
+  <text x="933" y="278" font-size="12" fill="#222222">RDMA</text>
+  <rect x="765" y="360" width="205" height="88" rx="6" fill="#EEEEEE" stroke="#888888"/>
+  <text x="867" y="378" font-size="12" font-weight="700" fill="#222222" text-anchor="middle">OSS / OST appliances</text>
+  <g fill="#FFFFFF" stroke="#888888">
+    <rect x="773" y="388" width="58" height="50" rx="4"/><rect x="838" y="388" width="58" height="50" rx="4"/><rect x="903" y="388" width="58" height="50" rx="4"/>
+  </g>
+  <g font-size="12" fill="#222222" text-anchor="middle">
+    <text x="802" y="409">OSS</text><text x="802" y="425">AI400X</text>
+    <text x="867" y="409">OSS</text><text x="867" y="425">AI400X</text>
+    <text x="932" y="409">OSS</text><text x="932" y="425">AI400X</text>
+  </g>
+  <rect x="765" y="460" width="205" height="42" rx="6" fill="#FFFFFF" stroke="#CC79A7" stroke-dasharray="4 3"/>
+  <text x="867" y="477" font-size="12" font-weight="700" fill="#222222" text-anchor="middle">+ Infinia KV-store engine</text>
+  <text x="867" y="494" font-size="12" fill="#222222" text-anchor="middle">S3, KV cache; via DDN CORE</text>
+  <g font-size="12" fill="#222222">
+    <text x="767" y="530">Bulk data: 1 hop to OSS</text>
+    <text x="767" y="550">Metadata: MDS/MDT, DNE shards</text>
+    <text x="767" y="570">Scales: MDS, OSS apart</text>
+  </g>
+
+  <!-- Legend -->
+  <rect x="20" y="606" width="960" height="46" rx="6" fill="#F3F6F9" stroke="#DDDDDD"/>
+  <line x1="36" y1="629" x2="86" y2="629" stroke="#222222" stroke-width="5" marker-end="url(#ah)"/>
+  <text x="94" y="633" font-size="12" fill="#222222">bulk data path</text>
+  <line x1="200" y1="629" x2="250" y2="629" stroke="#555555" stroke-width="1.6" stroke-dasharray="5 4" marker-end="url(#am)"/>
+  <text x="258" y="633" font-size="12" fill="#222222">metadata operations</text>
+  <line x1="390" y1="629" x2="440" y2="629" stroke="#888888" stroke-width="1.2" stroke-dasharray="2 3"/>
+  <text x="448" y="633" font-size="12" fill="#222222">control only</text>
+  <rect x="545" y="620" width="16" height="16" rx="3" fill="#FFFFFF" stroke="#555555" stroke-dasharray="4 3"/>
+  <text x="569" y="633" font-size="12" fill="#222222">up-stack layer or second engine</text>
+  <rect x="770" y="620" width="16" height="16" rx="3" fill="#EEEEEE" stroke="#888888"/>
+  <text x="794" y="633" font-size="12" fill="#222222">where the bytes live</text>
+  <text x="20" y="680" font-size="12" fill="#555555">Hop counts are logical network hops for bulk data, not latency. WEKA's internal hop order is simplified; WEKA does not publish it.</text>
+</svg>

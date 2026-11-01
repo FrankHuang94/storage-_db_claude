@@ -1,0 +1,3750 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A strategy-level knowledge base on storage, AI storage and the competitive landscape around Everpure (formerly Pure Storage).">
+      
+      
+      
+        <link rel="canonical" href="https://frankhuang94.github.io/storage-_db_claude/02-protocols-and-networking/08-file-protocols/">
+      
+      
+        <link rel="prev" href="../07-block-protocols/">
+      
+      
+        <link rel="next" href="../09-object-storage-and-s3/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>8. File protocols - Everpure Tech Atlas</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#8-file-protocols" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Everpure Tech Atlas" class="md-header__button md-logo" aria-label="Everpure Tech Atlas" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Everpure Tech Atlas
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              8. File protocols
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/FrankHuang94/storage-_db_claude" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    storage-_db_claude
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Everpure Tech Atlas" class="md-nav__button md-logo" aria-label="Everpure Tech Atlas" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Everpure Tech Atlas
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/FrankHuang94/storage-_db_claude" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    storage-_db_claude
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 0 — Start Here
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 0 — Start Here
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start-here/00a-how-to-use-this-atlas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0.1. How to use this atlas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start-here/00b-one-page-map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0.2. The one-page map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 1 — Storage Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 1 — Storage Fundamentals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/01-what-storage-does/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. What storage does
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/02-media-physics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Media physics for a semis person
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/03-inside-an-ssd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Inside an SSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/04-performance-and-economics-metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Performance and economics metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/05-data-reduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Data reduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/06-data-protection-and-resilience/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Data protection and resilience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 2 — Protocols and Networking
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 2 — Protocols and Networking
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../07-block-protocols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Block protocols
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. File protocols
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. File protocols
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters-for-everpure-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters for Everpure strategy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-a-file-protocol-actually-carries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What a file protocol actually carries
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nfsv3-stateless-by-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NFSv3: stateless by design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nfsv40-41-and-42-state-sessions-layouts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NFSv4.0, 4.1 and 4.2: state, sessions, layouts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-single-head-bottleneck-and-the-escalation-ladder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The single-head bottleneck and the escalation ladder
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-pnfs-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How pNFS works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#smb3-the-windows-side" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SMB3: the Windows side
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#posix-semantics-and-why-ai-loaders-want-them" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        POSIX semantics, and why AI loaders want them
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparison
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-everpure-approaches-it-vs-competitors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Everpure approaches it vs. competitors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#history-and-trajectory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        History and trajectory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#numbers-that-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Numbers that matter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversation-playbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversation playbook
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-deeper-optional-l3-pointers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going deeper (optional, L3 pointers)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key terms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-object-storage-and-s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Object storage and S3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-datacenter-networking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Datacenter networking for storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-gpu-data-path/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. The GPU data path
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-interfaces-and-emerging-tech/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Interfaces and emerging tech
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3 — Storage System Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 3 — Storage System Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/13-storage-stack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. The storage stack, layer by layer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/14-scale-up-dual-controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Scale-up dual-controller arrays
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/15-scale-out-shared-nothing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Scale-out shared-nothing clusters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/16-disaggregated-shared-everything/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Disaggregated shared-everything architectures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/17-parallel-file-systems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Parallel and distributed file systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/18-object-storage-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Object storage architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/19-software-defined-and-hci/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Software-defined storage and HCI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/20-distributed-systems-fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Distributed-systems fundamentals for storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/21-metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Metadata: the hidden bottleneck
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/22-control-planes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Control planes and fleet management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/23-consumption-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Consumption models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/24-architecture-decision-matrix/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Architecture decision matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 4 — Everpure
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 4 — Everpure
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/25-company-history-and-strategy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Company history and strategy, 2009–2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/26-purity-and-directflash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Core technology: Purity and DirectFlash
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/27-flasharray-and-flashblade/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Product portfolio: FlashArray and FlashBlade
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/28-platform-and-software/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. Platform and software
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/29-hyperscaler-ecosystem-financials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Hyperscaler business, ecosystem and financials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 5 — AI Storage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 5 — AI Storage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/30-ai-data-pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. The AI data pipeline end to end
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/31-training-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Training storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/32-inference-and-kv-cache/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Inference and KV cache
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/33-rag-vector-lakehouse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    33. RAG, vector databases and AI-native data formats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/34-nvidia-ecosystem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. NVIDIA's ecosystem and certifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/35-ai-factories-and-neoclouds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    35. AI factories and neoclouds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/36-hyperscaler-ai-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    36. How hyperscalers build AI storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/37-reading-benchmarks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    37. Reading benchmarks critically
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/38-power-and-density/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    38. Power, density and the AI datacenter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/39-agentic-ai-and-data-intelligence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    39. Agentic AI and data intelligence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 6 — Industry and Competition
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 6 — Industry and Competition
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/40-market-structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    40. Market structure and sizing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/41-why-ai-native-vendors-won/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    41. Why AI-native storage vendors gained traction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/42-vast-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    42. VAST Data deep dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/43-weka/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    43. WEKA deep dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/44-ddn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    44. DDN deep dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/45-head-to-head/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    45. Head-to-head: FlashBlade//EXA vs. VAST vs. WEKA vs. DDN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/46-incumbents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    46. Incumbents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/47-other-challengers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    47. Other challengers and software-defined players
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/48-media-suppliers-and-nand-cycle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    48. Media suppliers and the NAND cycle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/49-competitive-matrices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    49. Competitive landscape matrices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/50-diligence-framework/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    50. Technical diligence framework
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 7 — History and Future
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 7 — History and Future
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/51-history-of-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    51. History of storage, 1956–2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/52-history-of-flash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    52. History of flash and NAND economics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/53-future-trends/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    53. Future trends, 2026–2032
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/54-strategic-option-map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    54. Strategic option map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 8 — Conversation Toolkit
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 8 — Conversation Toolkit
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/55-talking-with-pms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    55. Talking with product managers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/56-talking-with-engineering-and-cto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    56. Talking with engineering leaders and the CTO office
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/57-question-bank/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    57. Question bank: 150 questions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/58-explain-in-30-seconds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    58. Explain it in 30 seconds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/59-self-test-flashcards/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    59. Self-test: 279 flashcards
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/60-cheat-sheets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    60. Cheat sheets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters-for-everpure-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters for Everpure strategy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-a-file-protocol-actually-carries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What a file protocol actually carries
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nfsv3-stateless-by-design" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NFSv3: stateless by design
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nfsv40-41-and-42-state-sessions-layouts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NFSv4.0, 4.1 and 4.2: state, sessions, layouts
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-single-head-bottleneck-and-the-escalation-ladder" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The single-head bottleneck and the escalation ladder
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-pnfs-works" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How pNFS works
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#smb3-the-windows-side" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SMB3: the Windows side
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#posix-semantics-and-why-ai-loaders-want-them" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        POSIX semantics, and why AI loaders want them
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#comparison" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Comparison
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-everpure-approaches-it-vs-competitors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Everpure approaches it vs. competitors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#history-and-trajectory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        History and trajectory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#numbers-that-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Numbers that matter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversation-playbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversation playbook
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-deeper-optional-l3-pointers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going deeper (optional, L3 pointers)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key terms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="8-file-protocols">8. File protocols<a class="headerlink" href="#8-file-protocols" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>Depth:</strong> L2 · <strong>Reading time:</strong> ~9 min · <strong>Last verified:</strong> 2026-11-01
+<strong>Prerequisites:</strong> <a href="../../01-storage-fundamentals/01-what-storage-does/">What storage does</a> · <a href="../07-block-protocols/">Block protocols and NVMe-oF</a> · <a href="../10-datacenter-networking/">Datacenter networking</a> (helpful)</p>
+</blockquote>
+<h2 id="tldr">TL;DR<a class="headerlink" href="#tldr" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>File protocols carry operations on names, not blocks.</strong> The server owns the namespace, locks and byte placement. NFS rules Linux and AI clusters; SMB rules Windows.</li>
+<li><strong>NFSv3 is stateless; NFSv4.x is stateful</strong>, with leases, delegations and integrated locks. v4.1 added sessions and <strong>pNFS</strong>; v4.2 added server-side copy and sparse files.</li>
+<li><strong>Classic NAS has a "single head" problem.</strong> Each mount goes to one server, so every byte crosses one controller. The fixes, from least to most disruptive: <code>nconnect</code>, RDMA, client multipath, pNFS, a proprietary parallel client.</li>
+<li><strong>pNFS separates the control path from the data path.</strong> The client gets a <em>layout</em> from a metadata server, then does I/O directly and in parallel to the data servers. The Flex Files layout (2018) lets those data servers be plain NFSv3 servers.</li>
+<li><strong>Vendors are converging on "parallel, with the stock Linux client."</strong> Hammerspace, Everpure FlashBlade//EXA, Dell and NetApp bet on pNFS; VAST on its multipath NFS client; Lustre, GPFS and WEKA on proprietary clients.</li>
+</ul>
+<h2 id="why-this-matters-for-everpure-strategy">Why this matters for Everpure strategy<a class="headerlink" href="#why-this-matters-for-everpure-strategy" title="Permanent link">&para;</a></h2>
+<p>GPU servers mount data, checkpoints and home directories as a POSIX file system, which on Linux usually means NFS, FlashBlade's main front door. The protocol therefore gates the deal. A proprietary parallel client is fastest but costs an install, kernel lock-in and a security review on every GPU node. Standard NFS is easy to adopt but tops out at the server head.</p>
+<p>FlashBlade//EXA (March 2025) is Pure Storage's (now Everpure's) bet on a middle path. It speaks pNFS, with metadata over NFSv4.1/TCP to a FlashBlade metadata core and data over NFSv3/RDMA directly to data nodes, and needs no proprietary client<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>. Rivals are making the same bet. In September 2026 NetApp announced its intent to acquire PEAK:AIO (not yet closed) to bring parallel NFS to ONTAP<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>, and Dell is adding pNFS Flex Files to PowerScale<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>. Judging EXA means knowing where pNFS beats VAST's multipath NFS or a Lustre client, and where it falls short; see <a href="../../03-system-architecture/17-parallel-file-systems/">Chapter 17</a> and <a href="../../03-system-architecture/16-disaggregated-shared-everything/">Chapter 16</a>.</p>
+<h2 id="core-concepts">Core concepts<a class="headerlink" href="#core-concepts" title="Permanent link">&para;</a></h2>
+<h3 id="what-a-file-protocol-actually-carries">What a file protocol actually carries<a class="headerlink" href="#what-a-file-protocol-actually-carries" title="Permanent link">&para;</a></h3>
+<p>A <a href="../07-block-protocols/">block protocol</a> says "read 8 blocks at LBA 1,000,000" and leaves meaning to the host's file system. A file protocol says "look up <code>shard-00042.tar</code>" and "read 1 MiB at offset 64 MiB". Because the server owns namespace and locks, many clients can share data safely, which is the point of NAS. The cost: every client depends on the server to turn names into bytes.</p>
+<p><strong>Semiconductor bridge.</strong> In directory-based cache coherence, a home node tracks where each line lives. A file server is that home node, and classic NAS also pushes the data through it. pNFS tells the requester where the line is and lets it fetch peer-to-peer.</p>
+<h3 id="nfsv3-stateless-by-design">NFSv3: stateless by design<a class="headerlink" href="#nfsv3-stateless-by-design" title="Permanent link">&para;</a></h3>
+<p>NFSv3 (RFC 1813, 1995)<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup> runs over Sun RPC. Each request carries an opaque <strong>file handle</strong> and stands alone; the server tracks no opens, so after a reboot clients just retry. That simplicity keeps v3 the most widely deployed version. Statelessness has three costs:</p>
+<ul>
+<li><strong>Locking sits outside the protocol</strong>, in fragile NLM/NSM side protocols.</li>
+<li><strong>Consistency is "close-to-open".</strong> Clients cache attributes for a few seconds, revalidate on <code>open()</code> and flush on <code>close()</code>. Another client is guaranteed to see your writes only after you close the file and it reopens it.</li>
+<li><strong>Every path component costs a round trip.</strong> A <code>LOOKUP</code> per component, plus <code>GETATTR</code>s, comes before the first <code>READ</code>.</li>
+</ul>
+<pre class="mermaid"><code>sequenceDiagram
+    participant C as Linux client
+    participant S as NAS head
+    participant D as Drives behind head
+    C-&gt;&gt;S: LOOKUP data then train then shard file
+    S--&gt;&gt;C: file handle
+    C-&gt;&gt;S: GETATTR file handle
+    S--&gt;&gt;C: size, mtime, permissions
+    loop for each 1 MiB chunk
+        C-&gt;&gt;S: READ handle, offset, 1 MiB
+        S-&gt;&gt;D: fetch blocks
+        D--&gt;&gt;S: data
+        S--&gt;&gt;C: data over one TCP connection
+    end</code></pre>
+<p><em>Figure 8.1 — In NFSv3 every metadata step and every data byte goes through the one server that owns the mount, so that server's CPU and NICs set the ceiling.</em></p>
+<h3 id="nfsv40-41-and-42-state-sessions-layouts">NFSv4.0, 4.1 and 4.2: state, sessions, layouts<a class="headerlink" href="#nfsv40-41-and-42-state-sessions-layouts" title="Permanent link">&para;</a></h3>
+<p><strong>NFSv4.0</strong> (RFC 3530 in 2003, revised as RFC 7530)<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup> made NFS stateful. Clients <code>OPEN</code> files under renewable <strong>leases</strong>, and locking became part of the protocol. <strong>Delegations</strong> give one client exclusive caching rights to a file until the server recalls them. <strong>COMPOUND</strong> bundles several operations, such as LOOKUP, GETATTR and READ, into one round trip. It runs on one port with Kerberos and ACLs. The price is a grace period after restarts while clients reclaim state.</p>
+<p><strong>NFSv4.1</strong> (RFC 5661 in 2010, now RFC 8881)<sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup> added <strong>sessions</strong>, which make retries exactly-once; <strong>trunking</strong>, which spreads one session over several connections; and <strong>pNFS</strong>. <strong>NFSv4.2</strong> (RFC 7862, 2016)<sup id="fnref:7"><a class="footnote-ref" href="#fn:7">7</a></sup> added server-side copy, sparse files, I/O hints, labeled NFS, and layout statistics and error reporting that pNFS servers use to steer clients. The <strong>Flex Files layout</strong> (RFC 8435, 2018)<sup id="fnref:8"><a class="footnote-ref" href="#fn:8">8</a></sup> lets data servers speak plain NFSv3 and lets clients mirror writes.</p>
+<h3 id="the-single-head-bottleneck-and-the-escalation-ladder">The single-head bottleneck and the escalation ladder<a class="headerlink" href="#the-single-head-bottleneck-and-the-escalation-ladder" title="Permanent link">&para;</a></h3>
+<p>Each end of a TCP connection is served by roughly one core and one NIC queue. VAST's documentation puts a plain NFS/TCP mount on a 100 Gb/s NIC at about 2–2.5 GB/s<sup id="fnref:9"><a class="footnote-ref" href="#fn:9">9</a></sup> [VERIFY: search-summary only]. <strong>Worked example:</strong> a GPU server with two 400 Gb/s storage ports can absorb 2 × 50 = 100 GB/s, the equivalent of 100 ÷ 2.25 ≈ 44 such connections. Across 500 servers that is 50 TB/s, far beyond any controller pair, and scale-out NAS nodes often relay data east-west behind the scenes. Five fixes, in rising order of disruption (Figure 8.2):</p>
+<ol>
+<li><strong><code>nconnect</code></strong> (Linux 5.3, 2019) opens up to 16 TCP connections per mount to the same server address<sup id="fnref:10"><a class="footnote-ref" href="#fn:10">10</a></sup>. VAST cites about 11 GB/s on one 100 Gb/s NIC<sup id="fnref2:9"><a class="footnote-ref" href="#fn:9">9</a></sup>: more pipes, same head.</li>
+<li><strong>NFS over RDMA</strong> (RFC 8166/8267, 2017)<sup id="fnref:11"><a class="footnote-ref" href="#fn:11">11</a></sup> has the server place bulk data directly into client memory, which saves copies and CPU. It is also how <a href="../11-gpu-data-path/">GPUDirect Storage</a> runs over NFS: NVIDIA's GDS driver supports NFS/RDMA<sup id="fnref:12"><a class="footnote-ref" href="#fn:12">12</a></sup>. VAST cites about 8–8.5 GB/s per RDMA connection on 100 GbE<sup id="fnref3:9"><a class="footnote-ref" href="#fn:9">9</a></sup>.</li>
+<li><strong>Client multipath</strong> spreads one mount over many local NICs and many server IPs. VAST ships its own build of the Linux NFS client for this, covering NFSv3 and NFSv4.1 over TCP or RDMA, and reported 162 GiB/s into one DGX A100 with eight 200 Gb/s NICs and GDS (<em>company-stated</em>)<sup id="fnref:13"><a class="footnote-ref" href="#fn:13">13</a></sup>. The wire protocol is standard; the client module is VAST's. It works because in <a href="../../03-system-architecture/16-disaggregated-shared-everything/">DASE</a> any node can serve any file.</li>
+<li><strong>pNFS</strong> changes the protocol so that data bypasses the head (Figure 8.3).</li>
+<li><strong>Proprietary parallel clients</strong> (Lustre, IBM Storage Scale/GPFS, WEKA, BeeGFS) replace NFS on the client entirely.</li>
+</ol>
+<p><img alt="Three panels. A: four clients converge on one NAS head, marked as the bottleneck, in front of its drives. B: one GPU server fans out many connections to four protocol nodes that share back-end media. C: three clients exchange dashed control traffic with a metadata server and send thick direct data paths to four data servers." src="../../assets/diagrams/ch08-parallel-access.svg" /></p>
+<p><em>Figure 8.2 — The escalation ladder moves from "more pipes into the same head" (A to B) to "take the head out of the data path" (C).</em></p>
+<h3 id="how-pnfs-works">How pNFS works<a class="headerlink" href="#how-pnfs-works" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>sequenceDiagram
+    participant C as Linux client
+    participant M as Metadata server
+    participant D1 as Data server 1
+    participant D2 as Data server 2
+    participant D3 as Data server 3
+    C-&gt;&gt;M: OPEN shard file over NFSv4.1
+    M--&gt;&gt;C: stateid and delegation if granted
+    C-&gt;&gt;M: LAYOUTGET byte range 0 to 3 GiB
+    M--&gt;&gt;C: layout, stripe unit and data server list
+    C-&gt;&gt;M: GETDEVICEINFO
+    M--&gt;&gt;C: data server addresses, TCP or RDMA
+    par direct parallel I/O
+        C-&gt;&gt;D1: READ stripe 0 over NFSv3 RDMA
+        C-&gt;&gt;D2: READ stripe 1 over NFSv3 RDMA
+        C-&gt;&gt;D3: READ stripe 2 over NFSv3 RDMA
+    end
+    D1--&gt;&gt;C: data
+    D2--&gt;&gt;C: data
+    D3--&gt;&gt;C: data
+    Note over M,D3: If data moves or a server fails, M recalls the layout and the client asks again
+    C-&gt;&gt;M: LAYOUTRETURN and CLOSE</code></pre>
+<p><em>Figure 8.3 — pNFS touches the metadata server once per file or range, then streams data from many servers in parallel, so throughput scales with the number of data servers, not with the metadata server.</em></p>
+<p>Three properties matter. First, <strong>the client does the striping arithmetic</strong>: from the stripe unit and server list it works out which server holds offset X, as a <a href="../../03-system-architecture/17-parallel-file-systems/">Lustre</a> client does with its stripe map. Second, <strong>layouts are recallable leases</strong>: a rebalance, failure or conflicting writer triggers a recall, and the client re-fetches or sends I/O via the metadata server. Third, <strong>layout types differ</strong>. The "files" layout needs data servers that speak NFSv4.1, and the block and SCSI layouts point at LUNs. Flex Files accepts plain NFSv3 servers, which is why Hammerspace and FlashBlade//EXA use NFSv3 on the data leg<sup id="fnref2:1"><a class="footnote-ref" href="#fn:1">1</a></sup><sup id="fnref2:8"><a class="footnote-ref" href="#fn:8">8</a></sup>.</p>
+<h3 id="smb3-the-windows-side">SMB3: the Windows side<a class="headerlink" href="#smb3-the-windows-side" title="Permanent link">&para;</a></h3>
+<p>SMB 3.0 (Windows Server 2012) added <strong>Multichannel</strong>, which spreads one session over several NICs automatically; <strong>SMB Direct</strong>, SMB over RDMA on iWARP, InfiniBand or RoCE; and transparent failover<sup id="fnref:14"><a class="footnote-ref" href="#fn:14">14</a></sup><sup id="fnref:15"><a class="footnote-ref" href="#fn:15">15</a></sup>. Multichannel also detects RDMA adapters, and SMB Direct gained encryption in Windows Server 2022<sup id="fnref2:14"><a class="footnote-ref" href="#fn:14">14</a></sup>. SMB3 is capable but rare on Linux GPU nodes; it matters for media, Windows analytics and as a multiprotocol checkbox.</p>
+<h3 id="posix-semantics-and-why-ai-loaders-want-them">POSIX semantics, and why AI loaders want them<a class="headerlink" href="#posix-semantics-and-why-ai-loaders-want-them" title="Permanent link">&para;</a></h3>
+<p>AI software is written against POSIX: <code>open</code>, random-offset <code>read</code>, <code>mmap</code>, <code>fsync</code>, atomic <code>rename</code>. Loaders read random samples inside shards; checkpointers write a temp file and rename it. NVIDIA's NIXL and Dynamo KV tiers use a POSIX backend for disk, and NVIDIA's cloud-partner rules require NFSv4 home directories with POSIX access control<sup id="fnref:16"><a class="footnote-ref" href="#fn:16">16</a></sup>. S3 is gaining: about one-sixth of MLPerf Storage v3.0 submissions (September 2026) used S3<sup id="fnref:17"><a class="footnote-ref" href="#fn:17">17</a></sup>. But S3 has no rename, append or partial overwrite, so most training code still expects a mount (<a href="../09-object-storage-and-s3/">Chapter 9</a>).</p>
+<p>How much POSIX matters depends on the access pattern. Read-mostly datasets and write-then-rename checkpoints are safe under close-to-open. <strong>Many processes writing one shared file at once</strong> are not, for example 1,024 ranks writing a single checkpoint file. That needs byte-range locks and immediate cross-client visibility, which Lustre, GPFS and WEKA clients provide via distributed lock managers. That is what the proprietary install buys.</p>
+<h3 id="comparison">Comparison<a class="headerlink" href="#comparison" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Protocol</th>
+<th>State model</th>
+<th>Locking</th>
+<th>Parallel data path</th>
+<th>RDMA</th>
+<th>Client</th>
+<th>Best fit</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NFSv3</td>
+<td>Stateless</td>
+<td>Side protocols (NLM)</td>
+<td>No: one server per mount (multipath needs vendor client)</td>
+<td>Yes (NFS/RDMA)</td>
+<td>In every OS</td>
+<td>Simple shared data, legacy apps, pNFS data leg</td>
+</tr>
+<tr>
+<td>NFSv4.1 / 4.2 (no pNFS)</td>
+<td>Stateful: leases, delegations, sessions</td>
+<td>Integrated, leased</td>
+<td>Trunking only; still one server's data</td>
+<td>Yes</td>
+<td>In every modern Linux</td>
+<td>Home dirs, secure multi-tenant NAS</td>
+</tr>
+<tr>
+<td>pNFS (v4.1+, Flex Files)</td>
+<td>Stateful on metadata server; data servers simple</td>
+<td>Via metadata server</td>
+<td><strong>Yes</strong>: direct to many data servers</td>
+<td>Yes on data leg</td>
+<td>Stock Linux NFSv4.1/4.2 client</td>
+<td>AI training/inference at scale without custom clients</td>
+</tr>
+<tr>
+<td>SMB3</td>
+<td>Stateful sessions, leases</td>
+<td>Integrated (oplocks/leases)</td>
+<td>Multichannel across NICs, same server</td>
+<td>SMB Direct</td>
+<td>Windows native; Linux CIFS</td>
+<td>Windows, media, VDI, enterprise shares</td>
+</tr>
+<tr>
+<td>Proprietary parallel (Lustre, GPFS, WEKA)</td>
+<td>Stateful, distributed lock manager</td>
+<td>Full POSIX byte-range</td>
+<td><strong>Yes</strong>: client stripes across storage servers</td>
+<td>Native (IB/RoCE; WEKA DPDK)</td>
+<td>Vendor kernel module or agent</td>
+<td>Largest HPC/AI clusters, shared-file writes</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 8.1 — Only pNFS and proprietary clients remove the server head from the data path; pNFS does it with the client already in the kernel.</em></p>
+<p>The proprietary route has a cost. The Lustre client left the Linux staging tree in 2018 and lives out of tree<sup id="fnref:18"><a class="footnote-ref" href="#fn:18">18</a></sup>, so every GPU-fleet kernel update waits for a matching client build. WEKA's client can bypass the kernel network stack with DPDK<sup id="fnref:19"><a class="footnote-ref" href="#fn:19">19</a></sup>, trading dedicated cores for speed.</p>
+<h2 id="how-everpure-approaches-it-vs-competitors">How Everpure approaches it vs. competitors<a class="headerlink" href="#how-everpure-approaches-it-vs-competitors" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Vendor / product</th>
+<th>Client-facing approach</th>
+<th>Client software</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Everpure FlashBlade//S</td>
+<td>NFSv3/4.1, SMB, S3; <code>nconnect</code>; NFS over RDMA</td>
+<td>Stock</td>
+<td>Scale-out NAS; Everpure documents nconnect on kernels ≥ 5.3<sup id="fnref:20"><a class="footnote-ref" href="#fn:20">20</a></sup>; NFS over RDMA with GDS reported from Purity//FB 4.3.4 (late 2023)<sup id="fnref:21"><a class="footnote-ref" href="#fn:21">21</a></sup> [VERIFY: search-summary only; confirm in Purity//FB release notes]</td>
+</tr>
+<tr>
+<td>Everpure FlashBlade//EXA</td>
+<td>pNFS: NFSv4.1/TCP to metadata core, NFSv3/RDMA to data nodes</td>
+<td>Stock Linux client</td>
+<td>Metadata core of 1–10 FlashBlade chassis; off-the-shelf data nodes at launch<sup id="fnref3:1"><a class="footnote-ref" href="#fn:1">1</a></sup><sup id="fnref:22"><a class="footnote-ref" href="#fn:22">22</a></sup></td>
+</tr>
+<tr>
+<td>VAST Data</td>
+<td>NFSv3/4.1, NFS/RDMA, SMB, S3</td>
+<td>Optional VAST NFS multipath client</td>
+<td>No public pNFS support found: its NFS client documentation (v4.5, 2026) lists multipath for NFSv3 and v4.1, not pNFS<sup id="fnref:23"><a class="footnote-ref" href="#fn:23">23</a></sup>; DASE makes any node a valid target<sup id="fnref2:13"><a class="footnote-ref" href="#fn:13">13</a></sup></td>
+</tr>
+<tr>
+<td>Hammerspace</td>
+<td>pNFS Flex Files over existing NFS storage</td>
+<td>Stock NFSv4.2 client</td>
+<td>Metadata on Anvil servers<sup id="fnref:24"><a class="footnote-ref" href="#fn:24">24</a></sup>; parallel NFS co-developed for Meta's 24k-GPU clusters<sup id="fnref:25"><a class="footnote-ref" href="#fn:25">25</a></sup></td>
+</tr>
+<tr>
+<td>Dell PowerScale / Lightning FS</td>
+<td>pNFS Flex Files with separate metadata server (2026)</td>
+<td>Stock</td>
+<td>Lightning FS aimed at &gt;16k-GPU / 4 TB/s sites<sup id="fnref2:3"><a class="footnote-ref" href="#fn:3">3</a></sup></td>
+</tr>
+<tr>
+<td>NetApp ONTAP / AFX</td>
+<td>NFSv4.1 pNFS, trunking; PEAK:AIO scale-out metadata to come</td>
+<td>Stock</td>
+<td>Deal announced 2026-09-25; terms undisclosed<sup id="fnref2:2"><a class="footnote-ref" href="#fn:2">2</a></sup><sup id="fnref:26"><a class="footnote-ref" href="#fn:26">26</a></sup></td>
+</tr>
+<tr>
+<td>WEKA, DDN EXAScaler, IBM Storage Scale</td>
+<td>Proprietary POSIX client (plus NFS/SMB/S3 gateways)</td>
+<td>Vendor client</td>
+<td>Highest per-client throughput and full POSIX; heaviest footprint<sup id="fnref2:19"><a class="footnote-ref" href="#fn:19">19</a></sup></td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 8.2 — Three answers to the single head: a better client on standard NFS (VAST), the pNFS standard (Everpure EXA, Hammerspace, Dell, NetApp), or a proprietary client (WEKA, DDN, IBM).</em></p>
+<p><strong>Steelmen.</strong> <em>Proprietary clients</em> remain safest for shared-file writes. <em>VAST's multipath</em> gets most of pNFS's bandwidth without a metadata server on every open, with a far lighter client than Lustre's. <em>pNFS</em> is the only option that takes the head out of the data path using the client already in the distro. Hammerspace cites a 10-node production IO500 result on the upstream NFSv4.2 client (<em>company-stated</em>)<sup id="fnref:27"><a class="footnote-ref" href="#fn:27">27</a></sup>.</p>
+<p><strong>Where pNFS is weaker.</strong> It is only as good as each distro's Linux client, one of whose upstream maintainers is Hammerspace's CTO<sup id="fnref:28"><a class="footnote-ref" href="#fn:28">28</a></sup>. Layout recalls under churn can stall clients, and metadata becomes the scaling point. Options a strategy team might evaluate, based on public information:</p>
+<ul>
+<li>how well EXA's NFSv3/RDMA data leg delivers GDS into GPU memory: Portworx documentation describes GDS for EXA file systems over RDMA NFS<sup id="fnref:29"><a class="footnote-ref" href="#fn:29">29</a></sup> [VERIFY: search-summary only], but NVIDIA certification for EXA and measured per-client numbers are not yet public;</li>
+<li>whether FlashBlade//S should add pNFS, giving one protocol story from enterprise to EXA;</li>
+<li>how much Everpure should invest upstream in the Linux pNFS client, which every pNFS vendor shares.</li>
+</ul>
+<h2 id="history-and-trajectory">History and trajectory<a class="headerlink" href="#history-and-trajectory" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>timeline
+    title File protocol milestones
+    1984 : Sun designs NFS
+    1995 : NFSv3 RFC 1813
+    2003 : NFSv4 RFC 3530 adds state and locking
+    2010 : NFSv4.1 RFC 5661 adds sessions and pNFS
+    2012 : SMB 3.0 adds Multichannel and SMB Direct
+    2016 : NFSv4.2 RFC 7862
+    2017 : RPC over RDMA v1 RFC 8166
+    2018 : Flex Files layout RFC 8435 : Lustre client leaves Linux staging
+    2019 : Linux 5.3 adds nconnect
+    2024 : Meta uses Hammerspace parallel NFS for GenAI clusters
+    2025 : Pure Storage announces FlashBlade EXA on pNFS : Dell previews PowerScale pNFS
+    2026 : NetApp agrees to buy PEAK AIO</code></pre>
+<p><em>Figure 8.4 — The pNFS standard existed from 2010, but AI-scale adoption came only after Flex Files (2018) and an upstream Linux client matured; 2024–2026 is when the major vendors committed.</em></p>
+<p>For 15 years pNFS was a standard in search of a market while HPC ran Lustre or GPFS. Then Flex Files and a better upstream client removed the need for special data servers, and AI buyers, especially neoclouds with thousands of GPU nodes, resisted proprietary kernel modules. Watch upstream NFSv4.2 client work (attribute delegations, faster failover and client-side erasure coding were in progress in 2024<sup id="fnref2:28"><a class="footnote-ref" href="#fn:28">28</a></sup>), GDS on pNFS data legs, and whether S3-over-RDMA absorbs checkpoint and KV-cache traffic (<a href="../../05-ai-storage/32-inference-and-kv-cache/">Chapter 32</a>).</p>
+<h2 id="numbers-that-matter">Numbers that matter<a class="headerlink" href="#numbers-that-matter" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+<th>Context</th>
+<th>Source / date</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Max <code>nconnect</code> connections</td>
+<td>16 per mount</td>
+<td>Linux kernel ≥ 5.3</td>
+<td>Dell InfoHub<sup id="fnref2:10"><a class="footnote-ref" href="#fn:10">10</a></sup></td>
+</tr>
+<tr>
+<td>Single NFS/TCP mount, 100 GbE</td>
+<td>~2–2.5 GB/s</td>
+<td>Vendor-measured; ~11 GB/s with nconnect</td>
+<td>VAST KB<sup id="fnref4:9"><a class="footnote-ref" href="#fn:9">9</a></sup></td>
+</tr>
+<tr>
+<td>Single NFS/RDMA connection, 100 GbE</td>
+<td>~8–8.5 GB/s</td>
+<td>Vendor-measured</td>
+<td>VAST KB<sup id="fnref5:9"><a class="footnote-ref" href="#fn:9">9</a></sup></td>
+</tr>
+<tr>
+<td>Multipath NFS into one DGX A100</td>
+<td>162 GiB/s</td>
+<td>8×200 Gb/s NICs + GDS; company-stated</td>
+<td>VAST blog<sup id="fnref3:13"><a class="footnote-ref" href="#fn:13">13</a></sup></td>
+</tr>
+<tr>
+<td>FlashBlade//EXA read target</td>
+<td>&gt;10 TB/s, one namespace</td>
+<td>Company-stated, preliminary</td>
+<td>Everpure brief<sup id="fnref4:1"><a class="footnote-ref" href="#fn:1">1</a></sup></td>
+</tr>
+<tr>
+<td>Connections to feed a 100 GB/s GPU server</td>
+<td>~44 single TCP flows</td>
+<td>100 ÷ 2.25 GB/s</td>
+<td>Worked example</td>
+</tr>
+<tr>
+<td>MLPerf Storage v3.0 using S3</td>
+<td>~1/6 of submissions</td>
+<td>Rest used POSIX file access</td>
+<td>MLCommons, 2026-09-01<sup id="fnref2:17"><a class="footnote-ref" href="#fn:17">17</a></sup></td>
+</tr>
+<tr>
+<td>Dell Lightning FS target</td>
+<td>&gt;16k GPUs or &gt;4 TB/s</td>
+<td>Company-stated positioning</td>
+<td>Blocks &amp; Files, 2025-11-17<sup id="fnref3:3"><a class="footnote-ref" href="#fn:3">3</a></sup></td>
+</tr>
+</tbody>
+</table>
+<h2 id="conversation-playbook">Conversation playbook<a class="headerlink" href="#conversation-playbook" title="Permanent link">&para;</a></h2>
+<p><strong>Questions for a PM</strong></p>
+<ol>
+<li><em>"Why pNFS for EXA rather than a proprietary or multipath client?"</em> Strong: adoption friction (no kernel module on GPU nodes, faster neocloud security review), plus candour on costs: shared-file writes and distro-client dependence.</li>
+<li><em>"Which distros and kernels do we validate, and what happens on older RHEL?"</em> Strong: minimum versions, known client bugs, fallback path.</li>
+<li><em>"Against VAST, where does multipath NFS match us and where does the direct path win?"</em> Strong: per-client and aggregate numbers, with GDS on or off stated for both.</li>
+</ol>
+<p><strong>Questions for an engineer</strong></p>
+<ol>
+<li><em>"A data node fails mid-checkpoint: what happens to in-flight I/O?"</em> Strong: layout recall, retry or fallback, time to a new layout, and how writes were protected.</li>
+<li><em>"Which layout type do we hand out, and who does striping and redundancy?"</em> Strong: names Flex Files or the files layout, gives the stripe unit, and says whether the client mirrors.</li>
+<li><em>"What create/open rate can the metadata core sustain, and what saturates first?"</em> Strong: a per-chassis number, plus whether opens, layouts or directory locks hit the limit first (<a href="../../03-system-architecture/21-metadata/">Chapter 21</a>).</li>
+</ol>
+<p><strong>Don't say this:</strong></p>
+<ul>
+<li>"pNFS is new." It was standardized in 2010. Flex Files, a mature client and AI demand are new.</li>
+<li>"NFS can't do RDMA." NFS/RDMA is standardized and is a common GDS path.</li>
+<li>"nconnect makes NFS parallel." Same server, more connections.</li>
+<li>"NFS is POSIX." It is close-to-open: fine for reads, not for concurrent shared-file writes.</li>
+<li>"VAST uses pNFS." Its parallelism comes from multipath into a shared-everything back end.</li>
+</ul>
+<h2 id="going-deeper-optional-l3-pointers">Going deeper (optional, L3 pointers)<a class="headerlink" href="#going-deeper-optional-l3-pointers" title="Permanent link">&para;</a></h2>
+<ul>
+<li>RFC 8881 §12–13 (pNFS and the file layout), RFC 8435 (Flex Files), RFC 8166/8267 (RPC-over-RDMA).</li>
+<li>Trond Myklebust, "Advancements in pNFS and NFSv4.2," SNIA SDC 2024<sup id="fnref3:28"><a class="footnote-ref" href="#fn:28">28</a></sup>.</li>
+<li>Linux <code>fs/nfs/flexfilelayout/</code> and <code>net/sunrpc/xprtrdma/</code>; <code>nfs(5)</code> on <code>nconnect</code>, <code>actimeo</code>, <code>nocto</code> and <code>proto=rdma</code>.</li>
+<li>Full parallel file systems (Lustre MDS/OSS, GPFS tokens): <a href="../../03-system-architecture/17-parallel-file-systems/">Chapter 17</a>.</li>
+</ul>
+<h2 id="key-terms">Key terms<a class="headerlink" href="#key-terms" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>File handle</strong> — opaque server token naming a file in NFS.</li>
+<li><strong>Close-to-open consistency</strong> — writes visible to others only after close and reopen.</li>
+<li><strong>Lease / delegation</strong> — NFSv4 time-bounded state; recallable exclusive caching rights.</li>
+<li><strong>pNFS layout</strong> — map of which data servers hold which byte ranges.</li>
+<li><strong>Flex Files</strong> — pNFS layout whose data servers can be plain NFSv3.</li>
+<li><strong>nconnect</strong> — Linux option for up to 16 TCP connections per mount.</li>
+<li><strong>SMB Multichannel / SMB Direct</strong> — SMB3 multi-connection and RDMA transport.</li>
+<li>See the <a href="../../glossary/">glossary</a> for the rest.</li>
+</ul>
+<h2 id="sources">Sources<a class="headerlink" href="#sources" title="Permanent link">&para;</a></h2>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>Everpure, "Technical Brief: FlashBlade//EXA," n.d. (2025). https://www.everpuredata.com/content/dam/pdf/en/technical-briefs/tb-flashblade-exa.pdf (retrieved 2026-11-01); Blocks &amp; Files, "How Pure Storage developed its disaggregated FlashBlade//EXA system," 2025-04-17. https://blocksandfiles.com/2025/04/17/how-pure-storage-developed-its-disaggregated-flashblade-exa-system/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:1" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:1" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>NetApp, "NetApp Announces Intent to Acquire PEAK:AIO to Advance Scalable AI Infrastructure Architecture," 2026-09-25. https://s21.q4cdn.com/371534297/files/doc_news/NetApp-Announces-Intent-to-Acquire-PEAKAIO-to-Advance-Scalable-AI-Infrastructure-Architecture-2026.pdf (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>Blocks &amp; Files, "Dell PowerScale gets struck by Lightning and goes parallel," 2025-11-17. https://www.blocksandfiles.com/ai-ml/2025/11/17/dell-powerscale-gets-struck-by-lightning-and-goes-parallel/1711291 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:3" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>IETF, "RFC 1813: NFS Version 3 Protocol Specification," 1995-06. https://www.rfc-editor.org/rfc/rfc1813 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p>IETF, "RFC 7530: Network File System (NFS) Version 4 Protocol" (obsoletes RFC 3530 of 2003-04), 2015-03. https://www.rfc-editor.org/rfc/rfc7530 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:6">
+<p>IETF, "RFC 8881: Network File System (NFS) Version 4 Minor Version 1 Protocol" (obsoletes RFC 5661 of 2010-01), 2020-08. https://www.rfc-editor.org/rfc/rfc8881 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+<li id="fn:7">
+<p>IETF, "RFC 7862: Network File System (NFS) Version 4 Minor Version 2 Protocol," 2016-11. https://www.rfc-editor.org/rfc/rfc7862 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:7" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+</li>
+<li id="fn:8">
+<p>IETF, "RFC 8435: Parallel NFS (pNFS) Flexible File Layout," 2018-08. https://www.rfc-editor.org/rfc/rfc8435 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:8" title="Jump back to footnote 8 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:8" title="Jump back to footnote 8 in the text">&#8617;</a></p>
+</li>
+<li id="fn:9">
+<p>VAST Data, "NFS Features for Enhanced Performance" (knowledge base), n.d. https://kb.vastdata.com/documentation/docs/nfs-features-for-enhanced-performance (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:9" title="Jump back to footnote 9 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:9" title="Jump back to footnote 9 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:9" title="Jump back to footnote 9 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:9" title="Jump back to footnote 9 in the text">&#8617;</a><a class="footnote-backref" href="#fnref5:9" title="Jump back to footnote 9 in the text">&#8617;</a></p>
+</li>
+<li id="fn:10">
+<p>Dell Technologies InfoHub, "PowerScale best practices for semiconductor EDA design environments: nconnect option," n.d. https://infohub.delltechnologies.com/en-au/l/powerscale-best-practices-for-semiconductor-eda-design-environments/nconnect-option (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:10" title="Jump back to footnote 10 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:10" title="Jump back to footnote 10 in the text">&#8617;</a></p>
+</li>
+<li id="fn:11">
+<p>IETF, "RFC 8166: Remote Direct Memory Access Transport for Remote Procedure Call, Version 1," 2017-06, https://www.rfc-editor.org/rfc/rfc8166; and "RFC 8267: NFS Upper-Layer Binding to RPC-over-RDMA Version 1," 2017-10, https://www.rfc-editor.org/rfc/rfc8267 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:11" title="Jump back to footnote 11 in the text">&#8617;</a></p>
+</li>
+<li id="fn:12">
+<p>NVIDIA, "GPUDirect Storage Filesystem Kernel Driver (nvidia-fs)," n.d. https://docs.nvidia.com/gpudirect-storage/nvidia_fs/index.html (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:12" title="Jump back to footnote 12 in the text">&#8617;</a></p>
+</li>
+<li id="fn:13">
+<p>VAST Data, "Achieve high bandwidth performance with NFS enhancements from VAST Data" (blog), n.d. (c. 2020). https://vastdata.com/blog/meet-your-need-for-speed-with-nfs (retrieved 2026-11-01); VAST Data, "7. VAST Client NFS Multipathing" (knowledge base), n.d. https://kb.vastdata.com/docs/7-vast-client-nfs-multipathing (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:13" title="Jump back to footnote 13 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:13" title="Jump back to footnote 13 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:13" title="Jump back to footnote 13 in the text">&#8617;</a></p>
+</li>
+<li id="fn:14">
+<p>Microsoft Learn, "SMB Direct," n.d. https://learn.microsoft.com/en-us/windows-server/storage/file-server/smb-direct (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:14" title="Jump back to footnote 14 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:14" title="Jump back to footnote 14 in the text">&#8617;</a></p>
+</li>
+<li id="fn:15">
+<p>Microsoft Support, "SMB 3.0 features in Windows Server 2012 file server" (KB 2709568), n.d. https://support.microsoft.com/kb/2709568 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:15" title="Jump back to footnote 15 in the text">&#8617;</a></p>
+</li>
+<li id="fn:16">
+<p>NVIDIA Docs, "NVIDIA Requirements for AI Clouds: Storage requirements," n.d. https://docs.nvidia.com/dsx/ncp/nvidia-requirements-for-ai-clouds/storage-requirements (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:16" title="Jump back to footnote 16 in the text">&#8617;</a></p>
+</li>
+<li id="fn:17">
+<p>MLCommons via GlobeNewswire, "MLCommons Releases New MLPerf Storage v3.0 Benchmark Results," 2026-09-01. https://www.globenewswire.com/news-release/2026/09/01/3354412/0/en/mlcommons-releases-new-mlperf-storage-v3-0-benchmark-results.html (retrieved 2026-11-01); StorageReview, "MLPerf Storage v3.0: 877 GiB/s Checkpoints, a Cloud First, and a Leaderboard Turned Over," 2026-09. https://www.storagereview.com/news/mlperf-storage-v3-0-877-gib-s-checkpoints-a-cloud-first-and-a-leaderboard-turned-over (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:17" title="Jump back to footnote 17 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:17" title="Jump back to footnote 17 in the text">&#8617;</a></p>
+</li>
+<li id="fn:18">
+<p>The Register, "Linux 4.18-rc1 removes Lustre filesystem," 2018-06-18. https://www.theregister.com/2018/06/18/linux_4_18_rc_1_removes_lustre_filesystem/ (retrieved 2026-11-01); LWN.net, "Getting Lustre upstream," 2025. https://lwn.net/Articles/1025268 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:18" title="Jump back to footnote 18 in the text">&#8617;</a></p>
+</li>
+<li id="fn:19">
+<p>WEKA, "Networking in WEKA" (docs v5.0), n.d. https://docs.weka.io/5.0/weka-system-overview/networking-in-wekaio (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:19" title="Jump back to footnote 19 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:19" title="Jump back to footnote 19 in the text">&#8617;</a></p>
+</li>
+<li id="fn:20">
+<p>Everpure Support, "NFS on SUSE/openSUSE: Performance Optimization," n.d. https://support.everpuredata.com/r/linux/suse-nfs-best-practices-performance-optimization (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:20" title="Jump back to footnote 20 in the text">&#8617;</a></p>
+</li>
+<li id="fn:21">
+<p>iThome (Taiwan), overview of GPUDirect Storage support among storage vendors (Pure Storage FlashBlade//S: NFS over RDMA, Purity//FB 4.3.4 or later, from October 2023), n.d. https://www.ithome.com.tw/tech/165670 (retrieved 2026-11-01; search-summary only, host not fetchable).&#160;<a class="footnote-backref" href="#fnref:21" title="Jump back to footnote 21 in the text">&#8617;</a></p>
+</li>
+<li id="fn:22">
+<p>Pure Storage, "FlashBlade//EXA for AI" (solution brief), 2025. https://www.purestorage.com/content/dam/pdf/en/solution-briefs/sb-flashblade-exa-ai.pdf (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:22" title="Jump back to footnote 22 in the text">&#8617;</a></p>
+</li>
+<li id="fn:23">
+<p>VAST Data, "VAST NFS documentation v4.5," 2026-04. https://vastnfs.vastdata.com/docs/4.5/index.html (retrieved 2026-11-01; search-summary only).&#160;<a class="footnote-backref" href="#fnref:23" title="Jump back to footnote 23 in the text">&#8617;</a></p>
+</li>
+<li id="fn:24">
+<p>Futurum, "Hammerspace shows storage acceleration for AI training at AI Field Day," n.d. https://futurumgroup.com/insights/hammerspace-shows-storage-acceleration-for-ai-training-at-ai-field-day (retrieved 2026-11-01); Hammerspace, "Hyperscale NAS," n.d. https://hammerspace.com/hyperscale-nas/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:24" title="Jump back to footnote 24 in the text">&#8617;</a></p>
+</li>
+<li id="fn:25">
+<p>Meta Engineering, "Building Meta's GenAI Infrastructure," 2024-03-12. https://engineering.fb.com/2024/03/12/data-center-engineering/building-metas-genai-infrastructure/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:25" title="Jump back to footnote 25 in the text">&#8617;</a></p>
+</li>
+<li id="fn:26">
+<p>NetApp, "Parallel NFS" (ONTAP 9 documentation), 2026-02. https://docs.netapp.com/us-en/ontap/pdfs/sidebar/Parallel_NFS.pdf (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:26" title="Jump back to footnote 26 in the text">&#8617;</a></p>
+</li>
+<li id="fn:27">
+<p>Hammerspace via Business Wire, "Hammerspace Breaks IO500 Barriers: First Standards-Based Linux + NFS System To Achieve True HPC-Class Performance," 2025-11-20. https://www.businesswire.com/news/home/20251120823774/en/Hammerspace-Breaks-IO500-Barriers-First-Standards-Based-Linux-NFS-System-To-Achieve-True-HPC-Class-Performance (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:27" title="Jump back to footnote 27 in the text">&#8617;</a></p>
+</li>
+<li id="fn:28">
+<p>SNIA, Trond Myklebust (Hammerspace), "Advancements in pNFS and NFSv4.2," SDC 2024 (posted 2025-05). https://snia.org/sites/default/files/2025-05/SNIA-SDC2024-Myklebust-Advancements-in-PNFS-NFSv4.2.pdf (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:28" title="Jump back to footnote 28 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:28" title="Jump back to footnote 28 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:28" title="Jump back to footnote 28 in the text">&#8617;</a></p>
+</li>
+<li id="fn:29">
+<p>Portworx, "Enable the FlashArray and FlashBlade driver" (FlashBlade//EXA file systems with GPUDirect Storage over RDMA NFS), n.d. https://docs.portworx.com/portworx-enterprise/platform/configure-portworx-components/enable-fa-fb-driver (retrieved 2026-11-01; search-summary only, host not fetchable).&#160;<a class="footnote-backref" href="#fnref:29" title="Jump back to footnote 29 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../07-block-protocols/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 7. Block protocols">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                7. Block protocols
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../09-object-storage-and-s3/" class="md-footer__link md-footer__link--next" aria-label="Next: 9. Object storage and S3">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                9. Object storage and S3
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>

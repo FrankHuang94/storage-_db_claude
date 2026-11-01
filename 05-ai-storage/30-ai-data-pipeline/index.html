@@ -1,0 +1,3750 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A strategy-level knowledge base on storage, AI storage and the competitive landscape around Everpure (formerly Pure Storage).">
+      
+      
+      
+        <link rel="canonical" href="https://frankhuang94.github.io/storage-_db_claude/05-ai-storage/30-ai-data-pipeline/">
+      
+      
+        <link rel="prev" href="../../04-everpure/29-hyperscaler-ecosystem-financials/">
+      
+      
+        <link rel="next" href="../31-training-storage/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>30. The AI data pipeline end to end - Everpure Tech Atlas</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#30-the-ai-data-pipeline-end-to-end" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Everpure Tech Atlas" class="md-header__button md-logo" aria-label="Everpure Tech Atlas" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Everpure Tech Atlas
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              30. The AI data pipeline end to end
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/FrankHuang94/storage-_db_claude" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    storage-_db_claude
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Everpure Tech Atlas" class="md-nav__button md-logo" aria-label="Everpure Tech Atlas" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Everpure Tech Atlas
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/FrankHuang94/storage-_db_claude" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    storage-_db_claude
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 0 — Start Here
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 0 — Start Here
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start-here/00a-how-to-use-this-atlas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0.1. How to use this atlas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start-here/00b-one-page-map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0.2. The one-page map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 1 — Storage Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 1 — Storage Fundamentals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/01-what-storage-does/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. What storage does
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/02-media-physics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Media physics for a semis person
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/03-inside-an-ssd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Inside an SSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/04-performance-and-economics-metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Performance and economics metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/05-data-reduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Data reduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/06-data-protection-and-resilience/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Data protection and resilience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 2 — Protocols and Networking
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 2 — Protocols and Networking
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/07-block-protocols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Block protocols
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/08-file-protocols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. File protocols
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/09-object-storage-and-s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Object storage and S3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/10-datacenter-networking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Datacenter networking for storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/11-gpu-data-path/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. The GPU data path
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/12-interfaces-and-emerging-tech/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Interfaces and emerging tech
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3 — Storage System Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 3 — Storage System Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/13-storage-stack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. The storage stack, layer by layer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/14-scale-up-dual-controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Scale-up dual-controller arrays
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/15-scale-out-shared-nothing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Scale-out shared-nothing clusters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/16-disaggregated-shared-everything/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Disaggregated shared-everything architectures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/17-parallel-file-systems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Parallel and distributed file systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/18-object-storage-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Object storage architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/19-software-defined-and-hci/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Software-defined storage and HCI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/20-distributed-systems-fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Distributed-systems fundamentals for storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/21-metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Metadata: the hidden bottleneck
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/22-control-planes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Control planes and fleet management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/23-consumption-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Consumption models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/24-architecture-decision-matrix/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Architecture decision matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 4 — Everpure
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 4 — Everpure
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/25-company-history-and-strategy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Company history and strategy, 2009–2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/26-purity-and-directflash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Core technology: Purity and DirectFlash
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/27-flasharray-and-flashblade/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Product portfolio: FlashArray and FlashBlade
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/28-platform-and-software/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. Platform and software
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/29-hyperscaler-ecosystem-financials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Hyperscaler business, ecosystem and financials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 5 — AI Storage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 5 — AI Storage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. The AI data pipeline end to end
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. The AI data pipeline end to end
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters-for-everpure-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters for Everpure strategy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eight-stages-eight-io-signatures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Eight stages, eight I/O signatures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-it-is-not-one-workload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why it is not one workload
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-the-lake-is-object-and-the-hot-tier-is-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why the lake is object and the hot tier is file
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-numbers-where-the-bytes-and-the-stress-are" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked numbers: where the bytes and the stress are
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#semiconductor-bridge-a-memory-hierarchy-with-a-prefetcher" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Semiconductor bridge: a memory hierarchy with a prefetcher
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-everpure-approaches-it-vs-competitors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Everpure approaches it vs. competitors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#history-and-trajectory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        History and trajectory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#numbers-that-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Numbers that matter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversation-playbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversation playbook
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-deeper-optional-l3-pointers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going deeper (optional, L3 pointers)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key terms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../31-training-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Training storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../32-inference-and-kv-cache/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Inference and KV cache
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../33-rag-vector-lakehouse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    33. RAG, vector databases and AI-native data formats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../34-nvidia-ecosystem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. NVIDIA's ecosystem and certifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../35-ai-factories-and-neoclouds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    35. AI factories and neoclouds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../36-hyperscaler-ai-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    36. How hyperscalers build AI storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../37-reading-benchmarks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    37. Reading benchmarks critically
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../38-power-and-density/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    38. Power, density and the AI datacenter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../39-agentic-ai-and-data-intelligence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    39. Agentic AI and data intelligence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 6 — Industry and Competition
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 6 — Industry and Competition
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/40-market-structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    40. Market structure and sizing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/41-why-ai-native-vendors-won/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    41. Why AI-native storage vendors gained traction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/42-vast-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    42. VAST Data deep dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/43-weka/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    43. WEKA deep dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/44-ddn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    44. DDN deep dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/45-head-to-head/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    45. Head-to-head: FlashBlade//EXA vs. VAST vs. WEKA vs. DDN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/46-incumbents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    46. Incumbents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/47-other-challengers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    47. Other challengers and software-defined players
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/48-media-suppliers-and-nand-cycle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    48. Media suppliers and the NAND cycle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/49-competitive-matrices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    49. Competitive landscape matrices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/50-diligence-framework/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    50. Technical diligence framework
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 7 — History and Future
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 7 — History and Future
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/51-history-of-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    51. History of storage, 1956–2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/52-history-of-flash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    52. History of flash and NAND economics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/53-future-trends/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    53. Future trends, 2026–2032
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/54-strategic-option-map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    54. Strategic option map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 8 — Conversation Toolkit
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 8 — Conversation Toolkit
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/55-talking-with-pms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    55. Talking with product managers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/56-talking-with-engineering-and-cto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    56. Talking with engineering leaders and the CTO office
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/57-question-bank/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    57. Question bank: 150 questions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/58-explain-in-30-seconds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    58. Explain it in 30 seconds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/59-self-test-flashcards/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    59. Self-test: 279 flashcards
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/60-cheat-sheets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    60. Cheat sheets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters-for-everpure-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters for Everpure strategy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#eight-stages-eight-io-signatures" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Eight stages, eight I/O signatures
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-it-is-not-one-workload" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why it is not one workload
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-the-lake-is-object-and-the-hot-tier-is-file" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why the lake is object and the hot tier is file
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-numbers-where-the-bytes-and-the-stress-are" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked numbers: where the bytes and the stress are
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#semiconductor-bridge-a-memory-hierarchy-with-a-prefetcher" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Semiconductor bridge: a memory hierarchy with a prefetcher
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-everpure-approaches-it-vs-competitors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Everpure approaches it vs. competitors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#history-and-trajectory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        History and trajectory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#numbers-that-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Numbers that matter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversation-playbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversation playbook
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-deeper-optional-l3-pointers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going deeper (optional, L3 pointers)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key terms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="30-the-ai-data-pipeline-end-to-end">30. The AI data pipeline end to end<a class="headerlink" href="#30-the-ai-data-pipeline-end-to-end" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>Depth:</strong> L2 · <strong>Reading time:</strong> ~10 min · <strong>Last verified:</strong> 2026-11-01
+<strong>Prerequisites:</strong> <a href="../../01-storage-fundamentals/01-what-storage-does/">What storage does</a> · <a href="../../02-protocols-and-networking/09-object-storage-and-s3/">Object storage and S3</a> · <a href="../../02-protocols-and-networking/11-gpu-data-path/">The GPU data path</a> · <a href="../../03-system-architecture/17-parallel-file-systems/">Parallel file systems</a></p>
+</blockquote>
+<h2 id="tldr">TL;DR<a class="headerlink" href="#tldr" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>"AI storage" is at least eight workloads, not one.</strong> Ingest is write-heavy and cost-bound, training reads are throughput-bound, checkpointing is a write burst, and inference, RAG and agents are latency-bound small I/O.</li>
+<li><strong>Data shrinks, then grows again.</strong> More than 10 PB of web crawl<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> filters down to tens of TB of training text and under 1 TB of weights. Then the pipeline makes new data: multi-TB checkpoints, KV caches, embeddings and logs.</li>
+<li><strong>Capacity lives in object storage; performance lives in file and flash next to the GPU.</strong> Object is the cheapest durable TB and every tool speaks S3. Training and checkpoint code expects POSIX paths and RDMA-fed bandwidth. The two are converging.</li>
+<li><strong>In LLM training, checkpoints stress storage more than the training data does.</strong> Newer spending sits further down the pipeline, in KV cache and in data intelligence for RAG and agents.</li>
+<li><strong>Treat the pipeline as a memory hierarchy with a prefetcher.</strong> Training access order is known in advance; inference and agent access depends on users. Every hop costs energy.</li>
+</ul>
+<h2 id="why-this-matters-for-everpure-strategy">Why this matters for Everpure strategy<a class="headerlink" href="#why-this-matters-for-everpure-strategy" title="Permanent link">&para;</a></h2>
+<p>Every storage vendor now says "AI", but the money sits in different places at each stage: the lake pays for cheap capacity, the training tier pays a premium for bandwidth, and inference and agents pay for new software. Everpure has products at most stages: FlashBlade//E and S3 for capacity, FlashBlade//S and FlashBlade//EXA for training and checkpoints, PureKVA for inference, and Data Stream plus Data Intelligence (formerly 1touch) for RAG and agents<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup><sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup><sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>. DDN and WEKA start from the high-performance tier, hyperscalers own the cloud lake, VAST spans the stack, and database vendors contest RAG and agents.</p>
+<p>The real questions: which stages to compete in, where a multi-stage platform beats point products, and where data gravity lets the lake owner capture downstream stages. This chapter maps Part 5; later chapters cover <a href="../31-training-storage/">training</a>, <a href="../32-inference-and-kv-cache/">inference and KV cache</a>, <a href="../33-rag-vector-lakehouse/">RAG and lakehouses</a>, <a href="../34-nvidia-ecosystem/">NVIDIA's ecosystem</a>, <a href="../35-ai-factories-and-neoclouds/">neoclouds</a>, <a href="../36-hyperscaler-ai-storage/">hyperscalers</a>, <a href="../37-reading-benchmarks/">benchmarks</a>, <a href="../38-power-and-density/">power</a> and <a href="../39-agentic-ai-and-data-intelligence/">agents</a>.</p>
+<h2 id="core-concepts">Core concepts<a class="headerlink" href="#core-concepts" title="Permanent link">&para;</a></h2>
+<h3 id="eight-stages-eight-io-signatures">Eight stages, eight I/O signatures<a class="headerlink" href="#eight-stages-eight-io-signatures" title="Permanent link">&para;</a></h3>
+<p><img alt="Eight stage cards in two rows: ingest, curate and preprocess, train data loading, checkpoint, fine-tune and post-train, inference, RAG retrieval, and agents. Each card lists access pattern, interface, typical sizes, what the stage is bound by, typical storage tier, a read/write bar and a throughput-bound or latency-bound badge. A dashed feedback arrow returns from agents to ingest." src="../../assets/diagrams/ch30-ai-pipeline.svg" /></p>
+<p><em>Figure 30.1 — The pipeline moves from write-heavy, cost-bound bulk I/O on the left to read-heavy, latency-bound small I/O on the right, then feeds its own outputs back into the lake.</em></p>
+<p><strong>Ingest.</strong> Crawls, documents, images, video and logs arrive as large write-once objects. Common Crawl's January 2025 crawl alone held 3.0 billion pages and 460 TiB uncompressed<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup>. Ingest needs cheap durable capacity and aggregate write bandwidth; latency barely matters.</p>
+<p><strong>Curation and preprocessing.</strong> Extraction, language identification, quality filtering, deduplication, PII scrubbing and tokenization are repeated full scans that rewrite shards into formats such as Parquet. This is AI's closest cousin to analytics, bound by scan throughput and CPU or GPU. It is also power-hungry: Meta found that for some production recommendation models, storage plus preprocessing drew more power than training itself<sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup>.</p>
+<p><strong>Training: data loading.</strong> Thousands of GPUs read shuffled samples and almost never write. Image and video datasets mean floods of small reads; LLM text is packed into large shards and is light. The danger is tail latency, because a synchronous step waits for its slowest loader.</p>
+<p><strong>Checkpointing.</strong> Every GPU dumps its state at once: a write burst, read back only after a failure (<a href="../31-training-storage/">Chapter 31</a>).</p>
+<p><strong>Fine-tuning and post-training.</strong> Supervised fine-tuning, reinforcement learning and distillation run many smaller jobs that re-read base weights repeatedly; RL even runs inference inside training. To storage it looks like a busy multi-tenant file share.</p>
+<p><strong>Inference.</strong> Two kinds of I/O. <em>Weight loading</em> is large sequential reads and a cold-start problem when services autoscale: 810 GB at 10 GB/s takes 81 seconds. The <em>KV cache</em> is per-token attention state that spills from HBM into DRAM, local NVMe and shared flash (<a href="../32-inference-and-kv-cache/">Chapter 32</a>).</p>
+<p><strong>RAG and agents.</strong> Retrieval searches a vector index and fetches chunks: small random reads on a millisecond budget, plus re-embedding writes as documents change. Agents chain many such steps across files, databases and APIs, adding governance and a trail of state and logs. Here storage becomes data management (<a href="../39-agentic-ai-and-data-intelligence/">Chapter 39</a>).</p>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>Dominant pattern</th>
+<th>Read / write</th>
+<th>Interface</th>
+<th>Typical I/O or file size</th>
+<th>Most sensitive to</th>
+<th>Typical tier</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ingest</td>
+<td>Sequential, append-only</td>
+<td>Write-heavy</td>
+<td>Object (S3 PUT, multipart)</td>
+<td>MB–GB objects</td>
+<td>$/TB, aggregate write GB/s</td>
+<td>Object lake on HDD or QLC</td>
+</tr>
+<tr>
+<td>Curation / preprocessing</td>
+<td>Repeated full scans + rewrites</td>
+<td>Read-heavy, large writes</td>
+<td>Object + Parquet / table formats</td>
+<td>100 MB–1 GB shards</td>
+<td>Scan throughput, CPU/GPU</td>
+<td>Lake + flash scratch</td>
+</tr>
+<tr>
+<td>Training data loading</td>
+<td>Random reads of shuffled samples/shards</td>
+<td>~100% read</td>
+<td>POSIX / NFS / parallel FS, or S3 with cache</td>
+<td>KB samples to GB shards</td>
+<td>Throughput and tail latency</td>
+<td>Hot flash + GPU-local NVMe</td>
+</tr>
+<tr>
+<td>Checkpointing</td>
+<td>Bursty large sequential writes</td>
+<td>~95% write</td>
+<td>Parallel FS or object</td>
+<td>GBs per GPU, TBs per checkpoint</td>
+<td>Burst write bandwidth</td>
+<td>Local NVMe → flash → object</td>
+</tr>
+<tr>
+<td>Fine-tuning / post-training</td>
+<td>Many concurrent medium jobs</td>
+<td>Mixed</td>
+<td>File, object, model hub</td>
+<td>GB–TB base weights</td>
+<td>Multi-tenancy, QoS</td>
+<td>Shared flash + object</td>
+</tr>
+<tr>
+<td>Inference</td>
+<td>Weight loads + KV block reads/writes</td>
+<td>Read-heavy</td>
+<td>File/S3; KV over RDMA</td>
+<td>GB–TB weights; KB–MB KV blocks</td>
+<td>Latency (time to first token)</td>
+<td>HBM → DRAM → NVMe → shared flash</td>
+</tr>
+<tr>
+<td>RAG retrieval</td>
+<td>Small random reads, background re-indexing</td>
+<td>~95% read</td>
+<td>Vector DB, lakehouse, object</td>
+<td>1–6 KB vectors; KB–MB chunks</td>
+<td>Query latency (ms), freshness</td>
+<td>DRAM/flash index; object corpus</td>
+</tr>
+<tr>
+<td>Agents</td>
+<td>Small, metadata-heavy, many sources</td>
+<td>Mixed (state, logs)</td>
+<td>APIs, MCP, file, object, DB</td>
+<td>KB records</td>
+<td>Latency, permissions, lineage</td>
+<td>All tiers + metadata catalog</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 30.1 — No single row resembles another closely enough for one tuning to serve all eight; read/write mixes are indicative.</em></p>
+<h3 id="why-it-is-not-one-workload">Why it is not one workload<a class="headerlink" href="#why-it-is-not-one-workload" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>quadrantChart
+    title Pipeline stages by I/O shape and sensitivity
+    x-axis Large sequential I/O --&gt; Small random I/O
+    y-axis Throughput-bound --&gt; Latency-bound
+    quadrant-1 Serving
+    quadrant-2 Bursty and time-critical
+    quadrant-3 Bulk and cost-bound
+    quadrant-4 Small-file throughput
+    Ingest: [0.12, 0.10]
+    Curation: [0.25, 0.22]
+    Checkpoint: [0.10, 0.42]
+    Training reads: [0.55, 0.40]
+    Fine-tuning: [0.40, 0.30]
+    KV cache: [0.62, 0.80]
+    RAG: [0.85, 0.85]
+    Agents: [0.90, 0.70]</code></pre>
+<p><em>Figure 30.2 — The stages scatter across all four quadrants, which is why "AI storage" deals are really multi-tier deals.</em></p>
+<p>The stages pull a design in opposite directions:</p>
+<ul>
+<li><strong>Cost versus speed.</strong> The lake wants the cheapest durable TB (HDD or QLC, wide erasure codes); the hot tier wants flash, RDMA and a metadata engine that pays only if GPUs stay busy.</li>
+<li><strong>Large versus small I/O.</strong> Wide stripes suit multi-MB writes and punish 4 KB random updates (<a href="../../01-storage-fundamentals/06-data-protection-and-resilience/">Chapter 6</a>).</li>
+<li><strong>Metadata.</strong> A checkpoint is a few huge files; an image dataset is billions of tiny ones; agents generate lookups (<a href="../../03-system-architecture/21-metadata/">Chapter 21</a>).</li>
+<li><strong>Semantics.</strong> POSIX offers rename, append and locks; S3 offers immutable objects over HTTP.</li>
+</ul>
+<p>Buyers run several tiers or buy a platform that credibly spans several; that choice is the vendor battleground.</p>
+<h3 id="why-the-lake-is-object-and-the-hot-tier-is-file">Why the lake is object and the hot tier is file<a class="headerlink" href="#why-the-lake-is-object-and-the-hot-tier-is-file" title="Permanent link">&para;</a></h3>
+<p><strong>Object storage wins the lake</strong> on cost, scale and reach. AWS says S3 holds more than 500 trillion objects and serves over 200 million requests per second<sup id="fnref:7"><a class="footnote-ref" href="#fn:7">7</a></sup>. Erasure coding makes durability cheap, write-once data fits immutable objects, and every tool from Spark to PyTorch loaders speaks S3. The weaknesses: millisecond latency, no append or rename, and a tax on small objects (<a href="../../02-protocols-and-networking/09-object-storage-and-s3/">Chapter 9</a>).</p>
+<p><strong>File and parallel file systems win the hot tier</strong> because training and checkpoint code writes to paths. Parallel file systems stripe each file across many servers that a client reads at once (<a href="../../03-system-architecture/17-parallel-file-systems/">Chapter 17</a>); RDMA and GPUDirect Storage skip the CPU bounce buffer (<a href="../../02-protocols-and-networking/11-gpu-data-path/">Chapter 11</a>).</p>
+<p><strong>The boundary is blurring.</strong> S3 Express One Zone (2023) claims 10x faster access than S3 Standard<sup id="fnref:8"><a class="footnote-ref" href="#fn:8">8</a></sup>; CoreWeave caches object data on every GPU node with LOTA<sup id="fnref:9"><a class="footnote-ref" href="#fn:9">9</a></sup>; MLPerf Storage v3.0 added an S3 path that about one-sixth of submissions used<sup id="fnref:10"><a class="footnote-ref" href="#fn:10">10</a></sup>. File systems are adding S3 front ends, and multiprotocol platforms (VAST, FlashBlade) serve both. The useful distinction is becoming <em>tier</em>, not <em>protocol</em>.</p>
+<pre class="mermaid"><code>flowchart LR
+    SRC["Sources: crawl, docs, logs, sensors"] --&gt; LAKE["Object data lake: HDD or QLC, EB-scale"]
+    LAKE --&gt;|"stage curated shards"| HOT["High-performance file or flash tier"]
+    HOT --&gt;|"prefetch batches"| NVME["GPU-server local NVMe"]
+    HOT --&gt;|"RDMA or GPUDirect reads"| HBM["GPU HBM"]
+    NVME --&gt; DRAM["Host DRAM"]
+    DRAM --&gt; HBM
+    HBM --&gt;|"checkpoint drain"| DRAM
+    DRAM --&gt;|"async flush"| HOT
+    HOT --&gt;|"age out old checkpoints"| LAKE
+    HBM &lt;--&gt;|"KV cache spill and reload"| NVME
+    HBM &lt;--&gt;|"shared KV tier"| HOT
+    HOT --&gt;|"weights and indexes"| APP["Serving: inference, RAG, agents"]
+    APP --&gt;|"logs, feedback, synthetic data"| LAKE</code></pre>
+<p><em>Figure 30.3 — Bulk data flows inward from the lake toward HBM; checkpoints and KV state flow back outward; the lake both starts and ends the loop.</em></p>
+<h3 id="worked-numbers-where-the-bytes-and-the-stress-are">Worked numbers: where the bytes and the stress are<a class="headerlink" href="#worked-numbers-where-the-bytes-and-the-stress-are" title="Permanent link">&para;</a></h3>
+<p><img alt="Horizontal log-scale bar chart: Common Crawl archive over 10 PB; DCLM-Pool text about 960 TB (240 trillion tokens, estimated bytes); FineWeb about 44 TB (15 trillion tokens); FineWeb-Edu about 5.2 TB (1.3 trillion tokens, estimated); 405B-parameter model weights about 810 GB; one full checkpoint with optimizer state about 6.5 TB." src="../../assets/charts/ch30-data-funnel.svg" /></p>
+<p><em>Figure 30.4 — Illustrative: filtering shrinks petabytes to terabytes, then training produces artefacts larger than the model itself.</em>
+Data: <code>data/ch30_data_funnel.csv</code></p>
+<p><strong>From crawl to weights.</strong> DataComp-LM's pool holds 240T tokens of Common Crawl text<sup id="fnref:11"><a class="footnote-ref" href="#fn:11">11</a></sup>. FineWeb filtered and deduplicated 96 snapshots into 15T tokens, about 44 TB on disk<sup id="fnref:12"><a class="footnote-ref" href="#fn:12">12</a></sup><sup id="fnref:13"><a class="footnote-ref" href="#fn:13">13</a></sup>, with a 1.3T-token educational subset<sup id="fnref2:12"><a class="footnote-ref" href="#fn:12">12</a></sup>. Llama 3 trained on about 15.6T tokens<sup id="fnref:14"><a class="footnote-ref" href="#fn:14">14</a></sup>; as 4-byte token IDs that is 15.6e12 × 4 ≈ 62 TB. Filtering, not tokenization, does the shrinking, so curation is where the lake's capacity and scan bandwidth earn their keep.</p>
+<p><strong>Tokens are cheap to stream.</strong> Llama 3's batch grew to 16M tokens per step<sup id="fnref2:14"><a class="footnote-ref" href="#fn:14">14</a></sup>: 64 MB at 4 bytes per token, so even one step per second is about 64 MB/s for the whole cluster. Multimodal is different; video can need GB/s per node.</p>
+<p><strong>Checkpoints are not cheap.</strong> A 405B model at 14–16 bytes per parameter (weights plus Adam state) needs 5.7–6.5 TB. Meta built Llama 3's storage on its Tectonic file system at 240 PB across 7,500 SSD servers, sustaining 2 TB/s with 7 TB/s peaks, and named bursty checkpoint writes a major challenge<sup id="fnref3:14"><a class="footnote-ref" href="#fn:14">14</a></sup>. At 2 TB/s, 6.5 TB takes about 3.3 s; at 100 GB/s, 65 s, with a 16K-GPU job like Llama 3's<sup id="fnref4:14"><a class="footnote-ref" href="#fn:14">14</a></sup> idle throughout.</p>
+<p><strong>Inference creates new state.</strong> Llama 3 70B's KV cache costs 80 layers × 8 KV heads × 128 dimensions × 2 (K and V) × 2 bytes = 327,680 bytes, or about 320 KiB per token. A 128K-token context is about 40 GiB, half an 80 GB GPU's HBM. <strong>RAG adds more</strong>: 1 billion chunks × 1,024-dimension float32 embeddings is 4 TB of vectors before any index overhead.</p>
+<h3 id="semiconductor-bridge-a-memory-hierarchy-with-a-prefetcher">Semiconductor bridge: a memory hierarchy with a prefetcher<a class="headerlink" href="#semiconductor-bridge-a-memory-hierarchy-with-a-prefetcher" title="Permanent link">&para;</a></h3>
+<p>Read the tiers as a cache hierarchy:</p>
+<table>
+<thead>
+<tr>
+<th>AI pipeline tier</th>
+<th>CPU analogue</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>HBM</td>
+<td>Register file / L1</td>
+</tr>
+<tr>
+<td>Host DRAM</td>
+<td>L2</td>
+</tr>
+<tr>
+<td>GPU-local NVMe</td>
+<td>Last-level cache</td>
+</tr>
+<tr>
+<td>Shared flash</td>
+<td>Main memory</td>
+</tr>
+<tr>
+<td>Object lake</td>
+<td>Disk</td>
+</tr>
+</tbody>
+</table>
+<p>Each step outward adds capacity and loses bandwidth per GPU; as in CPU design, the craft is hiding the next level's latency with prefetching and buffering.</p>
+<p><strong>Training is the friendly case.</strong> The shuffle order comes from a seed, so the loader knows exactly which samples come next: a perfect prefetcher, like a DMA engine walking a known descriptor list rather than a speculative stream prefetcher. <strong>Checkpoints use a write-back buffer</strong>: state drains from HBM to host DRAM or local NVMe in seconds, then flushes asynchronously, as a store buffer does.</p>
+<p><strong>Inference is a cache whose reuse distance depends on users</strong>: hit rate depends on how often prompts share prefixes. NVIDIA's KV Block Manager names its tiers G1 (HBM) through G4 (remote storage)<sup id="fnref:15"><a class="footnote-ref" href="#fn:15">15</a></sup>. Agents are least predictable of all. Downstream, value shifts from raw bandwidth to caching policy, placement and metadata.</p>
+<p><strong>Moving data costs energy.</strong> At 45 nm, Horowitz put a 64-bit DRAM access at roughly 1.3–2.6 nJ against 0.4–3.7 pJ for a floating-point operation, a gap of hundreds to thousands of times<sup id="fnref:16"><a class="footnote-ref" href="#fn:16">16</a></sup>. Every NIC, switch and SSD hop adds more. With data-centre electricity forecast at 565 TWh in 2026<sup id="fnref:17"><a class="footnote-ref" href="#fn:17">17</a></sup>, there are three responses:</p>
+<ol>
+<li>Keep hot data close, in local NVMe caches and KV tiers.</li>
+<li>Move compute to the data. NVIDIA's BlueField-4 STX<sup id="fnref2:18"><a class="footnote-ref" href="#fn:18">18</a></sup> and VAST running its storage controllers on BlueField-4 DPUs<sup id="fnref:19"><a class="footnote-ref" href="#fn:19">19</a></sup> both do this.</li>
+<li>Move fewer bytes, by filtering early and reducing data (<a href="../38-power-and-density/">Chapter 38</a>).</li>
+</ol>
+<h2 id="how-everpure-approaches-it-vs-competitors">How Everpure approaches it vs. competitors<a class="headerlink" href="#how-everpure-approaches-it-vs-competitors" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Stage</th>
+<th>What the buyer pays for</th>
+<th>Everpure offering</th>
+<th>Strongest alternatives (steelman)</th>
+<th>Who tends to win today</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Ingest / lake</td>
+<td>$/TB, durability, S3 compatibility</td>
+<td>FlashBlade//E, FlashBlade S3, DirectFlash density<sup id="fnref2:3"><a class="footnote-ref" href="#fn:3">3</a></sup></td>
+<td>AWS S3 / Azure Blob (gravity, zero ops); HDD object stores (cheapest TB)</td>
+<td>Hyperscalers in cloud; HDD object on-prem</td>
+</tr>
+<tr>
+<td>Curation</td>
+<td>Scan throughput, table formats, GPU pipelines</td>
+<td>Data Stream, built on NVIDIA's AI Data Platform design<sup id="fnref2:4"><a class="footnote-ref" href="#fn:4">4</a></sup><sup id="fnref2:20"><a class="footnote-ref" href="#fn:20">20</a></sup></td>
+<td>Lakehouse platforms on object storage; VAST's database and compute layer</td>
+<td>Lakehouse software vendors</td>
+</tr>
+<tr>
+<td>Training + checkpoint</td>
+<td>GB/s to TB/s, NVIDIA certification</td>
+<td>FlashBlade//S500, FlashBlade//EXA; 877.5 GiB/s checkpoint write in MLPerf Storage v3.0 (vendor-submitted; see <a href="../31-training-storage/">Ch 31</a> for who did not enter)<sup id="fnref:21"><a class="footnote-ref" href="#fn:21">21</a></sup></td>
+<td>DDN EXAScaler, WEKA, VAST, IBM Storage Scale, Dell Lightning FS<sup id="fnref:22"><a class="footnote-ref" href="#fn:22">22</a></sup></td>
+<td>NVIDIA-aligned specialists (<a href="../../06-industry-and-competition/41-why-ai-native-vendors-won/">Ch 41</a>)</td>
+</tr>
+<tr>
+<td>Fine-tuning</td>
+<td>Multi-tenancy, QoS, many jobs</td>
+<td>FlashBlade//S; FlashBlade//EXA multi-tenancy and QoS (2026)<sup id="fnref:23"><a class="footnote-ref" href="#fn:23">23</a></sup></td>
+<td>NetApp AFX, Dell PowerScale, VAST</td>
+<td>Enterprise incumbents</td>
+</tr>
+<tr>
+<td>Inference / KV cache</td>
+<td>Time to first token, tokens per dollar</td>
+<td>PureKVA, claimed up to 20x faster TTFT, test details unpublished<sup id="fnref2:2"><a class="footnote-ref" href="#fn:2">2</a></sup></td>
+<td>WEKA Augmented Memory Grid<sup id="fnref:24"><a class="footnote-ref" href="#fn:24">24</a></sup>, VAST on BlueField-4<sup id="fnref2:19"><a class="footnote-ref" href="#fn:19">19</a></sup>, NVIDIA STX/CMX<sup id="fnref3:18"><a class="footnote-ref" href="#fn:18">18</a></sup></td>
+<td>Too early to call</td>
+</tr>
+<tr>
+<td>RAG</td>
+<td>Vectors, freshness, permissions</td>
+<td>Data Stream vector DB integration<sup id="fnref3:4"><a class="footnote-ref" href="#fn:4">4</a></sup></td>
+<td>Vector databases; AWS S3 Vectors<sup id="fnref:25"><a class="footnote-ref" href="#fn:25">25</a></sup>; NetApp AI Data Engine<sup id="fnref:26"><a class="footnote-ref" href="#fn:26">26</a></sup></td>
+<td>Database vendors + hyperscalers</td>
+</tr>
+<tr>
+<td>Agents</td>
+<td>Discovery, classification, governance, MCP</td>
+<td>Data Intelligence (ex-1touch, US$125M); native MCP support<sup id="fnref3:3"><a class="footnote-ref" href="#fn:3">3</a></sup><sup id="fnref3:2"><a class="footnote-ref" href="#fn:2">2</a></sup></td>
+<td>NetApp AIDE, Dell AI Data Platform, governance software</td>
+<td>Open</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 30.2 — Everpure has a product at every stage, but its strongest positions are the flash tiers in the middle; the lake and the agent layer are contested by players who do not sell arrays.</em></p>
+<p><strong>Steelman the specialists.</strong> DDN and WEKA win the hot tier through focus, HPC heritage and early NVIDIA alignment. Hyperscalers win the lake through gravity: egress fees and tooling keep petabytes in S3. VAST argues one shared-everything platform should span lake, hot tier and database, the most direct challenge to a product-family approach (<a href="../../06-industry-and-competition/42-vast-data/">Chapter 42</a>). <strong>Everpure's counter-thesis</strong> is one operating environment and control plane across stages, with DirectFlash pulling lake capacity from HDD onto flash. The risk is being second-best at every stage.</p>
+<p>Options a strategy team might evaluate, based on public information:</p>
+<ul>
+<li>Lead with checkpoint and KV-cache performance, where MLPerf v3.0 gives comparable evidence.</li>
+<li>Use Data Intelligence to own the metadata layer that RAG and agents depend on.</li>
+<li>Partner rather than compete for the cloud lake.</li>
+</ul>
+<h2 id="history-and-trajectory">History and trajectory<a class="headerlink" href="#history-and-trajectory" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>timeline
+    title The pipeline moves downstream
+    2012 : Deep learning on ImageNet makes small-file reads the first AI storage problem
+    2021 : GPUDirect Storage 1.0 opens a direct storage-to-GPU path
+    2023 : S3 Express One Zone brings low-latency object storage
+    2024 : MLPerf Storage v1.0 measures training data loading
+    2025 : MLPerf Storage v2.0 adds checkpointing : NVIDIA AI Data Platform reference design
+    2026 : MLPerf Storage v3.0 adds KV cache, vector database and S3 : NVIDIA STX for context memory</code></pre>
+<p><em>Figure 30.5 — The industry's attention has moved stage by stage down the pipeline, from feeding training to serving inference.</em></p>
+<p>Small image files were the first AI storage problem; LLMs made checkpoints the bandwidth problem; deployment made inference context the latency problem. MLPerf Storage followed: v1.0 (September 2024) measured training reads<sup id="fnref:27"><a class="footnote-ref" href="#fn:27">27</a></sup>, v2.0 (August 2025) added checkpointing<sup id="fnref:28"><a class="footnote-ref" href="#fn:28">28</a></sup>, v3.0 (September 2026) added KV cache, vector database and S3<sup id="fnref2:10"><a class="footnote-ref" href="#fn:10">10</a></sup>. So did hardware: GPUDirect Storage 1.0 in 2021<sup id="fnref:29"><a class="footnote-ref" href="#fn:29">29</a></sup>, NVIDIA's AI Data Platform in March 2025<sup id="fnref:20"><a class="footnote-ref" href="#fn:20">20</a></sup>, BlueField-4 STX in March 2026<sup id="fnref:18"><a class="footnote-ref" href="#fn:18">18</a></sup>. TrendForce attributes part of 4Q26 enterprise SSD demand to hyperscalers buying QLC for KV cache<sup id="fnref:30"><a class="footnote-ref" href="#fn:30">30</a></sup>. A likely next step is agent memory and state as a named workload.</p>
+<h2 id="numbers-that-matter">Numbers that matter<a class="headerlink" href="#numbers-that-matter" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+<th>Context</th>
+<th>Source / date</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>One Common Crawl monthly crawl</td>
+<td>3.0B pages, 460 TiB uncompressed</td>
+<td>January 2025 crawl</td>
+<td>Common Crawl<sup id="fnref2:5"><a class="footnote-ref" href="#fn:5">5</a></sup>, 2025</td>
+</tr>
+<tr>
+<td>FineWeb</td>
+<td>15T tokens from 96 snapshots; ~44 TB</td>
+<td>Filtered, deduplicated web text</td>
+<td>NeurIPS 2024<sup id="fnref4:12"><a class="footnote-ref" href="#fn:12">12</a></sup>; Hugging Face<sup id="fnref2:13"><a class="footnote-ref" href="#fn:13">13</a></sup></td>
+</tr>
+<tr>
+<td>DCLM-Pool</td>
+<td>240T tokens</td>
+<td>Largest public pre-filter text pool</td>
+<td>DataComp-LM<sup id="fnref3:11"><a class="footnote-ref" href="#fn:11">11</a></sup>, 2024</td>
+</tr>
+<tr>
+<td>Llama 3 pre-training</td>
+<td>~15.6T tokens; 240 PB Tectonic, 2 TB/s sustained, 7 TB/s peak</td>
+<td>Meta's own training storage</td>
+<td>Meta, 2024-07<sup id="fnref6:14"><a class="footnote-ref" href="#fn:14">14</a></sup></td>
+</tr>
+<tr>
+<td>Checkpoint, 405B model</td>
+<td>5.7–6.5 TB</td>
+<td>14–16 bytes per parameter</td>
+<td>Worked example</td>
+</tr>
+<tr>
+<td>KV cache, Llama 3 70B</td>
+<td>~320 KiB per token; ~40 GiB at 128K tokens</td>
+<td>BF16, grouped-query attention</td>
+<td>Worked example</td>
+</tr>
+<tr>
+<td>S3 scale</td>
+<td>&gt;500T objects, &gt;200M requests/s</td>
+<td>Why lakes default to object</td>
+<td>AWS via LMI, 2026-03<sup id="fnref2:7"><a class="footnote-ref" href="#fn:7">7</a></sup></td>
+</tr>
+<tr>
+<td>DRAM access vs FP op energy</td>
+<td>~1.3–2.6 nJ vs 0.4–3.7 pJ</td>
+<td>45 nm; data movement dominates</td>
+<td>Horowitz, ISSCC 2014<sup id="fnref2:16"><a class="footnote-ref" href="#fn:16">16</a></sup></td>
+</tr>
+<tr>
+<td>MLPerf Storage v3.0 S3 share</td>
+<td>~1/6 of submissions</td>
+<td>Object entering the hot tier</td>
+<td>MLCommons, 2026-09-01<sup id="fnref3:10"><a class="footnote-ref" href="#fn:10">10</a></sup></td>
+</tr>
+</tbody>
+</table>
+<h2 id="conversation-playbook">Conversation playbook<a class="headerlink" href="#conversation-playbook" title="Permanent link">&para;</a></h2>
+<p><strong>Questions for a PM</strong></p>
+<ol>
+<li><em>"Which stages does our AI revenue come from today, and which are we betting on?"</em> Strong: revenue split by stage, where attach happens (does KVA ride on existing FlashBlade deals?), and candour about which wins are still pilots.</li>
+<li><em>"If the lake is already in S3, how do we win the hot tier, and ever win the lake back?"</em> Strong: data gravity, egress economics, the caching or tiering mechanism, and the NVIDIA certifications that get Everpure onto the bill of materials.</li>
+<li><em>"What must PureKVA prove to become a standard tier, not a feature?"</em> Strong: independent results (MLPerf v3.0 KV cache), integrations (Dynamo, vLLM, llm-d), hit-rate assumptions and tokens per dollar versus no offload.</li>
+</ol>
+<p><strong>Questions for an engineer</strong></p>
+<ol>
+<li><em>"Walk me through a 6 TB checkpoint on FlashBlade//EXA. Where does the burst land, what is the persistence point, and how many seconds are GPUs blocked?"</em> Strong: async staging via host DRAM or local NVMe, write GB/s per data node, blocked time versus time to durability.</li>
+<li><em>"What happens when a dataset of billions of small files is reshuffled every epoch?"</em> Strong: metadata operations per second, client caching, and advice to pack data into shards.</li>
+<li><em>"For a KV block fetch, what is the latency budget and where does it break: network, metadata or media?"</em> Strong: microsecond figures, the RDMA path, block sizes, and the concurrency where tail latency climbs.</li>
+</ol>
+<p><strong>Don't say this:</strong></p>
+<ul>
+<li>"AI storage is all about throughput." Inference, RAG and agents are latency- and metadata-bound.</li>
+<li>"LLM training needs huge read bandwidth for the dataset." Text tokens are tiny. Checkpoints and multimodal data drive bandwidth.</li>
+<li>"Object storage is too slow for AI." Nearly every lake is object storage, and S3 is now inside MLPerf Storage.</li>
+<li>"Data shrinks through the pipeline, so storage demand falls." Checkpoints, KV caches, embeddings, logs and retained versions grow it again.</li>
+<li>"GPUDirect makes storage latency irrelevant." It removes a CPU copy; it does not remove the network or the media.</li>
+</ul>
+<h2 id="going-deeper-optional-l3-pointers">Going deeper (optional, L3 pointers)<a class="headerlink" href="#going-deeper-optional-l3-pointers" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Meta, "The Llama 3 Herd of Models," infrastructure section<sup id="fnref5:14"><a class="footnote-ref" href="#fn:14">14</a></sup>; Zhao et al., ISCA 2022, on Meta's ingestion pipeline<sup id="fnref2:6"><a class="footnote-ref" href="#fn:6">6</a></sup>.</li>
+<li>FineWeb and DataComp-LM papers on curation filters<sup id="fnref3:12"><a class="footnote-ref" href="#fn:12">12</a></sup><sup id="fnref2:11"><a class="footnote-ref" href="#fn:11">11</a></sup>; NVIDIA Dynamo KVBM docs<sup id="fnref2:15"><a class="footnote-ref" href="#fn:15">15</a></sup>; MLPerf Storage rules (<a href="../37-reading-benchmarks/">Chapter 37</a>).</li>
+</ul>
+<h2 id="key-terms">Key terms<a class="headerlink" href="#key-terms" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Data lake</strong> — low-cost, usually object-based store for raw and curated data.</li>
+<li><strong>Hot tier</strong> — high-performance file or flash tier feeding GPUs.</li>
+<li><strong>KV cache</strong> — per-token attention state reused during inference.</li>
+<li><strong>Data gravity</strong> — the pull of applications and spend toward where large data already sits.</li>
+<li>More in the <a href="../../glossary/">glossary</a>.</li>
+</ul>
+<h2 id="sources">Sources<a class="headerlink" href="#sources" title="Permanent link">&para;</a></h2>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>Common Crawl, "Overview," n.d. https://commoncrawl.org/overview (retrieved 2026-11-01). Reports a repository of more than 10 PB collected since 2008. [VERIFY: search-summary only; page not fetchable from this environment]&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>Blocks &amp; Files, "Everpure bulks up AI offer," 2026-09-30. https://blocksandfiles.com/flash/2026/09/30/everpure-bulks-up-ai-offer/5300162 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:2" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>Everpure, "Pure Launch Blog: January 2026 Edition," 2026-01; and Everpure, "Form 10-Q for the quarter ended May 3, 2026," 2026-06. https://blog.everpuredata.com/products/pure-launch-blog-january-2026-edition/ ; https://www.sec.gov/Archives/edgar/data/0001474432/000147443226000061/pstg-20260503.htm (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:3" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>HPCwire/BigDATAwire, "Everpure Announces Data Stream to Expand AI-Ready Data Offerings," 2026-06-17. https://www.hpcwire.com/bigdatawire/this-just-in/everpure-announces-data-stream-to-expand-ai-ready-data-offerings/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:4" title="Jump back to footnote 4 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p>Common Crawl, "January 2025 Crawl Archive Now Available," 2025-01. https://commoncrawl.org/blog/january-2025-crawl-archive-now-available (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:6">
+<p>M. Zhao et al., "Understanding Data Storage and Ingestion for Large-Scale Deep Recommendation Model Training," ISCA 2022. https://arxiv.org/abs/2108.09373 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+<li id="fn:7">
+<p>Le Monde Informatique, "AWS S3 fête ses 20 ans," 2026-03 (reporting AWS's anniversary figures). https://www.lemondeinformatique.fr/actualites/lire-aws-s3-fete-ses-20-ans-99637.html (retrieved 2026-11-01). [VERIFY: search-summary only; corroborated by Wikipedia, confirm against AWS's own S3 20th-anniversary post]&#160;<a class="footnote-backref" href="#fnref:7" title="Jump back to footnote 7 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:7" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+</li>
+<li id="fn:8">
+<p>AWS, "Announcing the Amazon S3 Express One Zone storage class," 2023-11-28. https://aws.amazon.com/about-aws/whats-new/2023/11/amazon-s3-express-one-zone-storage-class (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:8" title="Jump back to footnote 8 in the text">&#8617;</a></p>
+</li>
+<li id="fn:9">
+<p>CoreWeave, "Storage," product page, n.d. https://coreweave.com/products/storage (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:9" title="Jump back to footnote 9 in the text">&#8617;</a></p>
+</li>
+<li id="fn:10">
+<p>MLCommons via GlobeNewswire, "MLCommons Releases New MLPerf Storage v3.0 Benchmark Results," 2026-09-01. https://www.globenewswire.com/news-release/2026/09/01/3354412/0/en/mlcommons-releases-new-mlperf-storage-v3-0-benchmark-results.html (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:10" title="Jump back to footnote 10 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:10" title="Jump back to footnote 10 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:10" title="Jump back to footnote 10 in the text">&#8617;</a></p>
+</li>
+<li id="fn:11">
+<p>J. Li et al., "DataComp-LM: In search of the next generation of training sets for language models," NeurIPS 2024 Datasets and Benchmarks, 2024-06. https://arxiv.org/abs/2406.11794 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:11" title="Jump back to footnote 11 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:11" title="Jump back to footnote 11 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:11" title="Jump back to footnote 11 in the text">&#8617;</a></p>
+</li>
+<li id="fn:12">
+<p>G. Penedo et al., "The FineWeb Datasets: Decanting the Web for the Finest Text Data at Scale," NeurIPS 2024 Datasets and Benchmarks, 2024. https://proceedings.neurips.cc/paper_files/paper/2024/hash/370df50ccfdf8bde18f8f9c2d9151bda-Abstract-Datasets_and_Benchmarks_Track.html (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:12" title="Jump back to footnote 12 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:12" title="Jump back to footnote 12 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:12" title="Jump back to footnote 12 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:12" title="Jump back to footnote 12 in the text">&#8617;</a></p>
+</li>
+<li id="fn:13">
+<p>Hugging Face, "FineWeb: decanting the web for the finest text data at scale" (blog), 2024-05-31. https://huggingfacefw-blogpost-fineweb-v1.static.hf.space/ (retrieved 2026-11-01; "15-trillion tokens, 44TB disk space", seen via search result; dataset card HuggingFaceFW/fineweb gives the same figure). Secondary summaries quoting ~50 TB are not the official figure.&#160;<a class="footnote-backref" href="#fnref:13" title="Jump back to footnote 13 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:13" title="Jump back to footnote 13 in the text">&#8617;</a></p>
+</li>
+<li id="fn:14">
+<p>Meta (Llama Team), "The Llama 3 Herd of Models," arXiv:2407.21783, 2024-07-31. https://arxiv.org/abs/2407.21783 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:14" title="Jump back to footnote 14 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:14" title="Jump back to footnote 14 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:14" title="Jump back to footnote 14 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:14" title="Jump back to footnote 14 in the text">&#8617;</a><a class="footnote-backref" href="#fnref5:14" title="Jump back to footnote 14 in the text">&#8617;</a><a class="footnote-backref" href="#fnref6:14" title="Jump back to footnote 14 in the text">&#8617;</a></p>
+</li>
+<li id="fn:15">
+<p>NVIDIA, "KVBM design," Dynamo documentation v1.3.0, n.d. https://docs.nvidia.com/dynamo/v1.3.0/design-docs/component-design/kvbm-design.md (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:15" title="Jump back to footnote 15 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:15" title="Jump back to footnote 15 in the text">&#8617;</a></p>
+</li>
+<li id="fn:16">
+<p>M. Horowitz, "1.1 Computing's energy problem (and what we can do about it)," ISSCC 2014, 2014-02. https://doi.org/10.1109/ISSCC.2014.6757323 (retrieved 2026-11-01); figures as reproduced in arXiv:1602.04183, https://arxiv.org/pdf/1602.04183 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:16" title="Jump back to footnote 16 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:16" title="Jump back to footnote 16 in the text">&#8617;</a></p>
+</li>
+<li id="fn:17">
+<p>Gartner, "Gartner Says Data Center Electricity Consumption to Grow 26% in 2026," 2026-06-10. https://www.gartner.com/en/newsroom/press-releases/2026-06-10-gartner-says-data-center-electricity-demand-to-grow-26-percent-in-2026 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:17" title="Jump back to footnote 17 in the text">&#8617;</a></p>
+</li>
+<li id="fn:18">
+<p>NVIDIA, "NVIDIA Launches BlueField-4 STX Storage Architecture With Broad Industry Adoption," 2026-03-16. https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Launches-BlueField-4-STX-Storage-Architecture-With-Broad-Industry-Adoption/default.aspx (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:18" title="Jump back to footnote 18 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:18" title="Jump back to footnote 18 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:18" title="Jump back to footnote 18 in the text">&#8617;</a></p>
+</li>
+<li id="fn:19">
+<p>StorageNewsletter, "CES 2026: Vast Data Redesigns AI Inference Architecture for the Agentic Era with Nvidia," 2026-01-07. https://www.storagenewsletter.com/2026/01/07/ces-2026-vast-data-redesigns-ai-inference-architecture-for-the-agentic-era-with-nvidia/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:19" title="Jump back to footnote 19 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:19" title="Jump back to footnote 19 in the text">&#8617;</a></p>
+</li>
+<li id="fn:20">
+<p>NVIDIA Newsroom, "NVIDIA and Storage Industry Leaders Unveil New Class of Enterprise Infrastructure for the Age of AI," 2025-03-18. https://nvidianews.nvidia.com/news/nvidia-and-storage-industry-leaders-unveil-new-class-of-enterprise-infrastructure-for-the-age-of-ai (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:20" title="Jump back to footnote 20 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:20" title="Jump back to footnote 20 in the text">&#8617;</a></p>
+</li>
+<li id="fn:21">
+<p>HPCwire, "Everpure Leads MLPerf Storage Tests for Large Model Checkpointing and KV Cache," 2026-09-02. https://hpcwire.com/off-the-wire/everpure-leads-mlperf-storage-tests-for-large-model-checkpointing-and-kv-cache (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:21" title="Jump back to footnote 21 in the text">&#8617;</a></p>
+</li>
+<li id="fn:22">
+<p>Dell Technologies, "Dell AI Data Platform with NVIDIA Supercharges Enterprise AI with Breakthrough Data Orchestration and Storage Innovations," 2026-03-16. https://www.dell.com/en-us/dt/corporate/newsroom/announcements/detailpage.press-releases~usa~2026~03~dell-ai-data-platform-with-nvidia-supercharges-enterprise-ai-with-breakthrough-data-orchestration-and-storage-innovations.htm (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:22" title="Jump back to footnote 22 in the text">&#8617;</a></p>
+</li>
+<li id="fn:23">
+<p>Everpure Blog, "Meet FlashBlade//EXA: the AI Data Platform for Scale," 2026-06. https://blog.everpuredata.com/products/meet-flashblade-exa-the-ai-data-platform-for-scale/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:23" title="Jump back to footnote 23 in the text">&#8617;</a></p>
+</li>
+<li id="fn:24">
+<p>WEKA, "WEKA Breaks The AI Memory Barrier With Augmented Memory Grid on NeuralMesh," 2025-11-18. https://www.weka.io/news/weka-breaks-the-ai-memory-barrier-with-augmented-memory-grid (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:24" title="Jump back to footnote 24 in the text">&#8617;</a></p>
+</li>
+<li id="fn:25">
+<p>StorageNewsletter, "AWS re:Invent 2025: Amazon S3 Vectors is Now Generally Available with 40 Times the Scale of Preview," 2025-12-05. https://www.storagenewsletter.com/2025/12/05/aws-reinvent-2025-amazon-s3-vectors-is-now-generally-available-with-40-times-the-scale-of-preview/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:25" title="Jump back to footnote 25 in the text">&#8617;</a></p>
+</li>
+<li id="fn:26">
+<p>Blocks &amp; Files, "NetApp disaggregates ONTAP storage and provides an AI Data Engine," 2025-10-14. https://blocksandfiles.com/2025/10/14/netapp-disaggregates-ontap-storage-and-provides-an-ai-data-engine/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:26" title="Jump back to footnote 26 in the text">&#8617;</a></p>
+</li>
+<li id="fn:27">
+<p>MLCommons, "New MLPerf Storage v1.0 Benchmark Results Show Storage Systems Play a Critical Role in AI Model Training Performance," 2024-09-25. https://mlcommons.org/2024/09/mlperf-storage-v1-0-benchmark-results/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:27" title="Jump back to footnote 27 in the text">&#8617;</a></p>
+</li>
+<li id="fn:28">
+<p>StorageNewsletter, "New MLPerf Storage v2.0 Benchmark Results Demonstrate the Critical Role of Storage Performance in AI Training Systems," 2025-08-08. https://www.storagenewsletter.com/2025/08/08/new-mlperf-storage-v2-0-benchmark-results-demonstrate-the-critical-role-of-storage-performance-in-ai-training-systems/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:28" title="Jump back to footnote 28 in the text">&#8617;</a></p>
+</li>
+<li id="fn:29">
+<p>Blocks &amp; Files, "GPUDirect Storage hitting the streets to VAST acclaim," 2021-06-28. https://www.blocksandfiles.com/file/2021/06/28/gpudirect-storage-hitting-the-streets-to-vast-acclaim/1611092 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:29" title="Jump back to footnote 29 in the text">&#8617;</a></p>
+</li>
+<li id="fn:30">
+<p>TrendForce, "AI Server Demand Sustains Memory Contract Price Increases in 4Q26, While Consumer-Side Pressure Persists," 2026-09-30. https://www.trendforce.com/presscenter/news/20260930-13258.html (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:30" title="Jump back to footnote 30 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../04-everpure/29-hyperscaler-ecosystem-financials/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 29. Hyperscaler business, ecosystem and financials">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                29. Hyperscaler business, ecosystem and financials
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../31-training-storage/" class="md-footer__link md-footer__link--next" aria-label="Next: 31. Training storage">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                31. Training storage
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>

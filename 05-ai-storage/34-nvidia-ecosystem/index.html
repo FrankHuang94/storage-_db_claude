@@ -1,0 +1,3781 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A strategy-level knowledge base on storage, AI storage and the competitive landscape around Everpure (formerly Pure Storage).">
+      
+      
+      
+        <link rel="canonical" href="https://frankhuang94.github.io/storage-_db_claude/05-ai-storage/34-nvidia-ecosystem/">
+      
+      
+        <link rel="prev" href="../33-rag-vector-lakehouse/">
+      
+      
+        <link rel="next" href="../35-ai-factories-and-neoclouds/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>34. NVIDIA's ecosystem and certifications - Everpure Tech Atlas</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#34-nvidias-ecosystem-and-certifications" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Everpure Tech Atlas" class="md-header__button md-logo" aria-label="Everpure Tech Atlas" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Everpure Tech Atlas
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              34. NVIDIA's ecosystem and certifications
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/FrankHuang94/storage-_db_claude" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    storage-_db_claude
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Everpure Tech Atlas" class="md-nav__button md-logo" aria-label="Everpure Tech Atlas" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Everpure Tech Atlas
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/FrankHuang94/storage-_db_claude" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    storage-_db_claude
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 0 — Start Here
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 0 — Start Here
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start-here/00a-how-to-use-this-atlas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0.1. How to use this atlas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start-here/00b-one-page-map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0.2. The one-page map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 1 — Storage Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 1 — Storage Fundamentals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/01-what-storage-does/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. What storage does
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/02-media-physics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Media physics for a semis person
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/03-inside-an-ssd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Inside an SSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/04-performance-and-economics-metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Performance and economics metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/05-data-reduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Data reduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/06-data-protection-and-resilience/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Data protection and resilience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 2 — Protocols and Networking
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 2 — Protocols and Networking
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/07-block-protocols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Block protocols
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/08-file-protocols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. File protocols
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/09-object-storage-and-s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Object storage and S3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/10-datacenter-networking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Datacenter networking for storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/11-gpu-data-path/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. The GPU data path
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/12-interfaces-and-emerging-tech/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Interfaces and emerging tech
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3 — Storage System Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 3 — Storage System Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/13-storage-stack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. The storage stack, layer by layer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/14-scale-up-dual-controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Scale-up dual-controller arrays
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/15-scale-out-shared-nothing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Scale-out shared-nothing clusters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/16-disaggregated-shared-everything/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Disaggregated shared-everything architectures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/17-parallel-file-systems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Parallel and distributed file systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/18-object-storage-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Object storage architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/19-software-defined-and-hci/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Software-defined storage and HCI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/20-distributed-systems-fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Distributed-systems fundamentals for storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/21-metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Metadata: the hidden bottleneck
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/22-control-planes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Control planes and fleet management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/23-consumption-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Consumption models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/24-architecture-decision-matrix/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Architecture decision matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 4 — Everpure
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 4 — Everpure
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/25-company-history-and-strategy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Company history and strategy, 2009–2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/26-purity-and-directflash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Core technology: Purity and DirectFlash
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/27-flasharray-and-flashblade/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Product portfolio: FlashArray and FlashBlade
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/28-platform-and-software/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. Platform and software
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/29-hyperscaler-ecosystem-financials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Hyperscaler business, ecosystem and financials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 5 — AI Storage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 5 — AI Storage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../30-ai-data-pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. The AI data pipeline end to end
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../31-training-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Training storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../32-inference-and-kv-cache/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Inference and KV cache
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../33-rag-vector-lakehouse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    33. RAG, vector databases and AI-native data formats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. NVIDIA's ecosystem and certifications
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. NVIDIA's ecosystem and certifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters-for-everpure-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters for Everpure strategy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#five-programs-one-gatekeeper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Five programs, one gatekeeper
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-the-tests-actually-require" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the tests actually require
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-ai-data-platform-nvidias-blueprint-for-the-storage-box-itself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The AI Data Platform: NVIDIA's blueprint for the storage box itself
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stx-and-cmx-the-reference-storage-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        STX and CMX: the reference storage server
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-deals-flow-through-nvidia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How deals flow through NVIDIA
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kingmaker-or-toll-booth-nvidias-investments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kingmaker or toll booth? NVIDIA's investments
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-everpure-approaches-it-vs-competitors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Everpure approaches it vs. competitors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#history-and-trajectory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        History and trajectory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#numbers-that-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Numbers that matter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversation-playbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversation playbook
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-deeper-optional-l3-pointers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going deeper (optional, L3 pointers)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key terms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../35-ai-factories-and-neoclouds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    35. AI factories and neoclouds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../36-hyperscaler-ai-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    36. How hyperscalers build AI storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../37-reading-benchmarks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    37. Reading benchmarks critically
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../38-power-and-density/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    38. Power, density and the AI datacenter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../39-agentic-ai-and-data-intelligence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    39. Agentic AI and data intelligence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 6 — Industry and Competition
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 6 — Industry and Competition
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/40-market-structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    40. Market structure and sizing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/41-why-ai-native-vendors-won/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    41. Why AI-native storage vendors gained traction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/42-vast-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    42. VAST Data deep dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/43-weka/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    43. WEKA deep dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/44-ddn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    44. DDN deep dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/45-head-to-head/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    45. Head-to-head: FlashBlade//EXA vs. VAST vs. WEKA vs. DDN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/46-incumbents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    46. Incumbents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/47-other-challengers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    47. Other challengers and software-defined players
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/48-media-suppliers-and-nand-cycle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    48. Media suppliers and the NAND cycle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/49-competitive-matrices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    49. Competitive landscape matrices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/50-diligence-framework/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    50. Technical diligence framework
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 7 — History and Future
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 7 — History and Future
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/51-history-of-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    51. History of storage, 1956–2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/52-history-of-flash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    52. History of flash and NAND economics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/53-future-trends/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    53. Future trends, 2026–2032
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/54-strategic-option-map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    54. Strategic option map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 8 — Conversation Toolkit
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 8 — Conversation Toolkit
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/55-talking-with-pms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    55. Talking with product managers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/56-talking-with-engineering-and-cto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    56. Talking with engineering leaders and the CTO office
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/57-question-bank/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    57. Question bank: 150 questions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/58-explain-in-30-seconds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    58. Explain it in 30 seconds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/59-self-test-flashcards/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    59. Self-test: 279 flashcards
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/60-cheat-sheets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    60. Cheat sheets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters-for-everpure-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters for Everpure strategy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#five-programs-one-gatekeeper" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Five programs, one gatekeeper
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#what-the-tests-actually-require" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the tests actually require
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-ai-data-platform-nvidias-blueprint-for-the-storage-box-itself" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The AI Data Platform: NVIDIA's blueprint for the storage box itself
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#stx-and-cmx-the-reference-storage-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        STX and CMX: the reference storage server
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-deals-flow-through-nvidia" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How deals flow through NVIDIA
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kingmaker-or-toll-booth-nvidias-investments" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Kingmaker or toll booth? NVIDIA's investments
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-everpure-approaches-it-vs-competitors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Everpure approaches it vs. competitors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#history-and-trajectory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        History and trajectory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#numbers-that-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Numbers that matter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversation-playbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversation playbook
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-deeper-optional-l3-pointers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going deeper (optional, L3 pointers)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key terms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="34-nvidias-ecosystem-and-certifications">34. NVIDIA's ecosystem and certifications<a class="headerlink" href="#34-nvidias-ecosystem-and-certifications" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>Depth:</strong> L2 · <strong>Reading time:</strong> ~10 min · <strong>Last verified:</strong> 2026-11-01
+<strong>Prerequisites:</strong> <a href="../../02-protocols-and-networking/10-datacenter-networking/">Datacenter networking for storage</a> · <a href="../../02-protocols-and-networking/11-gpu-data-path/">The GPU data path</a> · <a href="../32-inference-and-kv-cache/">Inference and KV cache</a></p>
+</blockquote>
+<h2 id="tldr">TL;DR<a class="headerlink" href="#tldr" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>NVIDIA runs the approved-vendor list for AI storage.</strong> Each of its reference designs (BasePOD, SuperPOD, NVIDIA Cloud Partner, Enterprise) names storage that passed NVIDIA's tests. A vendor missing from the list is usually not in the deal.</li>
+<li><strong>The program is a set of tiers ordered by scale.</strong> NVIDIA-Certified Storage has Foundation (up to 128 simulated GPUs), Enterprise (about 1,000) and NCP (up to 10,000) levels. SuperPOD certification adds per-GPU-generation throughput tiers. NCP certification adds cloud-grade uptime, durability and delivery-time rules.</li>
+<li><strong>Certification sets a floor. It does not rank vendors.</strong> The SuperPOD B200 "enhanced" tier works out to under 0.5 GB/s of read per GPU. About a dozen vendors hold NVIDIA storage certifications. Certification proves interoperability and minimum throughput. It says nothing about price, data reduction, operations or failure behaviour.</li>
+<li><strong>NVIDIA keeps moving into the storage box.</strong> The AI Data Platform (2025) put GPUs and NVIDIA retrieval software inside storage. BlueField-4 STX and CMX (2026) standardize the KV-cache tier on NVIDIA silicon, with 12 storage vendors as co-design partners.</li>
+<li><strong>NVIDIA invests in some of the vendors it certifies.</strong> It holds equity in VAST and WEKA, and NVIDIA's own clusters run on DDN. Everpure has every major certification for FlashBlade//S. It has none NVIDIA-granted yet for FlashBlade//EXA, and it has no reported NVIDIA equity tie.</li>
+</ul>
+<h2 id="why-this-matters-for-everpure-strategy">Why this matters for Everpure strategy<a class="headerlink" href="#why-this-matters-for-everpure-strategy" title="Permanent link">&para;</a></h2>
+<p>Storage is a small slice of an AI cluster's bill of materials, but the GPU vendor sets the architecture, picks the reference partners and often owns the customer conversation. For Everpure (NYSE: P, formerly PSTG), certification is the gate to compete; the competition happens after it. The strategic questions: how fast each new product clears NVIDIA's gates, how much deal flow runs through server OEMs that sell their own storage, and what happens to array economics if NVIDIA's reference storage (STX) absorbs functions storage software performs today.</p>
+<p>The semiconductor parallel is close. Being on a foundry's IP ecosystem list (TSMC's Open Innovation Platform) or a reference board's approved vendor list does not win a socket, but being off it loses one. The platform owner also decides when the list is re-qualified: usually every product generation.</p>
+<h2 id="core-concepts">Core concepts<a class="headerlink" href="#core-concepts" title="Permanent link">&para;</a></h2>
+<h3 id="five-programs-one-gatekeeper">Five programs, one gatekeeper<a class="headerlink" href="#five-programs-one-gatekeeper" title="Permanent link">&para;</a></h3>
+<p>NVIDIA publishes five overlapping structures that matter for storage:</p>
+<ol>
+<li><strong>DGX BasePOD.</strong> Enterprise clusters from two DGX nodes to dozens<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>; storage partners pass a validation-and-approval process. Launched with storage partners in September 2022<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>.</li>
+<li><strong>DGX SuperPOD.</strong> NVIDIA's turnkey large cluster, built from 32-node scalable units (SUs). Each GPU generation's reference architecture publishes a storage performance table to certify against<sup id="fnref2:3"><a class="footnote-ref" href="#fn:3">3</a></sup>.</li>
+<li><strong>NVIDIA Cloud Partner (NCP) reference architectures.</strong> GPU-cloud blueprints; storage earns "high-performance storage" (HPS) certification, and NCPs must meet NVIDIA's <em>Requirements for AI Clouds</em><sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>.</li>
+<li><strong>NVIDIA-Certified Storage (NVCS).</strong> Launched at GTC in March 2025 for enterprise AI factories on NVIDIA-Certified servers<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup>, with Foundation, Enterprise and NCP levels<sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup>.</li>
+<li><strong>AI Data Platform and STX.</strong> Reference <em>designs</em> for what storage itself should contain, not test suites. NVCS is the prerequisite for building on the AI Data Platform<sup id="fnref2:5"><a class="footnote-ref" href="#fn:5">5</a></sup>.</li>
+</ol>
+<pre class="mermaid"><code>flowchart LR
+    G["GDS support or self-certification"] --&gt; F["NVCS Foundation: simulates up to 128 GPUs"]
+    F --&gt; E["NVCS Enterprise: about 1,000 GPUs"]
+    E --&gt; B["DGX BasePOD validation: 2 to dozens of DGX nodes"]
+    B --&gt; S["DGX SuperPOD: per-SU read and write tiers, re-run per GPU generation"]
+    S --&gt; N["NCP HPS and NVCS NCP level: up to 10,000 GPUs, uptime, durability, early delivery"]</code></pre>
+<p><em>Figure 34.1 — Each rung simulates or deploys more GPUs and adds tests; the programs are parallel, not formal prerequisites, but buyers read them as a ladder.</em></p>
+<h3 id="what-the-tests-actually-require">What the tests actually require<a class="headerlink" href="#what-the-tests-actually-require" title="Permanent link">&para;</a></h3>
+<p>Most test details sit on partner portals. Three public anchors show the bar:</p>
+<ul>
+<li><strong>NVCS scale.</strong> Foundation tests simulate workloads of up to 128 GPUs, Enterprise about 1,000 and NCP up to 10,000<sup id="fnref2:6"><a class="footnote-ref" href="#fn:6">6</a></sup> [VERIFY: Foundation 128 and the 10,000-GPU top of the ladder are corroborated by NVIDIA docs summaries; the ~1,000-GPU Enterprise figure is not]. NVIDIA's framework covers training, fine-tuning, inference, KV cache and retrieval I/O profiles, including synchronous and asynchronous checkpoints<sup id="fnref3:6"><a class="footnote-ref" href="#fn:6">6</a></sup>.</li>
+<li><strong>SuperPOD throughput.</strong> The DGX B200 reference architecture asks, per 256-GPU SU, 40/20 GB/s read/write at "standard" and 125/62 GB/s at "enhanced", scaling linearly to four SUs<sup id="fnref3:3"><a class="footnote-ref" href="#fn:3">3</a></sup>. The B300 version asks 640 and 2,000 GB/s read for eight SUs<sup id="fnref:7"><a class="footnote-ref" href="#fn:7">7</a></sup>.</li>
+<li><strong>NCP operations.</strong> High-speed file storage at roughly 99.5% uptime and 99.999% annual durability per PB, NFSv4 home directories, and storage live with API integration eight weeks <em>before</em> the GPUs arrive<sup id="fnref2:4"><a class="footnote-ref" href="#fn:4">4</a></sup> [VERIFY: thresholds quoted from v2.2; current is v2.4]. The detailed GB300 NVL72 storage design is on NVIDIA's non-public partner portal<sup id="fnref:8"><a class="footnote-ref" href="#fn:8">8</a></sup>.</li>
+</ul>
+<p><strong>Worked example: how high is the floor?</strong> Enhanced B200 read is 125 GB/s ÷ 256 GPUs ≈ <strong>0.49 GB/s per GPU</strong>; standard is 40 ÷ 256 ≈ 0.16 GB/s. NVIDIA's own guidance says read-dominant work (image or video training) wants about 4 GB/s per GPU<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>, eight times the enhanced tier, or ~1 TB/s per SU. WEKA claimed 720 GB/s of read from one eight-node WEKApod at its 2024 SuperPOD certification<sup id="fnref:9"><a class="footnote-ref" href="#fn:9">9</a></sup>, beating the four-SU enhanced target with a single small appliance. Certification says the system won't starve a text-LLM training job; it does not separate the top vendors.</p>
+<p><strong>What certification does and doesn't prove</strong></p>
+<table>
+<thead>
+<tr>
+<th>Certification shows</th>
+<th>Certification does not show</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Interoperates with NVIDIA's stack (GDS, RDMA, Spectrum-X or InfiniBand, Base Command)</td>
+<td>Price-performance, $/TB or power per TB</td>
+</tr>
+<tr>
+<td>Meets a published throughput floor at a stated scale</td>
+<td>Behaviour at 80% full, during rebuilds, or under mixed tenants</td>
+</tr>
+<tr>
+<td>NVIDIA support and sales teams know the configuration</td>
+<td>Effective capacity after data reduction</td>
+</tr>
+<tr>
+<td>The vendor will re-qualify on the next GPU generation</td>
+<td>Long-run reliability, upgrade disruption, operations staffing</td>
+</tr>
+<tr>
+<td>Inclusion in reference bills of materials</td>
+<td>Any ranking: the list is unordered and non-exclusive</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 34.1 — Certification is a gate, not a grade. Everything in the right column is where deals are actually won (see <a href="../37-reading-benchmarks/">Chapter 37</a> on reading benchmarks).</em></p>
+<h3 id="the-ai-data-platform-nvidias-blueprint-for-the-storage-box-itself">The AI Data Platform: NVIDIA's blueprint for the storage box itself<a class="headerlink" href="#the-ai-data-platform-nvidias-blueprint-for-the-storage-box-itself" title="Permanent link">&para;</a></h3>
+<p>In March 2025 NVIDIA presented the AI Data Platform, a reference design that puts accelerated compute and AI agents into the storage layer so data is extracted, embedded and indexed where it lives rather than copied to a separate RAG pipeline. NVIDIA named ten launch partners, Pure Storage among them<sup id="fnref:10"><a class="footnote-ref" href="#fn:10">10</a></sup>. The hardware recipe pairs RTX PRO 6000 Blackwell Server Edition GPUs with BlueField DPUs and Spectrum-X Ethernet. The software recipe is the AI-Q blueprint, which calls NeMo Retriever microservices for extraction and retrieval<sup id="fnref:11"><a class="footnote-ref" href="#fn:11">11</a></sup>. Later implementations go further: Hammerspace's platform (GA March 2026) bundles NIM and NeMo Retriever<sup id="fnref:12"><a class="footnote-ref" href="#fn:12">12</a></sup>, and Everpure's Data Stream (June 2026) is an ingest-to-inference pipeline on the same design<sup id="fnref:13"><a class="footnote-ref" href="#fn:13">13</a></sup>.</p>
+<pre class="mermaid"><code>flowchart TB
+    subgraph APP["Agents and applications"]
+        AQ["AI-Q blueprint and enterprise agents"]
+    end
+    subgraph NVSW["NVIDIA AI Enterprise software running in the storage layer"]
+        NR["NeMo Retriever: extract, embed, rerank"]
+        NIM["NIM inference microservices"]
+        VI["GPU-accelerated vector index"]
+    end
+    subgraph PSW["Storage partner software"]
+        DS["File, object and block services"]
+        MD["Metadata, change notifications, permissions"]
+    end
+    subgraph HW["Accelerated storage hardware"]
+        GPU["RTX PRO 6000 Blackwell GPUs"]
+        BF["BlueField DPUs"]
+        SSD["NVMe flash"]
+    end
+    NET["Spectrum-X Ethernet fabric to GPU clusters"]
+    AQ --&gt; NR
+    AQ --&gt; NIM
+    NR --&gt; VI
+    MD --&gt;|"new or changed data triggers ingest"| NR
+    DS --&gt; SSD
+    NR --&gt; GPU
+    VI --&gt; GPU
+    BF --&gt; SSD
+    NET --- BF</code></pre>
+<p><em>Figure 34.2 — NVIDIA supplies GPUs, DPUs, network and retrieval software; the partner's differentiated layer, data services and metadata, is the middle of the sandwich.</em></p>
+<p>The bargain cuts both ways: partners get a ready-made RAG answer (<a href="../33-rag-vector-lakehouse/">Chapter 33</a>), NVIDIA gets GPUs and software subscriptions in every storage rack, and every partner's AI story converges on the same NVIDIA parts.</p>
+<h3 id="stx-and-cmx-the-reference-storage-server">STX and CMX: the reference storage server<a class="headerlink" href="#stx-and-cmx-the-reference-storage-server" title="Permanent link">&para;</a></h3>
+<p>NVIDIA went a step further at CES in January 2026 with the Inference Context Memory Storage (ICMS) platform, a BlueField-4-powered KV-cache tier inside each pod<sup id="fnref:14"><a class="footnote-ref" href="#fn:14">14</a></sup>. It sits between Dynamo's local-SSD (G3) and networked-storage (G4) tiers, hence the "G3.5" label in <a href="../32-inference-and-kv-cache/">Chapter 32</a>. At GTC in March 2026 it widened this into <strong>BlueField-4 STX</strong>, a modular storage reference architecture built on Vera Rubin, BlueField-4 and Spectrum-X. The first rack-scale implementation is the <strong>CMX</strong> context memory storage platform, effectively the CES platform under a new name<sup id="fnref:15"><a class="footnote-ref" href="#fn:15">15</a></sup>. Twelve storage vendors, including Everpure, VAST, WEKA, DDN, Dell and NetApp, are co-design partners; AIC, Supermicro and QCT build hardware; CoreWeave, Lambda, Nebius, OCI and four others are early adopters<sup id="fnref:16"><a class="footnote-ref" href="#fn:16">16</a></sup>. STX is a blueprint NVIDIA distributes, not a box it sells<sup id="fnref:17"><a class="footnote-ref" href="#fn:17">17</a></sup>. KV-cache mechanics are in <a href="../32-inference-and-kv-cache/">Chapter 32</a>, and the DPU's place in the network is in <a href="../../02-protocols-and-networking/10-datacenter-networking/">Chapter 10</a>.</p>
+<p>The strategic point is where value moves. If the controller is a BlueField-4 running NVIDIA's DOCA software on ODM-built servers, storage software becomes a tenant on NVIDIA's controller silicon, as fabless designs build on a foundry's process and IP. One analyst firm argues vendors not optimized for inference and context memory face margin pressure as NVIDIA standardizes the data path, while noting those vendors are STX partners<sup id="fnref:18"><a class="footnote-ref" href="#fn:18">18</a></sup>. Opinion, but the right risk.</p>
+<h3 id="how-deals-flow-through-nvidia">How deals flow through NVIDIA<a class="headerlink" href="#how-deals-flow-through-nvidia" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>flowchart TB
+    RA["NVIDIA reference design: SuperPOD, BasePOD, NCP RA, Enterprise RA, AI Data Platform, STX"]
+    CL["NVIDIA certified-storage list"]
+    RA --&gt; CL
+    CL --&gt; P1["Path 1: NVIDIA-led DGX SuperPOD sale"]
+    CL --&gt; P2["Path 2: server OEM AI factory - Dell, HPE, Cisco, Lenovo, Supermicro"]
+    CL --&gt; P3["Path 3: NCP or neocloud build"]
+    P1 --&gt; D1{"Storage choice"}
+    P2 --&gt; D2{"Storage choice"}
+    P3 --&gt; D3{"Storage choice"}
+    D1 --&gt;|"customer picks from list, NVIDIA team influences"| BUY["Buyer: enterprise, sovereign, lab"]
+    D2 --&gt;|"OEM's own storage is the default"| BUY
+    D3 --&gt;|"neocloud runs bake-offs, often multi-vendor"| NEO["Buyer: neocloud tenant capacity"]
+    GSI["Integrators: WWT, SHI, ePlus, AHEAD"] --&gt; P2</code></pre>
+<p><em>Figure 34.3 — Storage is chosen at three points: the certified list sets the field in NVIDIA-led deals, the OEM's own storage starts ahead in OEM deals, and neoclouds run their own tests.</em></p>
+<p>The paths have different economics. <strong>Dell</strong> bundles PowerScale, ObjectScale and its Lightning parallel file system into its AI Data Platform with NVIDIA<sup id="fnref:19"><a class="footnote-ref" href="#fn:19">19</a></sup>, so an independent vendor in a Dell-led deal starts behind. <strong>HPE</strong> sells its own X10000 alongside GreenLake for File, which runs VAST software<sup id="fnref:20"><a class="footnote-ref" href="#fn:20">20</a></sup>. <strong>Cisco</strong> has no storage, so its Secure AI Factory with NVIDIA lists partners (Pure Storage, Hitachi Vantara, NetApp, VAST, later Nutanix)<sup id="fnref:21"><a class="footnote-ref" href="#fn:21">21</a></sup>, which is why Everpure's FlashStack CVD in the Cisco AI PODs matters<sup id="fnref:22"><a class="footnote-ref" href="#fn:22">22</a></sup>. <strong>Neoclouds</strong> qualify several vendors: CoreWeave lists VAST, WEKA, DDN, IBM and Pure Storage<sup id="fnref:23"><a class="footnote-ref" href="#fn:23">23</a></sup>, and its US$1.17 billion VAST agreement shows how large one decision can be<sup id="fnref:24"><a class="footnote-ref" href="#fn:24">24</a></sup>. See <a href="../35-ai-factories-and-neoclouds/">Chapter 35</a>.</p>
+<h3 id="kingmaker-or-toll-booth-nvidias-investments">Kingmaker or toll booth? NVIDIA's investments<a class="headerlink" href="#kingmaker-or-toll-booth-nvidias-investments" title="Permanent link">&para;</a></h3>
+<p>NVIDIA also invests in some listed vendors. It participated in VAST's 2021 Series D<sup id="fnref:25"><a class="footnote-ref" href="#fn:25">25</a></sup> and its 2026 Series F at a US$30 billion valuation (<em>company-stated</em>)<sup id="fnref:26"><a class="footnote-ref" href="#fn:26">26</a></sup>. Secondary sources also list NVIDIA in VAST's December 2023 Series E, but VAST's own release names other investors [VERIFY: NVIDIA in VAST Series E]. NVIDIA was in WEKA's US$140 million Series E in 2024 (<em>company-stated</em>)<sup id="fnref:27"><a class="footnote-ref" href="#fn:27">27</a></sup>. DDN has no reported NVIDIA equity; its tie is operational, running NVIDIA's Selene and Eos clusters (Eos: 48 AI400X2 units, ~4 TB/s, <em>company-stated</em>)<sup id="fnref:28"><a class="footnote-ref" href="#fn:28">28</a></sup>. No public evidence shows certifications favour NVIDIA's portfolio companies; the pass lists include almost everyone. The investments buy something less formal: early roadmap access, joint launches (VAST's CNode-X, February 2026) and the "NVIDIA-backed" label in every press article.</p>
+<p>Read honestly, NVIDIA is less a kingmaker than a toll booth with favoured lanes. It rarely picks one winner; it sets the entry fee (re-certify every GPU generation, adopt each new NVIDIA interface) and profits from a crowded field of compliant suppliers. That is a platform owner commoditizing its complements.</p>
+<h2 id="how-everpure-approaches-it-vs-competitors">How Everpure approaches it vs. competitors<a class="headerlink" href="#how-everpure-approaches-it-vs-competitors" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Vendor</th>
+<th>DGX SuperPOD</th>
+<th>DGX BasePOD</th>
+<th>NCP / HPS</th>
+<th>NVIDIA-Certified Storage</th>
+<th>AI Data Platform / STX</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Everpure</strong></td>
+<td>FlashBlade//S500, Nov 2024<sup id="fnref:29"><a class="footnote-ref" href="#fn:29">29</a></sup>; none found for EXA</td>
+<td>Via Cisco FlashStack, Nov 2023<sup id="fnref2:22"><a class="footnote-ref" href="#fn:22">22</a></sup></td>
+<td>FlashBlade//S, HGX H200/B200, Mar 2025<sup id="fnref:30"><a class="footnote-ref" href="#fn:30">30</a></sup></td>
+<td>FB//S500 Foundation + Enterprise, Mar 2025<sup id="fnref2:30"><a class="footnote-ref" href="#fn:30">30</a></sup>; EXA: validation extension announced Mar 2026, toward NCP level; no EXA listing found by 2026-11<sup id="fnref2:31"><a class="footnote-ref" href="#fn:31">31</a></sup></td>
+<td>ADP in FlashBlade (Mar 2025); Data Stream (Jun 2026)<sup id="fnref2:13"><a class="footnote-ref" href="#fn:13">13</a></sup>; STX partner</td>
+</tr>
+<tr>
+<td><strong>VAST</strong></td>
+<td>Yes, May 2023 (first enterprise NAS)<sup id="fnref:32"><a class="footnote-ref" href="#fn:32">32</a></sup></td>
+<td>Earlier DGX POD RA [VERIFY]</td>
+<td>HPS, Jul 2024<sup id="fnref:33"><a class="footnote-ref" href="#fn:33">33</a></sup></td>
+<td>Listed (CNode, BlueField-3 DBox, EBox); level unverified<sup id="fnref:34"><a class="footnote-ref" href="#fn:34">34</a></sup></td>
+<td>InsightEngine (ADP launch); STX partner</td>
+</tr>
+<tr>
+<td><strong>WEKA</strong></td>
+<td>WEKApod, Mar 2024; Nitro/Prime 2025<sup id="fnref2:9"><a class="footnote-ref" href="#fn:9">9</a></sup></td>
+<td>Yes (H100)<sup id="fnref:35"><a class="footnote-ref" href="#fn:35">35</a></sup></td>
+<td>HPS, Sep 2024<sup id="fnref2:35"><a class="footnote-ref" href="#fn:35">35</a></sup></td>
+<td>Listed (WEKApod Nitro); level unverified<sup id="fnref2:34"><a class="footnote-ref" href="#fn:34">34</a></sup></td>
+<td>ADP launch; STX partner</td>
+</tr>
+<tr>
+<td><strong>DDN</strong></td>
+<td>Since DGX A100 era; runs Selene and Eos<sup id="fnref2:28"><a class="footnote-ref" href="#fn:28">28</a></sup></td>
+<td>Yes, 2022 RAs</td>
+<td>HPS, Aug 2024<sup id="fnref:36"><a class="footnote-ref" href="#fn:36">36</a></sup></td>
+<td>AI400X3 listed<sup id="fnref3:34"><a class="footnote-ref" href="#fn:34">34</a></sup></td>
+<td>Infinia (ADP launch); STX partner</td>
+</tr>
+<tr>
+<td><strong>NetApp</strong></td>
+<td>AFF A90, Mar 2025; EF600/BeeGFS earlier<sup id="fnref:37"><a class="footnote-ref" href="#fn:37">37</a></sup></td>
+<td>AIPod</td>
+<td>AFF A90, Mar 2025<sup id="fnref2:37"><a class="footnote-ref" href="#fn:37">37</a></sup></td>
+<td>AFF A90 and AFX listed<sup id="fnref4:34"><a class="footnote-ref" href="#fn:34">34</a></sup></td>
+<td>AIPod / AI Data Engine; STX partner</td>
+</tr>
+<tr>
+<td><strong>Dell</strong></td>
+<td>PowerScale F710, Mar 2024 (first Ethernet)<sup id="fnref:38"><a class="footnote-ref" href="#fn:38">38</a></sup></td>
+<td>[VERIFY]</td>
+<td>[VERIFY]</td>
+<td>PowerScale F710 listed<sup id="fnref5:34"><a class="footnote-ref" href="#fn:34">34</a></sup></td>
+<td>Dell AI Data Platform<sup id="fnref2:19"><a class="footnote-ref" href="#fn:19">19</a></sup>; STX partner</td>
+</tr>
+<tr>
+<td><strong>HPE</strong></td>
+<td>None found [VERIFY]</td>
+<td>GreenLake for File (VAST-based)<sup id="fnref2:20"><a class="footnote-ref" href="#fn:20">20</a></sup></td>
+<td>None found</td>
+<td>X10000 Foundation, first object platform, Mar 2026<sup id="fnref:39"><a class="footnote-ref" href="#fn:39">39</a></sup></td>
+<td>ADP launch; STX partner</td>
+</tr>
+<tr>
+<td><strong>IBM</strong></td>
+<td>Storage Scale System 6000, Aug 2024<sup id="fnref:40"><a class="footnote-ref" href="#fn:40">40</a></sup></td>
+<td>Yes (IBM-stated)<sup id="fnref:41"><a class="footnote-ref" href="#fn:41">41</a></sup></td>
+<td>Yes (IBM-stated)<sup id="fnref2:41"><a class="footnote-ref" href="#fn:41">41</a></sup></td>
+<td>Storage Scale System 3500/6000 listed<sup id="fnref6:34"><a class="footnote-ref" href="#fn:34">34</a></sup></td>
+<td>Storage Scale AI Data Platform; STX partner</td>
+</tr>
+<tr>
+<td><strong>Hitachi Vantara</strong></td>
+<td>Pursuing as of 2024; unconfirmed<sup id="fnref:42"><a class="footnote-ref" href="#fn:42">42</a></sup></td>
+<td>Hitachi iQ, Jul 2024<sup id="fnref2:42"><a class="footnote-ref" href="#fn:42">42</a></sup></td>
+<td>None found</td>
+<td>Listed; product unverified<sup id="fnref7:34"><a class="footnote-ref" href="#fn:34">34</a></sup></td>
+<td>ADP launch; STX partner</td>
+</tr>
+<tr>
+<td><strong>Nutanix</strong></td>
+<td>None found</td>
+<td>None found</td>
+<td>None found</td>
+<td>Enterprise level, Jun 2026<sup id="fnref:43"><a class="footnote-ref" href="#fn:43">43</a></sup> [VERIFY: date]</td>
+<td>ADP launch; STX partner</td>
+</tr>
+<tr>
+<td><strong>Hammerspace</strong></td>
+<td>None</td>
+<td>None</td>
+<td>None</td>
+<td>None as of Sep 2026<sup id="fnref2:44"><a class="footnote-ref" href="#fn:44">44</a></sup></td>
+<td>AIDP on NVIDIA reference design, GA Mar 2026<sup id="fnref2:12"><a class="footnote-ref" href="#fn:12">12</a></sup>; GDS self-certified Feb 2024</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 34.2 — Nearly every vendor holds nearly every badge; the differences are timing and product-line coverage. "None found" means no public source located, not confirmed absence.</em></p>
+<p><strong>Everpure's position.</strong> FlashBlade//S holds the full set. The gap is FlashBlade//EXA, aimed at the largest AI and neocloud deals. In March 2026 Everpure said it was extending NVCS validation to EXA as a step toward the NCP level, and aligning EXA with STX<sup id="fnref:31"><a class="footnote-ref" href="#fn:31">31</a></sup>. Trade press reported NCP certification for "later this year", but no completed EXA certification had been published by 2026-11-01. Until one is, competitors can call EXA uncertified in exactly the deals it targets. Everpure's distinctive move is public, peer-reviewed benchmarking: it submitted to MLPerf Storage v3.0 in September 2026, while VAST, WEKA and DDN did not<sup id="fnref:45"><a class="footnote-ref" href="#fn:45">45</a></sup> (DDN and WEKA entered earlier rounds; VAST never has<sup id="fnref:44"><a class="footnote-ref" href="#fn:44">44</a></sup>). The results are vendor-run, so they show what each submitter's configuration can do, not a market ranking.</p>
+<p><strong>Steelmanning the others.</strong> DDN's claim is strongest: NVIDIA runs its own clusters on DDN, which no certificate matches. VAST and WEKA have equity ties and usually ship NVIDIA's new interfaces first. Dell and HPE own the server sale. Everpure's counter is what certification doesn't measure: Evergreen economics, power and density (<a href="../38-power-and-density/">Chapter 38</a>) and enterprise data services.</p>
+<p><strong>Options a strategy team might evaluate, based on public information:</strong></p>
+<ol>
+<li><strong>Certification velocity as a KPI.</strong> Treat "days from NVIDIA GPU launch to certified on each tier" as a product metric, with EXA at the NCP level as the near-term gap.</li>
+<li><strong>Be an early STX/CMX implementer</strong> so Purity's data services run on whatever controller NVIDIA standardizes, rather than defending x86 controllers.</li>
+<li><strong>Diversify routes to market</strong> beyond NVIDIA-led deals: Cisco, integrators, hyperscaler marketplaces, and non-NVIDIA accelerator and Ultra Ethernet ecosystems as hedges.</li>
+<li><strong>Compete on what certificates don't measure</strong>: independent benchmarks, effective $/TB, TB per watt and non-disruptive upgrades.</li>
+<li><strong>Weigh a deeper NVIDIA commercial or equity tie</strong> against the cost: dependence on one supplier's roadmap and less neutrality with AMD and hyperscaler buyers.</li>
+</ol>
+<h2 id="history-and-trajectory">History and trajectory<a class="headerlink" href="#history-and-trajectory" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>timeline
+    title NVIDIA storage gatekeeping, 2020 to 2026
+    2020 : DDN storage behind Selene SuperPOD
+    2021 : GPUDirect Storage 1.0 with a broad vendor list
+    2022 : DGX BasePOD launches with storage partners
+    2023 : VAST certified as first enterprise NAS for SuperPOD
+    2024 : Dell and WEKA SuperPOD in March : VAST, DDN and WEKA NCP HPS : Pure FlashBlade S500 SuperPOD in November
+    2025 : NVIDIA-Certified Storage and AI Data Platform at GTC : RTX PRO platforms and Hammerspace join in October
+    2026 : ICMS at CES : BlueField-4 STX and CMX at GTC : first STX hardware due second half</code></pre>
+<p><em>Figure 34.4 — The gate has moved from "does your file system feed GPUs" (2020–2023), to "can you run inside a GPU cloud" (2024), to "will you build on NVIDIA's storage silicon" (2026).</em></p>
+<p>Supermicro has shown a prototype CMX server and is validating STX SSD requirements with Micron, Samsung and Phison, for 2H 2026 shipments<sup id="fnref:46"><a class="footnote-ref" href="#fn:46">46</a></sup>. The 2027 signal: whether NCP designs make CMX-class context storage a required line item, and whether CMX nodes come from storage vendors or straight from ODMs.</p>
+<h2 id="numbers-that-matter">Numbers that matter<a class="headerlink" href="#numbers-that-matter" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+<th>Context</th>
+<th>Source / date</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NVCS simulated scale</td>
+<td>128 / ~1,000 / 10,000 GPUs</td>
+<td>Foundation / Enterprise / NCP levels</td>
+<td>NVIDIA docs<sup id="fnref4:6"><a class="footnote-ref" href="#fn:6">6</a></sup>, retrieved 2026-11</td>
+</tr>
+<tr>
+<td>SuperPOD B200 read, 1 SU</td>
+<td>40 GB/s standard; 125 GB/s enhanced</td>
+<td>256 GPUs per SU</td>
+<td>NVIDIA B200 RA<sup id="fnref4:3"><a class="footnote-ref" href="#fn:3">3</a></sup></td>
+</tr>
+<tr>
+<td>Enhanced read per GPU</td>
+<td>≈0.49 GB/s</td>
+<td>125 ÷ 256; NVIDIA advises ~4 GB/s for read-heavy work</td>
+<td>Worked example</td>
+</tr>
+<tr>
+<td>SuperPOD B300 read, 8 SU</td>
+<td>640 / 2,000 GB/s</td>
+<td>Standard / enhanced</td>
+<td>NVIDIA B300 RA<sup id="fnref2:7"><a class="footnote-ref" href="#fn:7">7</a></sup></td>
+</tr>
+<tr>
+<td>NCP storage lead time</td>
+<td>8 weeks before GPUs</td>
+<td>With API integration</td>
+<td>NVIDIA AI Cloud requirements<sup id="fnref3:4"><a class="footnote-ref" href="#fn:4">4</a></sup></td>
+</tr>
+<tr>
+<td>STX co-design storage partners</td>
+<td>12</td>
+<td>Includes Everpure, VAST, WEKA, DDN</td>
+<td>StorageNewsletter, 2026-03-17<sup id="fnref2:16"><a class="footnote-ref" href="#fn:16">16</a></sup></td>
+</tr>
+<tr>
+<td>VAST Series F valuation</td>
+<td>US$30B</td>
+<td>NVIDIA participated; company-stated</td>
+<td>CNBC, 2026-04-22<sup id="fnref2:26"><a class="footnote-ref" href="#fn:26">26</a></sup></td>
+</tr>
+<tr>
+<td>WEKA Series E</td>
+<td>US$140M at US$1.6B</td>
+<td>NVIDIA participated; company-stated</td>
+<td>WEKA, 2024-05-15<sup id="fnref2:27"><a class="footnote-ref" href="#fn:27">27</a></sup></td>
+</tr>
+</tbody>
+</table>
+<h2 id="conversation-playbook">Conversation playbook<a class="headerlink" href="#conversation-playbook" title="Permanent link">&para;</a></h2>
+<p><strong>Questions for a PM</strong></p>
+<ol>
+<li><em>"When will FlashBlade//EXA appear on NVIDIA's certified list, at which level, and which deals are we losing until then?"</em> Strong: a level, a GPU generation, a target quarter, and the deal types where the gap is used against EXA.</li>
+<li><em>"In a Dell- or HPE-led AI factory, how do we get in?"</em> Strong: separates customer-mandated storage from OEM default, cites Cisco and integrator routes, and sizes each path.</li>
+<li><em>"What does STX/CMX do to our bill of materials and gross margin?"</em> Strong: whether Purity runs on BlueField-4, who builds the hardware, and whether CMX is new revenue or cannibalizes array capacity.</li>
+</ol>
+<p><strong>Questions for an engineer</strong></p>
+<ol>
+<li><em>"How much headroom do we have over the SuperPOD enhanced tier per SU, and what limits us first?"</em> Strong: a multiple (say 3× or 5×) and the first bottleneck (front-end ports, metadata, back-end fabric).</li>
+<li><em>"What did certification testing <em>not</em> exercise that customers hit in production?"</em> Strong: rebuild under load, full-system behaviour, multi-tenant QoS, upgrade under load.</li>
+<li><em>"What would it take to run our data path on a BlueField-4 controller?"</em> Strong: core-count and memory constraints, which Purity services fit on the DPU, and what stays on x86.</li>
+</ol>
+<p><strong>Don't say this:</strong></p>
+<ul>
+<li>"We're NVIDIA-certified, so we're as good as VAST." Everyone is; it is the entry ticket.</li>
+<li>"SuperPOD certification proves top performance." It proves a floor of about 0.5 GB/s per GPU on B200 enhanced.</li>
+<li>"NVIDIA picks the storage winner." NVIDIA usually lists a dozen. OEMs, integrators and neocloud bake-offs decide most deals.</li>
+<li>"STX means NVIDIA is entering storage." It is a partner-built reference architecture; the risk is a commoditized controller, not an NVIDIA storage brand (yet).</li>
+</ul>
+<h2 id="going-deeper-optional-l3-pointers">Going deeper (optional, L3 pointers)<a class="headerlink" href="#going-deeper-optional-l3-pointers" title="Permanent link">&para;</a></h2>
+<ul>
+<li>DGX SuperPOD reference architectures (B200, B300, GB200, Rubin), "Storage Architecture" sections.</li>
+<li>NVIDIA-Certified Storage docs: workload descriptions and the certified-systems list.</li>
+<li>NVIDIA <em>Requirements for AI Clouds</em>, storage chapter.</li>
+<li>Vendor RAs (Everpure's NCP design, IBM's SuperPOD guides) to compare node counts with NVIDIA's tiers.</li>
+</ul>
+<h2 id="key-terms">Key terms<a class="headerlink" href="#key-terms" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>DGX BasePOD / SuperPOD</strong> — enterprise and large-cluster reference architectures.</li>
+<li><strong>Scalable unit (SU)</strong> — the 32-node building block of a SuperPOD.</li>
+<li><strong>NCP / HPS</strong> — NVIDIA Cloud Partner program, and its high-performance storage certification.</li>
+<li><strong>NVIDIA-Certified Storage</strong> — tiered storage certification (Foundation, Enterprise, NCP).</li>
+<li><strong>AI Data Platform</strong> — NVIDIA's reference design for GPU-accelerated retrieval inside storage.</li>
+<li><strong>BlueField-4 STX / CMX</strong> — NVIDIA's storage reference architecture, and its context-memory rack implementation.</li>
+<li><strong>AI-Q, NeMo Retriever, NIM</strong> — agent blueprint, retrieval and inference microservices.</li>
+<li>See the <a href="../../glossary/">glossary</a> for the rest.</li>
+</ul>
+<h2 id="sources">Sources<a class="headerlink" href="#sources" title="Permanent link">&para;</a></h2>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>NVIDIA Docs, "DGX BasePOD Overview," n.d. https://docs.nvidia.com/dgx-basepod/reference-architecture-infrastructure-foundation-enterprise-ai/latest/dgx-basepod-overview.html (retrieved 2026-11-01; search-summary only).&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>Blocks &amp; Files, "Nvidia unveils DGX BasePOD and partners," 2022-09-21. https://blocksandfiles.com/2022/09/21/nvidia-basepod-storage-partners/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>NVIDIA Docs, "Storage Architecture — NVIDIA DGX SuperPOD Reference Architecture featuring DGX B200," Table 6, n.d.; PDF RA-11334-001. https://docs.nvidia.com/dgx-superpod/reference-architecture-scalable-infrastructure-b200/latest/storage-architecture.html (retrieved 2026-11-01; figures via search summary of the PDF, consistent with IBM's SuperPOD guide citing the same table: https://www-api.ibm.com/adobe/assets/urn:aaid:aem:9f7ef845-68b6-4092-8a4a-a0659d44267d/original/as/nvidia-dgx-superpod-with-ibm-storage-scale-and-ibm-storage-scale-system-6000-dgx-h100-h200-b200-b300.pdf).&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:3" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:3" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>NVIDIA Docs, "NVIDIA Requirements for AI Clouds – Storage requirements," n.d. (v2.2 archive; current v2.4). https://docs.nvidia.com/dsx/ncp/nvidia-requirements-for-ai-clouds/storage-requirements (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:4" title="Jump back to footnote 4 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p>NVIDIA Blog, "Full Steam Ahead: NVIDIA-Certified Program Expands to Enterprise Storage for Faster AI Factory Deployment," 2025-03 (GTC 2025). https://blogs.nvidia.com/blog/nvidia-certified-enterprise-storage/ (retrieved 2026-11-01; search-summary only).&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:6">
+<p>NVIDIA Docs, "NVIDIA-Certified Storage," n.d. https://docs.nvidia.com/certification-programs/certified-storage/latest/nvidia-certified-storage.html (retrieved 2026-11-01; search-summary only; Foundation 128-GPU figure corroborated by Data Centre Magazine, June 2026, https://publication.datacentremagazine.com/data-centre-magazine-june-2026-issue-47/0520680001781516622/p96).&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:6" title="Jump back to footnote 6 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:6" title="Jump back to footnote 6 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+<li id="fn:7">
+<p>NVIDIA Docs, "High Performance Storage Architecture — NVIDIA DGX SuperPOD with DGX B300 Systems (Quantum-X800)," Table 5, n.d. https://docs.nvidia.com/dgx-superpod/reference-architecture/scalable-infrastructure-b300-xdr/latest/storage-architecture.html (retrieved 2026-11-01; search-summary only).&#160;<a class="footnote-backref" href="#fnref:7" title="Jump back to footnote 7 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:7" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+</li>
+<li id="fn:8">
+<p>NVIDIA Docs, "Inference Provider Platform Requirements on GB300 NVL72 for NCPs," n.d. https://docs.nvidia.com/dsx/ncp/inference-provider-requirements/home (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:8" title="Jump back to footnote 8 in the text">&#8617;</a></p>
+</li>
+<li id="fn:9">
+<p>WEKA (PR Newswire), "WEKA Unveils Powerful AI-Native Data Platform Appliance for NVIDIA DGX SuperPOD with NVIDIA DGX H100 Systems," 2024-03-18. https://www.prnewswire.com/il/news-releases/weka-unveils-powerful-ai-native-data-platform-appliance-for-nvidia-dgx-superpod-with-nvidia-dgx-h100-systems-302091876.html ; AIwire/HPCwire, "WEKA Expands NVIDIA Integrations and Certifications," 2025-03-19. https://www.hpcwire.com/aiwire/2025/03/19/weka-expands-nvidia-integrations-and-certifications-unveils-augmented-memory-grid/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:9" title="Jump back to footnote 9 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:9" title="Jump back to footnote 9 in the text">&#8617;</a></p>
+</li>
+<li id="fn:10">
+<p>NVIDIA Newsroom, "NVIDIA and Storage Industry Leaders Unveil New Class of Enterprise Infrastructure for the Age of AI," 2025-03-18. https://nvidianews.nvidia.com/news/nvidia-and-storage-industry-leaders-unveil-new-class-of-enterprise-infrastructure-for-the-age-of-ai (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:10" title="Jump back to footnote 10 in the text">&#8617;</a></p>
+</li>
+<li id="fn:11">
+<p>NVIDIA Blog, "Ready to Reason: Storage Leaders Build Infrastructure to Fuel AI Agents With NVIDIA AI Data Platform," 2025. https://blogs.nvidia.com/blog/storage-leaders-ai-data-platform-agents/ ; IT Brief UK, "NVIDIA unveils AI data platform with leading storage firms," 2025-03. https://itbrief.co.uk/story/nvidia-unveils-ai-data-platform-with-leading-storage-firms (retrieved 2026-11-01; search-summary only).&#160;<a class="footnote-backref" href="#fnref:11" title="Jump back to footnote 11 in the text">&#8617;</a></p>
+</li>
+<li id="fn:12">
+<p>Hammerspace (Business Wire), "Hammerspace Launches AI Data Platform Based on NVIDIA Reference Design – Available Now," 2026-03-16. https://secure.businesswire.com/news/home/20260316701813/en/Hammerspace-Launches-AI-Data-Platform-Based-on-NVIDIA-Reference-Design-Available-Now ; StorageNewsletter, "Hammerspace Hyperscale NAS Achieves GPUDirect Storage Self-Certification from Nvidia," 2024-02-26. https://www.storagenewsletter.com/2024/02/26/hammerspace-hyperscale-nas-achieves-gpudirect-storage-self-certification-from-nvidia/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:12" title="Jump back to footnote 12 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:12" title="Jump back to footnote 12 in the text">&#8617;</a></p>
+</li>
+<li id="fn:13">
+<p>HPCwire/BigDATAwire, "Everpure Announces Data Stream to Expand AI-Ready Data Offerings," 2026-06-17. https://www.hpcwire.com/bigdatawire/this-just-in/everpure-announces-data-stream-to-expand-ai-ready-data-offerings/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:13" title="Jump back to footnote 13 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:13" title="Jump back to footnote 13 in the text">&#8617;</a></p>
+</li>
+<li id="fn:14">
+<p>NVIDIA Newsroom, "NVIDIA BlueField-4 Powers New Class of AI-Native Storage Infrastructure for the Next Frontier of AI," 2026-01-05. https://nvidianews.nvidia.com/news/nvidia-bluefield-4-powers-new-class-of-ai-native-storage-infrastructure-for-the-next-frontier-of-ai (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:14" title="Jump back to footnote 14 in the text">&#8617;</a></p>
+</li>
+<li id="fn:15">
+<p>NVIDIA Investor Relations, "NVIDIA Launches BlueField-4 STX Storage Architecture With Broad Industry Adoption," 2026-03-16. https://investor.nvidia.com/news/press-release-details/2026/NVIDIA-Launches-BlueField-4-STX-Storage-Architecture-With-Broad-Industry-Adoption/default.aspx (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:15" title="Jump back to footnote 15 in the text">&#8617;</a></p>
+</li>
+<li id="fn:16">
+<p>StorageNewsletter, "Nvidia GTC 2026: Nvidia Launches BlueField-4 STX Storage Architecture With Broad Industry Adoption," 2026-03-17. https://www.storagenewsletter.com/2026/03/17/nvidia-gtc-2026-nvidia-launches-bluefield-4-stx-storage-architecture-with-broad-industry-adoption/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:16" title="Jump back to footnote 16 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:16" title="Jump back to footnote 16 in the text">&#8617;</a></p>
+</li>
+<li id="fn:17">
+<p>VentureBeat, "Nvidia BlueField-4 STX adds a context memory layer to storage," 2026-03. https://venturebeat.com/data/nvidia-bluefield-4-stx-adds-a-context-memory-layer-to-storage-to-close-the (retrieved 2026-11-01; search-summary only).&#160;<a class="footnote-backref" href="#fnref:17" title="Jump back to footnote 17 in the text">&#8617;</a></p>
+</li>
+<li id="fn:18">
+<p>theCUBE Research, "Special Breaking Analysis: Nvidia moves even further down the stack — why STX signals a new battleground in storage for AI factories," 2026-03. https://thecuberesearch.com/special-breaking-analysis-nvidia-moves-even-further-down-the-stack-why-stx-signals-a-new-battleground-in-storage-for-ai-factories/ (retrieved 2026-11-01; search-summary only).&#160;<a class="footnote-backref" href="#fnref:18" title="Jump back to footnote 18 in the text">&#8617;</a></p>
+</li>
+<li id="fn:19">
+<p>Dell Newsroom, "Dell AI Data Platform with NVIDIA Supercharges Enterprise AI with Breakthrough Data Orchestration and Storage Innovations," 2026-03-16. https://www.dell.com/en-us/dt/corporate/newsroom/announcements/detailpage.press-releases~usa~2026~03~dell-ai-data-platform-with-nvidia-supercharges-enterprise-ai-with-breakthrough-data-orchestration-and-storage-innovations.htm (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:19" title="Jump back to footnote 19 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:19" title="Jump back to footnote 19 in the text">&#8617;</a></p>
+</li>
+<li id="fn:20">
+<p>HPE Community, "HPE GreenLake for File Storage certified for NVIDIA DGX BasePOD," n.d. https://community.hpe.com/t5/around-the-storage-block/hpe-greenlake-for-file-storage-certified-for-nvidia-basepod-with/ba-p/7217368 ; HPE, "HPE GreenLake for File Storage," n.d. https://www.hpe.com/data/hpe-greenlake-file-storage (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:20" title="Jump back to footnote 20 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:20" title="Jump back to footnote 20 in the text">&#8617;</a></p>
+</li>
+<li id="fn:21">
+<p>StorageNewsletter, "Cisco to Deliver Secure AI Infrastructure with NVIDIA," 2025-03-20. https://www.storagenewsletter.com/2025/03/20/cisco-to-deliver-secure-ai-infrastructure-with-nvidia/ ; Cisco, "Cisco Secure AI Factory with NVIDIA," n.d. https://www.cisco.com/site/us/en/solutions/artificial-intelligence/secure-ai-factory/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:21" title="Jump back to footnote 21 in the text">&#8617;</a></p>
+</li>
+<li id="fn:22">
+<p>StorageNewsletter, "Pure Storage and Cisco Deliver AI Factories for the Enterprise with Nvidia," 2025-11-07. https://www.storagenewsletter.com/2025/11/07/pure-storage-and-cisco-deliver-ai-factories-for-the-enterprise-with-nvidia/ ; Blocks &amp; Files, "Pure Storage gets new Cisco FlashStack for AI certification added to Nvidia BasePOD validation," 2023-11-13. https://blocksandfiles.com/2023/11/13/pure-storage-gets-new-cisco-flashstack-for-ai-certification-added-to-nvidia-basepod-validation/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:22" title="Jump back to footnote 22 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:22" title="Jump back to footnote 22 in the text">&#8617;</a></p>
+</li>
+<li id="fn:23">
+<p>CoreWeave, "Storage," n.d. https://coreweave.com/products/storage (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:23" title="Jump back to footnote 23 in the text">&#8617;</a></p>
+</li>
+<li id="fn:24">
+<p>Blocks &amp; Files, "VAST Data lands $1.17 billion CoreWeave deal," 2025-11-06. https://www.blocksandfiles.com/ai-ml/2025/11/06/vast-data-lands-117-billion-coreweave-deal/1608868 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:24" title="Jump back to footnote 24 in the text">&#8617;</a></p>
+</li>
+<li id="fn:25">
+<p>StorageNewsletter, "Vast Data Raised $83 Million, Total Reaching $263 Million," 2021-05-05. https://www.storagenewsletter.com/2021/05/05/vast-data-raised-83-million-total-reaching-263-million/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:25" title="Jump back to footnote 25 in the text">&#8617;</a></p>
+</li>
+<li id="fn:26">
+<p>CNBC, "Nvidia backs AI company Vast Data at $30 billion valuation," 2026-04-22. https://www.cnbc.com/2026/04/22/nvidia-backs-ai-company-vast-data.html ; Blocks &amp; Files, "VAST Data raises $1B at $30B valuation as AI storage demand surges," 2026-03-11. https://www.blocksandfiles.com/flash/2026/03/11/vast-data-raises-1b-at-30b-valuation-as-ai-storage-demand-surges/5208106 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:26" title="Jump back to footnote 26 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:26" title="Jump back to footnote 26 in the text">&#8617;</a></p>
+</li>
+<li id="fn:27">
+<p>WEKA, "WEKA Nets $140M in Series E Funding at $1.6B Valuation," 2024-05-15. https://www.weka.io/news/weka-nets-140m-in-series-e-funding-at-1-6b-valuation (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:27" title="Jump back to footnote 27 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:27" title="Jump back to footnote 27 in the text">&#8617;</a></p>
+</li>
+<li id="fn:28">
+<p>DDN, "DDN Delivers 4 Terabytes/Second of Accelerated Storage Performance in Groundbreaking NVIDIA Eos AI Supercomputer," 2024-03. https://www.ddn.com/press-releases/ddn-delivers-4-terabytes-second-of-accelerated-storage-performance-in-groundbreaking-nvidia-eos-ai-supercomputer/ ; insideHPC, "HPC at Scale Enabled by DDN A3i and NVIDIA SuperPOD," 2020-04. https://insidehpc.com/2020/04/hpc-at-scale-enabled-by-ddn-a3i-and-nvidia-superpod/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:28" title="Jump back to footnote 28 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:28" title="Jump back to footnote 28 in the text">&#8617;</a></p>
+</li>
+<li id="fn:29">
+<p>Blocks &amp; Files, "Pure Storage's FlashBlade//S500 gains Nvidia SuperPOD certification," 2024-11-18. https://www.blocksandfiles.com/ai-ml/2024/11/18/pure-storages-flashblade/s500-gains-nvidia-superpod-certification/1598641 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:29" title="Jump back to footnote 29 in the text">&#8617;</a></p>
+</li>
+<li id="fn:30">
+<p>Blocks &amp; Files, "Pure Storage expands AI capabilities with Nvidia certification," 2025-03-19. https://www.blocksandfiles.com/ai-ml/2025/03/19/pure-storage-expands-ai-capabilities-with-nvidia-certification/1595136 ; Pure Storage, "Pure Storage Integrates NVIDIA AI Data Platform into FlashBlade to Fuel Enterprise AI Innovation," 2025-03. https://investor.everpuredata.com/news-and-events/press-releases/press-release-details/2025/Pure-Storage-Integrates-NVIDIA-AI-Data-Platform-into-FlashBlade-to-Fuel-Enterprise-AI-Innovation/default.aspx (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:30" title="Jump back to footnote 30 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:30" title="Jump back to footnote 30 in the text">&#8617;</a></p>
+</li>
+<li id="fn:31">
+<p>StorageReview, "Everpure aligns FlashBlade//EXA with NVIDIA AI factory architectures, previews Data Stream," 2026-03. https://www.storagereview.com/news/everpure-aligns-flashblade-exa-with-nvidia-ai-factory-architectures-previews-data-stream ; Blocks &amp; Files, "Everpure dives deeper into AI," 2026-03-16. https://www.blocksandfiles.com/ai-ml/2026/03/16/everpure-dives-deeper-into-ai/5209351 (both retrieved 2026-11-01; search-summary only; no EXA entry seen in search extracts of NVIDIA's certified-storage systems list).&#160;<a class="footnote-backref" href="#fnref:31" title="Jump back to footnote 31 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:31" title="Jump back to footnote 31 in the text">&#8617;</a></p>
+</li>
+<li id="fn:32">
+<p>VAST Data (Business Wire), "VAST Data Achieves NVIDIA DGX SuperPOD Certification," 2023-05-17. https://www.businesswire.com/news/home/20230517005089/en ; Blocks &amp; Files, "VAST Data goes certifiably SuperPODding," 2023-05-17. https://blocksandfiles.com/2023/05/17/vast-data-goes-certifiably-superpodding/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:32" title="Jump back to footnote 32 in the text">&#8617;</a></p>
+</li>
+<li id="fn:33">
+<p>Intelligent CIO, "VAST Data achieves high-performance storage solution certification," 2024-07-10. https://www.intelligentcio.com/north-america/2024/07/10/vast-data-achieves-high-performance-storage-solution-certification/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:33" title="Jump back to footnote 33 in the text">&#8617;</a></p>
+</li>
+<li id="fn:34">
+<p>NVIDIA Docs, "List of NVIDIA-Certified Storage Systems," n.d. https://docs.nvidia.com/certification-programs/certified-storage/latest/systems-list.html (retrieved 2026-11-01; search-summary only; per-level detail not visible).&#160;<a class="footnote-backref" href="#fnref:34" title="Jump back to footnote 34 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:34" title="Jump back to footnote 34 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:34" title="Jump back to footnote 34 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:34" title="Jump back to footnote 34 in the text">&#8617;</a><a class="footnote-backref" href="#fnref5:34" title="Jump back to footnote 34 in the text">&#8617;</a><a class="footnote-backref" href="#fnref6:34" title="Jump back to footnote 34 in the text">&#8617;</a><a class="footnote-backref" href="#fnref7:34" title="Jump back to footnote 34 in the text">&#8617;</a></p>
+</li>
+<li id="fn:35">
+<p>WEKA, "WEKA Achieves NVIDIA Cloud Network Partner Certification," 2024-09-25. https://www.weka.io/news/weka-achieves-nvidia-cloud-network-partner-certification ; WEKA, "WEKA and NVIDIA DGX BasePOD reference architecture," n.d. https://weka.io/resources/reference-architecture/weka-and-nvidia-dgx-basepod (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:35" title="Jump back to footnote 35 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:35" title="Jump back to footnote 35 in the text">&#8617;</a></p>
+</li>
+<li id="fn:36">
+<p>Blocks &amp; Files, "DDN gets Nvidia nod to supply storage to GPU-serving cloud partners," 2024-08-21. https://www.blocksandfiles.com/ai-ml/2024/08/21/ddn-gets-nvidia-nod-to-supply-storage-to-gpu-serving-cloud-partners/1590712 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:36" title="Jump back to footnote 36 in the text">&#8617;</a></p>
+</li>
+<li id="fn:37">
+<p>HPCwire/BigDATAwire, "NetApp Validated for NVIDIA DGX SuperPOD, Cloud Partners and Certified Systems," 2025-03-18. https://www.hpcwire.com/bigdatawire/this-just-in/netapp-validated-for-nvidia-dgx-superpod-cloud-partners-and-certified-systems/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:37" title="Jump back to footnote 37 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:37" title="Jump back to footnote 37 in the text">&#8617;</a></p>
+</li>
+<li id="fn:38">
+<p>Dell Technologies, "PowerScale: World's First Ethernet Storage Certified on NVIDIA SuperPOD," 2024-03. https://www.dell.com/fr-ca/blog/powerscale-worlds-first-ethernet-storage-certified-on-nvidia-superpod/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:38" title="Jump back to footnote 38 in the text">&#8617;</a></p>
+</li>
+<li id="fn:39">
+<p>HPE Newsroom, "HPE accelerates secure, scalable production-ready AI through new innovations with NVIDIA," 2026-03-16. https://www.hpe.com/us/en/newsroom/press-release/2026/03/hpe-accelerates-secure-scalable-production-ready-ai-through-new-innovations-with-nvidia.html (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:39" title="Jump back to footnote 39 in the text">&#8617;</a></p>
+</li>
+<li id="fn:40">
+<p>IBM Community, "IBM Storage Scale System 6000 receives NVIDIA DGX SuperPOD certification," 2024-08-29. https://community.ibm.com/community/user/blogs/mike-kieran/2024/08/29/ibm-storage-scale-system-6000-receives-nvidia-dgx (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:40" title="Jump back to footnote 40 in the text">&#8617;</a></p>
+</li>
+<li id="fn:41">
+<p>IBM Community, "Introducing IBM Storage Scale 6.0.1 and Storage Scale System 7.0.1: An AI-Ready Data Platform," 2026-06-08. https://community.ibm.com/community/user/blogs/mike-kieran/2026/06/08/introducing-ibm-storage-scale-601-and-storage-scal (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:41" title="Jump back to footnote 41 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:41" title="Jump back to footnote 41 in the text">&#8617;</a></p>
+</li>
+<li id="fn:42">
+<p>Hitachi, "Hitachi Vantara achieves NVIDIA DGX BasePOD certification" (press release), 2024-07-29. https://www.hitachi.com/en/press/articles/2024/07/0729/ ; Blocks &amp; Files, "How Nvidia assesses SuperPOD AI storage performance," 2024-09-03. https://www.blocksandfiles.com/ai-ml/2024/09/03/how-nvidia-assesses-superpod-ai-storage-performance/1612775 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:42" title="Jump back to footnote 42 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:42" title="Jump back to footnote 42 in the text">&#8617;</a></p>
+</li>
+<li id="fn:43">
+<p>HPCwire/BigDATAwire, "Nutanix Unified Storage Achieves NVIDIA Certification as Enterprises Race to Build AI Factories," 2026-06. https://www.hpcwire.com/bigdatawire/this-just-in/nutanix-unified-storage-achieves-nvidia-certification-as-enterprises-race-to-build-ai-factories/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:43" title="Jump back to footnote 43 in the text">&#8617;</a></p>
+</li>
+<li id="fn:44">
+<p>StorageReview, "Best Storage Arrays 2026: AI Storage Leaders and Audited Results," updated 2026-09-01. https://www.storagereview.com/best/storage-arrays (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:44" title="Jump back to footnote 44 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:44" title="Jump back to footnote 44 in the text">&#8617;</a></p>
+</li>
+<li id="fn:45">
+<p>MLCommons, "MLCommons Releases New MLPerf Storage v3.0 Benchmark Results," 2026-09-01. https://mlcommons.org/2026/09/mlperf-storage-v3-0-results/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:45" title="Jump back to footnote 45 in the text">&#8617;</a></p>
+</li>
+<li id="fn:46">
+<p>MLQ.ai, "NVIDIA Launches BlueField-4 STX Storage Architecture at GTC 2026, Supermicro Among First to Build CMX Server," 2026-03. https://mlq.ai/news/nvidia-launches-bluefield-4-stx-storage-architecture-at-gtc-2026-supermicro-among-first-to-build-cmx-server/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:46" title="Jump back to footnote 46 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../33-rag-vector-lakehouse/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 33. RAG, vector databases and AI-native data formats">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                33. RAG, vector databases and AI-native data formats
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../35-ai-factories-and-neoclouds/" class="md-footer__link md-footer__link--next" aria-label="Next: 35. AI factories and neoclouds">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                35. AI factories and neoclouds
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>

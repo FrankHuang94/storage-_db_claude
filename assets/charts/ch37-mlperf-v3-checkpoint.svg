@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="984.1975pt" height="413.169051pt" viewBox="0 0 984.1975 413.169051" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 413.169051 
+L 984.1975 413.169051 
+L 984.1975 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 224.1925 324.64282 
+L 563.319521 324.64282 
+L 563.319521 22.318125 
+L 224.1925 22.318125 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <path d="M 224.1925 324.64282 
+L 224.1925 22.318125 
+" clip-path="url(#p6fa311be3c)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_2">
+      <defs>
+       <path id="m1fdb73ee06" d="M 0 0 
+L 0 3.5 
+" style="stroke: #222222; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m1fdb73ee06" x="224.1925" y="324.64282" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="224.1925" y="340.000241" transform="rotate(-0 224.1925 340.000241)">0</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_3">
+      <path d="M 268.814476 324.64282 
+L 268.814476 22.318125 
+" clip-path="url(#p6fa311be3c)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#m1fdb73ee06" x="268.814476" y="324.64282" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="268.814476" y="340.000241" transform="rotate(-0 268.814476 340.000241)">250</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_5">
+      <path d="M 313.436453 324.64282 
+L 313.436453 22.318125 
+" clip-path="url(#p6fa311be3c)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#m1fdb73ee06" x="313.436453" y="324.64282" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="313.436453" y="340.000241" transform="rotate(-0 313.436453 340.000241)">500</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_7">
+      <path d="M 358.058429 324.64282 
+L 358.058429 22.318125 
+" clip-path="url(#p6fa311be3c)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_8">
+      <g>
+       <use xlink:href="#m1fdb73ee06" x="358.058429" y="324.64282" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="358.058429" y="340.000241" transform="rotate(-0 358.058429 340.000241)">750</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_9">
+      <path d="M 402.680406 324.64282 
+L 402.680406 22.318125 
+" clip-path="url(#p6fa311be3c)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_10">
+      <g>
+       <use xlink:href="#m1fdb73ee06" x="402.680406" y="324.64282" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="402.680406" y="340.000241" transform="rotate(-0 402.680406 340.000241)">1000</text>
+     </g>
+    </g>
+    <g id="text_6">
+     <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="393.756011" y="355.001101" transform="rotate(-0 393.756011 355.001101)">Checkpoint write bandwidth (GiB/s), mean of 10 checkpoints</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_11">
+      <defs>
+       <path id="m82e05d245f" d="M 0 0 
+L -3.5 0 
+" style="stroke: #222222; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m82e05d245f" x="224.1925" y="292.459101" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_7">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="217.1925" y="296.258319" transform="rotate(-0 217.1925 296.258319)">NVIDIA AIStore, 12 nodes</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_12">
+      <g>
+       <use xlink:href="#m82e05d245f" x="224.1925" y="232.969786" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_8">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="217.1925" y="236.769005" transform="rotate(-0 217.1925 236.769005)">Alluxio on Amazon S3</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_13">
+      <g>
+       <use xlink:href="#m82e05d245f" x="224.1925" y="173.480472" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_9">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="217.1925" y="177.279691" transform="rotate(-0 217.1925 177.279691)">Everpure FlashBlade//EXA, 10 data nodes</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_14">
+      <g>
+       <use xlink:href="#m82e05d245f" x="224.1925" y="113.991158" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_10">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="217.1925" y="117.790377" transform="rotate(-0 217.1925 117.790377)">Azure Managed Lustre, 4,096 TiB</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_15">
+      <g>
+       <use xlink:href="#m82e05d245f" x="224.1925" y="54.501844" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_11">
+      <text style="font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="217.1925" y="58.301063" transform="rotate(-0 217.1925 58.301063)">Everpure FlashBlade//EXA, 30 data nodes</text>
+     </g>
+    </g>
+   </g>
+   <g id="patch_3">
+    <path d="M 224.1925 310.900788 
+L 247.979583 310.900788 
+L 247.979583 274.017413 
+L 224.1925 274.017413 
+z
+" clip-path="url(#p6fa311be3c)" style="fill: #009e73; stroke: #ffffff; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 224.1925 251.411474 
+L 250.435577 251.411474 
+L 250.435577 214.528099 
+L 224.1925 214.528099 
+z
+" clip-path="url(#p6fa311be3c)" style="fill: url(#h0fac168633); stroke: #222222; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 224.1925 191.92216 
+L 282.674062 191.92216 
+L 282.674062 155.038785 
+L 224.1925 155.038785 
+z
+" clip-path="url(#p6fa311be3c)" style="fill: #0072b2; stroke: #ffffff; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 224.1925 132.432846 
+L 338.817433 132.432846 
+L 338.817433 95.549471 
+L 224.1925 95.549471 
+z
+" clip-path="url(#p6fa311be3c)" style="fill: #56b4e9; stroke: #ffffff; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 224.1925 72.943531 
+L 380.819207 72.943531 
+L 380.819207 36.060157 
+L 224.1925 36.060157 
+z
+" clip-path="url(#p6fa311be3c)" style="fill: #0072b2; stroke: #ffffff; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 224.1925 324.64282 
+L 224.1925 22.318125 
+" style="fill: none; stroke: #888888; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 224.1925 324.64282 
+L 563.319521 324.64282 
+" style="fill: none; stroke: #888888; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_12">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #222222" x="250.121438" y="287.91843" transform="rotate(-0 250.121438 287.91843)">133.3 GiB/s</text>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #444444" x="250.121438" y="307.625187" transform="rotate(-0 250.121438 307.625187)">Llama 3 1T · cloud bare metal · 12 AIStore nodes, 16 checkpoint clients; ~95% of nominal NIC bandwidth</text>
+   </g>
+   <g id="text_14">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #222222" x="252.577432" y="228.429116" transform="rotate(-0 252.577432 228.429116)">147.0 GiB/s</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #444444" x="252.577432" y="248.135873" transform="rotate(-0 252.577432 248.135873)">Llama 3 405B · cloud (cache over S3) · distributed cache in front of S3; node count not captured</text>
+   </g>
+   <g id="text_16">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #222222" x="284.815917" y="168.939801" transform="rotate(-0 284.815917 168.939801)">327.6 GiB/s</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #444444" x="284.815917" y="188.646559" transform="rotate(-0 284.815917 188.646559)">Llama 3 1T-class · on-premises · same design, 10 data nodes</text>
+   </g>
+   <g id="text_18">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #222222" x="340.959288" y="109.450487" transform="rotate(-0 340.959288 109.450487)">642.2 GiB/s</text>
+   </g>
+   <g id="text_19">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #444444" x="340.959288" y="129.157245" transform="rotate(-0 340.959288 129.157245)">Llama 3 1T-class · cloud service · 4,096 TiB provisioned file system, 128 clients</text>
+   </g>
+   <g id="text_20">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #222222" x="382.961062" y="49.961173" transform="rotate(-0 382.961062 49.961173)">877.5 GiB/s</text>
+   </g>
+   <g id="text_21">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #444444" x="382.961062" y="69.667931" transform="rotate(-0 382.961062 69.667931)">Llama 3 1T-class · on-premises · 30 metadata blades (120 DFMs) + 30 Linux/NVMe data nodes, ~866 TB usable</text>
+   </g>
+   <g id="text_22">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: start" x="224.1925" y="16.318125" transform="rotate(-0 224.1925 16.318125)">MLPerf Storage v3.0 checkpoint write, selected submissions (vendor-reported; configurations not comparable)</text>
+   </g>
+  </g>
+  <g id="text_23">
+   <text style="font-size: 8px; font-family: 'DejaVu Sans'; fill: #555555" transform="translate(7.2 384.04202)">Sources: Everpure release via HPCwire (2026-09-02); Microsoft Learn Azure Managed Lustre v3.0 page; NVIDIA AIStore blog (2026-09-01); Alluxio blog (2026-09, search summary only, hatched bar = 405B model, not the 1T-class model);</text>
+   <text style="font-size: 8px; font-family: 'DejaVu Sans'; fill: #555555" transform="translate(7.2 393.644207)">StorageReview (2026-09). VAST, WEKA and DDN did not submit to v3.0. Data: data/ch37_mlperf_v3_checkpoint.csv</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p6fa311be3c">
+   <rect x="224.1925" y="22.318125" width="339.127021" height="302.324695"/>
+  </clipPath>
+ </defs>
+ <defs>
+  <pattern id="h0fac168633" patternUnits="userSpaceOnUse" x="0" y="0" width="72" height="72">
+   <rect x="0" y="0" width="73" height="73" fill="#e69f00"/>
+   <path d="M -36 36 
+L 36 -36 
+M -30 42 
+L 42 -30 
+M -24 48 
+L 48 -24 
+M -18 54 
+L 54 -18 
+M -12 60 
+L 60 -12 
+M -6 66 
+L 66 -6 
+M 0 72 
+L 72 0 
+M 6 78 
+L 78 6 
+M 12 84 
+L 84 12 
+M 18 90 
+L 90 18 
+M 24 96 
+L 96 24 
+M 30 102 
+L 102 30 
+M 36 108 
+L 108 36 
+" style="fill: #222222; stroke: #222222; stroke-width: 1.0; stroke-linecap: butt; stroke-linejoin: miter"/>
+  </pattern>
+ </defs>
+</svg>

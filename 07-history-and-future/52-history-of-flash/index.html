@@ -1,0 +1,3968 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A strategy-level knowledge base on storage, AI storage and the competitive landscape around Everpure (formerly Pure Storage).">
+      
+      
+      
+        <link rel="canonical" href="https://frankhuang94.github.io/storage-_db_claude/07-history-and-future/52-history-of-flash/">
+      
+      
+        <link rel="prev" href="../51-history-of-storage/">
+      
+      
+        <link rel="next" href="../53-future-trends/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>52. History of flash and NAND economics - Everpure Tech Atlas</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#52-history-of-flash-and-nand-economics" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Everpure Tech Atlas" class="md-header__button md-logo" aria-label="Everpure Tech Atlas" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Everpure Tech Atlas
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              52. History of flash and NAND economics
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/FrankHuang94/storage-_db_claude" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    storage-_db_claude
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Everpure Tech Atlas" class="md-nav__button md-logo" aria-label="Everpure Tech Atlas" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Everpure Tech Atlas
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/FrankHuang94/storage-_db_claude" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    storage-_db_claude
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 0 — Start Here
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 0 — Start Here
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start-here/00a-how-to-use-this-atlas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0.1. How to use this atlas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start-here/00b-one-page-map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0.2. The one-page map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 1 — Storage Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 1 — Storage Fundamentals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/01-what-storage-does/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. What storage does
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/02-media-physics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Media physics for a semis person
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/03-inside-an-ssd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Inside an SSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/04-performance-and-economics-metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Performance and economics metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/05-data-reduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Data reduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/06-data-protection-and-resilience/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Data protection and resilience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 2 — Protocols and Networking
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 2 — Protocols and Networking
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/07-block-protocols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Block protocols
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/08-file-protocols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. File protocols
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/09-object-storage-and-s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Object storage and S3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/10-datacenter-networking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Datacenter networking for storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/11-gpu-data-path/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. The GPU data path
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/12-interfaces-and-emerging-tech/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Interfaces and emerging tech
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3 — Storage System Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 3 — Storage System Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/13-storage-stack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. The storage stack, layer by layer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/14-scale-up-dual-controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Scale-up dual-controller arrays
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/15-scale-out-shared-nothing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Scale-out shared-nothing clusters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/16-disaggregated-shared-everything/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Disaggregated shared-everything architectures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/17-parallel-file-systems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Parallel and distributed file systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/18-object-storage-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Object storage architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/19-software-defined-and-hci/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Software-defined storage and HCI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/20-distributed-systems-fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Distributed-systems fundamentals for storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/21-metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Metadata: the hidden bottleneck
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/22-control-planes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Control planes and fleet management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/23-consumption-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Consumption models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/24-architecture-decision-matrix/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Architecture decision matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 4 — Everpure
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 4 — Everpure
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/25-company-history-and-strategy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Company history and strategy, 2009–2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/26-purity-and-directflash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Core technology: Purity and DirectFlash
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/27-flasharray-and-flashblade/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Product portfolio: FlashArray and FlashBlade
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/28-platform-and-software/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. Platform and software
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/29-hyperscaler-ecosystem-financials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Hyperscaler business, ecosystem and financials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 5 — AI Storage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 5 — AI Storage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/30-ai-data-pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. The AI data pipeline end to end
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/31-training-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Training storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/32-inference-and-kv-cache/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Inference and KV cache
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/33-rag-vector-lakehouse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    33. RAG, vector databases and AI-native data formats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/34-nvidia-ecosystem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. NVIDIA's ecosystem and certifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/35-ai-factories-and-neoclouds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    35. AI factories and neoclouds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/36-hyperscaler-ai-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    36. How hyperscalers build AI storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/37-reading-benchmarks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    37. Reading benchmarks critically
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/38-power-and-density/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    38. Power, density and the AI datacenter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/39-agentic-ai-and-data-intelligence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    39. Agentic AI and data intelligence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 6 — Industry and Competition
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 6 — Industry and Competition
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/40-market-structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    40. Market structure and sizing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/41-why-ai-native-vendors-won/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    41. Why AI-native storage vendors gained traction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/42-vast-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    42. VAST Data deep dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/43-weka/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    43. WEKA deep dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/44-ddn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    44. DDN deep dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/45-head-to-head/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    45. Head-to-head: FlashBlade//EXA vs. VAST vs. WEKA vs. DDN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/46-incumbents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    46. Incumbents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/47-other-challengers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    47. Other challengers and software-defined players
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/48-media-suppliers-and-nand-cycle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    48. Media suppliers and the NAND cycle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/49-competitive-matrices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    49. Competitive landscape matrices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/50-diligence-framework/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    50. Technical diligence framework
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 7 — History and Future
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 7 — History and Future
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../51-history-of-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    51. History of storage, 1956–2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    52. History of flash and NAND economics
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    52. History of flash and NAND economics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters-for-everpure-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters for Everpure strategy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#five-inflections-in-one-picture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Five inflections in one picture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#invention-and-why-toshiba-did-not-own-the-economics-19842000" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Invention, and why Toshiba did not own the economics (1984–2000)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consumers-paid-for-the-learning-curve-20052012" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Consumers paid for the learning curve (2005–2012)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-four-cost-levers-and-how-each-ran-out" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The four cost levers, and how each ran out
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bit-growth-versus-wafer-capacity-the-engine-of-the-cycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bit growth versus wafer capacity: the engine of the cycle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#boom-and-bust-20082026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Boom and bust, 2008–2026
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consolidation-the-same-fabs-new-owners" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Consolidation: the same fabs, new owners
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-enterprise-inflection-raw-versus-effective-gb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The enterprise inflection: raw versus effective $/GB
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-all-flash-won-primary-storage-and-disk-kept-the-bulk-tier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why all-flash won primary storage, and disk kept the bulk tier
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-everpure-approaches-it-vs-competitors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Everpure approaches it vs. competitors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#history-and-trajectory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        History and trajectory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#numbers-that-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Numbers that matter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversation-playbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversation playbook
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-deeper-optional-l3-pointers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going deeper (optional, L3 pointers)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key terms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../53-future-trends/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    53. Future trends, 2026–2032
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../54-strategic-option-map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    54. Strategic option map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 8 — Conversation Toolkit
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 8 — Conversation Toolkit
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/55-talking-with-pms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    55. Talking with product managers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/56-talking-with-engineering-and-cto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    56. Talking with engineering leaders and the CTO office
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/57-question-bank/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    57. Question bank: 150 questions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/58-explain-in-30-seconds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    58. Explain it in 30 seconds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/59-self-test-flashcards/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    59. Self-test: 279 flashcards
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/60-cheat-sheets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    60. Cheat sheets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters-for-everpure-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters for Everpure strategy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#five-inflections-in-one-picture" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Five inflections in one picture
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#invention-and-why-toshiba-did-not-own-the-economics-19842000" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Invention, and why Toshiba did not own the economics (1984–2000)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consumers-paid-for-the-learning-curve-20052012" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Consumers paid for the learning curve (2005–2012)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-four-cost-levers-and-how-each-ran-out" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The four cost levers, and how each ran out
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bit-growth-versus-wafer-capacity-the-engine-of-the-cycle" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bit growth versus wafer capacity: the engine of the cycle
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#boom-and-bust-20082026" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Boom and bust, 2008–2026
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#consolidation-the-same-fabs-new-owners" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Consolidation: the same fabs, new owners
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-enterprise-inflection-raw-versus-effective-gb" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The enterprise inflection: raw versus effective $/GB
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-all-flash-won-primary-storage-and-disk-kept-the-bulk-tier" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why all-flash won primary storage, and disk kept the bulk tier
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-everpure-approaches-it-vs-competitors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Everpure approaches it vs. competitors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#history-and-trajectory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        History and trajectory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#numbers-that-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Numbers that matter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversation-playbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversation playbook
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-deeper-optional-l3-pointers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going deeper (optional, L3 pointers)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key terms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="52-history-of-flash-and-nand-economics">52. History of flash and NAND economics<a class="headerlink" href="#52-history-of-flash-and-nand-economics" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>Depth:</strong> L2 · <strong>Reading time:</strong> ~11 min · <strong>Last verified:</strong> 2026-11-01
+<strong>Prerequisites:</strong> <a href="../../01-storage-fundamentals/02-media-physics/">Media physics for a semis person</a> · <a href="../../01-storage-fundamentals/05-data-reduction/">Data reduction</a> · <a href="../51-history-of-storage/">History of storage, 1956–2026</a></p>
+</blockquote>
+<h2 id="tldr">TL;DR<a class="headerlink" href="#tldr" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Consumers paid for flash's learning curve.</strong> Music players and phones funded NAND's scale from the mid-2000s; enterprise arrays inherited the curve. NAND fell from roughly $45/GB in 2005 to about 2¢/GB at the 2023 trough, around 35% a year.</li>
+<li><strong>The cost levers ran out one after another.</strong> Lithography carried the 2000s. Bits per cell (SLC→MLC→TLC→QLC) gave 50%, then 33%, then 25% cuts in cost per bit. 3D layers took over after Samsung's 24-layer V-NAND in 2013, and each new layer step now adds fewer bits per wafer and costs more capex.</li>
+<li><strong>Flash never beat nearline disk on raw $/TB.</strong> It beat <em>performance</em> disk (15K/10K RPM) on <em>effective</em> $/GB between about 2011 and 2015, because inline data reduction is cheap on flash and costly on disk. Latency, power and simpler operations did the rest.</li>
+<li><strong>NAND consolidated by changing owners, not by exits.</strong> Intel's fabs went to SK hynix (Solidigm), Toshiba's went to a Bain group (Kioxia), and SanDisk went to WD and was spun out again in 2025. DRAM consolidated through bankruptcies, to three players with ~88% of revenue. NAND still has five large suppliers, which partly explains its harsher cycles.</li>
+<li><strong>The cycle is a bit-growth-versus-wafer story.</strong> Booms bring capex, then supply overshoots and prices fall below cash cost (2008, 2012, 2018–19, 2022–23). The 2025–26 AI surge took spot NAND prices up roughly 13–15× from the 2023 trough. Suppliers are adding layers, not wafers.</li>
+</ul>
+<h2 id="why-this-matters-for-everpure-strategy">Why this matters for Everpure strategy<a class="headerlink" href="#why-this-matters-for-everpure-strategy" title="Permanent link">&para;</a></h2>
+<p>Everpure's whole history sits on this curve. Pure Storage was incorporated in 2009<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>, when NAND was still about $1/GB<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>. It sold all-flash arrays priced per <em>usable</em> gigabyte after data reduction, against 15K disk, and won the effective-$/GB argument before the raw one was close. The company's DirectFlash strategy is a bet on capturing more of each NAND generation's cost decline than SSD vendors pass through (<a href="../../04-everpure/26-purity-and-directflash/">Chapter 26</a>). Its gross margin and pricing power still move with the NAND cycle (<a href="../../06-industry-and-competition/48-media-suppliers-and-nand-cycle/">Chapter 48</a>).</p>
+<p>The history informs three live questions. Will the 2026 spike end in overbuild, as earlier ones did? How far can "flash replaces disk" go at an ~18× raw premium over nearline disk? And how much are supplier relationships worth when fab owners have changed at least four times in a decade?</p>
+<h2 id="core-concepts">Core concepts<a class="headerlink" href="#core-concepts" title="Permanent link">&para;</a></h2>
+<h3 id="five-inflections-in-one-picture">Five inflections in one picture<a class="headerlink" href="#five-inflections-in-one-picture" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>timeline
+    title NAND flash inflection points
+    1984-1987 : Masuoka team presents NOR flash at IEDM 1984 : NAND flash follows in 1987
+    2005-2008 : iPod nano and Apple flash prepayments : IMFT formed : 2008 price crash and 30 percent output cut
+    2011-2015 : All-flash arrays priced per usable GB : TLC reaches SSDs : Samsung 24-layer V-NAND : Flash arrays claim parity with 15K disk
+    2016-2021 : WD buys SanDisk : First QLC SSD : Toshiba Memory sold and renamed Kioxia : Intel NAND becomes Solidigm
+    2022-2026 : Deep downturn and wafer cuts : Kioxia IPO and Sandisk spin : AI-driven price surge : All-flash passes half of array revenue</code></pre>
+<p><em>Figure 52.1 — Flash went from invention to consumer scale in two decades, then won enterprise primary storage in about five years once data reduction made usable $/GB competitive.</em></p>
+<h3 id="invention-and-why-toshiba-did-not-own-the-economics-19842000">Invention, and why Toshiba did not own the economics (1984–2000)<a class="headerlink" href="#invention-and-why-toshiba-did-not-own-the-economics-19842000" title="Permanent link">&para;</a></h3>
+<p>Fujio Masuoka's team at Toshiba presented a flash EEPROM, the NOR type, at IEDM in December 1984<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>. The NAND cell followed in a paper by Masuoka, Momodomi, Iwata and Shirota at IEDM in December 1987, and Kioxia, Toshiba's former memory unit, uses 1987 as the invention date<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>. The Semiconductor History Museum of Japan's exhibit gives 1988 for Toshiba's NAND announcement<sup id="fnref2:3"><a class="footnote-ref" href="#fn:3">3</a></sup>, which appears to refer to a later device announcement. The peer-reviewed 1987 conference paper is the defensible date. NAND traded NOR's fast random reads for density: cells in series share contacts. That trade pays only when a controller handles errors and mapping, the origin of the <a href="../../01-storage-fundamentals/03-inside-an-ssd/">FTL</a>.</p>
+<p>Masuoka later sued Toshiba over compensation for the invention, and the case settled in 2006<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup>. Kioxia's own retrospective puts 1990s NAND at about $10,000 per gigabyte (company-stated)<sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup>. Another industry recollection suggests nearer $1,250/GB in the mid-1990s<sup id="fnref:7"><a class="footnote-ref" href="#fn:7">7</a></sup>. Either way, flash was then a niche product.</p>
+<h3 id="consumers-paid-for-the-learning-curve-20052012">Consumers paid for the learning curve (2005–2012)<a class="headerlink" href="#consumers-paid-for-the-learning-curve-20052012" title="Permanent link">&para;</a></h3>
+<p>Apple's iPod nano launched on 7 September 2005 at 2 GB for $199 and 4 GB for $249<sup id="fnref:8"><a class="footnote-ref" href="#fn:8">8</a></sup>. Analysts estimated the 2 GB model held about $90 of flash, or roughly $45/GB, at a time when 1 GB sold for about $45 in the volume market<sup id="fnref:9"><a class="footnote-ref" href="#fn:9">9</a></sup>. Ten weeks later Apple signed supply agreements running to 2010 with Hynix, Intel, Micron, Samsung and Toshiba. It prepaid $1.25 billion<sup id="fnref:10"><a class="footnote-ref" href="#fn:10">10</a></sup>. Intel and Micron formed IM Flash Technologies (IMFT), 51% owned by Micron, with Apple expected as its first customer<sup id="fnref:11"><a class="footnote-ref" href="#fn:11">11</a></sup>.</p>
+<p>This was a customer-funded capacity build: the buyer's balance sheet de-risked the suppliers' fab ramps. Music players, then smartphones, supplied the volume that drove the learning curve. Analyst data shows the result: about $45/GB in 2005, ~$0.90/GB for consumer NAND by Q4 2008<sup id="fnref2:2"><a class="footnote-ref" href="#fn:2">2</a></sup>, ~$1 in January 2011, ~$0.30 by July 2012 and ~$0.25 in early 2015<sup id="fnref:12"><a class="footnote-ref" href="#fn:12">12</a></sup>.</p>
+<p><img alt="Log-scale chart of NAND flash price per gigabyte from the 1990s to 2026: retrospective estimates of $10,000 and $1,250 per GB in the 1990s, $191 per GB for a 2003 retail flash card, an analyst market-price line falling from $45 per GB in 2005 to about 5 cents in 2019, and a TrendForce wafer-spot line rising from 2.2 cents in July 2023 to about 29 to 33 cents in 2026, with grey bands marking the 2008, 2012, 2018–19 and 2022–23 busts and a yellow band for the 2025–26 surge." src="../../assets/charts/ch52-flash-cost.svg" /></p>
+<p><em>Figure 52.2 — NAND fell roughly 35% a year on average from 2005 to the 2023 trough; the 2025–26 surge took spot prices back to roughly 2016–17 levels within months.</em>
+Data: <code>data/ch52_flash_cost.csv</code></p>
+<p>The bases differ: retrospective claims, a retail card in 2003<sup id="fnref:13"><a class="footnote-ref" href="#fn:13">13</a></sup>, analyst market prices<sup id="fnref:14"><a class="footnote-ref" href="#fn:14">14</a></sup><sup id="fnref:15"><a class="footnote-ref" href="#fn:15">15</a></sup> and TrendForce 512Gb TLC wafer spot quotes divided by 64 GB<sup id="fnref:16"><a class="footnote-ref" href="#fn:16">16</a></sup><sup id="fnref:17"><a class="footnote-ref" href="#fn:17">17</a></sup><sup id="fnref:18"><a class="footnote-ref" href="#fn:18">18</a></sup><sup id="fnref:19"><a class="footnote-ref" href="#fn:19">19</a></sup>. Read the slope, not the decimals. Worked trend: $45 ÷ $0.0219 ≈ 2,050× over 17.9 years, so ln(2,050)/17.9 ≈ 0.43 per year, which is about a 35% annual decline.</p>
+<h3 id="the-four-cost-levers-and-how-each-ran-out">The four cost levers, and how each ran out<a class="headerlink" href="#the-four-cost-levers-and-how-each-ran-out" title="Permanent link">&para;</a></h3>
+<p>Cost per bit = wafer cost ÷ (good dies per wafer × bits per die). Every era of NAND history leans on one term.</p>
+<p><strong>Lithography (to ~2013).</strong> Planar NAND shrank faster than logic because the array is regular. At around 15 nm, cells held so few electrons that cell-to-cell interference and endurance became limiting (<a href="../../01-storage-fundamentals/02-media-physics/">Chapter 2</a> covers the physics).</p>
+<p><strong>Bits per cell.</strong> Storing more bits per cell multiplies bits per die at almost the same area, but the first step gives the most:</p>
+<table>
+<thead>
+<tr>
+<th>Transition</th>
+<th>Landmark product</th>
+<th>Bits per cell</th>
+<th>Cost-per-bit cut (worked, ideal)</th>
+<th>What it cost</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SLC → MLC</td>
+<td>Toshiba/SanDisk 1 Gb MLC NAND, announced November 2001 (first MLC NAND chip)<sup id="fnref:20"><a class="footnote-ref" href="#fn:20">20</a></sup></td>
+<td>1 → 2</td>
+<td>50%</td>
+<td>4 voltage states; slower program, lower endurance</td>
+</tr>
+<tr>
+<td>MLC → TLC</td>
+<td>Samsung SSD 840, 2012 (first TLC consumer SSD)<sup id="fnref2:20"><a class="footnote-ref" href="#fn:20">20</a></sup></td>
+<td>2 → 3</td>
+<td>33%</td>
+<td>8 states; Samsung put TLC ~50% slower than its MLC</td>
+</tr>
+<tr>
+<td>TLC → QLC</td>
+<td>Micron 5210 ION, May 2018 (first QLC SSD)<sup id="fnref:21"><a class="footnote-ref" href="#fn:21">21</a></sup></td>
+<td>3 → 4</td>
+<td>25%</td>
+<td>16 states; launched as an HDD replacement for read-heavy work</td>
+</tr>
+<tr>
+<td>QLC → PLC</td>
+<td>Research only (SK hynix split-cell, IEDM 2025)<sup id="fnref2:22"><a class="footnote-ref" href="#fn:22">22</a></sup></td>
+<td>4 → 5</td>
+<td>20%</td>
+<td>32 states; needs new cell tricks to be usable</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 52.1 — Each extra bit per cell buys a smaller cost cut (1 − n/(n+1)) and costs more in speed and endurance, so bits per cell is a diminishing lever. Ideal figures ignore extra ECC and spare area.</em></p>
+<p><strong>Layers (2013 onward).</strong> Toshiba announced its BiCS 3D concept in June 2007<sup id="fnref:23"><a class="footnote-ref" href="#fn:23">23</a></sup>, but Samsung reached mass production first, with 24-layer, 128 Gb V-NAND on 6 August 2013<sup id="fnref:24"><a class="footnote-ref" href="#fn:24">24</a></sup>. Leading counts reached 321 (SK hynix, 2024)<sup id="fnref:25"><a class="footnote-ref" href="#fn:25">25</a></sup> and 400+ (Samsung V10, 2026)<sup id="fnref:26"><a class="footnote-ref" href="#fn:26">26</a></sup>. Layers are no free lunch. Going from 32 to 64 layers roughly doubled bits per wafer, but 96 to 128 layers added only ~33%. Meanwhile the greenfield cost per 3D NAND wafer start rose from ~1.5× planar to ~2.2× by 2021<sup id="fnref:27"><a class="footnote-ref" href="#fn:27">27</a></sup>. Layer steps also need far more deposition and etch time per wafer.</p>
+<p><strong>Wafers.</strong> Whatever the layers do not deliver, new fabs must. That makes the fourth lever the cyclical one.</p>
+<h3 id="bit-growth-versus-wafer-capacity-the-engine-of-the-cycle">Bit growth versus wafer capacity: the engine of the cycle<a class="headerlink" href="#bit-growth-versus-wafer-capacity-the-engine-of-the-cycle" title="Permanent link">&para;</a></h3>
+<p>Bit supply growth ≈ (1 + wafer-start growth) × (1 + bits-per-wafer growth) − 1. For years the industry's bit demand grew about 30% a year<sup id="fnref2:27"><a class="footnote-ref" href="#fn:27">27</a></sup>. While a node or layer step delivered +30–40% bits per wafer, suppliers could meet demand with flat wafer starts. As migrations yield less, keeping up with 30% demand means adding wafers. That is expensive, lumpy capex that arrives with a multi-year lag, so it overshoots.</p>
+<pre class="mermaid"><code>flowchart LR
+    A["Demand shock: new device class or AI servers"] --&gt; B["Prices and margins spike"]
+    B --&gt; C["Capex: new wafers plus layer migration"]
+    C --&gt; D["Bit supply jumps after a fab lag"]
+    D --&gt; E["Supply overshoots demand"]
+    E --&gt; F["Prices fall toward or below cash cost"]
+    F --&gt; G["Wafer-input cuts, capex freeze, deals"]
+    G --&gt; A</code></pre>
+<p><em>Figure 52.3 — The NAND cycle is a capacity-lag loop: margins fund wafers, wafers arrive late, and each bust ends with output cuts and ownership changes.</em></p>
+<p><strong>Semiconductor bridge: NAND versus DRAM.</strong> Both run the same loop, but DRAM consolidated through exits. Qimonda filed for insolvency in January 2009<sup id="fnref:28"><a class="footnote-ref" href="#fn:28">28</a></sup>, and Elpida filed for bankruptcy in February 2012 with 15.4% share<sup id="fnref:29"><a class="footnote-ref" href="#fn:29">29</a></sup>; Micron completed its takeover of Elpida on 31 July 2013<sup id="fnref:30"><a class="footnote-ref" href="#fn:30">30</a></sup>. In 2Q26, Samsung, SK hynix and Micron held 39.4%, 24.9% and 23.3% of DRAM revenue, about 88% together<sup id="fnref:31"><a class="footnote-ref" href="#fn:31">31</a></sup>. NAND kept five large suppliers. In 2008, TrendForce put Samsung at 40.4%, Toshiba 28.1%, Hynix 15.1%, Micron 7.9% and Intel 5.8%<sup id="fnref:32"><a class="footnote-ref" href="#fn:32">32</a></sup>. In 2Q26 the top five were Samsung (29.3%), SK hynix Group including Solidigm (18.2%), Micron (15.1%), Kioxia (13.6%) and Sandisk (11.4%), with $68.87B of revenue and 87.6% of the market between them<sup id="fnref:33"><a class="footnote-ref" href="#fn:33">33</a></sup>. Summing the squared market shares of the top five gives a Herfindahl index of about 2,750 for 2008 and about 1,730 for 2Q26 (worked: 29.3² + 18.2² + 15.1² + 13.6² + 11.4²). DRAM's top three alone score about 2,715. The 2008 shares are search-summary figures, so treat the gap as directional. NAND has become <em>less</em> concentrated, and its pricing less disciplined, although Kioxia and Sandisk share fabs, so there are fewer capacity decisions than brands.</p>
+<h3 id="boom-and-bust-20082026">Boom and bust, 2008–2026<a class="headerlink" href="#boom-and-bust-20082026" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>2008:</strong> Toshiba agreed in October to pay $1 billion for 30% of SanDisk's output. In December the two cut joint-venture output by 30%<sup id="fnref:34"><a class="footnote-ref" href="#fn:34">34</a></sup><sup id="fnref:35"><a class="footnote-ref" href="#fn:35">35</a></sup>.</li>
+<li><strong>2012:</strong> Toshiba cut Yokkaichi NAND output by ~30% in July after card and USB prices fell more than 20%<sup id="fnref:36"><a class="footnote-ref" href="#fn:36">36</a></sup>. In DRAM, the same year's bust killed Elpida.</li>
+<li><strong>2018–19:</strong> Prices that had held near 25¢/GB in 2016–17 collapsed to about 5¢ spot<sup id="fnref2:14"><a class="footnote-ref" href="#fn:14">14</a></sup>. A 13-minute power cut at Yokkaichi in June 2019 cost about 6 EB of wafer supply but did not reverse the slide<sup id="fnref:37"><a class="footnote-ref" href="#fn:37">37</a></sup>.</li>
+<li><strong>2022–23:</strong> SK hynix posted its first loss in a decade in Q4 2022<sup id="fnref:38"><a class="footnote-ref" href="#fn:38">38</a></sup>. In April 2023 Samsung joined SK hynix, Micron and Kioxia in cutting output<sup id="fnref:39"><a class="footnote-ref" href="#fn:39">39</a></sup>. The 512Gb TLC wafer spot price bottomed at about $1.40 (≈2.2¢/GB) in mid-2023<sup id="fnref2:16"><a class="footnote-ref" href="#fn:16">16</a></sup>.</li>
+<li><strong>2025–26:</strong> AI servers absorbed enterprise SSD bits. TrendForce reported top-five NAND revenue up 77% QoQ to $68.87B in 2Q26<sup id="fnref2:33"><a class="footnote-ref" href="#fn:33">33</a></sup>. It forecast 4Q26 contract prices up another 15–20%, with most new supply already committed<sup id="fnref:40"><a class="footnote-ref" href="#fn:40">40</a></sup>. Suppliers reportedly added almost no wafer capacity in 2026<sup id="fnref:41"><a class="footnote-ref" href="#fn:41">41</a></sup>, and TrendForce expects them to put DRAM and HBM capex ahead of new NAND capacity<sup id="fnref3:33"><a class="footnote-ref" href="#fn:33">33</a></sup>.</li>
+</ul>
+<p>For a deal team, the pattern is that most busts were followed by transactions.</p>
+<h3 id="consolidation-the-same-fabs-new-owners">Consolidation: the same fabs, new owners<a class="headerlink" href="#consolidation-the-same-fabs-new-owners" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Deal</th>
+<th>Year</th>
+<th>Value</th>
+<th>Consequence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Apple prepays five NAND suppliers</td>
+<td>2005</td>
+<td>$1.25B<sup id="fnref2:10"><a class="footnote-ref" href="#fn:10">10</a></sup></td>
+<td>Consumer demand underwrites capacity; IMFT's first anchor</td>
+</tr>
+<tr>
+<td>WD acquires SanDisk</td>
+<td>Signed 2015, closed May 2016</td>
+<td>~$19B at signing<sup id="fnref:42"><a class="footnote-ref" href="#fn:42">42</a></sup><sup id="fnref:43"><a class="footnote-ref" href="#fn:43">43</a></sup></td>
+<td>HDD leader buys a seat in the Toshiba fab JV</td>
+</tr>
+<tr>
+<td>Intel–Micron end joint NAND development</td>
+<td>Jan 2018</td>
+<td>n/a<sup id="fnref:44"><a class="footnote-ref" href="#fn:44">44</a></sup></td>
+<td>Intel's NAND strategy drifts; IMFT left making 3D XPoint</td>
+</tr>
+<tr>
+<td>Toshiba Memory sold to Bain-led consortium</td>
+<td>Closed Jun 2018</td>
+<td>~¥2tn (~$18B)<sup id="fnref2:45"><a class="footnote-ref" href="#fn:45">45</a></sup></td>
+<td>Distressed-parent carve-out; SK hynix becomes an indirect investor<sup id="fnref2:46"><a class="footnote-ref" href="#fn:46">46</a></sup>; renamed Kioxia Oct 2019</td>
+</tr>
+<tr>
+<td>Micron buys Intel's IMFT stake</td>
+<td>Closed Oct 2019</td>
+<td>~$1.5B cash<sup id="fnref:47"><a class="footnote-ref" href="#fn:47">47</a></sup><sup id="fnref:48"><a class="footnote-ref" href="#fn:48">48</a></sup></td>
+<td>IMFT unwound; Lehi fab sold to TI in 2021 for $900M<sup id="fnref:49"><a class="footnote-ref" href="#fn:49">49</a></sup></td>
+</tr>
+<tr>
+<td>SK hynix buys Intel NAND/SSD (Solidigm)</td>
+<td>Signed 2020; closings Dec 2021 and Mar 2025</td>
+<td>$7B + ~$1.9B net<sup id="fnref:50"><a class="footnote-ref" href="#fn:50">50</a></sup><sup id="fnref:51"><a class="footnote-ref" href="#fn:51">51</a></sup></td>
+<td>Intel exits; SK hynix gets enterprise QLC SSD share</td>
+</tr>
+<tr>
+<td>WD–Kioxia merger talks end</td>
+<td>Oct 2023</td>
+<td>n/a<sup id="fnref3:46"><a class="footnote-ref" href="#fn:46">46</a></sup></td>
+<td>SK hynix, a Kioxia investor, did not consent; the JV stays a JV</td>
+</tr>
+<tr>
+<td>Kioxia IPO</td>
+<td>Dec 2024</td>
+<td>~¥784B at pricing<sup id="fnref:52"><a class="footnote-ref" href="#fn:52">52</a></sup></td>
+<td>Bain gets a partial exit</td>
+</tr>
+<tr>
+<td>Sandisk spun from WD</td>
+<td>Feb 2025</td>
+<td>Nasdaq: SNDK<sup id="fnref:53"><a class="footnote-ref" href="#fn:53">53</a></sup></td>
+<td>Pure-play NAND again; WD back to HDD only</td>
+</tr>
+<tr>
+<td>Kioxia–Sandisk JV extended to 2034</td>
+<td>Jan 2026</td>
+<td>n/a<sup id="fnref:54"><a class="footnote-ref" href="#fn:54">54</a></sup></td>
+<td>Shared Yokkaichi/Kitakami fabs locked in for another cycle</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 52.2 — In twenty years almost every NAND fab outside Samsung changed owner or ownership structure, but the number of fab bases barely moved. Consolidation redistributed capacity rather than removing it.</em></p>
+<p>Intel left with good technology because cyclical NAND was non-core inside a logic company. Toshiba sold because its parent needed cash after losses at its US nuclear unit<sup id="fnref:45"><a class="footnote-ref" href="#fn:45">45</a></sup>. The SanDisk round trip suggests public markets preferred a NAND pure play to an HDD/NAND conglomerate.</p>
+<h3 id="the-enterprise-inflection-raw-versus-effective-gb">The enterprise inflection: raw versus effective $/GB<a class="headerlink" href="#the-enterprise-inflection-raw-versus-effective-gb" title="Permanent link">&para;</a></h3>
+<p>The real contest was flash versus <em>performance</em> disk: 10K and 15K RPM drives, short-stroked and over-provisioned for IOPS.</p>
+<table>
+<thead>
+<tr>
+<th>Year</th>
+<th>Flash claim or market price</th>
+<th>Disk comparator</th>
+<th>Raw or effective?</th>
+<th>Source type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>2011–12</td>
+<td>Pure Storage FA-300: $5–10 per usable GB after ~5:1 reduction</td>
+<td>Performance disk ~$5/GB (vendor claim)</td>
+<td>Effective (flash) vs raw (disk)</td>
+<td>Trade press<sup id="fnref:55"><a class="footnote-ref" href="#fn:55">55</a></sup></td>
+</tr>
+<tr>
+<td>2014</td>
+<td>HP 3PAR 7450: &lt;$2 per usable GB at 4:1 "compaction"; ~$15/GB without</td>
+<td>15K disk arrays ~$2 per usable GB, no reduction</td>
+<td>Effective vs raw</td>
+<td>Vendor claim<sup id="fnref:56"><a class="footnote-ref" href="#fn:56">56</a></sup>; Pure quoted at $3–4<sup id="fnref:57"><a class="footnote-ref" href="#fn:57">57</a></sup></td>
+</tr>
+<tr>
+<td>2015</td>
+<td>All-flash array: $16,500 per usable TB raw, $1,875 effective</td>
+<td>Tier-1 disk + flash tier: $8,000 per usable TB</td>
+<td>Both shown</td>
+<td>Analyst (Wikibon)<sup id="fnref:58"><a class="footnote-ref" href="#fn:58">58</a></sup></td>
+</tr>
+<tr>
+<td>Q2 2020</td>
+<td>Enterprise SSD $185/TB</td>
+<td>Nearline HDD $19/TB</td>
+<td>Raw media: 9.7×</td>
+<td>TrendForce via Wells Fargo<sup id="fnref:59"><a class="footnote-ref" href="#fn:59">59</a></sup></td>
+</tr>
+<tr>
+<td>Q3 2026</td>
+<td>30 TB TLC SSD ~$753/TB</td>
+<td>30 TB HDD ~$41/TB</td>
+<td>Raw media: 18.6×</td>
+<td>Single-vendor index<sup id="fnref:60"><a class="footnote-ref" href="#fn:60">60</a></sup></td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 52.3 — Flash crossed performance disk on an effective basis around 2012–2015. Against nearline disk it never crossed on raw $/TB, and at 4:1 reduction the 2026 premium is still about 4.6× (worked: 18.6 ÷ 4).</em></p>
+<p>Data reduction was the decisive asymmetry. Deduplication turns sequential reads into random ones, and fingerprint lookups need fast metadata. On flash that is nearly free. On disk it costs seeks that performance arrays could not afford. So flash arrays could quote effective capacity and disk arrays largely could not (<a href="../../01-storage-fundamentals/05-data-reduction/">Chapter 5</a>). Both 2014 and 2015 claims are vendor or analyst constructions with assumed reduction ratios. The robust conclusion is the direction, not the parity date.</p>
+<h3 id="why-all-flash-won-primary-storage-and-disk-kept-the-bulk-tier">Why all-flash won primary storage, and disk kept the bulk tier<a class="headerlink" href="#why-all-flash-won-primary-storage-and-disk-kept-the-bulk-tier" title="Permanent link">&para;</a></h3>
+<p>An illustrative worked example: delivering 100,000 random IOPS from 15K drives at ~200 IOPS each takes ~500 spindles. At 600 GB each that is ~300 TB raw to serve perhaps 20–30 TB of hot data, plus the power, rack space and failure rate of 500 motors. A single shelf of SSDs does the same with headroom. The other advantages compound:</p>
+<ul>
+<li><strong>Latency and consistency.</strong> ~100 µs reads instead of 5–8 ms seeks. Tail latency stopped depending on head position, so database and VDI performance became predictable.</li>
+<li><strong>Power and density.</strong> Fewer, denser devices. Today's 245 TB QLC drive rates at ~8.2 TB/W against ~4.4 TB/W for a 44 TB HDD (vendor comparison)<sup id="fnref2:61"><a class="footnote-ref" href="#fn:61">61</a></sup>.</li>
+<li><strong>Operational simplicity.</strong> No short-stroking, tiering policies or hot-spot tuning.</li>
+<li><strong>Reduction economics.</strong> Inline dedupe and compression became safe to run.</li>
+</ul>
+<p>The 15K drive died first; around 2017 ServeTheHome called Seagate's last Enterprise Performance 15K drives the likely final 15K series<sup id="fnref:62"><a class="footnote-ref" href="#fn:62">62</a></sup>. By 1Q26 all-flash arrays were 52.6% of IDC's external enterprise storage revenue, the first time above half<sup id="fnref:63"><a class="footnote-ref" href="#fn:63">63</a></sup>.</p>
+<p>Nearline disk survived because it competes on raw $/TB at exabyte scale, not latency. Backup, archive and hyperscale bulk data reduce less or are already deduplicated upstream. At a 10–20× raw premium, power and density savings rarely close the gap. Coughlin estimates over 85% of data-centre data still sits on HDD [VERIFY: sponsored source]<sup id="fnref:64"><a class="footnote-ref" href="#fn:64">64</a></sup>. <a href="../../01-storage-fundamentals/02-media-physics/">Chapter 2</a> has the media-level curves.</p>
+<h2 id="how-everpure-approaches-it-vs-competitors">How Everpure approaches it vs. competitors<a class="headerlink" href="#how-everpure-approaches-it-vs-competitors" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Model</th>
+<th>Who</th>
+<th>How NAND cost reaches them</th>
+<th>Cycle exposure</th>
+<th>Strength</th>
+<th>Weakness</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Raw NAND in proprietary modules</td>
+<td>Everpure (DirectFlash)</td>
+<td>Buys NAND from qualified fabs (Micron, Kioxia)<sup id="fnref:65"><a class="footnote-ref" href="#fn:65">65</a></sup></td>
+<td>Direct on arrays; hyperscaler licences avoid NAND procurement<sup id="fnref:66"><a class="footnote-ref" href="#fn:66">66</a></sup></td>
+<td>Captures more of each generation's cost cut; 300 TB modules<sup id="fnref:67"><a class="footnote-ref" href="#fn:67">67</a></sup></td>
+<td>Carries qualification and inventory risk itself</td>
+</tr>
+<tr>
+<td>Commodity SSD arrays</td>
+<td>Dell, NetApp, HPE, VAST, WEKA, DDN</td>
+<td>Buys finished SSDs</td>
+<td>Pass-through with lag; SSD vendor margin stacked on NAND</td>
+<td>Multi-source, quick to adopt 245 TB drives</td>
+<td>Paying for drive-level FTL and spare area</td>
+</tr>
+<tr>
+<td>Vertically integrated NAND+SSD</td>
+<td>Samsung, SK hynix/Solidigm, Micron, Kioxia, Sandisk</td>
+<td>Owns fabs</td>
+<td>Full cycle: windfall in 2026, losses in 2023</td>
+<td>Cost leadership and supply priority</td>
+<td>Commodity volatility; array vendors are customers, not partners</td>
+</tr>
+<tr>
+<td>Disk-heavy capacity tiers</td>
+<td>Seagate, WD, hyperscaler bulk tiers</td>
+<td>n/a</td>
+<td>Benefit when the flash premium widens</td>
+<td>Lowest raw $/TB</td>
+<td>IOPS per TB keep falling as drives grow</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 52.4 — Where a company sits in this stack decides whether a NAND spike is a windfall, a pass-through or a margin squeeze.</em></p>
+<p>The steelman for commodity-SSD vendors: in a shortage, allocation and multi-sourcing matter more than FTL efficiency. Options a strategy team might evaluate, based on public information: long-term supply agreements or prepayments of the kind Apple used in 2005; whether the hyperscaler licensing model (customer buys the NAND) should extend to more segments while prices are high; and how much a structurally wider flash premium slows HDD-replacement deals.</p>
+<h2 id="history-and-trajectory">History and trajectory<a class="headerlink" href="#history-and-trajectory" title="Permanent link">&para;</a></h2>
+<p>NAND cost declines have resumed after every spike, but not on a fixed schedule. The signal to watch is whether suppliers turn 2026 profits into new wafer starts, the classic precursor to a bust. Kioxia/Sandisk's 332-layer BiCS10 out-densities Samsung's 400+-layer part, so density beats layer count<sup id="fnref:68"><a class="footnote-ref" href="#fn:68">68</a></sup>. PLC remains research<sup id="fnref:22"><a class="footnote-ref" href="#fn:22">22</a></sup>. Standard SSDs have reached 245 TB<sup id="fnref:61"><a class="footnote-ref" href="#fn:61">61</a></sup>, and Sandisk has shown a 512 TB roadmap for 2027<sup id="fnref:69"><a class="footnote-ref" href="#fn:69">69</a></sup>. Consolidation is not over: Kioxia and WD's flash unit (now Sandisk) failed to merge in 2023<sup id="fnref:46"><a class="footnote-ref" href="#fn:46">46</a></sup>. <a href="../53-future-trends/">Chapter 53</a> takes up the 2026–2032 outlook.</p>
+<h2 id="numbers-that-matter">Numbers that matter<a class="headerlink" href="#numbers-that-matter" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+<th>Context</th>
+<th>Source / date</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NAND price, 2005</td>
+<td>~$45/GB</td>
+<td>1 GB in the volume market; iPod nano era</td>
+<td>Semico/iSuppli via press, 2005<sup id="fnref2:9"><a class="footnote-ref" href="#fn:9">9</a></sup></td>
+</tr>
+<tr>
+<td>NAND price, 2023 trough</td>
+<td>~2.2¢/GB</td>
+<td>512Gb TLC wafer spot $1.404 ÷ 64</td>
+<td>TrendForce, 2023-07-26<sup id="fnref3:16"><a class="footnote-ref" href="#fn:16">16</a></sup></td>
+</tr>
+<tr>
+<td>Average annual decline 2005–23</td>
+<td>~35%</td>
+<td>Worked from the two rows above</td>
+<td>Worked example</td>
+</tr>
+<tr>
+<td>2026 spot level</td>
+<td>~29–33¢/GB</td>
+<td>$18.8–21.2 per 512Gb wafer unit</td>
+<td>TrendForce, 2026<sup id="fnref2:19"><a class="footnote-ref" href="#fn:19">19</a></sup></td>
+</tr>
+<tr>
+<td>First 3D NAND mass production</td>
+<td>24 layers, Aug 2013</td>
+<td>Samsung V-NAND</td>
+<td>Samsung, 2013<sup id="fnref2:24"><a class="footnote-ref" href="#fn:24">24</a></sup></td>
+</tr>
+<tr>
+<td>Intel NAND to SK hynix</td>
+<td>$7B + ~$1.9B net</td>
+<td>Two closings, 2021 and 2025</td>
+<td>Intel, 2021; Intel 8-K, 2025<sup id="fnref2:50"><a class="footnote-ref" href="#fn:50">50</a></sup><sup id="fnref2:51"><a class="footnote-ref" href="#fn:51">51</a></sup></td>
+</tr>
+<tr>
+<td>Toshiba Memory sale</td>
+<td>~¥2tn</td>
+<td>Bain-led consortium, 2018</td>
+<td>Wikipedia (Kioxia)<sup id="fnref3:45"><a class="footnote-ref" href="#fn:45">45</a></sup></td>
+</tr>
+<tr>
+<td>DRAM top-3 share vs NAND top-5 share</td>
+<td>~88% vs 87.6% ($68.87B)</td>
+<td>2Q26; NAND top-five HHI ~1,730 vs DRAM top-three ~2,715</td>
+<td>TrendForce, 2026<sup id="fnref2:31"><a class="footnote-ref" href="#fn:31">31</a></sup><sup id="fnref4:33"><a class="footnote-ref" href="#fn:33">33</a></sup></td>
+</tr>
+<tr>
+<td>All-flash share of external storage</td>
+<td>52.6%</td>
+<td>1Q26, first time above half</td>
+<td>IDC, 2026<sup id="fnref2:63"><a class="footnote-ref" href="#fn:63">63</a></sup></td>
+</tr>
+<tr>
+<td>Enterprise SSD ÷ nearline HDD $/TB</td>
+<td>9.7× (2020) → 18.6× (Q3 2026)</td>
+<td>Raw media premium</td>
+<td>Blocks &amp; Files; Hardware Busters<sup id="fnref2:59"><a class="footnote-ref" href="#fn:59">59</a></sup><sup id="fnref2:60"><a class="footnote-ref" href="#fn:60">60</a></sup></td>
+</tr>
+</tbody>
+</table>
+<h2 id="conversation-playbook">Conversation playbook<a class="headerlink" href="#conversation-playbook" title="Permanent link">&para;</a></h2>
+<p><strong>Questions for a PM</strong></p>
+<ol>
+<li><em>"In past NAND spikes, how long did it take for array pricing to catch up, and what is different with Evergreen subscriptions?"</em> Strong: separates list prices from contracted subscriptions, gives a lag in quarters, and names which lines absorb cost.</li>
+<li><em>"Against nearline disk at an 18× raw premium, which workloads still convert, and on what effective ratio?"</em> Strong: names reduction ratios by data type (AI data reduces poorly) and a power or space constraint that makes the TCO case, not "flash is cheaper".</li>
+<li><em>"If NAND suppliers overbuild in 2027–28 as they did after 2017, how do we turn cheaper bits into share?"</em> Strong: capacity-tier products, bigger DFMs and per-effective-TB pricing, plus how fast rivals' SSD costs follow.</li>
+</ol>
+<p><strong>Questions for an engineer</strong></p>
+<ol>
+<li><em>"What does each bits-per-cell step cost you in write path design, and is PLC worth it for 25% more bits per cell (20% lower ideal cost per bit)?"</em> Strong: weighs endurance and program-time penalties against that gain and explains how the system FTL hides them.</li>
+<li><em>"How do you compare suppliers' generations: layers, Gb/mm² or $/GB at module level?"</em> Strong: density, yield and module-level cost, with layer count dismissed as a proxy.</li>
+<li><em>"How much raw NAND per effective TB do you save versus a commodity-SSD array, and where does it come from?"</em> Strong: splits the gain into over-provisioning, write amplification and reduction, per workload.</li>
+</ol>
+<p><strong>Don't say this:</strong></p>
+<ul>
+<li>"Flash got cheaper than disk." Not on raw $/TB against nearline disk, ever. It beat 15K/10K performance disk on effective $/GB.</li>
+<li>"NAND is like DRAM, a three-player market." DRAM has three; NAND has five large suppliers plus China's YMTC, and the structure has become less concentrated since 2008.</li>
+<li>"More layers means cheaper bits." Each layer step adds fewer bits per wafer and more capex per wafer; density and yield decide.</li>
+<li>"The 2026 shortage is a technology problem." It is supply discipline plus AI demand meeting a wafer-capacity freeze.</li>
+<li>"Toshiba invented flash in 1987." NOR flash came first, at IEDM 1984; the NAND cell followed at IEDM 1987 (one museum source says 1988).</li>
+</ul>
+<h2 id="going-deeper-optional-l3-pointers">Going deeper (optional, L3 pointers)<a class="headerlink" href="#going-deeper-optional-l3-pointers" title="Permanent link">&para;</a></h2>
+<ul>
+<li>IEDM proceedings 1984 and 1987 for the original NOR and NAND cell papers.</li>
+<li>Applied Materials' 3D NAND wafer-fab-equipment intensity analysis<sup id="fnref3:27"><a class="footnote-ref" href="#fn:27">27</a></sup>.</li>
+<li>TrendForce quarterly NAND and DRAM revenue rankings, for share and HHI tracking.</li>
+<li>Intel 8-K filings on the SK hynix closings and the Kioxia IPO prospectus for JV terms.</li>
+</ul>
+<h2 id="key-terms">Key terms<a class="headerlink" href="#key-terms" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>NOR / NAND flash</strong> — two flash array architectures: parallel cells (fast random reads) versus series strings (dense, cheap).</li>
+<li><strong>Bits per cell (SLC/MLC/TLC/QLC/PLC)</strong> — 1 to 5 bits stored per cell by distinguishing 2 to 32 voltage states.</li>
+<li><strong>V-NAND / 3D NAND</strong> — NAND built as vertical strings through stacked layers.</li>
+<li><strong>Wafer spot price</strong> — open-market price for unpackaged NAND wafers, quoted per die-equivalent.</li>
+<li><strong>Effective $/GB</strong> — price divided by logical capacity after data reduction.</li>
+<li><strong>Short-stroking</strong> — using only a disk's outer tracks to cut seek time, wasting capacity.</li>
+<li><strong>HHI</strong> — Herfindahl–Hirschman Index of market concentration.</li>
+<li>See the <a href="../../glossary/">glossary</a> for the rest.</li>
+</ul>
+<h2 id="sources">Sources<a class="headerlink" href="#sources" title="Permanent link">&para;</a></h2>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>Pure Storage, "Form S-1 Registration Statement," 2015-08-27. https://www.sec.gov/Archives/edgar/data/0001474432/000119312515287576/d895532ds1.htm (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>MacTech, "Will $1 per gigabyte NAND resuscitate solid state drives?," 2010-08-20, citing iSuppli. https://www.mactech.com/2010/08/20/will-1-per-gigabyte-nand-resuscitate-solid-state-drives (retrieved 2026-11-01). [VERIFY: search-summary only]&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>Semiconductor History Museum of Japan, "Flash memory," n.d. https://shmj.or.jp/english/pdf/ic/exhibi741E.pdf (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>F. Masuoka, M. Momodomi, Y. Iwata, R. Shirota, "New ultra high density EPROM and flash EEPROM with NAND structure cell," IEDM Technical Digest, December 1987, pp. 552–555; record at https://scholars.nthu.edu.tw/esploro/outputs/conferencePaper/NEW-ULTRA-HIGH-DENSITY-EPROM-AND/9957769607206774 (retrieved 2026-11-01; via search summary); Kioxia / Business Wire, "KIOXIA Celebrates 35th Anniversary of Invention of NAND Flash Memory," 2022-02-10. https://www.businesswire.com/news/home/20220210005043/en/KIOXIA-Celebrates-35th-Anniversary-of-Invention-of-NAND-Flash-Memory (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p>Wikipedia, "Fujio Masuoka," accessed 2026-11-01. https://en.wikipedia.org/wiki/Fujio_Masuoka (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:6">
+<p>Kioxia America, "35 Years of NAND Flash Memory" (infographic), 2022. https://americas.kioxia.com/content/dam/kioxia/en-us/about/asset/KIOXIA_35th_Anniv_Applications_Infographic.pdf (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+<li id="fn:7">
+<p>Design News, "NAND Flash Memory: After 35 Years, Technology Remains a Game Changer," 2022. https://www.designnews.com/electronics/nand-flash-memory-after-35-years-technology-remains-game-changer (retrieved 2026-11-01). [VERIFY: search-summary only]&#160;<a class="footnote-backref" href="#fnref:7" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+</li>
+<li id="fn:8">
+<p>Apple, "Apple Introduces iPod nano," 2005-09-07. https://www.apple.com/newsroom/2005/09/07Apple-Introduces-iPod-nano/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:8" title="Jump back to footnote 8 in the text">&#8617;</a></p>
+</li>
+<li id="fn:9">
+<p>MacDailyNews, "Chip analyst: Apple is probably losing money on iPod nano," 2005-09-19, citing Semico and iSuppli via CNET. https://macdailynews.com/2005/09/19/chip_analyst_apple_is_probably_losing_money_on_ipod_nano/ (retrieved 2026-11-01). [VERIFY: search-summary only]&#160;<a class="footnote-backref" href="#fnref:9" title="Jump back to footnote 9 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:9" title="Jump back to footnote 9 in the text">&#8617;</a></p>
+</li>
+<li id="fn:10">
+<p>Apple, "Apple Announces Long-Term Supply Agreements for Flash Memory," 2005-11-21. https://www.apple.com/newsroom/2005/11/21Apple-Announces-Long-Term-Supply-Agreements-for-Flash-Memory/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:10" title="Jump back to footnote 10 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:10" title="Jump back to footnote 10 in the text">&#8617;</a></p>
+</li>
+<li id="fn:11">
+<p>eWeek, "Intel, Micron Start to Flash Dance," 2005. https://www.eweek.com/networking/intel-micron-start-to-flash-dance/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:11" title="Jump back to footnote 11 in the text">&#8617;</a></p>
+</li>
+<li id="fn:12">
+<p>EE Times Japan, report on an Objective Analysis (Jim Handy) NAND price presentation, 2015-10-09. https://eetimes.itmedia.co.jp/ee/articles/1510/09/news034.html (retrieved 2026-11-01). [VERIFY: search-summary only; values read from a chart]&#160;<a class="footnote-backref" href="#fnref:12" title="Jump back to footnote 12 in the text">&#8617;</a></p>
+</li>
+<li id="fn:13">
+<p>PhotographyTalk, "SD Card Price History: 2000 to 2026," 2026, citing J. C. McCallum's flash price log. https://www.photographytalk.com/sd-card-price-history/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:13" title="Jump back to footnote 13 in the text">&#8617;</a></p>
+</li>
+<li id="fn:14">
+<p>TechTarget, "NAND flash pricing drop slows; experts disagree on forecasts," 2019. https://www.techtarget.com/searchstorage/news/252470220/NAND-flash-pricing-drop-slows-experts-disagree-on-forecasts (retrieved 2026-11-01). [VERIFY: publication date and 5¢ figure, search-summary only]&#160;<a class="footnote-backref" href="#fnref:14" title="Jump back to footnote 14 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:14" title="Jump back to footnote 14 in the text">&#8617;</a></p>
+</li>
+<li id="fn:15">
+<p>TechTarget, "Rising NAND flash prices should start to fall in 2022," 2021. https://www.techtarget.com/searchstorage/news/252505700/Rising-NAND-flash-prices-should-start-to-fall (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:15" title="Jump back to footnote 15 in the text">&#8617;</a></p>
+</li>
+<li id="fn:16">
+<p>TrendForce, "Memory Spot Price Update: Stagnant Demand; 512Gb TLC Wafer Sees Increase," 2023-07-26. https://www.trendforce.com/news/2023/07/26/memory-spot-price-update-stagnant-demand-512gb-tlc-wafer-sees-increase/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:16" title="Jump back to footnote 16 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:16" title="Jump back to footnote 16 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:16" title="Jump back to footnote 16 in the text">&#8617;</a></p>
+</li>
+<li id="fn:17">
+<p>TrendForce, "Insights: Memory Spot Price Update: NAND Price Declines Linked to Potential Supplier Wafer Provision Expansion," 2024-11-06. https://www.trendforce.com/news/2024/11/06/insights-memory-spot-price-update-nand-price-declines-linked-to-potential-supplier-wafer-provision-expansion/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:17" title="Jump back to footnote 17 in the text">&#8617;</a></p>
+</li>
+<li id="fn:18">
+<p>TrendForce, "Insights: Memory Spot Price Update: DRAM Chip Prices Surpass Module Prices, Signaling Imminent Surge," 2025-11-12. https://www.trendforce.com/news/2025/11/12/insights-memory-spot-price-update-dram-chip-prices-surpass-module-prices-signaling-imminent-surge/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:18" title="Jump back to footnote 18 in the text">&#8617;</a></p>
+</li>
+<li id="fn:19">
+<p>TrendForce, 512Gb TLC wafer spot-price updates (tag index; March, August and October 2026 readings), 2026. https://trendforce.com/news/tag/512gb-tlc-wafer (retrieved 2026-11-01). [VERIFY: search-summary only]&#160;<a class="footnote-backref" href="#fnref:19" title="Jump back to footnote 19 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:19" title="Jump back to footnote 19 in the text">&#8617;</a></p>
+</li>
+<li id="fn:20">
+<p>MLC row: Electronic Design, "NAND flash device houses 1 Gb memory" (Toshiba/SanDisk MLC NAND, Comdex, November 2001), n.d. https://www.electronicdesign.com/memory/nand-flash-device-houses-1-gb-memory (retrieved 2026-11-01; via search summary; EE Times and EDN coverage also describe it as the first MLC NAND device, MLC having already shipped in NOR). TLC row: AnandTech, "Samsung Releases TLC NAND Based 840 SSD," 2012-09. https://www.anandtech.com/show/6329 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:20" title="Jump back to footnote 20 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:20" title="Jump back to footnote 20 in the text">&#8617;</a></p>
+</li>
+<li id="fn:21">
+<p>Micron / GlobeNewswire, "Micron Ships Industry's First Quad-Level Cell NAND SSD," 2018-05-21. https://www.globenewswire.com/news-release/2018/05/21/1509612/14450/en/Micron-Ships-Industry-s-First-Quad-Level-Cell-NAND-SSD.html (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:21" title="Jump back to footnote 21 in the text">&#8617;</a></p>
+</li>
+<li id="fn:22">
+<p>Blocks &amp; Files, "SK hynix developing split-cell 5-bit flash," 2026-01-15. https://www.blocksandfiles.com/flash/2026/01/15/sk-hynix-developing-split-cell-5-bit-flash/4090388 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:22" title="Jump back to footnote 22 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:22" title="Jump back to footnote 22 in the text">&#8617;</a></p>
+</li>
+<li id="fn:23">
+<p>Tom's Hardware, "Toshiba Unveils 48-Layer BiCS 3D NAND," 2015. https://www.tomshardware.com/news/toshiba-bics-nand-3d,28830.html (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:23" title="Jump back to footnote 23 in the text">&#8617;</a></p>
+</li>
+<li id="fn:24">
+<p>Samsung Newsroom, "Samsung Starts Mass Producing Industry's First 3D Vertical NAND Flash," 2013-08-06. https://news.samsung.com/global/samsung-starts-mass-producing-industrys-first-3d-vertical-nand-flash (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:24" title="Jump back to footnote 24 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:24" title="Jump back to footnote 24 in the text">&#8617;</a></p>
+</li>
+<li id="fn:25">
+<p>Blocks &amp; Files, "SK hynix begins mass production of 321-layer 3D NAND," 2024-11-21. https://www.blocksandfiles.com/ai-ml/2024/11/21/sk-hynix-begins-mass-production-of-321-layer-3d-nand/1605947 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:25" title="Jump back to footnote 25 in the text">&#8617;</a></p>
+</li>
+<li id="fn:26">
+<p>Tom's Hardware, "Samsung unveils 10th Gen V-NAND: 400+ layers, 5.6 GT/s and hybrid bonding," 2026. https://www.tomshardware.com/pc-components/ssds/samsung-unveils-10th-gen-v-nand-400-layers-5-6-gt-s-and-hybrid-bonding (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:26" title="Jump back to footnote 26 in the text">&#8617;</a></p>
+</li>
+<li id="fn:27">
+<p>Applied Materials, "WFE Intensity Step-Up: 3D NAND Case Study," n.d. https://www.appliedmaterials.com/us/en/blog/blog-posts/wfe-intensity-step-up-3d-nand-case-study.html (retrieved 2026-11-01). [VERIFY: search-summary only; ~30% long-run bit growth also cited by SemiAnalysis]&#160;<a class="footnote-backref" href="#fnref:27" title="Jump back to footnote 27 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:27" title="Jump back to footnote 27 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:27" title="Jump back to footnote 27 in the text">&#8617;</a></p>
+</li>
+<li id="fn:28">
+<p>APH Networks, "DRAM Giant Qimonda Declares Insolvency," 2009-01. https://aphnetworks.com/node/1595 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:28" title="Jump back to footnote 28 in the text">&#8617;</a></p>
+</li>
+<li id="fn:29">
+<p>Computerworld, "DRAM maker Elpida files for bankruptcy," 2012-02-27. https://www.computerworld.com/article/1549504/dram-maker-elpida-files-for-bankruptcy.html (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:29" title="Jump back to footnote 29 in the text">&#8617;</a></p>
+</li>
+<li id="fn:30">
+<p>Micron Technology, "Form 10-K for fiscal year 2012" (Elpida sponsor agreement, July 2012), 2012-10. https://www.sec.gov/Archives/edgar/data/0000723125/000072312512000156/a2012q4.htm (retrieved 2026-11-01); completion on 2013-07-31 for US$615M of equity per Micron Technology, "Form 10-K for fiscal year 2013," 2013-10. https://www.sec.gov/Archives/edgar/data/0000723125/000072312513000228/a2013q4.htm (retrieved 2026-11-01; via search summary).&#160;<a class="footnote-backref" href="#fnref:30" title="Jump back to footnote 30 in the text">&#8617;</a></p>
+</li>
+<li id="fn:31">
+<p>TrendForce, "DRAM Revenue Rises 59.5% QoQ in 2Q26 as Supply Trails Demand," 2026-09-07. https://www.trendforce.com/presscenter/news/20260907-13219.html (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:31" title="Jump back to footnote 31 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:31" title="Jump back to footnote 31 in the text">&#8617;</a></p>
+</li>
+<li id="fn:32">
+<p>TrendForce, 2008 branded NAND flash sales ranking, 2009-02-06. https://trendforce.com/presscenter/news/20090206-7004.html (retrieved 2026-11-01). [VERIFY: full-year 2008 shares, search-summary only]&#160;<a class="footnote-backref" href="#fnref:32" title="Jump back to footnote 32 in the text">&#8617;</a></p>
+</li>
+<li id="fn:33">
+<p>TrendForce, "Combined Revenue of Top Five NAND Flash Brands Rises 77% QoQ in 2Q26; Micron Moves Up to Third Place," 2026-08-18. https://www.trendforce.com/presscenter/news/20260818-13186.html (retrieved 2026-11-01); market shares (29.3/18.2/15.1/13.6/11.4%, top five 87.6%) corroborated by Evertiq, "Top five NAND flash brands post 77% revenue surge in Q2," 2026-08-18. https://evertiq.com/news/2026-08-18-top-five-nand-flash-brands-post-77-revenue-surge-in-q2 (retrieved 2026-11-01; via search summary).&#160;<a class="footnote-backref" href="#fnref:33" title="Jump back to footnote 33 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:33" title="Jump back to footnote 33 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:33" title="Jump back to footnote 33 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:33" title="Jump back to footnote 33 in the text">&#8617;</a></p>
+</li>
+<li id="fn:34">
+<p>eWeek, "Toshiba Ups Flash Production for $1B, Then Cuts It Back," 2008-12. https://www.eweek.com/blogs/storage-station/toshiba-ups-flash-production-for-1b-then-cuts-it-back/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:34" title="Jump back to footnote 34 in the text">&#8617;</a></p>
+</li>
+<li id="fn:35">
+<p>Engadget, "Toshiba and SanDisk temporarily slash NAND Flash production by 30% in Yokkaichi," 2008-12-16. https://www.engadget.com/2008-12-16-toshiba-and-sandisk-temporarily-hack-nand-flash-production-by-30.html (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:35" title="Jump back to footnote 35 in the text">&#8617;</a></p>
+</li>
+<li id="fn:36">
+<p>Toshiba (Kioxia archive), NAND production adjustment at Yokkaichi, 2012-07-24. https://www.kioxia.com/en-jp/about/news/2012/20120724-1.html (retrieved 2026-11-01); eWeek, "Toshiba Cuts NAND Flash Production by 30 Percent," 2012-07. https://www.eweek.com/storage/toshiba-cuts-nand-flash-production-by-30-percent/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:36" title="Jump back to footnote 36 in the text">&#8617;</a></p>
+</li>
+<li id="fn:37">
+<p>Blocks &amp; Files, "13-minute power cut blacks out global flash chip supply," 2019-06-28. https://www.blocksandfiles.com/flash/2019/06/28/13-minute-power-cut-blacks-out-global-flash-chip-supply/1606210 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:37" title="Jump back to footnote 37 in the text">&#8617;</a></p>
+</li>
+<li id="fn:38">
+<p>DatacenterDynamics, "SK hynix posts first loss in 10 years as memory market struggles," 2023-02. https://www.datacenterdynamics.com/en/news/sk-hynix-posts-first-loss-in-10-years-as-memory-market-struggles (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:38" title="Jump back to footnote 38 in the text">&#8617;</a></p>
+</li>
+<li id="fn:39">
+<p>The Register, "Samsung, SK hynix losses as memory slump bites," 2023-04-27. https://www.theregister.com/2023/04/27/samsung_sk_hynix_losses/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:39" title="Jump back to footnote 39 in the text">&#8617;</a></p>
+</li>
+<li id="fn:40">
+<p>TrendForce, "AI Server Demand Sustains Memory Contract Price Increases in 4Q26, While Consumer-Side Pressure Persists," 2026-09-30. https://www.trendforce.com/presscenter/news/20260930-13258.html (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:40" title="Jump back to footnote 40 in the text">&#8617;</a></p>
+</li>
+<li id="fn:41">
+<p>Capital &amp; Compute, "Why SSDs Are So Expensive in 2026: The NAND Squeeze," 2026, citing TrendForce. https://capitalandcompute.net/blog/why-are-ssds-so-expensive/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:41" title="Jump back to footnote 41 in the text">&#8617;</a></p>
+</li>
+<li id="fn:42">
+<p>Windows Central, "Western Digital to acquire SanDisk for $19 billion," 2015-10-21. https://www.windowscentral.com/western-digital-acquire-sandisk-19-billion (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:42" title="Jump back to footnote 42 in the text">&#8617;</a></p>
+</li>
+<li id="fn:43">
+<p>Western Digital, "Form 8-K, Exhibit 99.1: Western Digital completes acquisition of SanDisk," 2016-05-12. https://www.sec.gov/Archives/edgar/data/0000106040/000119312516588382/d154176dex991.htm (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:43" title="Jump back to footnote 43 in the text">&#8617;</a></p>
+</li>
+<li id="fn:44">
+<p>HPCwire, "Micron, Intel Announce End to NAND Memory Joint Development Program," 2018-01-08. https://www.hpcwire.com/off-the-wire/micron-intel-announce-end-nand-memory-joint-development-program/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:44" title="Jump back to footnote 44 in the text">&#8617;</a></p>
+</li>
+<li id="fn:45">
+<p>Wikipedia, "Kioxia," accessed 2026-11-01. https://en.wikipedia.org/wiki/Kioxia (retrieved 2026-11-01); AnandTech, "Toshiba Memory to Rebrand as Kioxia," 2019-07. https://www.anandtech.com/show/14652/toshiba-memory-to-rebrand-as-kioxia (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:45" title="Jump back to footnote 45 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:45" title="Jump back to footnote 45 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:45" title="Jump back to footnote 45 in the text">&#8617;</a></p>
+</li>
+<li id="fn:46">
+<p>StorageNewsletter, "Negotiations between WD and Kioxia terminated," 2023-10-27. https://www.storagenewsletter.com/2023/10/27/negociations-between-wd-and-kioxia-terminated/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:46" title="Jump back to footnote 46 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:46" title="Jump back to footnote 46 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:46" title="Jump back to footnote 46 in the text">&#8617;</a></p>
+</li>
+<li id="fn:47">
+<p>The Register, "Micron to buy out Intel's share of flash joint venture," 2018-10-19. https://www.theregister.com/2018/10/19/micron_buy_out_intel_flash_joint_venture/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:47" title="Jump back to footnote 47 in the text">&#8617;</a></p>
+</li>
+<li id="fn:48">
+<p>Wikipedia, "IM Flash Technologies," accessed 2026-11-01. https://en.wikipedia.org/wiki/IM_Flash_Technologies (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:48" title="Jump back to footnote 48 in the text">&#8617;</a></p>
+</li>
+<li id="fn:49">
+<p>AnandTech, "Micron Sells Lehi 3D XPoint Fab to Texas Instruments for $900M," 2021-06-30. https://www.anandtech.com/show/16800 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:49" title="Jump back to footnote 49 in the text">&#8617;</a></p>
+</li>
+<li id="fn:50">
+<p>Intel, "Intel Sells SSD Business and Dalian Facility to SK hynix," 2021-12-29. https://www.intc.com/news-events/press-releases/detail/1513/intel-sells-ssd-business-and-dalian-facility-to-sk-hynix (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:50" title="Jump back to footnote 50 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:50" title="Jump back to footnote 50 in the text">&#8617;</a></p>
+</li>
+<li id="fn:51">
+<p>Digitimes, "SK hynix completes acquisition of Intel's NAND business," 2025-03-28. https://www.digitimes.com/news/a20250328PD225.html (retrieved 2026-11-01); Intel Corporation, "Form 8-K" (second closing; about $1.9B received, net of adjustments), 2025-03-27. https://www.sec.gov/Archives/edgar/data/50863/000005086325000060/intc-20250327.htm (retrieved 2026-11-01; via search summary).&#160;<a class="footnote-backref" href="#fnref:51" title="Jump back to footnote 51 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:51" title="Jump back to footnote 51 in the text">&#8617;</a></p>
+</li>
+<li id="fn:52">
+<p>Nippon.com (Jiji), "Kioxia Sets IPO Price at 1,455 Yen," 2024-12-09. https://nippon.com/en/news/yjj2024120900937 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:52" title="Jump back to footnote 52 in the text">&#8617;</a></p>
+</li>
+<li id="fn:53">
+<p>Sandisk, "Sandisk Celebrates Nasdaq Listing After Completing Separation from Western Digital," 2025-02-24. https://investor.sandisk.com/news-releases/news-release-details/sandisk-celebrates-nasdaq-listing-after-completing-separation (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:53" title="Jump back to footnote 53 in the text">&#8617;</a></p>
+</li>
+<li id="fn:54">
+<p>Sandisk, "Kioxia and Sandisk Extend Yokkaichi Joint Venture Agreement Through 2034," 2026-01-29. https://www.sandisk.com/ja-jp/company/newsroom/press-releases/2026/2026-01-29-kioxia-and-sandisk-extend-yokkaichi-joint-venture-agreement-through-2034 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:54" title="Jump back to footnote 54 in the text">&#8617;</a></p>
+</li>
+<li id="fn:55">
+<p>The Register, review of the Pure Storage FlashArray, 2012-05-16. https://www.theregister.com/2012/05/16/pue_storage_flash_array/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:55" title="Jump back to footnote 55 in the text">&#8617;</a></p>
+</li>
+<li id="fn:56">
+<p>PCWorld, "HP says its all-flash array now matches fast disks on price," 2014-06. https://www.pcworld.com/article/439720/hp-says-its-allflash-array-now-matches-fast-disks-on-price.html (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:56" title="Jump back to footnote 56 in the text">&#8617;</a></p>
+</li>
+<li id="fn:57">
+<p>The Register, "HP takes gloves off in fight against Pure," 2014-06-09. https://www.theregister.com/2014/06/09/hp_takes_gloves_off_in_fight_against_pure/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:57" title="Jump back to footnote 57 in the text">&#8617;</a></p>
+</li>
+<li id="fn:58">
+<p>SiliconANGLE, "Flash will soon be cheaper than disk, Wikibon research confirms," 2015-04-09. https://siliconangle.com/2015/04/09/flash-will-soon-be-cheaper-than-disk-wikibon-research-confirms/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:58" title="Jump back to footnote 58 in the text">&#8617;</a></p>
+</li>
+<li id="fn:59">
+<p>Blocks &amp; Files, "Enterprise SSDs cost ten times more than nearline disk drives," 2020-08-24. https://blocksandfiles.com/2020/08/24/10x-enterprise-ssd-price-premium-over-nearline-disk-drives/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:59" title="Jump back to footnote 59 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:59" title="Jump back to footnote 59 in the text">&#8617;</a></p>
+</li>
+<li id="fn:60">
+<p>Hardware Busters, "Enterprise SSD Prices Now Run 18.6x Hard Drives, and the Cheap Alternative Is Sold Out Until 2027," 2026. https://hwbusters.com/news/enterprise-ssd-prices-now-run-18-6x-hard-drives-and-the-cheap-alternative-is-sold-out-until-2027/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:60" title="Jump back to footnote 60 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:60" title="Jump back to footnote 60 in the text">&#8617;</a></p>
+</li>
+<li id="fn:61">
+<p>Micron, "Industry-Leading 245TB Micron 6600 ION Data Center SSD Now Shipping," 2026-05-05. https://investors.micron.com/news/press-release/2026/Industry-Leading-245TB-Micron-6600-ION-Data-Center-SSD-Now-Shipping/default.aspx (retrieved 2026-11-01); StorageReview, "Micron 6600 ION 245TB SSD Review," 2026. https://www.storagereview.com/review/micron-6600-ion-245tb-ssd-review-a-quarter-petabyte-per-drive-bay (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:61" title="Jump back to footnote 61 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:61" title="Jump back to footnote 61 in the text">&#8617;</a></p>
+</li>
+<li id="fn:62">
+<p>ServeTheHome, "Seagate Launches the Final 15K rpm Hard Drive: RIP 15K HDDs," n.d. (c. 2017, per search summary). https://www.servethehome.com/seagate-launches-final-15k-rpm-hard-drive-rip-15k-hdds/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:62" title="Jump back to footnote 62 in the text">&#8617;</a></p>
+</li>
+<li id="fn:63">
+<p>IDC, "Worldwide External Enterprise Storage Systems Market Accelerates to 22.7% Growth in the First Quarter of 2026," 2026-06-15. https://www.idc.com/resource-center/press-releases/worldwide-external-enterprise-storage-systems-market-accelerates-to-22-7-growth-in-the-first-quarter-of-2026-driven-by-ai-infrastructure-demand-and-deferred-refresh-spending-according-to-idc/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:63" title="Jump back to footnote 63 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:63" title="Jump back to footnote 63 in the text">&#8617;</a></p>
+</li>
+<li id="fn:64">
+<p>Washington Post Creative Group (Solidigm-sponsored), "Is 2026 finally the year for data center storage to crossover to SSDs?," 2026, citing Coughlin Associates. https://www.washingtonpost.com/creativegroup/solidigm/is-2026-finally-the-year-for-data-center-storage-to-crossover-to-ssds (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:64" title="Jump back to footnote 64 in the text">&#8617;</a></p>
+</li>
+<li id="fn:65">
+<p>Blocks &amp; Files, "Pure qualifies Micron's 276-layer flash," 2025-01-08. https://blocksandfiles.com/2025/01/08/pure-qualifies-microns-276-layer-flash/ (retrieved 2026-11-01); Blocks &amp; Files, "Kioxia 2 terabit NAND," 2024-07-03. https://blocksandfiles.com/2024/07/03/kioxia-2-terabit-nand/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:65" title="Jump back to footnote 65 in the text">&#8617;</a></p>
+</li>
+<li id="fn:66">
+<p>Everpure, "Everpure Lands New Design Win with Second Top-Five Hyperscaler," 2026-08-10. https://www.everpuredata.com/company/newsroom/press-releases/everpure-lands-new-design-win-with-second-top-five-hyperscaler.html (retrieved 2026-11-01); Motley Fool, "Everpure (P) Q2 2027 Earnings Call Transcript," 2026-08-31. https://www.fool.com/earnings/call-transcripts/2026/08/31/everpure-p-q2-2027-earnings-call-transcript/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:66" title="Jump back to footnote 66 in the text">&#8617;</a></p>
+</li>
+<li id="fn:67">
+<p>Blocks &amp; Files, "Second hyperscaler plumps for Everpure's flash technology," 2026-08-11. https://www.blocksandfiles.com/flash/2026/08/11/second-hyperscaler-plumps-for-everpures-flash-technology/5285903 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:67" title="Jump back to footnote 67 in the text">&#8617;</a></p>
+</li>
+<li id="fn:68">
+<p>Tom's Hardware, "Kioxia and Sandisk sample world's densest 3D NAND — new 332-Layer beats Samsung's 400-Layer NAND," 2026. https://www.tomshardware.com/pc-components/ssds/kioxia-and-sandisk-sample-worlds-densest-3d-nand-new-332-layer-beats-samsungs-400-layer-nand (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:68" title="Jump back to footnote 68 in the text">&#8617;</a></p>
+</li>
+<li id="fn:69">
+<p>Blocks &amp; Files, "Sandisk unveils 256 TB SSD for AI workloads, shipping in 2026," 2025-08-05. https://www.blocksandfiles.com/ai-ml/2025/08/05/sandisk-unveils-256-tb-ssd-for-ai-workloads-shipping-in-2026/1589534 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:69" title="Jump back to footnote 69 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../51-history-of-storage/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 51. History of storage, 1956–2026">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                51. History of storage, 1956–2026
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../53-future-trends/" class="md-footer__link md-footer__link--next" aria-label="Next: 53. Future trends, 2026–2032">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                53. Future trends, 2026–2032
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>

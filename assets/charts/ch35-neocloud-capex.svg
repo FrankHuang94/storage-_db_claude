@@ -1,0 +1,411 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="750.96pt" height="359.549352pt" viewBox="0 0 750.96 359.549352" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 359.549352 
+L 750.96 359.549352 
+L 750.96 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 219.199545 281.489308 
+L 743.76 281.489308 
+L 743.76 22.698047 
+L 219.199545 22.698047 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 219.199545 34.461286 
+L 334.139998 34.461286 
+L 334.139998 73.672083 
+L 219.199545 73.672083 
+z
+" clip-path="url(#pd337f2cdfc)" style="fill: #56b4e9"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 219.199545 83.474782 
+L 504.622146 83.474782 
+L 504.622146 122.685579 
+L 219.199545 122.685579 
+z
+" clip-path="url(#pd337f2cdfc)" style="fill: url(#hb1b15d1f27); stroke: #56b4e9; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 219.199545 132.488279 
+L 392.767343 132.488279 
+L 392.767343 171.699076 
+L 219.199545 171.699076 
+z
+" clip-path="url(#pd337f2cdfc)" style="fill: url(#hb1b15d1f27); stroke: #56b4e9; stroke-width: 1.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 219.199545 181.501775 
+L 648.876271 181.501775 
+L 648.876271 220.712572 
+L 219.199545 220.712572 
+z
+" clip-path="url(#pd337f2cdfc)" style="fill: #999999"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 219.199545 230.515271 
+L 228.225071 230.515271 
+L 228.225071 269.726068 
+L 219.199545 269.726068 
+z
+" clip-path="url(#pd337f2cdfc)" style="fill: #e69f00"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <path d="M 219.199545 281.489308 
+L 219.199545 22.698047 
+" clip-path="url(#pd337f2cdfc)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_2">
+      <defs>
+       <path id="md5518caa09" d="M 0 0 
+L 0 3.5 
+" style="stroke: #222222; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#md5518caa09" x="219.199545" y="281.489308" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="219.199545" y="296.846729" transform="rotate(-0 219.199545 296.846729)">0</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_3">
+      <path d="M 296.340789 281.489308 
+L 296.340789 22.698047 
+" clip-path="url(#pd337f2cdfc)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#md5518caa09" x="296.340789" y="281.489308" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="296.340789" y="296.846729" transform="rotate(-0 296.340789 296.846729)">10</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_5">
+      <path d="M 373.482032 281.489308 
+L 373.482032 22.698047 
+" clip-path="url(#pd337f2cdfc)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#md5518caa09" x="373.482032" y="281.489308" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="373.482032" y="296.846729" transform="rotate(-0 373.482032 296.846729)">20</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_7">
+      <path d="M 450.623275 281.489308 
+L 450.623275 22.698047 
+" clip-path="url(#pd337f2cdfc)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_8">
+      <g>
+       <use xlink:href="#md5518caa09" x="450.623275" y="281.489308" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="450.623275" y="296.846729" transform="rotate(-0 450.623275 296.846729)">30</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_9">
+      <path d="M 527.764519 281.489308 
+L 527.764519 22.698047 
+" clip-path="url(#pd337f2cdfc)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_10">
+      <g>
+       <use xlink:href="#md5518caa09" x="527.764519" y="281.489308" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="527.764519" y="296.846729" transform="rotate(-0 527.764519 296.846729)">40</text>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_11">
+      <path d="M 604.905762 281.489308 
+L 604.905762 22.698047 
+" clip-path="url(#pd337f2cdfc)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_12">
+      <g>
+       <use xlink:href="#md5518caa09" x="604.905762" y="281.489308" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="604.905762" y="296.846729" transform="rotate(-0 604.905762 296.846729)">50</text>
+     </g>
+    </g>
+    <g id="xtick_7">
+     <g id="line2d_13">
+      <path d="M 682.047005 281.489308 
+L 682.047005 22.698047 
+" clip-path="url(#pd337f2cdfc)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_14">
+      <g>
+       <use xlink:href="#md5518caa09" x="682.047005" y="281.489308" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_7">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="682.047005" y="296.846729" transform="rotate(-0 682.047005 296.846729)">60</text>
+     </g>
+    </g>
+    <g id="text_8">
+     <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="481.479773" y="311.847589" transform="rotate(-0 481.479773 311.847589)">US$ billions</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_15">
+      <defs>
+       <path id="m78b20fda8e" d="M 0 0 
+L -3.5 0 
+" style="stroke: #222222; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m78b20fda8e" x="219.199545" y="54.066685" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_9">
+      <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="212.199545" y="57.675942" transform="rotate(-0 212.199545 57.675942)">CoreWeave 2025 (actual)</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_16">
+      <g>
+       <use xlink:href="#m78b20fda8e" x="219.199545" y="103.080181" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_10">
+      <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="212.199545" y="106.689439" transform="rotate(-0 212.199545 106.689439)">CoreWeave 2026 (guidance, Aug 2026)</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_17">
+      <g>
+       <use xlink:href="#m78b20fda8e" x="219.199545" y="152.093677" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_11">
+      <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="212.199545" y="155.702935" transform="rotate(-0 212.199545 155.702935)">Nebius 2026 (guidance, Aug 2026)</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_18">
+      <g>
+       <use xlink:href="#m78b20fda8e" x="219.199545" y="201.107174" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_12">
+      <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="212.199545" y="204.716431" transform="rotate(-0 212.199545 204.716431)">Oracle FY2026 to May 2026 (actual) †</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_19">
+      <g>
+       <use xlink:href="#m78b20fda8e" x="219.199545" y="250.12067" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_13">
+      <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="212.199545" y="253.729928" transform="rotate(-0 212.199545 253.729928)">VAST-CoreWeave contract (total, 3-5 yrs)</text>
+     </g>
+    </g>
+   </g>
+   <g id="LineCollection_1">
+    <path d="M 489.193897 103.080181 
+L 520.050394 103.080181 
+" clip-path="url(#pd337f2cdfc)" style="fill: none; stroke: #0072b2; stroke-width: 1.5"/>
+   </g>
+   <g id="line2d_20">
+    <defs>
+     <path id="m8d070d2549" d="M 0 5 
+L 0 -5 
+" style="stroke: #0072b2"/>
+    </defs>
+    <g clip-path="url(#pd337f2cdfc)">
+     <use xlink:href="#m8d070d2549" x="489.193897" y="103.080181" style="fill: #0072b2; stroke: #0072b2"/>
+    </g>
+   </g>
+   <g id="line2d_21">
+    <g clip-path="url(#pd337f2cdfc)">
+     <use xlink:href="#m8d070d2549" x="520.050394" y="103.080181" style="fill: #0072b2; stroke: #0072b2"/>
+    </g>
+   </g>
+   <g id="LineCollection_2">
+    <path d="M 373.482032 152.093677 
+L 412.052654 152.093677 
+" clip-path="url(#pd337f2cdfc)" style="fill: none; stroke: #0072b2; stroke-width: 1.5"/>
+   </g>
+   <g id="line2d_22">
+    <g clip-path="url(#pd337f2cdfc)">
+     <use xlink:href="#m8d070d2549" x="373.482032" y="152.093677" style="fill: #0072b2; stroke: #0072b2"/>
+    </g>
+   </g>
+   <g id="line2d_23">
+    <g clip-path="url(#pd337f2cdfc)">
+     <use xlink:href="#m8d070d2549" x="412.052654" y="152.093677" style="fill: #0072b2; stroke: #0072b2"/>
+    </g>
+   </g>
+   <g id="line2d_24">
+    <path d="M 504.622146 103.080181 
+" clip-path="url(#pd337f2cdfc)" style="fill: none; stroke: #0072b2; stroke-width: 1.5; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_25">
+    <path d="M 392.767343 152.093677 
+" clip-path="url(#pd337f2cdfc)" style="fill: none; stroke: #0072b2; stroke-width: 1.5; stroke-linecap: square"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 219.199545 281.489308 
+L 219.199545 22.698047 
+" style="fill: none; stroke: #888888; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 219.199545 281.489308 
+L 743.76 281.489308 
+" style="fill: none; stroke: #888888; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #222222" x="340.311297" y="56.534829" transform="rotate(-0 340.311297 56.534829)">$14.9B</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #222222" x="526.221694" y="105.548325" transform="rotate(-0 526.221694 105.548325)">$35–39B</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #222222" x="418.223953" y="154.561822" transform="rotate(-0 418.223953 154.561822)">$20–25B</text>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #222222" x="655.04757" y="203.575318" transform="rotate(-0 655.04757 203.575318)">$55.7B</text>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #222222" x="234.39637" y="252.588814" transform="rotate(-0 234.39637 252.588814)">$1.17B total ≈ $0.23–0.39B a year</text>
+   </g>
+   <g id="text_19">
+    <text style="font-weight: 700; font-size: 12.5px; font-family: 'DejaVu Sans'; text-anchor: start" x="219.199545" y="16.698047" transform="rotate(-0 219.199545 16.698047)">Neocloud capex versus the largest disclosed neocloud storage contract</text>
+   </g>
+   <g id="legend_1">
+    <g id="patch_10">
+     <path d="M 554.970937 230.725089 
+L 572.970937 230.725089 
+L 572.970937 224.425089 
+L 554.970937 224.425089 
+z
+" style="fill: #56b4e9; stroke: #56b4e9; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_20">
+     <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start" x="580.170937" y="230.725089" transform="rotate(-0 580.170937 230.725089)">Neocloud capex, actual</text>
+    </g>
+    <g id="patch_11">
+     <path d="M 554.970937 244.225792 
+L 572.970937 244.225792 
+L 572.970937 237.925792 
+L 554.970937 237.925792 
+z
+" style="fill: #999999; stroke: #999999; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_21">
+     <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start" x="580.170937" y="244.225792" transform="rotate(-0 580.170937 244.225792)">Oracle (quasi-neocloud), actual</text>
+    </g>
+    <g id="patch_12">
+     <path d="M 554.970937 257.726495 
+L 572.970937 257.726495 
+L 572.970937 251.426495 
+L 554.970937 251.426495 
+z
+" style="fill: url(#hb1b15d1f27); stroke: #56b4e9; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_22">
+     <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start" x="580.170937" y="257.726495" transform="rotate(-0 580.170937 257.726495)">Guidance midpoint, range bar</text>
+    </g>
+    <g id="patch_13">
+     <path d="M 554.970937 271.227198 
+L 572.970937 271.227198 
+L 572.970937 264.927198 
+L 554.970937 264.927198 
+z
+" style="fill: #e69f00; stroke: #e69f00; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_23">
+     <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start" x="580.170937" y="271.227198" transform="rotate(-0 580.170937 271.227198)">Largest disclosed storage contract</text>
+    </g>
+   </g>
+  </g>
+  <g id="text_24">
+   <text style="font-size: 8px; font-family: 'DejaVu Sans'; fill: #555555" transform="translate(7.2 340.024508)">Sources: CoreWeave and Nebius results coverage (Aug 2026); Oracle FY2026 results coverage; StorageNewsletter 2025-11-07 (VAST, company-stated total; 3–5-year term is VAST's</text>
+   <text style="font-size: 8px; font-family: 'DejaVu Sans'; fill: #555555" transform="translate(7.2 349.626695)">stated typical range, annualised here). † = from search summaries, not checked against the filing. Oracle's fiscal year ends in May. Data: data/ch35_neocloud_capex.csv</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pd337f2cdfc">
+   <rect x="219.199545" y="22.698047" width="524.560455" height="258.791261"/>
+  </clipPath>
+ </defs>
+ <defs>
+  <pattern id="hb1b15d1f27" patternUnits="userSpaceOnUse" x="0" y="0" width="72" height="72">
+   <rect x="0" y="0" width="73" height="73" fill="#ffffff"/>
+   <path d="M -36 36 
+L 36 -36 
+M -30 42 
+L 42 -30 
+M -24 48 
+L 48 -24 
+M -18 54 
+L 54 -18 
+M -12 60 
+L 60 -12 
+M -6 66 
+L 66 -6 
+M 0 72 
+L 72 0 
+M 6 78 
+L 78 6 
+M 12 84 
+L 84 12 
+M 18 90 
+L 90 18 
+M 24 96 
+L 96 24 
+M 30 102 
+L 102 30 
+M 36 108 
+L 108 36 
+" style="fill: #56b4e9; stroke: #56b4e9; stroke-width: 1.0; stroke-linecap: butt; stroke-linejoin: miter"/>
+  </pattern>
+ </defs>
+</svg>

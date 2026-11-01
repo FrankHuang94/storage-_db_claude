@@ -1,0 +1,297 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 640" width="1000" height="640" role="img" aria-labelledby="t d">
+<title id="t">RAID levels versus wide declustered erasure coding</title>
+<desc id="d">Block layouts for RAID 1, RAID 10, RAID 5, RAID 6 and a declustered erasure-coded pool, with usable capacity and failure tolerance for each.</desc>
+<rect x="0" y="0" width="1000" height="640" fill="#FFFFFF"/>
+<text x="20" y="32" font-family="Inter, Helvetica, Arial, sans-serif" font-size="20" font-weight="700" fill="#222222">Where the redundancy lives: RAID layouts vs wide erasure coding</text>
+<text x="20" y="72" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#222222">RAID 1 (mirror)</text>
+<rect x="20" y="84" width="44" height="120" rx="6" fill="#F4F4F4" stroke="#888888"/>
+<text x="42.0" y="102" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">d0</text>
+<rect x="24" y="110" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="42.0" y="127" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">A1</text>
+<rect x="24" y="140" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="42.0" y="157" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">A2</text>
+<rect x="24" y="170" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="42.0" y="187" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">A3</text>
+<rect x="70" y="84" width="44" height="120" rx="6" fill="#F4F4F4" stroke="#888888"/>
+<text x="92.0" y="102" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">d1</text>
+<rect x="74" y="110" width="36" height="26" rx="3" fill="#0072B2"/>
+<text x="92.0" y="127" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#FFFFFF">A1</text>
+<rect x="74" y="140" width="36" height="26" rx="3" fill="#0072B2"/>
+<text x="92.0" y="157" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#FFFFFF">A2</text>
+<rect x="74" y="170" width="36" height="26" rx="3" fill="#0072B2"/>
+<text x="92.0" y="187" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#FFFFFF">A3</text>
+<text x="20" y="224" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#222222">Usable 50%</text>
+<text x="20" y="241" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#555555">Survives 1 of 2</text>
+<text x="160" y="72" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#222222">RAID 10 (striped mirrors)</text>
+<rect x="160" y="84" width="44" height="120" rx="6" fill="#F4F4F4" stroke="#888888"/>
+<text x="182.0" y="102" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">d0</text>
+<rect x="164" y="110" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="182.0" y="127" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">A1</text>
+<rect x="164" y="140" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="182.0" y="157" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">A3</text>
+<rect x="164" y="170" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="182.0" y="187" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">A5</text>
+<rect x="210" y="84" width="44" height="120" rx="6" fill="#F4F4F4" stroke="#888888"/>
+<text x="232.0" y="102" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">d1</text>
+<rect x="214" y="110" width="36" height="26" rx="3" fill="#0072B2"/>
+<text x="232.0" y="127" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#FFFFFF">A1</text>
+<rect x="214" y="140" width="36" height="26" rx="3" fill="#0072B2"/>
+<text x="232.0" y="157" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#FFFFFF">A3</text>
+<rect x="214" y="170" width="36" height="26" rx="3" fill="#0072B2"/>
+<text x="232.0" y="187" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#FFFFFF">A5</text>
+<rect x="260" y="84" width="44" height="120" rx="6" fill="#F4F4F4" stroke="#888888"/>
+<text x="282.0" y="102" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">d2</text>
+<rect x="264" y="110" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="282.0" y="127" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">A2</text>
+<rect x="264" y="140" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="282.0" y="157" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">A4</text>
+<rect x="264" y="170" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="282.0" y="187" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">A6</text>
+<rect x="310" y="84" width="44" height="120" rx="6" fill="#F4F4F4" stroke="#888888"/>
+<text x="332.0" y="102" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">d3</text>
+<rect x="314" y="110" width="36" height="26" rx="3" fill="#0072B2"/>
+<text x="332.0" y="127" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#FFFFFF">A2</text>
+<rect x="314" y="140" width="36" height="26" rx="3" fill="#0072B2"/>
+<text x="332.0" y="157" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#FFFFFF">A4</text>
+<rect x="314" y="170" width="36" height="26" rx="3" fill="#0072B2"/>
+<text x="332.0" y="187" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#FFFFFF">A6</text>
+<text x="160" y="224" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#222222">Usable 50%</text>
+<text x="160" y="241" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#555555">Survives 1 per pair</text>
+<text x="410" y="72" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#222222">RAID 5 (3+1 shown)</text>
+<rect x="410" y="84" width="44" height="150" rx="6" fill="#F4F4F4" stroke="#888888"/>
+<text x="432.0" y="102" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">d0</text>
+<rect x="414" y="110" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="432.0" y="127" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">A1</text>
+<rect x="414" y="140" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="432.0" y="157" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">B1</text>
+<rect x="414" y="170" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="432.0" y="187" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">C1</text>
+<rect x="414" y="200" width="36" height="26" rx="3" fill="#E69F00"/>
+<text x="432.0" y="217" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">Pd</text>
+<rect x="460" y="84" width="44" height="150" rx="6" fill="#F4F4F4" stroke="#888888"/>
+<text x="482.0" y="102" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">d1</text>
+<rect x="464" y="110" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="482.0" y="127" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">A2</text>
+<rect x="464" y="140" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="482.0" y="157" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">B2</text>
+<rect x="464" y="170" width="36" height="26" rx="3" fill="#E69F00"/>
+<text x="482.0" y="187" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">Pc</text>
+<rect x="464" y="200" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="482.0" y="217" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">D1</text>
+<rect x="510" y="84" width="44" height="150" rx="6" fill="#F4F4F4" stroke="#888888"/>
+<text x="532.0" y="102" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">d2</text>
+<rect x="514" y="110" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="532.0" y="127" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">A3</text>
+<rect x="514" y="140" width="36" height="26" rx="3" fill="#E69F00"/>
+<text x="532.0" y="157" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">Pb</text>
+<rect x="514" y="170" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="532.0" y="187" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">C2</text>
+<rect x="514" y="200" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="532.0" y="217" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">D2</text>
+<rect x="560" y="84" width="44" height="150" rx="6" fill="#F4F4F4" stroke="#888888"/>
+<text x="582.0" y="102" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">d3</text>
+<rect x="564" y="110" width="36" height="26" rx="3" fill="#E69F00"/>
+<text x="582.0" y="127" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">Pa</text>
+<rect x="564" y="140" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="582.0" y="157" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">B3</text>
+<rect x="564" y="170" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="582.0" y="187" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">C3</text>
+<rect x="564" y="200" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="582.0" y="217" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">D3</text>
+<text x="410" y="254" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#222222">Usable (n-1)/n, e.g. 7+1 = 87.5%</text>
+<text x="410" y="271" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#555555">Survives 1</text>
+<text x="660" y="72" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#222222">RAID 6 (3+2 shown)</text>
+<rect x="660" y="84" width="44" height="150" rx="6" fill="#F4F4F4" stroke="#888888"/>
+<text x="682.0" y="102" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">d0</text>
+<rect x="664" y="110" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="682.0" y="127" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">A1</text>
+<rect x="664" y="140" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="682.0" y="157" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">B1</text>
+<rect x="664" y="170" width="36" height="26" rx="3" fill="#E69F00"/>
+<text x="682.0" y="187" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">Pc</text>
+<rect x="664" y="200" width="36" height="26" rx="3" fill="#D55E00"/>
+<text x="682.0" y="217" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#FFFFFF">Qd</text>
+<rect x="716" y="84" width="44" height="150" rx="6" fill="#F4F4F4" stroke="#888888"/>
+<text x="738.0" y="102" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">d1</text>
+<rect x="720" y="110" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="738.0" y="127" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">A2</text>
+<rect x="720" y="140" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="738.0" y="157" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">B2</text>
+<rect x="720" y="170" width="36" height="26" rx="3" fill="#D55E00"/>
+<text x="738.0" y="187" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#FFFFFF">Qc</text>
+<rect x="720" y="200" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="738.0" y="217" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">D1</text>
+<rect x="772" y="84" width="44" height="150" rx="6" fill="#F4F4F4" stroke="#888888"/>
+<text x="794.0" y="102" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">d2</text>
+<rect x="776" y="110" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="794.0" y="127" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">A3</text>
+<rect x="776" y="140" width="36" height="26" rx="3" fill="#E69F00"/>
+<text x="794.0" y="157" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">Pb</text>
+<rect x="776" y="170" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="794.0" y="187" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">C1</text>
+<rect x="776" y="200" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="794.0" y="217" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">D2</text>
+<rect x="828" y="84" width="44" height="150" rx="6" fill="#F4F4F4" stroke="#888888"/>
+<text x="850.0" y="102" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">d3</text>
+<rect x="832" y="110" width="36" height="26" rx="3" fill="#E69F00"/>
+<text x="850.0" y="127" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">Pa</text>
+<rect x="832" y="140" width="36" height="26" rx="3" fill="#D55E00"/>
+<text x="850.0" y="157" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#FFFFFF">Qb</text>
+<rect x="832" y="170" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="850.0" y="187" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">C2</text>
+<rect x="832" y="200" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="850.0" y="217" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">D3</text>
+<rect x="884" y="84" width="44" height="150" rx="6" fill="#F4F4F4" stroke="#888888"/>
+<text x="906.0" y="102" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">d4</text>
+<rect x="888" y="110" width="36" height="26" rx="3" fill="#D55E00"/>
+<text x="906.0" y="127" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#FFFFFF">Qa</text>
+<rect x="888" y="140" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="906.0" y="157" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">B3</text>
+<rect x="888" y="170" width="36" height="26" rx="3" fill="#56B4E9"/>
+<text x="906.0" y="187" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">C3</text>
+<rect x="888" y="200" width="36" height="26" rx="3" fill="#E69F00"/>
+<text x="906.0" y="217" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">Pd</text>
+<text x="660" y="254" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#222222">Usable (n-2)/n, e.g. 8+2 = 80%</text>
+<text x="660" y="271" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#555555">Survives any 2</text>
+<line x1="20" y1="320" x2="980" y2="320" stroke="#DDDDDD" stroke-width="2"/>
+<text x="20" y="350" font-family="Inter, Helvetica, Arial, sans-serif" font-size="15" font-weight="700" fill="#222222">Wide erasure coding, declustered (k+m = 4+2 shown across 12 drives; production pools run 8+2 to 146+4)</text>
+<rect x="20" y="366" width="56" height="160" rx="6" fill="#F4F4F4" stroke="#888888"/>
+<text x="48.0" y="384" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">d0</text>
+<rect x="24" y="392" width="48" height="26" rx="3" fill="#D55E00"/>
+<text x="48.0" y="409" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#FFFFFF">Bp2</text>
+<rect x="24" y="424" width="48" height="26" rx="3" fill="#56B4E9"/>
+<text x="48.0" y="441" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">C1</text>
+<rect x="24" y="456" width="48" height="26" rx="3" fill="#EEEEEE"/>
+<text x="48.0" y="473" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#555555">free</text>
+<rect x="24" y="488" width="48" height="26" rx="3" fill="#FFFFFF" stroke="#999999" stroke-dasharray="4 3"/>
+<text x="48.0" y="505" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#555555">spare</text>
+<rect x="86" y="366" width="56" height="160" rx="6" fill="#F4F4F4" stroke="#888888"/>
+<text x="114.0" y="384" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">d1</text>
+<rect x="90" y="392" width="48" height="26" rx="3" fill="#56B4E9"/>
+<text x="114.0" y="409" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">B3</text>
+<rect x="90" y="424" width="48" height="26" rx="3" fill="#D55E00"/>
+<text x="114.0" y="441" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#FFFFFF">Dp2</text>
+<rect x="90" y="456" width="48" height="26" rx="3" fill="#56B4E9"/>
+<text x="114.0" y="473" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">E1</text>
+<rect x="90" y="488" width="48" height="26" rx="3" fill="#FFFFFF" stroke="#999999" stroke-dasharray="4 3"/>
+<text x="114.0" y="505" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#555555">spare</text>
+<rect x="152" y="366" width="56" height="160" rx="6" fill="#F4F4F4" stroke="#888888"/>
+<text x="180.0" y="384" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">d2</text>
+<rect x="156" y="392" width="48" height="26" rx="3" fill="#D55E00"/>
+<text x="180.0" y="409" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#FFFFFF">Ap2</text>
+<rect x="156" y="424" width="48" height="26" rx="3" fill="#E69F00"/>
+<text x="180.0" y="441" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">Dp1</text>
+<rect x="156" y="456" width="48" height="26" rx="3" fill="#EEEEEE"/>
+<text x="180.0" y="473" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#555555">free</text>
+<rect x="156" y="488" width="48" height="26" rx="3" fill="#FFFFFF" stroke="#999999" stroke-dasharray="4 3"/>
+<text x="180.0" y="505" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#555555">spare</text>
+<rect x="218" y="366" width="56" height="160" rx="6" fill="#F4F4F4" stroke="#888888"/>
+<text x="246.0" y="384" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">d3</text>
+<rect x="222" y="392" width="48" height="26" rx="3" fill="#56B4E9"/>
+<text x="246.0" y="409" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">A2</text>
+<rect x="222" y="424" width="48" height="26" rx="3" fill="#D55E00"/>
+<text x="246.0" y="441" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#FFFFFF">Cp2</text>
+<rect x="222" y="456" width="48" height="26" rx="3" fill="#EEEEEE"/>
+<text x="246.0" y="473" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#555555">free</text>
+<rect x="222" y="488" width="48" height="26" rx="3" fill="#FFFFFF" stroke="#999999" stroke-dasharray="4 3"/>
+<text x="246.0" y="505" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#555555">spare</text>
+<rect x="284" y="366" width="56" height="160" rx="6" fill="#F4F4F4" stroke="#888888"/>
+<text x="312.0" y="384" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">d4</text>
+<rect x="288" y="392" width="48" height="26" rx="3" fill="#56B4E9"/>
+<text x="312.0" y="409" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">A1</text>
+<rect x="288" y="424" width="48" height="26" rx="3" fill="#56B4E9"/>
+<text x="312.0" y="441" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">C2</text>
+<rect x="288" y="456" width="48" height="26" rx="3" fill="#56B4E9"/>
+<text x="312.0" y="473" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">E2</text>
+<rect x="288" y="488" width="48" height="26" rx="3" fill="#FFFFFF" stroke="#999999" stroke-dasharray="4 3"/>
+<text x="312.0" y="505" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#555555">spare</text>
+<rect x="350" y="366" width="56" height="160" rx="6" fill="#F4F4F4" stroke="#888888"/>
+<text x="378.0" y="384" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">d5</text>
+<rect x="354" y="392" width="48" height="26" rx="3" fill="#56B4E9"/>
+<text x="378.0" y="409" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">B4</text>
+<rect x="354" y="424" width="48" height="26" rx="3" fill="#56B4E9"/>
+<text x="378.0" y="441" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">C3</text>
+<rect x="354" y="456" width="48" height="26" rx="3" fill="#EEEEEE"/>
+<text x="378.0" y="473" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#555555">free</text>
+<rect x="354" y="488" width="48" height="26" rx="3" fill="#FFFFFF" stroke="#999999" stroke-dasharray="4 3"/>
+<text x="378.0" y="505" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#555555">spare</text>
+<rect x="416" y="366" width="56" height="160" rx="6" fill="#F4F4F4" stroke="#888888"/>
+<text x="444.0" y="384" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">d6</text>
+<rect x="420" y="392" width="48" height="26" rx="3" fill="#E69F00"/>
+<text x="444.0" y="409" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">Ap1</text>
+<rect x="420" y="424" width="48" height="26" rx="3" fill="#56B4E9"/>
+<text x="444.0" y="441" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">D4</text>
+<rect x="420" y="456" width="48" height="26" rx="3" fill="#D55E00"/>
+<text x="444.0" y="473" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#FFFFFF">Ep2</text>
+<rect x="420" y="488" width="48" height="26" rx="3" fill="#FFFFFF" stroke="#999999" stroke-dasharray="4 3"/>
+<text x="444.0" y="505" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#555555">spare</text>
+<rect x="482" y="366" width="56" height="160" rx="6" fill="#F4F4F4" stroke="#888888"/>
+<text x="510.0" y="384" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">d7</text>
+<rect x="486" y="392" width="48" height="26" rx="3" fill="#56B4E9"/>
+<text x="510.0" y="409" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">B1</text>
+<rect x="486" y="424" width="48" height="26" rx="3" fill="#E69F00"/>
+<text x="510.0" y="441" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">Cp1</text>
+<rect x="486" y="456" width="48" height="26" rx="3" fill="#56B4E9"/>
+<text x="510.0" y="473" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">E4</text>
+<rect x="486" y="488" width="48" height="26" rx="3" fill="#FFFFFF" stroke="#999999" stroke-dasharray="4 3"/>
+<text x="510.0" y="505" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#555555">spare</text>
+<rect x="548" y="366" width="56" height="160" rx="6" fill="#F4F4F4" stroke="#888888"/>
+<text x="576.0" y="384" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">d8</text>
+<rect x="552" y="392" width="48" height="26" rx="3" fill="#56B4E9"/>
+<text x="576.0" y="409" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">A4</text>
+<rect x="552" y="424" width="48" height="26" rx="3" fill="#56B4E9"/>
+<text x="576.0" y="441" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">D1</text>
+<rect x="552" y="456" width="48" height="26" rx="3" fill="#EEEEEE"/>
+<text x="576.0" y="473" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#555555">free</text>
+<rect x="552" y="488" width="48" height="26" rx="3" fill="#FFFFFF" stroke="#999999" stroke-dasharray="4 3"/>
+<text x="576.0" y="505" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#555555">spare</text>
+<rect x="614" y="366" width="56" height="160" rx="6" fill="#F4F4F4" stroke="#888888"/>
+<text x="642.0" y="384" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">d9</text>
+<rect x="618" y="392" width="48" height="26" rx="3" fill="#E69F00"/>
+<text x="642.0" y="409" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">Bp1</text>
+<rect x="618" y="424" width="48" height="26" rx="3" fill="#56B4E9"/>
+<text x="642.0" y="441" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">D3</text>
+<rect x="618" y="456" width="48" height="26" rx="3" fill="#56B4E9"/>
+<text x="642.0" y="473" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">E3</text>
+<rect x="618" y="488" width="48" height="26" rx="3" fill="#FFFFFF" stroke="#999999" stroke-dasharray="4 3"/>
+<text x="642.0" y="505" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#555555">spare</text>
+<rect x="680" y="366" width="56" height="160" rx="6" fill="#F4F4F4" stroke="#888888"/>
+<text x="708.0" y="384" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">d10</text>
+<rect x="684" y="392" width="48" height="26" rx="3" fill="#56B4E9"/>
+<text x="708.0" y="409" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">A3</text>
+<rect x="684" y="424" width="48" height="26" rx="3" fill="#56B4E9"/>
+<text x="708.0" y="441" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">C4</text>
+<rect x="684" y="456" width="48" height="26" rx="3" fill="#E69F00"/>
+<text x="708.0" y="473" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">Ep1</text>
+<rect x="684" y="488" width="48" height="26" rx="3" fill="#FFFFFF" stroke="#999999" stroke-dasharray="4 3"/>
+<text x="708.0" y="505" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#555555">spare</text>
+<rect x="746" y="366" width="56" height="160" rx="6" fill="#F4F4F4" stroke="#888888"/>
+<text x="774.0" y="384" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">d11</text>
+<rect x="750" y="392" width="48" height="26" rx="3" fill="#56B4E9"/>
+<text x="774.0" y="409" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">B2</text>
+<rect x="750" y="424" width="48" height="26" rx="3" fill="#56B4E9"/>
+<text x="774.0" y="441" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#222222">D2</text>
+<rect x="750" y="456" width="48" height="26" rx="3" fill="#EEEEEE"/>
+<text x="774.0" y="473" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#555555">free</text>
+<rect x="750" y="488" width="48" height="26" rx="3" fill="#FFFFFF" stroke="#999999" stroke-dasharray="4 3"/>
+<text x="774.0" y="505" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" text-anchor="middle" fill="#555555">spare</text>
+<text x="818" y="382" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#222222">Usable k/(k+m): 4+2 = 67%,</text>
+<text x="818" y="400" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#222222">8+2 = 80%, 16+2 = 89%,</text>
+<text x="818" y="418" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#222222">146+4 = 97%</text>
+<text x="818" y="436" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#222222"></text>
+<text x="818" y="454" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#222222">Every drive holds a little</text>
+<text x="818" y="472" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#222222">of many stripes and some</text>
+<text x="818" y="490" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#222222">spare space, so a rebuild</text>
+<text x="818" y="508" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#222222">is many-to-many, not</text>
+<text x="818" y="526" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#222222">many-to-one.</text>
+<rect x="20" y="560" width="18" height="18" rx="3" fill="#56B4E9"/>
+<text x="46" y="574" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#222222">Data block</text>
+<rect x="146" y="560" width="18" height="18" rx="3" fill="#0072B2"/>
+<text x="172" y="574" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#222222">Mirror copy</text>
+<rect x="279" y="560" width="18" height="18" rx="3" fill="#E69F00"/>
+<text x="305" y="574" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#222222">Parity P</text>
+<rect x="391" y="560" width="18" height="18" rx="3" fill="#D55E00"/>
+<text x="417" y="574" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#222222">Parity Q (second syndrome)</text>
+<text x="20" y="606" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#555555">Traditional RAID rebuilds onto one replacement drive, so rebuild speed is capped by that drive's write bandwidth.</text>
+<text x="20" y="624" font-family="Inter, Helvetica, Arial, sans-serif" font-size="12" fill="#555555">Declustered EC rebuilds into spare space on all survivors, but must read k surviving strips for every strip it reconstructs.</text>
+</svg>

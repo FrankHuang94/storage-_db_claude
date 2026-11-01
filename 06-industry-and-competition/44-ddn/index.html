@@ -1,0 +1,4037 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A strategy-level knowledge base on storage, AI storage and the competitive landscape around Everpure (formerly Pure Storage).">
+      
+      
+      
+        <link rel="canonical" href="https://frankhuang94.github.io/storage-_db_claude/06-industry-and-competition/44-ddn/">
+      
+      
+        <link rel="prev" href="../43-weka/">
+      
+      
+        <link rel="next" href="../45-head-to-head/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>44. DDN deep dive - Everpure Tech Atlas</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#44-ddn-deep-dive" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Everpure Tech Atlas" class="md-header__button md-logo" aria-label="Everpure Tech Atlas" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Everpure Tech Atlas
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              44. DDN deep dive
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/FrankHuang94/storage-_db_claude" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    storage-_db_claude
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Everpure Tech Atlas" class="md-nav__button md-logo" aria-label="Everpure Tech Atlas" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Everpure Tech Atlas
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/FrankHuang94/storage-_db_claude" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    storage-_db_claude
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 0 — Start Here
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 0 — Start Here
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start-here/00a-how-to-use-this-atlas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0.1. How to use this atlas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start-here/00b-one-page-map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0.2. The one-page map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 1 — Storage Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 1 — Storage Fundamentals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/01-what-storage-does/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. What storage does
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/02-media-physics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Media physics for a semis person
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/03-inside-an-ssd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Inside an SSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/04-performance-and-economics-metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Performance and economics metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/05-data-reduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Data reduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/06-data-protection-and-resilience/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Data protection and resilience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 2 — Protocols and Networking
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 2 — Protocols and Networking
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/07-block-protocols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Block protocols
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/08-file-protocols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. File protocols
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/09-object-storage-and-s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Object storage and S3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/10-datacenter-networking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Datacenter networking for storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/11-gpu-data-path/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. The GPU data path
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/12-interfaces-and-emerging-tech/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Interfaces and emerging tech
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3 — Storage System Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 3 — Storage System Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/13-storage-stack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. The storage stack, layer by layer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/14-scale-up-dual-controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Scale-up dual-controller arrays
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/15-scale-out-shared-nothing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Scale-out shared-nothing clusters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/16-disaggregated-shared-everything/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Disaggregated shared-everything architectures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/17-parallel-file-systems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Parallel and distributed file systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/18-object-storage-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Object storage architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/19-software-defined-and-hci/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Software-defined storage and HCI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/20-distributed-systems-fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Distributed-systems fundamentals for storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/21-metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Metadata: the hidden bottleneck
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/22-control-planes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Control planes and fleet management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/23-consumption-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Consumption models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/24-architecture-decision-matrix/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Architecture decision matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 4 — Everpure
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 4 — Everpure
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/25-company-history-and-strategy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Company history and strategy, 2009–2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/26-purity-and-directflash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Core technology: Purity and DirectFlash
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/27-flasharray-and-flashblade/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Product portfolio: FlashArray and FlashBlade
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/28-platform-and-software/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. Platform and software
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/29-hyperscaler-ecosystem-financials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Hyperscaler business, ecosystem and financials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 5 — AI Storage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 5 — AI Storage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/30-ai-data-pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. The AI data pipeline end to end
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/31-training-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Training storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/32-inference-and-kv-cache/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Inference and KV cache
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/33-rag-vector-lakehouse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    33. RAG, vector databases and AI-native data formats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/34-nvidia-ecosystem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. NVIDIA's ecosystem and certifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/35-ai-factories-and-neoclouds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    35. AI factories and neoclouds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/36-hyperscaler-ai-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    36. How hyperscalers build AI storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/37-reading-benchmarks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    37. Reading benchmarks critically
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/38-power-and-density/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    38. Power, density and the AI datacenter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/39-agentic-ai-and-data-intelligence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    39. Agentic AI and data intelligence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 6 — Industry and Competition
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 6 — Industry and Competition
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../40-market-structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    40. Market structure and sizing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../41-why-ai-native-vendors-won/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    41. Why AI-native storage vendors gained traction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../42-vast-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    42. VAST Data deep dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../43-weka/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    43. WEKA deep dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    44. DDN deep dive
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    44. DDN deep dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters-for-everpure-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters for Everpure strategy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-company-in-one-paragraph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The company in one paragraph
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#two-engines-one-company" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two engines, one company
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exascaler-lustre-productised" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EXAScaler: Lustre, productised
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-appliances-a3i-and-the-ai400x-line" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The appliances: A³I and the AI400X line
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#infinia-a-key-value-store-wearing-many-protocols" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Infinia: a key-value store wearing many protocols
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kv-cache-and-gpu-initiated-access-the-inference-bet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        KV cache and GPU-initiated access: the inference bet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inside-nvidias-clusters-and-the-xai-question" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inside NVIDIA's clusters, and the xAI question
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#benchmarks-present-in-v05-to-v20-absent-in-v30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Benchmarks: present in v0.5 to v2.0, absent in v3.0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-enterprise-sidecar-tintri-nexenta-intelliflash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The enterprise sidecar: Tintri, Nexenta, IntelliFlash
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#business-model-financials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Business model &amp; financials
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#customers-go-to-market" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Customers &amp; go-to-market
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-it-gained-traction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why it gained traction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#risks-open-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Risks &amp; open questions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#strategic-relevance-to-everpure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Strategic relevance to Everpure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-everpure-approaches-it-vs-competitors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Everpure approaches it vs. competitors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#history-and-trajectory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        History and trajectory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#numbers-that-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Numbers that matter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversation-playbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversation playbook
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-deeper-optional-l3-pointers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going deeper (optional, L3 pointers)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key terms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../45-head-to-head/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    45. Head-to-head: FlashBlade//EXA vs. VAST vs. WEKA vs. DDN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../46-incumbents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    46. Incumbents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../47-other-challengers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    47. Other challengers and software-defined players
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../48-media-suppliers-and-nand-cycle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    48. Media suppliers and the NAND cycle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../49-competitive-matrices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    49. Competitive landscape matrices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../50-diligence-framework/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    50. Technical diligence framework
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 7 — History and Future
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 7 — History and Future
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/51-history-of-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    51. History of storage, 1956–2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/52-history-of-flash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    52. History of flash and NAND economics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/53-future-trends/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    53. Future trends, 2026–2032
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/54-strategic-option-map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    54. Strategic option map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 8 — Conversation Toolkit
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 8 — Conversation Toolkit
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/55-talking-with-pms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    55. Talking with product managers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/56-talking-with-engineering-and-cto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    56. Talking with engineering leaders and the CTO office
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/57-question-bank/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    57. Question bank: 150 questions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/58-explain-in-30-seconds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    58. Explain it in 30 seconds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/59-self-test-flashcards/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    59. Self-test: 279 flashcards
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/60-cheat-sheets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    60. Cheat sheets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters-for-everpure-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters for Everpure strategy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-company-in-one-paragraph" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The company in one paragraph
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#two-engines-one-company" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Two engines, one company
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#exascaler-lustre-productised" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        EXAScaler: Lustre, productised
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-appliances-a3i-and-the-ai400x-line" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The appliances: A³I and the AI400X line
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#infinia-a-key-value-store-wearing-many-protocols" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Infinia: a key-value store wearing many protocols
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#kv-cache-and-gpu-initiated-access-the-inference-bet" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        KV cache and GPU-initiated access: the inference bet
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#inside-nvidias-clusters-and-the-xai-question" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Inside NVIDIA's clusters, and the xAI question
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#benchmarks-present-in-v05-to-v20-absent-in-v30" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Benchmarks: present in v0.5 to v2.0, absent in v3.0
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-enterprise-sidecar-tintri-nexenta-intelliflash" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The enterprise sidecar: Tintri, Nexenta, IntelliFlash
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#business-model-financials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Business model &amp; financials
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#customers-go-to-market" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Customers &amp; go-to-market
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-it-gained-traction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why it gained traction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#risks-open-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Risks &amp; open questions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#strategic-relevance-to-everpure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Strategic relevance to Everpure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-everpure-approaches-it-vs-competitors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Everpure approaches it vs. competitors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#history-and-trajectory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        History and trajectory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#numbers-that-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Numbers that matter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversation-playbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversation playbook
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-deeper-optional-l3-pointers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going deeper (optional, L3 pointers)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key terms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="44-ddn-deep-dive">44. DDN deep dive<a class="headerlink" href="#44-ddn-deep-dive" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>Depth:</strong> L2 · <strong>Reading time:</strong> ~17 min · <strong>Last verified:</strong> 2026-11-01
+<strong>Prerequisites:</strong> <a href="../../03-system-architecture/17-parallel-file-systems/">Parallel and distributed file systems</a> · <a href="../../03-system-architecture/18-object-storage-architecture/">Object storage architecture</a> · <a href="../../05-ai-storage/32-inference-and-kv-cache/">Inference and KV cache</a> · <a href="../../05-ai-storage/34-nvidia-ecosystem/">The NVIDIA ecosystem</a></p>
+</blockquote>
+<h2 id="tldr">TL;DR<a class="headerlink" href="#tldr" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>DDN is the 28-year-old incumbent of AI storage.</strong> Founded in 1998 and still run by its two founders, it owns the commercial centre of gravity of Lustre and sold the storage inside NVIDIA's own Selene and Eos supercomputers<sup id="fnref3:1"><a class="footnote-ref" href="#fn:1">1</a></sup><sup id="fnref3:2"><a class="footnote-ref" href="#fn:2">2</a></sup>.</li>
+<li><strong>It now runs two engines.</strong> EXAScaler (Lustre in appliances) serves training and HPC bandwidth. Infinia, a key-value-store-based platform announced in 2023, targets inference, KV cache and multi-tenant object data<sup id="fnref5:3"><a class="footnote-ref" href="#fn:3">3</a></sup>. DDN CORE (November 2025) is the control plane over both<sup id="fnref3:4"><a class="footnote-ref" href="#fn:4">4</a></sup>.</li>
+<li><strong>The money is real but opaque.</strong> Blackstone paid $300M for a stake at a $5B valuation in January 2025, DDN's first institutional capital in about two decades<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup>. Press reports put revenue near $500M in 2025 with a ~$1B target for 2026, but the base figures conflict<sup id="fnref4:6"><a class="footnote-ref" href="#fn:6">6</a></sup><sup id="fnref:7"><a class="footnote-ref" href="#fn:7">7</a></sup>.</li>
+<li><strong>The moat is intimacy, not code.</strong> Lustre is open source; DDN's edge is the engineers who maintain it, reference designs inside NVIDIA, and a profitable, government-friendly supplier record.</li>
+<li><strong>The risks are structural.</strong> A kernel client on every GPU node, two platforms to fund, late enterprise features, hardware-heavy margins and founder succession. DDN, which entered every earlier MLPerf Storage round, sat out v3.0, as did VAST and WEKA<sup id="fnref3:8"><a class="footnote-ref" href="#fn:8">8</a></sup>.</li>
+</ul>
+<h2 id="why-this-matters-for-everpure-strategy">Why this matters for Everpure strategy<a class="headerlink" href="#why-this-matters-for-everpure-strategy" title="Permanent link">&para;</a></h2>
+<p>In large AI and HPC deals, DDN is often already on the floor: the DGX SuperPOD reference architectures many GPU buyers copy were validated with DDN early<sup id="fnref:9"><a class="footnote-ref" href="#fn:9">9</a></sup>, and labs and governments have run Lustre for two decades. When Everpure (NYSE: P, formerly PSTG) pitches FlashBlade//EXA into those accounts, it is usually trying to displace or sit beside an EXAScaler system. EXA uses the same metadata-plus-data-nodes architecture but swaps the Lustre kernel client for standard pNFS (<a href="../../03-system-architecture/17-parallel-file-systems/">Chapter 17</a>).</p>
+<p>DDN is also changing shape in ways that move it closer to Everpure's home ground. It hired a former Pure Storage executive as President and Chief Revenue Officer to push into the enterprise<sup id="fnref:10"><a class="footnote-ref" href="#fn:10">10</a></sup>, built a new platform (Infinia) aimed at inference and KV cache, and is reportedly seeking strategic investors<sup id="fnref:11"><a class="footnote-ref" href="#fn:11">11</a></sup>. Knowing where DDN is strong (bandwidth, NVIDIA reference status, sovereign HPC) and thin (enterprise operations, data reduction, simplicity) tells Everpure where to fight and where to coexist.</p>
+<h2 id="core-concepts">Core concepts<a class="headerlink" href="#core-concepts" title="Permanent link">&para;</a></h2>
+<h3 id="the-company-in-one-paragraph">The company in one paragraph<a class="headerlink" href="#the-company-in-one-paragraph" title="Permanent link">&para;</a></h3>
+<p>DataDirect Networks was formed in 1998 by Alex Bouzari (CEO) and Paul Bloch, who had run a predecessor, MegaDrive Systems, since 1988<sup id="fnref:12"><a class="footnote-ref" href="#fn:12">12</a></sup>. It took about $12M of venture money around 2002, fell out with the investors, and the founders bought them out<sup id="fnref:13"><a class="footnote-ref" href="#fn:13">13</a></sup>. Until 2025 it grew on its own cash flow, selling high-bandwidth storage to supercomputing sites, and by Forbes' account each founder still owns about 40%<sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup>. Hence DDN's character: engineering-led, lab-focused, frugal, profitable (company-stated), and run by two people who have made every major decision for 28 years.</p>
+<h3 id="two-engines-one-company">Two engines, one company<a class="headerlink" href="#two-engines-one-company" title="Permanent link">&para;</a></h3>
+<p><img alt="Side-by-side diagram of DDN's two data engines. Left, EXAScaler: compute nodes with a Lustre kernel client cross an LNet fabric, get file layouts from a metadata server and stream striped data from object storage servers, packaged in AI400X-series appliances or as Google Cloud Managed Lustre. Right, Infinia: S3, SDK, KV-cache and limited POSIX access services sit as peers on a distributed key-value store with a hierarchical tenant keyspace, erasure coding and commodity NVMe servers. A DDN CORE control-plane band spans both." src="../../assets/diagrams/ch44-ddn-architecture.svg" /></p>
+<p><em>Figure 44.1 — DDN sells two different architectures: a mature Lustre engine tuned for bandwidth, and a young key-value engine tuned for tenancy and inference, joined only at the control plane.</em></p>
+<p>The two engines share almost no code. EXAScaler descends from Lustre, a 1999 research project that DDN took over commercially in 2018<sup id="fnref:14"><a class="footnote-ref" href="#fn:14">14</a></sup>. Infinia was written from scratch and announced in 2023 as "not a development of" EXAScaler<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>. DDN's Chief Product Officer said in January 2026 that EXAScaler remains central, with the two products as partners under one control plane<sup id="fnref:15"><a class="footnote-ref" href="#fn:15">15</a></sup>. In practice, training and simulation go to EXAScaler; data preparation, inference and multi-tenant service-provider work go to Infinia.</p>
+<p>The semiconductor analogy is a foundry running a mature high-performance node and a new specialty node. The old node pays the bills and holds the reference customers; the new one is where demand is supposed to land, but it lacks yield history, and every engineer on it is one not working on the cash cow.</p>
+<h3 id="exascaler-lustre-productised">EXAScaler: Lustre, productised<a class="headerlink" href="#exascaler-lustre-productised" title="Permanent link">&para;</a></h3>
+<p>EXAScaler is DDN's distribution of Lustre plus management tooling, monitoring and DDN's own hardware<sup id="fnref:16"><a class="footnote-ref" href="#fn:16">16</a></sup>. The mechanism is exactly the Lustre design of <a href="../../03-system-architecture/17-parallel-file-systems/">Chapter 17</a>. A metadata server (MDS) hands out a file's layout once. The client then moves data directly, in parallel, to and from many object storage servers (OSSs) over RDMA.</p>
+<pre class="mermaid"><code>sequenceDiagram
+    participant C as GPU node with Lustre client
+    participant M as MDS and MDT
+    participant O1 as OSS 1
+    participant O2 as OSS 2
+    C-&gt;&gt;M: open checkpoint file, request layout and lock
+    M--&gt;&gt;C: layout - stripes on OST0 to OST3
+    par stripes in parallel
+        C-&gt;&gt;O1: RDMA write stripes 0 and 2
+    and
+        C-&gt;&gt;O2: RDMA write stripes 1 and 3
+    end
+    O1--&gt;&gt;C: ack
+    O2--&gt;&gt;C: ack
+    C-&gt;&gt;M: close and release lock
+    Note over C,O2: metadata touched twice, bulk data never passes the MDS</code></pre>
+<p><em>Figure 44.2 — On EXAScaler the metadata server is consulted at open and close; the bulk bytes flow client-to-OSS in parallel, which is why aggregate bandwidth scales with the number of appliances.</em></p>
+<p>DDN adds packaging and people. Buying Intel's Lustre business in June 2018 brought the development team, support team and contracts, and revived the Whamcloud name<sup id="fnref2:14"><a class="footnote-ref" href="#fn:14">14</a></sup>. Owning the main Lustre engineering team lets DDN fix a client bug or backport a feature faster than any rival distributor; for a national lab, that is the product. Rivals ship Lustre too, including HPE and Microsoft (Azure Managed Lustre posted 642.2 GiB/s of checkpoint writes in MLPerf Storage v3.0<sup id="fnref:8"><a class="footnote-ref" href="#fn:8">8</a></sup>). The code is open; the moat is the team.</p>
+<p>The costs are those of any parallel file system: a client module matched to every GPU server's kernel, hot directories that bottleneck one metadata target, RAID under each target and little data reduction. Lustre buyers accept them for bandwidth and coherent POSIX semantics on shared files.</p>
+<h3 id="the-appliances-a3i-and-the-ai400x-line">The appliances: A³I and the AI400X line<a class="headerlink" href="#the-appliances-a3i-and-the-ai400x-line" title="Permanent link">&para;</a></h3>
+<p>DDN sells EXAScaler mostly as A³I ("Accelerated, Any-scale AI") appliances: 2U all-NVMe building blocks sized to slot into NVIDIA reference architectures.</p>
+<table>
+<thead>
+<tr>
+<th>Product</th>
+<th>What it is</th>
+<th>Launched</th>
+<th>Headline figures (vendor-stated)</th>
+<th>Role in 2026</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>AI400X</td>
+<td>First A³I all-flash EXAScaler appliance</td>
+<td>c. 2019–2020</td>
+<td>~7 PB behind NVIDIA Selene<sup id="fnref5:1"><a class="footnote-ref" href="#fn:1">1</a></sup></td>
+<td>Installed base</td>
+</tr>
+<tr>
+<td>AI400X2 / X2 Turbo</td>
+<td>Second generation; Turbo refresh</td>
+<td>2022 / 2024-03</td>
+<td>96 GB/s read, 65 GB/s write; Turbo up to 120 GB/s<sup id="fnref:17"><a class="footnote-ref" href="#fn:17">17</a></sup><sup id="fnref2:18"><a class="footnote-ref" href="#fn:18">18</a></sup></td>
+<td>NVIDIA Eos (48 units)<sup id="fnref5:2"><a class="footnote-ref" href="#fn:2">2</a></sup></td>
+</tr>
+<tr>
+<td>AI400X3</td>
+<td>Third-generation 2U EXAScaler appliance</td>
+<td>2025-06</td>
+<td>+55% read, +70% write vs prior gen<sup id="fnref:19"><a class="footnote-ref" href="#fn:19">19</a></sup>; reseller lists 140 GB/s read, 110 GB/s write<sup id="fnref:20"><a class="footnote-ref" href="#fn:20">20</a></sup></td>
+<td>MLPerf Storage v2.0 entry<sup id="fnref2:21"><a class="footnote-ref" href="#fn:21">21</a></sup></td>
+</tr>
+<tr>
+<td>AI400X3M</td>
+<td>Refresh with KV-cache support</td>
+<td>2026-06</td>
+<td>190 GB/s read, 110 GB/s write, 8M IOPS in 2U<sup id="fnref2:22"><a class="footnote-ref" href="#fn:22">22</a></sup></td>
+<td>Current flagship</td>
+</tr>
+<tr>
+<td>Infinia 2.0 → 2.4</td>
+<td>Software-defined key-value data platform</td>
+<td>2023; 2.0 2025-02; 2.4 2026-07</td>
+<td>Sub-ms metadata; up to 10x data reduction (claims)<sup id="fnref3:23"><a class="footnote-ref" href="#fn:23">23</a></sup><sup id="fnref6:24"><a class="footnote-ref" href="#fn:24">24</a></sup></td>
+<td>Inference, KV cache, tenancy</td>
+</tr>
+<tr>
+<td>DDN CORE</td>
+<td>Control plane and data fabric over both engines</td>
+<td>2025-11</td>
+<td>On-prem, Google Cloud, OCI, neoclouds<sup id="fnref5:4"><a class="footnote-ref" href="#fn:4">4</a></sup></td>
+<td>Unifying brand</td>
+</tr>
+<tr>
+<td>Google Cloud Managed Lustre</td>
+<td>First-party Google service built on EXAScaler</td>
+<td>GA 2025-07</td>
+<td>Up to 1 TB/s per namespace<sup id="fnref2:25"><a class="footnote-ref" href="#fn:25">25</a></sup></td>
+<td>Cloud channel</td>
+</tr>
+<tr>
+<td>Tintri VMstore / IntelliFlash</td>
+<td>Enterprise virtualisation and primary storage</td>
+<td>Acquired 2018 / 2019</td>
+<td>VMstore T7290 GA 2025-09<sup id="fnref2:26"><a class="footnote-ref" href="#fn:26">26</a></sup></td>
+<td>Separate enterprise unit</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 44.1 — DDN's portfolio is a bandwidth appliance line, a young software platform and an enterprise sidecar; the AI400X generations double bandwidth roughly every two to three years.</em></p>
+<p>A worked check on Eos shows how DDN sells. Eos used 48 AI400X2 appliances for 576 DGX H100 systems, in under three racks and about 100 kW, delivering about 4 TB/s<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>; one trade outlet gives 4.3 TB/s read and 3.1 TB/s write<sup id="fnref:18"><a class="footnote-ref" href="#fn:18">18</a></sup>. At the 96 GB/s datasheet rate, 48 × 96 GB/s = 4.6 TB/s, so delivery was about 87–93% of the summed datasheets (4.0 or 4.3 TB/s): near-linear scaling. Density is 4 TB/s ÷ 100 kW ≈ 40 GB/s per kW, or 4.3 TB/s ÷ 576 ≈ 7.5 GB/s per DGX node.</p>
+<p>Now size a checkpoint (<a href="../../05-ai-storage/31-training-storage/">Chapter 31</a>). A 405B-parameter model with Adam state is about 6.5 TB. At the reseller's 110 GB/s write figure, eight AI400X3s (16U) give about 880 GB/s, so a synchronous checkpoint takes 6.5 ÷ 0.88 ≈ 7.4 seconds. That is the pitch: a few rack units keep a large cluster's checkpoint stall in single-digit seconds.</p>
+<h3 id="infinia-a-key-value-store-wearing-many-protocols">Infinia: a key-value store wearing many protocols<a class="headerlink" href="#infinia-a-key-value-store-wearing-many-protocols" title="Permanent link">&para;</a></h3>
+<p>Infinia's base layer is a distributed key-value store built on a Bε-tree (B-epsilon tree)<sup id="fnref2:3"><a class="footnote-ref" href="#fn:3">3</a></sup>. A Bε-tree is a write-optimised B-tree: each internal node holds a buffer of pending updates, which are pushed down the tree in batches. Small random writes therefore become large sequential ones, much as a DRAM controller's write queue coalesces scattered writes into full bursts. Data and metadata both live there, and S3, SDK, block, KV-cache and (since 2.4) limited POSIX access sit on it as peer services, not layers stacked on a file system<sup id="fnref3:3"><a class="footnote-ref" href="#fn:3">3</a></sup><sup id="fnref:24"><a class="footnote-ref" href="#fn:24">24</a></sup>.</p>
+<p>Two design choices follow. First, <strong>tenancy is in the keyspace.</strong> Keys run realm, cluster, tenant, subtenant, dataset, and each tenant gets a fixed share of performance and capacity at creation, DDN's answer to noisy neighbours<sup id="fnref4:3"><a class="footnote-ref" href="#fn:3">3</a></sup>. Infinia 2.4 (July 2026) made this the headline: isolation, quotas and provisioning in about ten seconds via REST, aimed at NVIDIA cloud partners and managed AI services<sup id="fnref2:24"><a class="footnote-ref" href="#fn:24">24</a></sup>. Second, <strong>it is hardware-agnostic.</strong> Infinia runs on commodity NVMe servers and on Oracle Cloud, uses network erasure coding across nodes, and claims up to 10x always-on data reduction<sup id="fnref:23"><a class="footnote-ref" href="#fn:23">23</a></sup><sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>.</p>
+<p>The claims need care. The 2.0 launch claimed up to 100x faster metadata and 10x better cost efficiency without a published baseline<sup id="fnref2:23"><a class="footnote-ref" href="#fn:23">23</a></sup>. POSIX in 2.4 is limited availability (RHEL and Ubuntu); GPUDirect Storage and POSIX ACLs remain roadmap items<sup id="fnref3:24"><a class="footnote-ref" href="#fn:24">24</a></sup>. The public materials reviewed do not say whether isolation extends to per-tenant encryption keys, which is a fair diligence question [VERIFY: Infinia per-tenant encryption]. The flagship proof point is scale: DDN says xAI runs a single 350 PB Infinia cluster (<em>company-stated</em>)<sup id="fnref2:15"><a class="footnote-ref" href="#fn:15">15</a></sup>.</p>
+<pre class="mermaid"><code>sequenceDiagram
+    participant G as Inference server with NIXL plugin
+    participant A as Infinia access service
+    participant K as Key-value store
+    participant N as NVMe nodes
+    G-&gt;&gt;A: GET cached prefix blocks for tenant T
+    A-&gt;&gt;K: look up keys in tenant keyspace
+    K--&gt;&gt;A: hit - fragment locations
+    A-&gt;&gt;N: read erasure-coded fragments
+    N--&gt;&gt;A: fragments
+    A--&gt;&gt;G: KV blocks over RDMA into GPU memory
+    Note over G: prefill skipped for cached tokens
+    G-&gt;&gt;A: PUT new KV blocks after the turn
+    A-&gt;&gt;K: insert keys, apply quota and eviction policy</code></pre>
+<p><em>Figure 44.3 — Infinia's path is a key lookup, not a file open: a cached prompt prefix comes back as KV blocks, saving the GPU from recomputing it (simplified logical view).</em></p>
+<h3 id="kv-cache-and-gpu-initiated-access-the-inference-bet">KV cache and GPU-initiated access: the inference bet<a class="headerlink" href="#kv-cache-and-gpu-initiated-access-the-inference-bet" title="Permanent link">&para;</a></h3>
+<p>Why a second engine? Inference changes the I/O pattern (<a href="../../05-ai-storage/32-inference-and-kv-cache/">Chapter 32</a>). Training wants a few huge streaming files; long-context inference wants billions of small KV-cache blocks keyed by prompt prefix, retrieved in milliseconds and shared across tenants. That is a key-value workload, and Lustre's MDS-centric design fits it poorly.</p>
+<p>DDN's July 2025 benchmark is the reference claim. On Qwen3-32B with a 112K-token context, recomputing the prefill took 57 seconds; loading the cached KV from Infinia took 2.1 seconds, a 27x gain (<em>vendor test on two A100 GPUs</em>)<sup id="fnref:27"><a class="footnote-ref" href="#fn:27">27</a></sup>. A sanity check: Qwen3-32B has 64 layers and 8 KV heads of dimension 128 [VERIFY: model config from public model card], so each token's KV is 2 × 64 × 8 × 128 × 2 bytes = 256 KiB in BF16. For 112K tokens that is about 29 GB, and loading it in 2.1 seconds implies roughly 14 GB/s to two GPUs, plausible for RDMA storage. But recompute is the weakest baseline; the more useful number is Nebul's, a European sovereign cloud reporting nearly 10x faster time to first token than its own CPU-memory cache (October 2026, joint release)<sup id="fnref:28"><a class="footnote-ref" href="#fn:28">28</a></sup>. The semiconductor analogy is spill-to-memory versus recompute: a storage tier pays when fetching a byte costs less GPU time than regenerating it.</p>
+<p>DDN has also moved down the stack. In June 2026 both EXAScaler and Infinia gained KV-cache support through NVIDIA Dynamo and NIXL<sup id="fnref:22"><a class="footnote-ref" href="#fn:22">22</a></sup>. In August 2026 DDN and NVIDIA announced joint work, under NVIDIA's Storage-Next initiative, on GPU-initiated data access for Infinia, where GPU threads issue data operations without a CPU round-trip. No performance figures or availability dates were given<sup id="fnref:29"><a class="footnote-ref" href="#fn:29">29</a></sup>. If it ships, the storage client moves into the GPU, favouring vendors with deep NVIDIA ties.</p>
+<h3 id="inside-nvidias-clusters-and-the-xai-question">Inside NVIDIA's clusters, and the xAI question<a class="headerlink" href="#inside-nvidias-clusters-and-the-xai-question" title="Permanent link">&para;</a></h3>
+<p>DDN's best marketing asset is that NVIDIA bought it for itself. Selene, NVIDIA's DGX A100 SuperPOD ranked seventh in the world in 2020, used about 7 PB of DDN AI400X storage<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>. Eos used the 48 AI400X2s described above<sup id="fnref2:2"><a class="footnote-ref" href="#fn:2">2</a></sup>. DDN also claimed to be the first storage validated with DGX SuperPOD at any scale (<em>company-stated</em>)<sup id="fnref2:9"><a class="footnote-ref" href="#fn:9">9</a></sup>. When a GPU buyer copies NVIDIA's own design, DDN is in the bill of materials by default.</p>
+<p>xAI is murkier. In November 2024 DDN announced that EXAScaler and Infinia support xAI's 100,000-GPU Colossus in Memphis<sup id="fnref:30"><a class="footnote-ref" href="#fn:30">30</a></sup>. VAST Data has also claimed Colossus, saying xAI trains, checkpoints and stores data on VAST, and in October 2025 Blocks &amp; Files reported VAST in xAI's Colossus expansion while noting DDN's continuing role<sup id="fnref:31"><a class="footnote-ref" href="#fn:31">31</a></sup>. Both can be true at different tiers or phases; no public source settles the split. The honest statement: xAI references both, and Forbes credits xAI contracts as a driver of DDN's 2026 growth<sup id="fnref2:6"><a class="footnote-ref" href="#fn:6">6</a></sup>.</p>
+<h3 id="benchmarks-present-in-v05-to-v20-absent-in-v30">Benchmarks: present in v0.5 to v2.0, absent in v3.0<a class="headerlink" href="#benchmarks-present-in-v05-to-v20-absent-in-v30" title="Permanent link">&para;</a></h3>
+<p>DDN has been a regular MLPerf Storage entrant: it was one of five submitters in the first round, v0.5 (September 2023)<sup id="fnref:32"><a class="footnote-ref" href="#fn:32">32</a></sup>. In MLPerf Storage v2.0 (August 2025) a single AI400X3 sustained more than 110 GiB/s of reads, and DDN emphasised density (simulated GPUs fed per rack unit) over absolute cluster numbers<sup id="fnref:21"><a class="footnote-ref" href="#fn:21">21</a></sup> [VERIFY: per-workload accelerator counts differ between DDN materials and secondary write-ups]. In v1.0 an AI400X2T posted 99,018 MiB/s on 3D U-Net with 36 simulated H100s<sup id="fnref:33"><a class="footnote-ref" href="#fn:33">33</a></sup>. DDN skipped v3.0 (September 2026), which moved to simulated B200s and added KV-cache tests; VAST and WEKA also stayed out, while Everpure entered<sup id="fnref2:8"><a class="footnote-ref" href="#fn:8">8</a></sup>. On IO500 (June 2025) DDN claimed the top spot, but Argonne's DAOS systems held the first two places on the 10-node production list, with a Hudson River Trading EXAScaler system third<sup id="fnref:34"><a class="footnote-ref" href="#fn:34">34</a></sup>. The pattern: DDN shows up where its density story is strongest (<a href="../../05-ai-storage/37-reading-benchmarks/">Chapter 37</a>).</p>
+<h3 id="the-enterprise-sidecar-tintri-nexenta-intelliflash">The enterprise sidecar: Tintri, Nexenta, IntelliFlash<a class="headerlink" href="#the-enterprise-sidecar-tintri-nexenta-intelliflash" title="Permanent link">&para;</a></h3>
+<p>In 2018–2019 DDN bought three enterprise businesses: Tintri's assets out of bankruptcy for about $60M (September 2018)<sup id="fnref:35"><a class="footnote-ref" href="#fn:35">35</a></sup>, Nexenta, a software-defined storage vendor (May 2019, terms undisclosed)<sup id="fnref:36"><a class="footnote-ref" href="#fn:36">36</a></sup>, and Western Digital's IntelliFlash arrays (ex-Tegile, November 2019), with WD becoming a preferred drive supplier<sup id="fnref:37"><a class="footnote-ref" href="#fn:37">37</a></sup>. These cheap, distressed assets bought enterprise revenue and customers. Tintri still ships (VMstore T7290, September 2025)<sup id="fnref:26"><a class="footnote-ref" href="#fn:26">26</a></sup>, but the units run separately and play little part in the AI story. They show DDN's enterprise experience sits in virtualisation niches, not mainstream primary storage.</p>
+<h2 id="business-model-financials">Business model &amp; financials<a class="headerlink" href="#business-model-financials" title="Permanent link">&para;</a></h2>
+<p>DDN's model is classic systems vendor: integrated appliances (hardware, software, support) sold per deal, increasingly complemented by software licences (Infinia, CORE) and cloud royalties (Google Cloud Managed Lustre). Because it is private, every figure below is <em>company-stated</em> or <em>reported by press</em>, and they do not reconcile.</p>
+<p><img alt="Scatter chart of DDN annual revenue as reported: company-stated US$25M in 2003, US$45M in 2005, US$188M in 2010 and US$400M in 2020; a Blocks &amp; Files figure of US$500M for 2023 and estimate of US$750M for 2024; Forbes-reported US$400M for 2024 and US$500M for 2025; and a reported target of about US$1B for 2026, with milestone lines for the 2002 VC buyout, the 2018 Lustre and Tintri deals and the January 2025 Blackstone investment." src="../../assets/charts/ch44-milestones.svg" /></p>
+<p><em>Figure 44.4 — DDN's revenue history is a set of unaudited, partly contradictory data points; the only consistent message is a step-change from roughly US$0.4–0.5B toward a US$1B target in 2026.</em>
+Data: <code>data/ch44_milestones.csv</code></p>
+<ul>
+<li><strong>Revenue.</strong> The Register gave $25M (2003), $45M (2005) and $188M (2010)<sup id="fnref3:13"><a class="footnote-ref" href="#fn:13">13</a></sup>; DDN said it reached $400M in 2020<sup id="fnref2:7"><a class="footnote-ref" href="#fn:7">7</a></sup>. In January 2025 Blocks &amp; Files put 2023 at $500M and estimated 2024 at $750M<sup id="fnref3:7"><a class="footnote-ref" href="#fn:7">7</a></sup> [VERIFY: search-summary only]. Forbes' August 2026 profile, as syndicated, gives about $400M (2024) and $500M (2025), on track to double to about $1B in 2026, while the English original calls DDN historically a roughly $300M-a-year business<sup id="fnref5:6"><a class="footnote-ref" href="#fn:6">6</a></sup>. Treat ~$0.5B (2025) and a ~$1B 2026 target as a working range, not facts.</li>
+<li><strong>Momentum.</strong> DDN's new President told an October 2026 press tour that bookings were growing about 3x year on year (<em>company-stated</em>)<sup id="fnref2:38"><a class="footnote-ref" href="#fn:38">38</a></sup>.</li>
+<li><strong>Profitability.</strong> Blackstone's release cites a self-funded, profitable record (<em>company-stated</em>)<sup id="fnref2:5"><a class="footnote-ref" href="#fn:5">5</a></sup>. No margins are public; appliance-heavy revenue usually means lower gross margin than software-only rivals.</li>
+<li><strong>Capital and valuation.</strong> Blackstone Tactical Opportunities invested $300M at a $5B valuation in January 2025 and took a board seat<sup id="fnref3:5"><a class="footnote-ref" href="#fn:5">5</a></sup>. Coverage described it as a financial investment, with the founders keeping control<sup id="fnref:39"><a class="footnote-ref" href="#fn:39">39</a></sup>. At $5B against ~$400–500M revenue, the implied multiple is about 10–12x. VAST's $30B valuation on more than $500M of committed ARR is roughly 60x<sup id="fnref:40"><a class="footnote-ref" href="#fn:40">40</a></sup>, and WEKA's $1.6B on ~$100M ARR (2024) about 16x<sup id="fnref:41"><a class="footnote-ref" href="#fn:41">41</a></sup>. Investors valued DDN like a profitable hardware company, not an AI software platform. In June 2026 Bouzari told Bloomberg DDN wanted to raise again by year-end and bring in strategic investors. No size, valuation or close had been reported by 2026-11-01<sup id="fnref3:11"><a class="footnote-ref" href="#fn:11">11</a></sup>.</li>
+<li><strong>Scale.</strong> An outside estimate puts 2025 headcount near 1,334 (<em>estimated</em>)<sup id="fnref:42"><a class="footnote-ref" href="#fn:42">42</a></sup>, which on ~$500M revenue is roughly $375k per employee.</li>
+</ul>
+<h2 id="customers-go-to-market">Customers &amp; go-to-market<a class="headerlink" href="#customers-go-to-market" title="Permanent link">&para;</a></h2>
+<p>DDN's customers fall into five groups:</p>
+<ul>
+<li><strong>Supercomputing and government.</strong> National labs, defence and university HPC centres. Recent IO500 lists include SoftBank's CHIE-4, the University of Florida's HiPerGator and Hudson River Trading<sup id="fnref:43"><a class="footnote-ref" href="#fn:43">43</a></sup>.</li>
+<li><strong>NVIDIA itself.</strong> Selene, Eos and Cambridge-1, and the SuperPOD reference designs that follow from them<sup id="fnref4:1"><a class="footnote-ref" href="#fn:1">1</a></sup><sup id="fnref4:2"><a class="footnote-ref" href="#fn:2">2</a></sup><sup id="fnref3:9"><a class="footnote-ref" href="#fn:9">9</a></sup>.</li>
+<li><strong>AI labs.</strong> xAI, plus an unnamed frontier lab where DDN says it runs Infinia as a managed service across roughly 200,000 GPUs (<em>company-stated</em>)<sup id="fnref3:38"><a class="footnote-ref" href="#fn:38">38</a></sup>.</li>
+<li><strong>Sovereign and regional AI clouds.</strong> DDN cites Yotta's Shakti Cloud in India, Singtel, Nebul and SCX.ai, and launched "Sovereign AI Blueprints" at SC25<sup id="fnref:44"><a class="footnote-ref" href="#fn:44">44</a></sup><sup id="fnref2:28"><a class="footnote-ref" href="#fn:28">28</a></sup>.</li>
+<li><strong>Hyperscalers and neoclouds.</strong> Google, through Managed Lustre (GA July 2025, up to 1 TB/s per namespace)<sup id="fnref:25"><a class="footnote-ref" href="#fn:25">25</a></sup>, plus CoreWeave, Nebius and Scaleway via CORE, and Oracle via Infinia on OCI<sup id="fnref4:4"><a class="footnote-ref" href="#fn:4">4</a></sup>.</li>
+</ul>
+<p>DDN says its platforms support more than 500,000 NVIDIA GPUs (<em>company-stated</em>, January 2025)<sup id="fnref:45"><a class="footnote-ref" href="#fn:45">45</a></sup>. Customer counts in DDN materials range from 5,000+ to 11,000+ [VERIFY: definitions differ]<sup id="fnref:38"><a class="footnote-ref" href="#fn:38">38</a></sup><sup id="fnref2:12"><a class="footnote-ref" href="#fn:12">12</a></sup>.</p>
+<p>Go-to-market has three routes. <strong>NVIDIA-led</strong>: DDN rides SuperPOD and NVIDIA Cloud Partner designs into GPU purchases. <strong>Integrators and OEMs</strong>: national HPC procurements go through prime contractors, and SC25 added a Supermicro-built "Enterprise AI HyperPOD"<sup id="fnref2:4"><a class="footnote-ref" href="#fn:4">4</a></sup>. <strong>Cloud</strong>: Google sells EXAScaler as a first-party service, giving DDN reach without a sales force. In 2026 DDN professionalised its leadership: Guido Torrini (ex-CFO of OneTrust and Celonis) became Chief Financial Operating Officer in February, a hire Bloomberg tied to a possible IPO<sup id="fnref:46"><a class="footnote-ref" href="#fn:46">46</a></sup>; Kevin Delane (ex-Salesforce, Pure Storage and Cohesity) became President and Chief Revenue Officer in April to drive enterprise adoption<sup id="fnref2:10"><a class="footnote-ref" href="#fn:10">10</a></sup>; and a Vice Chair was named<sup id="fnref:47"><a class="footnote-ref" href="#fn:47">47</a></sup>.</p>
+<h2 id="why-it-gained-traction">Why it gained traction<a class="headerlink" href="#why-it-gained-traction" title="Permanent link">&para;</a></h2>
+<ol>
+<li><strong>It was already in the reference design.</strong> NVIDIA ran its own clusters on DDN, so the "safe" choice for a SuperPOD buyer in 2020–2024 was DDN. Reference status works like a foundry's process design kit: switching costs appear before price is discussed.</li>
+<li><strong>Bandwidth per rack when stalls were expensive.</strong> Every second a checkpoint blocks thousands of GPUs is paid at GPU rental rates (<a href="../../02-protocols-and-networking/11-gpu-data-path/">Chapter 11</a>); appliances with known GB/s per 2U let architects size storage by arithmetic.</li>
+<li><strong>Open source with a throat to choke.</strong> Sovereign and public buyers like Lustre because it is open (GPL); DDN employs most of its core developers, so buyers get open code plus a vendor that can fix it.</li>
+<li><strong>A boring balance sheet.</strong> A profitable, founder-owned supplier with 25 years of lab references passes government procurement and multi-year support tests that venture-funded rivals sometimes do not.</li>
+<li><strong>Speed into inference.</strong> Infinia, Dynamo/NIXL support and GPU-initiated access gave DDN a credible inference story quickly, so it was not trapped as a training-only vendor.</li>
+</ol>
+<h2 id="risks-open-questions">Risks &amp; open questions<a class="headerlink" href="#risks-open-questions" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Lustre complexity and the client.</strong> The kernel client is both DDN's performance edge and its operational tax: it must be rebuilt and qualified for every kernel and GPU-server image. Standard-client designs (FlashBlade//EXA's pNFS, VAST's NFS) attack exactly this pain (<a href="../../02-protocols-and-networking/08-file-protocols/">Chapter 8</a>).</li>
+<li><strong>Two platforms, one R&amp;D budget.</strong> EXAScaler and Infinia share a control plane, not a data path. DDN funds a mature parallel file system and a young KV platform where VAST and WEKA each fund one, and customers must pick which engine holds their data. Infinia's POSIX GA, ACLs and GPUDirect support were still on the roadmap in mid-2026<sup id="fnref5:24"><a class="footnote-ref" href="#fn:24">24</a></sup>.</li>
+<li><strong>Enterprise feature gaps.</strong> Enterprise buyers expect always-on data reduction, snapshots, replication, non-disruptive upgrades and simple multi-tenancy. EXAScaler was built for scratch bandwidth; Infinia adds tenancy and reduction but is young.</li>
+<li><strong>Appliance margins and supply.</strong> Selling hardware means DDN carries NAND and server-cost swings that software-only vendors pass to OEMs (<a href="../48-media-suppliers-and-nand-cycle/">Chapter 48</a>), and doubling revenue strains supply chains; Torrini's remit includes supply chain<sup id="fnref2:46"><a class="footnote-ref" href="#fn:46">46</a></sup>.</li>
+<li><strong>Founder succession and governance.</strong> Bouzari and Bloch have run DDN since 1998 and control roughly 80% of it<sup id="fnref6:6"><a class="footnote-ref" href="#fn:6">6</a></sup>. The 2026 hires look like institutionalisation ahead of an IPO or strategic round<sup id="fnref3:46"><a class="footnote-ref" href="#fn:46">46</a></sup><sup id="fnref3:10"><a class="footnote-ref" href="#fn:10">10</a></sup>; no succession plan is public.</li>
+<li><strong>Concentration and disclosure.</strong> Growth leans on a few huge AI and sovereign contracts, xAI among them; revenue figures are unaudited and inconsistent; skipping MLPerf v3.0 leaves no like-for-like evidence against 2026 rivals.</li>
+<li><strong>Open questions.</strong> Who joins the strategic round, and on what terms? Does Infinia reach POSIX GA and win training workloads, or stay an inference sidecar? How much of the 2026 revenue is one-off cluster builds versus recurring?</li>
+</ul>
+<h2 id="strategic-relevance-to-everpure">Strategic relevance to Everpure<a class="headerlink" href="#strategic-relevance-to-everpure" title="Permanent link">&para;</a></h2>
+<p>DDN matters to Everpure in three ways. First, it is the <strong>incumbent EXA must displace</strong> in Lustre-heritage accounts: Everpure offers the same metadata/data split without a kernel module, plus Purity's data reduction, Evergreen ownership and enterprise operations (<a href="../../04-everpure/27-flasharray-and-flashblade/">Chapter 27</a>); DDN counters with exascale references, coherent shared-file writes and NVIDIA's own clusters. Second, DDN is <strong>moving toward Everpure's ground</strong>: Infinia's tenancy targets the neocloud buyers EXA's 2026 tenancy features target, its KV-cache tier competes with PureKVA, and an ex-Pure Storage executive runs its revenue organisation. Third, its <strong>capital event</strong> is a signal: a strategic investor such as NVIDIA, a hyperscaler or a sovereign fund would harden DDN's channel.</p>
+<p>Options a strategy team might evaluate, based on public information:</p>
+<ul>
+<li><strong>Compete where Lustre hurts.</strong> Target accounts whose pain is client management, metadata hot spots or capacity cost, not raw bandwidth, and publish per-rack, per-kW and per-TB figures beside DDN's density claims.</li>
+<li><strong>Coexist where it does not.</strong> Where labs keep EXAScaler as scratch, position FlashBlade or EXA as the protected capacity and AI-data tier behind it.</li>
+<li><strong>Treat the round as intelligence.</strong> Watch who invests, at what valuation, and whether CORE or Infinia gains an OEM. A full acquisition would face founder control, a multi-billion price and heavy overlap with EXA; narrower moves (for example, Lustre-to-EXA migration tooling) look more plausible.</li>
+</ul>
+<h2 id="how-everpure-approaches-it-vs-competitors">How Everpure approaches it vs. competitors<a class="headerlink" href="#how-everpure-approaches-it-vs-competitors" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>DDN EXAScaler / Infinia</th>
+<th>Everpure FlashBlade//EXA</th>
+<th>VAST Data</th>
+<th>WEKA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Core architecture</td>
+<td>Lustre MDS/OSS appliances; separate KV-store platform</td>
+<td>Purity metadata core plus independent data nodes<sup id="fnref:48"><a class="footnote-ref" href="#fn:48">48</a></sup></td>
+<td>DASE: stateless CNodes, shared SCM and QLC DBoxes<sup id="fnref:49"><a class="footnote-ref" href="#fn:49">49</a></sup></td>
+<td>Shared-nothing NeuralMesh microservices<sup id="fnref:50"><a class="footnote-ref" href="#fn:50">50</a></sup></td>
+</tr>
+<tr>
+<td>Client</td>
+<td>Lustre kernel client; S3, SDK, NIXL for Infinia</td>
+<td>Standard pNFS client<sup id="fnref2:48"><a class="footnote-ref" href="#fn:48">48</a></sup></td>
+<td>Standard NFS (incl. RDMA), S3, SMB<sup id="fnref2:49"><a class="footnote-ref" href="#fn:49">49</a></sup></td>
+<td>Proprietary user-space client (DPDK); NFS, S3<sup id="fnref:51"><a class="footnote-ref" href="#fn:51">51</a></sup></td>
+</tr>
+<tr>
+<td>Data reduction</td>
+<td>Minimal on EXAScaler; up to 10x claimed on Infinia<sup id="fnref4:23"><a class="footnote-ref" href="#fn:23">23</a></sup></td>
+<td>Purity reduction on metadata core; data-node scheme maturing</td>
+<td>Similarity-based, global<sup id="fnref3:49"><a class="footnote-ref" href="#fn:49">49</a></sup></td>
+<td>Added in NeuralMesh 6 (2026)<sup id="fnref2:50"><a class="footnote-ref" href="#fn:50">50</a></sup></td>
+</tr>
+<tr>
+<td>Hardware model</td>
+<td>DDN appliances; Infinia on commodity or cloud</td>
+<td>DFM blades plus third-party data nodes<sup id="fnref3:48"><a class="footnote-ref" href="#fn:48">48</a></sup></td>
+<td>Software on OEM hardware (Supermicro, Cisco, HPE)<sup id="fnref4:49"><a class="footnote-ref" href="#fn:49">49</a></sup></td>
+<td>Software; WEKApod appliances</td>
+</tr>
+<tr>
+<td>KV-cache tier</td>
+<td>Infinia and EXAScaler via Dynamo/NIXL<sup id="fnref3:22"><a class="footnote-ref" href="#fn:22">22</a></sup></td>
+<td>PureKVA on FlashBlade//EXA (availability announced for Oct 2026)<sup id="fnref:52"><a class="footnote-ref" href="#fn:52">52</a></sup></td>
+<td>VUA (open source, 2025)<sup id="fnref:53"><a class="footnote-ref" href="#fn:53">53</a></sup>; BlueField-4-hosted CNodes for NVIDIA's context-memory tier (announced 2026); GPU-equipped CNode-X for vector search<sup id="fnref:54"><a class="footnote-ref" href="#fn:54">54</a></sup></td>
+<td>Augmented Memory Grid<sup id="fnref:55"><a class="footnote-ref" href="#fn:55">55</a></sup></td>
+</tr>
+<tr>
+<td>Cloud</td>
+<td>Google Cloud Managed Lustre; Infinia on OCI<sup id="fnref3:25"><a class="footnote-ref" href="#fn:25">25</a></sup><sup id="fnref6:4"><a class="footnote-ref" href="#fn:4">4</a></sup></td>
+<td>No managed EXA service found in public sources</td>
+<td>Google Cloud hybrid namespace (2025)<sup id="fnref:56"><a class="footnote-ref" href="#fn:56">56</a></sup></td>
+<td>Native on AWS, GCP, Azure, OCI<sup id="fnref:57"><a class="footnote-ref" href="#fn:57">57</a></sup></td>
+</tr>
+<tr>
+<td>Capital</td>
+<td>Founder-owned; Blackstone $300M at $5B<sup id="fnref4:5"><a class="footnote-ref" href="#fn:5">5</a></sup></td>
+<td>Public (NYSE: P)</td>
+<td>$30B valuation, Series F 2026<sup id="fnref2:40"><a class="footnote-ref" href="#fn:40">40</a></sup></td>
+<td>$1.6B valuation, Series E 2024<sup id="fnref2:41"><a class="footnote-ref" href="#fn:41">41</a></sup></td>
+</tr>
+<tr>
+<td>MLPerf Storage v3.0</td>
+<td>Did not submit</td>
+<td>Submitted; top checkpoint write<sup id="fnref4:8"><a class="footnote-ref" href="#fn:8">8</a></sup></td>
+<td>Did not submit</td>
+<td>Did not submit</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 44.2 — DDN wins on bandwidth heritage and NVIDIA intimacy; Everpure, VAST and WEKA each attack it on a different axis: standard clients, shared-everything economics or a software-only mesh.</em></p>
+<p><strong>Steelman DDN.</strong> For a 10,000-GPU training cluster whose owners already run Lustre, DDN is the low-risk answer: known GB/s per 2U, references inside NVIDIA, coherent POSIX writes from thousands of ranks, and an owner-operated supplier whose engineers wrote the code. Profitability means it need not win every deal, and its government relationships take years to replicate. <strong>Where Everpure is stronger:</strong> no client to install, data reduction and enterprise data services, an ownership model built around non-disruptive upgrades, and public, audited financials. <strong>Where VAST and WEKA are stronger:</strong> each runs one architecture across training and inference, with deeper software monetisation, and VAST has higher valuation currency for M&amp;A.</p>
+<h2 id="history-and-trajectory">History and trajectory<a class="headerlink" href="#history-and-trajectory" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>timeline
+    title DDN milestones, 1998 to 2026
+    1998 : DDN formed by Alex Bouzari and Paul Bloch
+    2002 : Founders buy out venture investors
+    2018 : Buys Intel Lustre team and revives Whamcloud : Buys Tintri assets for about 60M USD
+    2019 : Buys Nexenta : Buys IntelliFlash from Western Digital
+    2020 : NVIDIA Selene runs on DDN AI400X
+    2023 : Infinia key-value platform announced
+    2024 : NVIDIA Eos on 48 AI400X2 : xAI Colossus announced
+    2025 : Blackstone invests 300M USD at 5B USD : Infinia 2.0 and AI400X3 : Google Cloud Managed Lustre GA : DDN CORE
+    2026 : New CFOO and President : AI400X3M with KV cache : Infinia 2.4 : GPU-initiated access work with NVIDIA</code></pre>
+<p><em>Figure 44.5 — DDN spent two decades as a self-funded HPC specialist, bought Lustre and enterprise assets in 2018–2019, then added outside capital, a second platform and a cloud channel in 2025–2026.</em></p>
+<p>Three phases: <strong>1998–2017</strong>, a bootstrapped bandwidth specialist growing from $25M (2003) to $188M (2010) revenue<sup id="fnref2:13"><a class="footnote-ref" href="#fn:13">13</a></sup>; <strong>2018–2023</strong>, consolidation around Lustre, cheap enterprise assets and NVIDIA's own clusters<sup id="fnref3:14"><a class="footnote-ref" href="#fn:14">14</a></sup><sup id="fnref2:1"><a class="footnote-ref" href="#fn:1">1</a></sup>; <strong>2024–2026</strong>, the AI step-change with xAI, Blackstone, Infinia, Google Cloud and a reported revenue doubling<sup id="fnref3:6"><a class="footnote-ref" href="#fn:6">6</a></sup>. Signals to watch: Infinia POSIX GA and GPUDirect support (roadmap after 2.4)<sup id="fnref4:24"><a class="footnote-ref" href="#fn:24">24</a></sup>; productisation of GPU-initiated access<sup id="fnref2:29"><a class="footnote-ref" href="#fn:29">29</a></sup>; the strategic round targeted for end-2026<sup id="fnref2:11"><a class="footnote-ref" href="#fn:11">11</a></sup>; and whether DDN returns to MLPerf Storage.</p>
+<h2 id="numbers-that-matter">Numbers that matter<a class="headerlink" href="#numbers-that-matter" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+<th>Context</th>
+<th>Source / date</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Blackstone investment</td>
+<td>$300M at $5B valuation</td>
+<td>First institutional capital in ~two decades; board seat</td>
+<td>Blackstone, 2025-01<sup id="fnref5:5"><a class="footnote-ref" href="#fn:5">5</a></sup></td>
+</tr>
+<tr>
+<td>Revenue</td>
+<td>~$500M (2025); ~$1B target (2026)</td>
+<td>Reported by press; earlier estimates conflict ($750M for 2024)</td>
+<td>Forbes, 2026-08<sup id="fnref7:6"><a class="footnote-ref" href="#fn:6">6</a></sup>; B&amp;F, 2025-01<sup id="fnref4:7"><a class="footnote-ref" href="#fn:7">7</a></sup></td>
+</tr>
+<tr>
+<td>Implied valuation multiple</td>
+<td>~10–12x revenue</td>
+<td>$5B ÷ $0.4–0.5B; VAST ~60x CARR, WEKA ~16x ARR</td>
+<td>Worked example</td>
+</tr>
+<tr>
+<td>Founder ownership</td>
+<td>~40% each</td>
+<td>Bouzari and Bloch</td>
+<td>Forbes, 2026-08<sup id="fnref8:6"><a class="footnote-ref" href="#fn:6">6</a></sup></td>
+</tr>
+<tr>
+<td>Bookings growth</td>
+<td>~3x year on year (2026)</td>
+<td>Company-stated at press tour</td>
+<td>vmblog, 2026-10<sup id="fnref4:38"><a class="footnote-ref" href="#fn:38">38</a></sup></td>
+</tr>
+<tr>
+<td>NVIDIA Eos storage</td>
+<td>48 AI400X2, ~4 TB/s, &lt;3 racks, ~100 kW</td>
+<td>576 DGX H100; ≈40 GB/s per kW</td>
+<td>DDN, 2024-03<sup id="fnref6:2"><a class="footnote-ref" href="#fn:2">2</a></sup></td>
+</tr>
+<tr>
+<td>AI400X3M</td>
+<td>190 GB/s read, 110 GB/s write, 8M IOPS per 2U</td>
+<td>Vendor-stated, ISC 2026</td>
+<td>StorageReview, 2026-06<sup id="fnref4:22"><a class="footnote-ref" href="#fn:22">22</a></sup></td>
+</tr>
+<tr>
+<td>Infinia at xAI</td>
+<td>350 PB single cluster</td>
+<td>Company-stated</td>
+<td>Blocks &amp; Files, 2026-01<sup id="fnref3:15"><a class="footnote-ref" href="#fn:15">15</a></sup></td>
+</tr>
+<tr>
+<td>KV-cache claim</td>
+<td>57 s recompute vs 2.1 s load (27x), 112K tokens</td>
+<td>Vendor test, Qwen3-32B on 2 A100s</td>
+<td>DDN, 2025-07<sup id="fnref2:27"><a class="footnote-ref" href="#fn:27">27</a></sup></td>
+</tr>
+<tr>
+<td>Google Cloud Managed Lustre</td>
+<td>Up to 1 TB/s per namespace</td>
+<td>First-party Google service on EXAScaler</td>
+<td>Business Wire, 2025-07<sup id="fnref4:25"><a class="footnote-ref" href="#fn:25">25</a></sup></td>
+</tr>
+</tbody>
+</table>
+<h2 id="conversation-playbook">Conversation playbook<a class="headerlink" href="#conversation-playbook" title="Permanent link">&para;</a></h2>
+<p><strong>Questions for a PM</strong></p>
+<ol>
+<li><em>"In accounts where DDN shipped the first SuperPOD, what wins the second phase?"</em> Strong answer: names the trigger (a capacity tier, an inference build-out, a painful client upgrade), gives a win/loss pattern, and admits greenfield training pods often stay with DDN.</li>
+<li><em>"How do we answer DDN's 27x and 10x KV-cache numbers against PureKVA?"</em> Strong answer: normalises the baseline (recompute versus a CPU-memory cache versus another storage tier), context length, cache hit rate and cost per token, then quotes Everpure's own MLPerf v3.0 KV-cache results with their configuration.</li>
+<li><em>"Does Google Cloud Managed Lustre show up in our pipeline?"</em> Strong answer: knows which cloud-adjacent AI buyers are choosing a managed Lustre service over on-prem, and what Everpure offers them (data mobility, egress economics, subscription).</li>
+</ol>
+<p><strong>Questions for an engineer</strong></p>
+<ol>
+<li><em>"What does a FlashBlade//EXA client give up against a Lustre client on shared-file writes and per-node bandwidth?"</em> Strong answer: separates file-per-rank checkpoints (safe on pNFS) from N-to-1 shared writes, quantifies per-client GB/s, and explains recovery when a client hangs.</li>
+<li><em>"Size EXA against an eight-node AI400X3 rack: per U, per kW, per usable TB."</em> Strong answer: uses datasheet and MLPerf figures, includes data reduction and protection overhead, and names the workload, not just peak reads.</li>
+<li><em>"Infinia keeps all metadata in a Bε-tree key-value store. How does the EXA metadata core compare, and where does each hit its limits?"</em> Strong answer: covers write amplification, small-object rates, tenant isolation and how metadata scales across blades versus nodes.</li>
+</ol>
+<p><strong>Don't say this:</strong></p>
+<ul>
+<li>"DDN is just Lustre." Infinia is a separate, from-scratch platform, and CORE spans both.</li>
+<li>"DDN is the storage behind xAI." DDN and VAST both claim Colossus; say xAI references both.</li>
+<li>"DDN never took outside money." It had venture investors around 2002 and Blackstone in 2025.</li>
+<li>"DDN topped MLPerf Storage." It entered v0.5 to v2.0 and emphasised density in v2.0, but did not enter v3.0.</li>
+<li>"DDN does $1B in revenue." That is a reported 2026 target; 2025 figures conflict and are unaudited.</li>
+<li>"Lustre is legacy." It runs most of the world's largest systems, and Google sells DDN's version as a service.</li>
+</ul>
+<h2 id="going-deeper-optional-l3-pointers">Going deeper (optional, L3 pointers)<a class="headerlink" href="#going-deeper-optional-l3-pointers" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Lustre internals: ORNL's <em>Understanding Lustre Internals</em> and "Lustre Unveiled" (ACM TOS, 2025), as cited in <a href="../../03-system-architecture/17-parallel-file-systems/">Chapter 17</a>.</li>
+<li>Bε-trees: Bender et al., "An Introduction to Bε-trees and Write-Optimization," USENIX <em>;login:</em>, October 2015<sup id="fnref:58"><a class="footnote-ref" href="#fn:58">58</a></sup>.</li>
+<li>MLPerf Storage v2.0 and v3.0 results tables at MLCommons, and the IO500 lists, for DDN configurations and per-node numbers.</li>
+</ul>
+<h2 id="key-terms">Key terms<a class="headerlink" href="#key-terms" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>EXAScaler</strong> — DDN's Lustre distribution plus management tooling, sold mostly in appliances.</li>
+<li><strong>A³I / AI400X series</strong> — DDN's 2U all-NVMe EXAScaler appliances for GPU clusters.</li>
+<li><strong>Infinia</strong> — DDN's software-defined data platform built on a distributed key-value store.</li>
+<li><strong>Bε-tree</strong> — a write-optimised B-tree that buffers updates in internal nodes.</li>
+<li><strong>DDN CORE</strong> — DDN's control plane and data fabric spanning EXAScaler and Infinia.</li>
+<li><strong>Whamcloud</strong> — the Lustre engineering unit, owned by DDN since 2018.</li>
+<li><strong>KV-cache offload</strong> — storing transformer key/value tensors outside GPU memory for reuse.</li>
+<li><strong>GPU-initiated data access</strong> — GPUs issuing storage operations without a CPU round-trip.</li>
+<li>See the <a href="../../glossary/">glossary</a> for the rest.</li>
+</ul>
+<h2 id="sources">Sources<a class="headerlink" href="#sources" title="Permanent link">&para;</a></h2>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>insideHPC, "DDN Data Storage in 7th-ranked Nvidia Supercomputer," 2020-07. https://insidehpc.com/2020/07/ddn-data-storage-in-7th-ranked-nvidia-supercomputer/ (retrieved 2026-11-01); insideHPC, "HPC at Scale Enabled by DDN A3i and NVIDIA SuperPOD," 2020-04. https://insidehpc.com/2020/04/hpc-at-scale-enabled-by-ddn-a3i-and-nvidia-superpod/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:1" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:1" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:1" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref5:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>DDN, "DDN Delivers 4 Terabytes/Second of Accelerated Storage Performance in Groundbreaking NVIDIA Eos AI Supercomputer," 2024-03. https://www.ddn.com/press-releases/ddn-delivers-4-terabytes-second-of-accelerated-storage-performance-in-groundbreaking-nvidia-eos-ai-supercomputer/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:2" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:2" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:2" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref5:2" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref6:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>Blocks &amp; Files, "DDN's ground-up developed petabyte-scale and fast Infinia object store," 2023-11-08. https://blocksandfiles.com/2023/11/08/ddns-ground-up-developed-petabyte-scale-and-fast-infinia-object-store/ (retrieved 2026-11-01; search extract only).&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:3" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:3" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:3" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref5:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>DDN via Business Wire, "DDN Launches DDN CORE—The Unified Data Engine Powering the AI Factory Era," 2025-11-17. https://www.businesswire.com/news/home/20251117882831/en/ (retrieved 2026-11-01); Blocks &amp; Files, "DDN goes hard CORE," 2025-11-18. https://www.blocksandfiles.com/ai-ml/2025/11/18/ddn-goes-hard-core/1718766 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:4" title="Jump back to footnote 4 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:4" title="Jump back to footnote 4 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:4" title="Jump back to footnote 4 in the text">&#8617;</a><a class="footnote-backref" href="#fnref5:4" title="Jump back to footnote 4 in the text">&#8617;</a><a class="footnote-backref" href="#fnref6:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p>Blackstone, "Blackstone Invests $300 Million at a $5 Billion Valuation in DDN, AI and Data Intelligence Solutions Leader, to Fuel Further Rapid Growth," 2025-01-08. https://www.blackstone.com/news/press/blackstone-invests-300-million-at-a-5-billion-valuation-in-ddn-ai-and-data-intelligence-solutions-leader-to-fuel-further-rapid-growth/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:5" title="Jump back to footnote 5 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:5" title="Jump back to footnote 5 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:5" title="Jump back to footnote 5 in the text">&#8617;</a><a class="footnote-backref" href="#fnref5:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:6">
+<p>I. Martin, Forbes, "AI's Latest Rocket Ship Is An Old School, 28-Year-Old Data Company," 2026-08-06. https://www.forbes.com/sites/iainmartin/2026/08/06/ais-latest-rocket-ship-is-an-old-school-28-year-old-data-company/ (retrieved 2026-11-01; read via search extracts); Forbes Italia, "Chi è Alex Bouzari, il miliardario che rende più veloci i supercomputer dell'IA," 2026-08-10. https://forbes.it/2026/08/10/chi-e-alex-bouzari-il-miliardario-che-rende-piu-veloci-i-supercomputer-dellia/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:6" title="Jump back to footnote 6 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:6" title="Jump back to footnote 6 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:6" title="Jump back to footnote 6 in the text">&#8617;</a><a class="footnote-backref" href="#fnref5:6" title="Jump back to footnote 6 in the text">&#8617;</a><a class="footnote-backref" href="#fnref6:6" title="Jump back to footnote 6 in the text">&#8617;</a><a class="footnote-backref" href="#fnref7:6" title="Jump back to footnote 6 in the text">&#8617;</a><a class="footnote-backref" href="#fnref8:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+<li id="fn:7">
+<p>Blocks &amp; Files, "Blackstone invests $300M in DDN to boost AI storage business," 2025-01-09. https://www.blocksandfiles.com/ai-ml/2025/01/09/blackstone-invests-300m-in-ddn-to-boost-ai-storage-business/1588925 (retrieved 2026-11-01; search extract only).&#160;<a class="footnote-backref" href="#fnref:7" title="Jump back to footnote 7 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:7" title="Jump back to footnote 7 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:7" title="Jump back to footnote 7 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:7" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+</li>
+<li id="fn:8">
+<p>MLCommons, "MLCommons Releases New MLPerf Storage v3.0 Benchmark Results," 2026-09-01. https://mlcommons.org/2026/09/mlperf-storage-v3-0-results/ (retrieved 2026-11-01); StorageReview, "MLPerf Storage v3.0: 877 GiB/s Checkpoints, a Cloud First, and a Leaderboard Turned Over," 2026-09. https://www.storagereview.com/news/mlperf-storage-v3-0-877-gib-s-checkpoints-a-cloud-first-and-a-leaderboard-turned-over (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:8" title="Jump back to footnote 8 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:8" title="Jump back to footnote 8 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:8" title="Jump back to footnote 8 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:8" title="Jump back to footnote 8 in the text">&#8617;</a></p>
+</li>
+<li id="fn:9">
+<p>HPCwire, "DDN Announces Next-Gen Reference Architectures for NVIDIA DGX BasePOD and DGX SuperPOD," 2022-09. https://www.hpcwire.com/off-the-wire/ddn-announces-next-gen-reference-architectures-for-nvidia-dgx-basepod-and-dgx-superpod/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:9" title="Jump back to footnote 9 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:9" title="Jump back to footnote 9 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:9" title="Jump back to footnote 9 in the text">&#8617;</a></p>
+</li>
+<li id="fn:10">
+<p>DDN via Business Wire, "DDN Appoints Kevin Delane as President and Chief Revenue Officer to Scale Global AI Leadership," 2026-04-06. https://www.businesswire.com/news/home/20260406143422/en/ (retrieved 2026-11-01); Blocks &amp; Files, "DDN hires chief revenue officer," 2026-04-08. https://www.blocksandfiles.com/ai-ml/2026/04/08/ddn-hires-chief-revenue-officer/5214793 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:10" title="Jump back to footnote 10 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:10" title="Jump back to footnote 10 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:10" title="Jump back to footnote 10 in the text">&#8617;</a></p>
+</li>
+<li id="fn:11">
+<p>Bloomberg, "AI Data Firm DDN Eyeing a Fresh Funding Round by End of Year," 2026-06-10. https://www.bloomberg.com/news/articles/2026-06-10/ai-data-firm-ddn-eyeing-a-fresh-funding-round-by-end-of-year (retrieved 2026-11-01; paywalled, via search extract); Blocks &amp; Files, "DDN wants strategic investors," 2026-06-12. https://www.blocksandfiles.com/ai-ml/2026/06/12/ddn-wants-strategic-investors/5254665 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:11" title="Jump back to footnote 11 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:11" title="Jump back to footnote 11 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:11" title="Jump back to footnote 11 in the text">&#8617;</a></p>
+</li>
+<li id="fn:12">
+<p>Wikipedia, "DataDirect Networks," n.d. https://en.wikipedia.org/wiki/DataDirect_Networks (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:12" title="Jump back to footnote 12 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:12" title="Jump back to footnote 12 in the text">&#8617;</a></p>
+</li>
+<li id="fn:13">
+<p>The Register, "Alex Bouzari on his big data storage firm: First, we got rid of the VCs," 2014-06-30. https://www.theregister.com/2014/06/30/a_ddn_chat/ (retrieved 2026-11-01; search extract only).&#160;<a class="footnote-backref" href="#fnref:13" title="Jump back to footnote 13 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:13" title="Jump back to footnote 13 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:13" title="Jump back to footnote 13 in the text">&#8617;</a></p>
+</li>
+<li id="fn:14">
+<p>TOP500.org, "DDN Acquires Lustre Business from Intel," 2018-06. https://www.top500.org/news/ddn-acquires-lustre-business-from-intel/ (retrieved 2026-11-01); HPCwire, "Storage Leader DDN Acquires Lustre File System Capability from Intel," 2018-06-25. https://www.hpcwire.com/off-the-wire/storage-leader-ddn-acquires-lustre-file-system-capability-from-intel/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:14" title="Jump back to footnote 14 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:14" title="Jump back to footnote 14 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:14" title="Jump back to footnote 14 in the text">&#8617;</a></p>
+</li>
+<li id="fn:15">
+<p>Blocks &amp; Files, "DDN says Lustre-based EXAScaler remains central despite Infinia push," 2026-01-05. https://www.blocksandfiles.com/ai-ml/2026/01/05/ddn-says-lustre-based-exascaler-remains-central-despite-infinia-push/4090329 (retrieved 2026-11-01; search extract only).&#160;<a class="footnote-backref" href="#fnref:15" title="Jump back to footnote 15 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:15" title="Jump back to footnote 15 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:15" title="Jump back to footnote 15 in the text">&#8617;</a></p>
+</li>
+<li id="fn:16">
+<p>DDN, "DDN Boosts AI Storage Leadership with EXAScaler 6," n.d. https://www.ddn.com/press-releases/ddn-boosts-ai-leadership-with-exascaler-6 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:16" title="Jump back to footnote 16 in the text">&#8617;</a></p>
+</li>
+<li id="fn:17">
+<p>TechTarget, "DDN launches high-performance AI storage with AI400X2," n.d. (2022). https://www.techtarget.com/searchstorage/news/252509515/DDN-launches-high-performance-AI-storage-with-AI400X2 (retrieved 2026-11-01); StorageNewsletter, "DDN Storage Appliance Doubles Performance for NVIDIA DGX AI Solutions," 2022-03-28. https://www.storagenewsletter.com/2022/03/28/ddn-storage-appliance-doubles-performance-for-nvidia-dgx-ai-solutions-and-speeds-up-analytics-and-ml-in-cloud-by-100/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:17" title="Jump back to footnote 17 in the text">&#8617;</a></p>
+</li>
+<li id="fn:18">
+<p>BigDATAwire, "DDN Cranks the Data Throughput with AI400X2 Turbo," 2024-03-18. https://www.hpcwire.com/bigdatawire/2024/03/18/ddn-cranks-the-data-throughput-with-ai400x2-turbo/ (retrieved 2026-11-01; search extract only).&#160;<a class="footnote-backref" href="#fnref:18" title="Jump back to footnote 18 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:18" title="Jump back to footnote 18 in the text">&#8617;</a></p>
+</li>
+<li id="fn:19">
+<p>Blocks &amp; Files, "DDN unwraps AI400X3, Infinia updates in Hamburg before AI world turns to Paris," 2025-06-11. https://www.blocksandfiles.com/architecture/2025/06/11/ddn-unwraps-ai400x3-infinia-updates-in-hamburg-before-ai-world-turns-to-paris/1599773 (retrieved 2026-11-01); DDN, "DDN launches AI400X3 and Infinia 2.1 at ISC 2025," 2025-06. https://www.ddn.com/blog/ddn-launches-ai400x3-and-infinia-2.1-at-isc-2025/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:19" title="Jump back to footnote 19 in the text">&#8617;</a></p>
+</li>
+<li id="fn:20">
+<p>Scan Computers (reseller), "DDN AI Storage Solutions" product listing, n.d. https://www.scan.co.uk/ai-solutions/ddn-storage (retrieved 2026-11-01; search extract only).&#160;<a class="footnote-backref" href="#fnref:20" title="Jump back to footnote 20 in the text">&#8617;</a></p>
+</li>
+<li id="fn:21">
+<p>HPCwire/AIwire, "DDN Showcases AI400X3 Performance in Latest MLPerf Storage Benchmarks," 2025-08-05. https://www.hpcwire.com/aiwire/2025/08/05/ddn-showcases-ai400x3-performance-in-latest-mlperf-storage-benchmarks/ (retrieved 2026-11-01); DDN via Business Wire, "DDN Powers the AI Factory of the Future with Record-Breaking Performance Density," 2025-08-04. https://www.businesswire.com/news/home/20250804607363/en/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:21" title="Jump back to footnote 21 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:21" title="Jump back to footnote 21 in the text">&#8617;</a></p>
+</li>
+<li id="fn:22">
+<p>StorageReview, "DDN launches AI400X3M and Dynamo-integrated KV cache acceleration at ISC 2026," 2026-06. https://www.storagereview.com/news/ddn-launches-ai400x3m-and-dynamo-integrated-kv-cache-acceleration-at-isc-2026 (retrieved 2026-11-01); HPCwire, "DDN Preps for AI Wave with Speedy New Appliance, KV Cache Solution," 2026-06-24. https://www.hpcwire.com/2026/06/24/ddn-preps-for-ai-wave-with-speedy-new-appliance-kv-cache-solution/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:22" title="Jump back to footnote 22 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:22" title="Jump back to footnote 22 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:22" title="Jump back to footnote 22 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:22" title="Jump back to footnote 22 in the text">&#8617;</a></p>
+</li>
+<li id="fn:23">
+<p>DDN via Business Wire, "DDN Unveils Infinia 2.0, The AI Data Intelligence Platform to Maximize Value for Enterprises, AI Factories and Sovereign AI," 2025-02-20. https://www.businesswire.com/news/home/20250220891434/en/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:23" title="Jump back to footnote 23 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:23" title="Jump back to footnote 23 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:23" title="Jump back to footnote 23 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:23" title="Jump back to footnote 23 in the text">&#8617;</a></p>
+</li>
+<li id="fn:24">
+<p>DDN, "DDN Unveils Infinia 2.4 at RAISE, Establishing the Foundation Layer for Production AI Inference Economics and Sovereign AI Factories," 2026-07-07. https://www.ddn.com/press-releases/ddn-unveils-infinia-2-4-at-raise-establishing-the-foundation-layer-for-production-ai-inference-economics-and-sovereign-ai-factories/ (retrieved 2026-11-01); StorageReview, "DDN Infinia 2.4 adds multi-tenancy and POSIX support for production AI factories," 2026-07. https://www.storagereview.com/news/ddn-infinia-2-4-adds-multi-tenancy-and-posix-support-for-production-ai-factories (retrieved 2026-11-01); Blocks &amp; Files, "DDN gets Infinia ready for production AI inferencing," 2026-07-08. https://www.blocksandfiles.com/object/2026/07/08/ddn-gets-infinia-ready-for-production-ai-inferencing/5268312 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:24" title="Jump back to footnote 24 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:24" title="Jump back to footnote 24 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:24" title="Jump back to footnote 24 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:24" title="Jump back to footnote 24 in the text">&#8617;</a><a class="footnote-backref" href="#fnref5:24" title="Jump back to footnote 24 in the text">&#8617;</a><a class="footnote-backref" href="#fnref6:24" title="Jump back to footnote 24 in the text">&#8617;</a></p>
+</li>
+<li id="fn:25">
+<p>DDN via Business Wire, "Google Cloud Managed Lustre Powered by DDN EXAScaler Offering High-Performance File System Now Generally Available for AI and HPC Workloads," 2025-07-08. https://www.businesswire.com/news/home/20250708259327/en/ (retrieved 2026-11-01); The New Stack, "Google brings the Lustre parallel file system to its cloud," 2025. https://thenewstack.io/google-brings-the-lustre-parallel-file-system-to-its-cloud/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:25" title="Jump back to footnote 25 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:25" title="Jump back to footnote 25 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:25" title="Jump back to footnote 25 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:25" title="Jump back to footnote 25 in the text">&#8617;</a></p>
+</li>
+<li id="fn:26">
+<p>Tintri, "VMstore T7290 and TxOS 6.0 general availability," 2025-09-30, as summarised by Tintri blog and trade listings. https://tintri.com/blog/ (retrieved 2026-11-01; search extract only).&#160;<a class="footnote-backref" href="#fnref:26" title="Jump back to footnote 26 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:26" title="Jump back to footnote 26 in the text">&#8617;</a></p>
+</li>
+<li id="fn:27">
+<p>DDN, "DDN Eliminates GPU Waste Spiral with Industry-Leading KV Cache Performance for AI Reasoning," 2025-07. https://www.ddn.com/press-releases/ddn-eliminates-gpu-waste-spiral-with-industry-leading-kv-cache-performance-for-ai-reasoning/ (retrieved 2026-11-01); insideHPC, "DDN Takes on GPU Waste with KV Cache Performance for AI Reasoning," 2025-07. https://insidehpc.com/2025/07/ddn-eliminates-gpu-waste-spiral-with-industry-leading-kv-cache-performance-for-ai-reasoning/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:27" title="Jump back to footnote 27 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:27" title="Jump back to footnote 27 in the text">&#8617;</a></p>
+</li>
+<li id="fn:28">
+<p>DDN, "DDN, Nebul and NVIDIA Advance AI Inference Economics Through High-Performance KV Cache Acceleration," 2026-10. https://www.ddn.com/press-releases/ddn-nebul-and-nvidia-advance-ai-inference-economics-through-high-performance-kv-cache-acceleration/ (retrieved 2026-11-01; search extract only).&#160;<a class="footnote-backref" href="#fnref:28" title="Jump back to footnote 28 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:28" title="Jump back to footnote 28 in the text">&#8617;</a></p>
+</li>
+<li id="fn:29">
+<p>DDN via Business Wire, "DDN Collaborates with NVIDIA to Advance GPU-Initiated Data Access for Next-Generation AI," 2026-08-04. https://www.businesswire.com/news/home/20260804345565/en/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:29" title="Jump back to footnote 29 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:29" title="Jump back to footnote 29 in the text">&#8617;</a></p>
+</li>
+<li id="fn:30">
+<p>DDN, "DDN's Data Platform Propels xAI's Colossus to World-Class Performance," 2024-11-18. https://www.ddn.com/press-releases/ddns-data-platform-propels-xais-colossus-to-world-class-performance/ (retrieved 2026-11-01); Blocks &amp; Files, "DDN supplying storage for xAI's Colossus supercomputer," 2024-11-19. https://www.blocksandfiles.com/ai-ml/2024/11/19/ddn-supplying-storage-for-xais-colossus-supercomputer/1604044 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:30" title="Jump back to footnote 30 in the text">&#8617;</a></p>
+</li>
+<li id="fn:31">
+<p>VAST Data blog, "The story of VAST and xAI," n.d. https://www.vastdata.com/blog/the-story-of-vast-and-xai ; Blocks &amp; Files, "VAST Data in xAI's frontier AI factory, Nscale's UK data centers and Williams F1 racing team," 2025-10-30. https://blocksandfiles.com/2025/10/30/vast-data-in-xais-frontier-ai-factory-nscales-uk-data-centers-and-williams-f1-racing-team/ (both retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:31" title="Jump back to footnote 31 in the text">&#8617;</a></p>
+</li>
+<li id="fn:32">
+<p>Blocks &amp; Files, "MLCommons publishes storage benchmark for AI," 2023-09-18. https://www.blocksandfiles.com/ai-ml/2023/09/18/mlcommons-publishes-storage-benchmark-for-ai/1586446 ; HPCwire/AIwire, "DDN Shows Strong Results in Inaugural MLPerf AI Storage Benchmark," 2023-09-13. https://aiwire.net/2023/09/13/ddn-shows-strong-results-in-inaugural-mlperf-ai-storage-benchmark (both retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:32" title="Jump back to footnote 32 in the text">&#8617;</a></p>
+</li>
+<li id="fn:33">
+<p>Blocks &amp; Files, "MLPerf AI benchmark tests how storage systems keep GPUs busy," 2024-09-26. https://www.blocksandfiles.com/ai-ml/2024/09/26/mlperf-ai-benchmark-tests-how-storage-systems-keep-gpus-busy/1605043 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:33" title="Jump back to footnote 33 in the text">&#8617;</a></p>
+</li>
+<li id="fn:34">
+<p>Blocks &amp; Files, "DDN tops IO500 10-node list for HPC storage," 2025-06-20. https://www.blocksandfiles.com/ai-ml/2025/06/20/ddn-tops-io500-10-node-list-for-hpc-storage/1609176 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:34" title="Jump back to footnote 34 in the text">&#8617;</a></p>
+</li>
+<li id="fn:35">
+<p>Blocks &amp; Files, "DDN buys Tintri biz remains for $60mn," 2018-09-05. https://blocksandfiles.com/2018/09/05/ddn-buys-tintri-biz-remains-for-60mn/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:35" title="Jump back to footnote 35 in the text">&#8617;</a></p>
+</li>
+<li id="fn:36">
+<p>HPCwire, "DDN to Acquire Nexenta," 2019-05-06. https://www.hpcwire.com/2019/05/06/ddn-to-acquire-nexenta/ (retrieved 2026-11-01); The Register, "DDN is buying Nexenta," 2019-05-07. https://www.theregister.com/2019/05/07/ddn_is_buying_nexenta/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:36" title="Jump back to footnote 36 in the text">&#8617;</a></p>
+</li>
+<li id="fn:37">
+<p>StorageNewsletter, "DDN Completes Acquisition of Western Digital IntelliFlash AFA Business," 2019-11-21. https://www.storagenewsletter.com/2019/11/21/ddn-completes-acquisition-of-western-digital-intelliflash-afa-business/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:37" title="Jump back to footnote 37 in the text">&#8617;</a></p>
+</li>
+<li id="fn:38">
+<p>vmblog (D. Marshall), "DDN says bookings are heading past 3x, and its pitch is simple: stop letting your GPUs sit around," 2026-10-14. https://vmblog.com/bylines/ddn-says-bookings-are-heading-past-3x-and-its-pitch-is-simple-stop-letting-your-gpus-sit-around/ (retrieved 2026-11-01; search extract only); iTWire, "70th IT Press Tour: DDN wants every GPU earning its keep," 2026-10. https://itwire.com/business-it-news/data/70th-it-press-tour-ddn-wants-every-gpu-earning-its-keep-and-nvidia-and-google-already-run-on-its-data-engines (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:38" title="Jump back to footnote 38 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:38" title="Jump back to footnote 38 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:38" title="Jump back to footnote 38 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:38" title="Jump back to footnote 38 in the text">&#8617;</a></p>
+</li>
+<li id="fn:39">
+<p>Computer Weekly, "DDN seeks AI leadership as it bags $300m investment," 2025-01. https://www.computerweekly.com/news/366618008/DDN-seeks-AI-leadership-as-it-bags-300m-investment (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:39" title="Jump back to footnote 39 in the text">&#8617;</a></p>
+</li>
+<li id="fn:40">
+<p>CNBC, "Nvidia backs AI company Vast Data at $30 billion valuation," 2026-04-22. https://www.cnbc.com/2026/04/22/nvidia-backs-ai-company-vast-data.html (retrieved 2026-11-01); Futuriom, "VAST Data Hits $30 Billion Valuation Amid 'AI Revolution'," 2026-04. https://www.futuriom.com/articles/news/vast-data-hits-30-billion-valuation-amid-ai-revolution/2026/04 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:40" title="Jump back to footnote 40 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:40" title="Jump back to footnote 40 in the text">&#8617;</a></p>
+</li>
+<li id="fn:41">
+<p>WEKA, "WEKA Nets $140M in Series E Funding at $1.6B Valuation," 2024-05-15. https://www.weka.io/news/weka-nets-140m-in-series-e-funding-at-1-6b-valuation (retrieved 2026-11-01); WEKA, "A Strategic Step Forward for WEKA: An Open Letter From Our CEO," 2025-02. https://www.weka.io/article/a-strategic-step-forward-for-weka-an-open-letter-from-our-ceo (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:41" title="Jump back to footnote 41 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:41" title="Jump back to footnote 41 in the text">&#8617;</a></p>
+</li>
+<li id="fn:42">
+<p>Revelio Labs, "How many employees work at DataDirect Networks?," 2025. https://www.reveliolabs.com/companies/datadirect-networks/employees/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:42" title="Jump back to footnote 42 in the text">&#8617;</a></p>
+</li>
+<li id="fn:43">
+<p>StorageNewsletter, "SC25: The IO500 lists show interesting results as usual," 2025-11-25. https://www.storagenewsletter.com/2025/11/25/sc25-the-io500-lists-show-interesting-results-as-usual/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:43" title="Jump back to footnote 43 in the text">&#8617;</a></p>
+</li>
+<li id="fn:44">
+<p>StorageNewsletter, "SC25: DDN Launches Sovereign AI Solutions Based on NVIDIA AI Data Platform Reference Design," 2025-11-21. https://www.storagenewsletter.com/2025/11/21/sc25-ddn-launches-sovereign-ai-solutions-based-on-nvidia-ai-data-platform-reference-design-trusted-tested-and-proven-for-sovereign-grade-ai/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:44" title="Jump back to footnote 44 in the text">&#8617;</a></p>
+</li>
+<li id="fn:45">
+<p>Benzinga, "Blackstone invests $300 million in AI data firm that powers Elon Musk's xAI supercomputer," 2025-01. https://www.benzinga.com/news/25/01/42892338/blackstone-invests-300-million-in-ai-data-firm-that-powers-elon-musks-xai-supercomputer (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:45" title="Jump back to footnote 45 in the text">&#8617;</a></p>
+</li>
+<li id="fn:46">
+<p>Bloomberg, "Nvidia Partner DDN Hires New Finance Chief Ahead of Possible IPO," 2026-02-24. https://news.bloomberglaw.com/capital-markets/nvidia-partner-ddn-hires-new-finance-chief-ahead-of-possible-ipo (retrieved 2026-11-01; search extract only); DDN via Business Wire, "DDN Appoints Guido Torrini as Chief Financial Operating Officer to Lead Next Phase of Global Growth," 2026-02-24. https://www.businesswire.com/news/home/20260224400498/en/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:46" title="Jump back to footnote 46 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:46" title="Jump back to footnote 46 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:46" title="Jump back to footnote 46 in the text">&#8617;</a></p>
+</li>
+<li id="fn:47">
+<p>StorageNewsletter, "DDN Names Veteran Technology and Global Markets Leader Mohsen Moazami as Vice Chair," 2026-02-05. https://www.storagenewsletter.com/2026/02/05/ddn-names-veteran-technology-and-global-markets-leader-mohsen-moazami-as-vice-chair/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:47" title="Jump back to footnote 47 in the text">&#8617;</a></p>
+</li>
+<li id="fn:48">
+<p>Everpure, "Technical Brief: FlashBlade//EXA," n.d. (2025). https://www.everpuredata.com/content/dam/pdf/en/technical-briefs/tb-flashblade-exa.pdf (retrieved 2026-11-01); Blocks &amp; Files, "How Pure Storage developed its disaggregated FlashBlade//EXA system," 2025-04-17. https://blocksandfiles.com/2025/04/17/how-pure-storage-developed-its-disaggregated-flashblade-exa-system/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:48" title="Jump back to footnote 48 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:48" title="Jump back to footnote 48 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:48" title="Jump back to footnote 48 in the text">&#8617;</a></p>
+</li>
+<li id="fn:49">
+<p>VAST Data, "How it works," n.d. https://vastdata.com/how-it-works (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:49" title="Jump back to footnote 49 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:49" title="Jump back to footnote 49 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:49" title="Jump back to footnote 49 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:49" title="Jump back to footnote 49 in the text">&#8617;</a></p>
+</li>
+<li id="fn:50">
+<p>HPCwire, "WEKA Launches NeuralMesh 6 and WEKApod as AI Inference Pushes Infrastructure Limits," 2026-07-22. https://www.hpcwire.com/2026/07/22/weka-launches-neuralmesh-6-and-wekapod-as-ai-inference-pushes-infrastructure-limits/ (retrieved 2026-11-01); WEKA, "WEKA Introduces NeuralMesh," 2025-06-17. https://www.weka.io/company/weka-newsroom/press-releases/weka-introduces-neuralmesh/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:50" title="Jump back to footnote 50 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:50" title="Jump back to footnote 50 in the text">&#8617;</a></p>
+</li>
+<li id="fn:51">
+<p>WEKA, "Networking in WEKA" (docs v5.0), n.d. https://docs.weka.io/5.0/weka-system-overview/networking-in-wekaio (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:51" title="Jump back to footnote 51 in the text">&#8617;</a></p>
+</li>
+<li id="fn:52">
+<p>Everpure blog, "Everpure KVA Meets FlashBlade//EXA: Enterprise KV Caching at Neocloud Scale," 2026. https://blog.everpuredata.com/purely-technical/everpure-kva-meets-flashblade-exa-enterprise-kv-caching-at-neocloud-scale/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:52" title="Jump back to footnote 52 in the text">&#8617;</a></p>
+</li>
+<li id="fn:53">
+<p>Blocks &amp; Files, "VAST's VUA flash caching virtually expands GPU server memory for AI token generation," 2025-04-25. https://blocksandfiles.com/2025/04/25/vasts-vua-flash-caching-virtually-expands-gpu-server-memory-for-ai-token-generation/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:53" title="Jump back to footnote 53 in the text">&#8617;</a></p>
+</li>
+<li id="fn:54">
+<p>Datacenter Dynamics, "VAST Data integrates AI OS into Nvidia GPU-powered servers," 2026-02-25. https://www.datacenterdynamics.com/en/news/vast-data-integrates-ai-os-into-nvidia-gpu-powered-servers/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:54" title="Jump back to footnote 54 in the text">&#8617;</a></p>
+</li>
+<li id="fn:55">
+<p>WEKA, "WEKA Breaks The AI Memory Barrier With Augmented Memory Grid on NeuralMesh," 2025-11-18. https://www.weka.io/news/weka-breaks-the-ai-memory-barrier-with-augmented-memory-grid-on-neuralmesh (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:55" title="Jump back to footnote 55 in the text">&#8617;</a></p>
+</li>
+<li id="fn:56">
+<p>SDxCentral, "Google Cloud enlists VAST Data to support AI multi-environment deployments," 2025-11. https://www.sdxcentral.com/news/google-cloud-enlists-vast-data-to-support-ai-multi-environment-deployments/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:56" title="Jump back to footnote 56 in the text">&#8617;</a></p>
+</li>
+<li id="fn:57">
+<p>HPCwire, "WEKA Unveils Multicloud Data Platform for AI and Next-Gen Workloads," 2022-06. https://www.hpcwire.com/off-the-wire/weka-unveils-multicloud-data-platform-for-ai-and-next-gen-workloads/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:57" title="Jump back to footnote 57 in the text">&#8617;</a></p>
+</li>
+<li id="fn:58">
+<p>M. A. Bender, M. Farach-Colton, W. Jannen, R. Johnson, B. C. Kuszmaul, D. E. Porter, J. Yuan, Y. Zhan, "An Introduction to Bε-trees and Write-Optimization," USENIX <em>;login:</em> 40(5), 2015-10. https://www.usenix.org/publications/login/oct15/bender (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:58" title="Jump back to footnote 58 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../43-weka/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 43. WEKA deep dive">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                43. WEKA deep dive
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../45-head-to-head/" class="md-footer__link md-footer__link--next" aria-label="Next: 45. Head-to-head: FlashBlade//EXA vs. VAST vs. WEKA vs. DDN">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                45. Head-to-head: FlashBlade//EXA vs. VAST vs. WEKA vs. DDN
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>

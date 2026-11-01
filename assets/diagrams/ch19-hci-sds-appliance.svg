@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 680" width="1000" role="img" aria-labelledby="t d" font-family="Inter, Helvetica, Arial, sans-serif">
+  <title id="t">Appliance vs software-defined storage vs hyperconverged infrastructure</title>
+  <desc id="d">Three columns compare where application compute, storage software and media sit. Appliance: application servers reach a vendor-built box over a SAN or NAS network; the box holds the storage operating system on vendor controllers and vendor-qualified media. Software-defined storage: application servers reach a pool of commodity servers, each running storage software over its own drives; the customer or an OEM buys the servers from a compatibility list. Hyperconverged: there is no separate storage tier; every node runs the hypervisor and virtual machines, the storage software and local drives, and a cluster network carries replica writes between nodes. The bottom row shows what scales together in each model.</desc>
+  <rect x="0" y="0" width="1000" height="680" fill="#FFFFFF"/>
+
+  <text x="30" y="36" font-size="20" font-weight="700" fill="#222222">Where compute, storage software and media sit</text>
+  <text x="30" y="58" font-size="13" fill="#555555">Logical view, not to scale. Original drawing for the Everpure Tech Atlas, Chapter 19.</text>
+
+  <!-- Column headers -->
+  <text x="180" y="92" font-size="16" font-weight="700" text-anchor="middle" fill="#222222">Appliance</text>
+  <text x="180" y="110" font-size="12" text-anchor="middle" fill="#555555">e.g. FlashArray, PowerStore, NetApp AFF</text>
+  <text x="500" y="92" font-size="16" font-weight="700" text-anchor="middle" fill="#222222">Software-defined storage</text>
+  <text x="500" y="110" font-size="12" text-anchor="middle" fill="#555555">e.g. Ceph, MinIO, VAST/WEKA software, vSAN Max</text>
+  <text x="820" y="92" font-size="16" font-weight="700" text-anchor="middle" fill="#222222">Hyperconverged (HCI)</text>
+  <text x="820" y="110" font-size="12" text-anchor="middle" fill="#555555">e.g. Nutanix, VMware vSAN</text>
+
+  <!-- ===== Appliance column ===== -->
+  <rect x="30" y="124" width="300" height="56" rx="6" fill="#56B4E9" fill-opacity="0.35" stroke="#56B4E9"/>
+  <text x="180" y="148" font-size="13" text-anchor="middle" fill="#222222">Application servers</text>
+  <text x="180" y="166" font-size="12" text-anchor="middle" fill="#222222">hypervisor, VMs, containers</text>
+  <rect x="30" y="192" width="300" height="26" rx="4" fill="#DDDDDD"/>
+  <text x="180" y="210" font-size="12" text-anchor="middle" fill="#222222">SAN / NAS: FC, iSCSI, NVMe-oF, NFS</text>
+  <rect x="30" y="230" width="300" height="250" rx="8" fill="#FFFFFF" stroke="#222222" stroke-width="2"/>
+  <text x="180" y="252" font-size="12" font-weight="700" text-anchor="middle" fill="#222222">One vendor-built box</text>
+  <rect x="50" y="264" width="125" height="70" rx="5" fill="#0072B2" fill-opacity="0.85"/>
+  <text x="112" y="294" font-size="12" text-anchor="middle" fill="#FFFFFF">Controller A</text>
+  <text x="112" y="312" font-size="12" text-anchor="middle" fill="#FFFFFF">storage OS</text>
+  <rect x="185" y="264" width="125" height="70" rx="5" fill="#0072B2" fill-opacity="0.85"/>
+  <text x="247" y="294" font-size="12" text-anchor="middle" fill="#FFFFFF">Controller B</text>
+  <text x="247" y="312" font-size="12" text-anchor="middle" fill="#FFFFFF">storage OS</text>
+  <rect x="50" y="346" width="260" height="62" rx="5" fill="#E69F00" fill-opacity="0.75"/>
+  <text x="180" y="372" font-size="12" text-anchor="middle" fill="#222222">Shared, vendor-qualified media</text>
+  <text x="180" y="390" font-size="12" text-anchor="middle" fill="#222222">(sometimes custom flash modules)</text>
+  <text x="180" y="432" font-size="12" text-anchor="middle" fill="#222222">Vendor designs, qualifies, ships</text>
+  <text x="180" y="450" font-size="12" text-anchor="middle" fill="#222222">and supports hardware + software</text>
+
+  <!-- ===== SDS column ===== -->
+  <rect x="350" y="124" width="300" height="56" rx="6" fill="#56B4E9" fill-opacity="0.35" stroke="#56B4E9"/>
+  <text x="500" y="148" font-size="13" text-anchor="middle" fill="#222222">Application servers</text>
+  <text x="500" y="166" font-size="12" text-anchor="middle" fill="#222222">separate from storage</text>
+  <rect x="350" y="192" width="300" height="26" rx="4" fill="#DDDDDD"/>
+  <text x="500" y="210" font-size="12" text-anchor="middle" fill="#222222">Ethernet: NVMe/TCP, RBD, S3, NFS</text>
+  <!-- three commodity servers -->
+  <g>
+    <rect x="350" y="230" width="92" height="180" rx="6" fill="#FFFFFF" stroke="#888888"/>
+    <rect x="358" y="242" width="76" height="60" rx="4" fill="#0072B2" fill-opacity="0.85"/>
+    <text x="396" y="268" font-size="12" text-anchor="middle" fill="#FFFFFF">storage</text>
+    <text x="396" y="285" font-size="12" text-anchor="middle" fill="#FFFFFF">software</text>
+    <rect x="358" y="312" width="76" height="86" rx="4" fill="#E69F00" fill-opacity="0.75"/>
+    <text x="396" y="352" font-size="12" text-anchor="middle" fill="#222222">local</text>
+    <text x="396" y="369" font-size="12" text-anchor="middle" fill="#222222">drives</text>
+
+    <rect x="454" y="230" width="92" height="180" rx="6" fill="#FFFFFF" stroke="#888888"/>
+    <rect x="462" y="242" width="76" height="60" rx="4" fill="#0072B2" fill-opacity="0.85"/>
+    <text x="500" y="268" font-size="12" text-anchor="middle" fill="#FFFFFF">storage</text>
+    <text x="500" y="285" font-size="12" text-anchor="middle" fill="#FFFFFF">software</text>
+    <rect x="462" y="312" width="76" height="86" rx="4" fill="#E69F00" fill-opacity="0.75"/>
+    <text x="500" y="352" font-size="12" text-anchor="middle" fill="#222222">local</text>
+    <text x="500" y="369" font-size="12" text-anchor="middle" fill="#222222">drives</text>
+
+    <rect x="558" y="230" width="92" height="180" rx="6" fill="#FFFFFF" stroke="#888888"/>
+    <rect x="566" y="242" width="76" height="60" rx="4" fill="#0072B2" fill-opacity="0.85"/>
+    <text x="604" y="268" font-size="12" text-anchor="middle" fill="#FFFFFF">storage</text>
+    <text x="604" y="285" font-size="12" text-anchor="middle" fill="#FFFFFF">software</text>
+    <rect x="566" y="312" width="76" height="86" rx="4" fill="#E69F00" fill-opacity="0.75"/>
+    <text x="604" y="352" font-size="12" text-anchor="middle" fill="#222222">local</text>
+    <text x="604" y="369" font-size="12" text-anchor="middle" fill="#222222">drives</text>
+  </g>
+  <text x="500" y="432" font-size="12" text-anchor="middle" fill="#222222">Commodity servers from a compatibility</text>
+  <text x="500" y="450" font-size="12" text-anchor="middle" fill="#222222">list; vendor sells only the software</text>
+
+  <!-- ===== HCI column ===== -->
+  <rect x="670" y="124" width="300" height="94" rx="6" fill="#F3F6F9" stroke="#888888" stroke-dasharray="5 4"/>
+  <text x="820" y="160" font-size="13" text-anchor="middle" fill="#222222">No separate storage tier:</text>
+  <text x="820" y="180" font-size="12" text-anchor="middle" fill="#222222">VMs run on the same nodes</text>
+  <text x="820" y="198" font-size="12" text-anchor="middle" fill="#222222">that hold the data</text>
+  <g>
+    <rect x="670" y="230" width="92" height="210" rx="6" fill="#FFFFFF" stroke="#888888"/>
+    <rect x="678" y="242" width="76" height="56" rx="4" fill="#56B4E9" fill-opacity="0.6"/>
+    <text x="716" y="266" font-size="12" text-anchor="middle" fill="#222222">VMs +</text>
+    <text x="716" y="283" font-size="12" text-anchor="middle" fill="#222222">hypervisor</text>
+    <rect x="678" y="306" width="76" height="52" rx="4" fill="#0072B2" fill-opacity="0.85"/>
+    <text x="716" y="328" font-size="12" text-anchor="middle" fill="#FFFFFF">storage</text>
+    <text x="716" y="345" font-size="12" text-anchor="middle" fill="#FFFFFF">software</text>
+    <rect x="678" y="366" width="76" height="62" rx="4" fill="#E69F00" fill-opacity="0.75"/>
+    <text x="716" y="402" font-size="12" text-anchor="middle" fill="#222222">drives</text>
+
+    <rect x="774" y="230" width="92" height="210" rx="6" fill="#FFFFFF" stroke="#888888"/>
+    <rect x="782" y="242" width="76" height="56" rx="4" fill="#56B4E9" fill-opacity="0.6"/>
+    <text x="820" y="266" font-size="12" text-anchor="middle" fill="#222222">VMs +</text>
+    <text x="820" y="283" font-size="12" text-anchor="middle" fill="#222222">hypervisor</text>
+    <rect x="782" y="306" width="76" height="52" rx="4" fill="#0072B2" fill-opacity="0.85"/>
+    <text x="820" y="328" font-size="12" text-anchor="middle" fill="#FFFFFF">storage</text>
+    <text x="820" y="345" font-size="12" text-anchor="middle" fill="#FFFFFF">software</text>
+    <rect x="782" y="366" width="76" height="62" rx="4" fill="#E69F00" fill-opacity="0.75"/>
+    <text x="820" y="402" font-size="12" text-anchor="middle" fill="#222222">drives</text>
+
+    <rect x="878" y="230" width="92" height="210" rx="6" fill="#FFFFFF" stroke="#888888"/>
+    <rect x="886" y="242" width="76" height="56" rx="4" fill="#56B4E9" fill-opacity="0.6"/>
+    <text x="924" y="266" font-size="12" text-anchor="middle" fill="#222222">VMs +</text>
+    <text x="924" y="283" font-size="12" text-anchor="middle" fill="#222222">hypervisor</text>
+    <rect x="886" y="306" width="76" height="52" rx="4" fill="#0072B2" fill-opacity="0.85"/>
+    <text x="924" y="328" font-size="12" text-anchor="middle" fill="#FFFFFF">storage</text>
+    <text x="924" y="345" font-size="12" text-anchor="middle" fill="#FFFFFF">software</text>
+    <rect x="886" y="366" width="76" height="62" rx="4" fill="#E69F00" fill-opacity="0.75"/>
+    <text x="924" y="402" font-size="12" text-anchor="middle" fill="#222222">drives</text>
+  </g>
+  <rect x="670" y="452" width="300" height="26" rx="4" fill="#DDDDDD"/>
+  <text x="820" y="470" font-size="12" text-anchor="middle" fill="#222222">Cluster network carries replica writes</text>
+
+  <!-- Bottom row: what scales together -->
+  <line x1="30" y1="500" x2="970" y2="500" stroke="#DDDDDD" stroke-width="2"/>
+  <text x="30" y="524" font-size="13" font-weight="700" fill="#222222">What scales together</text>
+  <rect x="30" y="536" width="300" height="70" rx="6" fill="#F3F6F9" stroke="#DDDDDD"/>
+  <text x="180" y="560" font-size="12" text-anchor="middle" fill="#222222">Capacity: add shelves. Performance:</text>
+  <text x="180" y="578" font-size="12" text-anchor="middle" fill="#222222">upgrade controllers. Compute is</text>
+  <text x="180" y="596" font-size="12" text-anchor="middle" fill="#222222">bought and scaled separately.</text>
+  <rect x="350" y="536" width="300" height="70" rx="6" fill="#F3F6F9" stroke="#DDDDDD"/>
+  <text x="500" y="560" font-size="12" text-anchor="middle" fill="#222222">Add storage servers for capacity</text>
+  <text x="500" y="578" font-size="12" text-anchor="middle" fill="#222222">and performance together; compute</text>
+  <text x="500" y="596" font-size="12" text-anchor="middle" fill="#222222">still scales separately.</text>
+  <rect x="670" y="536" width="300" height="70" rx="6" fill="#FFF8D6" stroke="#F0E442"/>
+  <text x="820" y="560" font-size="12" text-anchor="middle" fill="#222222">Add a node = compute + memory +</text>
+  <text x="820" y="578" font-size="12" text-anchor="middle" fill="#222222">capacity in a fixed ratio. Whatever</text>
+  <text x="820" y="596" font-size="12" text-anchor="middle" fill="#222222">you did not need is stranded.</text>
+
+  <!-- Legend -->
+  <rect x="30" y="628" width="18" height="14" fill="#56B4E9" fill-opacity="0.6"/>
+  <text x="56" y="640" font-size="12" fill="#222222">Application compute</text>
+  <rect x="210" y="628" width="18" height="14" fill="#0072B2" fill-opacity="0.85"/>
+  <text x="236" y="640" font-size="12" fill="#222222">Storage software (data services, protection, metadata)</text>
+  <rect x="600" y="628" width="18" height="14" fill="#E69F00" fill-opacity="0.75"/>
+  <text x="626" y="640" font-size="12" fill="#222222">Media (SSD / HDD)</text>
+</svg>

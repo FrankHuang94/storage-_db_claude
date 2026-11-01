@@ -1,0 +1,4402 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A strategy-level knowledge base on storage, AI storage and the competitive landscape around Everpure (formerly Pure Storage).">
+      
+      
+      
+        <link rel="canonical" href="https://frankhuang94.github.io/storage-_db_claude/06-industry-and-competition/42-vast-data/">
+      
+      
+        <link rel="prev" href="../41-why-ai-native-vendors-won/">
+      
+      
+        <link rel="next" href="../43-weka/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>42. VAST Data deep dive - Everpure Tech Atlas</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#42-vast-data-deep-dive" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Everpure Tech Atlas" class="md-header__button md-logo" aria-label="Everpure Tech Atlas" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Everpure Tech Atlas
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              42. VAST Data deep dive
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/FrankHuang94/storage-_db_claude" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    storage-_db_claude
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Everpure Tech Atlas" class="md-nav__button md-logo" aria-label="Everpure Tech Atlas" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Everpure Tech Atlas
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/FrankHuang94/storage-_db_claude" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    storage-_db_claude
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 0 — Start Here
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 0 — Start Here
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start-here/00a-how-to-use-this-atlas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0.1. How to use this atlas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start-here/00b-one-page-map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0.2. The one-page map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 1 — Storage Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 1 — Storage Fundamentals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/01-what-storage-does/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. What storage does
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/02-media-physics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Media physics for a semis person
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/03-inside-an-ssd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Inside an SSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/04-performance-and-economics-metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Performance and economics metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/05-data-reduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Data reduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/06-data-protection-and-resilience/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Data protection and resilience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 2 — Protocols and Networking
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 2 — Protocols and Networking
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/07-block-protocols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Block protocols
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/08-file-protocols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. File protocols
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/09-object-storage-and-s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Object storage and S3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/10-datacenter-networking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Datacenter networking for storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/11-gpu-data-path/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. The GPU data path
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/12-interfaces-and-emerging-tech/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Interfaces and emerging tech
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3 — Storage System Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 3 — Storage System Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/13-storage-stack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. The storage stack, layer by layer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/14-scale-up-dual-controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Scale-up dual-controller arrays
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/15-scale-out-shared-nothing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Scale-out shared-nothing clusters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/16-disaggregated-shared-everything/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Disaggregated shared-everything architectures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/17-parallel-file-systems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Parallel and distributed file systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/18-object-storage-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Object storage architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/19-software-defined-and-hci/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Software-defined storage and HCI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/20-distributed-systems-fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Distributed-systems fundamentals for storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/21-metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Metadata: the hidden bottleneck
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/22-control-planes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Control planes and fleet management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/23-consumption-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Consumption models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/24-architecture-decision-matrix/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Architecture decision matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 4 — Everpure
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 4 — Everpure
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/25-company-history-and-strategy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Company history and strategy, 2009–2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/26-purity-and-directflash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Core technology: Purity and DirectFlash
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/27-flasharray-and-flashblade/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Product portfolio: FlashArray and FlashBlade
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/28-platform-and-software/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. Platform and software
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/29-hyperscaler-ecosystem-financials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Hyperscaler business, ecosystem and financials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 5 — AI Storage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 5 — AI Storage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/30-ai-data-pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. The AI data pipeline end to end
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/31-training-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Training storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/32-inference-and-kv-cache/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Inference and KV cache
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/33-rag-vector-lakehouse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    33. RAG, vector databases and AI-native data formats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/34-nvidia-ecosystem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. NVIDIA's ecosystem and certifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/35-ai-factories-and-neoclouds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    35. AI factories and neoclouds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/36-hyperscaler-ai-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    36. How hyperscalers build AI storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/37-reading-benchmarks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    37. Reading benchmarks critically
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/38-power-and-density/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    38. Power, density and the AI datacenter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/39-agentic-ai-and-data-intelligence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    39. Agentic AI and data intelligence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 6 — Industry and Competition
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 6 — Industry and Competition
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../40-market-structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    40. Market structure and sizing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../41-why-ai-native-vendors-won/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    41. Why AI-native storage vendors gained traction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    42. VAST Data deep dive
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    42. VAST Data deep dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters-for-everpure-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters for Everpure strategy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dase-in-one-paragraph-and-what-vast-adds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DASE in one paragraph, and what VAST adds
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hardware-generations-from-appliance-to-runs-on-anything-with-a-fabric" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hardware generations: from appliance to "runs on anything with a fabric"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-element-store-one-metadata-structure-for-every-data-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Element Store: one metadata structure for every data type
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#similarity-based-data-reduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Similarity-based data reduction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#locally-decodable-erasure-codes-why-wide-stripes-are-safe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Locally decodable erasure codes: why wide stripes are safe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#protocols-nfs-to-kafka-on-the-same-bytes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Protocols: NFS to Kafka on the same bytes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-ai-os-stack-what-each-layer-does-and-how-mature-it-is" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The AI OS stack: what each layer does and how mature it is
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#io-walkthrough-one-object-three-personalities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I/O walkthrough: one object, three personalities
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-put-gpus-and-dpus-into-storage-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why put GPUs and DPUs into storage nodes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#business-model-financials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Business model &amp; financials
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Business model &amp; financials">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-vast-makes-money" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How VAST makes money
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#funding-and-valuation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Funding and valuation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#revenue-profitability-and-the-rule-of-x" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Revenue, profitability and the "Rule of X"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#customers-go-to-market" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Customers &amp; go-to-market
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Customers &amp; go-to-market">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#who-buys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Who buys
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-it-sells" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How it sells
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-it-gained-traction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why it gained traction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#risks-open-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Risks &amp; open questions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#strategic-relevance-to-everpure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Strategic relevance to Everpure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-everpure-approaches-it-vs-competitors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Everpure approaches it vs. competitors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#history-and-trajectory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        History and trajectory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#numbers-that-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Numbers that matter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversation-playbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversation playbook
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-deeper-optional-l3-pointers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going deeper (optional, L3 pointers)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key terms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../43-weka/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    43. WEKA deep dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../44-ddn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    44. DDN deep dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../45-head-to-head/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    45. Head-to-head: FlashBlade//EXA vs. VAST vs. WEKA vs. DDN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../46-incumbents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    46. Incumbents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../47-other-challengers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    47. Other challengers and software-defined players
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../48-media-suppliers-and-nand-cycle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    48. Media suppliers and the NAND cycle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../49-competitive-matrices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    49. Competitive landscape matrices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../50-diligence-framework/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    50. Technical diligence framework
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 7 — History and Future
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 7 — History and Future
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/51-history-of-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    51. History of storage, 1956–2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/52-history-of-flash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    52. History of flash and NAND economics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/53-future-trends/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    53. Future trends, 2026–2032
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/54-strategic-option-map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    54. Strategic option map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 8 — Conversation Toolkit
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 8 — Conversation Toolkit
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/55-talking-with-pms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    55. Talking with product managers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/56-talking-with-engineering-and-cto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    56. Talking with engineering leaders and the CTO office
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/57-question-bank/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    57. Question bank: 150 questions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/58-explain-in-30-seconds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    58. Explain it in 30 seconds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/59-self-test-flashcards/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    59. Self-test: 279 flashcards
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/60-cheat-sheets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    60. Cheat sheets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters-for-everpure-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters for Everpure strategy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#dase-in-one-paragraph-and-what-vast-adds" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        DASE in one paragraph, and what VAST adds
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hardware-generations-from-appliance-to-runs-on-anything-with-a-fabric" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Hardware generations: from appliance to "runs on anything with a fabric"
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-element-store-one-metadata-structure-for-every-data-type" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The Element Store: one metadata structure for every data type
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#similarity-based-data-reduction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Similarity-based data reduction
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#locally-decodable-erasure-codes-why-wide-stripes-are-safe" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Locally decodable erasure codes: why wide stripes are safe
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#protocols-nfs-to-kafka-on-the-same-bytes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Protocols: NFS to Kafka on the same bytes
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-ai-os-stack-what-each-layer-does-and-how-mature-it-is" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The AI OS stack: what each layer does and how mature it is
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#io-walkthrough-one-object-three-personalities" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        I/O walkthrough: one object, three personalities
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-put-gpus-and-dpus-into-storage-nodes" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why put GPUs and DPUs into storage nodes
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#business-model-financials" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Business model &amp; financials
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Business model &amp; financials">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-vast-makes-money" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How VAST makes money
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#funding-and-valuation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Funding and valuation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#revenue-profitability-and-the-rule-of-x" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Revenue, profitability and the "Rule of X"
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#customers-go-to-market" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Customers &amp; go-to-market
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Customers &amp; go-to-market">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#who-buys" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Who buys
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-it-sells" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How it sells
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-it-gained-traction" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why it gained traction
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#risks-open-questions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Risks &amp; open questions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#strategic-relevance-to-everpure" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Strategic relevance to Everpure
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-everpure-approaches-it-vs-competitors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Everpure approaches it vs. competitors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#history-and-trajectory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        History and trajectory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#numbers-that-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Numbers that matter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversation-playbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversation playbook
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-deeper-optional-l3-pointers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going deeper (optional, L3 pointers)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key terms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="42-vast-data-deep-dive">42. VAST Data deep dive<a class="headerlink" href="#42-vast-data-deep-dive" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>Depth:</strong> L2 · <strong>Reading time:</strong> ~20 min · <strong>Last verified:</strong> 2026-11-01
+<strong>Prerequisites:</strong> <a href="../../03-system-architecture/16-disaggregated-shared-everything/">Disaggregated shared-everything architectures</a> · <a href="../../01-storage-fundamentals/05-data-reduction/">Data reduction</a> · <a href="../../01-storage-fundamentals/06-data-protection-and-resilience/">Data protection and resilience</a> · <a href="../../05-ai-storage/35-ai-factories-and-neoclouds/">AI factories and neoclouds</a> · <a href="../41-why-ai-native-vendors-won/">Why AI-native storage vendors gained traction</a></p>
+</blockquote>
+<h2 id="tldr">TL;DR<a class="headerlink" href="#tldr" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>VAST is a software company that built a hardware architecture, then climbed up the stack.</strong> Its base is DASE: stateless compute nodes sharing SCM plus QLC flash over NVMe-oF. On top sit the Element Store (one metadata structure for files, objects, tables and blocks), and then a growing set of "engines" sold together as the VAST AI Operating System.</li>
+<li><strong>The economics come from three mechanisms: very wide erasure codes, similarity-based data reduction, and cheap QLC.</strong> At large scale, protection overhead falls to about 3% and data reduction is cluster-wide. That makes all-flash credible for whole datasets, not just hot tiers.</li>
+<li><strong>The business numbers are company-stated and large.</strong> VAST cites more than US$500M in committed ARR, more than US$4B in cumulative bookings, positive operating margin and free cash flow, and a US$30B valuation in an April 2026 Series F of about US$1B, roughly half of it secondary (reported by Bloomberg).</li>
+<li><strong>The customer base leans heavily on neoclouds and frontier labs.</strong> CoreWeave signed a US$1.17B agreement, and VAST says it is the main data platform for xAI's Colossus, a claim DDN contests. Google Cloud and Microsoft Azure routes were announced in late 2025.</li>
+<li><strong>The risks mirror the strengths.</strong> VAST's valuation runs ahead of its disclosed revenue, it depends on partners for hardware during a NAND shortage, its customers are concentrated, NVIDIA is spreading the same architecture to every rival, and a database play takes it into Databricks and Snowflake territory.</li>
+</ul>
+<h2 id="why-this-matters-for-everpure-strategy">Why this matters for Everpure strategy<a class="headerlink" href="#why-this-matters-for-everpure-strategy" title="Permanent link">&para;</a></h2>
+<p>VAST is the competitor that defined the AI-native storage category in buyers' minds. At large GPU clusters it is often the incumbent that Everpure's FlashBlade//EXA must displace or sit beside. In April 2026 its company-stated valuation reached about 25 times that of its 2020 round<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup><sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>. Its pitch has moved from "cheaper all-flash" to "the operating system for AI data." Buyers now compare storage on more than GB/s and $/TB: they also ask whether it can host embeddings, event streams, SQL tables and agent runtimes.</p>
+<p>For a strategy team, VAST is a benchmark three ways: technically, the reference design for shared-everything disaggregation (<a href="../../03-system-architecture/16-disaggregated-shared-everything/">Chapter 16</a>); commercially, proof that software on partner hardware can generate cash at scale, if the company-stated figures hold; strategically, a test of whether storage vendors can capture value above the storage layer. Everpure faces the same question with Fusion, its KV-cache work and its data-management roadmap (<a href="../../04-everpure/28-platform-and-software/">Chapter 28</a>).</p>
+<h2 id="core-concepts">Core concepts<a class="headerlink" href="#core-concepts" title="Permanent link">&para;</a></h2>
+<h3 id="dase-in-one-paragraph-and-what-vast-adds">DASE in one paragraph, and what VAST adds<a class="headerlink" href="#dase-in-one-paragraph-and-what-vast-adds" title="Permanent link">&para;</a></h3>
+<p><a href="../../03-system-architecture/16-disaggregated-shared-everything/">Chapter 16</a> covers the architecture in depth, so here is the short version. VAST splits a cluster into <strong>CNodes</strong>, stateless servers that run every protocol and data service, and <strong>DBoxes</strong>, enclosures of SSDs behind redundant fabric endpoints called DNodes. An NVMe-over-RDMA fabric connects the two tiers, so every CNode can reach every SSD. All state, including metadata, lives on shared persistent media: a small storage-class-memory (SCM) tier and a large QLC tier<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>. A write is acknowledged once it is mirrored into SCM on two enclosures. Data reduction and wide-stripe erasure coding happen later, when the data migrates to QLC. Any CNode can serve any read.</p>
+<p><img alt="Layered diagram of the VAST AI Operating System. From bottom to top: shared media in DBoxes (DNodes, about 1% SCM or SLC, about 99% QLC); an NVMe-oF fabric; stateless compute (CNode, CNode-X with GPUs, BlueField-4 CNode inside GPU servers, EBox); the Element Store (byte-granular metadata, similarity reduction, wide erasure codes, snapshots and QoS); data services (DataStore, DataBase, DataSpace); compute engines (DataEngine, InsightEngine, AgentEngine, SyncEngine, plus announced TuningEngine and PolicyEngine); and access protocols (NFS, SMB, S3, NVMe/TCP block, Kafka API, SQL). A side column shows the Polaris control plane, the 2019–2026 sequence of additions, and the partner hardware and clouds it runs on." src="../../assets/diagrams/ch42-vast-architecture.svg" /></p>
+<p><em>Figure 42.1 — VAST's moat is no longer the DASE hardware pattern, which rivals now copy. It is the single Element Store underneath, which lets every new layer reuse the same data without copies.</em></p>
+<h3 id="hardware-generations-from-appliance-to-runs-on-anything-with-a-fabric">Hardware generations: from appliance to "runs on anything with a fabric"<a class="headerlink" href="#hardware-generations-from-appliance-to-runs-on-anything-with-a-fabric" title="Permanent link">&para;</a></h3>
+<p>VAST has changed what it ships roughly every two years. Each change pushed it further from being a box vendor:</p>
+<table>
+<thead>
+<tr>
+<th>Generation</th>
+<th>When</th>
+<th>What changed</th>
+<th>Strategic point</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Universal Storage appliance</td>
+<td>2019</td>
+<td>CNodes in CBoxes, plus enclosures with Intel Optane SCM and QLC, sold by VAST<sup id="fnref2:4"><a class="footnote-ref" href="#fn:4">4</a></sup></td>
+<td>Proved DASE in production</td>
+</tr>
+<tr>
+<td>Gemini model</td>
+<td>Apr 2021</td>
+<td>VAST stops selling hardware. Customers buy certified hardware at cost through a partner and pay VAST a software subscription<sup id="fnref2:5"><a class="footnote-ref" href="#fn:5">5</a></sup><sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup></td>
+<td>Software-like margins and revenue recognition</td>
+</tr>
+<tr>
+<td>Second-source SCM</td>
+<td>Nov 2021</td>
+<td>Kioxia FL6 SLC qualified alongside Optane<sup id="fnref:7"><a class="footnote-ref" href="#fn:7">7</a></sup></td>
+<td>Insurance before Intel exited Optane in 2022</td>
+</tr>
+<tr>
+<td>Ceres DBox</td>
+<td>Mar 2022</td>
+<td>NVIDIA BlueField DPUs replace x86 DNodes. The current DF-3060V2 holds 12 TB SCM and 1,352 TB QLC<sup id="fnref:8"><a class="footnote-ref" href="#fn:8">8</a></sup><sup id="fnref2:9"><a class="footnote-ref" href="#fn:9">9</a></sup></td>
+<td>Density and power per PB</td>
+</tr>
+<tr>
+<td>EBox</td>
+<td>2024–25</td>
+<td>CNode and DNode software on one standard server<sup id="fnref:10"><a class="footnote-ref" href="#fn:10">10</a></sup></td>
+<td>Fits hyperscaler and cloud fleets that buy one server type</td>
+</tr>
+<tr>
+<td>CNode-X</td>
+<td>Announced Feb 2026, due later in 2026</td>
+<td>CNodes with NVIDIA GPUs, sold first by Supermicro and Cisco. The Supermicro build carries two RTX PRO 6000 Blackwell GPUs<sup id="fnref:11"><a class="footnote-ref" href="#fn:11">11</a></sup><sup id="fnref2:12"><a class="footnote-ref" href="#fn:12">12</a></sup></td>
+<td>GPU-accelerated vector search and SQL inside the cluster</td>
+</tr>
+<tr>
+<td>BlueField-4 CNode</td>
+<td>Announced Jan 2026, hardware 2H 2026</td>
+<td>CNode software runs on the BlueField-4 DPU <em>inside GPU servers</em>, with access to the whole namespace<sup id="fnref2:13"><a class="footnote-ref" href="#fn:13">13</a></sup></td>
+<td>Storage controller moves into the GPU server for KV cache</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 42.1 — Every VAST hardware generation either lowered VAST's own hardware exposure or moved its software closer to the GPU.</em></p>
+<p><strong>Semiconductor bridge.</strong> The arc resembles a fabless chip company's path. VAST first sold a reference board (the appliance). It then licensed the design while partners handled manufacturing and inventory (Gemini and the OEMs). Most recently it has put its IP on the customer's own silicon (BlueField-4 inside the GPU server), much as an IP vendor ends up as a block inside someone else's SoC. Each step lowers capital intensity and cedes some control over the bill of materials.</p>
+<h3 id="the-element-store-one-metadata-structure-for-every-data-type">The Element Store: one metadata structure for every data type<a class="headerlink" href="#the-element-store-one-metadata-structure-for-every-data-type" title="Permanent link">&para;</a></h3>
+<p>Most storage systems keep separate metadata for each personality: a file-system inode tree, an object index, a LUN map. VAST's Element Store keeps one. Files, objects, block volumes and database tables are all "elements" in the same persistent metadata structure, which lives in SCM and which every CNode reads and writes directly over the fabric<sup id="fnref2:3"><a class="footnote-ref" href="#fn:3">3</a></sup>. Three consequences follow.</p>
+<ol>
+<li><strong>Multiprotocol is native, not gatewayed.</strong> An object written over S3 is the same element an NFS client sees as a file, with no translation copy. Snapshots, replication and quality-of-service apply to every protocol, so block volumes added in 2025 inherited them on day one<sup id="fnref2:14"><a class="footnote-ref" href="#fn:14">14</a></sup>.</li>
+<li><strong>Metadata is byte-granular.</strong> Data is stored at its exact byte length, not padded to a 4 KB or 32 KB block<sup id="fnref3:15"><a class="footnote-ref" href="#fn:15">15</a></sup>. That matters for small files and for the reduction scheme below.</li>
+<li><strong>Capacity and metadata scale together.</strong> Because metadata lives on shared SCM, not in the DRAM of a server that owns it, adding DBoxes adds metadata capacity, and adding CNodes adds metadata processing. The cost is a fabric round trip on every metadata lookup, as described in <a href="../../03-system-architecture/16-disaggregated-shared-everything/">Chapter 16</a>.</li>
+</ol>
+<p>The persistent tier is tiny: in a DF-3060V2, SCM is 12 ÷ 1,364 ≈ 0.9% of raw capacity<sup id="fnref:9"><a class="footnote-ref" href="#fn:9">9</a></sup>. It acts as last-level cache plus page table, with QLC as bulk memory, except that this "cache" is persistent, so a power loss leaves nothing to flush.</p>
+<h3 id="similarity-based-data-reduction">Similarity-based data reduction<a class="headerlink" href="#similarity-based-data-reduction" title="Permanent link">&para;</a></h3>
+<p>Classic deduplication finds <strong>identical</strong> chunks by hash, and classic compression squeezes each chunk on its own. Both miss a common pattern in real data: chunks that are almost the same. Two checkpoint shards, two VM images or two versions of a genomics file can differ by a few bytes per block. A shifted timestamp then defeats deduplication, and per-block compression never sees the redundancy between blocks.</p>
+<p>VAST's approach, described in its patent and engineering blog, works in three steps<sup id="fnref:16"><a class="footnote-ref" href="#fn:16">16</a></sup><sup id="fnref:17"><a class="footnote-ref" href="#fn:17">17</a></sup><sup id="fnref:15"><a class="footnote-ref" href="#fn:15">15</a></sup>:</p>
+<ol>
+<li>Compute a <strong>similarity hash</strong> for each chunk. Unlike a cryptographic hash, a similarity hash gives nearby values for chunks that share most of their bytes.</li>
+<li>Group chunks with matching similarity hashes. Store one as a <strong>reference</strong> block.</li>
+<li>Compress every other chunk in the group <strong>against the reference</strong> (VAST cites Zstandard-class compression with the reference used as a dictionary), so each one is stored only as a small delta. Exact duplicates collapse to pointers as before.</li>
+</ol>
+<p><strong>Worked example (illustrative).</strong> Take 1,000 daily snapshots of a 1 TB dataset in which 2% of the bytes change each day, scattered across blocks. Deduplication at 32 KB granularity finds few identical blocks, because nearly every block has at least one changed byte. Similarity reduction keeps one reference copy (1 TB) and stores each day's changes as deltas. That is about 0.02 TB a day plus compression overhead, or roughly 1 + 1,000 × 0.02 = 21 TB, against 1,000 TB logical, close to 48:1. On unrelated, already-compressed data such as JPEGs or encrypted video, the same machinery finds little and the ratio approaches 1:1. In January 2026 VAST's co-founder put the average across roughly 1,000 customers at 3.4:1 but the median at 1.75:1 (company-stated)<sup id="fnref:18"><a class="footnote-ref" href="#fn:18">18</a></sup><sup id="fnref:19"><a class="footnote-ref" href="#fn:19">19</a></sup>. A few highly reducible estates pull the average up, so the median is the better planning number.</p>
+<p><strong>Semiconductor bridge.</strong> This is base-plus-delta compression, the idea proposed for CPU caches: store a base value and small deltas for neighbouring words. VAST applies it across a whole namespace, which is only practical because the metadata that tracks the references sits in shared SCM.</p>
+<p><strong>The trade-off.</strong> Reading a delta-compressed chunk means fetching its reference too, and reduction burns CNode CPU during migration. VAST says locally decodable compression limits the extra fetch<sup id="fnref2:15"><a class="footnote-ref" href="#fn:15">15</a></sup>, but reduction-heavy data still costs more CPU per GB/s, so CNode counts scale with workload as well as capacity.</p>
+<h3 id="locally-decodable-erasure-codes-why-wide-stripes-are-safe">Locally decodable erasure codes: why wide stripes are safe<a class="headerlink" href="#locally-decodable-erasure-codes-why-wide-stripes-are-safe" title="Permanent link">&para;</a></h3>
+<p>Wide stripes cut overhead but traditionally made rebuilds expensive. With Reed-Solomon k+m, rebuilding one lost strip means reading k surviving strips. VAST's locally decodable codes add structure so that a single lost strip can be rebuilt from about a quarter of the stripe<sup id="fnref:20"><a class="footnote-ref" href="#fn:20">20</a></sup>.</p>
+<p><strong>Worked numbers.</strong> A 146+4 stripe, which VAST uses on clusters of 75 or more DBoxes, has an overhead of 4 ÷ 150 = 2.7%<sup id="fnref:21"><a class="footnote-ref" href="#fn:21">21</a></sup>. Plain Reed-Solomon would read 146 strips to rebuild one. Reading about a quarter means roughly 37. Compare a classic 8+2 layout, at 20% overhead and 8 reads per rebuild. VAST gets 7× lower overhead for about 4.6× more rebuild reads per strip. The rebuild is spread across every CNode and SSD in the cluster, so wall-clock rebuild time stays short. On a 50 PB usable cluster the overhead gap is worth about 50 ÷ 0.8 − 50 ÷ 0.973 ≈ 11 PB of raw flash.</p>
+<p><strong>Bridge.</strong> This resembles cloud storage's local reconstruction codes, or HBM's split between cheap local on-die ECC and stronger system-level ECC: most repairs stay local, and only rare multi-failure cases fall back to the wide code.</p>
+<h3 id="protocols-nfs-to-kafka-on-the-same-bytes">Protocols: NFS to Kafka on the same bytes<a class="headerlink" href="#protocols-nfs-to-kafka-on-the-same-bytes" title="Permanent link">&para;</a></h3>
+<p>By late 2026 the access layer includes NFSv3/v4 (including NFS over RDMA, which VAST paired with GPUDirect Storage from 2021<sup id="fnref:22"><a class="footnote-ref" href="#fn:22">22</a></sup>), SMB, S3, block over NVMe/TCP and a Kafka-compatible Event Broker. Block and Kafka arrived in early 2025<sup id="fnref:14"><a class="footnote-ref" href="#fn:14">14</a></sup><sup id="fnref:23"><a class="footnote-ref" href="#fn:23">23</a></sup>. VAST built the Kafka producer and consumer APIs as just another protocol module, so event topics land as tables that SQL can query. VAST claims its largest clusters handle 500 million messages per second (company-stated)<sup id="fnref2:23"><a class="footnote-ref" href="#fn:23">23</a></sup> [VERIFY: search-summary only]. Two choices matter:</p>
+<ul>
+<li><strong>Standard NFS clients, no proprietary driver.</strong> Lustre and WEKA each need a client module on every GPU node (<a href="../../03-system-architecture/17-parallel-file-systems/">Chapter 17</a>). VAST asks for none, which matters to neoclouds that run locked-down images. FlashBlade//EXA makes the same choice with standard pNFS.</li>
+<li><strong>One namespace across protocols.</strong> A dataset ingested through S3 can be trained on through NFS and catalogued through SQL without an ETL copy.</li>
+</ul>
+<h3 id="the-ai-os-stack-what-each-layer-does-and-how-mature-it-is">The AI OS stack: what each layer does and how mature it is<a class="headerlink" href="#the-ai-os-stack-what-each-layer-does-and-how-mature-it-is" title="Permanent link">&para;</a></h3>
+<p>VAST rebranded in May 2025 as the "AI Operating System"<sup id="fnref:24"><a class="footnote-ref" href="#fn:24">24</a></sup>. The label is marketing; the components are concrete:</p>
+<pre class="mermaid"><code>flowchart TB
+    subgraph S1["Shipping since 2019-2023"]
+        A1["DataStore: file, object"]
+        A2["DataBase: tables"]
+        A3["DataSpace: global namespace"]
+        A4["DataEngine: triggers and functions"]
+    end
+    subgraph S2["Added 2024-2025"]
+        B1["InsightEngine: embeddings, RAG"]
+        B2["Block and Kafka protocols"]
+        B3["AgentEngine: agent runtime"]
+        B4["SyncEngine: migration, catalog"]
+    end
+    subgraph S3["Announced Feb 2026, rolling out"]
+        C1["CNode-X GPU nodes"]
+        C2["TuningEngine"]
+        C3["PolicyEngine"]
+        C4["Polaris control plane"]
+    end
+    S1 --&gt; S2 --&gt; S3</code></pre>
+<p><em>Figure 42.2 — The product stack by maturity. The storage-native layers are proven at scale, while the agent and governance layers are newer and their adoption is mostly undisclosed.</em></p>
+<table>
+<thead>
+<tr>
+<th>Component</th>
+<th>What it does, in plain terms</th>
+<th>First announced</th>
+<th>Status (public sources)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>DataStore</td>
+<td>The file, object and block personalities of the Element Store</td>
+<td>2019 (as Universal Storage)</td>
+<td>Shipping</td>
+</tr>
+<tr>
+<td>DataBase</td>
+<td>Columnar tables stored directly in the Element Store and queried via engines such as Trino and Spark. Now holds vectors and event topics</td>
+<td>2023, with the "VAST Data Platform"<sup id="fnref:25"><a class="footnote-ref" href="#fn:25">25</a></sup></td>
+<td>Shipping</td>
+</tr>
+<tr>
+<td>DataSpace</td>
+<td>Global namespace across sites and clouds, extended to a hybrid namespace with Google Cloud in Nov 2025<sup id="fnref:26"><a class="footnote-ref" href="#fn:26">26</a></sup></td>
+<td>2023</td>
+<td>Shipping</td>
+</tr>
+<tr>
+<td>DataEngine</td>
+<td>Event triggers plus serverless functions and containers running inside the cluster<sup id="fnref:27"><a class="footnote-ref" href="#fn:27">27</a></sup></td>
+<td>2023</td>
+<td>Shipping</td>
+</tr>
+<tr>
+<td>InsightEngine</td>
+<td>Embeds new data as it lands, using NVIDIA NIM microservices triggered by DataEngine, then indexes it for retrieval<sup id="fnref:28"><a class="footnote-ref" href="#fn:28">28</a></sup></td>
+<td>Oct 2024</td>
+<td>Shipping [VERIFY: GA date; one source says Mar 2025]</td>
+</tr>
+<tr>
+<td>AgentEngine</td>
+<td>Runtime for deploying agents, with MCP-compatible tool access<sup id="fnref2:24"><a class="footnote-ref" href="#fn:24">24</a></sup></td>
+<td>May 2025</td>
+<td>Announced. Adoption undisclosed</td>
+</tr>
+<tr>
+<td>SyncEngine</td>
+<td>Catalogues files and objects in other systems (POSIX, S3, SaaS apps such as SharePoint), then migrates and keeps them in sync<sup id="fnref:29"><a class="footnote-ref" href="#fn:29">29</a></sup></td>
+<td>Aug 2025</td>
+<td>Shipping; no charge to VAST customers (company-stated)</td>
+</tr>
+<tr>
+<td>TuningEngine, PolicyEngine</td>
+<td>Fine-tuning loops; guardrails and access policy for agents<sup id="fnref2:30"><a class="footnote-ref" href="#fn:30">30</a></sup></td>
+<td>Feb 2026</td>
+<td>Due by end of 2026</td>
+</tr>
+<tr>
+<td>Polaris</td>
+<td>Kubernetes-based control plane that deploys and manages VAST clusters across clouds, neoclouds and data centres<sup id="fnref:31"><a class="footnote-ref" href="#fn:31">31</a></sup><sup id="fnref:32"><a class="footnote-ref" href="#fn:32">32</a></sup></td>
+<td>Feb 2026</td>
+<td>Included at no extra cost; available in VAST cloud deployments, with multi-cluster orchestration to follow (company-stated)</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 42.2 — "AI OS" is a bundle of storage-native services (proven) and compute or agent services (new). Diligence should treat the two halves separately.</em></p>
+<h3 id="io-walkthrough-one-object-three-personalities">I/O walkthrough: one object, three personalities<a class="headerlink" href="#io-walkthrough-one-object-three-personalities" title="Permanent link">&para;</a></h3>
+<p>The clearest way to see the Element Store's value is to follow one piece of data through the stack. Take a pharma company ingesting microscope images for a vision model:</p>
+<pre class="mermaid"><code>sequenceDiagram
+    participant P as Instrument via S3
+    participant C as Any CNode
+    participant S as SCM mirror
+    participant E as DataEngine trigger
+    participant G as GPU on CNode-X or external
+    participant D as DataBase table
+    participant T as Training node via NFS
+    participant Q as Analyst via SQL
+    P-&gt;&gt;C: PUT bucket/run42/img001.tif
+    C-&gt;&gt;S: write data and element metadata twice
+    S--&gt;&gt;C: persisted
+    C--&gt;&gt;P: 200 OK
+    C-&gt;&gt;E: new-object event fires
+    E-&gt;&gt;G: run embedding function on the image
+    G-&gt;&gt;D: insert row with path, labels, vector
+    Note over C,S: later, migration reduces data and writes a wide QLC stripe
+    T-&gt;&gt;C: open /datasets/run42/img001.tif over NFS
+    C--&gt;&gt;T: same bytes, no copy
+    Q-&gt;&gt;D: SELECT similar images WHERE label = tumor
+    D--&gt;&gt;Q: rows with vector matches and file paths</code></pre>
+<p><em>Figure 42.3 — One write serves object ingest, file-based training and SQL plus vector search. The copies a conventional stack makes between object store, file system and vector database never happen.</em></p>
+<p><strong>Worked example (illustrative).</strong> Take a 10 PB image corpus. A conventional pipeline lands it in object storage, copies a working set into a parallel file system for training, and builds embeddings in a separate vector database. If the training copy is half the corpus, that is 5 PB of extra flash plus the pipelines to keep it fresh. The embeddings are small by comparison. For 2 billion images at 1,024 dimensions × 2 bytes (FP16), they come to about 2e9 × 2,048 bytes ≈ 4 TB. The win is not the vector bytes. It is eliminating the 5 PB copy and the staleness window between copies. The counter-argument is that a parallel file system or a specialised vector database may be faster at its single job, and that many enterprises already own a lakehouse (<a href="../../05-ai-storage/33-rag-vector-lakehouse/">Chapter 33</a>).</p>
+<h3 id="why-put-gpus-and-dpus-into-storage-nodes">Why put GPUs and DPUs into storage nodes<a class="headerlink" href="#why-put-gpus-and-dpus-into-storage-nodes" title="Permanent link">&para;</a></h3>
+<p>CNode-X and the BlueField-4 CNode push compute in opposite directions. <strong>CNode-X</strong> brings GPUs into the storage cluster, so vector search (NVIDIA cuVS), data clustering and SQL (VAST cites the open-source Sirius GPU SQL engine and claims 44% faster queries, company-stated) run next to the data instead of hauling it to a GPU farm<sup id="fnref:12"><a class="footnote-ref" href="#fn:12">12</a></sup>. The <strong>BlueField-4 CNode</strong> does the reverse. It puts the storage controller on the DPU inside each GPU server, which serves NVIDIA's inference context-memory tier for KV cache (<a href="../../05-ai-storage/32-inference-and-kv-cache/">Chapter 32</a>). VAST claims 75% lower power for KV-cache operations than with separate controllers (company-stated)<sup id="fnref:13"><a class="footnote-ref" href="#fn:13">13</a></sup>. Both build on VAST Undivided Attention (VUA), a KV-cache agent for GPU servers that VAST open-sourced in April 2025; it keeps prefix chunks on shared NVMe reached over RDMA, and VAST says it performs best on VAST's own namespace<sup id="fnref:33"><a class="footnote-ref" href="#fn:33">33</a></sup>.</p>
+<p>The bridge is near-memory compute: move the operation to the data when its output is far smaller than its input, as in a similarity search over billions of vectors. The strategic catch is that NVIDIA published BlueField-4 STX as a reference architecture with a dozen storage partners, Everpure among them<sup id="fnref:34"><a class="footnote-ref" href="#fn:34">34</a></sup>. The DPU placement is therefore not unique to VAST, and the differentiation has to come from the software.</p>
+<h2 id="business-model-financials">Business model &amp; financials<a class="headerlink" href="#business-model-financials" title="Permanent link">&para;</a></h2>
+<h3 id="how-vast-makes-money">How VAST makes money<a class="headerlink" href="#how-vast-makes-money" title="Permanent link">&para;</a></h3>
+<p>Since 2021 VAST has sold software, not hardware. Under <strong>Gemini</strong>, customers buy certified servers and enclosures at cost from a manufacturing partner and pay VAST a subscription priced on capacity, with support included. VAST says customers can renew at the same price for up to ten years (company-stated)<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup><sup id="fnref:35"><a class="footnote-ref" href="#fn:35">35</a></sup>. VAST also sells through OEMs that bundle its software with their hardware (HPE, Cisco, Supermicro) and through cloud marketplaces. Per-TB prices are not public.</p>
+<p>Two consequences matter. First, VAST's gross margin should look like a software company's, while the customer's total cost still carries full hardware cost, including NAND, which VAST neither marks up nor controls. Second, "bookings" and "CARR" capture multi-year commitments that GAAP revenue would spread over time, so they are not comparable with Everpure's revenue or subscription ARR.</p>
+<h3 id="funding-and-valuation">Funding and valuation<a class="headerlink" href="#funding-and-valuation" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>timeline
+    title VAST Data funding and valuation milestones
+    2016 : Founded by Renen Hallak, Shachar Fienblit and Jeff Denworth
+    2019 : Exits stealth with about 80M dollars raised : Series B 40M dollars reported
+    2020 : Series C 100M dollars at 1.2B dollars led by Next47
+    2021 : Series D 83M dollars at 3.7B dollars led by Tiger Global with NVIDIA
+    2023 : Series E 118M dollars at 9.1B dollars led by Fidelity
+    2025 : Reuters reports talks with Alphabet and NVIDIA at up to 30B dollars
+    2026 : Feb report of mostly secondary round at 25 to 27B dollars : Apr Series F about 1B dollars at 30B dollars led by Drive Capital and Access Industries</code></pre>
+<p><em>Figure 42.4 — Valuation compounded about 25× from 2020 to 2026 on about US$1.4B of cumulative capital raised, much of the last round going to selling shareholders.</em></p>
+<p><img alt="Two-panel bar and line chart. Panel A shows amount raised per round: Series B US$40M (reported), Series C US$100M, Series D US$83M, Series E US$118M, no amount for the reported February 2026 round, and Series F about US$1,000M, about half secondary. Panel B shows post-money valuation on a log scale rising from US$1.2B (2020) to US$3.7B (2021), US$9.1B (2023), a reported US$25–27B (February 2026) and US$30B (April 2026)." src="../../assets/charts/ch42-funding.svg" /></p>
+<p><em>Figure 42.5 — VAST raised little primary capital relative to its valuation. The 2023 and 2026 rounds both returned cash to existing holders, which is what a company that says it is cash-generative would do.</em>
+Data: <code>data/ch42_funding.csv</code></p>
+<p>The details, with labels:</p>
+<ul>
+<li><strong>Founding.</strong> Early 2016, by Renen Hallak (CEO, previously at XtremIO), Shachar Fienblit and Jeff Denworth. Offices are in New York with R&amp;D in Israel<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>. VAST came out of stealth in February 2019 with about US$80M raised across its Series A and B (company-stated at launch)<sup id="fnref:36"><a class="footnote-ref" href="#fn:36">36</a></sup> [VERIFY: per-round investors for Series A and B].</li>
+<li><strong>Series C, April 2020:</strong> US$100M at US$1.2B, led by Next47 (company-stated)<sup id="fnref2:2"><a class="footnote-ref" href="#fn:2">2</a></sup>.</li>
+<li><strong>Series D, May 2021:</strong> US$83M at US$3.7B post-money, led by Tiger Global with NVIDIA participating, for about US$263M raised in total (company-stated)<sup id="fnref:37"><a class="footnote-ref" href="#fn:37">37</a></sup>.</li>
+<li><strong>Series E, December 2023:</strong> US$118M at US$9.1B, led by Fidelity with NEA, BOND and Drive Capital (company-stated). Part of the proceeds reportedly bought back existing shares (reported by The Information via Crunchbase News)<sup id="fnref:38"><a class="footnote-ref" href="#fn:38">38</a></sup><sup id="fnref:39"><a class="footnote-ref" href="#fn:39">39</a></sup>.</li>
+<li><strong>2025–early 2026 talks.</strong> Reuters, via Globes, reported talks with Alphabet and NVIDIA at up to US$30B. In February 2026, Globes reported a mostly secondary round at US$25–27B (both reported by press)<sup id="fnref:40"><a class="footnote-ref" href="#fn:40">40</a></sup><sup id="fnref:41"><a class="footnote-ref" href="#fn:41">41</a></sup>.</li>
+<li><strong>Series F, closed April 2026:</strong> about US$1B of primary and secondary capital at US$30B. Drive Capital and Access Industries co-led, and NVIDIA, Fidelity and NEA participated (company-stated)<sup id="fnref2:1"><a class="footnote-ref" href="#fn:1">1</a></sup><sup id="fnref:42"><a class="footnote-ref" href="#fn:42">42</a></sup>. Bloomberg reported that about half went to the company and half to early investors and employees through a tender (reported by Bloomberg)<sup id="fnref2:43"><a class="footnote-ref" href="#fn:43">43</a></sup>. Calcalist called it the largest private round in Israeli tech<sup id="fnref:44"><a class="footnote-ref" href="#fn:44">44</a></sup>. Hallak has said an IPO is possible but not needed for funding<sup id="fnref3:43"><a class="footnote-ref" href="#fn:43">43</a></sup>.</li>
+</ul>
+<h3 id="revenue-profitability-and-the-rule-of-x">Revenue, profitability and the "Rule of X"<a class="headerlink" href="#revenue-profitability-and-the-rule-of-x" title="Permanent link">&para;</a></h3>
+<p>VAST is private and publishes no audited financials. All of the following is company-stated unless marked otherwise:</p>
+<ul>
+<li><strong>Committed ARR (CARR) above US$500M</strong> on exiting fiscal year 2026, <strong>cumulative bookings above US$4B</strong>, and <strong>positive operating margin and free cash flow</strong><sup id="fnref2:42"><a class="footnote-ref" href="#fn:42">42</a></sup><sup id="fnref:45"><a class="footnote-ref" href="#fn:45">45</a></sup><sup id="fnref:46"><a class="footnote-ref" href="#fn:46">46</a></sup>. The release does not give the fiscal year-end month; coverage places it in January 2026 [VERIFY: VAST fiscal year-end month].</li>
+<li>At the Series E in late 2023, VAST cited US$1B of cumulative software bookings, more than US$200M of ARR at the end of its fiscal third quarter, and 12 consecutive quarters of positive cash flow<sup id="fnref2:38"><a class="footnote-ref" href="#fn:38">38</a></sup><sup id="fnref2:39"><a class="footnote-ref" href="#fn:39">39</a></sup><sup id="fnref:47"><a class="footnote-ref" href="#fn:47">47</a></sup>. Bookings therefore roughly quadrupled in about 2.3 years. ARR (live contracts) and CARR (signed contracts, including those not yet live) are different measures, so the two figures do not give a clean growth rate.</li>
+<li>A <strong>"Rule of X" score of 228%</strong><sup id="fnref3:42"><a class="footnote-ref" href="#fn:42">42</a></sup>. Bessemer defines Rule of X as revenue growth × a multiplier (about 2× for private companies) + free-cash-flow margin<sup id="fnref:48"><a class="footnote-ref" href="#fn:48">48</a></sup>. VAST did not disclose the components. <strong>Worked inference:</strong> if the FCF margin is between 10% and 30%, 228 = 2g + FCF implies growth of about 99–109%. With a 3× multiplier, which some analysts use<sup id="fnref:49"><a class="footnote-ref" href="#fn:49">49</a></sup>, it implies about 66–73%. In other words, the score is consistent with revenue growing by roughly two-thirds to double. That is an inference, not a disclosure.</li>
+<li>Press and analyst estimates vary widely. Sacra estimated about US$200M ARR in January 2025 (estimated)<sup id="fnref:50"><a class="footnote-ref" href="#fn:50">50</a></sup>, which matches VAST's own late-2023 figure and is probably stale. Blocks &amp; Files speculated that run-rate "could even be topping $2 billion" after the CoreWeave deal (speculation, not a disclosure)<sup id="fnref:51"><a class="footnote-ref" href="#fn:51">51</a></sup>. The gap between CARR (&gt;US$0.5B) and that speculation is a definitions problem: multi-year bookings booked up front versus annualised recurring value.</li>
+<li><strong>Headcount:</strong> about 1,200, roughly a third in Israel, as of March 2026 (reported)<sup id="fnref:52"><a class="footnote-ref" href="#fn:52">52</a></sup> [VERIFY: headcount].</li>
+</ul>
+<p><strong>Worked valuation multiple.</strong> US$30B ÷ US$0.5B CARR = <strong>60× trailing CARR</strong>. If CARR doubles in FY2027, which is consistent with the Rule of X inference, the forward multiple is about 30×. For scale, Everpure reported US$2.13B of subscription ARR in Q2 FY27<sup id="fnref:53"><a class="footnote-ref" href="#fn:53">53</a></sup>. That is about four times VAST's CARR, though the definitions differ and Everpure also books large product revenue.</p>
+<h2 id="customers-go-to-market">Customers &amp; go-to-market<a class="headerlink" href="#customers-go-to-market" title="Permanent link">&para;</a></h2>
+<h3 id="who-buys">Who buys<a class="headerlink" href="#who-buys" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Segment</th>
+<th>Named customers or partners (public)</th>
+<th>What they buy VAST for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Neoclouds</td>
+<td>CoreWeave (US$1.17B multi-year deal)<sup id="fnref2:54"><a class="footnote-ref" href="#fn:54">54</a></sup>, Lambda, Crusoe, Core42, Nebius<sup id="fnref:55"><a class="footnote-ref" href="#fn:55">55</a></sup>, Nscale<sup id="fnref2:56"><a class="footnote-ref" href="#fn:56">56</a></sup></td>
+<td>Multi-tenant shared storage behind GPU fleets, resold as a service</td>
+</tr>
+<tr>
+<td>Frontier labs</td>
+<td>xAI Colossus. VAST says it is the primary platform. DDN also claims a primary role<sup id="fnref2:57"><a class="footnote-ref" href="#fn:57">57</a></sup><sup id="fnref2:58"><a class="footnote-ref" href="#fn:58">58</a></sup></td>
+<td>Training data, checkpoints, model stores at 100k+ GPU scale</td>
+</tr>
+<tr>
+<td>Hyperscaler channels</td>
+<td>Google Cloud managed service (Nov 2025)<sup id="fnref2:59"><a class="footnote-ref" href="#fn:59">59</a></sup>; Azure Native ISV Service (announced Nov 2025)<sup id="fnref2:60"><a class="footnote-ref" href="#fn:60">60</a></sup></td>
+<td>Hybrid namespace and cloud bursting</td>
+</tr>
+<tr>
+<td>Enterprise and research via OEMs</td>
+<td>HPE GreenLake for File (since Apr 2023)<sup id="fnref:61"><a class="footnote-ref" href="#fn:61">61</a></sup>; Cisco UCS (Oct 2024)<sup id="fnref:62"><a class="footnote-ref" href="#fn:62">62</a></sup>; Supermicro<sup id="fnref2:11"><a class="footnote-ref" href="#fn:11">11</a></sup></td>
+<td>All-flash file and object consolidation, AI pilots</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 42.3 — VAST's revenue concentration is in the top two rows. The OEM and cloud rows are its route to diversification.</em></p>
+<p><strong>CoreWeave.</strong> The deal is US$1.17B (reported by Reuters on 2025-11-06, confirmed by VAST). It makes the VAST AI OS CoreWeave's primary data platform. VAST said contracts like this usually run three to five years, without giving terms<sup id="fnref:54"><a class="footnote-ref" href="#fn:54">54</a></sup><sup id="fnref:63"><a class="footnote-ref" href="#fn:63">63</a></sup>. The Next Platform called CoreWeave VAST's "customer number one"<sup id="fnref:64"><a class="footnote-ref" href="#fn:64">64</a></sup>. <strong>Rough concentration arithmetic:</strong> US$1.17B is about 29% of the US$4B cumulative bookings figure, though the timing of when each was booked is undisclosed.</p>
+<p><strong>xAI: contested.</strong> VAST's co-founder said xAI uses VAST "primarily," while adding that this does not mean exclusively. DDN's president called DDN the "primary and main" provider for Grok 3's first phase<sup id="fnref:57"><a class="footnote-ref" href="#fn:57">57</a></sup><sup id="fnref:58"><a class="footnote-ref" href="#fn:58">58</a></sup>. In October 2025 Blocks &amp; Files reported that xAI was using VAST in its Colossus expansion, while noting that DDN also has a storage role at the site<sup id="fnref:56"><a class="footnote-ref" href="#fn:56">56</a></sup>. xAI has not published a split. The defensible statement is "both supply Colossus; the split is unknown."</p>
+<p><strong>Cloud routes.</strong> On Google Cloud, VAST runs as a fully managed service with Marketplace billing and TPU support<sup id="fnref:59"><a class="footnote-ref" href="#fn:59">59</a></sup>. The Azure offering was announced at Ignite in November 2025 as an Azure Native ISV Service on local-NVMe VMs. Its general-availability status was unclear in public sources at the time of writing<sup id="fnref:60"><a class="footnote-ref" href="#fn:60">60</a></sup> [VERIFY: Azure GA].</p>
+<p><strong>OEMs.</strong> HPE GreenLake for File runs VAST software on Alletra MP hardware, but HPE decides which VAST features ship, and object was not offered at launch<sup id="fnref:65"><a class="footnote-ref" href="#fn:65">65</a></sup>. HPE also sells its own X10000, so it is both partner and competitor. Lenovo has run seller training on VAST with ThinkSystem servers (July 2025), but no Lenovo OEM launch was found<sup id="fnref:66"><a class="footnote-ref" href="#fn:66">66</a></sup> [VERIFY: Lenovo OEM status].</p>
+<h3 id="how-it-sells">How it sells<a class="headerlink" href="#how-it-sells" title="Permanent link">&para;</a></h3>
+<p>VAST's direct team chases the largest deals (neoclouds and labs), while OEMs extend reach into enterprise accounts. NVIDIA is a co-seller in all but name: an investor since 2021, it certified VAST for DGX SuperPOD and launched its AI Data Platform and STX designs with VAST as a partner<sup id="fnref:67"><a class="footnote-ref" href="#fn:67">67</a></sup><sup id="fnref2:34"><a class="footnote-ref" href="#fn:34">34</a></sup>. VAST has never submitted to MLPerf Storage, in any round from v0.5 (2023) to v3.0 (2026); it sells on reference customers rather than peer-reviewed benchmarks<sup id="fnref:68"><a class="footnote-ref" href="#fn:68">68</a></sup><sup id="fnref:69"><a class="footnote-ref" href="#fn:69">69</a></sup>.</p>
+<h2 id="why-it-gained-traction">Why it gained traction<a class="headerlink" href="#why-it-gained-traction" title="Permanent link">&para;</a></h2>
+<p><a href="../41-why-ai-native-vendors-won/">Chapter 41</a> covers the category-level reasons. For VAST specifically, the steelman has six parts:</p>
+<ol>
+<li><strong>It bet on the right media curve early.</strong> It designed for QLC, SCM and NVMe-oF in 2016, before all three matured, and incumbents could not retrofit that design onto dual-controller or shared-nothing code.</li>
+<li><strong>It made flash cheap enough for "all the data."</strong> Wide codes at about 3% overhead plus global reduction let VAST pitch one flash tier instead of flash plus disk, which suits AI jobs that reread whole datasets each epoch.</li>
+<li><strong>It fit neocloud operations.</strong> A neocloud needs standard NFS clients, multi-tenancy, a single namespace, and the ability to add throughput or capacity independently as tenants change. DASE gives all four.</li>
+<li><strong>It chose the software model before AI demand arrived.</strong> Gemini (2021) meant that when GPU clusters exploded in 2023–2025, VAST could scale bookings without a manufacturing balance sheet.</li>
+<li><strong>It stayed close to NVIDIA.</strong> NVIDIA invested from the Series D, early GPUDirect Storage work over NFS-RDMA followed, and NVIDIA launches have featured VAST since. In AI infrastructure, NVIDIA's reference designs are de facto procurement lists.</li>
+<li><strong>It sold a story and then shipped against it.</strong> The "operating system" framing is ambitious, but VAST has shipped a database, event streaming, block and agent tooling at a cadence rivals have struggled to match.</li>
+</ol>
+<h2 id="risks-open-questions">Risks &amp; open questions<a class="headerlink" href="#risks-open-questions" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Risk</th>
+<th>Why it matters</th>
+<th>What would reduce it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Valuation ahead of revenue</td>
+<td>60× trailing CARR. About half the Series F was secondary, and an IPO would test the number publicly</td>
+<td>Audited revenue, an S-1, or CARR well above US$1B</td>
+</tr>
+<tr>
+<td>Hardware dependency in a NAND shortage</td>
+<td>NAND contract prices rose sharply through 2026 (TrendForce forecast another 15–20% QoQ for 4Q26)<sup id="fnref:70"><a class="footnote-ref" href="#fn:70">70</a></sup>. VAST passes hardware through at cost, so customers bear the spike and deployments can slip. VAST pitches its reduction as a hedge<sup id="fnref:71"><a class="footnote-ref" href="#fn:71">71</a></sup></td>
+<td>Long-term supply agreements via OEMs, or higher reduction ratios on AI data</td>
+</tr>
+<tr>
+<td>Customer concentration</td>
+<td>One customer equals about 29% of cumulative bookings. Neocloud demand depends on GPU financing cycles</td>
+<td>Enterprise and cloud-marketplace growth disclosed separately</td>
+</tr>
+<tr>
+<td>NVIDIA commoditising the pattern</td>
+<td>STX and BlueField-4 give every partner the same DPU-in-GPU-server design<sup id="fnref3:34"><a class="footnote-ref" href="#fn:34">34</a></sup>. NetApp, HPE and Everpure ship disaggregated systems (<a href="../../03-system-architecture/16-disaggregated-shared-everything/">Chapter 16</a>)</td>
+<td>Software features rivals cannot match, such as the single Element Store across tables and files</td>
+</tr>
+<tr>
+<td>Moving up-stack</td>
+<td>DataBase, AgentEngine and TuningEngine compete with Databricks, Snowflake, vector databases and NVIDIA's own software. Buyers in those categories are different people</td>
+<td>Public reference customers for DataBase and AgentEngine</td>
+</tr>
+<tr>
+<td>OEM partners as competitors</td>
+<td>HPE sells X10000, Cisco and Supermicro sell rivals too, and HPE controls which VAST features ship<sup id="fnref2:65"><a class="footnote-ref" href="#fn:65">65</a></sup></td>
+<td>Direct, cloud and neocloud channels outgrowing OEMs</td>
+</tr>
+<tr>
+<td>No independent benchmarks</td>
+<td>Absent from MLPerf Storage v0.5–v3.0<sup id="fnref2:68"><a class="footnote-ref" href="#fn:68">68</a></sup></td>
+<td>Entering a public benchmark round</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 42.4 — Most of VAST's risks are the flip side of choices that made it successful: software-only, NVIDIA-aligned, neocloud-first and platform-ambitious.</em></p>
+<p>Open questions worth tracking: how much of CARR is CoreWeave; whether the BlueField-4 CNode ships in 2H 2026 as announced; whether DataBase wins workloads that do not start as storage; and Jeff Denworth's role: one Israeli outlet questioned it in 2026<sup id="fnref:72"><a class="footnote-ref" href="#fn:72">72</a></sup>, though he was still briefing press for VAST in January 2026<sup id="fnref2:19"><a class="footnote-ref" href="#fn:19">19</a></sup> [VERIFY: Denworth's current title and remit].</p>
+<h2 id="strategic-relevance-to-everpure">Strategic relevance to Everpure<a class="headerlink" href="#strategic-relevance-to-everpure" title="Permanent link">&para;</a></h2>
+<p>Options a strategy team might evaluate, based on public information:</p>
+<ol>
+<li><strong>Compete head-on at large AI scale with FlashBlade//EXA.</strong> EXA's case against VAST is a shorter data path (client to data node, no CNode hop), standard pNFS, Purity's metadata engine, and peer-reviewed MLPerf v3.0 results in a round VAST skipped (<a href="../../04-everpure/27-flasharray-and-flashblade/">Chapter 27</a>). The gaps are reference customers at 100k-GPU scale, DFM-based data nodes, and certification badges.</li>
+<li><strong>Turn the NAND shortage into a wedge.</strong> Everpure (NYSE: P, formerly PSTG) designs its own DirectFlash Modules and buys NAND as a large volume buyer (<a href="../../04-everpure/26-purity-and-directflash/">Chapter 26</a>). VAST's customers buy servers at cost in a tight market. If supply stays constrained into 2027, a vendor that guarantees capacity and price may matter more than one with a lower software fee (<a href="../48-media-suppliers-and-nand-cycle/">Chapter 48</a>).</li>
+<li><strong>Match the platform story selectively, not wholesale.</strong> Everpure already has KV-cache work (KVA), Data Stream and Fusion. The open question is which of VAST's up-stack layers buyers actually pay for. The evidence so far points to the storage-native ones (multiprotocol, global namespace, event triggers) rather than agent runtimes.</li>
+<li><strong>Coexist inside neoclouds.</strong> CoreWeave also lists Everpure among its dedicated-storage partners<sup id="fnref:73"><a class="footnote-ref" href="#fn:73">73</a></sup>. Neoclouds multi-source, so a second-source position is a realistic entry point.</li>
+<li><strong>Watch the IPO.</strong> A VAST S-1 would give the first audited view of AI-native storage economics: gross margin, revenue recognition on bookings, and customer concentration. That would reset the benchmark for Everpure's own valuation conversation. Acquiring VAST at a US$30B private mark would be a transformational, likely stock-heavy deal for any storage incumbent, with OEM-channel conflicts attached. Smaller up-stack assets are the more common pattern, as NetApp's 2026 purchase of DataPelago shows<sup id="fnref:74"><a class="footnote-ref" href="#fn:74">74</a></sup> [VERIFY: deal date and terms] (<a href="../46-incumbents/">Chapter 46</a>).</li>
+</ol>
+<h2 id="how-everpure-approaches-it-vs-competitors">How Everpure approaches it vs. competitors<a class="headerlink" href="#how-everpure-approaches-it-vs-competitors" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Dimension</th>
+<th>VAST AI OS</th>
+<th>Everpure FlashBlade//EXA</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Architecture</td>
+<td>DASE: stateless CNodes share all SSDs over NVMe-oF<sup id="fnref3:3"><a class="footnote-ref" href="#fn:3">3</a></sup></td>
+<td>Metadata/data split: Purity//FB metadata core plus data nodes running Purity//DN<sup id="fnref:75"><a class="footnote-ref" href="#fn:75">75</a></sup></td>
+</tr>
+<tr>
+<td>Data path</td>
+<td>Client → CNode → DBox (two fabric hops)</td>
+<td>Client → data node directly over RDMA after a pNFS layout fetch</td>
+</tr>
+<tr>
+<td>Metadata home</td>
+<td>Shared SCM, accessed by any CNode</td>
+<td>DFM-based FlashBlade blades</td>
+</tr>
+<tr>
+<td>Media</td>
+<td>SCM/SLC plus commodity QLC SSDs</td>
+<td>Metadata on DFMs. Data nodes use third-party NVMe today, with DFM data nodes planned [VERIFY: DFM data-node GA]</td>
+</tr>
+<tr>
+<td>Protection and reduction</td>
+<td>Locally decodable codes to 146+4 (2.7%). Global similarity reduction</td>
+<td>Purity reduction on the metadata core. Data-node protection on a separate release train (<a href="../../03-system-architecture/16-disaggregated-shared-everything/">Chapter 16</a>)</td>
+</tr>
+<tr>
+<td>Protocols</td>
+<td>NFS/RDMA, SMB, S3, NVMe/TCP block, Kafka, SQL</td>
+<td>pNFS (NFSv4.1 metadata over TCP, data over RDMA)</td>
+</tr>
+<tr>
+<td>Up-stack services</td>
+<td>DataBase, DataEngine, InsightEngine, AgentEngine and more</td>
+<td>KVA for KV cache, Fusion control plane, Data Stream preview<sup id="fnref:76"><a class="footnote-ref" href="#fn:76">76</a></sup></td>
+</tr>
+<tr>
+<td>Public benchmarks</td>
+<td>None in MLPerf Storage</td>
+<td>MLPerf v3.0: 877.5 GiB/s checkpoint write, 1,623.4 GiB/s KV-cache read<sup id="fnref3:68"><a class="footnote-ref" href="#fn:68">68</a></sup></td>
+</tr>
+<tr>
+<td>Business model</td>
+<td>Software subscription. Hardware at cost via partners or OEMs</td>
+<td>Everpure metadata hardware plus software. Data nodes customer-sourced with a 160 TiB entitlement each<sup id="fnref:77"><a class="footnote-ref" href="#fn:77">77</a></sup></td>
+</tr>
+<tr>
+<td>Scale proof points</td>
+<td>CoreWeave, xAI (contested), neoclouds</td>
+<td>Meta hyperscale DFM deal (adjacent)<sup id="fnref:78"><a class="footnote-ref" href="#fn:78">78</a></sup>; first enterprise EXA customer in Q4 FY26<sup id="fnref:79"><a class="footnote-ref" href="#fn:79">79</a></sup></td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 42.5 — VAST leads on breadth of services, data reduction and installed scale. EXA leads on data-path simplicity and has public benchmark results where VAST has none, and Everpure controls its media supply.</em></p>
+<p>The steelman for VAST in this comparison is that breadth compounds. Every new engine runs on the same Element Store, so each one makes the platform harder to remove. The steelman for EXA is that at the 1–10 TB/s frontier the bottleneck is metadata and the data path, not the number of personalities, and EXA removes a hop there. Which matters more depends on the buyer. A neocloud selling storage-as-a-service values breadth. A lab running one giant training job values throughput per dollar and per watt. <a href="../45-head-to-head/">Chapter 45</a> runs the four-way comparison including WEKA and DDN.</p>
+<h2 id="history-and-trajectory">History and trajectory<a class="headerlink" href="#history-and-trajectory" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>timeline
+    title VAST Data product and corporate milestones
+    2016 : Founded with a disaggregated design
+    2019 : Universal Storage launches out of stealth
+    2021 : Gemini software model : NFS over RDMA with GPUDirect Storage
+    2022 : Ceres DBox with BlueField DPUs
+    2023 : VAST Data Platform with DataBase : HPE GreenLake for File
+    2024 : InsightEngine with NVIDIA NIM : Cisco UCS route
+    2025 : Block and Kafka : VUA KV cache open-sourced : AI OS and AgentEngine : CoreWeave 1.17B deal : Google Cloud and Azure
+    2026 : BlueField-4 CNode : CNode-X and Polaris : Series F at 30B</code></pre>
+<p><em>Figure 42.6 — VAST added a major layer roughly every year. Since 2023 the additions have been software services more than hardware.</em></p>
+<p>The trajectory has three phases: a storage architecture (2016–2020), a software business with a data platform (2021–2023), and since 2024 an AI infrastructure company that happens to store data. Signals for 2026–2027 are CNode-X and BlueField-4 shipments in 2H 2026, TuningEngine and PolicyEngine general availability by year-end<sup id="fnref:30"><a class="footnote-ref" href="#fn:30">30</a></sup>, a possible IPO<sup id="fnref:43"><a class="footnote-ref" href="#fn:43">43</a></sup>, and whether CARR growth broadens beyond neoclouds.</p>
+<h2 id="numbers-that-matter">Numbers that matter<a class="headerlink" href="#numbers-that-matter" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+<th>Context</th>
+<th>Source / date</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Valuation</td>
+<td>US$30B</td>
+<td>Series F, company-stated; ~25× the 2020 round</td>
+<td>CNBC / VAST, 2026-04<sup id="fnref3:1"><a class="footnote-ref" href="#fn:1">1</a></sup></td>
+</tr>
+<tr>
+<td>Series F size</td>
+<td>~US$1B, ~half secondary</td>
+<td>Co-led by Drive Capital and Access Industries</td>
+<td>Bloomberg, 2026-04<sup id="fnref4:43"><a class="footnote-ref" href="#fn:43">43</a></sup></td>
+</tr>
+<tr>
+<td>Committed ARR</td>
+<td>&gt;US$500M</td>
+<td>Exiting FY ending Jan 2026, company-stated</td>
+<td>VAST via Futurum, 2026-04<sup id="fnref4:42"><a class="footnote-ref" href="#fn:42">42</a></sup></td>
+</tr>
+<tr>
+<td>Cumulative bookings</td>
+<td>&gt;US$4B</td>
+<td>Up from ~US$1B at end-2023, company-stated</td>
+<td>2026-04<sup id="fnref5:42"><a class="footnote-ref" href="#fn:42">42</a></sup>; 2023-12<sup id="fnref3:38"><a class="footnote-ref" href="#fn:38">38</a></sup></td>
+</tr>
+<tr>
+<td>Rule of X</td>
+<td>228%</td>
+<td>Implies ~100% growth at 10–30% FCF margin (worked inference)</td>
+<td>2026-04<sup id="fnref6:42"><a class="footnote-ref" href="#fn:42">42</a></sup>; Bessemer<sup id="fnref2:48"><a class="footnote-ref" href="#fn:48">48</a></sup></td>
+</tr>
+<tr>
+<td>CoreWeave agreement</td>
+<td>US$1.17B</td>
+<td>Multi-year; ~29% of cumulative bookings (worked)</td>
+<td>Reuters, 2025-11-06<sup id="fnref3:54"><a class="footnote-ref" href="#fn:54">54</a></sup></td>
+</tr>
+<tr>
+<td>Valuation ÷ CARR</td>
+<td>~60×</td>
+<td>Worked example</td>
+<td>Worked example</td>
+</tr>
+<tr>
+<td>Widest stripe overhead</td>
+<td>2.7% (146+4)</td>
+<td>Needs ≥75 DBoxes</td>
+<td>VAST blog<sup id="fnref2:21"><a class="footnote-ref" href="#fn:21">21</a></sup></td>
+</tr>
+<tr>
+<td>SCM share of raw</td>
+<td>~0.9%</td>
+<td>DF-3060V2 DBox</td>
+<td>VAST KB<sup id="fnref3:9"><a class="footnote-ref" href="#fn:9">9</a></sup></td>
+</tr>
+<tr>
+<td>Headcount</td>
+<td>~1,200</td>
+<td>~1/3 in Israel, reported</td>
+<td>HPCwire, 2026-03<sup id="fnref2:52"><a class="footnote-ref" href="#fn:52">52</a></sup></td>
+</tr>
+</tbody>
+</table>
+<h2 id="conversation-playbook">Conversation playbook<a class="headerlink" href="#conversation-playbook" title="Permanent link">&para;</a></h2>
+<p><strong>Questions for a PM</strong></p>
+<ol>
+<li><em>"In the last ten EXA deals against VAST, what decided the outcome?"</em> A strong answer separates neocloud from lab and enterprise deals. It names the deciding factor in each (reference customers, NFS versus pNFS client support, $/TB under NAND inflation, up-stack features), and admits where VAST's breadth won.</li>
+<li><em>"Which VAST AI OS features show up in RFPs as requirements, not nice-to-haves?"</em> A strong answer distinguishes multiprotocol on one namespace and event triggers, which appear often, from AgentEngine-style features, which rarely gate deals. It says how Everpure covers the ones that do.</li>
+<li><em>"How does the NAND shortage change our competitive pitch against a software-only vendor?"</em> A strong answer quantifies the hardware share of total cost of ownership for a 50 PB deal, explains Everpure's supply position versus at-cost white-box hardware, and avoids overclaiming price guarantees.</li>
+</ol>
+<p><strong>Questions for an engineer</strong></p>
+<ol>
+<li><em>"Walk me through a 1 GB/s write on VAST versus EXA: fabric crossings, persistence point, and where reduction happens."</em> A strong answer gives roughly 4× back-end traffic for VAST's mirror-then-migrate path (<a href="../../03-system-architecture/16-disaggregated-shared-everything/">Chapter 16</a>) and the direct data-node write for EXA, and says where each spends CPU.</li>
+<li><em>"Is similarity reduction a real advantage on AI training data?"</em> A strong answer says it helps on checkpoints, versions, logs and near-duplicate corpora. It helps little on compressed media and tokenised shards. It asks for measured ratios, not marketing medians.</li>
+<li><em>"What does BlueField-4 STX change for us?"</em> A strong answer explains that the DPU-resident controller becomes a shared NVIDIA pattern. It identifies the software that still differentiates (metadata engine, reduction, multi-tenancy) and the timeline for EXA's STX alignment.</li>
+</ol>
+<p><strong>Don't say this:</strong></p>
+<ul>
+<li>"VAST is a hardware company." It has sold software on partner hardware since 2021.</li>
+<li>"VAST has US$2B of ARR." That is press speculation. The company-stated figure is more than US$500M of CARR.</li>
+<li>"VAST powers xAI." Both VAST and DDN claim a primary role at Colossus, and the split is unknown.</li>
+<li>"VAST's data reduction is 3:1." That is close to its customer <em>average</em> (3.4:1); the company-stated median is 1.75:1, and the ratio depends entirely on the data.</li>
+<li>"FlashBlade//EXA beat VAST in MLPerf." VAST did not enter.</li>
+<li>"The AI OS is all shipping." Several engines and CNode-X were announced in 2026 with GA targeted for later in the year.</li>
+</ul>
+<h2 id="going-deeper-optional-l3-pointers">Going deeper (optional, L3 pointers)<a class="headerlink" href="#going-deeper-optional-l3-pointers" title="Permanent link">&para;</a></h2>
+<ul>
+<li>VAST's US patent application 2019/0379394 on global similarity-based compression<sup id="fnref2:16"><a class="footnote-ref" href="#fn:16">16</a></sup>, and its engineering blog series on locally decodable codes<sup id="fnref2:20"><a class="footnote-ref" href="#fn:20">20</a></sup>.</li>
+<li>Lockwood et al., PDSW'21, for an independent benchmark of a VAST system's read and write behaviour<sup id="fnref:80"><a class="footnote-ref" href="#fn:80">80</a></sup>.</li>
+<li>VAST knowledge-base pages on DBox high availability, rack resiliency and data reduction, for stripe and failure-domain rules.</li>
+<li>NVIDIA's BlueField-4 STX and inference context-memory documentation, to see which parts of the KV-cache design are NVIDIA's and which are VAST's.</li>
+</ul>
+<h2 id="key-terms">Key terms<a class="headerlink" href="#key-terms" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Element Store</strong> — VAST's single metadata and data structure underneath every protocol and service.</li>
+<li><strong>Similarity-based data reduction</strong> — compressing near-duplicate chunks as deltas against a shared reference block.</li>
+<li><strong>Locally decodable erasure code</strong> — a wide erasure code that rebuilds a lost strip from a fraction of the stripe.</li>
+<li><strong>VAST AI Operating System</strong> — VAST's 2025 umbrella brand for DataStore, DataBase, DataSpace and its compute engines.</li>
+<li><strong>CNode-X / EBox / Ceres</strong> — GPU-equipped compute node, converged server, and BlueField-based storage enclosure.</li>
+<li><strong>Gemini</strong> — VAST's model of hardware at cost plus a capacity-priced software subscription.</li>
+<li><strong>Committed ARR (CARR)</strong> — annualised value of signed recurring contracts, including those not yet live.</li>
+<li><strong>Rule of X</strong> — Bessemer's growth-weighted variant of the Rule of 40.</li>
+<li>See the <a href="../../glossary/">glossary</a> for the rest.</li>
+</ul>
+<h2 id="sources">Sources<a class="headerlink" href="#sources" title="Permanent link">&para;</a></h2>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>CNBC, "Nvidia backs AI company Vast Data at $30 billion valuation," 2026-04-22. https://www.cnbc.com/2026/04/22/nvidia-backs-ai-company-vast-data.html (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:1" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>VAST Data, "VAST Data Raises $100 Million in Series C Funding at $1.2 Billion Valuation to Democratize Flash for All Data" (press release), 2020-04. https://vastdata.com/news-post/vast-data-raises-100-million-in-series-c-funding-at-1-2-billion-valuation-to-democratize-flash-for-all-data (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>VAST Data, "How it works," n.d. https://vastdata.com/how-it-works (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:3" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>Blocks &amp; Files, "VAST Data's business sitrep," 2019-02-26. https://blocksandfiles.com/2019/02/26/vast-datas-business-sitrep/ ; StorageReview, "VAST Data emerges from stealth with Universal Storage," 2019-02. https://www.storagereview.com/news/vast-data-emerges-from-stealth-with-universal-storage (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p>Blocks &amp; Files, "VAST Data exits hardware business, pivots to software subscriptions," 2021-04-06. https://blocksandfiles.com/2021/04/06/vast-data-software-subscriptions-pivot/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:6">
+<p>The Next Platform, "VAST Data Sheds Hardware Business To Tackle Largest Users," 2021-04-06. https://www.nextplatform.com/2021/04/06/vast-data-sheds-hardware-business-to-tackle-largest-users/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+<li id="fn:7">
+<p>Blocks &amp; Files, "VAST Data lessens Optane SSD dependency," 2021-11-05. https://blocksandfiles.com/2021/11/05/vast-data-lessens-optane-ssd-dependency/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:7" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+</li>
+<li id="fn:8">
+<p>Blocks &amp; Files, "VAST Data launches Ceres storage drive enclosure," 2022-03-22. https://blocksandfiles.com/?p=37064 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:8" title="Jump back to footnote 8 in the text">&#8617;</a></p>
+</li>
+<li id="fn:9">
+<p>VAST Data Knowledge Base, "DBox DF-3015V2/DF-3060V2 Ceres Datasheet," n.d. https://kb.vastdata.com/docs/dbox-df-3015v2df-3060v2-ceres-datasheet (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:9" title="Jump back to footnote 9 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:9" title="Jump back to footnote 9 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:9" title="Jump back to footnote 9 in the text">&#8617;</a></p>
+</li>
+<li id="fn:10">
+<p>Blocks &amp; Files, "VAST enters 2025 with consolidated EBox and GCP support," 2025-01-15. https://blocksandfiles.com/2025/01/15/vast-enters-2015-with-consolidated-ebox-and-gcp-support/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:10" title="Jump back to footnote 10 in the text">&#8617;</a></p>
+</li>
+<li id="fn:11">
+<p>Supermicro, "Supermicro and VAST Data launch new enterprise AI data platform solution (NVIDIA)" (press release), 2026-02-25. https://www.supermicro.com/de/pressreleases/supermicro-and-vast-data-launch-new-enterprise-ai-data-platform-solution-nvidia (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:11" title="Jump back to footnote 11 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:11" title="Jump back to footnote 11 in the text">&#8617;</a></p>
+</li>
+<li id="fn:12">
+<p>HPCwire, "VAST adds GPUs into clusters with CNode-X," 2026-02-25. https://www.hpcwire.com/2026/02/25/vast-adds-gpus-into-clusters-with-cnode-x/ ; VAST Data via GlobeNewswire, "VAST Data Introduces End-to-End Fully Accelerated AI Data Stack with NVIDIA," 2026-02-25. https://www.globenewswire.com/news-release/2026/02/25/3244905/0/en/VAST-Data-Introduces-End-to-End-Fully-Accelerated-AI-Data-Stack-with-NVIDIA.html (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:12" title="Jump back to footnote 12 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:12" title="Jump back to footnote 12 in the text">&#8617;</a></p>
+</li>
+<li id="fn:13">
+<p>StorageNewsletter, "CES 2026: Vast Data Redesigns AI Inference Architecture for the Agentic Era with Nvidia," 2026-01-07. https://www.storagenewsletter.com/2026/01/07/ces-2026-vast-data-redesigns-ai-inference-architecture-for-the-agentic-era-with-nvidia/ ; NAND Research, "VAST's novel approach to NVIDIA's new Inference Context Memory Storage platform," 2026-01. https://nand-research.com/research-note-vasts-novel-approach-to-nvidias-new-inference-context-memory-storage-platform/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:13" title="Jump back to footnote 13 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:13" title="Jump back to footnote 13 in the text">&#8617;</a></p>
+</li>
+<li id="fn:14">
+<p>VAST Data blog, "The latest VAST release is all about the protocols," n.d. (2025). https://vastdata.com/blog/the-latest-vast-release-is-all-about-the-protocols ; TechTarget, "Block storage and Kafka events come to Vast Data Platform," 2025-02. https://www.techtarget.com/searchstorage/news/366619465/Block-storage-and-Kafka-events-come-to-Vast-Data-Platform (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:14" title="Jump back to footnote 14 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:14" title="Jump back to footnote 14 in the text">&#8617;</a></p>
+</li>
+<li id="fn:15">
+<p>VAST Data blog, "Breaking data reduction trade-offs with global compression," n.d. https://vastdata.com/blog/breaking-data-reduction-trade-offs-with-global-compression (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:15" title="Jump back to footnote 15 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:15" title="Jump back to footnote 15 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:15" title="Jump back to footnote 15 in the text">&#8617;</a></p>
+</li>
+<li id="fn:16">
+<p>US Patent Application 2019/0379394, "System and method for global data compression," 2019 (via Justia). https://patents.justia.com/patent/20190379394 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:16" title="Jump back to footnote 16 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:16" title="Jump back to footnote 16 in the text">&#8617;</a></p>
+</li>
+<li id="fn:17">
+<p>Blocks &amp; Files, "VAST Data reduction," 2019-02-26. https://blocksandfiles.com/2019/02/26/vast-data-reduction/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:17" title="Jump back to footnote 17 in the text">&#8617;</a></p>
+</li>
+<li id="fn:18">
+<p>VAST Data, "Scaling Through Flash Scarcity" (webinar), n.d. https://www.vastdata.com/events/scaling-through-flash-scarcity (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:18" title="Jump back to footnote 18 in the text">&#8617;</a></p>
+</li>
+<li id="fn:19">
+<p>Blocks &amp; Files, "VAST Data's flash reclaim attacks competitors' installed bases," 2026-01-13. https://www.blocksandfiles.com/ai-ml/2026/01/13/vast-datas-flash-reclaim-attacks-competitors-installed-bases/4090394 (retrieved 2026-11-01; search extract only).&#160;<a class="footnote-backref" href="#fnref:19" title="Jump back to footnote 19 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:19" title="Jump back to footnote 19 in the text">&#8617;</a></p>
+</li>
+<li id="fn:20">
+<p>VAST Data blog, "Beyond Better Codes (Providing Resilience Efficiently, Part II)," n.d. https://vastdata.com/blog/providing-resilience-efficiently-part-ii (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:20" title="Jump back to footnote 20 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:20" title="Jump back to footnote 20 in the text">&#8617;</a></p>
+</li>
+<li id="fn:21">
+<p>VAST Data blog, "Bringing rack-level resilience to VAST, part one," n.d. https://www.vastdata.com/blog/bringing-rack-level-resilience-to-vast-part-one (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:21" title="Jump back to footnote 21 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:21" title="Jump back to footnote 21 in the text">&#8617;</a></p>
+</li>
+<li id="fn:22">
+<p>Blocks &amp; Files, "GPUDirect Storage hitting the streets to VAST acclaim," 2021-06-28. https://www.blocksandfiles.com/file/2021/06/28/gpudirect-storage-hitting-the-streets-to-vast-acclaim/1611092 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:22" title="Jump back to footnote 22 in the text">&#8617;</a></p>
+</li>
+<li id="fn:23">
+<p>The Next Platform, "VAST Data builds out data platform with block storage and Kafka streams," 2025-02-21. https://www.nextplatform.com/2025/02/21/vast-data-builds-out-data-platform-with-block-storage-and-kafka-streams ; StorageReview, "VAST Data introduces fully unified AI data platform and launches Event Broker," 2025-02. https://www.storagereview.com/news/vast-data-introduces-fully-unified-ai-data-platform-and-launches-event-broker (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:23" title="Jump back to footnote 23 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:23" title="Jump back to footnote 23 in the text">&#8617;</a></p>
+</li>
+<li id="fn:24">
+<p>Blocks &amp; Files, "VAST Data launches AI operating system," 2025-05-21. https://www.blocksandfiles.com/ai-ml/2025/05/21/vast-data-launches-ai-operating-system/1613219 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:24" title="Jump back to footnote 24 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:24" title="Jump back to footnote 24 in the text">&#8617;</a></p>
+</li>
+<li id="fn:25">
+<p>The Next Platform, "VAST Data: What controls the data is more important than what stores it," 2026-02-27. https://www.nextplatform.com/store/2026/02/27/vast-data-what-controls-the-data-is-more-important-than-what-stores-it/4092860 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:25" title="Jump back to footnote 25 in the text">&#8617;</a></p>
+</li>
+<li id="fn:26">
+<p>SDxCentral, "Google Cloud enlists VAST Data to support AI multi-environment deployments," 2025-11. https://www.sdxcentral.com/news/google-cloud-enlists-vast-data-to-support-ai-multi-environment-deployments/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:26" title="Jump back to footnote 26 in the text">&#8617;</a></p>
+</li>
+<li id="fn:27">
+<p>Futuriom, "VAST Data Declares Itself an AI Operating System," 2025-05. https://www.futuriom.com/articles/news/vast-data-declares-itself-an-ai-operating-system/2025/05 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:27" title="Jump back to footnote 27 in the text">&#8617;</a></p>
+</li>
+<li id="fn:28">
+<p>Blocks &amp; Files, "VAST InsightEngine," 2024-10-01. https://blocksandfiles.com/2024/10/01/vast-insightengine/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:28" title="Jump back to footnote 28 in the text">&#8617;</a></p>
+</li>
+<li id="fn:29">
+<p>SiliconANGLE, "VAST Data's SyncEngine helps AI agents tap unstructured data from every source," 2025-08-21. https://siliconangle.com/2025/08/21/vast-datas-syncengine-helps-ai-agents-tap-unstructured-data-every-source/ ; Blocks &amp; Files, "VAST targets data sprawl with new SyncEngine utility," 2025-08-21. https://www.blocksandfiles.com/ai-ml/2025/08/21/vast-targets-data-sprawl-with-new-syncengine-utility/1598432 (both retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:29" title="Jump back to footnote 29 in the text">&#8617;</a></p>
+</li>
+<li id="fn:30">
+<p>HPCwire, "VAST Data Expands AI Data Stack, Keeps Eye on North Star," 2026-02-25. https://www.hpcwire.com/2026/02/25/vast-data-expands-ai-data-stack-keeps-eye-on-north-star/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:30" title="Jump back to footnote 30 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:30" title="Jump back to footnote 30 in the text">&#8617;</a></p>
+</li>
+<li id="fn:31">
+<p>Let's Data Science, "VAST Data Unveils AI Operating Enhancements," 2026-02 (secondary summary of VAST Forward 2026 announcements). https://letsdatascience.com/news/vast-data-unveils-ai-operating-enhancements-dd19113a (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:31" title="Jump back to footnote 31 in the text">&#8617;</a></p>
+</li>
+<li id="fn:32">
+<p>StorageNewsletter, "VAST Forward 2026: VAST Data Introduces Polaris to Orchestrate Globally Distributed AI Data Infrastructure Across Hybrid Multicloud Environments," 2026-03-04. https://www.storagenewsletter.com/2026/03/04/vast-forward-2026-vast-data-introduces-polaris-to-orchestrate-globally-distributed-ai-data-infrastructure-across-hybrid-multicloud-environments/ ; SiliconANGLE, "VAST Data expands AI operating system with global control plane…," 2026-02-25. https://siliconangle.com/2026/02/25/vast-data-expands-ai-operating-system-global-control-plane-zero-trust-agent-framework-deeper-nvidia-integration/ (both retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:32" title="Jump back to footnote 32 in the text">&#8617;</a></p>
+</li>
+<li id="fn:33">
+<p>Blocks &amp; Files, "VAST's VUA flash caching virtually expands GPU server memory for AI token generation," 2025-04-25. https://blocksandfiles.com/2025/04/25/vasts-vua-flash-caching-virtually-expands-gpu-server-memory-for-ai-token-generation/ ; VAST Data blog, "Open and Undivided Attention," 2025. https://www.vastdata.com/blog/open-and-undivided-attention (both retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:33" title="Jump back to footnote 33 in the text">&#8617;</a></p>
+</li>
+<li id="fn:34">
+<p>StorageNewsletter, "Nvidia GTC 2026: Nvidia Launches BlueField-4 STX Storage Architecture With Broad Industry Adoption," 2026-03-17. https://www.storagenewsletter.com/2026/03/17/nvidia-gtc-2026-nvidia-launches-bluefield-4-stx-storage-architecture-with-broad-industry-adoption/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:34" title="Jump back to footnote 34 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:34" title="Jump back to footnote 34 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:34" title="Jump back to footnote 34 in the text">&#8617;</a></p>
+</li>
+<li id="fn:35">
+<p>VAST Data, "What is Gemini," n.d. https://vastdata.com/what-is-gemini (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:35" title="Jump back to footnote 35 in the text">&#8617;</a></p>
+</li>
+<li id="fn:36">
+<p>Crunchbase News, "VAST Data secures $100M for storage, triples valuation to $1.2B," 2020-04. https://news.crunchbase.com/news/vast-data-secures-100m-for-storage-triples-valuation-to-1-2b (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:36" title="Jump back to footnote 36 in the text">&#8617;</a></p>
+</li>
+<li id="fn:37">
+<p>StorageNewsletter, "Vast Data Raised $83 Million, Total Reaching $263 Million," 2021-05-05. https://www.storagenewsletter.com/2021/05/05/vast-data-raised-83-million-total-reaching-263-million/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:37" title="Jump back to footnote 37 in the text">&#8617;</a></p>
+</li>
+<li id="fn:38">
+<p>Blocks &amp; Files, "VAST Data funding," 2023-12-06. https://blocksandfiles.com/2023/12/06/vast-data-funding/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:38" title="Jump back to footnote 38 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:38" title="Jump back to footnote 38 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:38" title="Jump back to footnote 38 in the text">&#8617;</a></p>
+</li>
+<li id="fn:39">
+<p>Crunchbase News, "Unicorn VAST Data valuation doubles (Fidelity)," 2023-12. https://news.crunchbase.com/ai/unicorn-vast-data-valuation-doubles-fidelity (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:39" title="Jump back to footnote 39 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:39" title="Jump back to footnote 39 in the text">&#8617;</a></p>
+</li>
+<li id="fn:40">
+<p>Globes, "Storage co Vast Data raising several billion dollars - report," 2025. https://en.globes.co.il/en/article-storage-co-vast-data-raising-several-billion-dollars-report-1001517875 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:40" title="Jump back to footnote 40 in the text">&#8617;</a></p>
+</li>
+<li id="fn:41">
+<p>Blocks &amp; Files, "VAST Data plans funding round so early stockholders can get cash," 2026-02-05. https://www.blocksandfiles.com/file/2026/02/05/vast-data-plans-funding-round-so-early-stockholders-can-get-cash/4090372 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:41" title="Jump back to footnote 41 in the text">&#8617;</a></p>
+</li>
+<li id="fn:42">
+<p>Futurum, "VAST Data Valuation Triples. Can a Unified Platform Scale AI Globally?," 2026-04. https://futurumgroup.com/insights/vast-data-valuation-triples-can-a-unified-platform-scale-ai-globally/ ; VAST Data, "VAST Data Valued at $30 Billion as AI Drives a New Infrastructure Stack" (press release), 2026-04-21. https://www.vastdata.com/press-releases/vast-series-f-financing-at-30-billion-valuation (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:42" title="Jump back to footnote 42 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:42" title="Jump back to footnote 42 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:42" title="Jump back to footnote 42 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:42" title="Jump back to footnote 42 in the text">&#8617;</a><a class="footnote-backref" href="#fnref5:42" title="Jump back to footnote 42 in the text">&#8617;</a><a class="footnote-backref" href="#fnref6:42" title="Jump back to footnote 42 in the text">&#8617;</a></p>
+</li>
+<li id="fn:43">
+<p>Bloomberg, "Nvidia-Backed Vast Data Triples Value to $30 Billion, Mulls IPO," 2026-04. https://news.bloomberglaw.com/private-equity/nvidia-backed-vast-data-triples-value-to-30-billion-mulls-ipo (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:43" title="Jump back to footnote 43 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:43" title="Jump back to footnote 43 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:43" title="Jump back to footnote 43 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:43" title="Jump back to footnote 43 in the text">&#8617;</a></p>
+</li>
+<li id="fn:44">
+<p>Calcalist (CTech), "Vast Data closes round at $30 billion valuation," 2026-04. https://www.calcalistech.com/ctechnews/article/b8kyeze8s (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:44" title="Jump back to footnote 44 in the text">&#8617;</a></p>
+</li>
+<li id="fn:45">
+<p>Wamda, "VAST Data closes Series F round at $30B valuation," 2026-04. https://www.wamda.com/2026/04/vast-data-closes-series-f-round-30b-valuation (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:45" title="Jump back to footnote 45 in the text">&#8617;</a></p>
+</li>
+<li id="fn:46">
+<p>VAST Data via iTWire, "VAST Data Valued at $30 Billion as AI Drives a New Infrastructure Stack," 2026-04-21. https://itwire.com/guest-articles/company-news/vast-data-valued-at-$30-billion-as-ai-drives-a-new-infrastructure-stack.html (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:46" title="Jump back to footnote 46 in the text">&#8617;</a></p>
+</li>
+<li id="fn:47">
+<p>Calcalist (CTech), "Vast Data triples valuation to $9.1 billion" (Series E coverage), 2023-12. https://www.calcalistech.com/ctechnews/article/bjfh5gast (retrieved 2026-11-01; search extract only).&#160;<a class="footnote-backref" href="#fnref:47" title="Jump back to footnote 47 in the text">&#8617;</a></p>
+</li>
+<li id="fn:48">
+<p>Bessemer Venture Partners, "The Rule of X," n.d. https://bvp.com/atlas/the-rule-of-x (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:48" title="Jump back to footnote 48 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:48" title="Jump back to footnote 48 in the text">&#8617;</a></p>
+</li>
+<li id="fn:49">
+<p>C. Lam (Clouded Judgement), "Clouded Judgement 2.23.24 – Rule of X," 2024-02-23. https://cloudedjudgement.substack.com/p/clouded-judgement-22324-rule-of-x (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:49" title="Jump back to footnote 49 in the text">&#8617;</a></p>
+</li>
+<li id="fn:50">
+<p>Sacra, "VAST Data," 2025. https://sacra.com/c/vast-data/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:50" title="Jump back to footnote 50 in the text">&#8617;</a></p>
+</li>
+<li id="fn:51">
+<p>Blocks &amp; Files, "VAST Data raises $1B at $30B valuation as AI storage demand surges," 2026-03-11. https://www.blocksandfiles.com/flash/2026/03/11/vast-data-raises-1b-at-30b-valuation-as-ai-storage-demand-surges/5208106 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:51" title="Jump back to footnote 51 in the text">&#8617;</a></p>
+</li>
+<li id="fn:52">
+<p>HPCwire, VAST Data headcount report (item p=189419), 2026-03. https://www.hpcwire.com/?p=189419 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:52" title="Jump back to footnote 52 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:52" title="Jump back to footnote 52 in the text">&#8617;</a></p>
+</li>
+<li id="fn:53">
+<p>Everpure, "Everpure Announces Second Quarter Fiscal 2027 Financial Results," 2026-08-26. https://investor.everpuredata.com/news-and-events/press-releases/press-release-details/2026/Everpure-Announces-Second-Quarter-Fiscal-2027-Financial-Results/default.aspx (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:53" title="Jump back to footnote 53 in the text">&#8617;</a></p>
+</li>
+<li id="fn:54">
+<p>Reuters (via Yahoo Finance), "Exclusive: Nvidia-backed Vast Data inks $1.17 billion AI deal with CoreWeave," 2025-11-06. https://finance.yahoo.com/news/exclusive-nvidia-backed-vast-data-120456403.html (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:54" title="Jump back to footnote 54 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:54" title="Jump back to footnote 54 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:54" title="Jump back to footnote 54 in the text">&#8617;</a></p>
+</li>
+<li id="fn:55">
+<p>VAST Data, "Accelerating Global Enterprise AI Adoption (Nebius customer story)," n.d. https://www.vastdata.com/customers/nebius ; Fierce Network, "Here's why Nvidia-backed startup VAST Data is all the rage," n.d. https://www.fierce-network.com/cloud/heres-why-nvidia-backed-startup-vast-data-all-rage (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:55" title="Jump back to footnote 55 in the text">&#8617;</a></p>
+</li>
+<li id="fn:56">
+<p>Blocks &amp; Files, "VAST Data in xAI's frontier AI factory, Nscale's UK data centers and Williams F1 racing team," 2025-10-30. https://blocksandfiles.com/2025/10/30/vast-data-in-xais-frontier-ai-factory-nscales-uk-data-centers-and-williams-f1-racing-team/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:56" title="Jump back to footnote 56 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:56" title="Jump back to footnote 56 in the text">&#8617;</a></p>
+</li>
+<li id="fn:57">
+<p>Blocks &amp; Files, "DDN supplying storage for xAI's Grok 3 Colossus AI supercomputer," 2024-11-19. https://blocksandfiles.com/2024/11/19/ddn-supplying-storage-for-xais-grok-3-colossus-ai-supercomputer/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:57" title="Jump back to footnote 57 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:57" title="Jump back to footnote 57 in the text">&#8617;</a></p>
+</li>
+<li id="fn:58">
+<p>VAST Data blog, "The story of VAST and xAI," n.d. https://www.vastdata.com/blog/the-story-of-vast-and-xai (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:58" title="Jump back to footnote 58 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:58" title="Jump back to footnote 58 in the text">&#8617;</a></p>
+</li>
+<li id="fn:59">
+<p>Blocks &amp; Files, "VAST supports Google Cloud TPUs in managed service with Red Stapler's SW," 2025-11-11. https://blocksandfiles.com/2025/11/11/vast-supports-google-cloud-tpus-in-managed-service-with-red-staplers-sw/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:59" title="Jump back to footnote 59 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:59" title="Jump back to footnote 59 in the text">&#8617;</a></p>
+</li>
+<li id="fn:60">
+<p>Blocks &amp; Files, "Azure gets VAST's AI OS as VAST builds out global AI operations data fabric," 2025-11-18. https://blocksandfiles.com/2025/11/18/azure-gets-vasts-ai-os-as-vast-builds-out-global-ai-operations-data-fabric ; NAND Research, "VAST Data expands cloud presence with Microsoft Azure and Google Cloud integrations," 2025-11. https://nand-research.com/research-note-vast-data-expands-cloud-presence-with-microsoft-azure-and-google-cloud-integrations/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:60" title="Jump back to footnote 60 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:60" title="Jump back to footnote 60 in the text">&#8617;</a></p>
+</li>
+<li id="fn:61">
+<p>VAST Data via Business Wire, announcement of VAST software in HPE GreenLake for File Storage, 2023-04-04. https://www.businesswire.com/news/home/20230404005358/en (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:61" title="Jump back to footnote 61 in the text">&#8617;</a></p>
+</li>
+<li id="fn:62">
+<p>Blocks &amp; Files, "VAST links up with Equinix and Cisco," 2024-10-01. https://www.blocksandfiles.com/ai-ml/2024/10/01/vast-links-up-with-equinix-and-cisco/1589567 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:62" title="Jump back to footnote 62 in the text">&#8617;</a></p>
+</li>
+<li id="fn:63">
+<p>StorageNewsletter, "Vast Data Secures Commercial Partnership Deal with CoreWeave for $1.17 Billion to Power the Next Generation of AI," 2025-11-07. https://www.storagenewsletter.com/2025/11/07/vast-data-secures-commercial-partnership-deal-with-coreweave-for-1-17-billion-to-power-the-next-generation-of-ai/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:63" title="Jump back to footnote 63 in the text">&#8617;</a></p>
+</li>
+<li id="fn:64">
+<p>The Next Platform, "VAST Data's $1.17 Billion Deal With CoreWeave Is A Leading Indicator," 2025-11-07. https://www.nextplatform.com/2025/11/07/vast-datas-1-17-billion-deal-with-coreweave-is-a-leading-indicator/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:64" title="Jump back to footnote 64 in the text">&#8617;</a></p>
+</li>
+<li id="fn:65">
+<p>Futurum, "HPE and VAST Data Join Forces to Launch HPE GreenLake for File Storage," 2023-04. https://futurumgroup.com/insights/hpe-and-vast-data-join-forces-to-launch-hpe-greenlake-for-file-storage (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:65" title="Jump back to footnote 65 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:65" title="Jump back to footnote 65 in the text">&#8617;</a></p>
+</li>
+<li id="fn:66">
+<p>Lenovo Press, "VTT Data Storage Solutions: The AI Operating System with VAST &amp; Lenovo" (course DVDAT219), 2025-07. https://lenovopress.lenovo.com/course/dvdat219 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:66" title="Jump back to footnote 66 in the text">&#8617;</a></p>
+</li>
+<li id="fn:67">
+<p>Blocks &amp; Files, "Storage vendors rally behind Nvidia at GTC 2025," 2025-03-18. https://www.blocksandfiles.com/ai-ml/2025/03/18/storage-vendors-rally-behind-nvidia-at-gtc-2025/1602277 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:67" title="Jump back to footnote 67 in the text">&#8617;</a></p>
+</li>
+<li id="fn:68">
+<p>StorageReview, "MLPerf Storage v3.0: 877 GiB/s Checkpoints, a Cloud First, and a Leaderboard Turned Over," 2026-09. https://www.storagereview.com/news/mlperf-storage-v3-0-877-gib-s-checkpoints-a-cloud-first-and-a-leaderboard-turned-over (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:68" title="Jump back to footnote 68 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:68" title="Jump back to footnote 68 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:68" title="Jump back to footnote 68 in the text">&#8617;</a></p>
+</li>
+<li id="fn:69">
+<p>StorageReview, "Best storage arrays" buyer's guide (MLPerf Storage submitter history, updated 2026-09-01). https://www.storagereview.com/best/storage-arrays (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:69" title="Jump back to footnote 69 in the text">&#8617;</a></p>
+</li>
+<li id="fn:70">
+<p>TrendForce, "AI Server Demand Sustains Memory Contract Price Increases in 4Q26, While Consumer-Side Pressure Persists," 2026-09-30. https://www.trendforce.com/presscenter/news/20260930-13258.html (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:70" title="Jump back to footnote 70 in the text">&#8617;</a></p>
+</li>
+<li id="fn:71">
+<p>HPCwire, "How the memory shortage is impacting AI and HPC projects," 2026-01-15. https://www.hpcwire.com/2026/01/15/how-the-memory-shortage-is-impacting-ai-and-hpc-projects/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:71" title="Jump back to footnote 71 in the text">&#8617;</a></p>
+</li>
+<li id="fn:72">
+<p>Calcalist (CTech), article 68ml6rrio, n.d. (2026). https://www.calcalistech.com/ctechnews/article/68ml6rrio (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:72" title="Jump back to footnote 72 in the text">&#8617;</a></p>
+</li>
+<li id="fn:73">
+<p>CoreWeave, "Storage" (product page), n.d. https://coreweave.com/products/storage (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:73" title="Jump back to footnote 73 in the text">&#8617;</a></p>
+</li>
+<li id="fn:74">
+<p>Yahoo Finance, "NetApp (NTAP) Acquires AI Storage Software Firm To Expand AI Infrastructure," 2026-07. https://finance.yahoo.com/technology/ai/articles/netapp-ntap-acquires-ai-storage-220629407.html (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:74" title="Jump back to footnote 74 in the text">&#8617;</a></p>
+</li>
+<li id="fn:75">
+<p>Blocks &amp; Files, "How Pure Storage developed its disaggregated FlashBlade//EXA system," 2025-04-17. https://blocksandfiles.com/2025/04/17/how-pure-storage-developed-its-disaggregated-flashblade-exa-system/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:75" title="Jump back to footnote 75 in the text">&#8617;</a></p>
+</li>
+<li id="fn:76">
+<p>StorageReview, "Everpure aligns FlashBlade//EXA with NVIDIA AI Factory architectures, previews Data Stream," 2026-03-16. https://www.storagereview.com/news/everpure-aligns-flashblade-exa-with-nvidia-ai-factory-architectures-previews-data-stream (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:76" title="Jump back to footnote 76 in the text">&#8617;</a></p>
+</li>
+<li id="fn:77">
+<p>Everpure, "FlashBlade//EXA Terms of Use," n.d. https://www.everpuredata.com/legal/flashblade-exa-terms-of-use.html (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:77" title="Jump back to footnote 77 in the text">&#8617;</a></p>
+</li>
+<li id="fn:78">
+<p>Blocks &amp; Files, "Pure knocking it out of the park," 2025-08-29. https://blocksandfiles.com/2025/08/29/pure-knocking-it-out-of-the-park/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:78" title="Jump back to footnote 78 in the text">&#8617;</a></p>
+</li>
+<li id="fn:79">
+<p>Futurum, "Everpure Q4 FY 2026 Revenue Passes $1 Billion as Platform Strategy Scales," 2026-02. https://futurumgroup.com/insights/everpure-q4-fy-2026-revenue-passes-1-billion-as-platform-strategy-scales (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:79" title="Jump back to footnote 79 in the text">&#8617;</a></p>
+</li>
+<li id="fn:80">
+<p>G. K. Lockwood et al., "New Challenges of Benchmarking All-Flash Storage for HPC," PDSW'21, 2021. https://pdsw.org/pdsw21/papers/ws_pdsw_paper_S2_P1_paper-lockwood.pdf (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:80" title="Jump back to footnote 80 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../41-why-ai-native-vendors-won/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 41. Why AI-native storage vendors gained traction">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                41. Why AI-native storage vendors gained traction
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../43-weka/" class="md-footer__link md-footer__link--next" aria-label="Next: 43. WEKA deep dive">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                43. WEKA deep dive
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>

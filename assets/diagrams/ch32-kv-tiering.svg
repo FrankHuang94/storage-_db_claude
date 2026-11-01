@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 740" width="1000" role="img" aria-labelledby="t d" font-family="Inter, Helvetica, Arial, sans-serif">
+  <title id="t">KV-cache tiering for LLM inference: G1 HBM to G4 networked storage</title>
+  <desc id="d">Six stacked tiers for KV cache. From top: G1 GPU HBM, G2 host DRAM, optional CXL memory extending G2, G3 local NVMe, G3.5 pod-level context memory storage (NVIDIA CMX), and G4 networked shared storage. Columns give order-of-magnitude latency, bandwidth to the GPU and capacity for each tier. A downward arrow on the left marks offload or eviction to slower tiers; an upward arrow marks onload or prefetch into HBM. A dashed line under the CXL tier marks the boundary between memory semantics and I/O semantics; a second line under G3 marks where KV becomes shareable across nodes and survives a server restart.</desc>
+  <rect x="0" y="0" width="1000" height="740" fill="#FFFFFF"/>
+  <defs>
+    <marker id="ad" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#D55E00"/></marker>
+    <marker id="au" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#0072B2"/></marker>
+  </defs>
+  <text x="30" y="36" font-size="20" font-weight="700" fill="#222222">KV-cache tiering: where a conversation's attention state lives</text>
+  <text x="30" y="58" font-size="13" fill="#555555">Tier names follow NVIDIA Dynamo KVBM (G1–G4) and NVIDIA's G3.5 label for CMX. Order-of-magnitude values, 2026; reference node = DGX B200 class.</text>
+  <text x="30" y="76" font-size="13" fill="#555555">Original drawing for the Everpure Tech Atlas, Chapter 32. Sources: chapter footnotes.</text>
+  <text x="560" y="108" font-size="14" font-weight="700" fill="#222222" text-anchor="middle">Latency</text>
+  <text x="728" y="108" font-size="14" font-weight="700" fill="#222222" text-anchor="middle">Bandwidth to GPU</text>
+  <text x="896" y="108" font-size="14" font-weight="700" fill="#222222" text-anchor="middle">Capacity</text>
+  <line x1="480" y1="116" x2="985" y2="116" stroke="#888888" stroke-width="1"/>
+  <rect x="70" y="126" width="350" height="68" rx="8" fill="#D55E00" stroke="#555555" stroke-width="1.2"/>
+  <text x="84" y="154" font-size="15" font-weight="700" fill="#FFFFFF">G1 · GPU HBM</text>
+  <text x="84" y="176" font-size="12.5" fill="#FFFFFF">Active KV: every token decode attends to</text>
+  <text x="560" y="156" font-size="13" fill="#222222" text-anchor="middle">~100s of ns</text>
+  <text x="728" y="156" font-size="13" fill="#222222" text-anchor="middle">3.35–22 TB/s per GPU</text>
+  <text x="896" y="156" font-size="13" fill="#222222" text-anchor="middle">80–288 GB per GPU</text>
+  <line x1="480" y1="203.0" x2="985" y2="203.0" stroke="#DDDDDD" stroke-width="1"/>
+  <rect x="70" y="212" width="350" height="68" rx="8" fill="#E69F00" stroke="#555555" stroke-width="1.2"/>
+  <text x="84" y="240" font-size="15" font-weight="700" fill="#222222">G2 · Host DRAM</text>
+  <text x="84" y="262" font-size="12.5" fill="#222222">Staging buffer; recently evicted blocks</text>
+  <text x="560" y="242" font-size="13" fill="#222222" text-anchor="middle">~100 ns; µs to GPU</text>
+  <text x="728" y="242" font-size="13" fill="#222222" text-anchor="middle">~64 GB/s per GPU (PCIe 5)</text>
+  <text x="896" y="242" font-size="13" fill="#222222" text-anchor="middle">2–4 TB per node</text>
+  <line x1="480" y1="289.0" x2="985" y2="289.0" stroke="#DDDDDD" stroke-width="1"/>
+  <rect x="70" y="298" width="350" height="68" rx="8" fill="#F0E442" stroke="#555555" stroke-width="1.2" stroke-dasharray="6 4"/>
+  <text x="84" y="326" font-size="15" font-weight="700" fill="#222222">G2+ · CXL memory (optional)</text>
+  <text x="84" y="348" font-size="12.5" fill="#222222">Extends G2; still DRAM, still per host</text>
+  <text x="560" y="328" font-size="13" fill="#222222" text-anchor="middle">+70–90 ns vs DRAM</text>
+  <text x="728" y="328" font-size="13" fill="#222222" text-anchor="middle">~64 GB/s per x16 device</text>
+  <text x="896" y="328" font-size="13" fill="#222222" text-anchor="middle">0.25–2 TB per device</text>
+  <rect x="70" y="384" width="350" height="68" rx="8" fill="#009E73" stroke="#555555" stroke-width="1.2"/>
+  <text x="84" y="412" font-size="15" font-weight="700" fill="#FFFFFF">G3 · Local NVMe</text>
+  <text x="84" y="434" font-size="12.5" fill="#FFFFFF">Warm sessions; invisible to other nodes</text>
+  <text x="560" y="414" font-size="13" fill="#222222" text-anchor="middle">~50–100 µs</text>
+  <text x="728" y="414" font-size="13" fill="#222222" text-anchor="middle">~7–14 GB/s per drive</text>
+  <text x="896" y="414" font-size="13" fill="#222222" text-anchor="middle">~30 TB per DGX B200</text>
+  <rect x="70" y="470" width="350" height="68" rx="8" fill="#56B4E9" stroke="#555555" stroke-width="1.2"/>
+  <text x="84" y="498" font-size="15" font-weight="700" fill="#222222">G3.5 · Pod context memory (CMX)</text>
+  <text x="84" y="520" font-size="12.5" fill="#222222">Shared prefixes and sessions in a pod</text>
+  <text x="560" y="500" font-size="13" fill="#222222" text-anchor="middle">~100s of µs</text>
+  <text x="728" y="500" font-size="13" fill="#222222" text-anchor="middle">800 Gb/s per BF-4 DPU</text>
+  <text x="896" y="500" font-size="13" fill="#222222" text-anchor="middle">“PBs per pod” (claim)</text>
+  <line x1="480" y1="547.0" x2="985" y2="547.0" stroke="#DDDDDD" stroke-width="1"/>
+  <rect x="70" y="556" width="350" height="68" rx="8" fill="#0072B2" stroke="#555555" stroke-width="1.2"/>
+  <text x="84" y="584" font-size="15" font-weight="700" fill="#FFFFFF">G4 · Networked shared storage</text>
+  <text x="84" y="606" font-size="12.5" fill="#FFFFFF">Persistent, shareable KV; cold sessions</text>
+  <text x="560" y="586" font-size="13" fill="#222222" text-anchor="middle">~0.1–1+ ms</text>
+  <text x="728" y="586" font-size="13" fill="#222222" text-anchor="middle">50–100 GB/s per GPU NIC</text>
+  <text x="896" y="586" font-size="13" fill="#222222" text-anchor="middle">PB to EB per cluster</text>
+  <line x1="56" y1="375.0" x2="428" y2="375.0" stroke="#D55E00" stroke-width="2.2" stroke-dasharray="8 5"/>
+  <line x1="462" y1="375.0" x2="985" y2="375.0" stroke="#D55E00" stroke-width="2.2" stroke-dasharray="8 5"/>
+  <text x="985" y="368.0" font-size="12" fill="#D55E00" text-anchor="end" font-weight="700">↑ memory semantics (load/store) · ~1,000× latency cliff · I/O semantics ↓</text>
+  <line x1="56" y1="461.0" x2="428" y2="461.0" stroke="#0072B2" stroke-width="2.2" stroke-dasharray="3 4"/>
+  <line x1="462" y1="461.0" x2="985" y2="461.0" stroke="#0072B2" stroke-width="2.2" stroke-dasharray="3 4"/>
+  <text x="985" y="454.0" font-size="12" fill="#0072B2" text-anchor="end" font-weight="700">below this line: KV is shared across servers and survives a restart</text>
+  <line x1="45" y1="132" x2="45" y2="618" stroke="#D55E00" stroke-width="4" marker-end="url(#ad)"/>
+  <text x="34" y="375.0" font-size="13" font-weight="700" fill="#D55E00" text-anchor="middle" transform="rotate(-90 34 375.0)">offload / evict (LRU, frequency filter)</text>
+  <line x1="452" y1="618" x2="452" y2="132" stroke="#0072B2" stroke-width="4" marker-end="url(#au)"/>
+  <text x="439" y="375.0" font-size="13" font-weight="700" fill="#0072B2" text-anchor="middle" transform="rotate(-90 439 375.0)">onload / prefetch on prefix hit (NIXL, GDS, RDMA)</text>
+  <text x="30" y="656" font-size="12.5" fill="#444444">Rule of thumb: every decode step reads the K and V of every active token, so active KV lives in G1. Lower tiers hold inactive state</text>
+  <text x="30" y="675" font-size="12.5" fill="#444444">(between turns, idle agents, shared prefixes) and pay off only when fetching beats recomputing the prefill (see Table 32.1).</text>
+  <text x="30" y="694" font-size="12.5" fill="#444444">CXL memory is not a KVBM tier; it enlarges G2. Bandwidth is per GPU or per device; an 8-GPU node aggregates eight GPUs and up to eight NICs.</text>
+</svg>

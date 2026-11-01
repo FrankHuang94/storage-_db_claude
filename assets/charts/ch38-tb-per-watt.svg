@@ -1,0 +1,683 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="826.704375pt" height="576.006562pt" viewBox="0 0 826.704375 576.006562" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 576.006562 
+L 826.704375 576.006562 
+L 826.704375 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 214.474545 254.04739 
+L 743.76 254.04739 
+L 743.76 68.17154 
+L 214.474545 68.17154 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <path d="M 214.474545 254.04739 
+L 214.474545 68.17154 
+" clip-path="url(#pd450e11adf)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_2">
+      <defs>
+       <path id="mf40b52e15c" d="M 0 0 
+L 0 3.5 
+" style="stroke: #222222; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#mf40b52e15c" x="214.474545" y="254.04739" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="214.474545" y="269.404812" transform="rotate(-0 214.474545 269.404812)">0</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_3">
+      <path d="M 278.630358 254.04739 
+L 278.630358 68.17154 
+" clip-path="url(#pd450e11adf)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#mf40b52e15c" x="278.630358" y="254.04739" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="278.630358" y="269.404812" transform="rotate(-0 278.630358 269.404812)">2</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_5">
+      <path d="M 342.786171 254.04739 
+L 342.786171 68.17154 
+" clip-path="url(#pd450e11adf)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#mf40b52e15c" x="342.786171" y="254.04739" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="342.786171" y="269.404812" transform="rotate(-0 342.786171 269.404812)">4</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_7">
+      <path d="M 406.941983 254.04739 
+L 406.941983 68.17154 
+" clip-path="url(#pd450e11adf)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_8">
+      <g>
+       <use xlink:href="#mf40b52e15c" x="406.941983" y="254.04739" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="406.941983" y="269.404812" transform="rotate(-0 406.941983 269.404812)">6</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_9">
+      <path d="M 471.097796 254.04739 
+L 471.097796 68.17154 
+" clip-path="url(#pd450e11adf)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_10">
+      <g>
+       <use xlink:href="#mf40b52e15c" x="471.097796" y="254.04739" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="471.097796" y="269.404812" transform="rotate(-0 471.097796 269.404812)">8</text>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_11">
+      <path d="M 535.253609 254.04739 
+L 535.253609 68.17154 
+" clip-path="url(#pd450e11adf)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_12">
+      <g>
+       <use xlink:href="#mf40b52e15c" x="535.253609" y="254.04739" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="535.253609" y="269.404812" transform="rotate(-0 535.253609 269.404812)">10</text>
+     </g>
+    </g>
+    <g id="xtick_7">
+     <g id="line2d_13">
+      <path d="M 599.409421 254.04739 
+L 599.409421 68.17154 
+" clip-path="url(#pd450e11adf)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_14">
+      <g>
+       <use xlink:href="#mf40b52e15c" x="599.409421" y="254.04739" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_7">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="599.409421" y="269.404812" transform="rotate(-0 599.409421 269.404812)">12</text>
+     </g>
+    </g>
+    <g id="xtick_8">
+     <g id="line2d_15">
+      <path d="M 663.565234 254.04739 
+L 663.565234 68.17154 
+" clip-path="url(#pd450e11adf)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_16">
+      <g>
+       <use xlink:href="#mf40b52e15c" x="663.565234" y="254.04739" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_8">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="663.565234" y="269.404812" transform="rotate(-0 663.565234 269.404812)">14</text>
+     </g>
+    </g>
+    <g id="xtick_9">
+     <g id="line2d_17">
+      <path d="M 727.721047 254.04739 
+L 727.721047 68.17154 
+" clip-path="url(#pd450e11adf)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_18">
+      <g>
+       <use xlink:href="#mf40b52e15c" x="727.721047" y="254.04739" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_9">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="727.721047" y="269.404812" transform="rotate(-0 727.721047 269.404812)">16</text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_19">
+      <defs>
+       <path id="m2a96ab3716" d="M 0 0 
+L -3.5 0 
+" style="stroke: #222222; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m2a96ab3716" x="214.474545" y="234.260134" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_10">
+      <text style="font-size: 9.2px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="207.474545" y="237.755056" transform="rotate(-0 207.474545 237.755056)">Seagate Exos M 30 TB (HAMR)</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_20">
+      <g>
+       <use xlink:href="#m2a96ab3716" x="214.474545" y="197.684799" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_11">
+      <text style="font-size: 9.2px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="207.474545" y="201.180081" transform="rotate(-0 207.474545 201.180081)">44 TB HAMR-class HDD</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_21">
+      <g>
+       <use xlink:href="#m2a96ab3716" x="214.474545" y="161.109465" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_12">
+      <text style="font-size: 9.2px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="207.474545" y="164.604746" transform="rotate(-0 207.474545 164.604746)">Solidigm D5-P5336 122.88 TB</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_22">
+      <g>
+       <use xlink:href="#m2a96ab3716" x="214.474545" y="124.53413" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_13">
+      <text style="font-size: 9.2px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="207.474545" y="128.029412" transform="rotate(-0 207.474545 128.029412)">Everpure 75 TB DirectFlash Module (2023)</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_23">
+      <g>
+       <use xlink:href="#m2a96ab3716" x="214.474545" y="87.958796" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_14">
+      <text style="font-size: 9.2px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="207.474545" y="91.454077" transform="rotate(-0 207.474545 91.454077)">Micron 6600 ION 245.76 TB</text>
+     </g>
+    </g>
+   </g>
+   <g id="patch_3">
+    <path d="M 214.474545 254.04739 
+L 214.474545 68.17154 
+" style="fill: none; stroke: #888888; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 214.474545 254.04739 
+L 743.76 254.04739 
+" style="fill: none; stroke: #888888; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 214.474545 245.598488 
+L 315.840729 245.598488 
+L 315.840729 222.92178 
+L 214.474545 222.92178 
+z
+" clip-path="url(#pd450e11adf)" style="fill: url(#hc1bfd42eb1); stroke: #555555; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 8.3px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #333333" x="322.192155" y="236.416513" transform="rotate(-0 322.192155 236.416513)">3.16  (9.5 W, max operating)</text>
+   </g>
+   <g id="patch_6">
+    <path d="M 214.474545 209.023153 
+L 355.617333 209.023153 
+L 355.617333 186.346446 
+L 214.474545 186.346446 
+z
+" clip-path="url(#pd450e11adf)" style="fill: url(#hc1bfd42eb1); stroke: #555555; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 8.3px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #333333" x="361.968759" y="199.841178" transform="rotate(-0 361.968759 199.841178)">4.40  (10 W, operating (as used in Micron comparison))</text>
+   </g>
+   <g id="patch_7">
+    <path d="M 214.474545 172.447819 
+L 372.297845 172.447819 
+L 372.297845 149.771111 
+L 214.474545 149.771111 
+z
+" clip-path="url(#pd450e11adf)" style="fill: #56b4e9; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_17">
+    <text style="font-size: 8.3px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #333333" x="378.64927" y="163.265844" transform="rotate(-0 378.64927 163.265844)">4.92  (25 W, max rated)</text>
+   </g>
+   <g id="patch_8">
+    <path d="M 214.474545 135.872484 
+L 455.058843 135.872484 
+L 455.058843 113.195777 
+L 214.474545 113.195777 
+z
+" clip-path="url(#pd450e11adf)" style="fill: #0072b2; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_18">
+    <text style="font-size: 8.3px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #333333" x="461.410268" y="126.690509" transform="rotate(-0 461.410268 126.690509)">7.50  (10 W, typical (CTO-stated upper bound))</text>
+   </g>
+   <g id="patch_9">
+    <path d="M 214.474545 99.297149 
+L 477.192598 99.297149 
+L 477.192598 76.620442 
+L 214.474545 76.620442 
+z
+" clip-path="url(#pd450e11adf)" style="fill: #56b4e9; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_19">
+    <text style="font-size: 8.3px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #333333" x="483.544024" y="90.115175" transform="rotate(-0 483.544024 90.115175)">8.19  (30 W, max rated)</text>
+   </g>
+   <g id="text_20">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start" x="214.474545" y="62.17154" transform="rotate(-0 214.474545 62.17154)">Single drive or module, TB per watt (raw)</text>
+   </g>
+   <g id="legend_1">
+    <g id="patch_10">
+     <path d="M 595.506719 193.352741 
+L 612.506719 193.352741 
+L 612.506719 187.402741 
+L 595.506719 187.402741 
+z
+" style="fill: #0072b2; stroke: #ffffff; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_21">
+     <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: start" x="619.306719" y="193.352741" transform="rotate(-0 619.306719 193.352741)">Everpure (company-stated)</text>
+    </g>
+    <g id="patch_11">
+     <path d="M 595.506719 206.103406 
+L 612.506719 206.103406 
+L 612.506719 200.153406 
+L 595.506719 200.153406 
+z
+" style="fill: #e69f00; stroke: #ffffff; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_22">
+     <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: start" x="619.306719" y="206.103406" transform="rotate(-0 619.306719 206.103406)">VAST Data</text>
+    </g>
+    <g id="patch_12">
+     <path d="M 595.506719 218.85407 
+L 612.506719 218.85407 
+L 612.506719 212.90407 
+L 595.506719 212.90407 
+z
+" style="fill: #cc79a7; stroke: #ffffff; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_23">
+     <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: start" x="619.306719" y="218.85407" transform="rotate(-0 619.306719 218.85407)">DDN</text>
+    </g>
+    <g id="patch_13">
+     <path d="M 595.506719 231.604734 
+L 612.506719 231.604734 
+L 612.506719 225.654734 
+L 595.506719 225.654734 
+z
+" style="fill: #56b4e9; stroke: #ffffff; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_24">
+     <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: start" x="619.306719" y="231.604734" transform="rotate(-0 619.306719 231.604734)">Commodity QLC SSD</text>
+    </g>
+    <g id="patch_14">
+     <path d="M 595.506719 244.355398 
+L 612.506719 244.355398 
+L 612.506719 238.405398 
+L 595.506719 238.405398 
+z
+" style="fill: url(#h759dc8dd4c); stroke: #555555; stroke-linejoin: miter"/>
+    </g>
+    <g id="text_25">
+     <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: start" x="619.306719" y="244.355398" transform="rotate(-0 619.306719 244.355398)">Hard disk (hatched)</text>
+    </g>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_15">
+    <path d="M 214.474545 484.312331 
+L 743.76 484.312331 
+L 743.76 298.436481 
+L 214.474545 298.436481 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_3">
+    <g id="xtick_10">
+     <g id="line2d_24">
+      <path d="M 214.474545 484.312331 
+L 214.474545 298.436481 
+" clip-path="url(#p44ec69b0d2)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_25">
+      <g>
+       <use xlink:href="#mf40b52e15c" x="214.474545" y="484.312331" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_26">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="214.474545" y="499.669753" transform="rotate(-0 214.474545 499.669753)">0.0</text>
+     </g>
+    </g>
+    <g id="xtick_11">
+     <g id="line2d_26">
+      <path d="M 292.310642 484.312331 
+L 292.310642 298.436481 
+" clip-path="url(#p44ec69b0d2)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_27">
+      <g>
+       <use xlink:href="#mf40b52e15c" x="292.310642" y="484.312331" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_27">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="292.310642" y="499.669753" transform="rotate(-0 292.310642 499.669753)">0.5</text>
+     </g>
+    </g>
+    <g id="xtick_12">
+     <g id="line2d_28">
+      <path d="M 370.146738 484.312331 
+L 370.146738 298.436481 
+" clip-path="url(#p44ec69b0d2)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_29">
+      <g>
+       <use xlink:href="#mf40b52e15c" x="370.146738" y="484.312331" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_28">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="370.146738" y="499.669753" transform="rotate(-0 370.146738 499.669753)">1.0</text>
+     </g>
+    </g>
+    <g id="xtick_13">
+     <g id="line2d_30">
+      <path d="M 447.982834 484.312331 
+L 447.982834 298.436481 
+" clip-path="url(#p44ec69b0d2)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_31">
+      <g>
+       <use xlink:href="#mf40b52e15c" x="447.982834" y="484.312331" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_29">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="447.982834" y="499.669753" transform="rotate(-0 447.982834 499.669753)">1.5</text>
+     </g>
+    </g>
+    <g id="xtick_14">
+     <g id="line2d_32">
+      <path d="M 525.81893 484.312331 
+L 525.81893 298.436481 
+" clip-path="url(#p44ec69b0d2)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_33">
+      <g>
+       <use xlink:href="#mf40b52e15c" x="525.81893" y="484.312331" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_30">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="525.81893" y="499.669753" transform="rotate(-0 525.81893 499.669753)">2.0</text>
+     </g>
+    </g>
+    <g id="xtick_15">
+     <g id="line2d_34">
+      <path d="M 603.655027 484.312331 
+L 603.655027 298.436481 
+" clip-path="url(#p44ec69b0d2)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_35">
+      <g>
+       <use xlink:href="#mf40b52e15c" x="603.655027" y="484.312331" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_31">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="603.655027" y="499.669753" transform="rotate(-0 603.655027 499.669753)">2.5</text>
+     </g>
+    </g>
+    <g id="xtick_16">
+     <g id="line2d_36">
+      <path d="M 681.491123 484.312331 
+L 681.491123 298.436481 
+" clip-path="url(#p44ec69b0d2)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_37">
+      <g>
+       <use xlink:href="#mf40b52e15c" x="681.491123" y="484.312331" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_32">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="681.491123" y="499.669753" transform="rotate(-0 681.491123 499.669753)">3.0</text>
+     </g>
+    </g>
+    <g id="text_33">
+     <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="479.117273" y="514.670612" transform="rotate(-0 479.117273 514.670612)">Terabytes per watt (higher is better)</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_4">
+    <g id="ytick_6">
+     <g id="line2d_38">
+      <g>
+       <use xlink:href="#m2a96ab3716" x="214.474545" y="464.525075" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_34">
+      <text style="font-size: 9.2px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="207.474545" y="468.019997" transform="rotate(-0 207.474545 468.019997)">DDN AI400X3 (2U)</text>
+     </g>
+    </g>
+    <g id="ytick_7">
+     <g id="line2d_39">
+      <g>
+       <use xlink:href="#m2a96ab3716" x="214.474545" y="427.94974" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_35">
+      <text style="font-size: 9.2px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="207.474545" y="431.445022" transform="rotate(-0 207.474545 431.445022)">Everpure FlashBlade//S500</text>
+     </g>
+    </g>
+    <g id="ytick_8">
+     <g id="line2d_40">
+      <g>
+       <use xlink:href="#m2a96ab3716" x="214.474545" y="391.374406" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_36">
+      <text style="font-size: 9.2px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="207.474545" y="394.869687" transform="rotate(-0 207.474545 394.869687)">Everpure FlashBlade//E expansion (2023)</text>
+     </g>
+    </g>
+    <g id="ytick_9">
+     <g id="line2d_41">
+      <g>
+       <use xlink:href="#m2a96ab3716" x="214.474545" y="354.799071" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_37">
+      <text style="font-size: 9.2px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="207.474545" y="358.294353" transform="rotate(-0 207.474545 358.294353)">WD Ultrastar Data102 JBOD (4U)</text>
+     </g>
+    </g>
+    <g id="ytick_10">
+     <g id="line2d_42">
+      <g>
+       <use xlink:href="#m2a96ab3716" x="214.474545" y="318.223737" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_38">
+      <text style="font-size: 9.2px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="207.474545" y="321.718659" transform="rotate(-0 207.474545 321.718659)">VAST Ceres DF-3060V2 DBox (1U)</text>
+     </g>
+    </g>
+   </g>
+   <g id="patch_16">
+    <path d="M 214.474545 484.312331 
+L 214.474545 298.436481 
+" style="fill: none; stroke: #888888; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_17">
+    <path d="M 214.474545 484.312331 
+L 743.76 484.312331 
+" style="fill: none; stroke: #888888; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_18">
+    <path d="M 214.474545 475.863429 
+L 247.165706 475.863429 
+L 247.165706 453.186721 
+L 214.474545 453.186721 
+z
+" clip-path="url(#p44ec69b0d2)" style="fill: #cc79a7; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_39">
+    <text style="font-size: 8.3px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #333333" x="253.517131" y="466.681454" transform="rotate(-0 253.517131 466.681454)">0.21  (2,400 W, appliance rating)</text>
+   </g>
+   <g id="patch_19">
+    <path d="M 214.474545 439.288094 
+L 334.342134 439.288094 
+L 334.342134 416.611387 
+L 214.474545 416.611387 
+z
+" clip-path="url(#p44ec69b0d2)" style="fill: #0072b2; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_40">
+    <text style="font-size: 8.3px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #333333" x="340.693559" y="430.106119" transform="rotate(-0 340.693559 430.106119)">0.77  (1.3 W/TB stated)</text>
+   </g>
+   <g id="patch_20">
+    <path d="M 214.474545 402.71276 
+L 401.281176 402.71276 
+L 401.281176 380.036052 
+L 214.474545 380.036052 
+z
+" clip-path="url(#p44ec69b0d2)" style="fill: #0072b2; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_41">
+    <text style="font-size: 8.3px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #333333" x="407.632602" y="393.530785" transform="rotate(-0 407.632602 393.530785)">1.20  (0.83 W/TB stated)</text>
+   </g>
+   <g id="patch_21">
+    <path d="M 214.474545 366.137425 
+L 483.787439 366.137425 
+L 483.787439 343.460718 
+L 214.474545 343.460718 
+z
+" clip-path="url(#p44ec69b0d2)" style="fill: url(#hc1bfd42eb1); stroke: #555555; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_42">
+    <text style="font-size: 8.3px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #333333" x="490.138864" y="356.95545" transform="rotate(-0 490.138864 356.95545)">1.73  (1,300 W, upper bound measured in WD testing)</text>
+   </g>
+   <g id="patch_22">
+    <path d="M 214.474545 329.562091 
+L 504.024824 329.562091 
+L 504.024824 306.885383 
+L 214.474545 306.885383 
+z
+" clip-path="url(#p44ec69b0d2)" style="fill: #e69f00; stroke: #ffffff; stroke-width: 0.6; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_43">
+    <text style="font-size: 8.3px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #333333" x="510.376249" y="320.380116" transform="rotate(-0 510.376249 320.380116)">1.86  (728 W, top of active range (400-728 W))</text>
+   </g>
+   <g id="text_44">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start" x="214.474545" y="292.436481" transform="rotate(-0 214.474545 292.436481)">Enclosure or system, TB per watt (raw except DDN, usable)</text>
+   </g>
+  </g>
+  <g id="text_45">
+   <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: start" x="7.2" y="16.318125" transform="rotate(-0 7.2 16.318125)">QLC beats disk about 2x per watt at the drive; at system level the gap depends on drive size and what the box includes</text>
+  </g>
+  <g id="text_46">
+   <text style="font-size: 8px; font-family: 'DejaVu Sans'; fill: #555555" transform="translate(7.2 546.879531)">Sources: StorageReview (Micron 6600 ION, Solidigm D5-P5336, Seagate Exos M); Blocks &amp; Files (2023-03-01, Pure DFM and FlashBlade//E); VAST Ceres V2 datasheet; WD Data102 user guide; Everpure</text>
+   <text style="font-size: 8px; font-family: 'DejaVu Sans'; fill: #555555" transform="translate(7.2 556.481719)">NCP note; DDN (2025-08-04). Watts basis differs by row (max, typical, stated) and several rows rest on search summaries [VERIFY]. Systems differ in what they include: the VAST DBox excludes CNodes,</text>
+   <text style="font-size: 8px; font-family: 'DejaVu Sans'; fill: #555555" transform="translate(7.2 566.083906)">the WD JBOD excludes its head server, FlashBlade includes compute. Data: data/ch38_tb_per_watt.csv</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pd450e11adf">
+   <rect x="214.474545" y="68.17154" width="529.285455" height="185.87585"/>
+  </clipPath>
+  <clipPath id="p44ec69b0d2">
+   <rect x="214.474545" y="298.436481" width="529.285455" height="185.87585"/>
+  </clipPath>
+ </defs>
+ <defs>
+  <pattern id="hc1bfd42eb1" patternUnits="userSpaceOnUse" x="0" y="0" width="72" height="72">
+   <rect x="0" y="0" width="73" height="73" fill="#999999"/>
+   <path d="M -36 36 
+L 36 -36 
+M -30 42 
+L 42 -30 
+M -24 48 
+L 48 -24 
+M -18 54 
+L 54 -18 
+M -12 60 
+L 60 -12 
+M -6 66 
+L 66 -6 
+M 0 72 
+L 72 0 
+M 6 78 
+L 78 6 
+M 12 84 
+L 84 12 
+M 18 90 
+L 90 18 
+M 24 96 
+L 96 24 
+M 30 102 
+L 102 30 
+M 36 108 
+L 108 36 
+" style="fill: #555555; stroke: #555555; stroke-width: 1.0; stroke-linecap: butt; stroke-linejoin: miter"/>
+  </pattern>
+  <pattern id="h759dc8dd4c" patternUnits="userSpaceOnUse" x="0" y="0" width="72" height="72">
+   <rect x="0" y="0" width="73" height="73" fill="#999999"/>
+   <path d="M -36 36 
+L 36 -36 
+M -30 42 
+L 42 -30 
+M -24 48 
+L 48 -24 
+M -18 54 
+L 54 -18 
+M -12 60 
+L 60 -12 
+M -6 66 
+L 66 -6 
+M 0 72 
+L 72 0 
+M 6 78 
+L 78 6 
+M 12 84 
+L 84 12 
+M 18 90 
+L 90 18 
+M 24 96 
+L 96 24 
+M 30 102 
+L 102 30 
+M 36 108 
+L 108 36 
+" style="fill: #999999; stroke: #999999; stroke-width: 1.0; stroke-linecap: butt; stroke-linejoin: miter"/>
+  </pattern>
+ </defs>
+</svg>

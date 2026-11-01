@@ -1,0 +1,197 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 882" width="1000" role="img" aria-labelledby="t d" font-family="Inter, Helvetica, Arial, sans-serif">
+  <title id="t">Architecture comparison poster: six storage architectures</title>
+  <desc id="d">Six panels, each with a mini-diagram and three bullets for strength, wall and example products. Scale-up dual-controller: two controllers with mirrored or shared NVRAM over one shared drive shelf. Scale-out shared-nothing: nodes that each own CPU and drives joined by an east-west network. DASE: stateless compute nodes meshed over an NVMe-oF fabric to shared enclosures of SCM and QLC flash. Parallel file system: a client fetches a layout from a metadata server, then stripes data directly to several data servers. Object: stateless S3 gateways, an index mapping keys to fragments, and data nodes holding erasure-coded fragments. SDS and HCI: nodes that each run applications, storage software and local drives, pooled over the LAN. Everpure products are marked in each panel. The same content appears as Table 60.3.</desc>
+  <defs><marker id="arr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#555555"/></marker></defs>
+  <rect x="0" y="0" width="1000" height="882" fill="#FFFFFF"/>
+  <text x="20" y="34" font-size="20" font-weight="700" fill="#222222">Architecture poster: six ways to build a storage system</text>
+  <text x="20" y="56" font-size="13" fill="#555555">Logical views, not to scale. Each panel: how it is wired, what it is good at, where it hits a wall, who ships it.</text>
+  <rect x="20" y="72" width="310" height="372" rx="8" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <rect x="20" y="72" width="310" height="32" rx="8" fill="#222222"/>
+  <rect x="20" y="92" width="310" height="12" fill="#222222"/>
+  <text x="32" y="93" font-size="14" fill="#FFFFFF" text-anchor="start" font-weight="700">Scale-up dual-controller</text>
+  <text x="318" y="93" font-size="12" fill="#FFFFFF" text-anchor="end">Ch 14</text>
+  <rect x="75" y="116" width="200" height="22" rx="4" fill="#F3F6F9" stroke="#888888"/><text x="175.0" y="131.2" font-size="12" text-anchor="middle" fill="#222222">Hosts (FC, iSCSI, NVMe-oF)</text>
+  <line x1="140" y1="138" x2="115" y2="160" stroke="#888888" stroke-width="1.2"/>
+  <line x1="210" y1="138" x2="235" y2="160" stroke="#888888" stroke-width="1.2"/>
+  <rect x="60" y="160" width="100" height="34" rx="4" fill="#FFFFFF" stroke="#888888"/><text x="110.0" y="181.2" font-size="12" text-anchor="middle" fill="#222222" font-weight="700">Controller A</text>
+  <rect x="190" y="160" width="100" height="34" rx="4" fill="#FFFFFF" stroke="#888888"/><text x="240.0" y="181.2" font-size="12" text-anchor="middle" fill="#222222" font-weight="700">Controller B</text>
+  <line x1="160" y1="177" x2="190" y2="177" stroke="#D55E00" stroke-width="2"/>
+  <text x="175" y="212" font-size="12" fill="#D55E00" text-anchor="middle">mirrored or shared NVRAM; failover</text>
+  <line x1="110" y1="194" x2="110" y2="222" stroke="#888888" stroke-width="1.2"/>
+  <line x1="240" y1="194" x2="240" y2="222" stroke="#888888" stroke-width="1.2"/>
+  <rect x="50" y="222" width="250" height="30" rx="4" fill="#F3F6F9" stroke="#888888"/>
+  <rect x="60" y="230" width="10" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="74" y="230" width="10" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="88" y="230" width="10" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="102" y="230" width="10" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="116" y="230" width="10" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="130" y="230" width="10" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="144" y="230" width="10" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="158" y="230" width="10" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="172" y="230" width="10" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/>
+  <text x="192" y="242" font-size="12" fill="#222222" text-anchor="start">shared shelf</text>
+  <line x1="32" y1="284" x2="318" y2="284" stroke="#DDDDDD" stroke-width="1"/>
+  <text x="34" y="300" font-size="12" fill="#222222"><tspan font-weight="700">Strength:</tspan> fewest hops, sub-ms block; a</text>
+  <text x="34" y="315" font-size="12" fill="#222222">controller swap is a planned failover</text>
+  <text x="34" y="330" font-size="12" fill="#222222">(the basis of Evergreen).</text>
+  <text x="34" y="353" font-size="12" fill="#222222"><tspan font-weight="700">Wall:</tspan> one controller pair's CPU and memory;</text>
+  <text x="34" y="368" font-size="12" fill="#222222">federating pairs is not one bigger system.</text>
+  <text x="34" y="391" font-size="12" fill="#222222"><tspan font-weight="700">Examples:</tspan> <tspan font-weight="700" fill="#0072B2">Everpure FlashArray</tspan>; Dell</text>
+  <text x="34" y="406" font-size="12" fill="#222222">PowerStore, PowerMax; NetApp AFF/ASA;</text>
+  <text x="34" y="421" font-size="12" fill="#222222">HPE Alletra MP B10000; IBM FlashSystem.</text>
+  <rect x="345" y="72" width="310" height="372" rx="8" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <rect x="345" y="72" width="310" height="32" rx="8" fill="#222222"/>
+  <rect x="345" y="92" width="310" height="12" fill="#222222"/>
+  <text x="357" y="93" font-size="14" fill="#FFFFFF" text-anchor="start" font-weight="700">Scale-out shared-nothing</text>
+  <text x="643" y="93" font-size="12" fill="#FFFFFF" text-anchor="end">Ch 15</text>
+  <rect x="365" y="116" width="270" height="22" rx="4" fill="#F3F6F9" stroke="#888888"/><text x="500.0" y="131.2" font-size="12" text-anchor="middle" fill="#222222">Clients: any node is an entry point</text>
+  <rect x="365" y="150" width="60" height="62" rx="4" fill="#FFFFFF" stroke="#888888"/>
+  <text x="395" y="168" font-size="12" fill="#222222" text-anchor="middle" font-weight="700">Node</text>
+  <text x="395" y="183" font-size="12" fill="#222222" text-anchor="middle">CPU</text>
+  <rect x="371" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="383" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="395" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="407" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/>
+  <line x1="395" y1="212" x2="395" y2="226" stroke="#888888" stroke-width="1.2"/>
+  <rect x="435" y="150" width="60" height="62" rx="4" fill="#FFFFFF" stroke="#888888"/>
+  <text x="465" y="168" font-size="12" fill="#222222" text-anchor="middle" font-weight="700">Node</text>
+  <text x="465" y="183" font-size="12" fill="#222222" text-anchor="middle">CPU</text>
+  <rect x="441" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="453" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="465" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="477" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/>
+  <line x1="465" y1="212" x2="465" y2="226" stroke="#888888" stroke-width="1.2"/>
+  <rect x="505" y="150" width="60" height="62" rx="4" fill="#FFFFFF" stroke="#888888"/>
+  <text x="535" y="168" font-size="12" fill="#222222" text-anchor="middle" font-weight="700">Node</text>
+  <text x="535" y="183" font-size="12" fill="#222222" text-anchor="middle">CPU</text>
+  <rect x="511" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="523" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="535" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="547" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/>
+  <line x1="535" y1="212" x2="535" y2="226" stroke="#888888" stroke-width="1.2"/>
+  <rect x="575" y="150" width="60" height="62" rx="4" fill="#FFFFFF" stroke="#888888"/>
+  <text x="605" y="168" font-size="12" fill="#222222" text-anchor="middle" font-weight="700">Node</text>
+  <text x="605" y="183" font-size="12" fill="#222222" text-anchor="middle">CPU</text>
+  <rect x="581" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="593" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="605" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="617" y="190" width="9" height="14" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/>
+  <line x1="605" y1="212" x2="605" y2="226" stroke="#888888" stroke-width="1.2"/>
+  <rect x="365" y="226" width="270" height="26" rx="4" fill="#FDEBD9" stroke="#E69F00"/><text x="500.0" y="243.2" font-size="12" text-anchor="middle" fill="#222222">East-west net: replicas, EC, rebuilds</text>
+  <line x1="357" y1="284" x2="643" y2="284" stroke="#DDDDDD" stroke-width="1"/>
+  <text x="359" y="300" font-size="12" fill="#222222"><tspan font-weight="700">Strength:</tspan> capacity and bandwidth grow node</text>
+  <text x="359" y="315" font-size="12" fill="#222222">by node; placement is computed; self-heals.</text>
+  <text x="359" y="338" font-size="12" fill="#222222"><tspan font-weight="700">Wall:</tspan> bundled scaling, east-west traffic,</text>
+  <text x="359" y="353" font-size="12" fill="#222222">rebuild storms, hot spots.</text>
+  <text x="359" y="376" font-size="12" fill="#222222"><tspan font-weight="700">Examples:</tspan> Dell PowerScale, WEKA, Ceph,</text>
+  <text x="359" y="391" font-size="12" fill="#222222">Qumulo, Nutanix; <tspan font-weight="700" fill="#0072B2">FlashBlade//S, //E</tspan> are</text>
+  <text x="359" y="406" font-size="12" fill="#222222">partitioned-writer (per-blade authorities).</text>
+  <rect x="670" y="72" width="310" height="372" rx="8" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <rect x="670" y="72" width="310" height="32" rx="8" fill="#222222"/>
+  <rect x="670" y="92" width="310" height="12" fill="#222222"/>
+  <text x="682" y="93" font-size="14" fill="#FFFFFF" text-anchor="start" font-weight="700">Disaggregated (DASE)</text>
+  <text x="968" y="93" font-size="12" fill="#FFFFFF" text-anchor="end">Ch 16</text>
+  <line x1="720" y1="146" x2="740" y2="208" stroke="#999999" stroke-width="1"/>
+  <line x1="720" y1="146" x2="910" y2="208" stroke="#999999" stroke-width="1"/>
+  <line x1="790" y1="146" x2="740" y2="208" stroke="#999999" stroke-width="1"/>
+  <line x1="790" y1="146" x2="910" y2="208" stroke="#999999" stroke-width="1"/>
+  <line x1="860" y1="146" x2="740" y2="208" stroke="#999999" stroke-width="1"/>
+  <line x1="860" y1="146" x2="910" y2="208" stroke="#999999" stroke-width="1"/>
+  <line x1="930" y1="146" x2="740" y2="208" stroke="#999999" stroke-width="1"/>
+  <line x1="930" y1="146" x2="910" y2="208" stroke="#999999" stroke-width="1"/>
+  <rect x="690" y="116" width="60" height="30" rx="4" fill="#FFFFFF" stroke="#888888"/><text x="720.0" y="135.2" font-size="12" text-anchor="middle" fill="#222222" font-weight="700">CNode</text>
+  <rect x="760" y="116" width="60" height="30" rx="4" fill="#FFFFFF" stroke="#888888"/><text x="790.0" y="135.2" font-size="12" text-anchor="middle" fill="#222222" font-weight="700">CNode</text>
+  <rect x="830" y="116" width="60" height="30" rx="4" fill="#FFFFFF" stroke="#888888"/><text x="860.0" y="135.2" font-size="12" text-anchor="middle" fill="#222222" font-weight="700">CNode</text>
+  <rect x="900" y="116" width="60" height="30" rx="4" fill="#FFFFFF" stroke="#888888"/><text x="930.0" y="135.2" font-size="12" text-anchor="middle" fill="#222222" font-weight="700">CNode</text>
+  <rect x="710" y="178" width="230" height="18" fill="#FFFFFF"/>
+  <text x="825" y="192" font-size="12" fill="#D55E00" text-anchor="middle">NVMe-oF fabric: every node, every SSD</text>
+  <rect x="690" y="208" width="115" height="46" rx="4" fill="#F3F6F9" stroke="#888888"/>
+  <rect x="696" y="214" width="26" height="34" fill="#D55E00" opacity="0.8"/>
+  <text x="709" y="236" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="700">SCM</text>
+  <rect x="728" y="214" width="10" height="34" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="742" y="214" width="10" height="34" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="756" y="214" width="10" height="34" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="770" y="214" width="10" height="34" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="784" y="214" width="10" height="34" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/>
+  <rect x="845" y="208" width="115" height="46" rx="4" fill="#F3F6F9" stroke="#888888"/>
+  <rect x="851" y="214" width="26" height="34" fill="#D55E00" opacity="0.8"/>
+  <text x="864" y="236" font-size="12" fill="#FFFFFF" text-anchor="middle" font-weight="700">SCM</text>
+  <rect x="883" y="214" width="10" height="34" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="897" y="214" width="10" height="34" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="911" y="214" width="10" height="34" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="925" y="214" width="10" height="34" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="939" y="214" width="10" height="34" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/>
+  <text x="825" y="270" font-size="12" fill="#555555" text-anchor="middle">stateless CNodes above, shared SCM + QLC below</text>
+  <line x1="682" y1="284" x2="968" y2="284" stroke="#DDDDDD" stroke-width="1"/>
+  <text x="684" y="300" font-size="12" fill="#222222"><tspan font-weight="700">Strength:</tspan> compute and media scale separately;</text>
+  <text x="684" y="315" font-size="12" fill="#222222">any node reaches any byte.</text>
+  <text x="684" y="338" font-size="12" fill="#222222"><tspan font-weight="700">Wall:</tspan> every I/O crosses the back-end fabric;</text>
+  <text x="684" y="353" font-size="12" fill="#222222">an enclosure is a failure domain; big minimum.</text>
+  <text x="684" y="376" font-size="12" fill="#222222"><tspan font-weight="700">Examples:</tspan> VAST Data; NetApp AFX; HPE</text>
+  <text x="684" y="391" font-size="12" fill="#222222">Alletra MP X10000. <tspan font-weight="700" fill="#0072B2">Everpure: none</tspan> (EXA is</text>
+  <text x="684" y="406" font-size="12" fill="#222222">a metadata/data split, not DASE).</text>
+  <rect x="20" y="460" width="310" height="372" rx="8" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <rect x="20" y="460" width="310" height="32" rx="8" fill="#222222"/>
+  <rect x="20" y="480" width="310" height="12" fill="#222222"/>
+  <text x="32" y="481" font-size="14" fill="#FFFFFF" text-anchor="start" font-weight="700">Parallel file system, incl. pNFS</text>
+  <text x="318" y="481" font-size="12" fill="#FFFFFF" text-anchor="end">Ch 17</text>
+  <rect x="30" y="554" width="70" height="40" rx="4" fill="#FFFFFF" stroke="#888888"/><text x="65.0" y="578.2" font-size="12" text-anchor="middle" fill="#222222" font-weight="700">Client</text>
+  <rect x="170" y="504" width="140" height="28" rx="4" fill="#FDEBD9" stroke="#E69F00"/><text x="240.0" y="522.2" font-size="12" text-anchor="middle" fill="#222222" font-weight="700">Metadata server</text>
+  <line x1="100" y1="562" x2="170" y2="524" stroke="#555555" stroke-width="1.2" stroke-dasharray="4 3" marker-end="url(#arr)"/>
+  <text x="32" y="534" font-size="12" fill="#555555" text-anchor="start">1 layout</text>
+  <rect x="210" y="548" width="100" height="26" rx="4" fill="#F3F6F9" stroke="#888888"/><text x="260.0" y="565.2" font-size="12" text-anchor="middle" fill="#222222">Data server 1</text>
+  <line x1="100" y1="574" x2="208" y2="561" stroke="#0072B2" stroke-width="2.4" marker-end="url(#arr)"/>
+  <rect x="210" y="580" width="100" height="26" rx="4" fill="#F3F6F9" stroke="#888888"/><text x="260.0" y="597.2" font-size="12" text-anchor="middle" fill="#222222">Data server 2</text>
+  <line x1="100" y1="574" x2="208" y2="593" stroke="#0072B2" stroke-width="2.4" marker-end="url(#arr)"/>
+  <rect x="210" y="612" width="100" height="26" rx="4" fill="#F3F6F9" stroke="#888888"/><text x="260.0" y="629.2" font-size="12" text-anchor="middle" fill="#222222">Data server 3</text>
+  <line x1="100" y1="574" x2="208" y2="625" stroke="#0072B2" stroke-width="2.4" marker-end="url(#arr)"/>
+  <text x="120" y="654" font-size="12" fill="#0072B2" text-anchor="start">2 parallel direct stripes</text>
+  <line x1="32" y1="672" x2="318" y2="672" stroke="#DDDDDD" stroke-width="1"/>
+  <text x="34" y="688" font-size="12" fill="#222222"><tspan font-weight="700">Strength:</tspan> clients stripe directly across many</text>
+  <text x="34" y="703" font-size="12" fill="#222222">servers: TB/s into one namespace.</text>
+  <text x="34" y="726" font-size="12" fill="#222222"><tspan font-weight="700">Wall:</tspan> metadata and small files; proprietary</text>
+  <text x="34" y="741" font-size="12" fill="#222222">clients tie upgrades to kernel builds.</text>
+  <text x="34" y="764" font-size="12" fill="#222222"><tspan font-weight="700">Examples:</tspan> Lustre (DDN EXAScaler, HPE Cray),</text>
+  <text x="34" y="779" font-size="12" fill="#222222">IBM Storage Scale, BeeGFS; pNFS:</text>
+  <text x="34" y="794" font-size="12" fill="#222222"><tspan font-weight="700" fill="#0072B2">FlashBlade//EXA</tspan>, Hammerspace.</text>
+  <rect x="345" y="460" width="310" height="372" rx="8" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <rect x="345" y="460" width="310" height="32" rx="8" fill="#222222"/>
+  <rect x="345" y="480" width="310" height="12" fill="#222222"/>
+  <text x="357" y="481" font-size="14" fill="#FFFFFF" text-anchor="start" font-weight="700">Object storage</text>
+  <text x="643" y="481" font-size="12" fill="#FFFFFF" text-anchor="end">Ch 18</text>
+  <text x="500" y="516" font-size="12" fill="#555555" text-anchor="middle">S3 over HTTPS</text>
+  <rect x="385" y="524" width="70" height="24" rx="4" fill="#FFFFFF" stroke="#888888"/><text x="420.0" y="540.2" font-size="12" text-anchor="middle" fill="#222222">Gateway</text>
+  <line x1="420" y1="548" x2="500" y2="564" stroke="#888888" stroke-width="1.2"/>
+  <rect x="465" y="524" width="70" height="24" rx="4" fill="#FFFFFF" stroke="#888888"/><text x="500.0" y="540.2" font-size="12" text-anchor="middle" fill="#222222">Gateway</text>
+  <line x1="500" y1="548" x2="500" y2="564" stroke="#888888" stroke-width="1.2"/>
+  <rect x="545" y="524" width="70" height="24" rx="4" fill="#FFFFFF" stroke="#888888"/><text x="580.0" y="540.2" font-size="12" text-anchor="middle" fill="#222222">Gateway</text>
+  <line x1="580" y1="548" x2="500" y2="564" stroke="#888888" stroke-width="1.2"/>
+  <rect x="405" y="564" width="190" height="26" rx="4" fill="#FDEBD9" stroke="#E69F00"/><text x="500.0" y="581.2" font-size="12" text-anchor="middle" fill="#222222" font-weight="700">Index: key → fragments</text>
+  <line x1="500" y1="590" x2="400" y2="606" stroke="#888888" stroke-width="1.2"/>
+  <rect x="370" y="606" width="60" height="40" rx="4" fill="#F3F6F9" stroke="#888888"/>
+  <rect x="376" y="616" width="13" height="20" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/>
+  <rect x="393" y="616" width="13" height="20" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/>
+  <rect x="410" y="616" width="13" height="20" fill="#009E73" stroke="#555555" stroke-width="0.6"/>
+  <line x1="500" y1="590" x2="500" y2="606" stroke="#888888" stroke-width="1.2"/>
+  <rect x="470" y="606" width="60" height="40" rx="4" fill="#F3F6F9" stroke="#888888"/>
+  <rect x="476" y="616" width="13" height="20" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/>
+  <rect x="493" y="616" width="13" height="20" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/>
+  <rect x="510" y="616" width="13" height="20" fill="#009E73" stroke="#555555" stroke-width="0.6"/>
+  <line x1="500" y1="590" x2="600" y2="606" stroke="#888888" stroke-width="1.2"/>
+  <rect x="570" y="606" width="60" height="40" rx="4" fill="#F3F6F9" stroke="#888888"/>
+  <rect x="576" y="616" width="13" height="20" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/>
+  <rect x="593" y="616" width="13" height="20" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/>
+  <rect x="610" y="616" width="13" height="20" fill="#009E73" stroke="#555555" stroke-width="0.6"/>
+  <text x="500" y="660" font-size="12" fill="#555555" text-anchor="middle">erasure-coded fragments (blue data, green parity)</text>
+  <line x1="357" y1="672" x2="643" y2="672" stroke="#DDDDDD" stroke-width="1"/>
+  <text x="359" y="688" font-size="12" fill="#222222"><tspan font-weight="700">Strength:</tspan> lowest $/TB, huge scale, geo</text>
+  <text x="359" y="703" font-size="12" fill="#222222">erasure coding, immutability.</text>
+  <text x="359" y="726" font-size="12" fill="#222222"><tspan font-weight="700">Wall:</tspan> object count, small objects, LIST and</text>
+  <text x="359" y="741" font-size="12" fill="#222222">tail latency; no POSIX or in-place edits.</text>
+  <text x="359" y="764" font-size="12" fill="#222222"><tspan font-weight="700">Examples:</tspan> AWS S3, MinIO AIStor, Cloudian,</text>
+  <text x="359" y="779" font-size="12" fill="#222222">Scality, Dell ObjectScale, NetApp StorageGRID;</text>
+  <text x="359" y="794" font-size="12" fill="#222222"><tspan font-weight="700" fill="#0072B2">FlashBlade S3, FlashArray S3</tspan>.</text>
+  <rect x="670" y="460" width="310" height="372" rx="8" fill="#FFFFFF" stroke="#BBBBBB"/>
+  <rect x="670" y="460" width="310" height="32" rx="8" fill="#222222"/>
+  <rect x="670" y="480" width="310" height="12" fill="#222222"/>
+  <text x="682" y="481" font-size="14" fill="#FFFFFF" text-anchor="start" font-weight="700">SDS and HCI</text>
+  <text x="968" y="481" font-size="12" fill="#FFFFFF" text-anchor="end">Ch 19</text>
+  <rect x="690" y="504" width="80" height="104" rx="4" fill="#FFFFFF" stroke="#888888"/>
+  <rect x="696" y="510" width="68" height="26" rx="4" fill="#E8F1F8" stroke="#56B4E9"/><text x="730.0" y="527.2" font-size="12" text-anchor="middle" fill="#222222">VMs / apps</text>
+  <rect x="696" y="542" width="68" height="26" rx="4" fill="#FDEBD9" stroke="#E69F00"/><text x="730.0" y="559.2" font-size="12" text-anchor="middle" fill="#222222">Storage SW</text>
+  <rect x="700" y="576" width="11" height="22" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="715" y="576" width="11" height="22" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="730" y="576" width="11" height="22" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="745" y="576" width="11" height="22" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/>
+  <line x1="730" y1="608" x2="730" y2="620" stroke="#888888" stroke-width="1.2"/>
+  <rect x="785" y="504" width="80" height="104" rx="4" fill="#FFFFFF" stroke="#888888"/>
+  <rect x="791" y="510" width="68" height="26" rx="4" fill="#E8F1F8" stroke="#56B4E9"/><text x="825.0" y="527.2" font-size="12" text-anchor="middle" fill="#222222">VMs / apps</text>
+  <rect x="791" y="542" width="68" height="26" rx="4" fill="#FDEBD9" stroke="#E69F00"/><text x="825.0" y="559.2" font-size="12" text-anchor="middle" fill="#222222">Storage SW</text>
+  <rect x="795" y="576" width="11" height="22" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="810" y="576" width="11" height="22" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="825" y="576" width="11" height="22" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="840" y="576" width="11" height="22" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/>
+  <line x1="825" y1="608" x2="825" y2="620" stroke="#888888" stroke-width="1.2"/>
+  <rect x="880" y="504" width="80" height="104" rx="4" fill="#FFFFFF" stroke="#888888"/>
+  <rect x="886" y="510" width="68" height="26" rx="4" fill="#E8F1F8" stroke="#56B4E9"/><text x="920.0" y="527.2" font-size="12" text-anchor="middle" fill="#222222">VMs / apps</text>
+  <rect x="886" y="542" width="68" height="26" rx="4" fill="#FDEBD9" stroke="#E69F00"/><text x="920.0" y="559.2" font-size="12" text-anchor="middle" fill="#222222">Storage SW</text>
+  <rect x="890" y="576" width="11" height="22" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="905" y="576" width="11" height="22" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="920" y="576" width="11" height="22" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/><rect x="935" y="576" width="11" height="22" fill="#56B4E9" stroke="#555555" stroke-width="0.6"/>
+  <line x1="920" y1="608" x2="920" y2="620" stroke="#888888" stroke-width="1.2"/>
+  <rect x="690" y="620" width="270" height="24" rx="4" fill="#F3F6F9" stroke="#888888"/><text x="825.0" y="636.2" font-size="12" text-anchor="middle" fill="#222222">Pooled across nodes over the LAN</text>
+  <line x1="682" y1="672" x2="968" y2="672" stroke="#DDDDDD" stroke-width="1"/>
+  <text x="684" y="688" font-size="12" fill="#222222"><tspan font-weight="700">Strength:</tspan> commodity servers or cloud; storage</text>
+  <text x="684" y="703" font-size="12" fill="#222222">and compute run as one estate.</text>
+  <text x="684" y="726" font-size="12" fill="#222222"><tspan font-weight="700">Wall:</tspan> coupled scaling strands compute or</text>
+  <text x="684" y="741" font-size="12" fill="#222222">capacity; vendor does not control the media.</text>
+  <text x="684" y="764" font-size="12" fill="#222222"><tspan font-weight="700">Examples:</tspan> Nutanix, VMware vSAN, Ceph;</text>
+  <text x="684" y="779" font-size="12" fill="#222222"><tspan font-weight="700" fill="#0072B2">Portworx</tspan> (Kubernetes); <tspan font-weight="700" fill="#0072B2">FlashArray</tspan> as</text>
+  <text x="684" y="794" font-size="12" fill="#222222">external storage for Nutanix AHV.</text>
+  <text x="20" y="854" font-size="12" fill="#555555" text-anchor="start">Blue bold marks Everpure products. Placement follows Chapters 14–19 and 24; the seventh row of Chapter 24's matrix, cloud block</text>
+  <text x="20" y="870" font-size="12" fill="#555555" text-anchor="start">storage (EBS-style), is SDS run by a hyperscaler and is left off the poster. Original drawing, Chapter 60.</text>
+</svg>

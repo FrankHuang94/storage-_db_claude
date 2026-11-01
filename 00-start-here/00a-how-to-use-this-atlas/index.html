@@ -1,0 +1,3898 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A strategy-level knowledge base on storage, AI storage and the competitive landscape around Everpure (formerly Pure Storage).">
+      
+      
+      
+        <link rel="canonical" href="https://frankhuang94.github.io/storage-_db_claude/00-start-here/00a-how-to-use-this-atlas/">
+      
+      
+        <link rel="prev" href="../..">
+      
+      
+        <link rel="next" href="../00b-one-page-map/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>0.1. How to use this atlas - Everpure Tech Atlas</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#01-how-to-use-this-atlas" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Everpure Tech Atlas" class="md-header__button md-logo" aria-label="Everpure Tech Atlas" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Everpure Tech Atlas
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              0.1. How to use this atlas
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/FrankHuang94/storage-_db_claude" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    storage-_db_claude
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Everpure Tech Atlas" class="md-nav__button md-logo" aria-label="Everpure Tech Atlas" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Everpure Tech Atlas
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/FrankHuang94/storage-_db_claude" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    storage-_db_claude
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 0 — Start Here
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 0 — Start Here
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0.1. How to use this atlas
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0.1. How to use this atlas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters-for-everpure-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters for Everpure strategy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-the-atlas-covers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the atlas covers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#depth-labels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Depth labels
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-every-chapter-is-built" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How every chapter is built
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#three-learning-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Three learning paths
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Three learning paths">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2-hour-crash-course" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2-hour crash course
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-day-ramp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2-day ramp
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-week-mastery-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2-week mastery plan
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reading-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading order
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-the-conversation-toolkit-before-a-meeting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using the conversation toolkit before a meeting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sourcing-labels-and-verify" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sourcing, labels and VERIFY
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-everpure-approaches-it-vs-competitors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Everpure approaches it vs. competitors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#history-and-trajectory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        History and trajectory
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="History and trajectory">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-to-keep-it-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to keep it current
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#numbers-that-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Numbers that matter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversation-playbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversation playbook
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-deeper-optional-l3-pointers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going deeper (optional, L3 pointers)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key terms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../00b-one-page-map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0.2. The one-page map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 1 — Storage Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 1 — Storage Fundamentals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/01-what-storage-does/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. What storage does
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/02-media-physics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Media physics for a semis person
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/03-inside-an-ssd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Inside an SSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/04-performance-and-economics-metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Performance and economics metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/05-data-reduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Data reduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/06-data-protection-and-resilience/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Data protection and resilience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 2 — Protocols and Networking
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 2 — Protocols and Networking
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/07-block-protocols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Block protocols
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/08-file-protocols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. File protocols
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/09-object-storage-and-s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Object storage and S3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/10-datacenter-networking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Datacenter networking for storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/11-gpu-data-path/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. The GPU data path
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/12-interfaces-and-emerging-tech/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Interfaces and emerging tech
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3 — Storage System Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 3 — Storage System Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/13-storage-stack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. The storage stack, layer by layer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/14-scale-up-dual-controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Scale-up dual-controller arrays
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/15-scale-out-shared-nothing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Scale-out shared-nothing clusters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/16-disaggregated-shared-everything/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Disaggregated shared-everything architectures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/17-parallel-file-systems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Parallel and distributed file systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/18-object-storage-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Object storage architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/19-software-defined-and-hci/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Software-defined storage and HCI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/20-distributed-systems-fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Distributed-systems fundamentals for storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/21-metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Metadata: the hidden bottleneck
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/22-control-planes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Control planes and fleet management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/23-consumption-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Consumption models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/24-architecture-decision-matrix/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Architecture decision matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 4 — Everpure
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 4 — Everpure
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/25-company-history-and-strategy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Company history and strategy, 2009–2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/26-purity-and-directflash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Core technology: Purity and DirectFlash
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/27-flasharray-and-flashblade/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Product portfolio: FlashArray and FlashBlade
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/28-platform-and-software/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. Platform and software
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/29-hyperscaler-ecosystem-financials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Hyperscaler business, ecosystem and financials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 5 — AI Storage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 5 — AI Storage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/30-ai-data-pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. The AI data pipeline end to end
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/31-training-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Training storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/32-inference-and-kv-cache/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Inference and KV cache
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/33-rag-vector-lakehouse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    33. RAG, vector databases and AI-native data formats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/34-nvidia-ecosystem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. NVIDIA's ecosystem and certifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/35-ai-factories-and-neoclouds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    35. AI factories and neoclouds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/36-hyperscaler-ai-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    36. How hyperscalers build AI storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/37-reading-benchmarks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    37. Reading benchmarks critically
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/38-power-and-density/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    38. Power, density and the AI datacenter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/39-agentic-ai-and-data-intelligence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    39. Agentic AI and data intelligence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 6 — Industry and Competition
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 6 — Industry and Competition
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/40-market-structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    40. Market structure and sizing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/41-why-ai-native-vendors-won/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    41. Why AI-native storage vendors gained traction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/42-vast-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    42. VAST Data deep dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/43-weka/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    43. WEKA deep dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/44-ddn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    44. DDN deep dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/45-head-to-head/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    45. Head-to-head: FlashBlade//EXA vs. VAST vs. WEKA vs. DDN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/46-incumbents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    46. Incumbents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/47-other-challengers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    47. Other challengers and software-defined players
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/48-media-suppliers-and-nand-cycle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    48. Media suppliers and the NAND cycle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/49-competitive-matrices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    49. Competitive landscape matrices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/50-diligence-framework/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    50. Technical diligence framework
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 7 — History and Future
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 7 — History and Future
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/51-history-of-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    51. History of storage, 1956–2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/52-history-of-flash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    52. History of flash and NAND economics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/53-future-trends/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    53. Future trends, 2026–2032
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/54-strategic-option-map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    54. Strategic option map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 8 — Conversation Toolkit
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 8 — Conversation Toolkit
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/55-talking-with-pms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    55. Talking with product managers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/56-talking-with-engineering-and-cto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    56. Talking with engineering leaders and the CTO office
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/57-question-bank/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    57. Question bank: 150 questions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/58-explain-in-30-seconds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    58. Explain it in 30 seconds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/59-self-test-flashcards/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    59. Self-test: 279 flashcards
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/60-cheat-sheets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    60. Cheat sheets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters-for-everpure-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters for Everpure strategy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-the-atlas-covers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What the atlas covers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#depth-labels" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Depth labels
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-every-chapter-is-built" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How every chapter is built
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#three-learning-paths" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Three learning paths
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Three learning paths">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#2-hour-crash-course" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2-hour crash course
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-day-ramp" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2-day ramp
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#2-week-mastery-plan" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        2-week mastery plan
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#reading-order" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Reading order
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#using-the-conversation-toolkit-before-a-meeting" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Using the conversation toolkit before a meeting
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sourcing-labels-and-verify" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sourcing, labels and VERIFY
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-everpure-approaches-it-vs-competitors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Everpure approaches it vs. competitors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#history-and-trajectory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        History and trajectory
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="History and trajectory">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#how-to-keep-it-current" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How to keep it current
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#numbers-that-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Numbers that matter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversation-playbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversation playbook
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-deeper-optional-l3-pointers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going deeper (optional, L3 pointers)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key terms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="01-how-to-use-this-atlas">0.1. How to use this atlas<a class="headerlink" href="#01-how-to-use-this-atlas" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>Depth:</strong> L1 · <strong>Reading time:</strong> ~8 min · <strong>Last verified:</strong> 2026-11-01
+<strong>Prerequisites:</strong> None. Start here, then go to <a href="../00b-one-page-map/">0.2 The one-page map</a>. Keep the <a href="../../glossary/">glossary</a> open in a second tab.</p>
+</blockquote>
+<h2 id="tldr">TL;DR<a class="headerlink" href="#tldr" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>The atlas is a briefing book, not a textbook.</strong> It prepares a strategy hire for credible conversations with Everpure PMs, engineering leaders and the Office of the CTO: how storage works, why the trade-offs exist, what they mean.</li>
+<li><strong>Default depth is L2: mechanism.</strong> Whiteboard the design and say why it wins for a workload. L3 detail lives only in "Going deeper" boxes.</li>
+<li><strong>Every chapter has the same ten sections.</strong> TL;DR first, "Core concepts" for the mechanism, the "Conversation playbook" the night before a meeting.</li>
+<li><strong>Pick a path by time available.</strong> A 2-hour crash course, a 2-day ramp and a 2-week mastery plan are laid out below.</li>
+<li><strong>Every number carries a label.</strong> <em>Filed</em>, <em>company-stated</em>, <em>reported by press</em>, <em>tracker estimate</em>, <em>atlas judgment</em> or <em>worked example</em>. Unconfirmed items are given an inline VERIFY tag and collected in one list. Quote a number with its label and date, or not at all.</li>
+</ul>
+<h2 id="why-this-matters-for-everpure-strategy">Why this matters for Everpure strategy<a class="headerlink" href="#why-this-matters-for-everpure-strategy" title="Permanent link">&para;</a></h2>
+<p>A new strategy hire at Everpure (NYSE: P, formerly PSTG)<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup> is judged quickly by career storage people. PMs notice if you confuse an EXA data node with a DirectFlash Module; engineers, if you call write amplification marketing; the CTO's office, if you quote a valuation as if it were revenue. Each slip drops the conversation to a level where you learn nothing; the atlas front-loads what prevents that.</p>
+<p>The assumed reader knows NAND, HBM, PCIe and fab economics from semiconductor M&amp;A but is new to storage <em>systems</em> and <em>software</em>. Hence the semiconductor bridges and a business consequence beside every mechanism.</p>
+<h2 id="core-concepts">Core concepts<a class="headerlink" href="#core-concepts" title="Permanent link">&para;</a></h2>
+<h3 id="what-the-atlas-covers">What the atlas covers<a class="headerlink" href="#what-the-atlas-covers" title="Permanent link">&para;</a></h3>
+<p>Nine Parts run from physics to strategy: fundamentals, protocols and architectures (1–3), Everpure (4), AI storage (5), competition (6), history and future (7) and the conversation toolkit (8). Parts 1–3 are vendor-neutral, so Parts 4–6 read as applications of mechanisms you already hold, not as competing sales pitches.</p>
+<h3 id="depth-labels">Depth labels<a class="headerlink" href="#depth-labels" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Label</th>
+<th>You can…</th>
+<th>Where it appears</th>
+<th>Self-test</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>L1 — Vocabulary</strong></td>
+<td>Define the term and use it correctly in a sentence</td>
+<td>Key terms, glossary, TL;DRs, <a href="../../08-conversation-toolkit/58-explain-in-30-seconds/">Ch 58</a> one-liners</td>
+<td>Explain "QLC" to a board member in one sentence</td>
+</tr>
+<tr>
+<td><strong>L2 — Mechanism</strong> <em>(default)</em></td>
+<td>Whiteboard how it works, name the trade-offs, say why one design beats another for a workload</td>
+<td>Core concepts of every chapter</td>
+<td>Draw a dual-controller write acknowledgment and say where the data sits when the host gets "done"</td>
+</tr>
+<tr>
+<td><strong>L3 — Implementation</strong></td>
+<td>Discuss code paths, on-disk formats, kernel internals</td>
+<td>Only in "Going deeper" boxes, as pointers</td>
+<td>Not required. Ask about it; never assert it</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 0.1.1 — Aim for L2 everywhere and L1 on the long tail; treat L3 as territory you ask engineers about, not territory you claim.</em></p>
+<p>At L2 you can put a number on a mechanism and invite correction ("a 4 KB write on a networked array is ~100–250 µs, mostly network and controller software; is that your profile?"). That is when engineers start teaching you: the credibility ladder of <a href="../../08-conversation-toolkit/56-talking-with-engineering-and-cto/">Chapter 56</a>.</p>
+<h3 id="how-every-chapter-is-built">How every chapter is built<a class="headerlink" href="#how-every-chapter-is-built" title="Permanent link">&para;</a></h3>
+<p>Chapters follow one template, so you always know where to look.</p>
+<table>
+<thead>
+<tr>
+<th>Section</th>
+<th>What it gives you</th>
+<th>Use it when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Header</strong></td>
+<td>Depth, reading time (prose words ÷ 230), last-verified date, prerequisites</td>
+<td>Deciding whether to read now or later</td>
+</tr>
+<tr>
+<td><strong>TL;DR</strong></td>
+<td>Five bullets to remember</td>
+<td>Skimming, crash course, the morning of a meeting</td>
+</tr>
+<tr>
+<td><strong>Why this matters for Everpure strategy</strong></td>
+<td>The business "so what" in two paragraphs</td>
+<td>Framing a memo or an exec summary</td>
+</tr>
+<tr>
+<td><strong>Core concepts</strong></td>
+<td>The L2 mechanism, worked numbers and most of the diagrams</td>
+<td>Learning; preparing to whiteboard</td>
+</tr>
+<tr>
+<td><strong>How Everpure approaches it vs. competitors</strong></td>
+<td>A comparison table and a steelman of the alternatives</td>
+<td>Competitive questions, deal reviews</td>
+</tr>
+<tr>
+<td><strong>History and trajectory</strong></td>
+<td>How it got here, with dated signals of where it is going</td>
+<td>Judging whether a trend is early or late</td>
+</tr>
+<tr>
+<td><strong>Numbers that matter</strong></td>
+<td>Five to ten sourced or worked figures</td>
+<td>Building slides; checking a claim</td>
+</tr>
+<tr>
+<td><strong>Conversation playbook</strong></td>
+<td>Three PM and three engineer questions, what a strong answer sounds like, and "Don't say this"</td>
+<td>The night before a meeting</td>
+</tr>
+<tr>
+<td><strong>Going deeper</strong></td>
+<td>L3 pointers: papers, specs, talks</td>
+<td>Only if a conversation goes there</td>
+</tr>
+<tr>
+<td><strong>Key terms / Sources</strong></td>
+<td>Glossary entries; footnotes with publication and retrieval dates</td>
+<td>Checking a definition or a citation</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 0.1.2 — The template puts the remember-this material first and the evidence last, so a ten-minute skim and a two-hour study use the same page.</em></p>
+<p>The deep dives (Chapters 42–44) add five business sections, from financials to strategic relevance. Every figure's italic caption states its takeaway, so captions alone make a usable summary. Signature diagrams, marked ★ in <code>meta/outline.md</code> rather than in the chapters, are the ones worth redrawing from memory.</p>
+<h3 id="three-learning-paths">Three learning paths<a class="headerlink" href="#three-learning-paths" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>flowchart TD
+    S["How much time before you need to talk credibly?"] --&gt; A["2 hours"]
+    S --&gt; B["2 days"]
+    S --&gt; C["2 weeks"]
+    A --&gt; A1["0.2 one-page map"]
+    A1 --&gt; A2["12 TL;DRs plus six signature figures"]
+    A2 --&gt; A3["Ch 58 one-liners and the ten numbers"]
+    B --&gt; B1["Day 1: Parts 1 to 4"]
+    B1 --&gt; B2["Day 2: Parts 5 and 6, Ch 53 to 57"]
+    C --&gt; C1["Every chapter, ten days of 3 to 4 hours"]
+    C1 --&gt; C2["Daily flashcards, two whiteboard rehearsals a week"]
+    A3 --&gt; M["Before any meeting: chapter playbooks plus Part 8"]
+    B2 --&gt; M
+    C2 --&gt; M</code></pre>
+<p><em>Figure 0.1.1 — All three paths start from the same map and end in the same place: the conversation toolkit and the playbooks of the chapters a meeting touches.</em></p>
+<h4 id="2-hour-crash-course">2-hour crash course<a class="headerlink" href="#2-hour-crash-course" title="Permanent link">&para;</a></h4>
+<ol>
+<li><strong>0:00–0:15. The map.</strong> <a href="../00b-one-page-map/">0.2</a>: mindmap, ten diagrams, ten numbers.</li>
+<li><strong>0:15–0:50. Twelve TL;DRs, plus "Why this matters".</strong> Fundamentals: <a href="../../01-storage-fundamentals/02-media-physics/">Ch 2</a>, <a href="../../01-storage-fundamentals/03-inside-an-ssd/">3</a>, <a href="../../03-system-architecture/13-storage-stack/">13</a>. Architecture: <a href="../../03-system-architecture/16-disaggregated-shared-everything/">16</a>, <a href="../../03-system-architecture/24-architecture-decision-matrix/">24</a>. Everpure: <a href="../../04-everpure/25-company-history-and-strategy/">25</a>, <a href="../../04-everpure/26-purity-and-directflash/">26</a>, <a href="../../04-everpure/29-hyperscaler-ecosystem-financials/">29</a>. AI: <a href="../../05-ai-storage/30-ai-data-pipeline/">30</a>, <a href="../../05-ai-storage/32-inference-and-kv-cache/">32</a>. Competition: <a href="../../06-industry-and-competition/41-why-ai-native-vendors-won/">41</a>, <a href="../../06-industry-and-competition/45-head-to-head/">45</a>.</li>
+<li><strong>0:50–1:30. Six figures, about seven minutes each.</strong> Figures 2.1 (media hierarchy), 13.1 (where the intelligence lives), 26.2 (DirectFlash vs. SSD), 30.1 (AI pipeline), 32.3 (KV-cache tiers) and 45.1 (four AI architectures). Read each caption, then explain the figure aloud without looking.</li>
+<li><strong>1:30–1:50. Words and numbers.</strong> The "Everpure's model" and "Competition" one-liners in <a href="../../08-conversation-toolkit/58-explain-in-30-seconds/">Ch 58</a>, then the 0.2 numbers table, each said with its date.</li>
+<li><strong>1:50–2:00. Behaviour.</strong> The credibility ladder in <a href="../../08-conversation-toolkit/56-talking-with-engineering-and-cto/">Ch 56</a> and the matching chapter's "Don't say this" list.</li>
+</ol>
+<h4 id="2-day-ramp">2-day ramp<a class="headerlink" href="#2-day-ramp" title="Permanent link">&para;</a></h4>
+<p>About six hours on day 1 and five on day 2; header reading times count prose only, so these estimates budget 1.5× for visuals.</p>
+<ul>
+<li><strong>Day 1, morning:</strong> Part 1 in full (<a href="../../01-storage-fundamentals/01-what-storage-does/">Ch 1–6</a>), then Chapters <a href="../../02-protocols-and-networking/07-block-protocols/">7</a>, <a href="../../02-protocols-and-networking/08-file-protocols/">8</a>, <a href="../../02-protocols-and-networking/09-object-storage-and-s3/">9</a> and <a href="../../02-protocols-and-networking/11-gpu-data-path/">11</a> from Part 2.</li>
+<li><strong>Day 1, afternoon:</strong> Part 3 core (<a href="../../03-system-architecture/13-storage-stack/">Ch 13–17</a>, <a href="../../03-system-architecture/23-consumption-models/">23</a>, <a href="../../03-system-architecture/24-architecture-decision-matrix/">24</a>) and all of Part 4 (<a href="../../04-everpure/25-company-history-and-strategy/">Ch 25–29</a>). Close with 30 minutes of flashcards for Parts 1–4.</li>
+<li><strong>Day 2, morning:</strong> Part 5 core (<a href="../../05-ai-storage/30-ai-data-pipeline/">Ch 30–32</a>, <a href="../../05-ai-storage/34-nvidia-ecosystem/">34</a>, <a href="../../05-ai-storage/35-ai-factories-and-neoclouds/">35</a>, <a href="../../05-ai-storage/37-reading-benchmarks/">37</a>).</li>
+<li><strong>Day 2, afternoon:</strong> Part 6 core (<a href="../../06-industry-and-competition/40-market-structure/">Ch 40</a>, <a href="../../06-industry-and-competition/41-why-ai-native-vendors-won/">41</a>, <a href="../../06-industry-and-competition/45-head-to-head/">45</a>, <a href="../../06-industry-and-competition/46-incumbents/">46</a>, <a href="../../06-industry-and-competition/49-competitive-matrices/">49</a>). Deep dives 42–44: TL;DR and business sections only. Then <a href="../../07-history-and-future/53-future-trends/">53</a> and <a href="../../07-history-and-future/54-strategic-option-map/">54</a>, and <a href="../../08-conversation-toolkit/55-talking-with-pms/">Ch 55–56</a>. Finish with ten questions from <a href="../../08-conversation-toolkit/57-question-bank/">Ch 57</a>.</li>
+</ul>
+<h4 id="2-week-mastery-plan">2-week mastery plan<a class="headerlink" href="#2-week-mastery-plan" title="Permanent link">&para;</a></h4>
+<p>Ten working days of 3–4 hours: 15 minutes of review flashcards (<a href="../../08-conversation-toolkit/59-self-test-flashcards/">Ch 59</a>, organised by Part), the reading (about 1–2 hours at 1.5× header times; days 9 and 10 run longest), then 30–45 minutes of practice, including two whiteboard rehearsals a week.</p>
+<table>
+<thead>
+<tr>
+<th>Day</th>
+<th>Read</th>
+<th>Practice</th>
+<th>Output</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>1</td>
+<td>0.1, 0.2, Ch 1–4</td>
+<td>Part 1 flashcards</td>
+<td>Redraw the media pyramid from memory</td>
+</tr>
+<tr>
+<td>2</td>
+<td>Ch 5–9</td>
+<td>Redo the Ch 4 TCO and Ch 5 data-reduction checks</td>
+<td>One-paragraph "why the ratio belongs to the data"</td>
+</tr>
+<tr>
+<td>3</td>
+<td>Ch 10–15</td>
+<td>Part 2 flashcards; <strong>Rehearsal 1:</strong> an NVMe-oF read and the GPUDirect path</td>
+<td>One-page protocol summary in your own words</td>
+</tr>
+<tr>
+<td>4</td>
+<td>Ch 16–21</td>
+<td><strong>Rehearsal 2:</strong> dual-controller write vs. DASE write</td>
+<td>Compare four architectures on one page</td>
+</tr>
+<tr>
+<td>5</td>
+<td>Ch 22–24, 51–52</td>
+<td>Part 3 flashcards; 30 random cards from week 1</td>
+<td>Apply the Ch 24 decision tree to three workloads</td>
+</tr>
+<tr>
+<td>6</td>
+<td>Ch 25–29, 55</td>
+<td>Read the latest Everpure earnings release and prepared remarks</td>
+<td>One-page company memo with sourced numbers</td>
+</tr>
+<tr>
+<td>7</td>
+<td>Ch 30–34</td>
+<td>Part 4–5 flashcards; <strong>Rehearsal 3:</strong> a checkpoint write from GPU memory to flash</td>
+<td>Size a 405B checkpoint and a 128K-token session</td>
+</tr>
+<tr>
+<td>8</td>
+<td>Ch 35–39, 56, 57</td>
+<td><strong>Rehearsal 4:</strong> EXA read path vs. VAST read path</td>
+<td>Seven questions for an engineering meeting</td>
+</tr>
+<tr>
+<td>9</td>
+<td>Ch 40–45</td>
+<td>Part 6 flashcards; 30-second answers from Ch 58 aloud</td>
+<td>Steelman one competitor against Everpure</td>
+</tr>
+<tr>
+<td>10</td>
+<td>Ch 46–50, 53–54, 60</td>
+<td>Ch 59's 50-card timed mixed test; mock PM meeting</td>
+<td>Write the ten numbers and five open questions from memory</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 0.1.3 — The mastery plan alternates reading with output; the outputs, not the reading, are what make the material usable in a meeting.</em></p>
+<h3 id="reading-order">Reading order<a class="headerlink" href="#reading-order" title="Permanent link">&para;</a></h3>
+<pre class="mermaid"><code>flowchart LR
+    P0["Part 0 Start here"] --&gt; P1["Part 1 Fundamentals"]
+    P1 --&gt; P2["Part 2 Protocols"]
+    P1 --&gt; P7a["Ch 51-52 History"]
+    P2 --&gt; P3["Part 3 Architectures"]
+    P1 --&gt; P3
+    P3 --&gt; P4["Part 4 Everpure"]
+    P2 --&gt; P5["Part 5 AI storage"]
+    P3 --&gt; P5
+    P4 --&gt; P6["Part 6 Competition"]
+    P5 --&gt; P6
+    P6 --&gt; P7b["Ch 53-54 Future and options"]
+    P4 --&gt; P8["Part 8 Toolkit"]
+    P6 --&gt; P8
+    G["Glossary"] -.-&gt; P1
+    G -.-&gt; P5</code></pre>
+<p><em>Figure 0.1.2 — Parts 1–3 are the foundation; Everpure and AI storage can be read in either order, but competition and strategy need both.</em></p>
+<p>Three dependencies matter most. Read <a href="../../01-storage-fundamentals/03-inside-an-ssd/">Chapter 3</a> (the FTL) before <a href="../../04-everpure/26-purity-and-directflash/">Chapter 26</a>, or DirectFlash looks like marketing. Read <a href="../../02-protocols-and-networking/11-gpu-data-path/">Chapter 11</a> before Part 5, and <a href="../../03-system-architecture/14-scale-up-dual-controller/">Chapters 14–17</a> before <a href="../../06-industry-and-competition/45-head-to-head/">Chapter 45</a>. History (51–52) needs only Part 1 and makes good light reading between dense days.</p>
+<h3 id="using-the-conversation-toolkit-before-a-meeting">Using the conversation toolkit before a meeting<a class="headerlink" href="#using-the-conversation-toolkit-before-a-meeting" title="Permanent link">&para;</a></h3>
+<p>For the 24 hours before a meeting:</p>
+<ol>
+<li><strong>Identify the audience and the product line.</strong> (<a href="../../08-conversation-toolkit/55-talking-with-pms/">Ch 55</a>, <a href="../../08-conversation-toolkit/56-talking-with-engineering-and-cto/">Ch 56</a>).</li>
+<li><strong>Do the public homework.</strong> Latest earnings release plus the chapter's "Numbers that matter"; never spend meeting time on what a 10-Q answers.</li>
+<li><strong>Pick five to seven questions,</strong> not thirty, from <a href="../../08-conversation-toolkit/57-question-bank/">Ch 57</a> and the chapter playbooks. Give each a hypothesis with a number.</li>
+<li><strong>Rehearse two 30-second answers</strong> from <a href="../../08-conversation-toolkit/58-explain-in-30-seconds/">Ch 58</a></li>
+<li><strong>Re-read "Don't say this"</strong> for each chapter in scope, and the <a href="../../08-conversation-toolkit/60-cheat-sheets/">cheat sheets</a> for acronyms.</li>
+</ol>
+<p>Afterwards, note what contradicted the atlas; those are its most valuable updates.</p>
+<h3 id="sourcing-labels-and-verify">Sourcing, labels and VERIFY<a class="headerlink" href="#sourcing-labels-and-verify" title="Permanent link">&para;</a></h3>
+<p>Every time-sensitive or vendor-specific claim has a footnote with publisher, publication date and retrieval date; established engineering facts and on-page arithmetic carry none. Labels say how much weight a number bears:</p>
+<table>
+<thead>
+<tr>
+<th>Label</th>
+<th>Meaning</th>
+<th>Example</th>
+<th>How to say it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Filed / company-reported</strong></td>
+<td>In an SEC filing or earnings release; audited or subject to disclosure rules</td>
+<td>Everpure subscription ARR US$2.13B (+20%), Q2 FY27<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup></td>
+<td>"Everpure reported…"</td>
+</tr>
+<tr>
+<td><strong>Company-stated</strong></td>
+<td>A private company's own unaudited figure</td>
+<td>VAST: committed ARR above US$500M<sup id="fnref2:3"><a class="footnote-ref" href="#fn:3">3</a></sup></td>
+<td>"VAST says…"</td>
+</tr>
+<tr>
+<td><strong>Reported by press</strong></td>
+<td>Journalists' figures, often from unnamed sources</td>
+<td>DDN revenue near US$500M in 2025, with conflicting base figures<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup></td>
+<td>"Forbes reported…; numbers conflict"</td>
+</tr>
+<tr>
+<td><strong>Tracker estimate</strong></td>
+<td>Analyst trackers with their own definitions</td>
+<td>Everpure 8.1% of external enterprise storage, 2Q26<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup></td>
+<td>"On IDC's definition…"</td>
+</tr>
+<tr>
+<td><strong>Atlas judgment</strong></td>
+<td>The atlas's synthesis of public facts</td>
+<td>Quadrant placements in <a href="../../06-industry-and-competition/49-competitive-matrices/">Ch 49</a></td>
+<td>"My read of public information…"</td>
+</tr>
+<tr>
+<td><strong>Worked example / illustrative</strong></td>
+<td>Arithmetic on stated assumptions; charts say "Illustrative" in the title</td>
+<td>405B parameters × ~16 bytes ≈ 6.5 TB checkpoint (<a href="../../05-ai-storage/31-training-storage/">Ch 31</a>)</td>
+<td>"Back of envelope…"</td>
+</tr>
+<tr>
+<td><strong>VERIFY tag</strong> (inline, in square brackets)</td>
+<td>Not confirmed by a primary or second source</td>
+<td>Figures seen only in a search summary</td>
+<td>Don't repeat it until checked</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 0.1.4 — The label is part of the number; dropping it is how a private company's claim turns into "fact" in a deck.</em></p>
+<p>Private figures are never set against public ones without the label. Charts plot only sourced or clearly illustrative data, and each chart's CSV in <code>data/</code> records its <code>source</code> and <code>as_of</code> date.</p>
+<h2 id="how-everpure-approaches-it-vs-competitors">How Everpure approaches it vs. competitors<a class="headerlink" href="#how-everpure-approaches-it-vs-competitors" title="Permanent link">&para;</a></h2>
+<p>Everpure and its competitors face the same standard of evidence; no cheerleading, including for Everpure.</p>
+<table>
+<thead>
+<tr>
+<th>Subject</th>
+<th>Main evidence</th>
+<th>Typical weakness</th>
+<th>How the atlas compensates</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Everpure</strong></td>
+<td>10-K/10-Q, earnings releases, prepared remarks, datasheets</td>
+<td>Management framing; metrics chosen by the company</td>
+<td>Same skepticism as for rivals; benchmarks read with the field that entered (<a href="../../05-ai-storage/37-reading-benchmarks/">Ch 37</a>)</td>
+</tr>
+<tr>
+<td><strong>Private AI-natives (VAST, WEKA, DDN)</strong></td>
+<td>Company statements, funding releases, press, MLPerf when they submit</td>
+<td>Unaudited and selectively disclosed</td>
+<td>Explicit labels; strongest case stated before the critique</td>
+</tr>
+<tr>
+<td><strong>Public incumbents (Dell, NetApp, HPE, IBM)</strong></td>
+<td>Filings, product documentation</td>
+<td>Storage often buried in a larger segment</td>
+<td>Profile tables; segment caveats in <a href="../../06-industry-and-competition/46-incumbents/">Ch 46</a></td>
+</tr>
+<tr>
+<td><strong>Hyperscalers</strong></td>
+<td>Papers, engineering blogs, re:Invent-style talks</td>
+<td>Selective, years after deployment</td>
+<td>Treated as architecture evidence, not market data (<a href="../../05-ai-storage/36-hyperscaler-ai-storage/">Ch 36</a>)</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 0.1.5 — Different competitors leave different evidence trails; the atlas labels each rather than pretending they are comparable.</em></p>
+<p>Strategy content is framed as <em>options a strategy team might evaluate, based on public information</em>, never as non-public Everpure plans.</p>
+<h2 id="history-and-trajectory">History and trajectory<a class="headerlink" href="#history-and-trajectory" title="Permanent link">&para;</a></h2>
+<p>The atlas is a snapshot as of 2026-11-01, covering Pure Storage from 2009 and Everpure from the February 2026 rebrand (ticker P since 2026-04-17<sup id="fnref2:1"><a class="footnote-ref" href="#fn:1">1</a></sup>). Mechanisms (Parts 1–3) and history age slowly; Parts 4–6 date fastest. Each earnings release moves ARR, RPO, margins and guidance; so do MLPerf rounds, NVIDIA certification lists, NAND prices and private funding rounds.</p>
+<h3 id="how-to-keep-it-current">How to keep it current<a class="headerlink" href="#how-to-keep-it-current" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>VERIFY tags</strong> sit inline where the doubt lives. <code>scripts/build_meta.py</code> collects them, with staged questions, into <code>meta/open-questions.md</code>; about 200 were open at drafting and 177 after the independent review pass.</li>
+<li><strong>Per-chapter staging files</strong> (<code>meta/open-questions-staging/</code>, <code>meta/glossary-staging/</code>) hold new VERIFY items, questions and terms; <code>scripts/build_glossary.py</code> merges terms into the <a href="../../glossary/">glossary</a>.</li>
+<li><strong>The "Last verified" date</strong> says when a chapter was last checked. Re-verify "Numbers that matter" first: that is what gets copied into slides.</li>
+<li><strong><code>meta/sources.md</code></strong> traces any superseded source to every chapter citing it.</li>
+</ul>
+<h2 id="numbers-that-matter">Numbers that matter<a class="headerlink" href="#numbers-that-matter" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+<th>Context</th>
+<th>Source / date</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Atlas size</td>
+<td>≈156,000 prose words, 62 chapter files in 9 Parts</td>
+<td>Prose only; tables, code and sources excluded; Ch 59's flashcard deck alone is ≈12,400</td>
+<td>Atlas count, <code>scripts/wordcount.py</code>, 2026-11-01</td>
+</tr>
+<tr>
+<td>Straight-through reading time</td>
+<td>≈11 hours</td>
+<td>~156,000 words ÷ 230 words per minute ≈ 680 minutes before visuals; ≈10.4 hours without the flashcard deck</td>
+<td>Worked example</td>
+</tr>
+<tr>
+<td>Glossary</td>
+<td>≈870 terms</td>
+<td>Merged from per-chapter staging, A–Z</td>
+<td>Atlas count, 2026-11-01</td>
+</tr>
+<tr>
+<td>Question bank</td>
+<td>150 questions in 14 topics</td>
+<td>Tagged by audience</td>
+<td><a href="../../08-conversation-toolkit/57-question-bank/">Ch 57</a>, atlas count</td>
+</tr>
+<tr>
+<td>One-liners</td>
+<td>66</td>
+<td>Four-beat 30-second answers</td>
+<td><a href="../../08-conversation-toolkit/58-explain-in-30-seconds/">Ch 58</a>, atlas count</td>
+</tr>
+<tr>
+<td>Flashcards</td>
+<td>279</td>
+<td>Organised by Part plus a strategy mix; the chapter title still says 200</td>
+<td><a href="../../08-conversation-toolkit/59-self-test-flashcards/">Ch 59</a>, atlas count</td>
+</tr>
+<tr>
+<td>Unique sources</td>
+<td>1,243</td>
+<td>Deduplicated by URL</td>
+<td><code>meta/sources.md</code>, 2026-11-01</td>
+</tr>
+<tr>
+<td>Open VERIFY markers</td>
+<td>≈180</td>
+<td>177 inline after review; <code>meta/open-questions.md</code> shows 200 until regenerated</td>
+<td>Atlas count, 2026-11-01</td>
+</tr>
+</tbody>
+</table>
+<h2 id="conversation-playbook">Conversation playbook<a class="headerlink" href="#conversation-playbook" title="Permanent link">&para;</a></h2>
+<p><strong>Three questions for a PM</strong></p>
+<ol>
+<li><em>"Which row of the atlas's positioning table for your product line is wrong?"</em> A strong answer names a workload, a competitor and the deciding attribute; a weak one defends the product.</li>
+<li><em>"What metric do you report upward, and what does it hide?"</em> A strong answer separates the public metric (ARR, customer counts) from the operational one it masks, such as time-to-deploy.</li>
+<li><em>"Which competitor claim do customers repeat most, and is it true?"</em> A strong answer concedes the true part first, a sign of a real win/loss loop.</li>
+</ol>
+<p><strong>Three questions for an engineer</strong></p>
+<ol>
+<li><em>"Here is my L2 model of the write path. Where is it wrong for your system?"</em> A strong answer corrects a specific step and gives a number, not an adjective.</li>
+<li><em>"What would you want a non-engineer to understand before we evaluate a target in your area?"</em> A strong answer names a wall (metadata, rebuild time, client management) rather than a feature.</li>
+<li><em>"Which benchmark result in our space do you trust least, and why?"</em> A strong answer names the configuration or normalisation that flatters it (<a href="../../05-ai-storage/37-reading-benchmarks/">Ch 37</a>).</li>
+</ol>
+<p><strong>Don't say this:</strong></p>
+<ul>
+<li>A private company's figure without its label: "VAST has $2B of ARR" is press speculation; the company-stated figure is above US$500M of committed ARR<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>.</li>
+<li>"Pure Storage" for post-February-2026 events, or "PSTG" for today's ticker.</li>
+<li>"We're #1 in MLPerf" without adding that VAST, WEKA, DDN, Dell, IBM and NetApp skipped that round (<a href="../../04-everpure/27-flasharray-and-flashblade/">Ch 27</a>, <a href="../../05-ai-storage/37-reading-benchmarks/">Ch 37</a>).</li>
+<li>An L3 assertion you cannot defend; ask it instead.</li>
+<li>An atlas number without its date; much of Parts 4–6 will be stale within two quarters.</li>
+</ul>
+<h2 id="going-deeper-optional-l3-pointers">Going deeper (optional, L3 pointers)<a class="headerlink" href="#going-deeper-optional-l3-pointers" title="Permanent link">&para;</a></h2>
+<ul>
+<li><code>meta/research/</code> holds the research notes behind Parts 4–6; cite their underlying sources, not the notes.</li>
+<li>The SNIA Dictionary (snia.org) is the reference vocabulary when vendor and atlas terms disagree.</li>
+<li>Each chapter's "Going deeper" box lists the specs, papers and talks (USENIX FAST, Hot Chips, FMS) behind its L3 detail.</li>
+</ul>
+<h2 id="key-terms">Key terms<a class="headerlink" href="#key-terms" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Depth label (L1/L2/L3)</strong> — vocabulary, mechanism and implementation levels (<a href="../../glossary/#d">glossary</a>).</li>
+<li><strong>Company-stated</strong> — a private company's own unaudited figure.</li>
+<li><strong>Reported by press</strong> — a figure published by journalists, often from unnamed sources.</li>
+<li><strong>Atlas judgment</strong> — the atlas's synthesis of public facts, such as quadrant placements.</li>
+<li><strong>Worked example</strong> — arithmetic on stated assumptions, shown on the page.</li>
+<li><strong>VERIFY tag</strong> — an inline marker for a claim not yet confirmed by a primary or second source.</li>
+<li><strong>Signature visual (★)</strong> — a diagram worth being able to redraw from memory.</li>
+<li><strong>Conversation playbook</strong> — each chapter's questions, strong answers and misconceptions.</li>
+</ul>
+<h2 id="sources">Sources<a class="headerlink" href="#sources" title="Permanent link">&para;</a></h2>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>Nasdaq / PR Newswire, "Everpure to Change Ticker Symbol to 'P'," 2026-04-07. https://www.nasdaq.com/press-release/everpure-change-ticker-symbol-p-2026-04-07 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>Everpure, "Everpure Announces Second Quarter Fiscal 2027 Financial Results," 2026-08-26. https://investor.everpuredata.com/news-and-events/press-releases/press-release-details/2026/Everpure-Announces-Second-Quarter-Fiscal-2027-Financial-Results/default.aspx (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>Futurum, "VAST Data Valuation Triples. Can a Unified Platform Scale AI Globally?," 2026-04. https://futurumgroup.com/insights/vast-data-valuation-triples-can-a-unified-platform-scale-ai-globally/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>I. Martin, Forbes, "AI's Latest Rocket Ship Is An Old School, 28-Year-Old Data Company," 2026-08-06. https://www.forbes.com/sites/iainmartin/2026/08/06/ais-latest-rocket-ship-is-an-old-school-28-year-old-data-company/ (retrieved 2026-11-01; read via search extracts).&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p>StorageReview, "IDC External Storage Tracker: $10.3 Billion in Q2 2026 as Server Market Tops $166 Billion on AI Demand," 2026-09. https://www.storagereview.com/news/idc-external-storage-tracker-q2-2026-10-3-billion-as-server-market-tops-166-billion (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../.." class="md-footer__link md-footer__link--prev" aria-label="Previous: Home">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                Home
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../00b-one-page-map/" class="md-footer__link md-footer__link--next" aria-label="Next: 0.2. The one-page map">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                0.2. The one-page map
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>

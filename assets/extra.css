@@ -1,0 +1,6 @@
+/* Everpure Tech Atlas — small readability tweaks */
+.md-typeset table:not([class]) { font-size: 0.72rem; }
+.md-typeset table:not([class]) th { background: #f3f6f9; }
+.md-typeset img { background: #ffffff; border-radius: 4px; }
+.md-typeset blockquote { border-left-color: #0072B2; }
+.md-typeset details { margin: 0.4em 0; }

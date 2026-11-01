@@ -1,0 +1,171 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 773" width="1000" role="img" aria-labelledby="t d" font-family="Inter, Helvetica, Arial, sans-serif">
+  <title id="t">Protocol comparison poster: block, file and object access</title>
+  <desc id="d">A table-style poster comparing eleven storage access protocols in three bands. Block: FC, iSCSI, FC-NVMe, NVMe over RoCE and NVMe over TCP. File: NFSv3, NFSv4.1 and pNFS, SMB3 and proprietary parallel file system clients. Object: S3 and S3 over RDMA. For each it gives the transport, the typical latency adder, who uses it, and Everpure support. The same content appears as Table 60.2 in the chapter.</desc>
+  <rect x="0" y="0" width="1000" height="773" fill="#FFFFFF"/>
+  <text x="20" y="34" font-size="20" font-weight="700" fill="#222222">Protocol poster: how hosts reach storage, and what each path costs</text>
+  <text x="20" y="56" font-size="13" fill="#555555">Eleven protocols in three families. Shaded column: Everpure support as of November 2026 (Chapters 7–9, 27).</text>
+  <rect x="20" y="70" width="960" height="30" fill="#222222"/>
+  <text x="30" y="90" font-size="13" font-weight="700" fill="#FFFFFF">Protocol</text>
+  <text x="165" y="90" font-size="13" font-weight="700" fill="#FFFFFF">Transport</text>
+  <text x="365" y="90" font-size="13" font-weight="700" fill="#FFFFFF">Typical latency adder</text>
+  <text x="565" y="90" font-size="13" font-weight="700" fill="#FFFFFF">Who uses it</text>
+  <text x="770" y="90" font-size="13" font-weight="700" fill="#FFFFFF">Everpure support</text>
+  <rect x="20" y="100" width="960" height="28" fill="#F3F6F9"/>
+  <rect x="20" y="100" width="10" height="28" fill="#56B4E9"/>
+  <text x="40" y="119" font-size="14" font-weight="700" fill="#222222">BLOCK — the host sees a disk (Chapter 7)</text>
+  <rect x="20" y="128" width="960" height="44" fill="#FFFFFF"/>
+  <rect x="760" y="128" width="220" height="44" fill="#E8F1F8"/>
+  <rect x="20" y="128" width="4" height="44" fill="#56B4E9"/>
+  <line x1="20" y1="172" x2="980" y2="172" stroke="#DDDDDD"/>
+  <text x="30" y="148" font-size="14" font-weight="700" fill="#222222">FC (SCSI)</text>
+  <text x="165" y="148" font-size="12" fill="#222222">Dedicated lossless fabric;</text>
+  <text x="165" y="163" font-size="12" fill="#222222">HBAs + FC switches, 32–128G</text>
+  <text x="365" y="148" font-size="12" fill="#222222">Low; HBA-offloaded,</text>
+  <text x="365" y="163" font-size="12" fill="#222222">the classic SAN baseline</text>
+  <text x="565" y="148" font-size="12" fill="#222222">Enterprises with FC estates,</text>
+  <text x="565" y="163" font-size="12" fill="#222222">tier-1 databases, VMware</text>
+  <text x="770" y="148" font-size="12" fill="#0B4F7C">FlashArray family</text>
+  <rect x="20" y="172" width="960" height="44" fill="#FAFAFA"/>
+  <rect x="760" y="172" width="220" height="44" fill="#E8F1F8"/>
+  <rect x="20" y="172" width="4" height="44" fill="#56B4E9"/>
+  <line x1="20" y1="216" x2="980" y2="216" stroke="#DDDDDD"/>
+  <text x="30" y="192" font-size="14" font-weight="700" fill="#222222">iSCSI</text>
+  <text x="165" y="192" font-size="12" fill="#222222">SCSI over TCP/IP on</text>
+  <text x="165" y="207" font-size="12" fill="#222222">any Ethernet NIC</text>
+  <text x="365" y="192" font-size="12" fill="#222222">Highest of the block set:</text>
+  <text x="365" y="207" font-size="12" fill="#222222">TCP plus SCSI translation</text>
+  <text x="565" y="192" font-size="12" fill="#222222">Mid-market, branch, the long</text>
+  <text x="565" y="207" font-size="12" fill="#222222">tail of installed SANs</text>
+  <text x="770" y="192" font-size="12" fill="#0B4F7C">FlashArray family</text>
+  <rect x="20" y="216" width="960" height="44" fill="#FFFFFF"/>
+  <rect x="760" y="216" width="220" height="44" fill="#E8F1F8"/>
+  <rect x="20" y="216" width="4" height="44" fill="#56B4E9"/>
+  <line x1="20" y1="260" x2="980" y2="260" stroke="#DDDDDD"/>
+  <text x="30" y="236" font-size="14" font-weight="700" fill="#222222">FC-NVMe</text>
+  <text x="165" y="236" font-size="12" fill="#222222">NVMe capsules over FC,</text>
+  <text x="165" y="251" font-size="12" fill="#222222">same HBAs and switches</text>
+  <text x="365" y="236" font-size="12" fill="#222222">Low; vendor claims ~50%</text>
+  <text x="365" y="251" font-size="12" fill="#222222">below SCSI-FC end to end</text>
+  <text x="565" y="236" font-size="12" fill="#222222">FC shops modernising</text>
+  <text x="565" y="251" font-size="12" fill="#222222">without a new fabric</text>
+  <text x="770" y="236" font-size="12" fill="#0B4F7C">FlashArray, Purity 6.1</text>
+  <text x="770" y="251" font-size="12" fill="#0B4F7C">(Feb 2021)</text>
+  <rect x="20" y="260" width="960" height="44" fill="#FAFAFA"/>
+  <rect x="760" y="260" width="220" height="44" fill="#E8F1F8"/>
+  <rect x="20" y="260" width="4" height="44" fill="#56B4E9"/>
+  <line x1="20" y1="304" x2="980" y2="304" stroke="#DDDDDD"/>
+  <text x="30" y="280" font-size="14" font-weight="700" fill="#222222">NVMe/RoCE</text>
+  <text x="165" y="280" font-size="12" fill="#222222">NVMe over RDMA (RoCEv2)</text>
+  <text x="165" y="295" font-size="12" fill="#222222">on tuned, lossless Ethernet</text>
+  <text x="365" y="280" font-size="12" fill="#222222">~5–15 µs over local NVMe</text>
+  <text x="565" y="280" font-size="12" fill="#222222">AI back-ends, neoclouds,</text>
+  <text x="565" y="295" font-size="12" fill="#222222">latency-critical databases</text>
+  <text x="770" y="280" font-size="12" fill="#0B4F7C">FlashArray, Purity 5.2</text>
+  <text x="770" y="295" font-size="12" fill="#0B4F7C">(2019, DirectFlash Fabric)</text>
+  <rect x="20" y="304" width="960" height="44" fill="#FFFFFF"/>
+  <rect x="760" y="304" width="220" height="44" fill="#E8F1F8"/>
+  <rect x="20" y="304" width="4" height="44" fill="#56B4E9"/>
+  <line x1="20" y1="348" x2="980" y2="348" stroke="#DDDDDD"/>
+  <text x="30" y="324" font-size="14" font-weight="700" fill="#222222">NVMe/TCP</text>
+  <text x="165" y="324" font-size="12" fill="#222222">NVMe over plain TCP on</text>
+  <text x="165" y="339" font-size="12" fill="#222222">any Ethernet NIC</text>
+  <text x="365" y="324" font-size="12" fill="#222222">~20–35 µs in early Linux</text>
+  <text x="365" y="339" font-size="12" fill="#222222">tests; wider under load</text>
+  <text x="565" y="324" font-size="12" fill="#222222">Greenfield Ethernet SANs,</text>
+  <text x="565" y="339" font-size="12" fill="#222222">VMware and Nutanix refreshes</text>
+  <text x="770" y="324" font-size="12" fill="#0B4F7C">FlashArray, Purity 6.4.2+</text>
+  <text x="770" y="339" font-size="12" fill="#0B4F7C">(GA date to verify)</text>
+  <rect x="20" y="348" width="960" height="28" fill="#F3F6F9"/>
+  <rect x="20" y="348" width="10" height="28" fill="#009E73"/>
+  <text x="40" y="367" font-size="14" font-weight="700" fill="#222222">FILE — the host sees a shared directory tree (Chapter 8)</text>
+  <rect x="20" y="376" width="960" height="44" fill="#FAFAFA"/>
+  <rect x="760" y="376" width="220" height="44" fill="#E8F1F8"/>
+  <rect x="20" y="376" width="4" height="44" fill="#009E73"/>
+  <line x1="20" y1="420" x2="980" y2="420" stroke="#DDDDDD"/>
+  <text x="30" y="396" font-size="14" font-weight="700" fill="#222222">NFSv3</text>
+  <text x="165" y="396" font-size="12" fill="#222222">Stateless; TCP or RDMA;</text>
+  <text x="165" y="411" font-size="12" fill="#222222">one server per mount</text>
+  <text x="365" y="396" font-size="12" fill="#222222">TCP stack + server file ops;</text>
+  <text x="365" y="411" font-size="12" fill="#222222">~2–2.5 GB/s per TCP mount</text>
+  <text x="565" y="396" font-size="12" fill="#222222">Linux apps, legacy NAS,</text>
+  <text x="565" y="411" font-size="12" fill="#222222">the pNFS data leg</text>
+  <text x="770" y="396" font-size="12" fill="#0B4F7C">FlashBlade; FlashArray</text>
+  <text x="770" y="411" font-size="12" fill="#0B4F7C">file services</text>
+  <rect x="20" y="420" width="960" height="59" fill="#FFFFFF"/>
+  <rect x="760" y="420" width="220" height="59" fill="#E8F1F8"/>
+  <rect x="20" y="420" width="4" height="59" fill="#009E73"/>
+  <line x1="20" y1="479" x2="980" y2="479" stroke="#DDDDDD"/>
+  <text x="30" y="440" font-size="14" font-weight="700" fill="#222222">NFSv4.1 /</text>
+  <text x="30" y="455" font-size="14" font-weight="700" fill="#222222">pNFS</text>
+  <text x="165" y="440" font-size="12" fill="#222222">Stateful sessions. pNFS: layout</text>
+  <text x="165" y="455" font-size="12" fill="#222222">from metadata server, then</text>
+  <text x="165" y="470" font-size="12" fill="#222222">data direct to data servers</text>
+  <text x="365" y="440" font-size="12" fill="#222222">One metadata round trip,</text>
+  <text x="365" y="455" font-size="12" fill="#222222">then parallel direct I/O</text>
+  <text x="565" y="440" font-size="12" fill="#222222">AI training and inference</text>
+  <text x="565" y="455" font-size="12" fill="#222222">with the stock Linux client</text>
+  <text x="770" y="440" font-size="12" fill="#0B4F7C">FlashBlade: NFSv4.1;</text>
+  <text x="770" y="455" font-size="12" fill="#0B4F7C">FlashBlade//EXA: pNFS with</text>
+  <text x="770" y="470" font-size="12" fill="#0B4F7C">RDMA data path</text>
+  <rect x="20" y="479" width="960" height="44" fill="#FAFAFA"/>
+  <rect x="760" y="479" width="220" height="44" fill="#E8F1F8"/>
+  <rect x="20" y="479" width="4" height="44" fill="#009E73"/>
+  <line x1="20" y1="523" x2="980" y2="523" stroke="#DDDDDD"/>
+  <text x="30" y="499" font-size="14" font-weight="700" fill="#222222">SMB3</text>
+  <text x="165" y="499" font-size="12" fill="#222222">Stateful sessions; Multichannel,</text>
+  <text x="165" y="514" font-size="12" fill="#222222">SMB Direct (RDMA)</text>
+  <text x="365" y="499" font-size="12" fill="#222222">NFS-like; Multichannel</text>
+  <text x="365" y="514" font-size="12" fill="#222222">still ends at one server</text>
+  <text x="565" y="499" font-size="12" fill="#222222">Windows shares, VDI,</text>
+  <text x="565" y="514" font-size="12" fill="#222222">media workflows</text>
+  <text x="770" y="499" font-size="12" fill="#0B4F7C">FlashBlade; FlashArray</text>
+  <text x="770" y="514" font-size="12" fill="#0B4F7C">file services</text>
+  <rect x="20" y="523" width="960" height="44" fill="#FFFFFF"/>
+  <rect x="760" y="523" width="220" height="44" fill="#E8F1F8"/>
+  <rect x="20" y="523" width="4" height="44" fill="#009E73"/>
+  <line x1="20" y1="567" x2="980" y2="567" stroke="#DDDDDD"/>
+  <text x="30" y="543" font-size="14" font-weight="700" fill="#222222">Parallel FS</text>
+  <text x="30" y="558" font-size="14" font-weight="700" fill="#222222">clients</text>
+  <text x="165" y="543" font-size="12" fill="#222222">Vendor kernel module or agent;</text>
+  <text x="165" y="558" font-size="12" fill="#222222">native InfiniBand or RoCE</text>
+  <text x="365" y="543" font-size="12" fill="#222222">Client stripes straight to</text>
+  <text x="365" y="558" font-size="12" fill="#222222">storage servers, no gateway</text>
+  <text x="565" y="543" font-size="12" fill="#222222">Largest HPC and AI clusters</text>
+  <text x="565" y="558" font-size="12" fill="#222222">(Lustre, Storage Scale, WEKA)</text>
+  <text x="770" y="543" font-size="12" fill="#0B4F7C">No proprietary client;</text>
+  <text x="770" y="558" font-size="12" fill="#0B4F7C">EXA answers with pNFS</text>
+  <rect x="20" y="567" width="960" height="28" fill="#F3F6F9"/>
+  <rect x="20" y="567" width="10" height="28" fill="#E69F00"/>
+  <text x="40" y="586" font-size="14" font-weight="700" fill="#222222">OBJECT — the host sees a bucket of keys (Chapter 9)</text>
+  <rect x="20" y="595" width="960" height="59" fill="#FAFAFA"/>
+  <rect x="760" y="595" width="220" height="59" fill="#E8F1F8"/>
+  <rect x="20" y="595" width="4" height="59" fill="#E69F00"/>
+  <line x1="20" y1="654" x2="980" y2="654" stroke="#DDDDDD"/>
+  <text x="30" y="615" font-size="14" font-weight="700" fill="#222222">S3</text>
+  <text x="165" y="615" font-size="12" fill="#222222">REST over HTTPS/TCP;</text>
+  <text x="165" y="630" font-size="12" fill="#222222">every request signed (SigV4)</text>
+  <text x="365" y="615" font-size="12" fill="#222222">AWS S3 Standard: ~100–200 ms</text>
+  <text x="365" y="630" font-size="12" fill="#222222">first byte; Express One Zone:</text>
+  <text x="365" y="645" font-size="12" fill="#222222">single-digit ms</text>
+  <text x="565" y="615" font-size="12" fill="#222222">Data lakes, backup, AI</text>
+  <text x="565" y="630" font-size="12" fill="#222222">pipelines, cloud-native apps</text>
+  <text x="770" y="615" font-size="12" fill="#0B4F7C">FlashBlade S3; FlashArray</text>
+  <text x="770" y="630" font-size="12" fill="#0B4F7C">S3 (added June 2025)</text>
+  <rect x="20" y="654" width="960" height="59" fill="#FFFFFF"/>
+  <rect x="760" y="654" width="220" height="59" fill="#E8F1F8"/>
+  <rect x="20" y="654" width="4" height="59" fill="#E69F00"/>
+  <line x1="20" y1="713" x2="980" y2="713" stroke="#DDDDDD"/>
+  <text x="30" y="674" font-size="14" font-weight="700" fill="#222222">S3 over</text>
+  <text x="30" y="689" font-size="14" font-weight="700" fill="#222222">RDMA</text>
+  <text x="165" y="674" font-size="12" fill="#222222">HTTP control path; RDMA moves</text>
+  <text x="165" y="689" font-size="12" fill="#222222">bytes into GPU or host memory</text>
+  <text x="365" y="674" font-size="12" fill="#222222">Removes TCP copies. MinIO</text>
+  <text x="365" y="689" font-size="12" fill="#222222">(vendor): 16 GiB in 0.65 s</text>
+  <text x="365" y="704" font-size="12" fill="#222222">vs 12.16 s over HTTP</text>
+  <text x="565" y="674" font-size="12" fill="#222222">GPU data loading, checkpoints,</text>
+  <text x="565" y="689" font-size="12" fill="#222222">KV-cache tiers</text>
+  <text x="770" y="674" font-size="12" fill="#0B4F7C">FlashBlade//S: announced</text>
+  <text x="770" y="689" font-size="12" fill="#0B4F7C">Mar 2025 (GA to verify)</text>
+  <text x="20" y="731" font-size="12" fill="#555555">Latency adders for block are per I/O versus local NVMe, from SNIA tests and vendor claims cited in Chapter 7. File and object rows say</text>
+  <text x="20" y="747" font-size="12" fill="#555555">where the time goes; the S3 figure is AWS's guidance for its cloud service, not an on-premises flash system. Original drawing, Chapter 60.</text>
+</svg>

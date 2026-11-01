@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="722.323544pt" height="388.878864pt" viewBox="0 0 722.323544 388.878864" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 388.878864 
+L 722.323544 388.878864 
+L 722.323544 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 63.191669 310.24282 
+L 672.48 310.24282 
+L 672.48 22.318125 
+L 63.191669 22.318125 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 134.625473 310.24282 
+L 201.857289 310.24282 
+L 201.857289 228.209319 
+L 134.625473 228.209319 
+z
+" clip-path="url(#p143ec93728)" style="fill: #0072b2"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 239.675186 310.24282 
+L 306.907001 310.24282 
+L 306.907001 189.039042 
+L 239.675186 189.039042 
+z
+" clip-path="url(#p143ec93728)" style="fill: #0072b2"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 344.724898 310.24282 
+L 411.956714 310.24282 
+L 411.956714 146.100707 
+L 344.724898 146.100707 
+z
+" clip-path="url(#p143ec93728)" style="fill: #0072b2"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 554.824322 310.24282 
+L 622.056138 310.24282 
+L 622.056138 90.538752 
+L 554.824322 90.538752 
+z
+" clip-path="url(#p143ec93728)" style="fill: #0072b2"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <path d="M 168.241381 310.24282 
+L 168.241381 22.318125 
+" clip-path="url(#p143ec93728)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_2">
+      <defs>
+       <path id="mc8b706053e" d="M 0 0 
+L 0 3.5 
+" style="stroke: #222222; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#mc8b706053e" x="168.241381" y="310.24282" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="168.241381" y="325.600241" transform="rotate(-0 168.241381 325.600241)">10</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_3">
+      <path d="M 273.291094 310.24282 
+L 273.291094 22.318125 
+" clip-path="url(#p143ec93728)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#mc8b706053e" x="273.291094" y="310.24282" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="273.291094" y="325.600241" transform="rotate(-0 273.291094 325.600241)">15</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_5">
+      <path d="M 378.340806 310.24282 
+L 378.340806 22.318125 
+" clip-path="url(#p143ec93728)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#mc8b706053e" x="378.340806" y="310.24282" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="378.340806" y="325.600241" transform="rotate(-0 378.340806 325.600241)">20</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_7">
+      <path d="M 588.44023 310.24282 
+L 588.44023 22.318125 
+" clip-path="url(#p143ec93728)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_8">
+      <g>
+       <use xlink:href="#mc8b706053e" x="588.44023" y="310.24282" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="588.44023" y="325.600241" transform="rotate(-0 588.44023 325.600241)">30</text>
+     </g>
+    </g>
+    <g id="text_5">
+     <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="367.835835" y="340.601101" transform="rotate(-0 367.835835 340.601101)">FlashBlade//EXA data nodes in the submitted configuration</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_9">
+      <path d="M 63.191669 310.24282 
+L 672.48 310.24282 
+" clip-path="url(#p143ec93728)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_10">
+      <defs>
+       <path id="m4db9313206" d="M 0 0 
+L -3.5 0 
+" style="stroke: #222222; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m4db9313206" x="63.191669" y="310.24282" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="56.191669" y="314.421531" transform="rotate(-0 56.191669 314.421531)">0</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_11">
+      <path d="M 63.191669 260.16896 
+L 672.48 260.16896 
+" clip-path="url(#p143ec93728)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_12">
+      <g>
+       <use xlink:href="#m4db9313206" x="63.191669" y="260.16896" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_7">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="56.191669" y="264.347671" transform="rotate(-0 56.191669 264.347671)">200</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_13">
+      <path d="M 63.191669 210.0951 
+L 672.48 210.0951 
+" clip-path="url(#p143ec93728)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_14">
+      <g>
+       <use xlink:href="#m4db9313206" x="63.191669" y="210.0951" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_8">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="56.191669" y="214.273811" transform="rotate(-0 56.191669 214.273811)">400</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_15">
+      <path d="M 63.191669 160.02124 
+L 672.48 160.02124 
+" clip-path="url(#p143ec93728)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_16">
+      <g>
+       <use xlink:href="#m4db9313206" x="63.191669" y="160.02124" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_9">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="56.191669" y="164.199951" transform="rotate(-0 56.191669 164.199951)">600</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_17">
+      <path d="M 63.191669 109.94738 
+L 672.48 109.94738 
+" clip-path="url(#p143ec93728)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_18">
+      <g>
+       <use xlink:href="#m4db9313206" x="63.191669" y="109.94738" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_10">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="56.191669" y="114.126091" transform="rotate(-0 56.191669 114.126091)">800</text>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_19">
+      <path d="M 63.191669 59.87352 
+L 672.48 59.87352 
+" clip-path="url(#p143ec93728)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_20">
+      <g>
+       <use xlink:href="#m4db9313206" x="63.191669" y="59.87352" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_11">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="56.191669" y="64.052231" transform="rotate(-0 56.191669 64.052231)">1000</text>
+     </g>
+    </g>
+    <g id="text_12">
+     <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="21.554091" y="166.280472" transform="rotate(-90 21.554091 166.280472)">Checkpoint write bandwidth (GiB/s)</text>
+    </g>
+   </g>
+   <g id="line2d_21">
+    <path d="M 126.221496 244.616019 
+L 630.460115 47.735616 
+" clip-path="url(#p143ec93728)" style="fill: none; stroke-dasharray: 5.92,2.56; stroke-dashoffset: 0; stroke: #d55e00; stroke-width: 1.6"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 63.191669 310.24282 
+L 63.191669 22.318125 
+" style="fill: none; stroke: #888888; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 63.191669 310.24282 
+L 672.48 310.24282 
+" style="fill: none; stroke: #888888; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_13">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(159.652006 209.837222)">328</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(133.143491 220.639683)">(32.8 per node)</text>
+   </g>
+   <g id="text_14">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(264.701719 170.666945)">484</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(238.193203 181.469406)">(32.3 per node)</text>
+   </g>
+   <g id="text_15">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(369.751431 127.72861)">656</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(343.242915 138.531071)">(32.8 per node)</text>
+   </g>
+   <g id="text_16">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(579.850855 72.166655)">878</text>
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(553.34234 82.969116)">(29.2 per node)</text>
+   </g>
+   <g id="text_17">
+    <text style="font-weight: 700; font-size: 12px; font-family: 'DejaVu Sans'; text-anchor: start" x="63.191669" y="16.318125" transform="rotate(-0 63.191669 16.318125)">MLPerf Storage v3.0: FlashBlade//EXA checkpoint write vs data-node count (vendor submission)</text>
+   </g>
+   <g id="legend_1">
+    <g id="line2d_22">
+     <path d="M 73.091669 36.726406 
+L 84.091669 36.726406 
+L 95.091669 36.726406 
+" style="fill: none; stroke-dasharray: 5.92,2.56; stroke-dashoffset: 0; stroke: #d55e00; stroke-width: 1.6"/>
+    </g>
+    <g id="text_18">
+     <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start" x="103.891669" y="40.576406" transform="rotate(-0 103.891669 40.576406)">Perfectly linear from the 10-node point</text>
+    </g>
+    <g id="patch_9">
+     <path d="M 73.091669 57.077266 
+L 95.091669 57.077266 
+L 95.091669 49.377266 
+L 73.091669 49.377266 
+z
+" style="fill: #0072b2"/>
+    </g>
+    <g id="text_19">
+     <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start" x="103.891669" y="57.077266" transform="rotate(-0 103.891669 57.077266)">Measured checkpoint write (GiB/s)</text>
+    </g>
+   </g>
+  </g>
+  <g id="text_20">
+   <text style="font-size: 8px; font-family: 'DejaVu Sans'; fill: #555555" transform="translate(7.2 369.35402)">Source: MLPerf Storage v3.0 results as reported by Everpure (HPCwire, 2026-09-02) and StorageReview (2026-09); 15- and 20-node points reported by StorageReview only.</text>
+   <text style="font-size: 8px; font-family: 'DejaVu Sans'; fill: #555555" transform="translate(7.2 378.956207)">Per-node values are atlas arithmetic. No VAST, WEKA or DDN submission in v3.0. Data: data/ch27_mlperf_checkpoint_scaling.csv</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p143ec93728">
+   <rect x="63.191669" y="22.318125" width="609.288331" height="287.924695"/>
+  </clipPath>
+ </defs>
+</svg>

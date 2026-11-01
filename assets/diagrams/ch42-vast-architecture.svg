@@ -1,0 +1,150 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 770" width="1000" role="img" aria-labelledby="t d" font-family="Inter, Helvetica, Arial, sans-serif">
+  <title id="t">VAST AI Operating System: software layers stacked on a DASE hardware base</title>
+  <desc id="d">Layered view. At the bottom, DBox enclosures hold a small SCM or SLC tier for write buffer and metadata and a large QLC tier, reached over an NVMe-oF fabric. Above them run stateless compute nodes: x86 CNodes, GPU-equipped CNode-X, CNode software on BlueField-4 DPUs inside GPU servers, and converged EBoxes. The Element Store sits on that compute: one byte-granular metadata structure in SCM, similarity-based data reduction, wide locally decodable erasure codes, and snapshots and quality of service. On top of the Element Store are three data services: DataStore for files, objects and block volumes, DataBase for tables and vectors, and DataSpace for a global namespace across sites and clouds. Above them are compute engines: DataEngine, InsightEngine, AgentEngine and SyncEngine, plus TuningEngine and PolicyEngine announced in 2026. The top layer is access protocols: NFS including RDMA, SMB, S3, NVMe over TCP block, a Kafka-compatible API and SQL. A side column shows the Polaris control plane, announced in 2026, and the hardware partners and clouds the software runs on.</desc>
+  <rect x="0" y="0" width="1000" height="770" fill="#FFFFFF"/>
+
+  <text x="30" y="34" font-size="20" font-weight="700" fill="#222222">VAST "AI OS": a software stack climbing on top of DASE</text>
+  <text x="30" y="56" font-size="13" fill="#555555">Logical layers, not a deployment drawing. Original diagram for the Everpure Tech Atlas, Chapter 42. Status as of 2026-11-01.</text>
+
+  <!-- Consumers -->
+  <g font-size="13" fill="#222222" text-anchor="middle">
+    <rect x="30" y="72" width="240" height="36" rx="6" fill="#F3F6F9" stroke="#888888"/>
+    <text x="150" y="95">GPU training and inference</text>
+    <rect x="285" y="72" width="240" height="36" rx="6" fill="#F3F6F9" stroke="#888888"/>
+    <text x="405" y="95">Analytics, apps, pipelines</text>
+    <rect x="540" y="72" width="240" height="36" rx="6" fill="#F3F6F9" stroke="#888888"/>
+    <text x="660" y="95">AI agents and RAG services</text>
+  </g>
+
+  <!-- Access protocols -->
+  <rect x="30" y="120" width="750" height="70" rx="6" fill="#E8F4FB" stroke="#56B4E9"/>
+  <text x="40" y="137" font-size="12" font-weight="700" fill="#222222">ACCESS: protocol modules, all against the same data</text>
+  <g font-size="12" fill="#222222" text-anchor="middle">
+    <rect x="40" y="146" width="116" height="34" rx="4" fill="#FFFFFF" stroke="#56B4E9"/><text x="98" y="167">NFS / NFSoRDMA</text>
+    <rect x="163" y="146" width="116" height="34" rx="4" fill="#FFFFFF" stroke="#56B4E9"/><text x="221" y="167">SMB</text>
+    <rect x="286" y="146" width="116" height="34" rx="4" fill="#FFFFFF" stroke="#56B4E9"/><text x="344" y="167">S3 object</text>
+    <rect x="409" y="146" width="116" height="34" rx="4" fill="#FFFFFF" stroke="#56B4E9"/><text x="467" y="167">Block NVMe/TCP</text>
+    <rect x="532" y="146" width="116" height="34" rx="4" fill="#FFFFFF" stroke="#56B4E9"/><text x="590" y="167">Kafka API</text>
+    <rect x="655" y="146" width="116" height="34" rx="4" fill="#FFFFFF" stroke="#56B4E9"/><text x="713" y="167">SQL / Python</text>
+  </g>
+
+  <!-- Engines -->
+  <rect x="30" y="200" width="750" height="98" rx="6" fill="#FDF1DA" stroke="#E69F00"/>
+  <text x="40" y="217" font-size="12" font-weight="700" fill="#222222">COMPUTE ENGINES: code that runs where the data lives</text>
+  <g font-size="12" fill="#222222" text-anchor="middle">
+    <rect x="40" y="226" width="116" height="62" rx="4" fill="#FFFFFF" stroke="#E69F00"/>
+    <text x="98" y="246" font-weight="700">DataEngine</text><text x="98" y="263">triggers,</text><text x="98" y="278">functions</text>
+    <rect x="163" y="226" width="116" height="62" rx="4" fill="#FFFFFF" stroke="#E69F00"/>
+    <text x="221" y="246" font-weight="700">InsightEngine</text><text x="221" y="263">embed, index,</text><text x="221" y="278">retrieve (RAG)</text>
+    <rect x="286" y="226" width="116" height="62" rx="4" fill="#FFFFFF" stroke="#E69F00"/>
+    <text x="344" y="246" font-weight="700">AgentEngine</text><text x="344" y="263">agent runtime,</text><text x="344" y="278">MCP tools</text>
+    <rect x="409" y="226" width="116" height="62" rx="4" fill="#FFFFFF" stroke="#E69F00"/>
+    <text x="467" y="246" font-weight="700">SyncEngine</text><text x="467" y="263">migrate,</text><text x="467" y="278">catalog</text>
+    <rect x="532" y="226" width="116" height="62" rx="4" fill="#FFFFFF" stroke="#E69F00" stroke-dasharray="6 4"/>
+    <text x="590" y="246" font-weight="700">TuningEngine</text><text x="590" y="263">fine-tuning</text><text x="590" y="278">loops</text>
+    <rect x="655" y="226" width="116" height="62" rx="4" fill="#FFFFFF" stroke="#E69F00" stroke-dasharray="6 4"/>
+    <text x="713" y="246" font-weight="700">PolicyEngine</text><text x="713" y="263">agent guard-</text><text x="713" y="278">rails, access</text>
+  </g>
+
+  <!-- Data services -->
+  <rect x="30" y="308" width="750" height="84" rx="6" fill="#DDF2EA" stroke="#009E73"/>
+  <text x="40" y="325" font-size="12" font-weight="700" fill="#222222">DATA SERVICES: three views of one store</text>
+  <g font-size="12" fill="#222222" text-anchor="middle">
+    <rect x="40" y="334" width="238" height="48" rx="4" fill="#FFFFFF" stroke="#009E73"/>
+    <text x="159" y="353" font-weight="700">DataStore</text><text x="159" y="371">files, objects, block volumes</text>
+    <rect x="286" y="334" width="238" height="48" rx="4" fill="#FFFFFF" stroke="#009E73"/>
+    <text x="405" y="353" font-weight="700">DataBase</text><text x="405" y="371">columnar tables, vectors, events</text>
+    <rect x="532" y="334" width="239" height="48" rx="4" fill="#FFFFFF" stroke="#009E73"/>
+    <text x="651" y="353" font-weight="700">DataSpace</text><text x="651" y="371">global namespace, sites + clouds</text>
+  </g>
+
+  <!-- Element Store -->
+  <rect x="30" y="402" width="750" height="84" rx="6" fill="#F7E4EF" stroke="#CC79A7"/>
+  <text x="40" y="419" font-size="12" font-weight="700" fill="#222222">ELEMENT STORE: one metadata structure for every data type</text>
+  <g font-size="12" fill="#222222" text-anchor="middle">
+    <rect x="40" y="428" width="177" height="48" rx="4" fill="#FFFFFF" stroke="#CC79A7"/>
+    <text x="128" y="447">byte-granular metadata</text><text x="128" y="465">trees held in SCM</text>
+    <rect x="225" y="428" width="177" height="48" rx="4" fill="#FFFFFF" stroke="#CC79A7"/>
+    <text x="313" y="447">similarity-based</text><text x="313" y="465">global data reduction</text>
+    <rect x="410" y="428" width="177" height="48" rx="4" fill="#FFFFFF" stroke="#CC79A7"/>
+    <text x="498" y="447">wide locally decodable</text><text x="498" y="465">erasure codes (~3%)</text>
+    <rect x="595" y="428" width="176" height="48" rx="4" fill="#FFFFFF" stroke="#CC79A7"/>
+    <text x="683" y="447">snapshots, QoS,</text><text x="683" y="465">multi-tenancy</text>
+  </g>
+
+  <!-- Stateless compute -->
+  <rect x="30" y="496" width="750" height="84" rx="6" fill="#F3F3F3" stroke="#888888"/>
+  <text x="40" y="513" font-size="12" font-weight="700" fill="#222222">STATELESS COMPUTE: where the software executes</text>
+  <g font-size="12" fill="#222222" text-anchor="middle">
+    <rect x="40" y="522" width="177" height="48" rx="4" fill="#FFFFFF" stroke="#888888"/>
+    <text x="128" y="541" font-weight="700">CNode</text><text x="128" y="559">x86 server</text>
+    <rect x="225" y="522" width="177" height="48" rx="4" fill="#FFFFFF" stroke="#888888" stroke-dasharray="6 4"/>
+    <text x="313" y="541" font-weight="700">CNode-X</text><text x="313" y="559">server with NVIDIA GPUs</text>
+    <rect x="410" y="522" width="177" height="48" rx="4" fill="#FFFFFF" stroke="#888888" stroke-dasharray="6 4"/>
+    <text x="498" y="541" font-weight="700">BlueField-4 CNode</text><text x="498" y="559">DPU inside GPU server</text>
+    <rect x="595" y="522" width="176" height="48" rx="4" fill="#FFFFFF" stroke="#888888"/>
+    <text x="683" y="541" font-weight="700">EBox</text><text x="683" y="559">CNode + DNode, one box</text>
+  </g>
+
+  <!-- Fabric -->
+  <rect x="30" y="590" width="750" height="26" rx="4" fill="#DDDDDD"/>
+  <text x="405" y="608" font-size="12" text-anchor="middle" fill="#222222">NVMe-oF over RDMA: every compute element reaches every SSD (DASE, see Chapter 16)</text>
+
+  <!-- Media -->
+  <rect x="30" y="626" width="750" height="84" rx="6" fill="#FFFFFF" stroke="#555555"/>
+  <text x="40" y="643" font-size="12" font-weight="700" fill="#222222">SHARED MEDIA: DBoxes (or EBox drives) hold all state</text>
+  <g font-size="12" fill="#222222" text-anchor="middle">
+    <rect x="40" y="652" width="177" height="48" rx="4" fill="#F3F3F3" stroke="#888888"/>
+    <text x="128" y="671">DNodes / DPUs</text><text x="128" y="689">fabric endpoints</text>
+    <rect x="225" y="652" width="120" height="48" rx="4" fill="#FFF7D6" stroke="#B8A200"/>
+    <text x="285" y="671">SCM / SLC</text><text x="285" y="689">~1% of raw</text>
+    <rect x="353" y="652" width="418" height="48" rx="4" fill="#EFEFEF" stroke="#888888"/>
+    <text x="562" y="671">QLC flash: ~99% of raw capacity</text><text x="562" y="689">written in large, wide, reduced stripes</text>
+  </g>
+
+  <!-- Side column: control plane -->
+  <rect x="800" y="120" width="170" height="366" rx="6" fill="#FFFFFF" stroke="#E69F00" stroke-dasharray="6 4"/>
+  <g font-size="12" fill="#222222">
+    <text x="812" y="142" font-weight="700">CONTROL PLANE</text>
+    <text x="812" y="166">Polaris (announced</text>
+    <text x="812" y="182">Feb 2026): fleet</text>
+    <text x="812" y="198">management across</text>
+    <text x="812" y="214">clusters and clouds</text>
+    <text x="812" y="250" font-weight="700">The up-stack climb</text>
+    <text x="812" y="272">2019 file + object</text>
+    <text x="812" y="290">2023 DataBase,</text>
+    <text x="812" y="306">DataSpace, DataEngine</text>
+    <text x="812" y="324">2024 InsightEngine</text>
+    <text x="812" y="342">2025 block, Kafka,</text>
+    <text x="812" y="358">AgentEngine,</text>
+    <text x="812" y="374">SyncEngine</text>
+    <text x="812" y="392">2026 CNode-X,</text>
+    <text x="812" y="408">TuningEngine,</text>
+    <text x="812" y="424">PolicyEngine</text>
+    <text x="812" y="452" fill="#555555">Each layer adds a</text>
+    <text x="812" y="468" fill="#555555">new set of rivals.</text>
+  </g>
+
+  <!-- Side column: where it runs -->
+  <rect x="800" y="496" width="170" height="214" rx="6" fill="#F3F3F3" stroke="#888888"/>
+  <g font-size="12" fill="#222222">
+    <text x="812" y="518" font-weight="700">WHERE IT RUNS</text>
+    <text x="812" y="540">VAST sells software;</text>
+    <text x="812" y="556">hardware comes from:</text>
+    <text x="812" y="578">Supermicro</text>
+    <text x="812" y="596">Cisco UCS</text>
+    <text x="812" y="614">HPE Alletra MP</text>
+    <text x="812" y="632">Lenovo (unconfirmed)</text>
+    <text x="812" y="654">Clouds: Google Cloud,</text>
+    <text x="812" y="670">Azure, neocloud fleets</text>
+    <text x="812" y="692" fill="#555555">e.g. CoreWeave</text>
+  </g>
+
+  <!-- Legend -->
+  <g font-size="12" fill="#222222">
+    <rect x="30" y="728" width="34" height="18" rx="3" fill="#FFFFFF" stroke="#555555"/>
+    <text x="72" y="742">Shipping per public sources</text>
+    <rect x="270" y="728" width="34" height="18" rx="3" fill="#FFFFFF" stroke="#555555" stroke-dasharray="6 4"/>
+    <text x="312" y="742">Announced; general availability not confirmed by 2026-11-01</text>
+  </g>
+</svg>

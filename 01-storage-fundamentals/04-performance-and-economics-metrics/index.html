@@ -1,0 +1,3792 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A strategy-level knowledge base on storage, AI storage and the competitive landscape around Everpure (formerly Pure Storage).">
+      
+      
+      
+        <link rel="canonical" href="https://frankhuang94.github.io/storage-_db_claude/01-storage-fundamentals/04-performance-and-economics-metrics/">
+      
+      
+        <link rel="prev" href="../03-inside-an-ssd/">
+      
+      
+        <link rel="next" href="../05-data-reduction/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>4. Performance and economics metrics - Everpure Tech Atlas</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#4-performance-and-economics-metrics" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Everpure Tech Atlas" class="md-header__button md-logo" aria-label="Everpure Tech Atlas" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Everpure Tech Atlas
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              4. Performance and economics metrics
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/FrankHuang94/storage-_db_claude" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    storage-_db_claude
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Everpure Tech Atlas" class="md-nav__button md-logo" aria-label="Everpure Tech Atlas" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Everpure Tech Atlas
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/FrankHuang94/storage-_db_claude" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    storage-_db_claude
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 0 — Start Here
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 0 — Start Here
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start-here/00a-how-to-use-this-atlas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0.1. How to use this atlas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start-here/00b-one-page-map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0.2. The one-page map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 1 — Storage Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 1 — Storage Fundamentals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-what-storage-does/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. What storage does
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../02-media-physics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Media physics for a semis person
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-inside-an-ssd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Inside an SSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Performance and economics metrics
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Performance and economics metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters-for-everpure-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters for Everpure strategy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iops-throughput-and-latency-one-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IOPS, throughput and latency: one equation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-latency-hockey-sticks-under-load" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why latency hockey-sticks under load
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tail-latency-why-p99-and-p999-run-the-business" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tail latency: why p99 and p99.9 run the business
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raw-usable-and-effective-capacity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Raw, usable and effective capacity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#density-and-efficiency-tbw-and-tbru" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Density and efficiency: TB/W and TB/RU
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-vendors-pick-the-metric-that-flatters-them" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How vendors pick the metric that flatters them
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-five-year-tco-all-flash-qlc-versus-hybrid-disk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked example: five-year TCO, all-flash QLC versus hybrid disk
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-everpure-approaches-it-vs-competitors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Everpure approaches it vs. competitors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#history-and-trajectory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        History and trajectory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#numbers-that-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Numbers that matter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversation-playbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversation playbook
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-deeper-optional-l3-pointers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going deeper (optional, L3 pointers)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key terms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-data-reduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Data reduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-data-protection-and-resilience/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Data protection and resilience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 2 — Protocols and Networking
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 2 — Protocols and Networking
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/07-block-protocols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Block protocols
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/08-file-protocols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. File protocols
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/09-object-storage-and-s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Object storage and S3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/10-datacenter-networking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Datacenter networking for storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/11-gpu-data-path/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. The GPU data path
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/12-interfaces-and-emerging-tech/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Interfaces and emerging tech
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3 — Storage System Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 3 — Storage System Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/13-storage-stack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. The storage stack, layer by layer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/14-scale-up-dual-controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Scale-up dual-controller arrays
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/15-scale-out-shared-nothing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Scale-out shared-nothing clusters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/16-disaggregated-shared-everything/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Disaggregated shared-everything architectures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/17-parallel-file-systems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Parallel and distributed file systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/18-object-storage-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Object storage architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/19-software-defined-and-hci/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Software-defined storage and HCI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/20-distributed-systems-fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Distributed-systems fundamentals for storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/21-metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Metadata: the hidden bottleneck
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/22-control-planes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Control planes and fleet management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/23-consumption-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Consumption models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/24-architecture-decision-matrix/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Architecture decision matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 4 — Everpure
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 4 — Everpure
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/25-company-history-and-strategy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Company history and strategy, 2009–2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/26-purity-and-directflash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Core technology: Purity and DirectFlash
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/27-flasharray-and-flashblade/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Product portfolio: FlashArray and FlashBlade
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/28-platform-and-software/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. Platform and software
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/29-hyperscaler-ecosystem-financials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Hyperscaler business, ecosystem and financials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 5 — AI Storage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 5 — AI Storage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/30-ai-data-pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. The AI data pipeline end to end
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/31-training-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Training storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/32-inference-and-kv-cache/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Inference and KV cache
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/33-rag-vector-lakehouse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    33. RAG, vector databases and AI-native data formats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/34-nvidia-ecosystem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. NVIDIA's ecosystem and certifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/35-ai-factories-and-neoclouds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    35. AI factories and neoclouds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/36-hyperscaler-ai-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    36. How hyperscalers build AI storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/37-reading-benchmarks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    37. Reading benchmarks critically
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/38-power-and-density/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    38. Power, density and the AI datacenter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/39-agentic-ai-and-data-intelligence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    39. Agentic AI and data intelligence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 6 — Industry and Competition
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 6 — Industry and Competition
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/40-market-structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    40. Market structure and sizing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/41-why-ai-native-vendors-won/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    41. Why AI-native storage vendors gained traction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/42-vast-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    42. VAST Data deep dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/43-weka/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    43. WEKA deep dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/44-ddn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    44. DDN deep dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/45-head-to-head/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    45. Head-to-head: FlashBlade//EXA vs. VAST vs. WEKA vs. DDN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/46-incumbents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    46. Incumbents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/47-other-challengers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    47. Other challengers and software-defined players
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/48-media-suppliers-and-nand-cycle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    48. Media suppliers and the NAND cycle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/49-competitive-matrices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    49. Competitive landscape matrices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/50-diligence-framework/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    50. Technical diligence framework
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 7 — History and Future
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 7 — History and Future
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/51-history-of-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    51. History of storage, 1956–2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/52-history-of-flash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    52. History of flash and NAND economics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/53-future-trends/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    53. Future trends, 2026–2032
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/54-strategic-option-map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    54. Strategic option map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 8 — Conversation Toolkit
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 8 — Conversation Toolkit
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/55-talking-with-pms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    55. Talking with product managers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/56-talking-with-engineering-and-cto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    56. Talking with engineering leaders and the CTO office
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/57-question-bank/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    57. Question bank: 150 questions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/58-explain-in-30-seconds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    58. Explain it in 30 seconds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/59-self-test-flashcards/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    59. Self-test: 279 flashcards
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/60-cheat-sheets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    60. Cheat sheets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters-for-everpure-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters for Everpure strategy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#iops-throughput-and-latency-one-equation" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        IOPS, throughput and latency: one equation
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-latency-hockey-sticks-under-load" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why latency hockey-sticks under load
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#tail-latency-why-p99-and-p999-run-the-business" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Tail latency: why p99 and p99.9 run the business
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#raw-usable-and-effective-capacity" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Raw, usable and effective capacity
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#density-and-efficiency-tbw-and-tbru" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Density and efficiency: TB/W and TB/RU
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#how-vendors-pick-the-metric-that-flatters-them" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How vendors pick the metric that flatters them
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#worked-example-five-year-tco-all-flash-qlc-versus-hybrid-disk" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Worked example: five-year TCO, all-flash QLC versus hybrid disk
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-everpure-approaches-it-vs-competitors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Everpure approaches it vs. competitors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#history-and-trajectory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        History and trajectory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#numbers-that-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Numbers that matter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversation-playbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversation playbook
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-deeper-optional-l3-pointers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going deeper (optional, L3 pointers)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key terms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="4-performance-and-economics-metrics">4. Performance and economics metrics<a class="headerlink" href="#4-performance-and-economics-metrics" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>Depth:</strong> L2 · <strong>Reading time:</strong> ~12 min · <strong>Last verified:</strong> 2026-11-01
+<strong>Prerequisites:</strong> <a href="../02-media-physics/">Media physics for a semis person</a> · <a href="../03-inside-an-ssd/">Inside an SSD</a></p>
+</blockquote>
+<h2 id="tldr">TL;DR<a class="headerlink" href="#tldr" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>IOPS, throughput and latency are one equation, not three specs.</strong> Throughput = IOPS × I/O size, and Little's law ties IOPS to latency through the requests in flight. A datasheet number means nothing without its I/O size, mix and queue depth.</li>
+<li><strong>Latency is flat until something saturates, then it hockey-sticks.</strong> Past roughly 70% utilization of the bottleneck, queueing dominates and p99/p99.9 blow up long before the average looks bad.</li>
+<li><strong>The tail, not the mean, sets application speed.</strong> Databases chain I/Os and GPU clusters synchronise thousands of workers, so the slowest request governs.</li>
+<li><strong>Capacity has three prices: raw, usable and effective.</strong> Protection and reserves take 20–30% off raw; data reduction multiplies usable by an <em>assumed</em> ratio, so 2:1 versus 4:1 doubles effective $/TB (<a href="../05-data-reduction/">Chapter 5</a>).</li>
+<li><strong>TCO at 2026 NAND prices favours disk for cold capacity; flash wins on performance, density and power.</strong> In the worked example, all-flash costs ~3.2× hybrid disk over five years for 10 PB of cold data (~2.7× once disk's own 2026 price rise is included), reaching parity only with cheap NAND <em>and</em> ~4:1 reduction. Power and space are under 10% of TCO.</li>
+</ul>
+<h2 id="why-this-matters-for-everpure-strategy">Why this matters for Everpure strategy<a class="headerlink" href="#why-this-matters-for-everpure-strategy" title="Permanent link">&para;</a></h2>
+<p>Every competitive claim in storage is a metric choice. Everpure's long-running pitch, that flash can replace disk, rests on effective capacity (data reduction), density (TB per rack unit) and efficiency (TB per watt). AI-native rivals pitch GB/s per rack, and disk vendors pitch $/TB. Each frame is true on its own terms and misleading on someone else's. Translating between them tells you which deals are winnable and which "TCO advantage" slides would not survive a customer's spreadsheet.</p>
+<p>The 2026 NAND shortage makes this urgent. TrendForce expects enterprise SSD contract prices to rise another 23–28% quarter on quarter in 4Q26<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>. One vendor's index put a 30 TB QLC SSD at 22.6× the $/TB of a 30 TB nearline disk in Q1 2026, up from 4.9× in Q2 2025<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>, versus about 10× in 2020<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>. When the media gap widens that much, flash's other arguments (performance per TB, power, density and reduction) must carry more of the case, and knowing what each is worth is where credibility lies.</p>
+<h2 id="core-concepts">Core concepts<a class="headerlink" href="#core-concepts" title="Permanent link">&para;</a></h2>
+<h3 id="iops-throughput-and-latency-one-equation">IOPS, throughput and latency: one equation<a class="headerlink" href="#iops-throughput-and-latency-one-equation" title="Permanent link">&para;</a></h3>
+<p>Three numbers describe performance:</p>
+<ul>
+<li><strong>IOPS</strong>: I/O operations completed per second, usually quoted for small (4 KiB) random reads.</li>
+<li><strong>Throughput</strong> (bandwidth): bytes per second, usually quoted for large (128 KiB–1 MiB) sequential transfers.</li>
+<li><strong>Latency</strong>: time from issuing one request to its completion, in microseconds (µs) for flash and milliseconds for disk.</li>
+</ul>
+<p>They are linked by two identities. <strong>Throughput = IOPS × I/O size</strong>. <strong>Little's law</strong>, proved by John Little in 1961<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>, says the average number of requests in flight (L) equals the arrival rate (λ) times the average time each spends in the system (W). For storage that becomes <strong>outstanding I/Os = IOPS × latency</strong>.</p>
+<pre class="mermaid"><code>flowchart LR
+    A["Arrivals λ: requests per second"] --&gt; Q["In flight L: queued plus in service"]
+    Q --&gt; C["Completions after W seconds each"]
+    Q -.-&gt; F["L = λ × W"]
+    F --&gt; S1["NVMe SSD: 1M IOPS × 100 µs = 100 I/Os outstanding"]
+    F --&gt; S2["DDR5-6400 channel: 51.2 GB/s × 100 ns = 5.1 KB = 80 cache lines in flight"]
+    F --&gt; S3["GPU cluster read: 1 TB/s × 2 ms = 2 GB, about 2,000 × 1 MB requests in flight"]</code></pre>
+<p><em>Figure 4.1 — Little's law: to get bandwidth out of any latency-bound device, from a DRAM channel to a storage cluster, you must keep enough requests in flight to cover the latency.</em></p>
+<p>Two consequences follow. First, <strong>a device's peak IOPS is reachable only with enough concurrency</strong>. A database thread that waits for each read before issuing the next runs at queue depth 1. At 100 µs per read it gets 1 ÷ 100 µs = 10,000 IOPS from an SSD rated at a million. Second, <strong>IOPS and throughput are different limits</strong>. Micron's PCIe 6.0 9650 is rated at 5.5 million random-read IOPS and 28 GB/s sequential read<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup>. At 4 KiB, 5.5M IOPS is only 22.5 GB/s, so small-block work hits the controller's command-processing limit before it hits the link. A 30 TB HAMR disk is rated at about 170 random-read IOPS<sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup>, or 0.7 MB/s at 4 KiB, versus several hundred MB/s sequential, because each random I/O pays a seek and rotation. Since per-drive random IOPS has barely moved in two decades while capacity grew tenfold, a modern disk delivers under 6 <strong>IOPS per TB</strong>. That is the metric that killed disk for primary storage: performance-bound workloads must buy spindles they do not need for capacity.</p>
+<p><strong>Semiconductor bridge: bandwidth versus latency in memory.</strong> The same law governs DRAM. A DDR5-6400 channel moves 6.4 GT/s × 8 bytes = 51.2 GB/s. With loaded latency around 100 ns, the controller must keep about 5.1 KB, or 80 64-byte lines, outstanding to fill it. That is why memory controllers have deep request queues and bank-level parallelism, and why one CPU core, limited to a few tens of outstanding misses, cannot saturate a socket's memory bandwidth. HBM raised bandwidth per stack by an order of magnitude while DRAM core latency stayed roughly flat, so GPUs hide latency with tens of thousands of threads in flight. Storage repeats the pattern: each PCIe generation doubles the link, but NAND read time has not improved and is worse for QLC (<a href="../02-media-physics/">Chapter 2</a>). Bandwidth scales with parallelism; latency is set by physics.</p>
+<h3 id="why-latency-hockey-sticks-under-load">Why latency hockey-sticks under load<a class="headerlink" href="#why-latency-hockey-sticks-under-load" title="Permanent link">&para;</a></h3>
+<p>Any shared resource, such as a NAND die, a controller CPU, a network port or a disk arm, behaves like a queue. The textbook single-server model (M/M/1) gives mean response time = service time ÷ (1 − utilization). At 50% busy, a 100 µs operation takes 200 µs on average. At 90% it takes 1 ms, and at 95%, 2 ms. Percentiles are worse. In the same model, p99 is about 4.6× the mean and p99.9 about 6.9× at <em>any</em> load, so a 1 ms mean at 90% busy carries a 4.6 ms p99.</p>
+<p><img alt="Two-panel illustrative chart. Panel A plots mean, p99 and p99.9 response time against utilization for a queue with 100 microsecond service time; all three curves are flat at low load and climb steeply past about 70 percent, with p99.9 exceeding 3.5 milliseconds near 80 percent. Panel B plots mean latency against achieved IOPS for a simulated 32-die SSD as queue depth rises from 1 to 256; IOPS grows with little latency increase up to about 300 thousand, then flattens near 400 thousand while latency rises to about 640 microseconds." src="../../assets/charts/ch04-latency-load.svg" /></p>
+<p><em>Figure 4.2 — Illustrative model: below saturation, more queue depth buys more IOPS; past it, more queue depth buys only more latency, and the tail rises first.</em>
+Data: <code>data/ch04_latency_load.csv</code></p>
+<p>Panel B shows the knee from the device side. An SSD's parallelism comes from its NAND dies (<a href="../03-inside-an-ssd/">Chapter 3</a>). With 32 dies and 80 µs reads, perfect parallelism would deliver 400K IOPS at queue depth 32. Requests land on random dies and collide, so at QD32 only about 20 dies are busy: 255K IOPS at 125 µs. Pushing to QD256 squeezes out the last 145K IOPS, but latency rises fivefold. Vendors quote the right-hand end of the curve; latency-sensitive customers live on the left. Garbage collection, which stalls reads behind erases and programs, adds a further tail, so steady-state numbers on a full drive are what matter.</p>
+<p><strong>The operating rule:</strong> size systems so the bottleneck runs at 50–70% busy at peak.</p>
+<h3 id="tail-latency-why-p99-and-p999-run-the-business">Tail latency: why p99 and p99.9 run the business<a class="headerlink" href="#tail-latency-why-p99-and-p999-run-the-business" title="Permanent link">&para;</a></h3>
+<p>Dean and Barroso's "The Tail at Scale" showed that when a request fans out to many servers, rare slowness becomes common<sup id="fnref:7"><a class="footnote-ref" href="#fn:7">7</a></sup>. If each of 100 parallel sub-requests has a 1% chance of being slow, the probability that at least one is slow is 1 − 0.99¹⁰⁰ ≈ 63%.</p>
+<pre class="mermaid"><code>flowchart LR
+    R["One user request or training step"] --&gt; F1["I/O 1"]
+    R --&gt; F2["I/O 2"]
+    R --&gt; F3["..."]
+    R --&gt; F4["I/O N"]
+    F1 --&gt; W["Wait for the slowest"]
+    F2 --&gt; W
+    F3 --&gt; W
+    F4 --&gt; W
+    W --&gt; O["P at least one slow = 1 − 0.99^N: N=10 gives 10%, N=100 gives 63%, N=512 gives 99%"]</code></pre>
+<p><em>Figure 4.3 — When work waits for the slowest of N parallel I/Os, the device's p99 becomes the system's median.</em></p>
+<ul>
+<li><strong>Databases.</strong> An OLTP commit waits on a log write, and a query plan may chain ten dependent reads. At ten reads, 1 − 0.99¹⁰ ≈ 10% of queries pay at least one p99 penalty. Locks are held longer, others queue behind them, and the hockey stick takes over. Database arrays are therefore judged on p99 at load (<a href="../../03-system-architecture/14-scale-up-dual-controller/">Chapter 14</a>).</li>
+<li><strong>GPU clusters.</strong> Synchronous training waits for every rank. If a step needs data for 512 GPUs and each fetch has a 1% chance of a slow read, 99% of steps contain at least one straggler unless prefetch buffers absorb it. Checkpoints are worse: with 1,024 ranks writing shards, training resumes when the <em>last</em> shard lands, so 1 − 0.999¹⁰²⁴ ≈ 64% of checkpoints wait on a p99.9 write. Every stalled second idles the whole cluster, the economic core of <a href="../../02-protocols-and-networking/11-gpu-data-path/">Chapter 11</a> and <a href="../../05-ai-storage/31-training-storage/">Chapter 31</a>.</li>
+</ul>
+<p>So the question is never "what is your latency?" but "what is your p99.9 at 70% of rated load, on a full system, during a rebuild?"</p>
+<h3 id="raw-usable-and-effective-capacity">Raw, usable and effective capacity<a class="headerlink" href="#raw-usable-and-effective-capacity" title="Permanent link">&para;</a></h3>
+<p>Capacity is quoted in three layers, and most commercial disputes start in the gaps.</p>
+<p><img alt="Illustrative waterfall chart for a 24-drive shelf of 61.44 TB QLC drives: 1,475 TB raw, minus 134 for conversion to binary TiB, minus 56 for a distributed spare, minus 117 for 20+2 parity, minus 94 for an 8 percent metadata and system reserve, leaving 1,075 TiB usable; effective capacity is 2,150 TiB at 2:1 data reduction and 4,300 TiB at a claimed 4:1." src="../../assets/charts/ch04-capacity-waterfall.svg" /></p>
+<p><em>Figure 4.4 — Illustrative: protection and reserves take about 20% off raw; the data-reduction assumption then decides whether "effective" is 1.5× or 3× the raw figure.</em>
+Data: <code>data/ch04_capacity_waterfall.csv</code></p>
+<ul>
+<li><strong>Raw</strong> is the sum of drive capacities in decimal terabytes (10¹² bytes). Operating systems report binary tebibytes (2⁴⁰ bytes), so the same capacity reads 9% smaller. The waterfall shows that as a step, but it is a change of units: no bytes are lost.</li>
+<li><strong>Usable</strong> is what remains after parity, rebuild spares, metadata and system reserves. Wide erasure codes (<a href="../06-data-protection-and-resilience/">Chapter 6</a>) push usable toward 85–90% of raw; small systems with narrow stripes may get 60–70%. Many systems also run best below ~80% full.</li>
+<li><strong>Effective</strong> is usable × an assumed data-reduction ratio (DRR) from deduplication and compression, sometimes with thin provisioning and snapshots counted on top. Pure Storage has long marketed a fleet-average 5:1 reduction ratio<sup id="fnref:8"><a class="footnote-ref" href="#fn:8">8</a></sup>, and 10:1 "total efficiency" once thin provisioning is counted<sup id="fnref:9"><a class="footnote-ref" href="#fn:9">9</a></sup>, a far softer number.</li>
+</ul>
+<p>The DRR is a property of the <em>customer's data</em>, not the array. Databases and VM images typically reduce well; compressed media, encrypted data and most AI training corpora reduce close to 1:1. As reported at launch, Pure Storage stated FlashArray//E's maximum effective capacity at 2:1 but the //C90's at 5:1<sup id="fnref:10"><a class="footnote-ref" href="#fn:10">10</a></sup>. VAST cites a median of about 2:1 for its similarity-based reduction (<em>company-stated</em>)<sup id="fnref:11"><a class="footnote-ref" href="#fn:11">11</a></sup>. <a href="../05-data-reduction/">Chapter 5</a> covers how to sanity-check a DRR claim.</p>
+<p><strong>Worked example ($/TB raw versus effective).</strong> A flash system at $450 per raw TB with 80% usable costs $563 per usable TB. At 4:1 it is $141 per effective TB and looks competitive with disk. If the data actually reduces 1.5:1, the same system costs $375 per effective TB, 2.7× the quote. Only the assumption moved.</p>
+<h3 id="density-and-efficiency-tbw-and-tbru">Density and efficiency: TB/W and TB/RU<a class="headerlink" href="#density-and-efficiency-tbw-and-tbru" title="Permanent link">&para;</a></h3>
+<p>Two physical metrics matter more each year because power, not floor space, is now the scarce input. Gartner forecasts data-centre electricity use to grow 26% in 2026<sup id="fnref:12"><a class="footnote-ref" href="#fn:12">12</a></sup>.</p>
+<ul>
+<li><strong>TB/W</strong> (or its inverse, W/TB): capacity per watt. At the drive level, flash has overtaken disk. Micron rates its 245 TB QLC SSD at about 8.2 TB/W, versus about 4.4 TB/W for a 44 TB HDD (<em>vendor comparison</em>)<sup id="fnref2:13"><a class="footnote-ref" href="#fn:13">13</a></sup>. At system level, Pure Storage's FlashBlade//E launched in 2023 at roughly 1 W/TB<sup id="fnref:14"><a class="footnote-ref" href="#fn:14">14</a></sup>. Watch the basis: raw or effective, active or idle, drive or whole system.</li>
+<li><strong>TB/RU</strong> (capacity per rack unit) and its AI cousin <strong>GB/s per RU</strong>: density per slot of rack space, driven mostly by drive size.</li>
+</ul>
+<p>Both flatter large drives and high DRRs and ignore performance: a system can be superb on TB/W and useless for a workload needing 10 GB/s per PB.</p>
+<h3 id="how-vendors-pick-the-metric-that-flatters-them">How vendors pick the metric that flatters them<a class="headerlink" href="#how-vendors-pick-the-metric-that-flatters-them" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Headline metric</th>
+<th>Who leans on it</th>
+<th>What it flatters</th>
+<th>What it hides</th>
+<th>Ask instead</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Peak IOPS (4 KiB random read, deep queue)</td>
+<td>SSD and block-array datasheets, e.g., 5.5M IOPS on one SSD<sup id="fnref2:5"><a class="footnote-ref" href="#fn:5">5</a></sup></td>
+<td>Parallelism</td>
+<td>Latency at that load, writes, mixed I/O, a full drive in steady state</td>
+<td>IOPS at a stated p99 latency, 70/30 read/write, on a full system</td>
+</tr>
+<tr>
+<td>GB/s per rack unit</td>
+<td>Parallel file systems for AI, e.g., Dell's claim of up to 150 GB/s per RU<sup id="fnref:15"><a class="footnote-ref" href="#fn:15">15</a></sup></td>
+<td>Front-end bandwidth density</td>
+<td>Capacity per RU, switches outside the count, write rate</td>
+<td>GB/s per rack and per kW, including network, at stated capacity</td>
+</tr>
+<tr>
+<td>Effective PB per rack</td>
+<td>AI and enterprise vendors, e.g., WEKApod 3 at 1.1 EB effective per rack (<em>company-stated</em>)<sup id="fnref:16"><a class="footnote-ref" href="#fn:16">16</a></sup></td>
+<td>The DRR assumption</td>
+<td>Usable capacity; whether the data reduces at all</td>
+<td>Usable PB per rack, plus DRR measured on the customer's data</td>
+</tr>
+<tr>
+<td>"Up to 75% less power than disk"</td>
+<td>Flash vendors, including Pure Storage's DirectFlash pitch<sup id="fnref:17"><a class="footnote-ref" href="#fn:17">17</a></sup></td>
+<td>Choice of disk baseline and of reduction</td>
+<td>Age of the HDD baseline; idle versus active power</td>
+<td>W per usable TB at the customer's duty cycle</td>
+</tr>
+<tr>
+<td>$/TB raw</td>
+<td>Disk vendors and cloud archive tiers</td>
+<td>Media cost</td>
+<td>IOPS per TB, rebuild times, power per IOPS</td>
+<td>$/TB at the required IOPS and GB/s</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 4.1 — Every headline metric is true at one corner of the operating envelope; the counter-question moves it to the customer's corner.</em></p>
+<h3 id="worked-example-five-year-tco-all-flash-qlc-versus-hybrid-disk">Worked example: five-year TCO, all-flash QLC versus hybrid disk<a class="headerlink" href="#worked-example-five-year-tco-all-flash-qlc-versus-hybrid-disk" title="Permanent link">&para;</a></h3>
+<p><strong>Requirement:</strong> 10 PB of effective capacity for cold-to-warm unstructured data (a data lake or AI dataset archive), held flat for five years in a US colocation facility. <strong>Illustrative</strong>: the platform costs, power densities and reduction ratios are this atlas's assumptions; market inputs are sourced.</p>
+<table>
+<thead>
+<tr>
+<th>Line item</th>
+<th>All-flash QLC</th>
+<th>Hybrid disk (30 TB HDD + 3% flash tier)</th>
+<th>Basis / assumption</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Data-reduction ratio</td>
+<td>2:1</td>
+<td>1.3:1 (compression only)</td>
+<td>Flash at the 2:1 vendors themselves use for unstructured data<sup id="fnref2:10"><a class="footnote-ref" href="#fn:10">10</a></sup><sup id="fnref2:11"><a class="footnote-ref" href="#fn:11">11</a></sup>; disk systems rarely dedupe inline because it fragments reads</td>
+</tr>
+<tr>
+<td>Usable ÷ raw</td>
+<td>80%</td>
+<td>75% (8+2 EC, spares)</td>
+<td>Assumption</td>
+</tr>
+<tr>
+<td>Raw capacity</td>
+<td>6,250 TB</td>
+<td>10,256 TB HDD (342 drives) + 288 TB flash</td>
+<td>10,000 ÷ DRR ÷ usable ratio</td>
+</tr>
+<tr>
+<td>Media price</td>
+<td>$302/TB</td>
+<td>$22/TB HDD; $302/TB flash tier</td>
+<td>122.88 TB QLC SSD at $37,128<sup id="fnref:18"><a class="footnote-ref" href="#fn:18">18</a></sup>; 30 TB nearline HDD ≈ $668 (Q1 2026)<sup id="fnref2:19"><a class="footnote-ref" href="#fn:19">19</a></sup></td>
+</tr>
+<tr>
+<td>Platform (controllers, enclosures, software, network)</td>
+<td>$150 per raw TB</td>
+<td>$40 per raw HDD TB; $150 per raw TB on the flash tier</td>
+<td>Assumption</td>
+</tr>
+<tr>
+<td><strong>Acquisition</strong></td>
+<td><strong>$2.83M</strong></td>
+<td><strong>$0.77M</strong></td>
+<td>Media + platform</td>
+</tr>
+<tr>
+<td>System power (IT load)</td>
+<td>0.40 W/TB → 2.5 kW</td>
+<td>0.55 W/TB → 5.8 kW</td>
+<td>Assumption, cross-checked against ~1 W/TB for 2023-era flash<sup id="fnref2:14"><a class="footnote-ref" href="#fn:14">14</a></sup> and 9.5 W per 30 TB HDD before enclosure overhead<sup id="fnref2:6"><a class="footnote-ref" href="#fn:6">6</a></sup></td>
+</tr>
+<tr>
+<td>Energy, 5 years</td>
+<td>$23K</td>
+<td>$54K</td>
+<td>kW × PUE 1.54<sup id="fnref:20"><a class="footnote-ref" href="#fn:20">20</a></sup> × 43,800 h × $0.1385/kWh<sup id="fnref:21"><a class="footnote-ref" href="#fn:21">21</a></sup></td>
+</tr>
+<tr>
+<td>Space and power capacity, 5 years</td>
+<td>$29K</td>
+<td>$68K</td>
+<td>kW × $196.25 per kW-month colocation<sup id="fnref:22"><a class="footnote-ref" href="#fn:22">22</a></sup> × 60</td>
+</tr>
+<tr>
+<td>Rack units (approx.)</td>
+<td>~13 RU</td>
+<td>~17 RU</td>
+<td>0.5 PB/RU flash; 0.64 PB/RU for 4U 106-bay JBODs plus servers</td>
+</tr>
+<tr>
+<td>Support, years 2–5</td>
+<td>$1.13M</td>
+<td>$0.31M</td>
+<td>10% of acquisition per year</td>
+</tr>
+<tr>
+<td>Controller/server refresh (year ~4)</td>
+<td>$0.28M</td>
+<td>$0.14M</td>
+<td>30% of platform cost; bundled into the fee under subscription models (<a href="../../03-system-architecture/23-consumption-models/">Chapter 23</a>)</td>
+</tr>
+<tr>
+<td><strong>Five-year TCO</strong></td>
+<td><strong>$4.29M</strong> ($429 per effective TB)</td>
+<td><strong>$1.33M</strong> ($133 per effective TB)</td>
+<td>Flash ≈ 3.2×</td>
+</tr>
+<tr>
+<td>Random-read capability</td>
+<td>Millions of IOPS (controller-bound)</td>
+<td>~58K IOPS (342 × 170)</td>
+<td>Disk fails any random-I/O requirement</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 4.2 — Illustrative: at 2026 NAND prices, disk wins cold-capacity TCO by about 3×; power and space are under 10% of either total.</em></p>
+<p>Note what the inputs imply: $302 against $22 per TB is a 13.7× media premium, well below the 22.6× index headline, because a 122 TB drive's street price per TB sits below the index's 30 TB QLC drive (about $504/TB in Q1 2026<sup id="fnref2:2"><a class="footnote-ref" href="#fn:2">2</a></sup>). The base case is therefore kind to flash. Disk prices moved as well: the same index's 30 TB HDD rose to $1,216 (about $40/TB) by Q3 2026<sup id="fnref:23"><a class="footnote-ref" href="#fn:23">23</a></sup>. At that disk price, with everything else unchanged, flash costs ~2.7× disk rather than 3.2×. Three sensitivities change the answer. At mid-2025 media prices (about $80/TB for 30 TB QLC and $16.50/TB for HDD<sup id="fnref:19"><a class="footnote-ref" href="#fn:19">19</a></sup>), flash falls to ~2.0× disk. At 2026 prices but with 4:1 reduction on the flash side, it is ~1.6×. With <em>both</em> cheap NAND and 4:1, the two options reach parity (~$1.17M versus $1.16M). Power alone cannot close the gap: even valuing each freed kilowatt at $15,000 a year of GPU output (an assumption), 3.3 kW saved is worth ~$250K over five years. Flash for capacity tiers needs some mix of (a) a performance requirement disk cannot meet without overbuying spindles, (b) reducible data, (c) a power- or space-capped site, and (d) NAND costs below street price, which is the hyperscaler DirectFlash thesis (<a href="../../04-everpure/29-hyperscaler-ecosystem-financials/">Chapter 29</a>).</p>
+<h2 id="how-everpure-approaches-it-vs-competitors">How Everpure approaches it vs. competitors<a class="headerlink" href="#how-everpure-approaches-it-vs-competitors" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Vendor</th>
+<th>Metrics it leads with (public)</th>
+<th>Why that suits its architecture</th>
+<th>Steelman / caveat</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Everpure</td>
+<td>Effective capacity (fleet-average DRR), TB/W and TB/RU from large DirectFlash modules; contractual watts/TiB</td>
+<td>Owns the flash translation layer, so it can ship larger modules (<a href="../../04-everpure/26-purity-and-directflash/">Chapter 26</a>); always-on inline reduction</td>
+<td>Turns metrics into guarantees. The effective numbers still depend on DRR: FlashArray effective capacities assume a 5:1 average, so FlashArray//XL R5's ~1.9 PB raw becomes 7.4 PB effective, ~3.8× raw after RAID, metadata and TiB conversion<sup id="fnref:24"><a class="footnote-ref" href="#fn:24">24</a></sup><sup id="fnref:25"><a class="footnote-ref" href="#fn:25">25</a></sup></td>
+</tr>
+<tr>
+<td>VAST Data</td>
+<td>$/TB effective at scale; QLC plus similarity reduction and wide erasure codes</td>
+<td>Global reduction across a shared pool (<a href="../../03-system-architecture/16-disaggregated-shared-everything/">Chapter 16</a>)</td>
+<td>Its own cited median is ~2:1<sup id="fnref3:11"><a class="footnote-ref" href="#fn:11">11</a></sup>, which is honest; savings need scale</td>
+</tr>
+<tr>
+<td>WEKA</td>
+<td>Per-rack IOPS, TB/s and effective capacity</td>
+<td>Software on dense servers, built for small-file and metadata-heavy AI work</td>
+<td>Per-rack effective figures carry a DRR assumption<sup id="fnref2:16"><a class="footnote-ref" href="#fn:16">16</a></sup></td>
+</tr>
+<tr>
+<td>Dell, DDN</td>
+<td>GB/s per RU or per appliance (DDN AI400X3M: up to 190 GB/s read<sup id="fnref:26"><a class="footnote-ref" href="#fn:26">26</a></sup>)</td>
+<td>Parallel file systems for GPU feeding</td>
+<td>Bandwidth density says nothing about $/TB or tail latency under mixed load</td>
+</tr>
+<tr>
+<td>Seagate, Western Digital</td>
+<td>$/TB and TB per drive</td>
+<td>Disk's media cost advantage, now ~15–23× at the drive<sup id="fnref3:2"><a class="footnote-ref" href="#fn:2">2</a></sup></td>
+<td>IOPS per TB keeps falling with each capacity step</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 4.3 — Each vendor's headline metric is the one its architecture is built to win.</em></p>
+<p>Everpure's distinctive move is contractual. Evergreen//One, its storage-as-a-service offer, added a guaranteed maximum watts per TiB in January 2023, backed by service credits and remediation<sup id="fnref:27"><a class="footnote-ref" href="#fn:27">27</a></sup>. The published figures assume 2:1 reduction on most tiers and none on the capacity tier<sup id="fnref:28"><a class="footnote-ref" href="#fn:28">28</a></sup>. Its subscription is billed on effective used capacity: the customer pays for its reserve commitment whether used or not, plus on-demand usage above it. Separately, Everpure commits to keep a 25% capacity buffer (up to 1 PiB) deployed above the higher of the two<sup id="fnref:29"><a class="footnote-ref" href="#fn:29">29</a></sup>. Pricing per effective TiB shifts DRR risk to the vendor: if data reduces less, Everpure ships more hardware for the same fee, so fleet reduction telemetry becomes a margin input. The steelman for per-usable-TB pricing is transparency. Options a strategy team might evaluate, based on public information: how such guarantees hold margin when NAND costs swing 50% in a quarter, and whether AI buyers, whose data reduces poorly, value them at all.</p>
+<h2 id="history-and-trajectory">History and trajectory<a class="headerlink" href="#history-and-trajectory" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>timeline
+    title Performance and economics metrics milestones
+    1961 : Little proves L equals lambda times W
+    2013 : Dean and Barroso publish The Tail at Scale
+    2020 : Enterprise SSD about 10x nearline HDD per TB
+    2023 : FlashBlade E launches near 1 W per TB : Pure offers a watts per TiB guarantee
+    2025 : 122 TB class QLC SSDs ship
+    2026 : NAND contract prices surge : QLC 15 to 23x HDD per TB : 245 TB QLC SSD ships</code></pre>
+<p><em>Figure 4.5 — The metrics are old; what changed is that power became the binding constraint just as NAND became expensive again.</em></p>
+<p>Storage marketing moved from IOPS (the disk era) to latency and effective capacity (2010s all-flash), then to GB/s per rack and TB/W (AI). Two forces now pull in opposite directions. Micron's 245 TB QLC SSD began shipping in May 2026<sup id="fnref:13"><a class="footnote-ref" href="#fn:13">13</a></sup>, and DirectFlash modules are reported at up to 300 TB<sup id="fnref:30"><a class="footnote-ref" href="#fn:30">30</a></sup> [VERIFY: official 300 TB DFM availability]. That improves TB/W and TB/RU every year, while NAND contract prices have risen in every quarter of 2026 on AI server demand<sup id="fnref2:1"><a class="footnote-ref" href="#fn:1">1</a></sup>, reopening a $/TB gap that flash vendors had expected to keep closing. Expect TCO arguments to lean harder on power, density and guarantees, and buyers to ask for usable rather than effective numbers. <a href="../../05-ai-storage/37-reading-benchmarks/">Chapter 37</a> (benchmarks) and <a href="../../05-ai-storage/38-power-and-density/">Chapter 38</a> (power) build on this chapter.</p>
+<h2 id="numbers-that-matter">Numbers that matter<a class="headerlink" href="#numbers-that-matter" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+<th>Context</th>
+<th>Source / date</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Fan-out tail effect</td>
+<td>63% of requests slow at N=100, 1% each</td>
+<td>1 − 0.99¹⁰⁰</td>
+<td>Dean &amp; Barroso, 2013<sup id="fnref3:7"><a class="footnote-ref" href="#fn:7">7</a></sup></td>
+</tr>
+<tr>
+<td>M/M/1 p99 ÷ mean</td>
+<td>≈ 4.6×</td>
+<td>ln(100); p99.9 ≈ 6.9×</td>
+<td>Worked example</td>
+</tr>
+<tr>
+<td>HDD random IOPS (30 TB HAMR)</td>
+<td>~170 read / 350 write at 4K QD16</td>
+<td>&lt; 6 IOPS per TB</td>
+<td>StorageReview, 2025<sup id="fnref3:6"><a class="footnote-ref" href="#fn:6">6</a></sup></td>
+</tr>
+<tr>
+<td>Flagship SSD (PCIe 6.0)</td>
+<td>5.5M IOPS, 28 GB/s read</td>
+<td>Micron 9650</td>
+<td>Tom's Hardware via Borecraft, 2026-02<sup id="fnref3:5"><a class="footnote-ref" href="#fn:5">5</a></sup></td>
+</tr>
+<tr>
+<td>Drive-level TB/W, QLC vs HDD</td>
+<td>~8.2 vs ~4.4</td>
+<td>245 TB SSD vs 44 TB HDD (<em>vendor</em>)</td>
+<td>StorageReview, 2026<sup id="fnref3:13"><a class="footnote-ref" href="#fn:13">13</a></sup></td>
+</tr>
+<tr>
+<td>QLC SSD vs HDD $/TB</td>
+<td>~22.6× (Q1 2026); ~10× (2020)</td>
+<td>Acquisition cost only; single-vendor index</td>
+<td>VDURA index via Blocks &amp; Files, 2026<sup id="fnref4:2"><a class="footnote-ref" href="#fn:2">2</a></sup>; Blocks &amp; Files, 2020<sup id="fnref2:3"><a class="footnote-ref" href="#fn:3">3</a></sup></td>
+</tr>
+<tr>
+<td>Pure Storage marketed average DRR</td>
+<td>5:1 (10:1 with thin provisioning)</td>
+<td>Fleet-average claim; varies by data</td>
+<td>10-K FY2019<sup id="fnref2:8"><a class="footnote-ref" href="#fn:8">8</a></sup>; datasheet<sup id="fnref2:9"><a class="footnote-ref" href="#fn:9">9</a></sup></td>
+</tr>
+<tr>
+<td>Five-year TCO, 10 PB effective cold data</td>
+<td>Flash ~$429 vs disk ~$133 per effective TB (~3.2×; ~2.7× at Q3 2026 HDD prices)</td>
+<td>2026 prices; parity needs cheap NAND + 4:1</td>
+<td>Worked example (Table 4.2)</td>
+</tr>
+<tr>
+<td>US commercial electricity</td>
+<td>13.85¢/kWh</td>
+<td>12 months to July 2026</td>
+<td>EIA, 2026<sup id="fnref2:21"><a class="footnote-ref" href="#fn:21">21</a></sup></td>
+</tr>
+</tbody>
+</table>
+<h2 id="conversation-playbook">Conversation playbook<a class="headerlink" href="#conversation-playbook" title="Permanent link">&para;</a></h2>
+<p><strong>Questions for a PM</strong></p>
+<ol>
+<li><em>"What DRR do we assume when we quote effective capacity for an AI data lake, and what does Pure1 telemetry say we actually get?"</em> Strong: measured medians by workload class, candour that AI corpora reduce poorly, and how Evergreen//One absorbs the shortfall.</li>
+<li><em>"Where is the crossover in $/effective TB against a hybrid disk system at today's NAND prices?"</em> Strong: named DRR, density and power assumptions, and candour that cold capacity is hard to win in 2026 without a performance or power constraint.</li>
+<li><em>"Which metric do we lose on in AI bake-offs: GB/s per rack, per kW, or $/TB?"</em> Strong: names competitor, metric and the response.</li>
+</ol>
+<p><strong>Questions for an engineer</strong></p>
+<ol>
+<li><em>"What is p99.9 read latency at 70% of rated IOPS, on a 90%-full system, during a drive rebuild?"</em> Strong: a number with conditions and the dominant cause (GC, rebuild or controller CPU).</li>
+<li><em>"What queue depth does an application need to reach the rated IOPS?"</em> Strong: Little's-law arithmetic, plus performance at QD1–4, where databases live.</li>
+<li><em>"Is the watts/TiB guarantee measured at the wall or estimated, and on what reduction ratio?"</em> Strong: measurement method, DRR basis, and the incompressible-data case.</li>
+</ol>
+<p><strong>Don't say this:</strong></p>
+<ul>
+<li>"Our array does 2 million IOPS, so it's faster." Ask: at what latency, block size, mix and fill level?</li>
+<li>"Average latency is 150 µs, so we're fine for databases." Databases and GPU clusters live on p99 and p99.9.</li>
+<li>"Flash is now cheaper than disk." Not on $/TB in 2026; only under stated reduction, power and performance assumptions.</li>
+<li>"Effective capacity is what the customer gets." It is what they get <em>if their data reduces as assumed</em>.</li>
+<li>"Power is the biggest TCO line." Usually under 10%; it dominates only where power is capped.</li>
+</ul>
+<h2 id="going-deeper-optional-l3-pointers">Going deeper (optional, L3 pointers)<a class="headerlink" href="#going-deeper-optional-l3-pointers" title="Permanent link">&para;</a></h2>
+<ul>
+<li>Queueing: Harchol-Balter, <em>Performance Modeling and Design of Computer Systems</em> (Cambridge, 2013), on M/M/c, M/G/1 and why variance in service time drives tails.</li>
+<li>Dean &amp; Barroso, "The Tail at Scale," on hedged and tied requests, the main software fixes for fan-out tails<sup id="fnref2:7"><a class="footnote-ref" href="#fn:7">7</a></sup>.</li>
+<li>SNIA Solid State Storage Performance Test Specification (PTS), on steady-state preconditioning before measuring SSDs.</li>
+<li>For DRAM: memory-controller scheduling (FR-FCFS) and miss-status holding registers as the CPU-side analogue of queue depth.</li>
+</ul>
+<h2 id="key-terms">Key terms<a class="headerlink" href="#key-terms" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>IOPS / throughput / latency</strong> — operations per second, bytes per second, time per operation.</li>
+<li><strong>Queue depth</strong> — I/Os outstanding at once; Little's law links it to IOPS × latency.</li>
+<li><strong>Tail latency (p99, p99.9)</strong> — the latency that 1% or 0.1% of requests exceed.</li>
+<li><strong>Raw / usable / effective capacity</strong> — drive total; after protection and reserves; after assumed data reduction.</li>
+<li><strong>TB/W, TB/RU</strong> — capacity per watt and per rack unit.</li>
+<li><strong>TCO</strong> — total cost of ownership over a stated period, including power, space, support and refresh.</li>
+<li>See the <a href="../../glossary/">glossary</a> for the rest.</li>
+</ul>
+<h2 id="sources">Sources<a class="headerlink" href="#sources" title="Permanent link">&para;</a></h2>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>TrendForce, "AI Server Demand Sustains Memory Contract Price Increases in 4Q26, While Consumer-Side Pressure Persists," 2026-09-30. https://www.trendforce.com/presscenter/news/20260930-13258.html (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>Blocks &amp; Files, "VDURA says 30 TB QLC SSD capacity now costs 22.6x more than HDD," 2026-04-08. https://www.blocksandfiles.com/flash/2026/04/08/vdura-says-30-tb-qlc-ssd-capacity-now-costs-226x-more-than-hdd/5214761 (retrieved via search 2026-11-01). VDURA index: 30 TB QLC SSD from $2,450 (Q2 2025) to $15,121 (Q1 2026); VDURA is a hybrid flash/disk vendor and does not name its price sources.&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:2" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:2" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>Blocks &amp; Files, "Enterprise SSDs are ten times the price of nearline disk drives," 2020-05-15. https://blocksandfiles.com/2020/05/15/enterprise-ssds-are-ten-x-cost-of-nearline-disk-drives/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>J. D. C. Little, "A Proof for the Queuing Formula: L = λW," <em>Operations Research</em> 9(3):383–387, 1961. https://doi.org/10.1287/opre.9.3.383 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p>Borecraft (syndicating Tom's Hardware), "First PCIe 6.0 SSD enters mass production with 28GB/s speeds, 5.5 million IOPS and liquid cooling," 2026-02-14. https://borecraft.com/2026/02/14/first-pcie-6-0-ssd-enters-mass-production-with-28gb-s-speeds-5-5-million-iops-and-liquid-cooling-micron-9650-series-ssds-support-air-and-liquid-cooling/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:5" title="Jump back to footnote 5 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:6">
+<p>StorageReview, "Seagate Exos M 30TB Review: HAMR-ing Storage Density," 2025-07-15. https://www.storagereview.com/review/seagate-exos-m-30tb-review-hamr-ing-storage-density (retrieved 2026-11-01). Rated 9.5 W max operating, 6.9 W idle; 170/350 random read/write IOPS at 4K QD16.&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:6" title="Jump back to footnote 6 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+<li id="fn:7">
+<p>J. Dean and L. A. Barroso, "The Tail at Scale," <em>Communications of the ACM</em> 56(2):74–80, 2013-02. https://research.google/pubs/pub40801/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:7" title="Jump back to footnote 7 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:7" title="Jump back to footnote 7 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:7" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+</li>
+<li id="fn:8">
+<p>Pure Storage, "Form 10-K for the fiscal year ended January 31, 2019," 2019-04. https://www.sec.gov/Archives/edgar/data/1474432/000162828019003437/a10k2019.htm (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:8" title="Jump back to footnote 8 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:8" title="Jump back to footnote 8 in the text">&#8617;</a></p>
+</li>
+<li id="fn:9">
+<p>Pure Storage, "Purity Data Sheet," n.d. https://ie.insight.com/content/dam/insight-web/emea/partner/pure-storage/Pure_Purity_Data_Sheet.pdf (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:9" title="Jump back to footnote 9 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:9" title="Jump back to footnote 9 in the text">&#8617;</a></p>
+</li>
+<li id="fn:10">
+<p>Blocks &amp; Files, "Pure Storage intros fresh FlashArray features for enterprise," 2023-06-14. https://blocksandfiles.com/2023/06/14/pure-storage-flasharray/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:10" title="Jump back to footnote 10 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:10" title="Jump back to footnote 10 in the text">&#8617;</a></p>
+</li>
+<li id="fn:11">
+<p>VAST Data, "Scaling Through Flash Scarcity" (webinar), n.d. https://www.vastdata.com/events/scaling-through-flash-scarcity (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:11" title="Jump back to footnote 11 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:11" title="Jump back to footnote 11 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:11" title="Jump back to footnote 11 in the text">&#8617;</a></p>
+</li>
+<li id="fn:12">
+<p>Gartner, "Gartner Says Data Center Electricity Consumption to Grow 26% in 2026," 2026-06-10. https://www.gartner.com/en/newsroom/press-releases/2026-06-10-gartner-says-data-center-electricity-demand-to-grow-26-percent-in-2026 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:12" title="Jump back to footnote 12 in the text">&#8617;</a></p>
+</li>
+<li id="fn:13">
+<p>StorageReview, "Micron 6600 ION 245TB SSD Review: A Quarter Petabyte Per Drive Bay," 2026. https://www.storagereview.com/review/micron-6600-ion-245tb-ssd-review-a-quarter-petabyte-per-drive-bay (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:13" title="Jump back to footnote 13 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:13" title="Jump back to footnote 13 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:13" title="Jump back to footnote 13 in the text">&#8617;</a></p>
+</li>
+<li id="fn:14">
+<p>Blocks &amp; Files, "Pure swings FlashBlade//E at unstructured data," 2023-03-01. https://blocksandfiles.com/2023/03/01/pure-flashblade-e/ (retrieved 2026-11-01). About 1.06 W/TB for a starting configuration, 0.83 W/TB per expansion.&#160;<a class="footnote-backref" href="#fnref:14" title="Jump back to footnote 14 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:14" title="Jump back to footnote 14 in the text">&#8617;</a></p>
+</li>
+<li id="fn:15">
+<p>Dell Technologies, "Dell AI Data Platform with NVIDIA Supercharges Enterprise AI with Breakthrough Data Orchestration and Storage Innovations," 2026-03-16. https://www.dell.com/en-us/dt/corporate/newsroom/announcements/detailpage.press-releases~usa~2026~03~dell-ai-data-platform-with-nvidia-supercharges-enterprise-ai-with-breakthrough-data-orchestration-and-storage-innovations.htm (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:15" title="Jump back to footnote 15 in the text">&#8617;</a></p>
+</li>
+<li id="fn:16">
+<p>Unite.AI, "WEKA Launches NeuralMesh 6 and WEKApod 3 as AI Infrastructure Shifts Toward Inference," 2026-07. https://www.unite.ai/weka-launches-neuralmesh-6-and-wekapod-3-as-ai-infrastructure-shifts-toward-inference/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:16" title="Jump back to footnote 16 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:16" title="Jump back to footnote 16 in the text">&#8617;</a></p>
+</li>
+<li id="fn:17">
+<p>Pure Storage, "Hyperscaler," n.d. https://purestorage.com/pure-advantage/platform/hyperscaler.html (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:17" title="Jump back to footnote 17 in the text">&#8617;</a></p>
+</li>
+<li id="fn:18">
+<p>TechRadar, "World's largest SSD has tripled in price in just nine months and now costs more than a new car," 2026. https://www.techradar.com/pro/worlds-largest-ssd-has-tripled-in-price-in-just-nine-months-and-now-costs-more-than-a-new-car (retrieved 2026-11-01). $37,128 for a 122.88 TB Solidigm D5-P5336 (~$302/TB).&#160;<a class="footnote-backref" href="#fnref:18" title="Jump back to footnote 18 in the text">&#8617;</a></p>
+</li>
+<li id="fn:19">
+<p>ServNet UK, storage price table (30 TB enterprise HDD $495 in Q2 2025 and $668 in Q1 2026; 30 TB QLC SSD $2,450 in Q2 2025), 2026. https://www.servnetuk.com/insights/all-flash-vs-nearline-hdd-tco-2026 (retrieved 2026-11-01). Consistent with the VDURA index ratios reported by Blocks &amp; Files (4.9× and 22.6×), from which these HDD prices derive.&#160;<a class="footnote-backref" href="#fnref:19" title="Jump back to footnote 19 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:19" title="Jump back to footnote 19 in the text">&#8617;</a></p>
+</li>
+<li id="fn:20">
+<p>Uptime Institute, "Global Data Center Survey 2025," 2025-07. https://intelligence.uptimeinstitute.com/resource/uptime-institute-global-data-center-survey-2025 (retrieved 2026-11-01). Weighted average PUE 1.54. [VERIFY: search-summary only]&#160;<a class="footnote-backref" href="#fnref:20" title="Jump back to footnote 20 in the text">&#8617;</a></p>
+</li>
+<li id="fn:21">
+<p>U.S. Energy Information Administration, "Electric Power Monthly, Table 5.3: Average Price of Electricity to Ultimate Customers" (data for July 2026), 2026-09-24. https://www.eia.gov/electricity/monthly/epm_table_grapher.php?t=epmt_5_3 (retrieved 2026-11-01). Commercial sector, trailing 12 months. [VERIFY: search-summary only]&#160;<a class="footnote-backref" href="#fnref:21" title="Jump back to footnote 21 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:21" title="Jump back to footnote 21 in the text">&#8617;</a></p>
+</li>
+<li id="fn:22">
+<p>CBRE, "North America Data Center Trends H2 2025," 2026. https://www.cbre.co.uk/insights/books/north-america-data-center-trends-h2-2025/silicon-valley-data-center-market (retrieved 2026-11-01). Average asking rate for 250–500 kW in primary markets. [VERIFY: search-summary only]&#160;<a class="footnote-backref" href="#fnref:22" title="Jump back to footnote 22 in the text">&#8617;</a></p>
+</li>
+<li id="fn:23">
+<p>StorageReview, "Enterprise SSD prices run at 6.5x last year; Vdura pegs a 30TB TLC drive at $22,600," 2026-08. https://storagereview.com/news/enterprise-ssd-prices-run-at-6-5x-last-year-vdura-pegs-a-30tb-tlc-drive-at-22600 (retrieved via search 2026-11-01). 18.6× TLC-to-HDD multiple implies a 30 TB HDD at ~$1,216.&#160;<a class="footnote-backref" href="#fnref:23" title="Jump back to footnote 23 in the text">&#8617;</a></p>
+</li>
+<li id="fn:24">
+<p>Techzine, "Pure surprises: FlashArray gets S3 support, FlashArray//ST without DFMs," 2025-06. https://www.techzine.eu/blogs/infrastructure/132388/pure-surprises-flasharray-gets-s3-support-flasharray-st-without-dfms/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:24" title="Jump back to footnote 24 in the text">&#8617;</a></p>
+</li>
+<li id="fn:25">
+<p>Pure Storage, "FlashArray//XL" product page (effective capacity footnote: average data reduction calculated at 5-to-1, excluding thin provisioning), n.d. https://www.purestorage.com/uk/products/nvme/flasharray-xl.html (retrieved via search 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:25" title="Jump back to footnote 25 in the text">&#8617;</a></p>
+</li>
+<li id="fn:26">
+<p>StorageReview, "DDN launches AI400X3M and Dynamo-integrated KV cache acceleration at ISC 2026," 2026-06. https://www.storagereview.com/news/ddn-launches-ai400x3m-and-dynamo-integrated-kv-cache-acceleration-at-isc-2026 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:26" title="Jump back to footnote 26 in the text">&#8617;</a></p>
+</li>
+<li id="fn:27">
+<p>Pure Storage, "With Industry-First Energy Efficiency Guarantee, Pure Storage Further Expands SLA Offerings for Evergreen//One," 2023-01-18. https://www.everpuredata.com/company/newsroom/press-releases/pure-expands-sla-offerings-evergreen-one.html (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:27" title="Jump back to footnote 27 in the text">&#8617;</a></p>
+</li>
+<li id="fn:28">
+<p>Pure Storage Blog, post 110226 on the Evergreen//One energy efficiency SLA (title not retrieved), 2023. https://blog.purestorage.com/?p=110226 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:28" title="Jump back to footnote 28 in the text">&#8617;</a></p>
+</li>
+<li id="fn:29">
+<p>Pure Storage, "Evergreen//One Product Guide (June 16, 2024 – August 4, 2024)," 2024. https://www.purestorage.com/content/dam/pdf/en/legal/evergreen-one-product-guide-jun-16-2024-aug-4-2024.pdf (retrieved via search 2026-11-01); Everpure support, "Evergreen//One and Everpure Cloud Dedicated Array capacity" (EUC as the billing unit), n.d. https://support.everpuredata.com/r/everpure-cloud-dedicated-aws/eg1-pscd-array-capacity (retrieved via search 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:29" title="Jump back to footnote 29 in the text">&#8617;</a></p>
+</li>
+<li id="fn:30">
+<p>Blocks &amp; Files, "Second hyperscaler plumps for Everpure's flash technology," 2026-08-11. https://www.blocksandfiles.com/flash/2026/08/11/second-hyperscaler-plumps-for-everpures-flash-technology/5285903 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:30" title="Jump back to footnote 30 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../03-inside-an-ssd/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 3. Inside an SSD">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                3. Inside an SSD
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../05-data-reduction/" class="md-footer__link md-footer__link--next" aria-label="Next: 5. Data reduction">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                5. Data reduction
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>

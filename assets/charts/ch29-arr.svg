@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN"
+  "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="720.71375pt" height="398.527539pt" viewBox="0 0 720.71375 398.527539" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.11.2, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 398.527539 
+L 720.71375 398.527539 
+L 720.71375 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 51.704396 314.475352 
+L 678.768331 314.475352 
+L 678.768331 22.698047 
+L 51.704396 22.698047 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 80.207302 314.475352 
+L 141.284958 314.475352 
+L 141.284958 207.363903 
+L 80.207302 207.363903 
+z
+" clip-path="url(#p6a9057d138)" style="fill: #0072b2"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 182.003396 314.475352 
+L 243.081052 314.475352 
+L 243.081052 180.889976 
+L 182.003396 180.889976 
+z
+" clip-path="url(#p6a9057d138)" style="fill: #0072b2"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 283.799489 314.475352 
+L 344.877145 314.475352 
+L 344.877145 153.239213 
+L 283.799489 153.239213 
+z
+" clip-path="url(#p6a9057d138)" style="fill: #0072b2"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 385.595582 314.475352 
+L 446.673238 314.475352 
+L 446.673238 127.319662 
+L 385.595582 127.319662 
+z
+" clip-path="url(#p6a9057d138)" style="fill: #0072b2"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 487.391676 314.475352 
+L 548.469332 314.475352 
+L 548.469332 116.455821 
+L 487.391676 116.455821 
+z
+" clip-path="url(#p6a9057d138)" style="fill: #0072b2"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 589.187769 314.475352 
+L 650.265425 314.475352 
+L 650.265425 107.313465 
+L 589.187769 107.313465 
+z
+" clip-path="url(#p6a9057d138)" style="fill: #0072b2"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <defs>
+       <path id="m21e8c47899" d="M 0 0 
+L 0 3.5 
+" style="stroke: #222222; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m21e8c47899" x="110.74613" y="314.475352" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(93.956912 329.214121)">FY2023</text>
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(102.268552 340.016582)">end</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2">
+      <g>
+       <use xlink:href="#m21e8c47899" x="212.542224" y="314.475352" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(195.753005 329.214121)">FY2024</text>
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(204.064646 340.016582)">end</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_3">
+      <g>
+       <use xlink:href="#m21e8c47899" x="314.338317" y="314.475352" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(297.549098 329.214121)">FY2025</text>
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(305.860739 340.016582)">end</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#m21e8c47899" x="416.13441" y="314.475352" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(399.345192 329.214121)">FY2026</text>
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(407.656832 340.016582)">end</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_5">
+      <g>
+       <use xlink:href="#m21e8c47899" x="517.930504" y="314.475352" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(493.30566 329.214121)">Q1 FY2027</text>
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(509.452925 340.016582)">end</text>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#m21e8c47899" x="619.726597" y="314.475352" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(595.101753 329.214121)">Q2 FY2027</text>
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #222222" transform="translate(611.249019 340.016582)">end</text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_7">
+      <path d="M 51.704396 314.475352 
+L 678.768331 314.475352 
+" clip-path="url(#p6a9057d138)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_8">
+      <defs>
+       <path id="me624795cfc" d="M 0 0 
+L -3.5 0 
+" style="stroke: #222222; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#me624795cfc" x="51.704396" y="314.475352" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_7">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="44.704396" y="318.654063" transform="rotate(-0 44.704396 318.654063)">0.0</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_9">
+      <path d="M 51.704396 265.845801 
+L 678.768331 265.845801 
+" clip-path="url(#p6a9057d138)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_10">
+      <g>
+       <use xlink:href="#me624795cfc" x="51.704396" y="265.845801" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_8">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="44.704396" y="270.024512" transform="rotate(-0 44.704396 270.024512)">0.5</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_11">
+      <path d="M 51.704396 217.21625 
+L 678.768331 217.21625 
+" clip-path="url(#p6a9057d138)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_12">
+      <g>
+       <use xlink:href="#me624795cfc" x="51.704396" y="217.21625" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_9">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="44.704396" y="221.394961" transform="rotate(-0 44.704396 221.394961)">1.0</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_13">
+      <path d="M 51.704396 168.586699 
+L 678.768331 168.586699 
+" clip-path="url(#p6a9057d138)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_14">
+      <g>
+       <use xlink:href="#me624795cfc" x="51.704396" y="168.586699" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_10">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="44.704396" y="172.76541" transform="rotate(-0 44.704396 172.76541)">1.5</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_15">
+      <path d="M 51.704396 119.957148 
+L 678.768331 119.957148 
+" clip-path="url(#p6a9057d138)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_16">
+      <g>
+       <use xlink:href="#me624795cfc" x="51.704396" y="119.957148" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_11">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="44.704396" y="124.135859" transform="rotate(-0 44.704396 124.135859)">2.0</text>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_17">
+      <path d="M 51.704396 71.327598 
+L 678.768331 71.327598 
+" clip-path="url(#p6a9057d138)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_18">
+      <g>
+       <use xlink:href="#me624795cfc" x="51.704396" y="71.327598" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_12">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="44.704396" y="75.506309" transform="rotate(-0 44.704396 75.506309)">2.5</text>
+     </g>
+    </g>
+    <g id="ytick_7">
+     <g id="line2d_19">
+      <path d="M 51.704396 22.698047 
+L 678.768331 22.698047 
+" clip-path="url(#p6a9057d138)" style="fill: none; stroke: #dddddd; stroke-width: 0.6; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_20">
+      <g>
+       <use xlink:href="#me624795cfc" x="51.704396" y="22.698047" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_13">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #222222" x="44.704396" y="26.876758" transform="rotate(-0 44.704396 26.876758)">3.0</text>
+     </g>
+    </g>
+    <g id="text_14">
+     <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #222222" x="20.568381" y="168.586699" transform="rotate(-90 20.568381 168.586699)">Subscription ARR (US$ billions)</text>
+    </g>
+   </g>
+   <g id="patch_9">
+    <path d="M 51.704396 314.475352 
+L 51.704396 22.698047 
+" style="fill: none; stroke: #888888; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 51.704396 314.475352 
+L 678.768331 314.475352 
+" style="fill: none; stroke: #888888; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_15">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #ffffff" x="110.74613" y="263.257869" transform="rotate(-0 110.74613 263.257869)">$1.10B</text>
+   </g>
+   <g id="text_16">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #ffffff" x="212.542224" y="250.020906" transform="rotate(-0 212.542224 250.020906)">$1.37B</text>
+   </g>
+   <g id="text_17">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #ffffff" x="314.338317" y="236.195524" transform="rotate(-0 314.338317 236.195524)">$1.66B</text>
+   </g>
+   <g id="text_18">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #ffffff" x="416.13441" y="223.235749" transform="rotate(-0 416.13441 223.235749)">$1.92B</text>
+   </g>
+   <g id="text_19">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #ffffff" x="517.930504" y="217.803828" transform="rotate(-0 517.930504 217.803828)">$2.04B</text>
+   </g>
+   <g id="text_20">
+    <text style="font-weight: 700; font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #ffffff" x="619.726597" y="213.232651" transform="rotate(-0 619.726597 213.232651)">$2.13B</text>
+   </g>
+   <g id="text_21">
+    <text style="font-weight: 700; font-size: 12.5px; font-family: 'DejaVu Sans'; text-anchor: start" x="51.704396" y="16.698047" transform="rotate(-0 51.704396 16.698047)">Everpure subscription ARR and RPO at fiscal period-ends, FY2023–Q2 FY2027</text>
+   </g>
+   <g id="legend_1">
+    <g id="patch_11">
+     <path d="M 59.804396 37.636641 
+L 77.804396 37.636641 
+L 77.804396 31.336641 
+L 59.804396 31.336641 
+z
+" style="fill: #0072b2"/>
+    </g>
+    <g id="text_22">
+     <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start" x="85.004396" y="37.636641" transform="rotate(-0 85.004396 37.636641)">Subscription ARR (left axis)</text>
+    </g>
+    <g id="line2d_21">
+     <path d="M 59.804396 47.987344 
+L 68.804396 47.987344 
+L 77.804396 47.987344 
+" style="fill: none; stroke: #d55e00; stroke-width: 2.2; stroke-linecap: square"/>
+     <defs>
+      <path id="m4323b4c403" d="M 0 3 
+C 0.795609 3 1.55874 2.683901 2.12132 2.12132 
+C 2.683901 1.55874 3 0.795609 3 0 
+C 3 -0.795609 2.683901 -1.55874 2.12132 -2.12132 
+C 1.55874 -2.683901 0.795609 -3 0 -3 
+C -0.795609 -3 -1.55874 -2.683901 -2.12132 -2.12132 
+C -2.683901 -1.55874 -3 -0.795609 -3 0 
+C -3 0.795609 -2.683901 1.55874 -2.12132 2.12132 
+C -1.55874 2.683901 -0.795609 3 0 3 
+z
+" style="stroke: #d55e00"/>
+     </defs>
+     <g>
+      <use xlink:href="#m4323b4c403" x="68.804396" y="47.987344" style="fill: #d55e00; stroke: #d55e00"/>
+     </g>
+    </g>
+    <g id="text_23">
+     <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: start" x="85.004396" y="51.137344" transform="rotate(-0 85.004396 51.137344)">Remaining performance obligations, RPO (right axis)</text>
+    </g>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="matplotlib.axis_3">
+    <g id="ytick_8">
+     <g id="line2d_22">
+      <defs>
+       <path id="m990b65e2c6" d="M 0 0 
+L 3.5 0 
+" style="stroke: #222222; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m990b65e2c6" x="678.768331" y="314.475352" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_24">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #222222" x="685.768331" y="318.654063" transform="rotate(-0 685.768331 318.654063)">0</text>
+     </g>
+    </g>
+    <g id="ytick_9">
+     <g id="line2d_23">
+      <g>
+       <use xlink:href="#m990b65e2c6" x="678.768331" y="256.119891" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_25">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #222222" x="685.768331" y="260.298602" transform="rotate(-0 685.768331 260.298602)">1</text>
+     </g>
+    </g>
+    <g id="ytick_10">
+     <g id="line2d_24">
+      <g>
+       <use xlink:href="#m990b65e2c6" x="678.768331" y="197.76443" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_26">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #222222" x="685.768331" y="201.943141" transform="rotate(-0 685.768331 201.943141)">2</text>
+     </g>
+    </g>
+    <g id="ytick_11">
+     <g id="line2d_25">
+      <g>
+       <use xlink:href="#m990b65e2c6" x="678.768331" y="139.408969" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_27">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #222222" x="685.768331" y="143.58768" transform="rotate(-0 685.768331 143.58768)">3</text>
+     </g>
+    </g>
+    <g id="ytick_12">
+     <g id="line2d_26">
+      <g>
+       <use xlink:href="#m990b65e2c6" x="678.768331" y="81.053508" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_28">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #222222" x="685.768331" y="85.232219" transform="rotate(-0 685.768331 85.232219)">4</text>
+     </g>
+    </g>
+    <g id="ytick_13">
+     <g id="line2d_27">
+      <g>
+       <use xlink:href="#m990b65e2c6" x="678.768331" y="22.698047" style="fill: #222222; stroke: #222222; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_29">
+      <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #222222" x="685.768331" y="26.876758" transform="rotate(-0 685.768331 26.876758)">5</text>
+     </g>
+    </g>
+    <g id="text_30">
+     <text style="font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #d55e00" x="705.125362" y="168.586699" transform="rotate(-90 705.125362 168.586699)">RPO (US$ billions)</text>
+    </g>
+   </g>
+   <g id="line2d_28">
+    <path d="M 212.542224 180.257791 
+L 314.338317 162.751153 
+L 416.13441 98.560146 
+L 517.930504 92.7246 
+L 619.726597 75.217962 
+" clip-path="url(#p6a9057d138)" style="fill: none; stroke: #d55e00; stroke-width: 2.2; stroke-linecap: square"/>
+    <g clip-path="url(#p6a9057d138)">
+     <use xlink:href="#m4323b4c403" x="212.542224" y="180.257791" style="fill: #d55e00; stroke: #d55e00"/>
+     <use xlink:href="#m4323b4c403" x="314.338317" y="162.751153" style="fill: #d55e00; stroke: #d55e00"/>
+     <use xlink:href="#m4323b4c403" x="416.13441" y="98.560146" style="fill: #d55e00; stroke: #d55e00"/>
+     <use xlink:href="#m4323b4c403" x="517.930504" y="92.7246" style="fill: #d55e00; stroke: #d55e00"/>
+     <use xlink:href="#m4323b4c403" x="619.726597" y="75.217962" style="fill: #d55e00; stroke: #d55e00"/>
+    </g>
+   </g>
+   <g id="patch_12">
+    <path d="M 51.704396 314.475352 
+L 51.704396 22.698047 
+" style="fill: none; stroke: #888888; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 678.768331 314.475352 
+L 678.768331 22.698047 
+" style="fill: none; stroke: #888888; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 51.704396 314.475352 
+L 678.768331 314.475352 
+" style="fill: none; stroke: #888888; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_31">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #d55e00" x="212.542224" y="171.257791" transform="rotate(-0 212.542224 171.257791)">$2.3B</text>
+   </g>
+   <g id="text_32">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #d55e00" x="314.338317" y="153.751153" transform="rotate(-0 314.338317 153.751153)">$2.6B</text>
+   </g>
+   <g id="text_33">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #d55e00" x="416.13441" y="89.560146" transform="rotate(-0 416.13441 89.560146)">$3.7B</text>
+   </g>
+   <g id="text_34">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #d55e00" x="517.930504" y="83.7246" transform="rotate(-0 517.930504 83.7246)">$3.8B</text>
+   </g>
+   <g id="text_35">
+    <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #d55e00" x="619.726597" y="66.217962" transform="rotate(-0 619.726597 66.217962)">$4.1B</text>
+   </g>
+  </g>
+  <g id="text_36">
+   <text style="font-size: 8px; font-family: 'DejaVu Sans'; fill: #555555" transform="translate(7.2 369.400508)">Sources: Pure Storage / Everpure Form 10-K FY2024–FY2026, Q4 FY25 results (8-K Ex. 99.1), Q1 and Q2 FY27 results releases. ARR = annualised value of active subscriptions +</text>
+   <text style="font-size: 8px; font-family: 'DejaVu Sans'; fill: #555555" transform="translate(7.2 379.002695)">quarterly on-demand revenue x4 (company definition). Period-ends are fiscal (FY2026 ended 2026-02-01; Q2 FY27 ended 2026-08-02). Figures from search summaries of the</text>
+   <text style="font-size: 8px; font-family: 'DejaVu Sans'; fill: #555555" transform="translate(7.2 388.604883)">filings; Q2 FY27 ARR rounded. FY2023 RPO not charted. Data: data/ch29_arr.csv</text>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p6a9057d138">
+   <rect x="51.704396" y="22.698047" width="627.063935" height="291.777305"/>
+  </clipPath>
+ </defs>
+</svg>

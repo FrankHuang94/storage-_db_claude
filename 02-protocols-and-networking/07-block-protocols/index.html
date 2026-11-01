@@ -1,0 +1,3769 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A strategy-level knowledge base on storage, AI storage and the competitive landscape around Everpure (formerly Pure Storage).">
+      
+      
+      
+        <link rel="canonical" href="https://frankhuang94.github.io/storage-_db_claude/02-protocols-and-networking/07-block-protocols/">
+      
+      
+        <link rel="prev" href="../../01-storage-fundamentals/06-data-protection-and-resilience/">
+      
+      
+        <link rel="next" href="../08-file-protocols/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>7. Block protocols - Everpure Tech Atlas</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#7-block-protocols" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Everpure Tech Atlas" class="md-header__button md-logo" aria-label="Everpure Tech Atlas" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Everpure Tech Atlas
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              7. Block protocols
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/FrankHuang94/storage-_db_claude" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    storage-_db_claude
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Everpure Tech Atlas" class="md-nav__button md-logo" aria-label="Everpure Tech Atlas" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Everpure Tech Atlas
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/FrankHuang94/storage-_db_claude" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    storage-_db_claude
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 0 — Start Here
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 0 — Start Here
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start-here/00a-how-to-use-this-atlas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0.1. How to use this atlas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start-here/00b-one-page-map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0.2. The one-page map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 1 — Storage Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 1 — Storage Fundamentals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/01-what-storage-does/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. What storage does
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/02-media-physics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Media physics for a semis person
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/03-inside-an-ssd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Inside an SSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/04-performance-and-economics-metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Performance and economics metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/05-data-reduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Data reduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../01-storage-fundamentals/06-data-protection-and-resilience/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Data protection and resilience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 2 — Protocols and Networking
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 2 — Protocols and Networking
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Block protocols
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Block protocols
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters-for-everpure-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters for Everpure strategy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-a-block-protocol-does" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What a block protocol does
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scsi-a-command-set-that-outlived-its-cable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SCSI: a command set that outlived its cable
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fibre-channel-and-iscsi-two-ways-to-network-scsi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fibre Channel and iSCSI: two ways to network SCSI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nvme-a-protocol-designed-around-queues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NVMe: a protocol designed around queues
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nvme-of-stretching-the-rings-across-a-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NVMe-oF: stretching the rings across a network
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-transports-compared" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The transports compared
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-nvmetcp-is-the-enterprise-default-trajectory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why NVMe/TCP is the enterprise default trajectory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-roce-wins-ai-back-ends" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why RoCE wins AI back-ends
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-fibre-channel-persists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Fibre Channel persists
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-everpure-approaches-it-vs-competitors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Everpure approaches it vs. competitors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#history-and-trajectory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        History and trajectory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#numbers-that-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Numbers that matter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversation-playbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversation playbook
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-deeper-optional-l3-pointers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going deeper (optional, L3 pointers)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key terms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../08-file-protocols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. File protocols
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../09-object-storage-and-s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Object storage and S3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../10-datacenter-networking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Datacenter networking for storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../11-gpu-data-path/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. The GPU data path
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../12-interfaces-and-emerging-tech/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Interfaces and emerging tech
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3 — Storage System Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 3 — Storage System Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/13-storage-stack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. The storage stack, layer by layer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/14-scale-up-dual-controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Scale-up dual-controller arrays
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/15-scale-out-shared-nothing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Scale-out shared-nothing clusters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/16-disaggregated-shared-everything/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Disaggregated shared-everything architectures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/17-parallel-file-systems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Parallel and distributed file systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/18-object-storage-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Object storage architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/19-software-defined-and-hci/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Software-defined storage and HCI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/20-distributed-systems-fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Distributed-systems fundamentals for storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/21-metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Metadata: the hidden bottleneck
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/22-control-planes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Control planes and fleet management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/23-consumption-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Consumption models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/24-architecture-decision-matrix/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Architecture decision matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 4 — Everpure
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 4 — Everpure
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/25-company-history-and-strategy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Company history and strategy, 2009–2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/26-purity-and-directflash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Core technology: Purity and DirectFlash
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/27-flasharray-and-flashblade/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Product portfolio: FlashArray and FlashBlade
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/28-platform-and-software/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. Platform and software
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/29-hyperscaler-ecosystem-financials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Hyperscaler business, ecosystem and financials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 5 — AI Storage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 5 — AI Storage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/30-ai-data-pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. The AI data pipeline end to end
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/31-training-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Training storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/32-inference-and-kv-cache/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Inference and KV cache
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/33-rag-vector-lakehouse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    33. RAG, vector databases and AI-native data formats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/34-nvidia-ecosystem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. NVIDIA's ecosystem and certifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/35-ai-factories-and-neoclouds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    35. AI factories and neoclouds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/36-hyperscaler-ai-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    36. How hyperscalers build AI storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/37-reading-benchmarks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    37. Reading benchmarks critically
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/38-power-and-density/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    38. Power, density and the AI datacenter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/39-agentic-ai-and-data-intelligence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    39. Agentic AI and data intelligence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 6 — Industry and Competition
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 6 — Industry and Competition
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/40-market-structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    40. Market structure and sizing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/41-why-ai-native-vendors-won/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    41. Why AI-native storage vendors gained traction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/42-vast-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    42. VAST Data deep dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/43-weka/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    43. WEKA deep dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/44-ddn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    44. DDN deep dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/45-head-to-head/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    45. Head-to-head: FlashBlade//EXA vs. VAST vs. WEKA vs. DDN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/46-incumbents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    46. Incumbents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/47-other-challengers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    47. Other challengers and software-defined players
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/48-media-suppliers-and-nand-cycle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    48. Media suppliers and the NAND cycle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/49-competitive-matrices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    49. Competitive landscape matrices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/50-diligence-framework/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    50. Technical diligence framework
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 7 — History and Future
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 7 — History and Future
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/51-history-of-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    51. History of storage, 1956–2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/52-history-of-flash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    52. History of flash and NAND economics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/53-future-trends/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    53. Future trends, 2026–2032
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/54-strategic-option-map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    54. Strategic option map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 8 — Conversation Toolkit
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 8 — Conversation Toolkit
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/55-talking-with-pms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    55. Talking with product managers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/56-talking-with-engineering-and-cto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    56. Talking with engineering leaders and the CTO office
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/57-question-bank/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    57. Question bank: 150 questions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/58-explain-in-30-seconds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    58. Explain it in 30 seconds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/59-self-test-flashcards/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    59. Self-test: 279 flashcards
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/60-cheat-sheets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    60. Cheat sheets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters-for-everpure-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters for Everpure strategy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#what-a-block-protocol-does" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What a block protocol does
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#scsi-a-command-set-that-outlived-its-cable" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        SCSI: a command set that outlived its cable
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#fibre-channel-and-iscsi-two-ways-to-network-scsi" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Fibre Channel and iSCSI: two ways to network SCSI
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nvme-a-protocol-designed-around-queues" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NVMe: a protocol designed around queues
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#nvme-of-stretching-the-rings-across-a-network" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        NVMe-oF: stretching the rings across a network
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#the-transports-compared" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The transports compared
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-nvmetcp-is-the-enterprise-default-trajectory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why NVMe/TCP is the enterprise default trajectory
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-roce-wins-ai-back-ends" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why RoCE wins AI back-ends
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-fibre-channel-persists" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why Fibre Channel persists
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-everpure-approaches-it-vs-competitors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Everpure approaches it vs. competitors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#history-and-trajectory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        History and trajectory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#numbers-that-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Numbers that matter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversation-playbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversation playbook
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-deeper-optional-l3-pointers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going deeper (optional, L3 pointers)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key terms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="7-block-protocols">7. Block protocols<a class="headerlink" href="#7-block-protocols" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>Depth:</strong> L2 · <strong>Reading time:</strong> ~10 min · <strong>Last verified:</strong> 2026-11-01
+<strong>Prerequisites:</strong> <a href="../../01-storage-fundamentals/01-what-storage-does/">What storage does</a> · <a href="../../01-storage-fundamentals/03-inside-an-ssd/">Inside an SSD</a> · <a href="../../01-storage-fundamentals/04-performance-and-economics-metrics/">Performance and economics metrics</a></p>
+</blockquote>
+<h2 id="tldr">TL;DR<a class="headerlink" href="#tldr" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>A block protocol is a command set riding a transport</strong> (plus fabric services for discovery and access control). SCSI rode parallel cables, Fibre Channel (FC) and TCP/IP (iSCSI). NVMe replaced it, and NVMe over Fabrics (NVMe-oF) carries NVMe over FC, RDMA or TCP.</li>
+<li><strong>NVMe's advantage is its queue model, not raw bandwidth.</strong> Up to 65,535 I/O queues of up to 64K entries, one or more per core, driven by doorbell registers with no shared lock.</li>
+<li><strong>NVMe/TCP is the enterprise default trajectory.</strong> It runs on any Ethernet NIC and every major OS and array, and adds roughly 20–35 µs, small next to a flash read.</li>
+<li><strong>NVMe over RoCE (RDMA on Ethernet) wins AI back-ends.</strong> GPU servers already carry 400G RDMA NICs, and copy-free data movement keeps GPUs fed.</li>
+<li><strong>Fibre Channel is not dying.</strong> FC sales grew in 2025 and 128G switches launched. Most FC estates will move to NVMe/FC on the same hardware.</li>
+</ul>
+<h2 id="why-this-matters-for-everpure-strategy">Why this matters for Everpure strategy<a class="headerlink" href="#why-this-matters-for-everpure-strategy" title="Permanent link">&para;</a></h2>
+<p>FlashArray is a block array, so its revenue rides on whichever wire the customer's servers use. Transport transitions are when customers re-platform and incumbents lose share. Two current examples: VMware-exit projects, where Everpure's May 2025 Nutanix partnership attaches FlashArray to AHV hosts over NVMe/TCP<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup>, and AI clusters, where storage must sit on the RDMA fabric the GPUs already use.</p>
+<p>Protocol support is now table stakes. The strategic questions are subtler. Which transport will buyers standardize on for a decade? Who controls discovery and automation? Does end-to-end NVMe (Everpure's DirectFlash, see <a href="../../04-everpure/26-purity-and-directflash/">Chapter 26</a>) become a measurable edge once the front end is NVMe too?</p>
+<h2 id="core-concepts">Core concepts<a class="headerlink" href="#core-concepts" title="Permanent link">&para;</a></h2>
+<h3 id="what-a-block-protocol-does">What a block protocol does<a class="headerlink" href="#what-a-block-protocol-does" title="Permanent link">&para;</a></h3>
+<p>A block protocol lets a server (the <strong>initiator</strong>, or <strong>host</strong>) read and write numbered fixed-size blocks on a remote device (the <strong>target</strong>). It asks for "block 1,000,000, 256 blocks long" and knows nothing about files, which are the job of the file system above (see <a href="../../01-storage-fundamentals/01-what-storage-does/">Chapter 1</a>). Every block protocol has three layers:</p>
+<ol>
+<li><strong>Command set.</strong> READ, WRITE, FLUSH and error reporting. SCSI uses a Command Descriptor Block (CDB) addressed to a <strong>LUN</strong>. NVMe uses a 64-byte Submission Queue Entry (SQE) addressed to a <strong>namespace</strong>.</li>
+<li><strong>Transport.</strong> How commands, data and status cross the wire: parallel SCSI, FC, TCP/IP, PCIe or RDMA.</li>
+<li><strong>Fabric services.</strong> Discovery, naming, access control and multipathing: FC zoning, iSCSI qualified names (IQNs), NVMe Qualified Names (NQNs) and discovery controllers.</li>
+</ol>
+<p>The command set and the transport evolve on different clocks.</p>
+<h3 id="scsi-a-command-set-that-outlived-its-cable">SCSI: a command set that outlived its cable<a class="headerlink" href="#scsi-a-command-set-that-outlived-its-cable" title="Permanent link">&para;</a></h3>
+<p>SCSI was standardized in 1986 for disks on a ribbon cable<sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>. Its command model is rich (sense codes, persistent reservations that clusters use for fencing) and was designed when a disk access took about 5 ms. A 20 µs software stack was then 0.4% of the I/O; against an 80 µs flash read it is 25% (worked example).</p>
+<p>The bigger problem is queuing. SCSI-era stacks present roughly one queue per device per path, and cores contend for its lock. SATA's AHCI is the extreme: one queue, 32 commands deep. Sustained IOPS ≈ outstanding commands ÷ latency, so 32 commands at 100 µs caps a device at 32 ÷ 0.0001 s = <strong>320,000 IOPS</strong>, however fast the NAND behind it. Linux later retrofitted multi-queue layers (blk-mq, scsi-mq) and modern FC and SAS HBAs expose several hardware queues, but per-LUN queue depths and the heavier SCSI command path still cap concurrency well below NVMe's.</p>
+<h3 id="fibre-channel-and-iscsi-two-ways-to-network-scsi">Fibre Channel and iSCSI: two ways to network SCSI<a class="headerlink" href="#fibre-channel-and-iscsi-two-ways-to-network-scsi" title="Permanent link">&para;</a></h3>
+<p><strong>Fibre Channel</strong> (FC-PH, 1994<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>) built a dedicated, lossless network for SCSI. Lossless is the defining property. Each link uses <strong>buffer-to-buffer credits</strong>: a sender transmits only as many frames as the receiver has advertised buffers for, so congestion never drops frames. Semiconductor bridge: this is PCIe's flow-control credit scheme stretched across a building. FC adds a name server and zoning (an access-control list on the switch) and maps SCSI onto frames through FCP. The result is deterministic, offloaded in HBAs and run by the storage team. It also needs its own switches (in practice Broadcom's Brocade or Cisco MDS), HBAs and skills.</p>
+<p><strong>iSCSI</strong> (RFC 3720, April 2004<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>) put the same SCSI commands into TCP/IP, so any Ethernet network and any server NIC could build a SAN. It made SANs affordable for the mid-market, at the cost of host CPU for TCP and Ethernet's lossy, shared nature.</p>
+<pre class="mermaid"><code>sequenceDiagram
+    participant I as Initiator host
+    participant T as iSCSI target array
+    Note over I,T: READ
+    I-&gt;&gt;T: SCSI Command PDU with READ CDB
+    T-&gt;&gt;I: Data-In PDUs carry the blocks
+    T-&gt;&gt;I: SCSI Response PDU with status
+    Note over I,T: WRITE
+    I-&gt;&gt;T: SCSI Command PDU with WRITE CDB
+    T-&gt;&gt;I: R2T, ready to transfer
+    I-&gt;&gt;T: Data-Out PDUs carry the blocks
+    T-&gt;&gt;I: SCSI Response PDU with status</code></pre>
+<p><em>Figure 7.1 — SCSI over iSCSI (or FC, where the same steps are FCP_CMND, FCP_XFER_RDY, FCP_DATA and FCP_RSP): by default a write costs an extra round trip because the target must invite the data before the host sends it. iSCSI immediate/unsolicited data and FC first burst can skip that step for the first chunk, if both ends negotiate it.</em></p>
+<h3 id="nvme-a-protocol-designed-around-queues">NVMe: a protocol designed around queues<a class="headerlink" href="#nvme-a-protocol-designed-around-queues" title="Permanent link">&para;</a></h3>
+<p>NVMe 1.0 (March 2011<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup>) was written for flash on PCIe and organizes the interface around paired rings in host memory:</p>
+<ul>
+<li>A <strong>submission queue (SQ)</strong> holds 64-byte commands. A <strong>completion queue (CQ)</strong> holds 16-byte completions.</li>
+<li>The host may create up to 65,535 I/O queue pairs, each up to 64K entries deep<sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup>. The driver typically gives each CPU core its own pair, so no core waits on another's lock.</li>
+<li>The command set is small and fixed-format, so the controller parses commands in hardware without walking variable-length CDBs.</li>
+</ul>
+<pre class="mermaid"><code>flowchart LR
+    subgraph LEG["Legacy SCSI or AHCI host model"]
+        A0["Core 0"] --&gt; LK["Shared lock"]
+        A1["Core 1"] --&gt; LK
+        A2["Core N"] --&gt; LK
+        LK --&gt; Q["One queue per device, 32 deep on SATA"]
+    end
+    subgraph NV["NVMe host model"]
+        B0["Core 0"] --&gt; P0["SQ 0 and CQ 0"]
+        B1["Core 1"] --&gt; P1["SQ 1 and CQ 1"]
+        B2["Core N"] --&gt; P2["SQ N and CQ N"]
+    end
+    Q --&gt; HBA["HBA or SATA controller"]
+    P0 --&gt; CTL["NVMe controller, up to 65,535 queues x 64K entries"]
+    P1 --&gt; CTL
+    P2 --&gt; CTL</code></pre>
+<p><em>Figure 7.2 — NVMe replaces one lock-protected queue with a private queue pair per core; parallelism comes from the interface, not from heroic per-command speed.</em></p>
+<p>Little's law again: 64 cores each keeping 32 commands in flight gives 2,048 outstanding. At 100 µs that is about <strong>20 million IOPS</strong> of addressable concurrency, far beyond any single SSD. The interface stops being the bottleneck.</p>
+<p><strong>Semiconductor bridge: NVMe is a DMA engine with descriptor rings.</strong> The host writes a descriptor (the SQE) into a ring in DRAM, then performs one memory-mapped write to a <strong>doorbell register</strong> in the SSD's PCIe BAR to announce the new tail pointer. The SSD, a PCIe bus master, fetches the descriptor by DMA, moves the data by DMA to or from the host buffers the descriptor points to, writes a completion entry into the CQ (with a phase bit so the host can tell new entries from stale ones), and raises an MSI-X interrupt. The host consumes completions and rings a second doorbell to free CQ slots. PCIe is NVMe's native transport: the protocol assumes the device can reach host memory directly.</p>
+<pre class="mermaid"><code>sequenceDiagram
+    participant D as Host driver on core k
+    participant R as SQ k and CQ k in host DRAM
+    participant C as NVMe SSD controller
+    D-&gt;&gt;R: write 64 B READ command into SQ k
+    D-&gt;&gt;C: MMIO write to SQ k tail doorbell
+    C-&gt;&gt;R: DMA fetch the command
+    C-&gt;&gt;R: DMA write data into host buffer
+    C-&gt;&gt;R: write 16 B completion into CQ k
+    C-&gt;&gt;D: MSI-X interrupt to core k
+    D-&gt;&gt;C: MMIO write to CQ k head doorbell</code></pre>
+<p><em>Figure 7.3 — Local NVMe over PCIe: one doorbell write starts the I/O and the device does the rest by DMA, which is why the host-side cost is a few microseconds.</em></p>
+<h3 id="nvme-of-stretching-the-rings-across-a-network">NVMe-oF: stretching the rings across a network<a class="headerlink" href="#nvme-of-stretching-the-rings-across-a-network" title="Permanent link">&para;</a></h3>
+<p>A remote SSD cannot DMA descriptors out of host DRAM, so NVMe-oF (1.0 in June 2016, with RDMA and FC bindings<sup id="fnref:7"><a class="footnote-ref" href="#fn:7">7</a></sup>) sends them. The 64-byte SQE travels in a <strong>command capsule</strong>, optionally with small-write data inside, and the completion returns in a <strong>response capsule</strong>. Each NVMe queue pair maps onto one transport connection (an RDMA queue pair, a TCP connection or an FC-NVMe connection within an association), preserving per-core parallelism end to end. Multipathing uses <strong>ANA</strong> (Asymmetric Namespace Access), NVMe's equivalent of SCSI ALUA (see <a href="../../03-system-architecture/14-scale-up-dual-controller/">Chapter 14</a>).</p>
+<p>The transports differ mainly in how bulk data moves:</p>
+<ul>
+<li><strong>RDMA (RoCEv2 on Ethernet, or InfiniBand).</strong> The capsule carries the address and key of a registered host buffer; the target RDMA-WRITEs read data into it, or RDMA-READs write data out of it. No host CPU copies a byte, and the adder is about 5–15 µs over local NVMe<sup id="fnref:8"><a class="footnote-ref" href="#fn:8">8</a></sup>. The price is RDMA NICs and, for RoCE, carefully tuned Ethernet (see <a href="../10-datacenter-networking/">Chapter 10</a>).</li>
+<li><strong>TCP.</strong> Capsules and data travel as PDUs on a TCP stream: reads return as C2HData PDUs (the last one may carry a success flag so the target can skip the response capsule), and writes larger than the in-capsule limit wait for an R2T, as in iSCSI, then send H2CData PDUs. The kernel copies payloads and runs TCP; early Linux tests showed 20–35 µs added<sup id="fnref:9"><a class="footnote-ref" href="#fn:9">9</a></sup>. Under heavy load the gap widens: one 2018 vendor test measured 183 µs average for TCP versus 107 µs for RoCE, although single-I/O latency was within a few microseconds<sup id="fnref:10"><a class="footnote-ref" href="#fn:10">10</a></sup>.</li>
+<li><strong>FC (FC-NVMe, standardized by T11 in 2017<sup id="fnref:11"><a class="footnote-ref" href="#fn:11">11</a></sup>).</strong> Capsules ride FC frames on the same HBAs, switches, zoning and lossless credits as SCSI-FC, with data movement offloaded to the HBA.</li>
+</ul>
+<pre class="mermaid"><code>sequenceDiagram
+    participant H as Host NVMe-oF driver
+    participant T as Target array controller
+    participant M as Flash media
+    H-&gt;&gt;T: command capsule READ 128 KB, buffer address and key
+    T-&gt;&gt;M: read blocks
+    M--&gt;&gt;T: data
+    alt RDMA transport
+        T-&gt;&gt;H: RDMA WRITE data directly into host buffer
+        Note over H: NIC places data, no host CPU copy
+    else TCP transport
+        T-&gt;&gt;H: C2HData PDUs on the TCP stream
+        Note over H: kernel reassembles and copies into buffer
+    end
+    T-&gt;&gt;H: response capsule with 16 B completion</code></pre>
+<p><em>Figure 7.4 — NVMe-oF read: the command and completion are identical across transports; only the data leg changes, and that leg is where RDMA saves CPU and microseconds.</em></p>
+<pre class="mermaid"><code>sequenceDiagram
+    participant H as Host NVMe-oF driver
+    participant T as Target array controller
+    participant W as NVRAM write cache
+    alt Small write, in-capsule data
+        H-&gt;&gt;T: command capsule WRITE with 4 KB data inside
+    else Large write over RDMA
+        H-&gt;&gt;T: command capsule WRITE, buffer address and key
+        T-&gt;&gt;H: RDMA READ pulls data from host memory
+    else Large write over TCP
+        H-&gt;&gt;T: command capsule WRITE
+        T-&gt;&gt;H: R2T, ready to transfer
+        H-&gt;&gt;T: H2CData PDUs carry the data
+    end
+    T-&gt;&gt;W: persist to mirrored or shared NVRAM
+    W--&gt;&gt;T: durable
+    T-&gt;&gt;H: response capsule with completion</code></pre>
+<p><em>Figure 7.5 — NVMe-oF write: in-capsule data (up to a size the target advertises) lets small writes finish in one round trip on RDMA or TCP, while large writes are pulled by the target (RDMA) or invited by an R2T (TCP). FC-NVMe has an analogous first-burst option.</em></p>
+<h3 id="the-transports-compared">The transports compared<a class="headerlink" href="#the-transports-compared" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Transport</th>
+<th>Latency adder vs local NVMe</th>
+<th>Hardware needs</th>
+<th>Ecosystem</th>
+<th>Typical buyer</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>FC-NVMe (NVMe/FC)</td>
+<td>Low; HBA-offloaded. Vendor claims ~50% lower end-to-end latency than SCSI-FC<sup id="fnref:12"><a class="footnote-ref" href="#fn:12">12</a></sup></td>
+<td>FC HBAs (32G+), FC switches, zoning</td>
+<td>Brocade/Cisco fabrics; VMware, Linux, Windows; all major arrays</td>
+<td>Enterprises with an existing FC estate and a storage team that owns it</td>
+</tr>
+<tr>
+<td>NVMe/RoCE</td>
+<td>~5–15 µs<sup id="fnref2:8"><a class="footnote-ref" href="#fn:8">8</a></sup></td>
+<td>RDMA NICs (ConnectX/BlueField class), switches tuned for RoCE</td>
+<td>NVIDIA networking, Linux, VMware; DASE back-ends</td>
+<td>AI clusters, neoclouds, latency-critical databases</td>
+</tr>
+<tr>
+<td>NVMe/TCP</td>
+<td>~20–35 µs in early Linux tests<sup id="fnref2:9"><a class="footnote-ref" href="#fn:9">9</a></sup>; wider under load<sup id="fnref2:10"><a class="footnote-ref" href="#fn:10">10</a></sup></td>
+<td>Any Ethernet NIC; offloads optional</td>
+<td>Linux kernel, VMware since 2021, every major array</td>
+<td>Greenfield Ethernet SANs, VMware/Nutanix refreshes, cloud and SDS</td>
+</tr>
+<tr>
+<td>iSCSI</td>
+<td>Highest: TCP plus SCSI translation. Vendor claims NVMe/RoCE has ~50% lower latency<sup id="fnref:13"><a class="footnote-ref" href="#fn:13">13</a></sup></td>
+<td>Any Ethernet NIC</td>
+<td>Universal, 20+ years of tooling</td>
+<td>Mid-market and branch; the long tail of installed SANs</td>
+</tr>
+</tbody>
+</table>
+<p><em>Figure 7.6 — The four transports trade the latency adder against hardware specialization; the buyer's existing fabric usually decides more than the microseconds do.</em></p>
+<h3 id="why-nvmetcp-is-the-enterprise-default-trajectory">Why NVMe/TCP is the enterprise default trajectory<a class="headerlink" href="#why-nvmetcp-is-the-enterprise-default-trajectory" title="Permanent link">&para;</a></h3>
+<p>NVMe/TCP was ratified in November 2018 (TP 8000)<sup id="fnref:14"><a class="footnote-ref" href="#fn:14">14</a></sup>, reached upstream Linux in 5.0<sup id="fnref:15"><a class="footnote-ref" href="#fn:15">15</a></sup> and VMware in vSphere 7 Update 3 in late 2021<sup id="fnref:16"><a class="footnote-ref" href="#fn:16">16</a></sup>. Four reasons it is winning new Ethernet SANs:</p>
+<ol>
+<li><strong>No special hardware.</strong> It runs on existing NICs and routes like any TCP traffic; RoCE needs RDMA NICs and carefully engineered switches.</li>
+<li><strong>The penalty is small where it counts.</strong> A 20–35 µs adder over a 100–200 µs array round trip is real but rarely decisive for databases or VMs. A 2021 SNIA talk reported realistic performance similar to RoCEv2<sup id="fnref:17"><a class="footnote-ref" href="#fn:17">17</a></sup>.</li>
+<li><strong>CPU cost is falling.</strong> More cores and NIC/DPU offloads shrink the copy overhead.</li>
+<li><strong>It replaces iSCSI without retraining.</strong> Same network, same team, better queue model.</li>
+</ol>
+<p>The gaps are operational: discovery at scale (Dell's SmartFabric Storage Software is a centralized discovery controller for this<sup id="fnref:18"><a class="footnote-ref" href="#fn:18">18</a></sup>), authentication and TLS, and tail latency on congested networks.</p>
+<h3 id="why-roce-wins-ai-back-ends">Why RoCE wins AI back-ends<a class="headerlink" href="#why-roce-wins-ai-back-ends" title="Permanent link">&para;</a></h3>
+<p>In an AI cluster the economics flip. GPU servers already carry several 400G RDMA NICs, so RDMA is free, and at hundreds of gigabits per server CPU copies would burn host cores. GPUDirect Storage needs an RDMA-capable path to land data directly in GPU memory (see <a href="../11-gpu-data-path/">Chapter 11</a>). Disaggregated back-ends such as VAST's use NVMe over RDMA internally (see <a href="../../03-system-architecture/16-disaggregated-shared-everything/">Chapter 16</a>). NVIDIA claims its Spectrum-X adaptive routing gives almost 50% more storage read bandwidth than plain RoCEv2, in its own tests<sup id="fnref:19"><a class="footnote-ref" href="#fn:19">19</a></sup>.</p>
+<h3 id="why-fibre-channel-persists">Why Fibre Channel persists<a class="headerlink" href="#why-fibre-channel-persists" title="Permanent link">&para;</a></h3>
+<p>FC's survival is organizational as much as technical: a separate lossless fabric with a small blast radius, change control owned by the storage team, and mature diagnostics under decades of mission-critical databases. Its NVMe upgrade path is cheap, because NVMe/FC runs on the same 32G-and-later HBAs and switches. Crehan Research reported FC networking sales up 6% in 2025, with 64G about half of shipments<sup id="fnref:20"><a class="footnote-ref" href="#fn:20">20</a></sup> [VERIFY: search-summary only], and Broadcom launched Gen 8 128G Brocade switches in November 2025<sup id="fnref:21"><a class="footnote-ref" href="#fn:21">21</a></sup>.</p>
+<h2 id="how-everpure-approaches-it-vs-competitors">How Everpure approaches it vs. competitors<a class="headerlink" href="#how-everpure-approaches-it-vs-competitors" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Vendor / array</th>
+<th>NVMe/RoCE</th>
+<th>NVMe/FC</th>
+<th>NVMe/TCP</th>
+<th>Notable angle</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Everpure FlashArray</td>
+<td>2019, Purity 5.2 "DirectFlash Fabric"<sup id="fnref2:13"><a class="footnote-ref" href="#fn:13">13</a></sup></td>
+<td>Feb 2021, Purity 6.1<sup id="fnref2:12"><a class="footnote-ref" href="#fn:12">12</a></sup></td>
+<td>Purity 6.4.2, 2022 [VERIFY: exact GA month; sources conflict]<sup id="fnref:22"><a class="footnote-ref" href="#fn:22">22</a></sup></td>
+<td>NVMe end to end internally (DirectFlash); Nutanix AHV over NVMe/TCP<sup id="fnref2:1"><a class="footnote-ref" href="#fn:1">1</a></sup></td>
+</tr>
+<tr>
+<td>NetApp ONTAP (AFF/ASA)</td>
+<td>Not supported on ONTAP, which offers NVMe/FC and NVMe/TCP only<sup id="fnref:23"><a class="footnote-ref" href="#fn:23">23</a></sup>; the separate E-Series/EF line has RDMA options</td>
+<td>ONTAP 9.4, 2018<sup id="fnref:24"><a class="footnote-ref" href="#fn:24">24</a></sup></td>
+<td>ONTAP 9.10.1, late 2021<sup id="fnref:25"><a class="footnote-ref" href="#fn:25">25</a></sup></td>
+<td>Unified file+block; large FC base</td>
+</tr>
+<tr>
+<td>Dell PowerStore</td>
+<td>Not found in public PowerStore material; Dell chose NVMe/TCP for Ethernet hosts<sup id="fnref:26"><a class="footnote-ref" href="#fn:26">26</a></sup></td>
+<td>PowerStoreOS 2.0, 2021<sup id="fnref:27"><a class="footnote-ref" href="#fn:27">27</a></sup></td>
+<td>PowerStoreOS 2.1, early 2022<sup id="fnref:28"><a class="footnote-ref" href="#fn:28">28</a></sup></td>
+<td>SmartFabric Storage Software for NVMe/TCP discovery<sup id="fnref2:18"><a class="footnote-ref" href="#fn:18">18</a></sup></td>
+</tr>
+</tbody>
+</table>
+<p><em>Figure 7.7 — Everpure shipped RoCE early and followed on TCP; by 2026 the three vendors are at parity on NVMe/FC and NVMe/TCP (only Everpure offers RoCE on these lines), so differentiation sits in the internal data path and the automation around discovery.</em></p>
+<p>Everpure shipped RoCE first, a bet on latency-sensitive databases. Its structural argument is that DirectFlash already speaks NVMe from controller to raw NAND, so an NVMe front end removes the last SCSI translation (see <a href="../../04-everpure/26-purity-and-directflash/">Chapter 26</a>). The steelman for competitors is strong. Dell's centralized discovery addresses a real NVMe/TCP pain point at scale, NetApp's unified ONTAP serves FC, NVMe and NAS from one estate, and because FC customers rarely change fabric, the incumbent with the deepest FC relationships often holds the account. Options a strategy team might evaluate, based on public information: owning NVMe/TCP automation in VMware-exit and Nutanix deals, and judging how much AI back-end RoCE demand reaches block arrays rather than file and object (FlashBlade; see <a href="../../04-everpure/27-flasharray-and-flashblade/">Chapter 27</a>).</p>
+<h2 id="history-and-trajectory">History and trajectory<a class="headerlink" href="#history-and-trajectory" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>timeline
+    title Block protocol lineage
+    1986 : SCSI-1 standard for parallel disks
+    1994 : Fibre Channel FC-PH, a lossless SAN for SCSI
+    2004 : iSCSI RFC 3720 puts SCSI on TCP
+    2011 : NVMe 1.0 for PCIe flash
+    2016 : NVMe-oF 1.0 with RDMA and FC bindings
+    2017 : FC-NVMe standard completed in T11
+    2018 : NVMe over TCP ratified as TP 8000
+    2021 : NVMe 2.0 library and vSphere NVMe over TCP
+    2025 : 128G Gen 8 Fibre Channel switches</code></pre>
+<p><em>Figure 7.8 — The command set changed once in 25 years (SCSI to NVMe); transports keep multiplying because each buyer segment brings its own fabric.</em></p>
+<p>A command set is born on a local bus, then re-ridden across every network: SCSI from ribbon cable to FC to TCP, NVMe from PCIe to RDMA and FC to TCP. The June 2021 NVMe 2.0 refactor made each transport its own specification<sup id="fnref:29"><a class="footnote-ref" href="#fn:29">29</a></sup>.</p>
+<p>Signals to watch: NVMe/TCP offload on DPUs (erasing its CPU penalty), better Ethernet RDMA congestion control (making RoCE easier outside AI), FC's move to 128G, and whether hyperscaler-style block services (see <a href="../../03-system-architecture/19-software-defined-and-hci/">Chapter 19</a>) pull enterprise buyers toward NVMe/TCP-only designs.</p>
+<h2 id="numbers-that-matter">Numbers that matter<a class="headerlink" href="#numbers-that-matter" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+<th>Context</th>
+<th>Source / date</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>NVMe max I/O queues</td>
+<td>65,535, each up to 64K entries</td>
+<td>Per controller; one or more per core</td>
+<td>Microsoft / NVMe spec<sup id="fnref2:6"><a class="footnote-ref" href="#fn:6">6</a></sup></td>
+</tr>
+<tr>
+<td>RDMA NVMe-oF latency adder</td>
+<td>~5–15 µs</td>
+<td>Per I/O vs local NVMe</td>
+<td>SNIA 2016<sup id="fnref3:8"><a class="footnote-ref" href="#fn:8">8</a></sup></td>
+</tr>
+<tr>
+<td>NVMe/TCP latency adder</td>
+<td>~20–35 µs</td>
+<td>Early Linux tests, raw device</td>
+<td>SNIA 2019<sup id="fnref3:9"><a class="footnote-ref" href="#fn:9">9</a></sup></td>
+</tr>
+<tr>
+<td>SATA AHCI ceiling at 100 µs</td>
+<td>320K IOPS</td>
+<td>32 outstanding ÷ 100 µs</td>
+<td>Worked example</td>
+</tr>
+<tr>
+<td>NVMe concurrency at 100 µs</td>
+<td>~20M IOPS</td>
+<td>64 cores × 32 in flight</td>
+<td>Worked example</td>
+</tr>
+<tr>
+<td>FC networking sales growth</td>
+<td>+6% in 2025; 64G ≈ half of shipments</td>
+<td>Enterprise demand persists</td>
+<td>Crehan Research, 2026-03<sup id="fnref2:20"><a class="footnote-ref" href="#fn:20">20</a></sup></td>
+</tr>
+<tr>
+<td>Newest FC speed</td>
+<td>128G (Gen 8)</td>
+<td>Launched Nov 2025</td>
+<td>Broadcom<sup id="fnref2:21"><a class="footnote-ref" href="#fn:21">21</a></sup></td>
+</tr>
+</tbody>
+</table>
+<h2 id="conversation-playbook">Conversation playbook<a class="headerlink" href="#conversation-playbook" title="Permanent link">&para;</a></h2>
+<p><strong>Questions for a PM</strong></p>
+<ol>
+<li><em>"In new FlashArray deals, what share of hosts attach by NVMe/TCP versus FC versus iSCSI, and how has that shifted in two years?"</em> Strong: a measured mix from telemetry, by segment, and whether NVMe/TCP is displacing iSCSI or FC.</li>
+<li><em>"When a VMware customer moves to Nutanix or another hypervisor, does the storage protocol change, and who decides?"</em> Strong: names the decision-maker and whether NVMe/TCP automation shortens the cycle.</li>
+<li><em>"Where do we lose block deals on protocol grounds?"</em> Strong: specific cases (a missing automation integration, an FC estate locked to a competitor), not "we support everything."</li>
+</ol>
+<p><strong>Questions for an engineer</strong></p>
+<ol>
+<li><em>"What is the latency delta between NVMe/TCP and NVMe/RoCE on FlashArray at queue depth 1 and at saturation?"</em> Strong: both numbers, host CPU per IOPS, and where tail latency diverges.</li>
+<li><em>"How do ANA paths and controller failover behave on NVMe-oF versus ALUA on SCSI?"</em> Strong: path-state transitions and failover time.</li>
+<li><em>"Does the array's internal NVMe path change how many queue pairs per host you can serve?"</em> Strong: concrete queue and connection limits per port, and behaviour with thousands of Kubernetes hosts.</li>
+</ol>
+<p><strong>Don't say this:</strong></p>
+<ul>
+<li>"NVMe-oF is faster because the wire is faster." The wire is the same; the gain is the queue model and no SCSI translation.</li>
+<li>"Fibre Channel is dead." Sales grew in 2025 and 128G is shipping. Say "shrinking share, durable base."</li>
+<li>"NVMe/TCP is too slow for real work." It adds tens of microseconds, not milliseconds.</li>
+<li>"RoCE is the same as InfiniBand." RoCE shares RDMA semantics but runs on Ethernet and depends on congestion management.</li>
+<li>"iSCSI and NVMe/TCP are interchangeable." Same network, different command set and queue model.</li>
+</ul>
+<h2 id="going-deeper-optional-l3-pointers">Going deeper (optional, L3 pointers)<a class="headerlink" href="#going-deeper-optional-l3-pointers" title="Permanent link">&para;</a></h2>
+<ul>
+<li>NVM Express base and transport specifications (2.x library): capsule formats, SGLs, ANA.</li>
+<li>Linux <code>nvme-tcp</code>, <code>nvme-rdma</code> and <code>nvmet</code> drivers, and blk-mq queue-to-CPU mapping.</li>
+<li>iSCSI RFC 7143 and T11 FC-NVMe-2 (transport error recovery).</li>
+<li>Kernel-bypass storage stacks (SPDK) and NVMe/TCP offload on DPUs.</li>
+</ul>
+<h2 id="key-terms">Key terms<a class="headerlink" href="#key-terms" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Initiator / target</strong> — host issuing block commands; device executing them.</li>
+<li><strong>LUN / namespace</strong> — the SCSI and NVMe names for an addressable block volume.</li>
+<li><strong>SQ / CQ</strong> — NVMe's command and completion rings.</li>
+<li><strong>Doorbell</strong> — device register announcing new queue entries.</li>
+<li><strong>Capsule</strong> — NVMe-oF command or response message.</li>
+<li><strong>ANA</strong> — Asymmetric Namespace Access, NVMe's multipath path-state mechanism.</li>
+<li><strong>R2T</strong> — Ready to Transfer, a target's invitation for the host to send write data.</li>
+<li>See the <a href="../../glossary/">glossary</a> for the rest.</li>
+</ul>
+<h2 id="sources">Sources<a class="headerlink" href="#sources" title="Permanent link">&para;</a></h2>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>SDxCentral, "Nutanix partners with Pure Storage in latest VMware assault," 2025-05. https://www.sdxcentral.com/news/nutanix-partners-with-pure-storage-in-latest-vmware-assault/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>INCITS T10, "X3T9.2 (SCSI) archive" (SCSI-1 published as ANSI X3.131-1986), n.d. https://t10.org/x3t9_2.htm (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>ANSI Webstore, "ANSI INCITS 230-1994 (Fibre Channel Physical and Signaling Interface, FC-PH)," n.d. https://webstore.ansi.org/standards/incits/ansiincits2301994am1996r2001 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>IETF, J. Satran et al., "RFC 3720: Internet Small Computer Systems Interface (iSCSI)," 2004-04. https://www.rfc-editor.org/rfc/rfc3720 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p>EE Times Japan, report on the NVMHCI Working Group's release of NVM Express 1.0, 2011-03-10. https://eetimes.itmedia.co.jp/ee/articles/1103/10/news116.html (retrieved 2026-11-01); UNH-IOL, "Emerging NVM Express spec has busy year," 2014-12-15. https://iol.unh.edu/news/2014/12/15/emerging-nvm-express-spec-has-busy-year (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:6">
+<p>Microsoft Learn, "NVME_CDW11_FEATURE_NUMBER_OF_QUEUES union (nvme.h)," n.d. https://learn.microsoft.com/en-us/windows/win32/api/nvme/ns-nvme-nvme_cdw11_feature_number_of_queues (retrieved 2026-11-01); NVM Express, "What makes NVMe architecture so efficient?" (FAQ), n.d. https://nvmexpress.org/faq-items/what-makes-nvme-architecture-so-efficient/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+<li id="fn:7">
+<p>NVM Express, "NVM Express over Fabrics Specification Released," 2016-06-09. https://nvmexpress.org/nvm-express-over-fabrics-specification-released/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:7" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+</li>
+<li id="fn:8">
+<p>R. Davis (Mellanox), "Demonstrating NVMe Performance over Ethernet," SNIA Data Storage Innovation Conference, 2016. https://www.snia.org/sites/default/files/DSI/2016/presentations/stor_networks/Rob_Davis_Demonstrating_NVMe_Performance_Ethernet.pdf (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:8" title="Jump back to footnote 8 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:8" title="Jump back to footnote 8 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:8" title="Jump back to footnote 8 in the text">&#8617;</a></p>
+</li>
+<li id="fn:9">
+<p>SNIA, "Author of NVMe/TCP Spec Answers Your Questions," 2019. https://snia.org/blog/2019/author-nvmetm-tcp-spec-answers-your-questions (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:9" title="Jump back to footnote 9 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:9" title="Jump back to footnote 9 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:9" title="Jump back to footnote 9 in the text">&#8617;</a></p>
+</li>
+<li id="fn:10">
+<p>The Register, "Pavilion fabrics performance" (NVMe/TCP vs RoCE test), 2018-08-16. https://www.theregister.com/2018/08/16/pavilion_fabrics_performance (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:10" title="Jump back to footnote 10 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:10" title="Jump back to footnote 10 in the text">&#8617;</a></p>
+</li>
+<li id="fn:11">
+<p>Fibre Channel Industry Association, "Event also signals first validation of the newly completed INCITS T11 FC-NVMe standard," 2017. https://fibrechannel.org/?p=1914 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:11" title="Jump back to footnote 11 in the text">&#8617;</a></p>
+</li>
+<li id="fn:12">
+<p>Blocks &amp; Files, "Pure Storage ramps up enterprise creds with ransomware and DR support" (Purity 6.1, NVMe/FC), 2021-02-16. https://www.blocksandfiles.com/flash/2021/02/16/pure-storage-ramps-up-enterprise-creds-with-ransomware-and-dr-support/1591949 (retrieved 2026-11-01); C. Hosterman, "What's New in Purity 6.1: NVMe-oF/Fibre Channel," 2021-02. https://www.codyhosterman.com/2021/02/whats-new-in-purity-6-1-nvme-of-fibre-channel/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:12" title="Jump back to footnote 12 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:12" title="Jump back to footnote 12 in the text">&#8617;</a></p>
+</li>
+<li id="fn:13">
+<p>Techzine, "Pure Storage introduces NVMe-oF RoCE with DirectFlash Fabric," 2019-02. https://www.techzine.eu/news/data-management/38963/pure-storage-introduces-nvme-of-roce-with-directflash-fabric/ (retrieved 2026-11-01); CRN (J. F. Kovar, via Converge TP), "Pure Storage pushes all-flash performance with NVMe-oF RoCE," 2019-02-19. https://convergetp.com/2019/02/19/pure-storage-pushes-all-flash-performance-with-nvme-of-roce-intros-flash-storage-for-cloud-backups/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:13" title="Jump back to footnote 13 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:13" title="Jump back to footnote 13 in the text">&#8617;</a></p>
+</li>
+<li id="fn:14">
+<p>Linux NVMe mailing list, "[PATCH v2 00/14] TCP transport binding for NVMe over Fabrics" (references ratified TP 8000), 2018-11-21. https://lore.kernel.org/all/20181121130545.GD1373@lst.de/T/ (retrieved 2026-11-01); Lightbits Labs, "Lightbits Labs celebrates NVM Express ratification of NVMe/TCP transport standard," via StorageNewsletter, 2018-12-11. https://www.storagenewsletter.com/2018/12/11/lightbits-labs-celebrates-nvm-express-ratification-of-nvme-tcp-transport-standard/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:14" title="Jump back to footnote 14 in the text">&#8617;</a></p>
+</li>
+<li id="fn:15">
+<p>NVM Express, "Answering Your Questions: NVMe/TCP: What You Need to Know About the Specification" (webcast Q&amp;A), n.d. https://nvmexpress.org/answering-your-questions-nvme-tcp-what-you-need-to-know-about-the-specification-webcast-qa/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:15" title="Jump back to footnote 15 in the text">&#8617;</a></p>
+</li>
+<li id="fn:16">
+<p>VMware, "Announcing NVMe/TCP support in vSphere 7 Update 3," 2021-09. https://blogs.vmware.com/vsphere/?p=33749 (retrieved 2026-11-01); StorageNewsletter, "VMware vSphere 7 Update 3 with NVMe/TCP support," 2021-10-08. https://www.storagenewsletter.com/?p=239261 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:16" title="Jump back to footnote 16 in the text">&#8617;</a></p>
+</li>
+<li id="fn:17">
+<p>SNIA SDC 2021, Gupta and Rajagopal, "NVMe/TCP in the enterprise," 2021. https://www.snia.org/sites/default/files/2025-05/SNIA-SDC21-Gupta-Rajagopal-NVMe-TCP-in-the-enterprise.pdf (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:17" title="Jump back to footnote 17 in the text">&#8617;</a></p>
+</li>
+<li id="fn:18">
+<p>Dell Technologies, "The future of software-defined networking for storage connectivity" (SmartFabric Storage Software), n.d. https://www.dell.com/fr-ca/blog/the-future-of-software-defined-networking-for-storage-connectivity/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:18" title="Jump back to footnote 18 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:18" title="Jump back to footnote 18 in the text">&#8617;</a></p>
+</li>
+<li id="fn:19">
+<p>Blocks &amp; Files, "Nvidia says Spectrum-X adaptive routing can boost storage fabric bandwidth," 2025-02-04. https://www.blocksandfiles.com/ai-ml/2025/02/04/nvidia-says-spectrum-x-adaptive-routing-can-boost-storage-fabric-bandwidth/1606433 (retrieved 2026-11-01); NVIDIA Developer Blog, "Accelerating AI storage by up to 48% with NVIDIA Spectrum-X networking platform and partners," n.d. (2025). https://developer.nvidia.com/blog/accelerating-ai-storage-by-up-to-48-with-nvidia-spectrum-x-networking-platform-and-partners/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:19" title="Jump back to footnote 19 in the text">&#8617;</a></p>
+</li>
+<li id="fn:20">
+<p>Crehan Research (via GlobeNewswire), "Fibre Channel Networking Sales Grew 6% in 2025, Reports Crehan Research," 2026-03-23. https://www.globenewswire.com/news-release/2026/03/23/3260519/0/en/Fibre-Channel-Networking-Sales-Grew-6-in-2025-Reports-Crehan-Research.html (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:20" title="Jump back to footnote 20 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:20" title="Jump back to footnote 20 in the text">&#8617;</a></p>
+</li>
+<li id="fn:21">
+<p>Broadcom, "Broadcom introduces the world's first quantum-safe Gen 8 128G SAN switch portfolio," 2025-11-19. https://investors.broadcom.com/news-releases/news-release-details/broadcom-introduces-worlds-first-quantum-safe-gen-8-128g-san (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:21" title="Jump back to footnote 21 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:21" title="Jump back to footnote 21 in the text">&#8617;</a></p>
+</li>
+<li id="fn:22">
+<p>Pure Storage, "Purity//FA 6.4 Release Highlights," n.d. https://blog.purestorage.com/purity-fa-releases/current-active-release-purity-fa-6-4-0 (retrieved 2026-11-01); OpenStack Cinder, "[Pure Storage] Add TCP transport type to NVMe driver" (requires Purity 6.4.2+), n.d. https://gitea09.opendev.org:3081/openstack/cinder/commit/dc77207e4c73950f1cacee5c9022586821ea6b59 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:22" title="Jump back to footnote 22 in the text">&#8617;</a></p>
+</li>
+<li id="fn:23">
+<p>NetApp Knowledge Base, "Is NVMe over RoCE supported with ONTAP?" n.d. https://kb.netapp.com/on-prem/ontap/da/SAN/SAN-KBs/Is_NVME_over_ROCE_supported_with_Ontap (retrieved 2026-11-01; search-summary only).&#160;<a class="footnote-backref" href="#fnref:23" title="Jump back to footnote 23 in the text">&#8617;</a></p>
+</li>
+<li id="fn:24">
+<p>NetApp, "NVMe configuration, support and limitations" (ONTAP 9 documentation), n.d. https://docs.netapp.com/us-en/ontap/nvme/support-limitations.html (retrieved 2026-11-01; search-summary only).&#160;<a class="footnote-backref" href="#fnref:24" title="Jump back to footnote 24 in the text">&#8617;</a></p>
+</li>
+<li id="fn:25">
+<p>TechTarget, "NetApp OnTap 9.10.1 adds ransomware protection, NVMe/TCP," 2021. https://www.techtarget.com/searchstorage/news/252508661/NetApp-OnTap-9101-adds-ransomware-protection-NVMe-TCP (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:25" title="Jump back to footnote 25 in the text">&#8617;</a></p>
+</li>
+<li id="fn:26">
+<p>WWT, "PowerStore 2.1: NVMe over TCP and SmartFabric Storage Software," n.d. (2022). https://www.wwt.com/article/powerstore-2-1-nvme-over-tcp-smartfabric-storage-software (retrieved 2026-11-01; search-summary only).&#160;<a class="footnote-backref" href="#fnref:26" title="Jump back to footnote 26 in the text">&#8617;</a></p>
+</li>
+<li id="fn:27">
+<p>Channelbuzz, "Dell upgrades PowerStore software and unveils entry-level PowerStore 500 model," 2021-04. https://channelbuzz.ca/2021/04/dell-upgrades-powerstore-software-and-unveils-entry-level-powerstore-500-model-36437/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:27" title="Jump back to footnote 27 in the text">&#8617;</a></p>
+</li>
+<li id="fn:28">
+<p>Blocks &amp; Files, "More power for PowerStore: Dell adds NVMe/TCP networking to unified file/block array," 2021-09-28. https://blocksandfiles.com/2021/09/28/more-power-for-powerstore-dell-adds-nvme-tcp-networking-to-unified-fileblock-array/ (retrieved 2026-11-01); Dell Info Hub, "What's New with the Dell PowerStoreOS 2.1 Release?" 2022. https://infohub.delltechnologies.com/en-au/p/what-s-new-with-the-dell-powerstoreos-2-1-release (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:28" title="Jump back to footnote 28 in the text">&#8617;</a></p>
+</li>
+<li id="fn:29">
+<p>NVM Express, "Which specifications are included in the refactored NVMe 2.0 specifications?" (FAQ), n.d. https://nvmexpress.org/?p=5558 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:29" title="Jump back to footnote 29 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../../01-storage-fundamentals/06-data-protection-and-resilience/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 6. Data protection and resilience">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                6. Data protection and resilience
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../08-file-protocols/" class="md-footer__link md-footer__link--next" aria-label="Next: 8. File protocols">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                8. File protocols
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,134 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 720" width="1000" role="img" aria-labelledby="t d" font-family="Inter, Helvetica, Arial, sans-serif">
+  <title id="t">Inside an enterprise NVMe SSD</title>
+  <desc id="d">A host connects over PCIe and NVMe to a controller system-on-chip. The controller contains several real-time processor cores running the flash translation layer firmware, hardware engines for error correction, encryption and DMA, on-chip SRAM, a DRAM controller and flash channel controllers. External DRAM holds the logical-to-physical mapping table, about 1 GB per TB of flash at 4 KB granularity. A bank of power-loss capacitors keeps the drive alive long enough to flush buffered data and map updates. Eight or sixteen NAND channels each connect to several dies; each die contains planes, each plane thousands of erase blocks, each block hundreds of pages. A hatched share of blocks is over-provisioned spare area that the host never sees.</desc>
+  <defs>
+    <pattern id="op" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
+      <rect width="6" height="6" fill="#FDE6D8"/><line x1="0" y1="0" x2="0" y2="6" stroke="#D55E00" stroke-width="2"/>
+    </pattern>
+  </defs>
+  <rect x="0" y="0" width="1000" height="720" fill="#FFFFFF"/>
+
+  <text x="20" y="34" font-size="20" font-weight="700" fill="#222222">Inside an enterprise NVMe SSD: a small computer wrapped around NAND</text>
+  <text x="20" y="56" font-size="13" fill="#555555">Logical view, not to scale. Original drawing for the Everpure Tech Atlas, Chapter 3.</text>
+
+  <!-- Host -->
+  <rect x="20" y="300" width="150" height="150" rx="8" fill="#DDEEF9" stroke="#56B4E9" stroke-width="2"/>
+  <text x="95" y="330" font-size="15" font-weight="700" text-anchor="middle" fill="#222222">Host server</text>
+  <text x="95" y="354" font-size="12" text-anchor="middle" fill="#222222">OS / array software</text>
+  <text x="95" y="372" font-size="12" text-anchor="middle" fill="#222222">sees a flat range</text>
+  <text x="95" y="390" font-size="12" text-anchor="middle" fill="#222222">of logical blocks</text>
+  <text x="95" y="408" font-size="12" text-anchor="middle" fill="#222222">(LBAs)</text>
+  <text x="95" y="426" font-size="12" text-anchor="middle" fill="#555555">client drives may</text>
+  <text x="95" y="441" font-size="12" text-anchor="middle" fill="#555555">borrow host DRAM</text>
+  <!-- host link -->
+  <line x1="170" y1="375" x2="214" y2="375" stroke="#222222" stroke-width="3"/>
+  <polygon points="214,368 226,375 214,382" fill="#222222"/>
+  <text x="196" y="364" font-size="12" text-anchor="middle" fill="#222222">PCIe</text>
+  <text x="196" y="398" font-size="12" text-anchor="middle" fill="#222222">x4</text>
+
+  <!-- Controller SoC -->
+  <rect x="226" y="80" width="370" height="430" rx="10" fill="#EAF3FA" stroke="#0072B2" stroke-width="2.5"/>
+  <text x="411" y="106" font-size="16" font-weight="700" text-anchor="middle" fill="#0072B2">Controller SoC (custom ASIC)</text>
+
+  <g font-size="13" font-weight="700" fill="#FFFFFF" text-anchor="middle">
+    <rect x="244" y="120" width="76" height="44" rx="5" fill="#0072B2"/><text x="282" y="147">Core 1</text>
+    <rect x="330" y="120" width="76" height="44" rx="5" fill="#0072B2"/><text x="368" y="147">Core 2</text>
+    <rect x="416" y="120" width="76" height="44" rx="5" fill="#0072B2"/><text x="454" y="147">Core 3</text>
+    <rect x="502" y="120" width="76" height="44" rx="5" fill="#0072B2"/><text x="540" y="147">Core N</text>
+  </g>
+  <text x="411" y="184" font-size="12" text-anchor="middle" fill="#222222">Real-time Arm cores run the FTL firmware: mapping, garbage</text>
+  <text x="411" y="200" font-size="12" text-anchor="middle" fill="#222222">collection, wear leveling, bad-block and refresh management</text>
+
+  <rect x="244" y="212" width="334" height="52" rx="5" fill="#FFFFFF" stroke="#888888"/>
+  <text x="411" y="234" font-size="13" font-weight="700" text-anchor="middle" fill="#222222">Hardware engines</text>
+  <text x="411" y="253" font-size="12" text-anchor="middle" fill="#222222">LDPC error correction · AES encryption · DMA · CRC</text>
+
+  <rect x="244" y="274" width="160" height="52" rx="5" fill="#FFFFFF" stroke="#888888"/>
+  <text x="324" y="296" font-size="13" font-weight="700" text-anchor="middle" fill="#222222">On-chip SRAM</text>
+  <text x="324" y="314" font-size="12" text-anchor="middle" fill="#222222">hot map entries</text>
+  <rect x="418" y="274" width="160" height="52" rx="5" fill="#FFFFFF" stroke="#888888"/>
+  <text x="498" y="296" font-size="13" font-weight="700" text-anchor="middle" fill="#222222">DRAM controller</text>
+  <text x="498" y="314" font-size="12" text-anchor="middle" fill="#222222">DDR4 / LPDDR4 class</text>
+
+  <rect x="244" y="336" width="334" height="70" rx="5" fill="#FFFFFF" stroke="#888888"/>
+  <text x="411" y="358" font-size="13" font-weight="700" text-anchor="middle" fill="#222222">NVMe front end + PCIe controller and SerDes</text>
+  <text x="411" y="377" font-size="12" text-anchor="middle" fill="#222222">submission / completion queues, doorbells, namespaces;</text>
+  <text x="411" y="394" font-size="12" text-anchor="middle" fill="#222222">ZNS and FDP live here when supported</text>
+
+  <rect x="244" y="416" width="334" height="80" rx="5" fill="#FFFFFF" stroke="#888888"/>
+  <text x="411" y="438" font-size="13" font-weight="700" text-anchor="middle" fill="#222222">Flash channel controllers + NAND PHY</text>
+  <text x="411" y="457" font-size="12" text-anchor="middle" fill="#222222">8 or 16 independent channels (ONFI / Toggle),</text>
+  <text x="411" y="474" font-size="12" text-anchor="middle" fill="#222222">each up to ~2.4–3.6 GT/s on current parts;</text>
+  <text x="411" y="490" font-size="12" text-anchor="middle" fill="#222222">schedules reads, programs and erases per die</text>
+
+  <!-- DRAM -->
+  <line x1="498" y1="326" x2="498" y2="336" stroke="#E69F00" stroke-width="0"/>
+  <rect x="226" y="540" width="230" height="100" rx="8" fill="#FBEBCB" stroke="#E69F00" stroke-width="2"/>
+  <text x="341" y="564" font-size="15" font-weight="700" text-anchor="middle" fill="#222222">DRAM chips</text>
+  <text x="341" y="584" font-size="12" text-anchor="middle" fill="#222222">logical-to-physical map:</text>
+  <text x="341" y="601" font-size="12" text-anchor="middle" fill="#222222">~1 GB per TB of flash at 4 KB</text>
+  <text x="341" y="618" font-size="12" text-anchor="middle" fill="#222222">granularity, plus write buffer</text>
+  <line x1="341" y1="510" x2="341" y2="540" stroke="#E69F00" stroke-width="3"/>
+
+  <!-- PLP capacitors -->
+  <rect x="470" y="540" width="126" height="100" rx="8" fill="#FBF7C9" stroke="#C9B800" stroke-width="2"/>
+  <text x="533" y="562" font-size="13" font-weight="700" text-anchor="middle" fill="#222222">Power-loss</text>
+  <text x="533" y="578" font-size="13" font-weight="700" text-anchor="middle" fill="#222222">capacitors</text>
+  <g stroke="#222222" stroke-width="2">
+    <line x1="494" y1="592" x2="494" y2="610"/><line x1="502" y1="592" x2="502" y2="610"/>
+    <line x1="529" y1="592" x2="529" y2="610"/><line x1="537" y1="592" x2="537" y2="610"/>
+    <line x1="564" y1="592" x2="564" y2="610"/><line x1="572" y1="592" x2="572" y2="610"/>
+  </g>
+  <text x="533" y="628" font-size="12" text-anchor="middle" fill="#222222">flush on power loss</text>
+  <line x1="533" y1="510" x2="533" y2="540" stroke="#C9B800" stroke-width="3" stroke-dasharray="4 3"/>
+
+  <!-- NAND array -->
+  <rect x="630" y="80" width="355" height="430" rx="10" fill="#F4F4F4" stroke="#888888" stroke-width="1.5"/>
+  <text x="807" y="106" font-size="16" font-weight="700" text-anchor="middle" fill="#222222">NAND flash array</text>
+
+  <!-- channel buses -->
+  <g stroke="#009E73" stroke-width="3" fill="none">
+    <path d="M578 456 L612 456 L612 150 L650 150"/>
+    <path d="M612 230 L650 230"/>
+    <path d="M612 310 L650 310"/>
+    <path d="M612 456 L612 420 L650 420"/>
+  </g>
+  <g font-size="12" fill="#222222">
+    <text x="650" y="133">Ch 0</text><text x="650" y="213">Ch 1</text><text x="650" y="293">Ch 2</text><text x="650" y="403">Ch 15</text>
+  </g>
+  <text x="807" y="365" font-size="16" text-anchor="middle" fill="#555555">⋮</text>
+  <g fill="#009E73" stroke="#00684D">
+    <rect x="690" y="135" width="62" height="34" rx="3"/><rect x="760" y="135" width="62" height="34" rx="3"/><rect x="830" y="135" width="62" height="34" rx="3"/><rect x="900" y="135" width="62" height="34" rx="3"/>
+    <rect x="690" y="215" width="62" height="34" rx="3"/><rect x="760" y="215" width="62" height="34" rx="3"/><rect x="830" y="215" width="62" height="34" rx="3"/><rect x="900" y="215" width="62" height="34" rx="3"/>
+    <rect x="690" y="295" width="62" height="34" rx="3"/><rect x="760" y="295" width="62" height="34" rx="3"/><rect x="830" y="295" width="62" height="34" rx="3"/><rect x="900" y="295" width="62" height="34" rx="3"/>
+    <rect x="690" y="405" width="62" height="34" rx="3"/><rect x="760" y="405" width="62" height="34" rx="3"/><rect x="830" y="405" width="62" height="34" rx="3"/><rect x="900" y="405" width="62" height="34" rx="3"/>
+  </g>
+  <g font-size="12" fill="#FFFFFF" text-anchor="middle">
+    <text x="721" y="157">die 0</text><text x="791" y="157">die 1</text><text x="861" y="157">die 2</text><text x="931" y="157">die k</text>
+    <text x="721" y="237">die 0</text><text x="791" y="237">die 1</text><text x="861" y="237">die 2</text><text x="931" y="237">die k</text>
+    <text x="721" y="317">die 0</text><text x="791" y="317">die 1</text><text x="861" y="317">die 2</text><text x="931" y="317">die k</text>
+    <text x="721" y="427">die 0</text><text x="791" y="427">die 1</text><text x="861" y="427">die 2</text><text x="931" y="427">die k</text>
+  </g>
+  <text x="807" y="470" font-size="12" text-anchor="middle" fill="#222222">Each channel is a shared bus; dies on it work in parallel.</text>
+  <text x="807" y="488" font-size="12" text-anchor="middle" fill="#222222">Throughput comes from keeping many dies busy at once.</text>
+
+  <!-- die zoom -->
+  <rect x="630" y="530" width="355" height="175" rx="10" fill="#FFFFFF" stroke="#009E73" stroke-width="2"/>
+  <text x="645" y="552" font-size="13" font-weight="700" fill="#222222">Zoom into one die</text>
+  <g stroke="#00684D" fill="#E3F4EE">
+    <rect x="645" y="562" width="70" height="60" rx="3"/><rect x="722" y="562" width="70" height="60" rx="3"/>
+    <rect x="799" y="562" width="70" height="60" rx="3"/><rect x="876" y="562" width="70" height="60" rx="3"/>
+  </g>
+  <g stroke="#00684D" fill="url(#op)">
+    <rect x="645" y="608" width="70" height="14"/><rect x="722" y="608" width="70" height="14"/>
+    <rect x="799" y="608" width="70" height="14"/><rect x="876" y="608" width="70" height="14"/>
+  </g>
+  <g font-size="12" fill="#222222" text-anchor="middle">
+    <text x="680" y="590">plane 0</text><text x="757" y="590">plane 1</text><text x="834" y="590">plane 2</text><text x="911" y="590">plane 3</text>
+  </g>
+  <text x="645" y="640" font-size="12" fill="#222222">plane → thousands of blocks (MBs) → pages (~16 KB)</text>
+  <text x="645" y="657" font-size="12" fill="#D55E00">program by page, erase only by whole block</text>
+  <rect x="645" y="670" width="22" height="14" fill="url(#op)" stroke="#D55E00"/>
+  <text x="675" y="682" font-size="12" fill="#222222">over-provisioned spare blocks: ~7–37% extra,</text>
+  <text x="675" y="698" font-size="12" fill="#222222">hidden from the host, used by garbage collection</text>
+</svg>

@@ -1,0 +1,3760 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="A strategy-level knowledge base on storage, AI storage and the competitive landscape around Everpure (formerly Pure Storage).">
+      
+      
+      
+        <link rel="canonical" href="https://frankhuang94.github.io/storage-_db_claude/01-storage-fundamentals/02-media-physics/">
+      
+      
+        <link rel="prev" href="../01-what-storage-does/">
+      
+      
+        <link rel="next" href="../03-inside-an-ssd/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.0">
+    
+    
+      
+        <title>2. Media physics for a semis person - Everpure Tech Atlas</title>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
+      
+        
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+      <link rel="stylesheet" href="../../assets/extra.css">
+    
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#2-media-physics-for-a-semis-person" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href="../.." title="Everpure Tech Atlas" class="md-header__button md-logo" aria-label="Everpure Tech Atlas" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Everpure Tech Atlas
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              2. Media physics for a semis person
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange"  aria-label="Dark mode"  type="radio" name="__palette" id="__palette_0">
+    
+      <label class="md-header__button md-icon" title="Dark mode" for="__palette_1" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a4 4 0 0 0-4 4 4 4 0 0 0 4 4 4 4 0 0 0 4-4 4 4 0 0 0-4-4m0 10a6 6 0 0 1-6-6 6 6 0 0 1 6-6 6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="slate" data-md-color-primary="blue-grey" data-md-color-accent="deep-orange"  aria-label="Light mode"  type="radio" name="__palette" id="__palette_1">
+    
+      <label class="md-header__button md-icon" title="Light mode" for="__palette_0" hidden>
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c-.89 0-1.74-.2-2.5-.55C11.56 16.5 13 14.42 13 12s-1.44-4.5-3.5-5.45C10.26 6.2 11.11 6 12 6a6 6 0 0 1 6 6 6 6 0 0 1-6 6m8-9.31V4h-4.69L12 .69 8.69 4H4v4.69L.69 12 4 15.31V20h4.69L12 23.31 15.31 20H20v-4.69L23.31 12z"/></svg>
+      </label>
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+        <div class="md-search__suggest" data-md-component="search-suggest"></div>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+      <div class="md-header__source">
+        <a href="https://github.com/FrankHuang94/storage-_db_claude" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    storage-_db_claude
+  </div>
+</a>
+      </div>
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href="../.." title="Everpure Tech Atlas" class="md-nav__button md-logo" aria-label="Everpure Tech Atlas" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Everpure Tech Atlas
+  </label>
+  
+    <div class="md-nav__source">
+      <a href="https://github.com/FrankHuang94/storage-_db_claude" title="Go to repository" class="md-source" data-md-component="source">
+  <div class="md-source__icon md-icon">
+    
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512"><!--! Font Awesome Free 7.1.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free (Icons: CC BY 4.0, Fonts: SIL OFL 1.1, Code: MIT License) Copyright 2025 Fonticons, Inc.--><path d="M439.6 236.1 244 40.5c-5.4-5.5-12.8-8.5-20.4-8.5s-15 3-20.4 8.4L162.5 81l51.5 51.5c27.1-9.1 52.7 16.8 43.4 43.7l49.7 49.7c34.2-11.8 61.2 31 35.5 56.7-26.5 26.5-70.2-2.9-56-37.3L240.3 199v121.9c25.3 12.5 22.3 41.8 9.1 55-6.4 6.4-15.2 10.1-24.3 10.1s-17.8-3.6-24.3-10.1c-17.6-17.6-11.1-46.9 11.2-56v-123c-20.8-8.5-24.6-30.7-18.6-45L142.6 101 8.5 235.1C3 240.6 0 247.9 0 255.5s3 15 8.5 20.4l195.6 195.7c5.4 5.4 12.7 8.4 20.4 8.4s15-3 20.4-8.4l194.7-194.7c5.4-5.4 8.4-12.8 8.4-20.4s-3-15-8.4-20.4"/></svg>
+  </div>
+  <div class="md-source__repository">
+    storage-_db_claude
+  </div>
+</a>
+    </div>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_2" >
+        
+          
+          <label class="md-nav__link" for="__nav_2" id="__nav_2_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 0 — Start Here
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_2_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_2">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 0 — Start Here
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start-here/00a-how-to-use-this-atlas/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0.1. How to use this atlas
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../00-start-here/00b-one-page-map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    0.2. The one-page map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--active md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        
+          
+          <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 1 — Storage Fundamentals
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+          <label class="md-nav__title" for="__nav_3">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 1 — Storage Fundamentals
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../01-what-storage-does/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    1. What storage does
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Media physics for a semis person
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    2. Media physics for a semis person
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters-for-everpure-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters for Everpure strategy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-hierarchy-same-logic-as-a-cpu-cache-wider-gaps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The hierarchy: same logic as a CPU cache, wider gaps
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#one-level-deeper-on-a-nand-cell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        One level deeper on a NAND cell
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bits-per-cell-the-costquality-dial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bits per cell: the cost/quality dial
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-qlc-needs-a-smart-write-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why QLC needs a smart write path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3d-nand-scaling-layers-decks-and-bonding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3D NAND scaling: layers, decks and bonding
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hdd-mechanics-capacity-keeps-rising-performance-does-not" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HDD mechanics: capacity keeps rising, performance does not
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cost-per-bit-curves-why-the-gap-moved" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cost-per-bit curves: why the gap moved
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-everpure-approaches-it-vs-competitors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Everpure approaches it vs. competitors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#history-and-trajectory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        History and trajectory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#numbers-that-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Numbers that matter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversation-playbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversation playbook
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-deeper-optional-l3-pointers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going deeper (optional, L3 pointers)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key terms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../03-inside-an-ssd/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    3. Inside an SSD
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../04-performance-and-economics-metrics/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    4. Performance and economics metrics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../05-data-reduction/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    5. Data reduction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../06-data-protection-and-resilience/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    6. Data protection and resilience
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_4" >
+        
+          
+          <label class="md-nav__link" for="__nav_4" id="__nav_4_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 2 — Protocols and Networking
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_4_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_4">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 2 — Protocols and Networking
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/07-block-protocols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    7. Block protocols
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/08-file-protocols/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    8. File protocols
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/09-object-storage-and-s3/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    9. Object storage and S3
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/10-datacenter-networking/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    10. Datacenter networking for storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/11-gpu-data-path/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    11. The GPU data path
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../02-protocols-and-networking/12-interfaces-and-emerging-tech/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    12. Interfaces and emerging tech
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_5" >
+        
+          
+          <label class="md-nav__link" for="__nav_5" id="__nav_5_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 3 — Storage System Architecture
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_5_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_5">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 3 — Storage System Architecture
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/13-storage-stack/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    13. The storage stack, layer by layer
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/14-scale-up-dual-controller/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    14. Scale-up dual-controller arrays
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/15-scale-out-shared-nothing/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    15. Scale-out shared-nothing clusters
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/16-disaggregated-shared-everything/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    16. Disaggregated shared-everything architectures
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/17-parallel-file-systems/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    17. Parallel and distributed file systems
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/18-object-storage-architecture/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    18. Object storage architecture
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/19-software-defined-and-hci/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    19. Software-defined storage and HCI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/20-distributed-systems-fundamentals/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    20. Distributed-systems fundamentals for storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/21-metadata/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    21. Metadata: the hidden bottleneck
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/22-control-planes/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    22. Control planes and fleet management
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/23-consumption-models/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    23. Consumption models
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../03-system-architecture/24-architecture-decision-matrix/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    24. Architecture decision matrix
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_6" >
+        
+          
+          <label class="md-nav__link" for="__nav_6" id="__nav_6_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 4 — Everpure
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_6_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_6">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 4 — Everpure
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/25-company-history-and-strategy/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    25. Company history and strategy, 2009–2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/26-purity-and-directflash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    26. Core technology: Purity and DirectFlash
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/27-flasharray-and-flashblade/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    27. Product portfolio: FlashArray and FlashBlade
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/28-platform-and-software/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    28. Platform and software
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../04-everpure/29-hyperscaler-ecosystem-financials/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    29. Hyperscaler business, ecosystem and financials
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_7" >
+        
+          
+          <label class="md-nav__link" for="__nav_7" id="__nav_7_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 5 — AI Storage
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_7_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_7">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 5 — AI Storage
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/30-ai-data-pipeline/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    30. The AI data pipeline end to end
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/31-training-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    31. Training storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/32-inference-and-kv-cache/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    32. Inference and KV cache
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/33-rag-vector-lakehouse/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    33. RAG, vector databases and AI-native data formats
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/34-nvidia-ecosystem/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    34. NVIDIA's ecosystem and certifications
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/35-ai-factories-and-neoclouds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    35. AI factories and neoclouds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/36-hyperscaler-ai-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    36. How hyperscalers build AI storage
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/37-reading-benchmarks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    37. Reading benchmarks critically
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/38-power-and-density/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    38. Power, density and the AI datacenter
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../05-ai-storage/39-agentic-ai-and-data-intelligence/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    39. Agentic AI and data intelligence
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_8" >
+        
+          
+          <label class="md-nav__link" for="__nav_8" id="__nav_8_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 6 — Industry and Competition
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_8_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_8">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 6 — Industry and Competition
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/40-market-structure/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    40. Market structure and sizing
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/41-why-ai-native-vendors-won/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    41. Why AI-native storage vendors gained traction
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/42-vast-data/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    42. VAST Data deep dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/43-weka/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    43. WEKA deep dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/44-ddn/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    44. DDN deep dive
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/45-head-to-head/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    45. Head-to-head: FlashBlade//EXA vs. VAST vs. WEKA vs. DDN
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/46-incumbents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    46. Incumbents
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/47-other-challengers/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    47. Other challengers and software-defined players
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/48-media-suppliers-and-nand-cycle/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    48. Media suppliers and the NAND cycle
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/49-competitive-matrices/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    49. Competitive landscape matrices
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../06-industry-and-competition/50-diligence-framework/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    50. Technical diligence framework
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_9" >
+        
+          
+          <label class="md-nav__link" for="__nav_9" id="__nav_9_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 7 — History and Future
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_9_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_9">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 7 — History and Future
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/51-history-of-storage/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    51. History of storage, 1956–2026
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/52-history-of-flash/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    52. History of flash and NAND economics
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/53-future-trends/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    53. Future trends, 2026–2032
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../07-history-and-future/54-strategic-option-map/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    54. Strategic option map
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    
+    
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+        
+      
+    
+    
+    
+      
+        
+        
+      
+    
+    
+    <li class="md-nav__item md-nav__item--section md-nav__item--nested">
+      
+        
+        
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_10" >
+        
+          
+          <label class="md-nav__link" for="__nav_10" id="__nav_10_label" tabindex="">
+            
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Part 8 — Conversation Toolkit
+  
+
+    
+  </span>
+  
+  
+
+            <span class="md-nav__icon md-icon"></span>
+          </label>
+        
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_10_label" aria-expanded="false">
+          <label class="md-nav__title" for="__nav_10">
+            <span class="md-nav__icon md-icon"></span>
+            
+  
+    Part 8 — Conversation Toolkit
+  
+
+          </label>
+          <ul class="md-nav__list" data-md-scrollfix>
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/55-talking-with-pms/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    55. Talking with product managers
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/56-talking-with-engineering-and-cto/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    56. Talking with engineering leaders and the CTO office
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/57-question-bank/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    57. Question bank: 150 questions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/58-explain-in-30-seconds/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    58. Explain it in 30 seconds
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/59-self-test-flashcards/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    59. Self-test: 279 flashcards
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../08-conversation-toolkit/60-cheat-sheets/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    60. Cheat sheets
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+          </ul>
+        </nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../glossary/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Glossary
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#tldr" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        TL;DR
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#why-this-matters-for-everpure-strategy" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why this matters for Everpure strategy
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#core-concepts" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Core concepts
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Core concepts">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#the-hierarchy-same-logic-as-a-cpu-cache-wider-gaps" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        The hierarchy: same logic as a CPU cache, wider gaps
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#one-level-deeper-on-a-nand-cell" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        One level deeper on a NAND cell
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#bits-per-cell-the-costquality-dial" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Bits per cell: the cost/quality dial
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#why-qlc-needs-a-smart-write-path" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Why QLC needs a smart write path
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#3d-nand-scaling-layers-decks-and-bonding" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        3D NAND scaling: layers, decks and bonding
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#hdd-mechanics-capacity-keeps-rising-performance-does-not" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        HDD mechanics: capacity keeps rising, performance does not
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#cost-per-bit-curves-why-the-gap-moved" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Cost-per-bit curves: why the gap moved
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#how-everpure-approaches-it-vs-competitors" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        How Everpure approaches it vs. competitors
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#history-and-trajectory" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        History and trajectory
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#numbers-that-matter" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Numbers that matter
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#conversation-playbook" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Conversation playbook
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#going-deeper-optional-l3-pointers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Going deeper (optional, L3 pointers)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#key-terms" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Key terms
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#sources" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sources
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+  
+  
+
+
+<h1 id="2-media-physics-for-a-semis-person">2. Media physics for a semis person<a class="headerlink" href="#2-media-physics-for-a-semis-person" title="Permanent link">&para;</a></h1>
+<blockquote>
+<p><strong>Depth:</strong> L2 · <strong>Reading time:</strong> ~14 min · <strong>Last verified:</strong> 2026-11-01
+<strong>Prerequisites:</strong> <a href="../01-what-storage-does/">What storage does</a> · NAND basics from semiconductors (assumed)</p>
+</blockquote>
+<h2 id="tldr">TL;DR<a class="headerlink" href="#tldr" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>Storage is a cache hierarchy with a cliff in the middle.</strong> Memory tiers answer in ~100–400 ns, NAND in ~50–150 µs. Most storage-system design is about hiding that ~1,000× wall.</li>
+<li><strong>NAND is asymmetric by physics.</strong> You program pages but erase only whole blocks, and every cell wears out after finite program/erase (P/E) cycles. Hence the flash translation layer (FTL), and why "who runs the FTL" is strategic (<a href="../03-inside-an-ssd/">Chapter 3</a>, <a href="../../04-everpure/26-purity-and-directflash/">Chapter 26</a>).</li>
+<li><strong>Each extra bit per cell roughly halves the voltage margin.</strong> QLC (16 states) is cheaper per bit but slower, less durable and more fragile than SLC (2 states). It works in enterprise only when software turns small random writes into large sequential ones.</li>
+<li><strong>Scaling moved from lithography to layers, and from layers to bonding.</strong> Leading 3D NAND went from 24 layers in 2013 to 400+ in 2026. Bit density per mm², not layer count, is the number to ask for.</li>
+<li><strong>HDD is not dead, and the 2026 shortage reset the economics.</strong> HAMR ships 40–44 TB drives, and in 2026 enterprise flash cost ~18–23× disk per TB, up from ~6–10×. "Flash replaces disk" now rests on power, density and operations, not purchase price.</li>
+</ul>
+<h2 id="why-this-matters-for-everpure-strategy">Why this matters for Everpure strategy<a class="headerlink" href="#why-this-matters-for-everpure-strategy" title="Permanent link">&para;</a></h2>
+<p>Everpure's core technical bet is that whoever manages raw NAND best wins on cost, density and power. Its DirectFlash Modules expose raw NAND to Purity software rather than hiding it behind a per-drive controller, and the same technology underpins its hyperscaler design wins with Meta (December 2024) and a second top-five hyperscaler (August 2026)<sup id="fnref:1"><a class="footnote-ref" href="#fn:1">1</a></sup><sup id="fnref:2"><a class="footnote-ref" href="#fn:2">2</a></sup>. Claims about endurance, QLC viability or "flash cheaper than disk" all trace back to the physics in this chapter; knowing it lets you test them rather than repeat them.</p>
+<p>The 2025–26 memory shortage makes this urgent. NAND contract prices rose every quarter of 2026. TrendForce expected another 15–20% rise in 4Q26, with enterprise SSDs up 23–28%<sup id="fnref:3"><a class="footnote-ref" href="#fn:3">3</a></sup>. When flash costs 18× disk per TB instead of 6×, the argument for replacing disk changes from "cheaper to buy" to "cheaper to power, house and run". <a href="../../06-industry-and-competition/48-media-suppliers-and-nand-cycle/">Chapter 48</a> covers the supply cycle.</p>
+<h2 id="core-concepts">Core concepts<a class="headerlink" href="#core-concepts" title="Permanent link">&para;</a></h2>
+<h3 id="the-hierarchy-same-logic-as-a-cpu-cache-wider-gaps">The hierarchy: same logic as a CPU cache, wider gaps<a class="headerlink" href="#the-hierarchy-same-logic-as-a-cpu-cache-wider-gaps" title="Permanent link">&para;</a></h3>
+<p><img alt="Seven-tier pyramid from HBM at the top through DRAM, CXL memory, local NVMe SSD, networked flash and HDD to tape at the bottom, with columns for access latency, price per GB and typical capacity, and a dashed line marking a roughly 1,000-fold latency jump between memory and flash tiers." src="../../assets/diagrams/ch02-media-hierarchy.svg" /></p>
+<p><em>Figure 2.1 — Every tier down is roughly 10× cheaper and 10× bigger, but the step from memory to flash costs about 1,000× in latency, and that wall shapes storage architecture.</em></p>
+<p>Sources for the 2026 figures: HBM3E contract pricing is estimated at roughly $8–18 per GB<sup id="fnref:4"><a class="footnote-ref" href="#fn:4">4</a></sup>. In 2026, server DDR5 rose to a similar range: a 64 GB RDIMM ended 1Q26 at about $927, or about $14.5/GB<sup id="fnref:5"><a class="footnote-ref" href="#fn:5">5</a></sup>. The HBM premium over DDR5 was expected to narrow in 2026<sup id="fnref:6"><a class="footnote-ref" href="#fn:6">6</a></sup>. A Blackwell Ultra-class GPU carries 288 GB of HBM3E, in 12-high stacks<sup id="fnref:7"><a class="footnote-ref" href="#fn:7">7</a></sup>. HBM is a bandwidth tier, not a latency tier: measured from a GPU core, a dependent load that misses the caches takes roughly 350 ns on an H100<sup id="fnref:8"><a class="footnote-ref" href="#fn:8">8</a></sup>, slower than a CPU's local DRAM. Measured CXL memory expanders show load latencies of about 214–271 ns<sup id="fnref:9"><a class="footnote-ref" href="#fn:9">9</a></sup>. They ship as modules of 256 GB<sup id="fnref:10"><a class="footnote-ref" href="#fn:10">10</a></sup> and as boxes of up to 16 TB<sup id="fnref:11"><a class="footnote-ref" href="#fn:11">11</a></sup>. NVMe-oF over RDMA adds about 5–15 µs to a local flash access<sup id="fnref:12"><a class="footnote-ref" href="#fn:12">12</a></sup>, and array software adds more. A 30 TB nearline HDD indexed at $1,216 works out to about $0.04/GB<sup id="fnref:13"><a class="footnote-ref" href="#fn:13">13</a></sup>. LTO-10 cartridges hold 30 TB native and sell for about $275–315<sup id="fnref:14"><a class="footnote-ref" href="#fn:14">14</a></sup><sup id="fnref:15"><a class="footnote-ref" href="#fn:15">15</a></sup>, or about $0.01/GB for media alone.</p>
+<p>Three points for a semis reader:</p>
+<ol>
+<li><strong>The wall is architectural, not just quantitative.</strong> Above it, the CPU issues loads and stores to volatile, byte-addressable media. Below it, the OS queues block I/O to persistent media through a driver. Crossing it costs a software stack and microseconds of overhead. Intel's Optane partly filled the gap but needed new software models to exploit, and Intel wound it down in 2022<sup id="fnref:16"><a class="footnote-ref" href="#fn:16">16</a></sup>.</li>
+<li><strong>2026 broke the price ladder at the top.</strong> HBM normally costs several times DRAM per GB; the 2026 shortage brought them level. DRAM-heavy designs got far costlier, strengthening the case for pushing KV cache and metadata down to flash (<a href="../../05-ai-storage/32-inference-and-kv-cache/">Chapter 32</a>).</li>
+<li><strong>Networked flash costs latency, not much else.</strong> The fabric adds microseconds against a ~100 µs media read. It buys sharing, protection and independent scaling (<a href="../../03-system-architecture/16-disaggregated-shared-everything/">Chapter 16</a>).</li>
+</ol>
+<h3 id="one-level-deeper-on-a-nand-cell">One level deeper on a NAND cell<a class="headerlink" href="#one-level-deeper-on-a-nand-cell" title="Permanent link">&para;</a></h3>
+<p>Modern 3D NAND mostly replaces the floating gate with a <strong>charge-trap</strong> cell: electrons sit in a silicon-nitride layer wrapped around a vertical polysilicon channel. Word lines are horizontal tungsten plates stacked hundreds high, and a "string" is the column of cells sharing one channel between a bit line and a source line.</p>
+<p><img alt="Three-panel schematic: a vertical NAND string with bit line, select gates, stacked word lines and CMOS logic beneath; a horizontal slice of one charge-trap cell showing concentric word line, blocking oxide, charge-trap layer with electrons, tunnel oxide, channel and core; and threshold-voltage distributions for SLC, TLC and QLC showing 2, 8 and 16 states in the same window." src="../../assets/diagrams/ch02-nand-cell.svg" /></p>
+<p><em>Figure 2.2 — Cells sit in series on a vertical string, store charge in a nitride trap, and must fit ever more voltage states into the same few-volt window.</em></p>
+<p>Four behaviours matter for system design:</p>
+<p><strong>Program/erase asymmetry.</strong> Programming uses incremental step pulses (ISPP) on one word line to tunnel electrons into the trap layer, page by page (~16 kB per plane today; TLC and QLC store several logical pages per word line and often program them in multiple passes). Erase raises the channel to a high voltage relative to every word line in a block. In a charge-trap cell that works mostly by injecting holes that neutralise the trapped electrons, not by pulling electrons back out. Many 3D designs have no body contact under the polysilicon channel, so they generate those holes by gate-induced drain leakage at the select gates. Either way it can only be done for a whole <strong>block</strong> of many megabytes in current 3D parts. Program takes hundreds of µs (TLC) to a few ms (QLC); erase takes several ms. Above all, you cannot overwrite in place: an update goes to a fresh page, and the old page is garbage until its whole block is reclaimed. That creates the FTL, garbage collection and write amplification, a background housekeeping tax set by cell physics, much as refresh is for DRAM (<a href="../03-inside-an-ssd/">Chapter 3</a>).</p>
+<p><strong>Endurance.</strong> Each P/E cycle drives charge through the tunnel oxide and leaves interface and bulk traps behind. The threshold-voltage distributions widen until the controller's error correction (LDPC codes) can no longer separate them. Worked example in drive writes per day (DWPD): DWPD ≈ P/E cycles × (raw ÷ user capacity) ÷ (write amplification × days of warranty). Take a QLC part rated for 1,000 cycles over 5 years (1,825 days), and ignore spare area for simplicity (raw = user). It gives 1,000 ÷ 1,825 ≈ 0.55 DWPD if writes arrive perfectly sequential (WAF = 1). The same drive under random small writes at WAF = 3 gives about 0.18 DWPD. On a 122.88 TB drive, that is the difference between ~67 TB and ~22 TB of host writes per day. A shipping drive shows the same ratio: Micron rates its 245.76 TB QLC 6600 ION at 1.0 DWPD for 128 KB sequential writes but 0.3 DWPD for 16 KB random writes<sup id="fnref:17"><a class="footnote-ref" href="#fn:17">17</a></sup>. The sequential rating also implies that current QLC is good for well over 1,000 cycles, nearer 2,000, so the worked example is conservative.</p>
+<p><strong>Retention.</strong> Trapped charge leaks, faster when hot and faster in worn cells (the loss is thermally activated, so vendors accelerate it with bake tests). JEDEC's enterprise SSD rating (JESD218) requires only three months of unpowered retention at 40 °C, at the end of rated life. A fresh drive retains far longer, but nobody guarantees how long. Powered drives refresh data in the background, but flash is a poor shelf archive, one reason tape survives.</p>
+<p><strong>Read disturb.</strong> Cells in a string sit in series, so reading one cell means applying a pass voltage to every other word line in the block. Each read slightly programs the neighbours. After enough reads the controller must relocate the block. AI training rereads the same blocks every epoch, so even a "read-only" workload creates hidden background writes; a good design schedules them away from foreground reads to protect tail latency.</p>
+<h3 id="bits-per-cell-the-costquality-dial">Bits per cell: the cost/quality dial<a class="headerlink" href="#bits-per-cell-the-costquality-dial" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Cell type</th>
+<th>Bits/cell</th>
+<th>Voltage states</th>
+<th>Typical P/E endurance</th>
+<th>Typical page read (tR)</th>
+<th>2026 status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>SLC</td>
+<td>1</td>
+<td>2</td>
+<td>~50,000–100,000</td>
+<td>~20–30 µs</td>
+<td>Caches, write buffers, low-latency SCM-like parts</td>
+</tr>
+<tr>
+<td>MLC</td>
+<td>2</td>
+<td>4</td>
+<td>~3,000–10,000</td>
+<td>~50 µs</td>
+<td>Largely displaced in data centers</td>
+</tr>
+<tr>
+<td>TLC</td>
+<td>3</td>
+<td>8</td>
+<td>~3,000–10,000 (enterprise grades at the top)</td>
+<td>~40–80 µs</td>
+<td>Performance tier; the volume workhorse</td>
+</tr>
+<tr>
+<td>QLC</td>
+<td>4</td>
+<td>16</td>
+<td>~1,000–3,000</td>
+<td>~100–160 µs</td>
+<td>Capacity tier; 122–256 TB SSDs<sup id="fnref2:18"><a class="footnote-ref" href="#fn:18">18</a></sup><sup id="fnref2:19"><a class="footnote-ref" href="#fn:19">19</a></sup><sup id="fnref2:20"><a class="footnote-ref" href="#fn:20">20</a></sup></td>
+</tr>
+<tr>
+<td>PLC</td>
+<td>5</td>
+<td>32</td>
+<td>Lower still (not commercial)</td>
+<td>Slower still</td>
+<td>Research only; SK hynix showed a split-cell design at IEDM in December 2025<sup id="fnref3:21"><a class="footnote-ref" href="#fn:21">21</a></sup></td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 2.1 — Each added bit gives 100%, 50%, 33% then 25% more bits per cell, while doubling the states to resolve. The cost gain shrinks as the physics penalty grows.</em> Endurance and tR are typical ranges across vendors. NAND makers rarely publish P/E ratings. The TLC and QLC ranges are consistent with the DWPD ratings of the Micron drives cited in this chapter and <a href="../03-inside-an-ssd/">Chapter 3</a> once over-provisioning and WAF are backed out, but they are not datasheet values [VERIFY: confirm P/E ranges against 2025–26 NAND vendor disclosures].</p>
+<p>TLC→QLC adds ~33% capacity per die, minus extra ECC parity and over-provisioning. QLC→PLC adds only 25% for twice the states, which is why PLC keeps slipping and the industry adds layers rather than bits.</p>
+<h3 id="why-qlc-needs-a-smart-write-path">Why QLC needs a smart write path<a class="headerlink" href="#why-qlc-needs-a-smart-write-path" title="Permanent link">&para;</a></h3>
+<p>QLC programs slowly, in large units, and wears out quickly. Small random overwrites force the FTL to keep moving valid data out of partly-stale blocks, so write amplification rises, endurance falls and latency turns erratic. Serious QLC systems put a write path in front of the NAND:</p>
+<pre class="mermaid"><code>flowchart LR
+    A["Small random writes from hosts"] --&gt; B["Fast persistent buffer: NVRAM, SCM or SLC-mode flash"]
+    B --&gt; C["Coalesce, dedupe, compress"]
+    C --&gt; D["Sort by expected lifetime: hot vs cold"]
+    D --&gt; E["Large sequential stripes aligned to erase blocks"]
+    E --&gt; F["QLC NAND"]
+    F -. "occasional garbage collection of cold data" .-&gt; D</code></pre>
+<p><em>Figure 2.3 — QLC is viable in enterprise systems only behind a buffer that turns many small writes into few large, lifetime-sorted ones; the further up the stack this happens, the less the NAND sees.</em></p>
+<p>Commodity QLC SSDs do this inside the drive with an SLC-mode cache, which runs out under sustained writes. Arrays do it one level up: VAST buffers in shared SCM before writing wide QLC stripes (<a href="../../03-system-architecture/16-disaggregated-shared-everything/">Chapter 16</a>). Everpure's DirectFlash puts the whole job in array software that sees every module's raw NAND (<a href="../../04-everpure/26-purity-and-directflash/">Chapter 26</a>). Hyperscalers push hints down with NVMe Flexible Data Placement so drives can keep data of similar lifetime together<sup id="fnref:22"><a class="footnote-ref" href="#fn:22">22</a></sup>. The semis analogy is a write-combining buffer in front of a DRAM controller.</p>
+<h3 id="3d-nand-scaling-layers-decks-and-bonding">3D NAND scaling: layers, decks and bonding<a class="headerlink" href="#3d-nand-scaling-layers-decks-and-bonding" title="Permanent link">&para;</a></h3>
+<p>Planar NAND stopped shrinking in the mid-teens of nanometres, when cells held too few electrons to count reliably, so the industry turned the array on its side. The critical step is now etching a channel hole through the whole stack at extreme aspect ratio. Long stacks are built as two or three <strong>decks</strong> that are etched separately and aligned. SK hynix's 321-layer part uses three "plugs" and entered mass production in November 2024<sup id="fnref:23"><a class="footnote-ref" href="#fn:23">23</a></sup>. The newest step is <strong>wafer bonding</strong>: building CMOS periphery on a separate wafer and hybrid-bonding it to the array. Samsung's 400+-layer V10 uses it<sup id="fnref:24"><a class="footnote-ref" href="#fn:24">24</a></sup>.</p>
+<p><img alt="Step chart of leading 3D NAND layer counts from Samsung's 24 layers in 2013 to Samsung V10 at 400-plus layers in 2026, with 2024–26 points sourced and earlier points shown hollow as background-only." src="../../assets/charts/ch02-nand-layers.svg" /></p>
+<p><em>Figure 2.4 — Layer count rose roughly 17× in 13 years, but it is a poor proxy for cost per bit; density and wafer cost decide competitiveness.</em>
+Data: <code>data/ch02_nand_layers.csv</code></p>
+<p>Layer count is a marketing number. Kioxia/Sandisk's 332-layer BiCS10 reportedly reaches about 37 Gb/mm² as QLC, which is denser than Samsung's 400+-layer V10 (about 28 Gb/mm² as TLC)<sup id="fnref:25"><a class="footnote-ref" href="#fn:25">25</a></sup><sup id="fnref2:24"><a class="footnote-ref" href="#fn:24">24</a></sup>. Micron's 276-layer G9 is about 21 Gb/mm² in TLC<sup id="fnref:26"><a class="footnote-ref" href="#fn:26">26</a></sup>. Comparing QLC with TLC flatters BiCS10, but the lesson stands: ask for Gb/mm², wafer cost and yield, as for a logic node. Each deck adds deposition and etch steps, so capex per wafer rises even as cost per bit falls, which makes suppliers cautious about adding capacity even in a shortage.</p>
+<p>Bigger dies and more layers produce bigger drives. Micron began shipping the 245.76 TB 6600 ION, built on G9 QLC, in May 2026<sup id="fnref:18"><a class="footnote-ref" href="#fn:18">18</a></sup>. Sandisk has a 256 TB drive on 218-layer BiCS8 and shows 512 TB on its roadmap for 2027<sup id="fnref:20"><a class="footnote-ref" href="#fn:20">20</a></sup>. Everpure's DirectFlash Module is reported at up to 300 TB<sup id="fnref:27"><a class="footnote-ref" href="#fn:27">27</a></sup> [VERIFY: GA and ship date of the 300 TB DFM].</p>
+<h3 id="hdd-mechanics-capacity-keeps-rising-performance-does-not">HDD mechanics: capacity keeps rising, performance does not<a class="headerlink" href="#hdd-mechanics-capacity-keeps-rising-performance-does-not" title="Permanent link">&para;</a></h3>
+<p>Random access on a hard drive needs a head seek plus, on average, half a platter rotation. At 7,200 rpm one rotation takes 60 ÷ 7,200 = 8.33 ms, so average rotational latency is ~4.2 ms. Nearline drives have long been specified at ~8 ms average seek, and measured access times run a little higher<sup id="fnref:28"><a class="footnote-ref" href="#fn:28">28</a></sup>. A random read therefore costs ~12 ms, or roughly 80 IOPS per drive at queue depth 1. Command queuing lets the drive reorder requests to shorten seeks, so a 30 TB HAMR drive reaches ~170 random-read IOPS at queue depth 16 (<a href="../04-performance-and-economics-metrics/">Chapter 4</a>). Those figures have barely moved in 20 years while capacity has grown more than tenfold. A 30 TB drive therefore delivers ~3–6 IOPS per TB. Rebuilding one at an assumed ~250 MB/s sustained takes 30 × 10¹² ÷ 250 × 10⁶ ≈ 120,000 s, about <strong>33 hours</strong> at best. Bigger HDDs suit bulk sequential data and get worse at everything else, which is why vendors now pitch bandwidth as well as terabytes<sup id="fnref:29"><a class="footnote-ref" href="#fn:29">29</a></sup>.</p>
+<p>Capacity growth depends on areal density, which runs into the magnetic <strong>trilemma</strong>. Smaller grains store more bits but become thermally unstable. Stable, high-anisotropy grains need a stronger write field than a head can produce. Three recording technologies work around it:</p>
+<table>
+<thead>
+<tr>
+<th>Technology</th>
+<th>How it adds density</th>
+<th>The catch</th>
+<th>2026 status</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>CMR / ePMR</td>
+<td>Perpendicular grains; energy-assisted write heads</td>
+<td>Approaching trilemma limits</td>
+<td>WD roadmap: ePMR to 60 TB, 40 TB UltraSMR drives in 2H 2026<sup id="fnref2:30"><a class="footnote-ref" href="#fn:30">30</a></sup></td>
+</tr>
+<tr>
+<td>SMR (shingled)</td>
+<td>Overlaps tracks like roof shingles, since read heads are narrower than write heads</td>
+<td>Can't rewrite one track without rewriting its band; host-managed SMR needs sequential zone writes, much like NAND erase blocks</td>
+<td>Common in hyperscale; WD UltraSMR at 40 TB<sup id="fnref3:30"><a class="footnote-ref" href="#fn:30">30</a></sup></td>
+</tr>
+<tr>
+<td>HAMR</td>
+<td>A laser heats a tiny spot for a nanosecond so a high-anisotropy (FePt) medium can be written, then it cools stably</td>
+<td>New heads, media and reliability proof; slow volume ramp</td>
+<td>Seagate Mozaic 3+ at 30 TB from 2024<sup id="fnref:31"><a class="footnote-ref" href="#fn:31">31</a></sup>; Mozaic 4+ at up to 44 TB shipping in volume to two hyperscalers from March 2026<sup id="fnref:32"><a class="footnote-ref" href="#fn:32">32</a></sup>; WD HAMR ramps 2027, targets 100 TB by 2029<sup id="fnref4:30"><a class="footnote-ref" href="#fn:30">30</a></sup></td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 2.2 — HDD makers trade write flexibility (SMR) or manufacturing complexity (HAMR) for capacity; none of it improves random I/O.</em></p>
+<p>Note the SMR/NAND parallel: both prefer large sequential writes into zones that must be reclaimed whole, so the same zoned-storage software ideas (ZNS, FDP, log-structured layouts) apply to both (<a href="../../02-protocols-and-networking/12-interfaces-and-emerging-tech/">Chapter 12</a>).</p>
+<h3 id="cost-per-bit-curves-why-the-gap-moved">Cost-per-bit curves: why the gap moved<a class="headerlink" href="#cost-per-bit-curves-why-the-gap-moved" title="Permanent link">&para;</a></h3>
+<p><img alt="Two-panel chart: left, sparse sourced price-per-TB points for HDD and enterprise SSD from 2009 to 2026 on a log scale; right, the enterprise SSD to nearline HDD price-per-TB premium, falling from 18× in late 2017 to about 9–10× in 2019–2020 and a 6.6× vendor projection for 2024, then rising to 18.6–22.6× in 2026." src="../../assets/charts/ch02-hdd-vs-nand-cost.svg" /></p>
+<p><em>Figure 2.5 — Flash's price premium over disk roughly halved between 2017 and 2020, then the 2026 shortage pushed it back to around 20×; the sources use different bases, so read direction, not decimals.</em>
+Data: <code>data/ch02_hdd_vs_nand_cost.csv</code></p>
+<p>The HDD curve is slow and steady. Backblaze's purchase cost fell from about $0.11/GB in 2009 to $0.014/GB in November 2022<sup id="fnref:33"><a class="footnote-ref" href="#fn:33">33</a></sup>, an average decline of ~1.2% a month, or ~14% a year. NAND's curve is steeper but cyclical. In Q2 2020, TrendForce data put enterprise SSDs at about $185/TB against $19/TB for nearline disk, a 9.7× premium<sup id="fnref:34"><a class="footnote-ref" href="#fn:34">34</a></sup>. Seagate said in 2024 that it expected disk to hold a &gt;6:1 advantage through 2027, averaging 6.6:1 (company-stated)<sup id="fnref:35"><a class="footnote-ref" href="#fn:35">35</a></sup>. Then the shortage hit. VDURA's Flash Volatility Index put a 30 TB QLC SSD at 22.6× a 30 TB HDD per TB in Q1 2026, up from 4.9× in Q2 2025<sup id="fnref:36"><a class="footnote-ref" href="#fn:36">36</a></sup>, and a 30 TB TLC SSD at 18.6× in Q3 2026 ($22,600 against $1,216)<sup id="fnref2:13"><a class="footnote-ref" href="#fn:13">13</a></sup>. The index comes from a hybrid flash-and-disk vendor that does not disclose its price sources, and it has switched between QLC and TLC bases between releases, so read the level with caution [VERIFY: corroborate the 2026 premium with TrendForce or Coughlin data]. Disk rose too: the index's 30 TB HDD went from $668 in Q1 to $1,216 in Q3 2026.</p>
+<p>Flash wins elsewhere. Micron rates the 245 TB drive at ~8.2 TB/W against ~4.4 TB/W for a 44 TB HDD (vendor comparison)<sup id="fnref:19"><a class="footnote-ref" href="#fn:19">19</a></sup>. Everpure claims DirectFlash cuts power by up to 75% compared with HDD (vendor claim)<sup id="fnref:37"><a class="footnote-ref" href="#fn:37">37</a></sup>. Where power and space bind, as in AI data centers, TCO can favour flash despite the premium. <a href="../04-performance-and-economics-metrics/">Chapter 4</a> works the TCO.</p>
+<h2 id="how-everpure-approaches-it-vs-competitors">How Everpure approaches it vs. competitors<a class="headerlink" href="#how-everpure-approaches-it-vs-competitors" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Approach</th>
+<th>Who</th>
+<th>Where NAND is managed</th>
+<th>Strength</th>
+<th>Weakness</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Raw NAND under array software</td>
+<td>Everpure DirectFlash (FlashArray, FlashBlade, hyperscaler DFMs)</td>
+<td>Purity, globally across modules</td>
+<td>One FTL for the whole system: lifetime-aware placement, less over-provisioning, very large modules</td>
+<td>Proprietary module; Everpure carries NAND qualification and supply work</td>
+</tr>
+<tr>
+<td>Commodity SSDs + SCM buffer</td>
+<td>VAST</td>
+<td>SSD FTLs, with an SCM write buffer shaping writes into wide QLC stripes</td>
+<td>Uses the industry's largest standard drives; buffer absorbs QLC weaknesses</td>
+<td>Two FTL layers; dependence on an SCM tier<sup id="fnref:38"><a class="footnote-ref" href="#fn:38">38</a></sup></td>
+</tr>
+<tr>
+<td>Commodity TLC/QLC SSDs</td>
+<td>NetApp, Dell, WEKA, DDN and most others</td>
+<td>Inside each drive</td>
+<td>Multi-sourced, fast to adopt new drives</td>
+<td>Each drive reserves its own spare area and does its own garbage collection</td>
+</tr>
+<tr>
+<td>Host-guided placement</td>
+<td>Hyperscalers using FDP</td>
+<td>Shared: host hints, drive executes</td>
+<td>Cuts write amplification without custom hardware<sup id="fnref3:22"><a class="footnote-ref" href="#fn:22">22</a></sup></td>
+<td>Needs software built for it; hyperscale-specific</td>
+</tr>
+<tr>
+<td>Disk plus flash cache</td>
+<td>Hyperscale bulk tiers, HDD vendors' thesis</td>
+<td>N/A for disk</td>
+<td>Lowest acquisition $/TB; 6–20× gap</td>
+<td>Few IOPS per TB, long rebuilds, more power and space per PB</td>
+</tr>
+</tbody>
+</table>
+<p><em>Table 2.3 — The competitive question is not "flash or disk" but where the flash-management intelligence lives and who pays for it.</em></p>
+<p>The steelman for commodity SSDs is supply flexibility: a new 245 TB drive can be qualified quickly, while a module vendor must build its own. The steelman for disk: at an 18× gap, exabyte-scale cold data stays on HDD and tape for years. Two public facts shape Everpure's position. Its Meta and second-hyperscaler deals license DirectFlash technology, and management has said Everpure does not procure the NAND for the hyperscaler business<sup id="fnref2:2"><a class="footnote-ref" href="#fn:2">2</a></sup>, which insulates that revenue line from NAND price spikes. It has also qualified multiple NAND sources (Micron G8/G9 QLC, Kioxia BiCS8)<sup id="fnref:39"><a class="footnote-ref" href="#fn:39">39</a></sup>. Options a strategy team might evaluate, based on public information: how much of the 2026 NAND price rise flows through array pricing versus margin, and whether a structurally higher flash premium slows HDD-replacement deals while strengthening the power-and-density argument for AI sites.</p>
+<h2 id="history-and-trajectory">History and trajectory<a class="headerlink" href="#history-and-trajectory" title="Permanent link">&para;</a></h2>
+<pre class="mermaid"><code>timeline
+    title Storage media milestones
+    1956 : IBM RAMAC ships the first hard disk drive
+    1987 : Toshiba presents NAND flash
+    2013 : Samsung ships first 3D V-NAND at 24 layers
+    2022 : Intel winds down Optane
+    2024 : Seagate launches 30 TB HAMR drives : SK hynix mass-produces 321-layer NAND
+    2025 : LTO-10 30 TB cartridges ship : Sandisk 256 TB QLC SSD announced : SK hynix shows split-cell PLC research
+    2026 : Micron ships 245 TB QLC SSD : Samsung unveils 400-plus-layer V10 : NAND contract prices surge : Seagate ships 44 TB HAMR to hyperscalers
+    2027-2029 : WD HAMR ramps in 2027 : WD targets 100 TB HAMR by 2029</code></pre>
+<p><em>Figure 2.6 — Flash capacity per device overtook disk by roughly 5× in 2026, while HDD's new technology, HAMR, is only now reaching volume.</em></p>
+<p>The RAMAC date is from the Computer History Museum<sup id="fnref:40"><a class="footnote-ref" href="#fn:40">40</a></sup>; Toshiba's NAND paper (Masuoka et al., IEDM 1987) and Samsung's 24-layer V-NAND (2013) are standard history, and the 2016–2022 layer points in Figure 2.4 are background only. Looking forward: Layer roadmaps target ~500 layers, though vendor timelines conflict<sup id="fnref2:26"><a class="footnote-ref" href="#fn:26">26</a></sup>. PLC remains research<sup id="fnref:21"><a class="footnote-ref" href="#fn:21">21</a></sup>. HDD capacity roadmaps (WD: 100 TB by 2029) depend on HAMR ramping on schedule<sup id="fnref:30"><a class="footnote-ref" href="#fn:30">30</a></sup>. Meanwhile the 2026 price shock is a supply-discipline event, not a physics event. AI servers absorbed bits, and TrendForce reported most new supply already committed<sup id="fnref2:3"><a class="footnote-ref" href="#fn:3">3</a></sup>. Its length matters for 2027 pricing.</p>
+<h2 id="numbers-that-matter">Numbers that matter<a class="headerlink" href="#numbers-that-matter" title="Permanent link">&para;</a></h2>
+<table>
+<thead>
+<tr>
+<th>Metric</th>
+<th>Value</th>
+<th>Context</th>
+<th>Source / date</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Largest shipping standard SSD</td>
+<td>245.76 TB (Micron 6600 ION, QLC)</td>
+<td>Shipping since 2026-05-05</td>
+<td>Micron<sup id="fnref3:18"><a class="footnote-ref" href="#fn:18">18</a></sup></td>
+</tr>
+<tr>
+<td>Leading 3D NAND layer count</td>
+<td>400+ (Samsung V10)</td>
+<td>Hybrid-bonded; density per mm² matters more</td>
+<td>Tom's Hardware, 2026<sup id="fnref3:24"><a class="footnote-ref" href="#fn:24">24</a></sup></td>
+</tr>
+<tr>
+<td>Largest HDD shipping to hyperscalers</td>
+<td>Up to 44 TB (Seagate Mozaic 4+, HAMR)</td>
+<td>Shipping in volume to two hyperscalers from March 2026</td>
+<td>Seagate, 2026-03-03<sup id="fnref2:32"><a class="footnote-ref" href="#fn:32">32</a></sup></td>
+</tr>
+<tr>
+<td>Enterprise SSD ÷ nearline HDD $/TB</td>
+<td>22.6× (QLC, Q1 2026); ~18.6× (TLC, Q3 2026); 9.7× (Q2 2020)</td>
+<td>Single-vendor index vs TrendForce data</td>
+<td>Blocks &amp; Files<sup id="fnref2:36"><a class="footnote-ref" href="#fn:36">36</a></sup>; Hardware Busters<sup id="fnref3:13"><a class="footnote-ref" href="#fn:13">13</a></sup>; Blocks &amp; Files<sup id="fnref2:34"><a class="footnote-ref" href="#fn:34">34</a></sup></td>
+</tr>
+<tr>
+<td>4Q26 NAND contract price change</td>
+<td>+15–20% QoQ (enterprise SSD +23–28%)</td>
+<td>Forecast; follows large 1H26 rises</td>
+<td>TrendForce, 2026-09-30<sup id="fnref3:3"><a class="footnote-ref" href="#fn:3">3</a></sup></td>
+</tr>
+<tr>
+<td>Capacity per watt</td>
+<td>~8.2 TB/W (245 TB QLC) vs ~4.4 TB/W (44 TB HDD)</td>
+<td>Vendor comparison</td>
+<td>StorageReview<sup id="fnref3:19"><a class="footnote-ref" href="#fn:19">19</a></sup></td>
+</tr>
+<tr>
+<td>CXL memory load latency</td>
+<td>~214–271 ns</td>
+<td>Measured expander devices</td>
+<td>arXiv, 2024<sup id="fnref2:9"><a class="footnote-ref" href="#fn:9">9</a></sup></td>
+</tr>
+<tr>
+<td>LTO-10 cartridge</td>
+<td>30 TB native, ~$275–315</td>
+<td>~$0.01/GB media only</td>
+<td>TechRadar<sup id="fnref2:14"><a class="footnote-ref" href="#fn:14">14</a></sup></td>
+</tr>
+<tr>
+<td>QLC endurance in DWPD</td>
+<td>~0.55 at WAF 1; ~0.18 at WAF 3</td>
+<td>1,000 P/E, 5-year warranty; Micron 245 TB rated 1.0 sequential / 0.3 random</td>
+<td>Worked example; StorageReview<sup id="fnref2:17"><a class="footnote-ref" href="#fn:17">17</a></sup></td>
+</tr>
+<tr>
+<td>HDD random IOPS per TB (30 TB)</td>
+<td>~3–6</td>
+<td>~80 IOPS at QD1 to ~170 at QD16, ÷ 30 TB</td>
+<td>Worked example</td>
+</tr>
+</tbody>
+</table>
+<h2 id="conversation-playbook">Conversation playbook<a class="headerlink" href="#conversation-playbook" title="Permanent link">&para;</a></h2>
+<p><strong>Questions for a PM</strong></p>
+<ol>
+<li><em>"At today's flash premium over disk, where does an all-flash pitch still win on TCO, and where do we lose?"</em> Strong: names the binding constraint per segment (power, rack space, rebuild risk) and a break-even premium, not "flash is always cheaper".</li>
+<li><em>"How exposed are product margins to the 2026 NAND price rise, and how much is passed through?"</em> Strong: separates arrays (Everpure buys NAND) from hyperscaler licensing (customer buys NAND), and covers contract timing and Evergreen commitments that limit repricing.</li>
+<li><em>"What does QLC let us sell that TLC doesn't, and where would we refuse to put QLC?"</em> Strong: capacity and power wins for file, object and backup; caution for write-heavy, latency-critical block workloads unless the write path absorbs them.</li>
+</ol>
+<p><strong>Questions for an engineer</strong></p>
+<ol>
+<li><em>"What effective WAF does Purity see on QLC in the field, and how does that translate into DWPD headroom?"</em> Strong: a measured number by workload, and how the system-level FTL keeps WAF near 1.</li>
+<li><em>"How do you handle read disturb and retention on read-mostly AI datasets?"</em> Strong: background scrub and relocation scheduled around foreground I/O, plus telemetry on read-retry rates as a wear signal.</li>
+<li><em>"What changes when you move from a 75 TB to a 300 TB module: rebuild time, blast radius, performance per TB?"</em> Strong: rebuild hours, protection scheme, and how in-module parallelism stops performance per TB collapsing as it does on large HDDs.</li>
+</ol>
+<p><strong>Don't say this:</strong></p>
+<ul>
+<li>"More layers means cheaper flash." Bit density, wafer cost and yield decide cost per bit. A 332-layer part can out-density a 400-layer one.</li>
+<li>"QLC wears out too fast for enterprise." Behind a good write path it is adequate for most capacity workloads.</li>
+<li>"Flash is now cheaper than disk." Not on purchase price in 2026, when the premium is roughly 18× or more by one vendor's index. Argue TCO, power and density instead.</li>
+<li>"SSDs are a good archive." JEDEC-rated unpowered retention at end of life is three months, and nothing guarantees years.</li>
+<li>"HAMR fixes disk performance." It adds capacity. IOPS per drive stay flat, so IOPS per TB keep falling.</li>
+</ul>
+<h2 id="going-deeper-optional-l3-pointers">Going deeper (optional, L3 pointers)<a class="headerlink" href="#going-deeper-optional-l3-pointers" title="Permanent link">&para;</a></h2>
+<ul>
+<li>JEDEC JESD218/JESD219: SSD endurance and retention test conditions.</li>
+<li>IEDM/ISSCC NAND papers: tR, tPROG and bonding by vendor, e.g. SK hynix's multi-site-cell PLC (IEDM 2025)<sup id="fnref2:21"><a class="footnote-ref" href="#fn:21">21</a></sup>.</li>
+<li>NVM Express FDP (TP4146) and ZNS specifications<sup id="fnref2:22"><a class="footnote-ref" href="#fn:22">22</a></sup>.</li>
+<li>Seagate and Western Digital investor-day decks on HAMR roadmaps.</li>
+</ul>
+<h2 id="key-terms">Key terms<a class="headerlink" href="#key-terms" title="Permanent link">&para;</a></h2>
+<ul>
+<li><strong>P/E cycle</strong> — one program/erase cycle of a NAND block; the unit of flash wear.</li>
+<li><strong>DWPD</strong> — drive writes per day sustainable over the warranty.</li>
+<li><strong>Charge-trap cell</strong> — 3D NAND cell storing electrons in a nitride layer.</li>
+<li><strong>Read disturb</strong> — gradual corruption of unread cells caused by reads of neighbours.</li>
+<li><strong>QLC / PLC</strong> — 4 and 5 bits per cell NAND.</li>
+<li><strong>HAMR / SMR</strong> — heat-assisted and shingled magnetic recording.</li>
+<li><strong>Memory–storage wall</strong> — the ~1,000× latency step between DRAM-class memory and flash.</li>
+<li>See the <a href="../../glossary/">glossary</a> for the rest.</li>
+</ul>
+<h2 id="sources">Sources<a class="headerlink" href="#sources" title="Permanent link">&para;</a></h2>
+<div class="footnote">
+<hr />
+<ol>
+<li id="fn:1">
+<p>SiliconANGLE, "Shares of Pure Storage jump on impressive earnings beat and strong guidance," 2024-12-03. https://siliconangle.com/2024/12/03/shares-pure-storage-jump-impressive-earnings-beat-strong-guidance/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:1" title="Jump back to footnote 1 in the text">&#8617;</a></p>
+</li>
+<li id="fn:2">
+<p>Everpure, "Everpure Lands New Design Win with Second Top-Five Hyperscaler," 2026-08-10. https://www.everpuredata.com/company/newsroom/press-releases/everpure-lands-new-design-win-with-second-top-five-hyperscaler.html (retrieved 2026-11-01); Motley Fool, "Everpure (P) Q2 2027 Earnings Call Transcript," 2026-08-31. https://www.fool.com/earnings/call-transcripts/2026/08/31/everpure-p-q2-2027-earnings-call-transcript/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:2" title="Jump back to footnote 2 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:2" title="Jump back to footnote 2 in the text">&#8617;</a></p>
+</li>
+<li id="fn:3">
+<p>TrendForce, "AI Server Demand Sustains Memory Contract Price Increases in 4Q26, While Consumer-Side Pressure Persists," 2026-09-30. https://www.trendforce.com/presscenter/news/20260930-13258.html (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:3" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:3" title="Jump back to footnote 3 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:3" title="Jump back to footnote 3 in the text">&#8617;</a></p>
+</li>
+<li id="fn:4">
+<p>Silicon Analysts, "HBM Memory Pricing and Specifications (2026)," 2026. https://siliconanalysts.com/data/hbm-pricing (retrieved 2026-11-01; figures seen via search summary).&#160;<a class="footnote-backref" href="#fnref:4" title="Jump back to footnote 4 in the text">&#8617;</a></p>
+</li>
+<li id="fn:5">
+<p>Counterpoint Research, "Memory Price Tracker, April 2026," 2026-04. https://counterpointresearch.com/de/reports/memory-price-tracker-april-2026 (retrieved 2026-11-01; figure seen via search summary, consistent with a Citi estimate of $873 for 1Q26).&#160;<a class="footnote-backref" href="#fnref:5" title="Jump back to footnote 5 in the text">&#8617;</a></p>
+</li>
+<li id="fn:6">
+<p>uAnalyze, "DDR5大漲價 2026年與HBM3e定價差距將收斂" (DDR5 price surge: gap with HBM3e pricing to narrow in 2026), n.d. (late 2025). https://uanalyze.com.tw/articles/1451142587 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:6" title="Jump back to footnote 6 in the text">&#8617;</a></p>
+</li>
+<li id="fn:7">
+<p>NVIDIA, "NVIDIA Blackwell Ultra AI Factory Platform Paves Way for Age of AI Reasoning," 2025-03-18. https://nvidianews.nvidia.com/news/nvidia-blackwell-ultra-ai-factory-platform-paves-way-for-age-of-ai-reasoning (primary release not fetched); The Register, "We heard you like HBM – Nvidia's Blackwell Ultra GPUs will have 288 GB of it," 2025-03-18. https://www.theregister.com/2025/03/18/nvidia_blackwell_ultra/ (retrieved via search 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:7" title="Jump back to footnote 7 in the text">&#8617;</a></p>
+</li>
+<li id="fn:8">
+<p>arXiv:2608.15764, "Concurrency Response of Plain Global Loads on the NVIDIA H100," 2026-08. https://arxiv.org/pdf/2608.15764 (seen via search summary, 2026-11-01). Pointer-chase plateau of ~353 ns for HBM-resident working sets; cycle-based studies report ~290–480 cycles.&#160;<a class="footnote-backref" href="#fnref:8" title="Jump back to footnote 8 in the text">&#8617;</a></p>
+</li>
+<li id="fn:9">
+<p>arXiv:2409.14317, "Dissecting CXL Memory Performance at Scale: Analysis, Modeling, and Optimization," 2024-09. https://arxiv.org/pdf/2409.14317 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:9" title="Jump back to footnote 9 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:9" title="Jump back to footnote 9 in the text">&#8617;</a></p>
+</li>
+<li id="fn:10">
+<p>Red Hat Ecosystem Catalog, "Micron CMM CZ120 256GB E3.S CXL2.0 Memory Expander," n.d. https://catalog.redhat.com/en/hardware/components/detail/259147 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:10" title="Jump back to footnote 10 in the text">&#8617;</a></p>
+</li>
+<li id="fn:11">
+<p>AnandTech, "Samsung Unveils CXL Memory Module Box: Up to 16 TB at 60 GB/s," 2024. https://www.anandtech.com/show/21333 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:11" title="Jump back to footnote 11 in the text">&#8617;</a></p>
+</li>
+<li id="fn:12">
+<p>R. Davis (Mellanox), "Demonstrating NVMe Performance over Ethernet," SNIA Data Storage Innovation Conference, 2016. https://www.snia.org/sites/default/files/DSI/2016/presentations/stor_networks/Rob_Davis_Demonstrating_NVMe_Performance_Ethernet.pdf (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:12" title="Jump back to footnote 12 in the text">&#8617;</a></p>
+</li>
+<li id="fn:13">
+<p>Hardware Busters, "Enterprise SSD Prices Now Run 18.6x Hard Drives, and the Cheap Alternative Is Sold Out Until 2027," 2026. https://hwbusters.com/news/enterprise-ssd-prices-now-run-18-6x-hard-drives-and-the-cheap-alternative-is-sold-out-until-2027/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:13" title="Jump back to footnote 13 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:13" title="Jump back to footnote 13 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:13" title="Jump back to footnote 13 in the text">&#8617;</a></p>
+</li>
+<li id="fn:14">
+<p>TechRadar, "Tape storage is not dead yet – but $300 LTO-10 cartridges and inflated exabyte numbers won't help its cause," n.d. (2025–26). https://www.techradar.com/pro/tape-is-not-dead-yet-but-usd300-lto-10-cartridges-and-inflated-exabyte-numbers-wont-help-its-cause (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:14" title="Jump back to footnote 14 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:14" title="Jump back to footnote 14 in the text">&#8617;</a></p>
+</li>
+<li id="fn:15">
+<p>StorageNewsletter, "Availability of FujiFilm LTO Ultrium 10 Cartridge with 30TB Native Capacity," 2025-06-16. https://www.storagenewsletter.com/2025/06/16/availability-of-fujifilm-lto-ultrium-10-cartridge-with-30tb-native-capacity/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:15" title="Jump back to footnote 15 in the text">&#8617;</a></p>
+</li>
+<li id="fn:16">
+<p>AnandTech, "Intel To Wind Down Optane Memory Business – 3D XPoint Storage Tech Reaches Its End," 2022-07-28. https://www.anandtech.com/show/17515 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:16" title="Jump back to footnote 16 in the text">&#8617;</a></p>
+</li>
+<li id="fn:17">
+<p>StorageReview, "Micron 6600 ION 245TB SSD Review: A Quarter Petabyte Per Drive Bay," 2026. https://www.storagereview.com/review/micron-6600-ion-245tb-ssd-review-a-quarter-petabyte-per-drive-bay (retrieved via search 2026-11-01). Spec table: 1.0 DWPD (128 KB sequential), 0.3 DWPD (16 KB random).&#160;<a class="footnote-backref" href="#fnref:17" title="Jump back to footnote 17 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:17" title="Jump back to footnote 17 in the text">&#8617;</a></p>
+</li>
+<li id="fn:18">
+<p>Micron Technology, "Industry-Leading 245TB Micron 6600 ION Data Center SSD Now Shipping," 2026-05-05. https://investors.micron.com/news/press-release/2026/Industry-Leading-245TB-Micron-6600-ION-Data-Center-SSD-Now-Shipping/default.aspx (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:18" title="Jump back to footnote 18 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:18" title="Jump back to footnote 18 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:18" title="Jump back to footnote 18 in the text">&#8617;</a></p>
+</li>
+<li id="fn:19">
+<p>StorageReview, "Micron 6600 ION 245TB SSD Review: A Quarter Petabyte Per Drive Bay," 2026. https://www.storagereview.com/review/micron-6600-ion-245tb-ssd-review-a-quarter-petabyte-per-drive-bay (retrieved 2026-11-01); StorageReview, "Solidigm 122.88TB D5-P5336 Review," 2025. https://www.storagereview.com/review/solidigm-122-88tb-d5-p5336-review-high-capacity-storage-meets-operational-efficiency (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:19" title="Jump back to footnote 19 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:19" title="Jump back to footnote 19 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:19" title="Jump back to footnote 19 in the text">&#8617;</a></p>
+</li>
+<li id="fn:20">
+<p>Blocks &amp; Files, "Sandisk unveils 256 TB SSD for AI workloads, shipping in 2026," 2025-08-05. https://www.blocksandfiles.com/ai-ml/2025/08/05/sandisk-unveils-256-tb-ssd-for-ai-workloads-shipping-in-2026/1589534 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:20" title="Jump back to footnote 20 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:20" title="Jump back to footnote 20 in the text">&#8617;</a></p>
+</li>
+<li id="fn:21">
+<p>Blocks &amp; Files, "SK hynix developing split-cell 5-bit flash," 2026-01-15. https://www.blocksandfiles.com/flash/2026/01/15/sk-hynix-developing-split-cell-5-bit-flash/4090388 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:21" title="Jump back to footnote 21 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:21" title="Jump back to footnote 21 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:21" title="Jump back to footnote 21 in the text">&#8617;</a></p>
+</li>
+<li id="fn:22">
+<p>NVM Express, "Overcoming the Write Amplification Problem with NVM Express Flexible Data Placement," n.d. https://nvmexpress.org/nvmeflexible-data-placement-fdp-blog/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:22" title="Jump back to footnote 22 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:22" title="Jump back to footnote 22 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:22" title="Jump back to footnote 22 in the text">&#8617;</a></p>
+</li>
+<li id="fn:23">
+<p>Blocks &amp; Files, "SK hynix begins mass production of 321-layer 3D NAND," 2024-11-21. https://www.blocksandfiles.com/ai-ml/2024/11/21/sk-hynix-begins-mass-production-of-321-layer-3d-nand/1605947 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:23" title="Jump back to footnote 23 in the text">&#8617;</a></p>
+</li>
+<li id="fn:24">
+<p>Tom's Hardware, "Samsung unveils 10th Gen V-NAND: 400+ layers, 5.6 GT/s and hybrid bonding," 2026. https://www.tomshardware.com/pc-components/ssds/samsung-unveils-10th-gen-v-nand-400-layers-5-6-gt-s-and-hybrid-bonding (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:24" title="Jump back to footnote 24 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:24" title="Jump back to footnote 24 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:24" title="Jump back to footnote 24 in the text">&#8617;</a></p>
+</li>
+<li id="fn:25">
+<p>Tom's Hardware, "Kioxia and Sandisk sample world's densest 3D NAND — new 332-Layer beats Samsung's 400-Layer NAND," 2026. https://www.tomshardware.com/pc-components/ssds/kioxia-and-sandisk-sample-worlds-densest-3d-nand-new-332-layer-beats-samsungs-400-layer-nand (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:25" title="Jump back to footnote 25 in the text">&#8617;</a></p>
+</li>
+<li id="fn:26">
+<p>Tom's Hardware, "Inside the future of 3D NAND: The roadmap to 500 layers," 2026. https://www.tomshardware.com/pc-components/storage/inside-the-future-of-3d-nand-the-roadmap-to-500-layers (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:26" title="Jump back to footnote 26 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:26" title="Jump back to footnote 26 in the text">&#8617;</a></p>
+</li>
+<li id="fn:27">
+<p>Blocks &amp; Files, "Second hyperscaler plumps for Everpure's flash technology," 2026-08-11. https://www.blocksandfiles.com/flash/2026/08/11/second-hyperscaler-plumps-for-everpures-flash-technology/5285903 (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:27" title="Jump back to footnote 27 in the text">&#8617;</a></p>
+</li>
+<li id="fn:28">
+<p>StorageReview, "Seagate NL35" review (7,200 rpm nearline drive specified at 8 ms seek; 13.1 ms measured average read access time), n.d. (mid-2000s). https://storagereview.com/review/seagate-nl35 (seen via search summary, 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:28" title="Jump back to footnote 28 in the text">&#8617;</a></p>
+</li>
+<li id="fn:29">
+<p>StorageReview, "WD Bets 8x Bandwidth Beats More Terabytes as 40TB UltraSMR Starts Shipping," 2026. https://www.storagereview.com/news/wd-bets-8x-bandwidth-beats-more-terabytes-as-40tb-ultrasmr-starts-shipping (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:29" title="Jump back to footnote 29 in the text">&#8617;</a></p>
+</li>
+<li id="fn:30">
+<p>Western Digital, "Western Digital Accelerates Storage Innovation for AI Era," 2026-02-03. https://www.westerndigital.com/company/newsroom/press-releases/2026/2026-02-03-western-digital-accelerates-storage-innovation-for-ai-era (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:30" title="Jump back to footnote 30 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:30" title="Jump back to footnote 30 in the text">&#8617;</a><a class="footnote-backref" href="#fnref3:30" title="Jump back to footnote 30 in the text">&#8617;</a><a class="footnote-backref" href="#fnref4:30" title="Jump back to footnote 30 in the text">&#8617;</a></p>
+</li>
+<li id="fn:31">
+<p>PetaPixel, "Seagate's new 30TB Hard Drive is the Largest Ever," 2024-01-18. https://petapixel.com/2024/01/18/seagates-new-30tb-hard-drive-is-the-largest-ever/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:31" title="Jump back to footnote 31 in the text">&#8617;</a></p>
+</li>
+<li id="fn:32">
+<p>Seagate Technology, "Seagate Delivers Industry's Highest Capacity Hard Drives with Next-Generation Mozaic 4+," 2026-03-03. https://investors.seagate.com/news/news-details/2026/Seagate-Delivers-Industrys-Highest-Capacity-Hard-Drives-with-Next-Generation-Mozaic-4/default.aspx (retrieved via search 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:32" title="Jump back to footnote 32 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:32" title="Jump back to footnote 32 in the text">&#8617;</a></p>
+</li>
+<li id="fn:33">
+<p>Backblaze, "Hard Drive Cost Per Gigabyte," 2022-11. https://www.backblaze.com/blog/hard-drive-cost-per-gigabyte/ (retrieved 2026-11-01; figures seen via search summary); Blocks &amp; Files, "Backblaze predicts HDD prices will fall to 1¢/GB by mid-2025," 2022-12-12. https://blocksandfiles.com/2022/12/12/backblaze-sees-hdd-pricing-falling-to-a-penny-a-gig/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:33" title="Jump back to footnote 33 in the text">&#8617;</a></p>
+</li>
+<li id="fn:34">
+<p>Blocks &amp; Files, "Enterprise SSDs cost ten times more than nearline disk drives," 2020-08-24. https://blocksandfiles.com/2020/08/24/10x-enterprise-ssd-price-premium-over-nearline-disk-drives/ (retrieved 2026-11-01); Blocks &amp; Files, "How long before SSDs replace nearline disk drives?," 2019-08-28. https://blocksandfiles.com/2019/08/28/nearline-disk-drives-ssd-attack/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:34" title="Jump back to footnote 34 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:34" title="Jump back to footnote 34 in the text">&#8617;</a></p>
+</li>
+<li id="fn:35">
+<p>Blocks &amp; Files, "Seagate: Is flash killing the hard drive? No," 2024-05-01. https://blocksandfiles.com/2024/05/01/seagate-is-flash-killing-the-hard-drive-no/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:35" title="Jump back to footnote 35 in the text">&#8617;</a></p>
+</li>
+<li id="fn:36">
+<p>Blocks &amp; Files, "VDURA says 30 TB QLC SSD capacity now costs 22.6x more than HDD," 2026-04-08. https://www.blocksandfiles.com/flash/2026/04/08/vdura-says-30-tb-qlc-ssd-capacity-now-costs-226x-more-than-hdd/5214761 (retrieved via search 2026-11-01); Tom's Hardware, "Vdura hikes its enterprise SSD pricing, now costs 22.6x more than hard drives," 2026-04. https://www.tomshardware.com/pc-components/ssds/vdura-sharply-revises-its-enterprise-ssd-pricing-figures (retrieved via search 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:36" title="Jump back to footnote 36 in the text">&#8617;</a><a class="footnote-backref" href="#fnref2:36" title="Jump back to footnote 36 in the text">&#8617;</a></p>
+</li>
+<li id="fn:37">
+<p>Pure Storage, "Hyperscaler," n.d. https://purestorage.com/pure-advantage/platform/hyperscaler.html (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:37" title="Jump back to footnote 37 in the text">&#8617;</a></p>
+</li>
+<li id="fn:38">
+<p>VAST Data Knowledge Base, "DBox DF-3015V2/DF-3060V2 Ceres Datasheet," n.d. https://kb.vastdata.com/docs/dbox-df-3015v2df-3060v2-ceres-datasheet (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:38" title="Jump back to footnote 38 in the text">&#8617;</a></p>
+</li>
+<li id="fn:39">
+<p>Blocks &amp; Files, "Pure qualifies Micron's 276-layer flash," 2025-01-08. https://blocksandfiles.com/2025/01/08/pure-qualifies-microns-276-layer-flash/ (retrieved 2026-11-01); Blocks &amp; Files, "Kioxia 2 terabit NAND," 2024-07-03. https://blocksandfiles.com/2024/07/03/kioxia-2-terabit-nand/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:39" title="Jump back to footnote 39 in the text">&#8617;</a></p>
+</li>
+<li id="fn:40">
+<p>Computer History Museum, "1956: First commercial hard disk drive shipped," n.d. https://www.computerhistory.org/storageengine/first-commercial-hard-disk-drive-shipped/ (retrieved 2026-11-01).&#160;<a class="footnote-backref" href="#fnref:40" title="Jump back to footnote 40 in the text">&#8617;</a></p>
+</li>
+</ol>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+          <button type="button" class="md-top md-icon" data-md-component="top" hidden>
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8z"/></svg>
+  Back to top
+</button>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+    
+      
+      <nav class="md-footer__inner md-grid" aria-label="Footer" >
+        
+          
+          <a href="../01-what-storage-does/" class="md-footer__link md-footer__link--prev" aria-label="Previous: 1. What storage does">
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+            </div>
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Previous
+              </span>
+              <div class="md-ellipsis">
+                1. What storage does
+              </div>
+            </div>
+          </a>
+        
+        
+          
+          <a href="../03-inside-an-ssd/" class="md-footer__link md-footer__link--next" aria-label="Next: 3. Inside an SSD">
+            <div class="md-footer__title">
+              <span class="md-footer__direction">
+                Next
+              </span>
+              <div class="md-ellipsis">
+                3. Inside an SSD
+              </div>
+            </div>
+            <div class="md-footer__button md-icon">
+              
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M4 11v2h12l-5.5 5.5 1.42 1.42L19.84 12l-7.92-7.92L10.5 5.5 16 11z"/></svg>
+            </div>
+          </a>
+        
+      </nav>
+    
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.sections", "navigation.indexes", "navigation.top", "navigation.footer", "search.suggest", "search.highlight", "content.code.copy", "toc.follow"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../../assets/javascripts/bundle.c21346df.min.js"></script>
+      
+    
+  </body>
+</html>

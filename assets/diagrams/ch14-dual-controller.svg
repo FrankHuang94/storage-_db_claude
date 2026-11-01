@@ -1,0 +1,112 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 680" width="1000" role="img" aria-labelledby="t d" font-family="Inter, Helvetica, Arial, sans-serif">
+  <title id="t">Scale-up dual-controller array: two controllers, mirrored write log, shared dual-ported drives</title>
+  <desc id="d">Two hosts each have two host bus adapters, one cabled to SAN fabric A and one to fabric B. Both fabrics reach front-end ports on both controllers. The two controllers sit in one chassis and are joined by a high-availability interconnect. A battery- or capacitor-backed NVRAM write log sits between them and is reachable by both. Below a passive midplane, dual-ported NVMe drives in the base chassis are reachable by both controllers, and an expansion shelf hangs off both controllers through redundant shelf I/O modules.</desc>
+  <rect x="0" y="0" width="1000" height="680" fill="#FFFFFF"/>
+
+  <!-- Title -->
+  <text x="30" y="34" font-size="20" font-weight="700" fill="#222222">Scale-up dual-controller array: two brains, one set of drives</text>
+  <text x="30" y="56" font-size="13" fill="#555555">Logical view, not to scale. Original drawing for the Everpure Tech Atlas, Chapter 14.</text>
+
+  <!-- Hosts -->
+  <rect x="130" y="74" width="280" height="54" rx="6" fill="#F3F6F9" stroke="#888888"/>
+  <text x="270" y="96" font-size="14" font-weight="700" text-anchor="middle" fill="#222222">Host 1 (database server)</text>
+  <text x="270" y="116" font-size="12" text-anchor="middle" fill="#222222">HBA 1 · multipath driver · HBA 2</text>
+  <rect x="590" y="74" width="280" height="54" rx="6" fill="#F3F6F9" stroke="#888888"/>
+  <text x="730" y="96" font-size="14" font-weight="700" text-anchor="middle" fill="#222222">Host 2 (hypervisor)</text>
+  <text x="730" y="116" font-size="12" text-anchor="middle" fill="#222222">HBA 1 · multipath driver · HBA 2</text>
+
+  <!-- Host to fabric cabling -->
+  <g stroke="#222222" stroke-width="1.6" fill="none">
+    <line x1="170" y1="128" x2="250" y2="162"/>
+    <line x1="370" y1="128" x2="700" y2="162"/>
+    <line x1="630" y1="128" x2="300" y2="162"/>
+    <line x1="830" y1="128" x2="750" y2="162"/>
+  </g>
+
+  <!-- Fabrics -->
+  <rect x="90" y="162" width="380" height="26" rx="4" fill="#DDDDDD"/>
+  <text x="280" y="180" font-size="13" text-anchor="middle" fill="#222222">SAN fabric A (FC, iSCSI or NVMe-oF)</text>
+  <rect x="530" y="162" width="380" height="26" rx="4" fill="#DDDDDD"/>
+  <text x="720" y="180" font-size="13" text-anchor="middle" fill="#222222">SAN fabric B (independent switches)</text>
+
+  <!-- Fabric to controller port cabling: each fabric reaches both controllers -->
+  <g stroke="#222222" stroke-width="1.6" fill="none">
+    <line x1="160" y1="188" x2="160" y2="252"/>
+    <line x1="400" y1="188" x2="660" y2="252"/>
+    <line x1="600" y1="188" x2="340" y2="252"/>
+    <line x1="840" y1="188" x2="840" y2="252"/>
+  </g>
+
+  <!-- Base chassis outline -->
+  <rect x="40" y="222" width="920" height="300" rx="10" fill="none" stroke="#555555" stroke-width="1.5" stroke-dasharray="6 4"/>
+  <text x="56" y="242" font-size="12" fill="#555555">Base chassis</text>
+
+  <!-- Controller A -->
+  <rect x="80" y="252" width="320" height="120" rx="8" fill="#0072B2"/>
+  <rect x="140" y="252" width="40" height="14" fill="#FFFFFF" stroke="#0072B2"/>
+  <rect x="320" y="252" width="40" height="14" fill="#FFFFFF" stroke="#0072B2"/>
+  <text x="240" y="292" font-size="16" font-weight="700" text-anchor="middle" fill="#FFFFFF">Controller A</text>
+  <text x="240" y="314" font-size="13" text-anchor="middle" fill="#FFFFFF">CPUs + DRAM (read cache, metadata)</text>
+  <text x="240" y="334" font-size="13" text-anchor="middle" fill="#FFFFFF">Runs the storage OS, owns its LUNs</text>
+  <text x="240" y="356" font-size="12" text-anchor="middle" fill="#FFFFFF">front-end ports on top · back-end below</text>
+
+  <!-- Controller B -->
+  <rect x="600" y="252" width="320" height="120" rx="8" fill="#56B4E9"/>
+  <rect x="640" y="252" width="40" height="14" fill="#FFFFFF" stroke="#56B4E9"/>
+  <rect x="820" y="252" width="40" height="14" fill="#FFFFFF" stroke="#56B4E9"/>
+  <text x="760" y="292" font-size="16" font-weight="700" text-anchor="middle" fill="#222222">Controller B</text>
+  <text x="760" y="314" font-size="13" text-anchor="middle" fill="#222222">Identical hardware, partner role</text>
+  <text x="760" y="334" font-size="13" text-anchor="middle" fill="#222222">Takes over A's LUNs if A fails</text>
+  <text x="760" y="356" font-size="12" text-anchor="middle" fill="#222222">front-end ports on top · back-end below</text>
+
+  <!-- HA interconnect -->
+  <line x1="404" y1="278" x2="596" y2="278" stroke="#D55E00" stroke-width="4"/>
+  <polygon points="404,278 416,271 416,285" fill="#D55E00"/>
+  <polygon points="596,278 584,271 584,285" fill="#D55E00"/>
+  <text x="500" y="268" font-size="13" font-weight="700" text-anchor="middle" fill="#D55E00">HA interconnect</text>
+  <text x="500" y="298" font-size="12" text-anchor="middle" fill="#222222">heartbeat + write mirror</text>
+
+  <!-- NVRAM -->
+  <rect x="420" y="318" width="160" height="62" rx="6" fill="#F0E442" stroke="#222222"/>
+  <text x="500" y="340" font-size="14" font-weight="700" text-anchor="middle" fill="#222222">NVRAM write log</text>
+  <text x="500" y="358" font-size="12" text-anchor="middle" fill="#222222">battery / capacitor</text>
+  <text x="500" y="373" font-size="12" text-anchor="middle" fill="#222222">backed, mirrored</text>
+  <line x1="400" y1="349" x2="420" y2="349" stroke="#222222" stroke-width="2"/>
+  <line x1="580" y1="349" x2="600" y2="349" stroke="#222222" stroke-width="2"/>
+
+  <!-- Midplane -->
+  <rect x="80" y="398" width="840" height="20" rx="4" fill="#DDDDDD"/>
+  <text x="500" y="413" font-size="12" text-anchor="middle" fill="#222222">Passive midplane: PCIe lanes from both controllers to every drive slot</text>
+  <line x1="240" y1="372" x2="240" y2="398" stroke="#222222" stroke-width="2"/>
+  <line x1="760" y1="372" x2="760" y2="398" stroke="#222222" stroke-width="2"/>
+  <line x1="500" y1="380" x2="500" y2="398" stroke="#222222" stroke-width="2"/>
+
+  <!-- Drives -->
+  <g fill="#FFFFFF" stroke="#0072B2" stroke-width="1.5">
+    <rect x="90" y="432" width="50" height="50" rx="3"/><rect x="150" y="432" width="50" height="50" rx="3"/>
+    <rect x="210" y="432" width="50" height="50" rx="3"/><rect x="270" y="432" width="50" height="50" rx="3"/>
+    <rect x="330" y="432" width="50" height="50" rx="3"/><rect x="390" y="432" width="50" height="50" rx="3"/>
+    <rect x="450" y="432" width="50" height="50" rx="3"/><rect x="510" y="432" width="50" height="50" rx="3"/>
+    <rect x="570" y="432" width="50" height="50" rx="3"/><rect x="630" y="432" width="50" height="50" rx="3"/>
+    <rect x="690" y="432" width="50" height="50" rx="3"/><rect x="750" y="432" width="50" height="50" rx="3"/>
+    <rect x="810" y="432" width="50" height="50" rx="3"/><rect x="870" y="432" width="40" height="50" rx="3"/>
+  </g>
+  <text x="500" y="506" font-size="13" text-anchor="middle" fill="#222222">Dual-ported NVMe SSDs or flash modules, RAID-protected: every drive reachable by both controllers</text>
+
+  <!-- Expansion shelf cabling -->
+  <path d="M 84 360 L 60 360 L 60 580 L 120 580" fill="none" stroke="#222222" stroke-width="1.6"/>
+  <path d="M 916 360 L 940 360 L 940 580 L 880 580" fill="none" stroke="#222222" stroke-width="1.6"/>
+
+  <!-- Expansion shelf -->
+  <rect x="120" y="548" width="760" height="70" rx="8" fill="#F3F6F9" stroke="#888888"/>
+  <rect x="134" y="562" width="120" height="42" rx="4" fill="#DDDDDD"/>
+  <text x="194" y="588" font-size="12" text-anchor="middle" fill="#222222">Shelf I/O module A</text>
+  <rect x="746" y="562" width="120" height="42" rx="4" fill="#DDDDDD"/>
+  <text x="806" y="588" font-size="12" text-anchor="middle" fill="#222222">Shelf I/O module B</text>
+  <text x="500" y="580" font-size="14" font-weight="700" text-anchor="middle" fill="#222222">Expansion shelf</text>
+  <text x="500" y="600" font-size="12" text-anchor="middle" fill="#222222">SAS or NVMe-oF over RoCE; adds capacity, not CPU</text>
+
+  <!-- Footer -->
+  <text x="30" y="646" font-size="12" fill="#555555">Variants: NetApp ONTAP keeps NVRAM inside each controller and mirrors it to the partner over the interconnect.</text>
+  <text x="30" y="664" font-size="12" fill="#555555">Everpure FlashArray keeps NVRAM in the chassis (on //XL, on the flash modules), so the controllers themselves hold no unique state.</text>
+</svg>
