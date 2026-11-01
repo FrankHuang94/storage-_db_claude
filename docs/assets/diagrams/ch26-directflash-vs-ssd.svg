@@ -1,0 +1,124 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 700" width="1000" height="700" font-family="Inter, Helvetica, Arial, sans-serif" role="img" aria-labelledby="t d">
+  <title id="t">Commodity-SSD array stack versus DirectFlash stack</title>
+  <desc id="d">Left: an array on commodity SSDs runs its own log and garbage collector, then each SSD runs a second FTL with its own controller, DRAM map and hidden over-provisioned NAND. Right: Purity runs one global flash translation layer across DirectFlash Modules that expose raw NAND through a thin controller, with spare capacity pooled at array level.</desc>
+  <rect x="0" y="0" width="1000" height="700" fill="#FFFFFF"/>
+
+  <!-- Column titles -->
+  <text x="250" y="34" font-size="20" font-weight="700" fill="#222222" text-anchor="middle">Array on commodity SSDs</text>
+  <text x="250" y="56" font-size="13" fill="#555555" text-anchor="middle">two flash translation layers stacked</text>
+  <text x="750" y="34" font-size="20" font-weight="700" fill="#0072B2" text-anchor="middle">Purity + DirectFlash</text>
+  <text x="750" y="56" font-size="13" fill="#555555" text-anchor="middle">one flash translation layer for the whole array</text>
+  <line x1="500" y1="20" x2="500" y2="680" stroke="#DDDDDD" stroke-width="2"/>
+
+  <!-- LEFT: array software -->
+  <rect x="40" y="76" width="420" height="118" rx="8" fill="#FFF4DE" stroke="#E69F00" stroke-width="2"/>
+  <text x="250" y="100" font-size="15" font-weight="700" fill="#222222" text-anchor="middle">Array controller software (CPU + DRAM)</text>
+  <text x="60" y="124" font-size="13" fill="#222222">Data services: reduction, snapshots, replication</text>
+  <text x="60" y="146" font-size="13" fill="#222222">RAID / erasure coding across drives</text>
+  <text x="60" y="168" font-size="13" fill="#D55E00" font-weight="700">Array log + garbage collection #1</text>
+  <text x="60" y="186" font-size="12" fill="#555555">sees logical block addresses only, not NAND blocks</text>
+
+  <text x="250" y="216" font-size="13" fill="#555555" text-anchor="middle">NVMe over PCIe: read / write / trim of LBAs</text>
+  <line x1="250" y1="196" x2="250" y2="204" stroke="#888888" stroke-width="2"/>
+  <path d="M250 222 L250 236" stroke="#888888" stroke-width="2"/>
+  <polygon points="244,232 256,232 250,242" fill="#888888"/>
+
+  <!-- LEFT: three SSDs -->
+  <g>
+    <rect x="40" y="246" width="130" height="380" rx="8" fill="#FFFFFF" stroke="#E69F00" stroke-width="2"/>
+    <rect x="185" y="246" width="130" height="380" rx="8" fill="#FFFFFF" stroke="#E69F00" stroke-width="2"/>
+    <rect x="330" y="246" width="130" height="380" rx="8" fill="#FFFFFF" stroke="#E69F00" stroke-width="2"/>
+  </g>
+  <g font-size="13" text-anchor="middle" fill="#222222">
+    <text x="105" y="268" font-weight="700">SSD 1</text>
+    <text x="250" y="268" font-weight="700">SSD 2</text>
+    <text x="395" y="268" font-weight="700">SSD n</text>
+  </g>
+  <!-- per-SSD layers -->
+  <g font-size="12" text-anchor="middle" fill="#222222">
+    <rect x="50" y="278" width="110" height="40" rx="4" fill="#E69F00" fill-opacity="0.25"/>
+    <text x="105" y="296">Controller</text><text x="105" y="311">ASIC</text>
+    <rect x="195" y="278" width="110" height="40" rx="4" fill="#E69F00" fill-opacity="0.25"/>
+    <text x="250" y="296">Controller</text><text x="250" y="311">ASIC</text>
+    <rect x="340" y="278" width="110" height="40" rx="4" fill="#E69F00" fill-opacity="0.25"/>
+    <text x="395" y="296">Controller</text><text x="395" y="311">ASIC</text>
+
+    <rect x="50" y="324" width="110" height="40" rx="4" fill="#CC79A7" fill-opacity="0.25"/>
+    <text x="105" y="342">DRAM map</text><text x="105" y="357">~1 GB per TB</text>
+    <rect x="195" y="324" width="110" height="40" rx="4" fill="#CC79A7" fill-opacity="0.25"/>
+    <text x="250" y="342">DRAM map</text><text x="250" y="357">~1 GB per TB</text>
+    <rect x="340" y="324" width="110" height="40" rx="4" fill="#CC79A7" fill-opacity="0.25"/>
+    <text x="395" y="342">DRAM map</text><text x="395" y="357">~1 GB per TB</text>
+
+    <rect x="50" y="370" width="110" height="56" rx="4" fill="#D55E00" fill-opacity="0.18"/>
+    <text x="105" y="389">FTL firmware</text><text x="105" y="404">GC #2, wear</text><text x="105" y="419">leveling</text>
+    <rect x="195" y="370" width="110" height="56" rx="4" fill="#D55E00" fill-opacity="0.18"/>
+    <text x="250" y="389">FTL firmware</text><text x="250" y="404">GC #2, wear</text><text x="250" y="419">leveling</text>
+    <rect x="340" y="370" width="110" height="56" rx="4" fill="#D55E00" fill-opacity="0.18"/>
+    <text x="395" y="389">FTL firmware</text><text x="395" y="404">GC #2, wear</text><text x="395" y="419">leveling</text>
+
+    <rect x="50" y="432" width="110" height="128" rx="4" fill="#56B4E9" fill-opacity="0.30"/>
+    <text x="105" y="500">NAND dies</text>
+    <rect x="195" y="432" width="110" height="128" rx="4" fill="#56B4E9" fill-opacity="0.30"/>
+    <text x="250" y="500">NAND dies</text>
+    <rect x="340" y="432" width="110" height="128" rx="4" fill="#56B4E9" fill-opacity="0.30"/>
+    <text x="395" y="500">NAND dies</text>
+
+    <rect x="50" y="566" width="110" height="50" rx="4" fill="#999999" fill-opacity="0.35" stroke="#555555" stroke-dasharray="4 3"/>
+    <text x="105" y="586">Hidden spare</text><text x="105" y="601">~15% to 37%</text>
+    <rect x="195" y="566" width="110" height="50" rx="4" fill="#999999" fill-opacity="0.35" stroke="#555555" stroke-dasharray="4 3"/>
+    <text x="250" y="586">Hidden spare</text><text x="250" y="601">~15% to 37%</text>
+    <rect x="340" y="566" width="110" height="50" rx="4" fill="#999999" fill-opacity="0.35" stroke="#555555" stroke-dasharray="4 3"/>
+    <text x="395" y="586">Hidden spare</text><text x="395" y="601">~15% to 37%</text>
+  </g>
+  <text x="250" y="652" font-size="13" fill="#222222" text-anchor="middle">Each drive is a black box: its own map, its own GC timing,</text>
+  <text x="250" y="670" font-size="13" fill="#222222" text-anchor="middle">its own spare flash the array cannot use or see.</text>
+
+  <!-- RIGHT: Purity -->
+  <rect x="540" y="76" width="420" height="190" rx="8" fill="#E3F0F9" stroke="#0072B2" stroke-width="2"/>
+  <text x="750" y="100" font-size="15" font-weight="700" fill="#222222" text-anchor="middle">Purity on array controllers (CPU + DRAM)</text>
+  <text x="560" y="124" font-size="13" fill="#222222">Data services: reduction, snapshots, replication</text>
+  <text x="560" y="146" font-size="13" fill="#222222">RAID-HA dual parity across modules</text>
+  <rect x="556" y="158" width="388" height="98" rx="6" fill="#0072B2" fill-opacity="0.16" stroke="#0072B2"/>
+  <text x="750" y="178" font-size="14" font-weight="700" fill="#0072B2" text-anchor="middle">DirectFlash software: one global FTL</text>
+  <text x="570" y="198" font-size="12" fill="#222222">One map from logical data to physical NAND blocks</text>
+  <text x="570" y="216" font-size="12" fill="#222222">One garbage collector, scheduled around host I/O</text>
+  <text x="570" y="234" font-size="12" fill="#222222">Wear leveling and placement across every module</text>
+  <text x="570" y="250" font-size="12" fill="#222222">Spare flash pooled array-wide, not per drive</text>
+
+  <text x="750" y="286" font-size="13" fill="#555555" text-anchor="middle">NVMe over PCIe: commands address NAND blocks and pages</text>
+  <path d="M750 292 L750 304" stroke="#888888" stroke-width="2"/>
+  <polygon points="744,300 756,300 750,310" fill="#888888"/>
+
+  <!-- RIGHT: DFMs -->
+  <g>
+    <rect x="540" y="316" width="130" height="310" rx="8" fill="#FFFFFF" stroke="#0072B2" stroke-width="2"/>
+    <rect x="685" y="316" width="130" height="310" rx="8" fill="#FFFFFF" stroke="#0072B2" stroke-width="2"/>
+    <rect x="830" y="316" width="130" height="310" rx="8" fill="#FFFFFF" stroke="#0072B2" stroke-width="2"/>
+  </g>
+  <g font-size="12" text-anchor="middle" fill="#222222">
+    <text x="605" y="338" font-size="13" font-weight="700">DFM 1</text>
+    <text x="750" y="338" font-size="13" font-weight="700">DFM 2</text>
+    <text x="895" y="338" font-size="13" font-weight="700">DFM n</text>
+
+    <rect x="550" y="348" width="110" height="40" rx="4" fill="#009E73" fill-opacity="0.22"/>
+    <text x="605" y="366">Thin controller</text><text x="605" y="381">link + NAND I/O</text>
+    <rect x="695" y="348" width="110" height="40" rx="4" fill="#009E73" fill-opacity="0.22"/>
+    <text x="750" y="366">Thin controller</text><text x="750" y="381">link + NAND I/O</text>
+    <rect x="840" y="348" width="110" height="40" rx="4" fill="#009E73" fill-opacity="0.22"/>
+    <text x="895" y="366">Thin controller</text><text x="895" y="381">link + NAND I/O</text>
+
+    <text x="605" y="408" fill="#555555">no FTL, no DRAM map</text>
+    <text x="750" y="408" fill="#555555">no FTL, no DRAM map</text>
+    <text x="895" y="408" fill="#555555">no FTL, no DRAM map</text>
+
+    <rect x="550" y="418" width="110" height="198" rx="4" fill="#56B4E9" fill-opacity="0.30"/>
+    <text x="605" y="512">Raw NAND</text><text x="605" y="528">exposed</text>
+    <rect x="695" y="418" width="110" height="198" rx="4" fill="#56B4E9" fill-opacity="0.30"/>
+    <text x="750" y="512">Raw NAND</text><text x="750" y="528">exposed</text>
+    <rect x="840" y="418" width="110" height="198" rx="4" fill="#56B4E9" fill-opacity="0.30"/>
+    <text x="895" y="512">Raw NAND</text><text x="895" y="528">exposed</text>
+  </g>
+  <text x="750" y="652" font-size="13" fill="#222222" text-anchor="middle">The array sees every block's health and validity, so it</text>
+  <text x="750" y="670" font-size="13" fill="#222222" text-anchor="middle">collects once, places by lifetime and sizes modules freely.</text>
+</svg>

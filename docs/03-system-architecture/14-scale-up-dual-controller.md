@@ -93,15 +93,15 @@ Most flash-array reads miss DRAM: latency is a metadata lookup, a NAND read and 
 | Model | How it works | Examples |
 |---|---|---|
 | Active/passive | One controller serves everything; the other waits | Older midrange arrays |
-| Asymmetric active/active | Each controller owns some LUNs; I/O sent to the non-owner is forwarded | NetApp AFF before 9.19.1; IBM FlashSystem preferred node |
-| Symmetric active/active | Every path optimized; any controller serves any LUN via a coherent shared cache | NetApp ASA[^7] and AFF from 9.19.1[^8]; HPE Alletra 9000 "all-active"[^9]; PowerMax global cache[^10]; PowerStore[^11] |
-| Single-envelope (FlashArray) | All ports active, but one controller does back-end work; the secondary relays I/O[^12] | FlashArray; XL190 Purity Turbo lets the secondary serve reads[^15] |
+| Asymmetric active/active | Each controller owns some LUNs; I/O sent to the non-owner is forwarded | NetApp AFF before 9.19.1; IBM FlashSystem preferred node; Dell PowerStore, whose two nodes both serve I/O[^7] [VERIFY: PowerStore per-volume node affinity and ALUA path states] |
+| Symmetric active/active | Every path optimized; any controller serves any LUN via a coherent shared cache | NetApp ASA[^8] and AFF from 9.19.1[^9]; HPE Alletra 9000 "all-active"[^10]; PowerMax global cache[^11] |
+| Single-envelope (FlashArray) | All ports active, but one controller does back-end work; the secondary relays I/O[^12] | FlashArray; since January 2026, XL190 Purity Turbo lets the secondary serve reads[^13] |
 
 *Table 14.1 — "Active/active" covers three different designs; FlashArray is its own category.*
 
-FlashArray is the outlier [VERIFY: whether current Purity//FA still relays all secondary-port I/O to the primary]. Critics called it active/passive in disguise[^13]; Pure Storage's answer is that capping performance at one controller's worth means nothing is lost on failure[^14].
+FlashArray is the outlier [VERIFY: whether current Purity//FA still relays all secondary-port I/O to the primary]. Critics called it active/passive in disguise[^14]; Pure Storage's answer is that capping performance at one controller's worth means nothing is lost on failure[^15].
 
-**How ALUA works.** Asymmetric Logical Unit Access is a SCSI standard (SPC-3). Each port group reports a per-LUN state: active/optimized, active/non-optimized, standby or unavailable. Hosts use optimized paths and fall back only when needed; on failover the array flips states. NVMe's equivalent is ANA[^16], which ONTAP has supported since 9.5[^17]. Symmetric designs mark every path optimized, so hosts never wait for a transition[^7].
+**How ALUA works.** Asymmetric Logical Unit Access is a SCSI standard (SPC-3). Each port group reports a per-LUN state: active/optimized, active/non-optimized, standby or unavailable. Hosts use optimized paths and fall back only when needed; on failover the array flips states. NVMe's equivalent is ANA[^16], which ONTAP has supported since 9.5[^17]. Symmetric designs mark every path optimized, so hosts never wait for a transition[^8].
 
 ```mermaid
 flowchart LR
@@ -173,7 +173,7 @@ The same choreography covers software and hardware. With stateless controllers, 
 - **Capacity.** Shelves add drives until back-end ports or controller DRAM (which must hold block maps and dedupe tables) run out. FlashArray//XL R5 tops out near 1.9 PB raw, 7.4 PB effective[^23].
 - **Performance.** One pair's CPUs, memory bandwidth and PCIe lanes set the limit. Moving FlashArray//X R5 and //C R5 to Intel Emerald Rapids raised performance ~30% and ~40%[^24]: the array roadmap is largely Intel's. Scale-up is a monolithic die riding process nodes; scale-out is the multi-die answer.
 - **Federation.** PowerStore clusters up to four appliances and migrates volumes between them[^4], with ML rebalancing in Prime[^25]. ONTAP ASA clusters reach 12 nodes[^26], IBM four I/O groups[^27] [VERIFY: current FlashSystem cluster maximum], HPE's B10000 six nodes[^28]. A volume still lives on one pair; federation adds mobility and one management plane, not a bigger volume.
-- **The exception.** PowerMax 8500 scales to 16 nodes sharing a global cache over a 100 Gb/s NVMe/InfiniBand fabric[^29][^10], a scale-up machine built from many controllers.
+- **The exception.** PowerMax 8500 scales to 16 nodes sharing a global cache over a 100 Gb/s NVMe/InfiniBand fabric[^29][^11], a scale-up machine built from many controllers.
 
 ### Pros, cons and fit
 
@@ -197,11 +197,11 @@ Entry is cheap and operations simple. The hidden cost is the headroom tax of pay
 
 | System | Controllers | Write log | Path model | Beyond one pair |
 |---|---|---|---|---|
-| Everpure FlashArray //X, //C, //XL | 2, stateless | NVRAM in chassis; on //XL, on DFMDs[^6] | All ports active; one controller does back-end work; XL190 Turbo lets secondary serve reads[^15] | No clustering; ActiveCluster sync replication between arrays; fleet management |
-| Dell PowerStore T | 2 nodes per appliance | Mirrored NVRAM drives; 500 mirrors to peer DRAM[^4] | Both nodes serve I/O[^11] | Up to 4 appliances per cluster[^4] |
-| Dell PowerMax 2500/8500 | 2–16 nodes | Global cache shared via RDMA[^10] | All-active | 8 node pairs on Dynamic Fabric[^29] |
-| NetApp AFF / ASA | HA pairs | Per-node NVRAM mirrored to partner[^2] | ALUA on AFF until 9.19.1; symmetric on ASA[^7][^8] | ONTAP clusters of HA pairs[^26] |
-| HPE Alletra 9000 / MP B10000 | 2–4 (9000)[^9]; up to 6 (B10000)[^28] | Not verified | All-active | 100% availability guarantee[^19] |
+| Everpure FlashArray //X, //C, //XL | 2, stateless | NVRAM in chassis; on //XL, on DFMDs[^6] | All ports active; one controller does back-end work; XL190 Turbo lets secondary serve reads[^13] | No clustering; ActiveCluster sync replication between arrays; fleet management |
+| Dell PowerStore T | 2 nodes per appliance | Mirrored NVRAM drives; 500 mirrors to peer DRAM[^4] | Both nodes serve I/O[^7]; ALUA | Up to 4 appliances per cluster[^4] |
+| Dell PowerMax 2500/8500 | 2–16 nodes | Global cache shared via RDMA[^11] | All-active | 8 node pairs on Dynamic Fabric[^29] |
+| NetApp AFF / ASA | HA pairs | Per-node NVRAM mirrored to partner[^2] | ALUA on AFF until 9.19.1; symmetric on ASA[^8][^9] | ONTAP clusters of HA pairs[^26] |
+| HPE Alletra 9000 / MP B10000 | 2–4 (9000)[^10]; up to 6 (B10000)[^28] | Not verified | All-active | 100% availability guarantee[^19] |
 | IBM FlashSystem | 2 canisters per I/O group | Write cache mirrored across the pair[^27] | Preferred node per volume | Up to 4 I/O groups[^27] |
 
 *Table 14.4 — Everyone ships two controllers; the differences are where the write log lives, whether both controllers do real work, and how many pairs can be federated.*
@@ -223,7 +223,7 @@ timeline
 
 *Figure 14.6 — The architecture is old; what changed recently is where NVRAM lives and how much work the second controller does.*
 
-The pattern dates to 1990s RAID arrays; flash moved the bottleneck from drives to controllers. In 2015 Pure Storage paired FlashArray//m with Evergreen, selling statelessness as a refresh model[^30]. Looking forward, symmetric active/active is becoming the default (ASA, then AFF 9.19.1[^8]), and NVMe-oF shelves blur scale-up into shared-everything: HPE's B10000 is described as disaggregated[^31], and FlashArray attaches DirectFlash shelves over NVMe-oF/RoCE[^32].
+The pattern dates to 1990s RAID arrays; flash moved the bottleneck from drives to controllers. In 2015 Pure Storage paired FlashArray//m with Evergreen, selling statelessness as a refresh model[^30]. Looking forward, symmetric active/active is becoming the default (ASA, then AFF 9.19.1[^9]), and NVMe-oF shelves blur scale-up into shared-everything: HPE's B10000 is described as disaggregated[^31], and FlashArray attaches DirectFlash shelves over NVMe-oF/RoCE[^32].
 
 ## Numbers that matter
 
@@ -278,15 +278,15 @@ The pattern dates to 1990s RAID arrays; flash moved the bottleneck from drives t
 [^4]: StorageReview, "Dell PowerStore delivers Gen2 with massive software, hardware update," n.d. (2022). https://www.storagereview.com/review/dell-powerstore-delivers-gen2-with-massive-software-hardware-update (retrieved 2026-11-01). [VERIFY: search-summary only — NVRAM drive pairing, PowerStore 500 DRAM mirroring, four-appliance cluster limit and data-in-place upgrade details]
 [^5]: Pure Storage, blog post on FlashArray//m NVRAM and stateless controllers, 2015. https://blog.purestorage.com/products/flasharraym-nvram/ (retrieved 2026-11-01).
 [^6]: Pure Storage, "FlashArray//XL data sheet," n.d. https://www.purestorage.com/content/dam/pdf/en/datasheets/ds-flasharray-xl.pdf (retrieved 2026-11-01).
-[^7]: NetApp, "All-Flash SAN Array software configuration overview," n.d. https://docs.netapp.com/us-en/ontap/asa/overview.html (retrieved 2026-11-01).
-[^8]: NetApp Community, "NetApp extends symmetric active-active SAN pathing to unified AFF," n.d. https://community.netapp.com/community/discussion/468316/netapp-extends-symmetric-active-active-san-pathing-to-unified-aff (retrieved 2026-11-01).
-[^9]: HPE, "HPE Alletra Storage 9000 QuickSpecs," n.d. https://cdn.blueally.com/servercomputeworks/datasheets/alletra/hpe-alletra-storage-9000-quickspecs.pdf (retrieved 2026-11-01).
-[^10]: Dell Technologies Info Hub, "PowerMax 2500 and 8500 Dynamic Fabric—A High-Performance Clustered Architecture for Enterprise Storage," 2023-04. https://infohub.delltechnologies.com/p/powermax-2500-and-8500-dynamic-fabric-a-high-performance-clustered-architecture-for-enterprise-storage (retrieved 2026-11-01).
-[^11]: Dell Technologies, "Dell PowerStore: Introduction to the Platform (H18149)," n.d. https://www.delltechnologies.com/asset/en-us/products/storage/industry-market/h18149-dell-powerstore-platform-introduction.pdf (retrieved 2026-11-01).
+[^7]: Dell Technologies, "Dell PowerStore: Introduction to the Platform (H18149)," n.d. https://www.delltechnologies.com/asset/en-us/products/storage/industry-market/h18149-dell-powerstore-platform-introduction.pdf (retrieved 2026-11-01).
+[^8]: NetApp, "All-Flash SAN Array software configuration overview," n.d. https://docs.netapp.com/us-en/ontap/asa/overview.html (retrieved 2026-11-01).
+[^9]: NetApp Community, "NetApp extends symmetric active-active SAN pathing to unified AFF," n.d. https://community.netapp.com/community/discussion/468316/netapp-extends-symmetric-active-active-san-pathing-to-unified-aff (retrieved 2026-11-01).
+[^10]: HPE, "HPE Alletra Storage 9000 QuickSpecs," n.d. https://cdn.blueally.com/servercomputeworks/datasheets/alletra/hpe-alletra-storage-9000-quickspecs.pdf (retrieved 2026-11-01).
+[^11]: Dell Technologies Info Hub, "PowerMax 2500 and 8500 Dynamic Fabric—A High-Performance Clustered Architecture for Enterprise Storage," 2023-04. https://infohub.delltechnologies.com/p/powermax-2500-and-8500-dynamic-fabric-a-high-performance-clustered-architecture-for-enterprise-storage (retrieved 2026-11-01).
 [^12]: C. Hogan, "Pure Storage revisited – a chat with Vaughn Stewart," 2014-04-24 (including reader discussion). https://cormachogan.com/2014/04/24/pure-storage-revisited-a-chat-with-vaughn-stewart/ (retrieved 2026-11-01).
-[^13]: flashdba, "All Flash Arrays: Active/Active versus Active/Passive," 2016-10-19. https://flashdba.com/2016/10/19/all-flash-arrays-activeactive-versus-activepassive/ (retrieved 2026-11-01).
-[^14]: Pure Storage, "Pure Storage 101: Ensuring 100% Performance," n.d. https://blog.everpuredata.com/purely-technical/pure-storage-101-ensuring-100-performance/ (retrieved 2026-11-01).
-[^15]: Everpure, "Pure Launch Blog: January 2026 Edition," 2026-01. https://blog.everpuredata.com/products/pure-launch-blog-january-2026-edition/ (retrieved 2026-11-01).
+[^13]: Everpure, "Pure Launch Blog: January 2026 Edition," 2026-01. https://blog.everpuredata.com/products/pure-launch-blog-january-2026-edition/ (retrieved 2026-11-01).
+[^14]: flashdba, "All Flash Arrays: Active/Active versus Active/Passive," 2016-10-19. https://flashdba.com/2016/10/19/all-flash-arrays-activeactive-versus-activepassive/ (retrieved 2026-11-01).
+[^15]: Pure Storage, "Pure Storage 101: Ensuring 100% Performance," n.d. https://blog.everpuredata.com/purely-technical/pure-storage-101-ensuring-100-performance/ (retrieved 2026-11-01).
 [^16]: Everpure Support, "FAQ: NVMe-oF and VMware," n.d. https://support.everpuredata.com/r/howtos-for-vmware-solutions/faq-nvmeof-and-vmware (retrieved 2026-11-01).
 [^17]: NetApp, "Host support for multipathing overview," n.d. https://docs.netapp.com/us-en/ontap/san-config/host-support-multipathing-concept.html (retrieved 2026-11-01).
 [^18]: Everpure Support, "Array, Replication Network, and Site Failures" (ActiveCluster), n.d. https://support.everpuredata.com/r/activecluster/array-replication-network-and-site-failures (retrieved 2026-11-01).
