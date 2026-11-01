@@ -25,7 +25,7 @@ STYLES = {
 MILESTONES = [
     (2002, "2002: founders buy\nout venture investors"),
     (2018.5, "2018: Intel Lustre team\n(Whamcloud), Tintri"),
-    (2025.03, "Jan 2025: Blackstone\n$300M at $5B"),
+    (2025.03, "Jan 2025: Blackstone\n\\$300M at \\$5B"),
 ]
 
 
@@ -59,7 +59,7 @@ def build(out_dir: Path) -> Path:
         ax.text(x - 0.2, 1080, txt, fontsize=8.5, color="#555555", ha="right", va="top")
     ax.set_xlim(2001, 2027.2)
     ax.set_ylim(0, 1120)
-    ax.set_xticks([2003, 2005, 2010, 2015, 2020, 2023, 2024, 2025, 2026])
+    ax.set_xticks([2003, 2005, 2010, 2015, 2020, 2023, 2026])
     ax.set_ylabel("Annual revenue (US$ millions)")
     ax.set_title("DDN revenue as reported, 2003–2026: a private company with conflicting public figures",
                  loc="left", fontsize=12.5)
