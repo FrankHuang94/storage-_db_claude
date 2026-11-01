@@ -13,7 +13,7 @@
 
 ## Why this matters for Everpure strategy
 
-In large AI and HPC deals, DDN is often the vendor already on the floor. The NVIDIA DGX SuperPOD reference architectures that many GPU buyers copy were validated with DDN early[^9]. National labs, universities and government buyers have run Lustre for two decades. When Everpure (NYSE: P, formerly PSTG) pitches FlashBlade//EXA into those accounts, it is usually trying to displace or sit beside an EXAScaler system. EXA uses the same metadata-plus-data-nodes architecture but swaps the Lustre kernel client for standard pNFS ([Chapter 17](../03-system-architecture/17-parallel-file-systems.md)).
+In large AI and HPC deals, DDN is often already on the floor: the DGX SuperPOD reference architectures many GPU buyers copy were validated with DDN early[^9], and labs and governments have run Lustre for two decades. When Everpure (NYSE: P, formerly PSTG) pitches FlashBlade//EXA into those accounts, it is usually trying to displace or sit beside an EXAScaler system. EXA uses the same metadata-plus-data-nodes architecture but swaps the Lustre kernel client for standard pNFS ([Chapter 17](../03-system-architecture/17-parallel-file-systems.md)).
 
 DDN is also changing shape in ways that move it closer to Everpure's home ground. It hired a former Pure Storage executive as President and Chief Revenue Officer to push into the enterprise[^10], built a new platform (Infinia) aimed at inference and KV cache, and is reportedly seeking strategic investors[^11]. Knowing where DDN is strong (bandwidth, NVIDIA reference status, sovereign HPC) and thin (enterprise operations, data reduction, simplicity) tells Everpure where to fight and where to coexist.
 
@@ -21,7 +21,7 @@ DDN is also changing shape in ways that move it closer to Everpure's home ground
 
 ### The company in one paragraph
 
-DataDirect Networks was formed in 1998 by Alex Bouzari (CEO) and Paul Bloch, who had run a predecessor, MegaDrive Systems, since 1988[^12]. It took about $12M of venture money around 2002, fell out with the investors, and the founders bought them out[^13]. From then until 2025 it grew on its own cash flow, selling high-bandwidth storage to supercomputing sites. By Forbes' account each founder still owns about 40% of the company[^6]. That history explains DDN's character: engineering-led, sales-to-labs culture, frugal, profitable (company-stated), and run by two people who have made every major decision for 28 years.
+DataDirect Networks was formed in 1998 by Alex Bouzari (CEO) and Paul Bloch, who had run a predecessor, MegaDrive Systems, since 1988[^12]. It took about $12M of venture money around 2002, fell out with the investors, and the founders bought them out[^13]. Until 2025 it grew on its own cash flow, selling high-bandwidth storage to supercomputing sites, and by Forbes' account each founder still owns about 40%[^6]. Hence DDN's character: engineering-led, lab-focused, frugal, profitable (company-stated), and run by two people who have made every major decision for 28 years.
 
 ### Two engines, one company
 
@@ -29,7 +29,7 @@ DataDirect Networks was formed in 1998 by Alex Bouzari (CEO) and Paul Bloch, who
 
 *Figure 44.1 — DDN sells two different architectures: a mature Lustre engine tuned for bandwidth, and a young key-value engine tuned for tenancy and inference, joined only at the control plane.*
 
-The two engines share almost no code. EXAScaler descends from Lustre, a 1999 research project that DDN took over commercially in 2018[^14]. Infinia was written from scratch and announced in 2023 as "not a development of" EXAScaler[^3]. DDN's Chief Product Officer said in January 2026 that EXAScaler remains central and is not being sidelined, with the two products positioned as partners under one control plane[^15]. In practice, DDN steers training and simulation to EXAScaler and data preparation, inference and multi-tenant service-provider work to Infinia.
+The two engines share almost no code. EXAScaler descends from Lustre, a 1999 research project that DDN took over commercially in 2018[^14]. Infinia was written from scratch and announced in 2023 as "not a development of" EXAScaler[^3]. DDN's Chief Product Officer said in January 2026 that EXAScaler remains central, with the two products as partners under one control plane[^15]. In practice, training and simulation go to EXAScaler; data preparation, inference and multi-tenant service-provider work go to Infinia.
 
 The semiconductor analogy is a foundry running a mature high-performance node and a new specialty node. The old node pays the bills and holds the reference customers; the new one is where demand is supposed to land, but it lacks yield history, and every engineer on it is one not working on the cash cow.
 
@@ -58,13 +58,13 @@ sequenceDiagram
 
 *Figure 44.2 — On EXAScaler the metadata server is consulted at open and close; the bulk bytes flow client-to-OSS in parallel, which is why aggregate bandwidth scales with the number of appliances.*
 
-What DDN adds is packaging and people. Buying Intel's Lustre business in June 2018 brought the development team, support team and contracts, and revived the Whamcloud name[^14]. Owning the main Lustre engineering team lets DDN fix a client bug or backport a feature faster than any rival distributor; for a national lab, that is the product. Rivals ship Lustre too, including HPE and Microsoft (Azure Managed Lustre posted 642.2 GiB/s of checkpoint writes in MLPerf Storage v3.0[^8]). The code is open; the moat is the team.
+DDN adds packaging and people. Buying Intel's Lustre business in June 2018 brought the development team, support team and contracts, and revived the Whamcloud name[^14]. Owning the main Lustre engineering team lets DDN fix a client bug or backport a feature faster than any rival distributor; for a national lab, that is the product. Rivals ship Lustre too, including HPE and Microsoft (Azure Managed Lustre posted 642.2 GiB/s of checkpoint writes in MLPerf Storage v3.0[^8]). The code is open; the moat is the team.
 
 The costs are those of any parallel file system: a client module matched to every GPU server's kernel, hot directories that bottleneck one metadata target, RAID under each target and little data reduction. Lustre buyers accept them for bandwidth and coherent POSIX semantics on shared files.
 
 ### The appliances: A³I and the AI400X line
 
-DDN sells EXAScaler mostly as A³I ("Accelerated, Any-scale AI") appliances: 2U all-NVMe building blocks that put EXAScaler on DDN controllers, sized to slot into NVIDIA reference architectures.
+DDN sells EXAScaler mostly as A³I ("Accelerated, Any-scale AI") appliances: 2U all-NVMe building blocks sized to slot into NVIDIA reference architectures.
 
 | Product | What it is | Launched | Headline figures (vendor-stated) | Role in 2026 |
 |---|---|---|---|---|
@@ -85,9 +85,9 @@ Now size a checkpoint ([Chapter 31](../05-ai-storage/31-training-storage.md)). A
 
 ### Infinia: a key-value store wearing many protocols
 
-Infinia is a different animal. Its base layer is a distributed key-value store built on a Bε-tree (B-epsilon tree)[^3]. A Bε-tree is a write-optimised B-tree: each internal node holds a buffer of pending updates, which are pushed down the tree in batches. Small random writes therefore become large sequential ones, much as a DRAM controller's write queue coalesces scattered writes into full bursts. Data and metadata both live in that store. S3, an SDK, block, KV-cache and (since 2.4) limited POSIX access are services that sit on it as peers rather than as layers stacked on a file system[^3][^24].
+Infinia's base layer is a distributed key-value store built on a Bε-tree (B-epsilon tree)[^3]. A Bε-tree is a write-optimised B-tree: each internal node holds a buffer of pending updates, which are pushed down the tree in batches. Small random writes therefore become large sequential ones, much as a DRAM controller's write queue coalesces scattered writes into full bursts. Data and metadata both live there, and S3, SDK, block, KV-cache and (since 2.4) limited POSIX access sit on it as peer services, not layers stacked on a file system[^3][^24].
 
-Two design choices follow. First, **tenancy is in the keyspace.** Keys are organised as realm, cluster, tenant, subtenant and dataset, and each tenant gets a share of performance and capacity when it is created, which is DDN's answer to noisy neighbours[^3]. Infinia 2.4 (July 2026) made this the headline: per-tenant isolation, quotas and provisioning in roughly ten seconds through REST calls, aimed at NVIDIA cloud partners and managed AI services[^24]. Second, **it is hardware-agnostic.** Infinia runs on commodity NVMe servers and on Oracle Cloud, uses network erasure coding across nodes, and claims up to 10x always-on data reduction[^23][^4].
+Two design choices follow. First, **tenancy is in the keyspace.** Keys run realm, cluster, tenant, subtenant, dataset, and each tenant gets a fixed share of performance and capacity at creation, DDN's answer to noisy neighbours[^3]. Infinia 2.4 (July 2026) made this the headline: isolation, quotas and provisioning in about ten seconds via REST, aimed at NVIDIA cloud partners and managed AI services[^24]. Second, **it is hardware-agnostic.** Infinia runs on commodity NVMe servers and on Oracle Cloud, uses network erasure coding across nodes, and claims up to 10x always-on data reduction[^23][^4].
 
 The claims need care. The 2.0 launch claimed up to 100x faster metadata and 10x better cost efficiency without a published baseline[^23]. POSIX in 2.4 is limited availability (RHEL and Ubuntu); GPUDirect Storage and POSIX ACLs remain roadmap items[^24]. An outside practitioner notes that tenancy is enforced at the access layer, not cryptographically [VERIFY: informal third-party source only]. The flagship proof point is scale: DDN says xAI runs a single 350 PB Infinia cluster (*company-stated*)[^15].
 
@@ -114,15 +114,15 @@ sequenceDiagram
 
 Why a second engine? Inference changes the I/O pattern ([Chapter 32](../05-ai-storage/32-inference-and-kv-cache.md)). Training wants a few huge streaming files; long-context inference wants billions of small KV-cache blocks keyed by prompt prefix, retrieved in milliseconds and shared across tenants. That is a key-value workload, and Lustre's MDS-centric design fits it poorly.
 
-DDN's July 2025 benchmark is the reference claim. On Qwen3-32B with a 112K-token context, recomputing the prefill took 57 seconds; loading the cached KV from Infinia took 2.1 seconds, a 27x gain (*vendor test on two A100 GPUs*)[^27]. A sanity check: Qwen3-32B has 64 layers and 8 KV heads of dimension 128 [VERIFY: model config from public model card], so each token's KV is 2 × 64 × 8 × 128 × 2 bytes = 256 KiB in BF16. For 112K tokens that is about 29 GB, and loading it in 2.1 seconds implies roughly 14 GB/s to two GPUs. That is plausible for RDMA storage. But recompute is the weakest baseline; the more useful number is Nebul's, a European sovereign cloud reporting nearly 10x faster time to first token than its own CPU-memory cache (October 2026, joint release)[^28]. The semiconductor analogy is spill-to-memory versus recompute: a storage tier pays when fetching a byte costs less GPU time than regenerating it.
+DDN's July 2025 benchmark is the reference claim. On Qwen3-32B with a 112K-token context, recomputing the prefill took 57 seconds; loading the cached KV from Infinia took 2.1 seconds, a 27x gain (*vendor test on two A100 GPUs*)[^27]. A sanity check: Qwen3-32B has 64 layers and 8 KV heads of dimension 128 [VERIFY: model config from public model card], so each token's KV is 2 × 64 × 8 × 128 × 2 bytes = 256 KiB in BF16. For 112K tokens that is about 29 GB, and loading it in 2.1 seconds implies roughly 14 GB/s to two GPUs, plausible for RDMA storage. But recompute is the weakest baseline; the more useful number is Nebul's, a European sovereign cloud reporting nearly 10x faster time to first token than its own CPU-memory cache (October 2026, joint release)[^28]. The semiconductor analogy is spill-to-memory versus recompute: a storage tier pays when fetching a byte costs less GPU time than regenerating it.
 
-DDN has also moved down the stack. In June 2026 both EXAScaler and Infinia gained KV-cache support through NVIDIA Dynamo and NIXL[^22]. In August 2026 DDN and NVIDIA announced joint work, under NVIDIA's Storage-Next initiative, on GPU-initiated data access for Infinia, where GPU threads issue data operations without a CPU round-trip. No performance figures or availability dates were given[^29]. If it ships, the storage client effectively moves into the GPU, which favours vendors with deep NVIDIA engineering ties.
+DDN has also moved down the stack. In June 2026 both EXAScaler and Infinia gained KV-cache support through NVIDIA Dynamo and NIXL[^22]. In August 2026 DDN and NVIDIA announced joint work, under NVIDIA's Storage-Next initiative, on GPU-initiated data access for Infinia, where GPU threads issue data operations without a CPU round-trip. No performance figures or availability dates were given[^29]. If it ships, the storage client moves into the GPU, favouring vendors with deep NVIDIA ties.
 
 ### Inside NVIDIA's clusters, and the xAI question
 
-DDN's strongest marketing asset is that NVIDIA bought it for itself. Selene, NVIDIA's DGX A100 SuperPOD ranked seventh in the world in 2020, used about 7 PB of DDN AI400X storage[^1]. Eos used the 48 AI400X2s described above[^2]. DDN also claimed to be the first storage validated with DGX SuperPOD at any scale (*company-stated*)[^9]. When a GPU buyer copies NVIDIA's own design, DDN is in the bill of materials by default.
+DDN's best marketing asset is that NVIDIA bought it for itself. Selene, NVIDIA's DGX A100 SuperPOD ranked seventh in the world in 2020, used about 7 PB of DDN AI400X storage[^1]. Eos used the 48 AI400X2s described above[^2]. DDN also claimed to be the first storage validated with DGX SuperPOD at any scale (*company-stated*)[^9]. When a GPU buyer copies NVIDIA's own design, DDN is in the bill of materials by default.
 
-xAI is murkier. In November 2024 DDN announced that EXAScaler and Infinia support xAI's 100,000-GPU Colossus in Memphis[^30]. VAST Data has also claimed Colossus, saying xAI trains, checkpoints and stores data on VAST[^30]. Both can be true at different tiers or phases, and no public source settles the split. The honest statement is that xAI is a reference customer for both, and Forbes' reporting credits xAI contracts as a driver of DDN's 2026 growth[^6].
+xAI is murkier. In November 2024 DDN announced that EXAScaler and Infinia support xAI's 100,000-GPU Colossus in Memphis[^30]. VAST Data has also claimed Colossus, saying xAI trains, checkpoints and stores data on VAST[^30]. Both can be true at different tiers or phases; no public source settles the split. The honest statement: xAI references both, and Forbes credits xAI contracts as a driver of DDN's 2026 growth[^6].
 
 ### Benchmarks: present in v2.0, absent in v3.0
 
@@ -143,7 +143,7 @@ Data: `data/ch44_milestones.csv`
 
 - **Revenue.** The Register gave $25M (2003), $45M (2005) and $188M (2010)[^13]; DDN said it reached $400M in 2020[^7]. In January 2025 Blocks & Files put 2023 at $500M and estimated 2024 at $750M[^7] [VERIFY: search-summary only]. Forbes' August 2026 profile, as syndicated, gives about $400M (2024) and $500M (2025), on track to double to about $1B in 2026, while the English original calls DDN historically a roughly $300M-a-year business[^6]. Treat ~$0.5B (2025) and a ~$1B 2026 target as a working range, not facts.
 - **Momentum.** DDN's new President told an October 2026 press tour that bookings were growing about 3x year on year (*company-stated*)[^36].
-- **Profitability.** DDN describes itself as profitable for most of its history. Blackstone's release cites a self-funded, profitable record (*company-stated*)[^5]. No margins are public. Appliance-heavy revenue typically means lower gross margin than software-only rivals, though support contracts help.
+- **Profitability.** Blackstone's release cites a self-funded, profitable record (*company-stated*)[^5]. No margins are public; appliance-heavy revenue usually means lower gross margin than software-only rivals.
 - **Capital and valuation.** Blackstone Tactical Opportunities invested $300M at a $5B valuation in January 2025 and took a board seat[^5]. Coverage described it as a financial investment, with the founders keeping control[^37]. At $5B against ~$400–500M revenue, the implied multiple is about 10–12x. VAST's $30B valuation on more than $500M of committed ARR is roughly 60x[^38], and WEKA's $1.6B on ~$100M ARR (2024) about 16x[^39]. Investors valued DDN like a profitable hardware company, not an AI software platform. In June 2026 Bouzari told Bloomberg DDN wanted to raise again by year-end and bring in strategic investors. No size, valuation or close had been reported by 2026-11-01[^11].
 - **Scale.** An outside estimate puts 2025 headcount near 1,334 (*estimated*)[^40], which on ~$500M revenue is roughly $375k per employee.
 
@@ -172,11 +172,11 @@ Go-to-market has three routes. **NVIDIA-led**: DDN rides SuperPOD and NVIDIA Clo
 ## Risks & open questions
 
 - **Lustre complexity and the client.** The kernel client is both DDN's performance edge and its operational tax: it must be rebuilt and qualified for every kernel and GPU-server image. Standard-client designs (FlashBlade//EXA's pNFS, VAST's NFS) attack exactly this pain ([Chapter 8](../02-protocols-and-networking/08-file-protocols.md)).
-- **Two platforms, one R&D budget.** EXAScaler and Infinia share a control plane, not a data path. Every year DDN funds a mature parallel file system and a young object/KV platform, while VAST and WEKA each fund one. Customers must also choose which engine their data lives on. Infinia's POSIX GA, ACLs and GPUDirect support were still roadmap items in mid-2026[^24].
+- **Two platforms, one R&D budget.** EXAScaler and Infinia share a control plane, not a data path. DDN funds a mature parallel file system and a young KV platform where VAST and WEKA each fund one, and customers must pick which engine holds their data. Infinia's POSIX GA, ACLs and GPUDirect support were still on the roadmap in mid-2026[^24].
 - **Enterprise feature gaps.** Enterprise buyers expect always-on data reduction, snapshots, replication, non-disruptive upgrades and simple multi-tenancy. EXAScaler was built for scratch bandwidth; Infinia adds tenancy and reduction but is young.
 - **Appliance margins and supply.** Selling hardware means DDN carries NAND and server-cost swings that software-only vendors pass to OEMs ([Chapter 48](48-media-suppliers-and-nand-cycle.md)), and doubling revenue strains supply chains; Torrini's remit includes supply chain[^44].
 - **Founder succession and governance.** Bouzari and Bloch have run DDN since 1998 and control roughly 80% of it[^6]. The 2026 hires look like institutionalisation ahead of an IPO or strategic round[^44][^10]; no succession plan is public.
-- **Concentration and disclosure.** Growth leans on a few very large AI and sovereign contracts, xAI among them. Revenue figures are unaudited and inconsistent. Skipping MLPerf v3.0 leaves no like-for-like evidence against 2026 rivals.
+- **Concentration and disclosure.** Growth leans on a few huge AI and sovereign contracts, xAI among them; revenue figures are unaudited and inconsistent; skipping MLPerf v3.0 leaves no like-for-like evidence against 2026 rivals.
 - **Open questions.** Who joins the strategic round, and on what terms? Does Infinia reach POSIX GA and win training workloads, or stay an inference sidecar? How much of the 2026 revenue is one-off cluster builds versus recurring?
 
 ## Strategic relevance to Everpure
@@ -185,9 +185,9 @@ DDN matters to Everpure in three ways. First, it is the **incumbent EXA must dis
 
 Options a strategy team might evaluate, based on public information:
 
-- **Compete where Lustre hurts.** Target accounts whose pain is client management, metadata hot spots or capacity cost rather than raw bandwidth. Publish per-rack, per-kW and per-TB figures beside DDN's density claims, using the MLPerf v3.0 results DDN did not contest.
-- **Coexist where it does not.** In labs that will keep EXAScaler as scratch, position FlashBlade or EXA as the shared, reduced, protected capacity and AI-data tier behind it.
-- **Treat the round as intelligence.** Watch who invests, at what valuation, and whether CORE or Infinia gains an OEM. A full acquisition of DDN would face founder control, a likely multi-billion price and heavy product overlap with EXA. A strategy team would more plausibly look at narrower partnerships or capabilities (for example, Lustre-to-EXA migration tooling).
+- **Compete where Lustre hurts.** Target accounts whose pain is client management, metadata hot spots or capacity cost, not raw bandwidth, and publish per-rack, per-kW and per-TB figures beside DDN's density claims.
+- **Coexist where it does not.** Where labs keep EXAScaler as scratch, position FlashBlade or EXA as the protected capacity and AI-data tier behind it.
+- **Treat the round as intelligence.** Watch who invests, at what valuation, and whether CORE or Infinia gains an OEM. A full acquisition would face founder control, a multi-billion price and heavy overlap with EXA; narrower moves (for example, Lustre-to-EXA migration tooling) look more plausible.
 
 ## How Everpure approaches it vs. competitors
 
