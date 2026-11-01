@@ -280,3 +280,93 @@
 | 22 | Pure1 当前的遥测规模数字（找到的最新公开数字为 2017 年的">1 trillion data points/day, ~7 PB"） | 有当前数据点会让护城河论证更有力。 |
 | 22 | Pure1 Manage MCP server（见于 2026 年 Everpure 博客，仅见于搜索摘要）以及跨阵列 Fusion 存储类别的 GA 状态 | 两者在发布时（2025 年 9 月）均为路线图项目。 |
 | 22 | Fusion 的 Terraform provider 当前的维护状态与版本（所见最新为 v1.0.16，2023 年 8 月，面向 Fusion v1 编写） | 若已过时，对 Fusion v2 预设的"存储即代码"支持可能比字面暗示的更薄弱。 |
+| 23 | Evergreen//One Overdrive（可超出订阅水平突发使用，据报道最高 25%）的条款与 GA 日期，仅见于 Accelerate 2026 的二手摘要 | 影响容量风险经济性的新产品能力。 |
+| 23 | Everpure 如何对部署在客户现场的 Evergreen//One 硬件进行会计处理（资本化计入不动产与设备并计提折旧，还是费用化） | 决定财务报表中 STaaS 的利润率与现金流特征。 |
+| 23 | Q2 FY27 STaaS 合同总价值（TCV）（$277M，+121%）及">$1B run rate"来自电话会议摘要（Quartr、Statementdog、Nasdaq），而非官方准备发言稿；Q2 FY27 产品/订阅毛利率（66.2%/74.9%，似为非 GAAP）同样仅来自摘要 | 第 19 章与第 23 章中的标题级数字。 |
+| 24 | FlashBlade//EXA 数据节点当前的保护方案及单节点重建时间 | 决定矩阵中 EXA 的故障域评级以及对工程师问题的回答。 |
+| 24 | 热力图评级属于本图谱的判断；有争议的单元格（DASE 用于 OLTP、对象存储用于训练、并行文件系统用于 KV 缓存、纵向扩展用于 RAG）应请 Everpure 现场工程师做合理性核查 | 评级会在对话中被引用；某个单元格出错会损害可信度。 |
+| 25 | FlashArray 原生文件服务成熟于哪个版本（有报道称是 Purity//FA 6.4，约在 6.0 之后两年） | 决定 Compuverde 整合实际耗时多久；用于"耗时更长"的评分卡。 |
+| 25 | Forever Flash 的推出日期（2014 年 2 月）及细节，仅见于 Pure 新闻稿的搜索摘要 | 时间线条目及 Evergreen 商业模式的起源。 |
+| 25 | Evergreen Storage + FlashArray//m 的发布日期（2015 年 6 月），仅见于搜索摘要（GeekFluent） | 时间线条目；为订阅护城河的起点标注日期。 |
+| 25 | data/ch25_revenue.csv 中 FY2016–FY2020、FY2023 与 FY2026 的收入数字取自 10-K 的搜索摘要（在图 25.3 中以 † 标注）；FY2017/FY2018 为 ASC 606 之前的原始报告数 | 收入图表与 CAGR（23.6%）依赖这些数字。 |
+| 25 | StorReduce/ObjectEngine 是否有正式的停产（end-of-life）通知及日期（只找到 2020 年关于其下架的媒体报道） | 并购记录表的准确性。 |
+| 26 | 哪些 NAND 管理功能（ECC、读重试、编程算法）运行在 DFM 的精简控制器上，哪些在 Purity 软件中 | 决定"无 SSD 控制器"带来的节省有多少是真实的，以及 DirectFlash 在不同 NAND 供应商之间的可移植性 |
+| 26 | 据 FY2026 10-K，300 TB DFM 于 2025 年发布（仅见于年报的搜索摘要），以及其在企业级阵列中当前的批量出货状态 | 相对 245.76 TB 标准 SSD 的标题级密度说法 |
+| 26 | Q2 FY27 预付费用增加约 $577M，被解读为提前采购 NAND（第三方对 10-Q 的解读） | 衡量 2026 年短缺期间 Everpure 的库存规模与 NAND 价格敞口 |
+| 26 | 2019 年 FlashArray//C 推出时的容量为 18.3 TB TLC DFM（仅见于搜索摘要） | DFM 容量图表上的早期数据点 |
+| 27 | FlashBlade//S R2 搭配 300 TB DFM 与 400GbE"每刀片最高 1,200 TB"——仅见于合作伙伴/经销商列表 | 容量层定位与 DFM 路线图说法依赖于此。 |
+| 27 | Everpure 称 FlashBlade//S R2 已通过 DGX GB200/GB300 SuperPOD 认证——仅见于 Everpure 博客的搜索摘要 | 决定 //S 与 //EXA 之间 SuperPOD 认证差距有多大。 |
+| 27 | 基于 DirectFlash 的 FlashBlade//EXA 数据节点的 GA 状态（计划于 2025 年下半年；2026 年 9 月的 MLPerf v3.0 仍使用 Linux/NVMe 节点） | 是 EXA 相对 VAST/WEKA 介质成本竞争力的核心。 |
+| 27 | Pure Storage 的 FlashBlade//EXA "MLPerf Storage v2.0 test results"白皮书是否对应任何官方 MLCommons v2.0 提交 | 有报道称 v3.0 是 Everpure 首次提交；影响基准测试历史相关说法。 |
+| 27 | QLC 与 HDD 的 $/GB 比值（据 TrendForce 约 15x，经 DatacenterDisk/Vdura 衍生报道） | HDD 对象存储相对 FlashArray//E 与 FlashBlade//E 的最强论点（steelman）。 |
+| 27 | MLPerf v3.0 EXA 检查点读取数字：588.28 GiB/s（Everpure 新闻稿）对 833.0 GiB/s（StorageReview 摘要） | 基准测试表的准确性；需核对 MLCommons 结果表。 |
+| 27 | 一个"18M IOPS / 200 GB/s"的数字被不同来源分别归于 FlashArray//XL190 与第二代 FlashArray//ST——在问题解决前已从本章删除 | 避免错配旗舰产品的性能规格。 |
+| 27 | FlashBlade//EXA NCP 认证的完成情况（Blocks & Files，2026 年 3 月："later this year"），以及 EXA 是否获得任何 DGX SuperPOD 认证 | 新兴 GPU 云（neocloud）与 SuperPOD 交易的关键门槛事项。 |
+| 28 | Evergreen//One Overdrive（可超出订阅量最高 25% 突发，2026 年 Q3）的条款仅来自 Accelerate 2026 的二手摘要 | 改变容量缓冲的经济性及 Evergreen//One 定价。 |
+| 28 | Fusion Compliance、Agentic Triage 以及 Workload Rebalance and Mobility 的 GA 状态（计划于 2026 年 Q4；Blocks & Files，经搜索摘要） | 决定控制平面锁定叙事的成熟度。 |
+| 28 | 客户总数：2026 年引用的数字有 14,500+ 与 15,000 两种 | Fusion 采用率（约 8%）及附加率算例的分母。 |
+| 28 | Everpure Cloud Azure Native 支持 Azure VM 的 GA 日期（2026 年 6 月，二手来源） | 界定 AVS 之外的云覆盖范围。 |
+| 28 | TechTarget 与 Futurum 分析师对 Data Intelligence 的评论（Strechay 的引语、未加入 OSI）仅经搜索摘要读取；页面无法抓取 | 引语准确性。 |
+| 29 | Q4 FY26 准备发言稿中关于标准化超大规模模式的措辞（Everpure 采购部分组件；超大规模云厂商采购 NAND） | 仅见于搜索摘要；它界定了超大规模收入的利润率特征。 |
+| 29 | 分析师对超大规模业务毛利率的估计（75–85%；纯特许权使用费 >90%） | 驱动示意性的混合利润率算例；并非公司披露。 |
+| 29 | Q2 FY27 存储即服务（STaaS）TCV $277M（+121%）以及"$1B annualised Evergreen//One TCV"的说法 | 仅来自电话会议摘要。 |
+| 29 | Evergreen//One 的成本构成（Everpure 自有硬件的折旧计入订阅服务成本） | 决定 //One 占比提升是否会摊薄订阅毛利率。 |
+| 29 | Everpure 是否只会以汇总口径报告超大规模收入（Q2 FY27 电话会议的中文纪要摘要） | 影响分析师如何追踪超大规模业务线。 |
+| 29 | 两张图表中 FY23–Q2 FY27 的全部收入结构、ARR 与 RPO 数字均来自 10-K/10-Q/新闻稿的搜索摘要；FY25 订阅收入由总收入减产品收入推算 | 发布前需对照 EDGAR 抽查。 |
+| 30 | Common Crawl 仓库总规模（">10 PB since 2008"）来自 Common Crawl 概览页面；仅见于搜索摘要 | 为第 30 章数据量漏斗的顶端及要点速览（TL;DR）中的说法提供锚点。 |
+| 30 | AWS S3 规模数字（>500 万亿个对象、>200M 次请求/秒、数百 EB）来自 AWS 2026 年 3 月的 S3 20 周年文章；经 Le Monde Informatique 引用 | 支撑第 30 章与第 36 章中"数据湖即对象存储"的论点。 |
+| 30 | Horowitz ISSCC 2014 能耗数字（45 nm 下 64-bit DRAM 约 1.3–2.6 nJ，对比 FP 运算 0.4–3.7 pJ）需对照原论文的表格核实，而非二手转载 | 关于数据搬运能耗的半导体类比。 |
+| 31 | NVIDIA DGX SuperPOD（H100）存储分层：每个 SU 读取 15/40/125 GB/s（good/better/best）见于 RA Table 6 的搜索片段；"best"档单节点 40/20 GB/s 及每 SU 写入 62 GB/s 仍未确认（docs.nvidia.com 无法访问） | 在 AI 工厂规模估算段落中用作行业规模交叉核验。 |
+| 31 | Llama 3 论文细节（466/47/419 次中断，约 78% 为硬件原因；Tectonic 240 PB / 7,500 台服务器 / 2 TB/s 持续 / 7 TB/s 峰值；每 GPU 状态 1 MB–4 GB；TP8/PP16/DP128 下 41% MFU）因 arxiv.org 无法访问，经二手来源与幻灯片确认（Princeton COS316 2026 幻灯片佐证 240 PB / 7,500 台 SSD 服务器；审阅者对 §3.3 的记忆与全部数字相符）；需对照 arXiv 2407.21783 §3.3 与 Table 4 复核 | 这些数字是本章故障率、存储与数据加载算例的锚点。 |
+| 31 | MLPerf Storage v3.0 Everpure 检查点细节：30 个数据节点上 877.52/588.28 GiB/s 及 17.74 s / 28.99 s 现已有 Techzine 和 StorageReview 佐证；1,024 个模拟加速器仍需对照 MLCommons 结果表确认 | 推算 16–17 TB 检查点大小及读写恢复点的依据。 |
+| 31 | IBM 报告的 MLPerf 检查点大小（8B = 105 GB；1T = 15 TB，其中优化器 13.2 TB）仅见于搜索摘要 | 佐证每参数 13–15 字节的落盘规模估算。 |
+| 32 | Dynamo KVBM 默认的"访问两次后才卸载到磁盘"频率过滤——需确认当前默认值与版本 | 影响 G3/G4 层实际承受多少写流量（及 SSD 耐久度）。 |
+| 32 | Rubin 每 GPU 的 HBM4 容量（288 GB）与带宽（约 22 TB/s）需对照 NVIDIA 数据手册；各来源对 CES 与 GTC 2026 的引用不一 | 用作图 32.3 与正文中 G1 的上限。 |
+| 32 | WEKA、VAST 与 DDN 未提交 MLPerf Storage v3.0（StorageReview）；仍需核查 HPE，以及 Everpure 按单主机计算的 KV 排名与 UBIX/FarmGPU（较小配置约 444 GiB/s）的对比 | Everpure 的"参加的每项 KV 测试均第一"是公司说法；竞争对比需要完整结果表。 |
+| 32 | PureKVA"TTFT 最高快 20x"背后的测试条件（模型、上下文、命中率、基线），以及已宣布的 2026 年 10 月供货是否兑现（截至 2026-11-01 未找到 GA 确认） | 在任何对外或董事会层面的对比中使用该说法之前需要确认。 |
+| 32 | VAST 的 VUA vLLM 连接器是否已并入 LMCache 的 GDS 后端（仅由一个代码仓库镜像报道） | 决定 VAST 是仍提供自己的 KV 客户端，还是依赖开源层。 |
+| 33 | Everpure Data Stream 搭载哪种向量引擎（一篇赞助的 Blocks & Files 文章称内置向量数据库并集成 NVIDIA NeMo Retriever） | 决定 Everpure 与向量数据库厂商是竞争还是合作；只找到赞助内容来源。 |
+| 33 | 有关 Pinecone 寻求出售的报道的日期与现状（Calcalist 援引 The Information） | 用作独立向量数据库承受功能挤压的证据；仅见于搜索摘要。 |
+| 33 | Dell Data Search Engine / cuVS 混合搜索是否如计划于 2026 年上半年发布 | 表 33.2 将其列为计划中；2026 年中之后的状态未确认。 |
+| 33 | NetApp AIDE 的广泛供货（宣布于 2026 年初夏） | 影响将 AIDE 描述为已广泛出货还是仅限灯塔客户。 |
+| 34 | NVIDIA-Certified Storage Enterprise（约 1,000 GPU）的模拟规模；Foundation（128）与 NCP（最高 10,000）已有 docs.nvidia.com 与 NVIDIA 博客的搜索摘要佐证 | 界定图 34.1 与"关键数字"表中使用的认证阶梯。 |
+| 34 | 当前 v2.4 版 Requirements for AI Clouds 与 v2.2 存档版中的 NCP 存储阈值（99.5% 正常运行时间、每 PB 99.999% 持久性、8 周交付周期） | "核心概念"中引用的 NCP 运营门槛。 |
+| 34 | NVIDIA 是否参与了 VAST 2023 年 12 月的 E 轮融资（二手来源称是；VAST 新闻稿未点名 NVIDIA） | NVIDIA 投资叙事的准确性。 |
+| 34 | VAST DGX BasePOD 状态（只找到一份较早的 NVIDIA 托管 DGX POD RA） | 厂商认证表中的单元格。 |
+| 34 | Dell PowerScale BasePOD 与 NCP/HPS 状态 | 厂商认证表中的单元格。 |
+| 34 | HPE 存储的 DGX SuperPOD 认证（未找到）以及各厂商的 NVCS 级别（官方列表仅经搜索摘要可见，未显示级别） | 厂商认证表的准确性。 |
+| 34 | Nutanix NVCS Enterprise 的发布日期（据搜索摘录为 2026 年 6 月） | 表中日期。 |
+| 34 | FlashBlade//EXA 自 2026 年 3 月以来是否获得任何 NVIDIA 认证（2026-11-01 的搜索未找到；最新来源仍称其为通往 NCP 级别的"stepping stone"） | 要点速览（TL;DR）与对比部分所称 Everpure 的核心差距。 |
+| 34 | DGX SuperPOD B200/B300 存储表中的数字（经 NVIDIA PDF/HTML 的搜索摘要读取） | 关于认证底线的算例。 |
+| 35 | Cisco NCP 高性能存储 RA 的规模（1,152 GPU 读取 180 GB/s）。搜索确认 NVL72 设计为 Cisco EBox 上的 VAST（UCS C225-M8N）、采用 1,152 GPU 拓扑，但未确认 180 GB/s 数字；无法抓取 cisco.com | 为每 GPU 存储规模估算的低端提供锚点。 |
+| 35 | Nebius 共享文件系统已验证至 100 PB（AI Cloud 3.6 版本，仅见于搜索摘要） | 支撑"自建威胁"论点。 |
+| 35 | Together AI 的存储供应商（未披露；据报道部分运行在 CoreWeave/Lambda 的算力上） | 新兴 GPU 云（neocloud）厂商图谱中的空白。 |
+| 35 | Oracle FY2026 资本开支 US$55.7B（二手来源的搜索摘要；图中以 † 标注）。CoreWeave 2025 年资本开支 US$14.9B 为 Q4 电话会上的公司自述（权责发生制口径；10-K 现金资本开支为 US$10.3B） | 图 35.3 数值；需核对 Oracle 10-K。 |
+| 35 | CoreWeave 2026 年 Q3 业绩（预计约 2026 年 11 月中旬发布）可能更新资本开支、电力与积压订单数字 | 本章使用 2026 年 Q2（8 月）数字。 |
+| 35 | Nscale 的存储供应商（仅一份 Next Platform 列表称是 VAST）；Microsoft–Nscale 约 200,000 GB300 合同本身已由 Nscale 2025-10-15 新闻稿确认（未披露金额） | 图 35.2 中 Nscale 的连线为虚线。 |
+| 36 | S3 约 1 PB/s 的峰值带宽（Wikipedia，归于 re:Invent 2024 的一场分享）。>500 万亿个对象 / 数百 EB 的数字已由 re:Invent 2025 的报道确认 | 衡量 AWS 对象层的规模。 |
+| 36 | Meta 2024 年 GenAI 文章、2025 年 QLC 文章以及 2026 年"AI storage blueprint"仅经搜索摘录读取（本环境无法访问 engineering.fb.com） | Meta 存储的核心说法（闪存 Tectonic、Hammerspace NFS、区域 BLOB、L1/L2/L3 缓存）应对照完整文章抽查。 |
+| 36 | Tectonic FAST '21 论文细节（ZippyDB、名称/文件/块三层、TrafficGroups）经 Meta 博客与二手摘要确认，而非完整阅读论文（usenix.org 无法访问） | 支撑图 36.2。 |
+| 36 | Google Next '26 存储发布文章以及 Azure AMLFS 20 Tech Community 文章的确切标题 | 脚注格式要求确切标题。 |
+| 37 | MLPerf Storage v3.0 向量数据库数据集规模与索引：10M 个向量（closed 组，据 MLCommons 页面）对比 Milvus 上 1,536 维的 1M 个向量（Blocks & Files） | 决定新向量工作负载的压力有多大。 |
+| 37 | MLPerf Storage v3.0 是否报告功耗/机架空间效率指标。规则要求本地系统列出机架单元数和通电硬件清单，但实测功耗为可选项 | 对经审计结果做每 kW 归一化的依据。 |
+| 37 | FlashBlade//EXA 是否参加了任何 v3.0 训练类工作负载：关于 U-Net 表格的报道（YanRong 543.9 GiB/s、HPE K3000 345.8 GiB/s）中没有 EXA 条目；需在 MLCommons 结果表中确认 | 检验"参加的每项测试均第一"的说法。 |
+| 37 | 1T 级检查点结果的模型归属（v3.0 中为"llama3-1t"，Everpure 与 Microsoft 资料中为"1.25T"），以及 Alluxio 405B 的 147.03 GiB/s 数字（单一厂商来源） | 图 37.2 中的图表标签。 |
+| 38 | Satya Nadella 在 Bg2 播客中称 Microsoft 有 GPU 积压在库存中无法上电这一言论的确切日期（据报道为 2025 年 10 月下旬/11 月上旬） | 电力相关表态表（表 38.1）中带日期的条目。 |
+| 38 | FMS 2025 演讲 QLCP-201-1（据 FMS 列表，演讲者为 Meta 软件工程师 Sumit Gupta）：">10 PB per rack"与"power higher than we like"的措辞 | 已部署的超大规模 QLC 机架密度的唯一公开数据点；本环境无法抓取来源 PDF。 |
+| 38 | WD Ultrastar Data102 3000 Series：WD 测试中低于 1,300 W（用户指南，经 ManualsLib），以及 2,244 TB（102 x 22 TB）的 SKU | TB/W 图表中的 HDD JBOD 一行，以及每盘位 15 W 的算例假设。 |
+| 38 | VAST DF-3060V2 数据手册功耗（空闲 368 W、工作 400-728 W、最大 850 W）及 1,352 TB 原始容量 | TB/W 图表中的 VAST 一行；本环境无法抓取 kb.vastdata.com。 |
+| 38 | Everpure NCP 支持说明中 FlashBlade//S500 的"1.3 W per TB" | TB/W 图表中的 Everpure 系统一行。 |
+| 38 | DDN AI400X3 每台设备的可用容量（由 64 台设备共 32 PB 推算约 500 TB；未找到单台数字）。AI400X3M（2026 年 6 月）可用容量最高 2 PB | TB/W 图表中的 DDN 一行取决于配置。 |
+| 38 | EIA 美国商业电价 13.85 美分/kWh（截至 2026 年 7 月的 12 个月），仅见于搜索摘要（ServNet/VDURA 介质价格现已有佐证，同第 4 章） | 100 PB 算例中的能源成本项（与第 4 章共用）。 |
+| 39 | Everpure 是否为 Open Semantic Interchange（OSI）工作组成员；该说法依据的是一份 TechTarget 搜索摘要 | 这是检验 Everpure 关于 Data Intelligence 中立性说法最清晰的公开标准 |
+| 39 | NetApp AI Data Engine 的正式供货日期，以及 2026 年 9 月的多厂商索引与 Console MCP server 是否已 GA | 决定 NetApp 在覆盖非自有存储方面是否领先 Everpure |
+| 40 | IDC 是否将超大规模云厂商的 DirectFlash 许可/组件收入（Meta、另一家前五超大规模云厂商）计为外部企业级存储 | 决定 Everpure 在追踪数据中的份额是否涵盖其增长最快的业务线。 |
+| 40 | Omdia 2022 年外部存储数字（约 US$38.0B；搜索摘要还引用了 +12.7% 与 +16.5% 两个增速） | 仅用作追踪机构之间分歧的例子；不同摘要中的数字与增速互相矛盾。 |
+| 40 | Next Platform 从 IDC 2029 年 US$758B AI 基础设施预测中推算出约 US$10.5B 存储（1.4%）；需确认具体文章 | 唯一与 IDC 挂钩、由媒体推算的前瞻性 AI 存储数字。 |
+| 40 | 当前 IDC 或 Gartner 的文件与对象存储市场规模（找到的最新公开数字是 IDC 2013→2017） | 衡量 FlashBlade 潜在市场规模（TAM）所需。 |
+| 40 | 2025 年 Gartner Backup and Data Protection Platforms 领导者完整名单（来自厂商新闻稿与一份二手摘要） | 细分市场图谱中的领导者说法。 |
+| 40 | IDC 数据重述：2024 年公布值为 US$33.5B，而 2025 年的 US$33.0B（+3.9%）隐含约 US$31.8B；1Q26 增速 22.7% 被修订为 28.7%；据报道 2Q26 新闻稿称 2Q26 为仅次于 4Q25 的第二高季度，但 4Q25 的公布值为 US$9.7B | 图表序列混用了原始与重述后的数据。 |
+| 40 | Huawei、NetApp、Everpure、HPE 的 2Q25 厂商份额由 2Q26 收入/增速推算，而非读自 IDC 表格；2Q18 来源 URL（StorageNewsletter p=193184）未逐页核查 | 厂商份额图表中的对比点。 |
+| 40 | Everpure 自己在 2026-09-23 金融分析师大会上给出的 TAM/SAM 数字 | 公司自述的规模估算应作为 TAM 表的锚点。 |
+| 41 | NetApp AFX 1K 的确切 GA 日期（2025 年 10 月 Insight 大会上宣布；据 ONTAP 9.18.1/9.19.1 报道，已于 2026 年出货） | 为表 41.3 中在位厂商的追赶标注日期。 |
