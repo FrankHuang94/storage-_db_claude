@@ -64,7 +64,7 @@ Everpure does not publish PM scorecards, but its disclosures show what the compa
 
 ### Partner and certification cycles
 
-AI product lines run on NVIDIA's calendar. NVIDIA-Certified Storage launched at GTC in March 2025, with Foundation, Enterprise and NCP levels[^6]. SuperPOD certification is tied to a GPU generation; its B200 "enhanced" storage tier works out to roughly 0.5 GB/s of read per GPU[^7]. FlashBlade//S500 gained SuperPOD certification in November 2024[^8]. FlashBlade//EXA's certification was not on the public record as of this writing ([Chapter 34](../05-ai-storage/34-nvidia-ecosystem.md)). For an EXA PM, the certification date is a pipeline gate. For you it is a diligence question: in which deals is the gap used against us, and when does it close?
+AI product lines run on NVIDIA's calendar. NVIDIA-Certified Storage launched at GTC in March 2025, with Foundation, Enterprise and NCP levels[^6]. SuperPOD certification is tied to a GPU generation; its B200 "enhanced" storage tier works out to roughly 0.5 GB/s of read per GPU[^7]. FlashBlade//S500 gained SuperPOD certification in November 2024[^8], and FlashBlade added NCP high-performance-storage certification in March 2025 ([Chapter 27](../04-everpure/27-flasharray-and-flashblade.md)). For FlashBlade//EXA, Everpure said in March 2026 that NVIDIA-Certified Storage validation extended to EXA; NCP and SuperPOD certification for EXA were not on the public record as of this writing ([Chapter 34](../05-ai-storage/34-nvidia-ecosystem.md)). For an EXA PM, the certification date is a pipeline gate. For you it is a diligence question: in which deals is the gap used against us, and when does it close?
 
 ### Question sets by product line
 
@@ -85,7 +85,7 @@ Each line below has a different scorecard, so the questions differ. The second c
 
 *Table 55.2 — Ten product lines, ten scorecards; the strong answers share a pattern: a number, a named loss, and a date.*
 
-A few lines deserve extra care. **Data Intelligence** went GA in June 2026[^9], so its PMs are still defining the persona. Questions about who signs and who is paid will be welcome. **KV cache** is new: PureKVA's GA and its "up to 20×" time-to-first-token claim date from September–October 2026[^10], so the useful question is the baseline, not the multiple ([Chapter 32](../05-ai-storage/32-inference-and-kv-cache.md)). **Hyperscale** PMs sell a licence. The first customer, Meta, passed 2 EB in FY26[^11], and a second, unnamed top-five hyperscaler signed in August 2026[^12], so their scorecard is exabytes and design wins, not arrays.
+A few lines deserve extra care. **Data Intelligence** went GA in June 2026[^9], so its PMs are still defining the persona. Questions about who signs and who is paid will be welcome. **KV cache** is new: PureKVA and its "up to 20×" time-to-first-token claim were announced on 2026-09-30 for October availability, and GA had not been confirmed publicly at this writing[^10], so the useful question is the baseline, not the multiple ([Chapter 32](../05-ai-storage/32-inference-and-kv-cache.md)). **Hyperscale** PMs sell a licence. The first customer, Meta, passed 2 EB in FY26[^11], and a second, unnamed top-five hyperscaler signed in August 2026[^12], so their scorecard is exabytes and design wins, not arrays.
 
 ### Preparing for a PM meeting
 
@@ -108,7 +108,7 @@ Three habits make the flow work. First, never spend meeting time on a question t
 
 ## How Everpure approaches it vs. competitors
 
-PMs and executives across the industry frame their products publicly in ways that shape what they will push on in a meeting, including a target's PMs during diligence.
+PMs and executives across the industry frame their products publicly in ways that shape what they will push on in a meeting, including a target's PMs during a formal diligence process. Use the counter-questions with Everpure colleagues, in public forums or under a diligence agreement; never to draw non-public information out of a competitor's staff.
 
 | Vendor | Public framing | What their PMs will push | Your counter-question |
 |---|---|---|---|
@@ -124,7 +124,7 @@ The steelman for competitors' PMs is real. VAST's PMs can argue that one system 
 
 ## History and trajectory
 
-Storage product management has moved through three scorecards. In the disk era, PMs competed on IOPS, capacity and price per GB, sold in three-to-five-year forklift cycles. Pure Storage changed the commercial axis: Forever Flash (2014) and Evergreen Storage (2015) turned controller refresh into a subscription entitlement[^17], and the 2022 relaunch as //Forever, //Flex and //One made consumption terms a PM-owned product[^18]. Since 2023 the AI cycle has added a third axis, partner certification and benchmark position. EXA's MLPerf Storage v3.0 checkpoint result, 877.52 GiB/s on 30 data nodes, is now part of the sales motion[^19].
+Storage product management has moved through three scorecards. In the disk era, PMs competed on IOPS, capacity and price per GB, sold in three-to-five-year forklift cycles. Pure Storage changed the commercial axis: Forever Flash (2014) and Evergreen Storage (2015) turned controller refresh into a subscription entitlement[^17], and the 2022 relaunch as //Forever, //Flex and //One made consumption terms a PM-owned product[^18]. Since 2023 the AI cycle has added a third axis, partner certification and benchmark position. EXA's MLPerf Storage v3.0 checkpoint write, 877.52 GiB/s on 30 data nodes (vendor-submitted, peer-reviewed, in a round VAST, WEKA and DDN did not enter), is now part of the sales motion[^19].
 
 The next shift is already visible. Data Intelligence, MCP servers and KV cache all sell to buyers outside the storage team. That requires PMs who can price software separately from arrays and defend a non-storage persona. Watch whether Everpure starts disclosing per-line software metrics ([Chapter 25](../04-everpure/25-company-history-and-strategy.md)).
 

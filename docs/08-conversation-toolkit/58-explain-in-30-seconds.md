@@ -78,7 +78,7 @@ flowchart LR
 5. **QLC.** Four bits per cell: cheapest flash, but less durable. Purity makes it work by writing large sequential chunks ([Ch 2](../01-storage-fundamentals/02-media-physics.md)).
 6. **Data reduction.** Deduplication and compression multiply usable capacity. Purity averages ~5:1[^4]; AI data barely shrinks ([Ch 5](../01-storage-fundamentals/05-data-reduction.md)).
 7. **Raw, usable, effective.** Three prices: before protection, after it, and after assumed reduction. Compare like with like ([Ch 4](../01-storage-fundamentals/04-performance-and-economics-metrics.md)).
-8. **Watts.** AI sites are power-capped, so storage watts displace GPUs. A rack of the largest SSDs holds ~5× a disk rack ([Ch 38](../05-ai-storage/38-power-and-density.md)).
+8. **Watts.** AI sites are power-capped, so storage watts displace GPUs. A rack of the largest SSDs holds ~5× the petabytes of a disk rack, at 2–3× the power ([Ch 38](../05-ai-storage/38-power-and-density.md)).
 
 ### How storage systems work
 
@@ -109,7 +109,7 @@ flowchart LR
 
 ### AI and storage
 
-30. **Storage for AI.** Keeping GPUs busy. At $2–6 per GPU-hour[^9][^10], an idle 1,024-GPU cluster burns ~$0.57–1.75 a second ([Ch 11](../02-protocols-and-networking/11-gpu-data-path.md)).
+30. **Storage for AI.** Keeping GPUs busy. At about $2–6 per GPU-hour[^9][^10], an idle 1,024-GPU cluster burns ~$0.6–1.7 a second ([Ch 11](../02-protocols-and-networking/11-gpu-data-path.md)).
 31. **"AI storage."** At least eight workloads, from bulk ingest to inference. Ask vendors which stage they actually win ([Ch 30](../05-ai-storage/30-ai-data-pipeline.md)).
 32. **Checkpoint.** Saving the game. A 405B-parameter model's state is ~6.5 TB; saving it in a minute needs ~108 GB/s ([Ch 31](../05-ai-storage/31-training-storage.md)).
 33. **Failure rate.** Meta's Llama 3 run had 419 unexpected interruptions in 54 days[^11], so fast restores protect GPU spend ([Ch 31](../05-ai-storage/31-training-storage.md)).
@@ -119,8 +119,8 @@ flowchart LR
 37. **RAG.** AI looking up company documents before answering, turning storage into search and governance ([Ch 33](../05-ai-storage/33-rag-vector-lakehouse.md)).
 38. **Agents and MCP.** Agents need findable, permitted data. MCP passed 10,000 servers[^13], turning metadata into a product ([Ch 39](../05-ai-storage/39-agentic-ai-and-data-intelligence.md)).
 39. **NVIDIA certification.** NVIDIA's approved-vendor list: absence usually means no deal, but it proves a floor, not a ranking ([Ch 34](../05-ai-storage/34-nvidia-ecosystem.md)).
-40. **Neocloud.** A GPU-specialist cloud; CoreWeave guides 2026 capex to $35–39B[^14]. Storage is ~1% of it yet can idle every GPU ([Ch 35](../05-ai-storage/35-ai-factories-and-neoclouds.md)).
-41. **MLPerf Storage.** A peer-reviewed benchmark with simulated GPUs. EXA led v3.0 checkpointing at 877.5 GiB/s[^15]; VAST, WEKA and DDN skipped it[^16] ([Ch 37](../05-ai-storage/37-reading-benchmarks.md)).
+40. **Neocloud.** A GPU-specialist cloud; CoreWeave guides 2026 capex to $35–39B[^14]. The largest disclosed storage contract is about 1% a year of a neocloud's capex, yet storage can idle every GPU ([Ch 35](../05-ai-storage/35-ai-factories-and-neoclouds.md)).
+41. **MLPerf Storage.** A peer-reviewed benchmark with simulated GPUs. EXA led v3.0 checkpoint writes at 877.5 GiB/s[^15] (read was 588 GiB/s); VAST, WEKA and DDN skipped the round[^16] ([Ch 37](../05-ai-storage/37-reading-benchmarks.md)).
 
 ### Everpure's model
 
@@ -134,7 +134,7 @@ flowchart LR
 49. **FlashBlade//EXA.** Purity runs metadata, third-party servers hold data, clients use standard pNFS: Everpure's AI-scale answer to VAST and WEKA ([Ch 27](../04-everpure/27-flasharray-and-flashblade.md)).
 50. **Pure1 and Fusion.** Fleet analytics and policy control. Fusion passed 1,200 customers[^22], moving switching costs into software ([Ch 28](../04-everpure/28-platform-and-software.md)).
 51. **Portworx and 1touch.** Kubernetes storage, and data classification bought for $125.0M[^23]. Both bet on selling software above the array ([Ch 28](../04-everpure/28-platform-and-software.md)).
-52. **Margin squeeze.** Q2 FY27 non-GAAP product margin was 66.2% versus 74.9% for subscription[^24]; NAND stockpiling made free cash flow −$238M[^25] ([Ch 29](../04-everpure/29-hyperscaler-ecosystem-financials.md)).
+52. **Margin squeeze.** Q2 FY27 non-GAAP product margin was 66.2% versus 74.9% for subscription[^24]; strategic NAND and component purchases made Q2 free cash flow −$238M[^25] ([Ch 29](../04-everpure/29-hyperscaler-ecosystem-financials.md)).
 53. **The rename.** A bid for a data-platform valuation while revenue is still mostly arrays ([Ch 25](../04-everpure/25-company-history-and-strategy.md)).
 
 ### Competition
@@ -218,7 +218,7 @@ The pitch has had three versions: flash at disk-like effective prices at the Oct
 |---|---|---|---|
 | Subscription ARR | $2.13B (+20%) | Recurring base, Q2 FY27 | Everpure, 2026-08-26[^20] |
 | Remaining performance obligations | $4.1B (+44%) | Contracted future revenue | Everpure, 2026-08-26[^20] |
-| FY27 revenue guidance | $5.03–5.07B (about +38%) | Raised from $4.3–4.4B | Everpure, 2026-08-26[^20] |
+| FY27 revenue guidance | $5.03–5.07B (about +38%) | Initial guide $4.3–4.4B (Feb 2026), raised in May and August | Everpure, 2026-08-26[^20] |
 | Everpure share of external storage | 8.1% (#4) | 2Q26; Dell 23.8% | IDC via StorageReview, 2026-09[^26] |
 | Non-GAAP gross margin, product vs subscription | 66.2% vs 74.9% | Q2 FY27; NAND squeeze | Investing.com, 2026-08[^24] |
 | Enterprise SSD ÷ nearline HDD $/TB | ~18.6× (~10× in 2020) | Why flash sells on power and density | Hardware Busters, 2026[^1] |

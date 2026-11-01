@@ -217,7 +217,7 @@ S3 Standard at US$0.023 per GB-month against Glacier Deep Archive at US$0.00099 
 <details>
 <summary><strong>Q7.</strong> What is the memory–storage wall?</summary>
 
-The ~1,000× latency step between DRAM-class memory (~100–300 ns) and NAND (~50–150 µs). Most storage-system design is about hiding it. ([Ch 2](../01-storage-fundamentals/02-media-physics.md))
+The ~1,000× latency step between memory tiers (~100–400 ns; HBM is ~350 ns from the GPU, a bandwidth tier rather than a latency one) and NAND (~50–150 µs). Most storage-system design is about hiding it. ([Ch 2](../01-storage-fundamentals/02-media-physics.md))
 
 </details>
 
@@ -231,7 +231,7 @@ NAND programs pages but erases only whole blocks, and every cell wears out after
 <details>
 <summary><strong>Q9.</strong> (L2) Why is QLC harder to use than SLC?</summary>
 
-Each extra bit per cell halves the voltage margin. QLC's 16 states make it cheaper per bit but slower, less durable and more fragile, so it works in enterprise only when software turns small random writes into large sequential ones. ([Ch 2](../01-storage-fundamentals/02-media-physics.md))
+Each extra bit per cell roughly halves the voltage margin. QLC's 16 states make it cheaper per bit but slower, less durable and more fragile, so it works in enterprise only when software turns small random writes into large sequential ones. ([Ch 2](../01-storage-fundamentals/02-media-physics.md))
 
 </details>
 
@@ -336,7 +336,7 @@ Raw is the drive total. Usable is what remains after protection and reserves, ty
 <details>
 <summary><strong>Q24.</strong> (L2) In the chapter's TCO example, does flash beat disk for 10 PB of cold data?</summary>
 
-No. At 2026 prices all-flash costs ~3.2× hybrid disk over five years (~$429 vs ~$133 per effective TB), reaching parity only with cheap NAND and ~4:1 reduction. Power and space are under 10% of TCO. ([Ch 4](../01-storage-fundamentals/04-performance-and-economics-metrics.md))
+No. At 2026 prices all-flash costs ~3.2× hybrid disk over five years (~$429 vs ~$133 per effective TB; ~2.7× once disk's own 2026 price rise is included), reaching parity only with cheap NAND and ~4:1 reduction. Power and space are under 10% of TCO. ([Ch 4](../01-storage-fundamentals/04-performance-and-economics-metrics.md))
 
 </details>
 
@@ -399,7 +399,7 @@ A layout that spreads stripes and spare space across all drives, so a rebuild re
 <details>
 <summary><strong>Q33.</strong> (L2) Why do 245 TB SSDs make rebuild time a strategic issue?</summary>
 
-Rebuilt onto a single spare at 1 GB/s, one takes about 68 hours, longer than a 30 TB hard drive did. Declustering over 100 drives cuts that to ~1.4 hours, and dual parity covers the window. ([Ch 6](../01-storage-fundamentals/06-data-protection-and-resilience.md))
+Rebuilt onto a single spare at 1 GB/s, one takes about 68 hours, longer than a 30 TB hard drive did. Declustering over 100 drives, each reading ~4 GB/s for 8+2 stripes, delivers ~50 GB/s of rebuild output and cuts that to ~1.4 hours; dual parity covers the window. ([Ch 6](../01-storage-fundamentals/06-data-protection-and-resilience.md))
 
 </details>
 
@@ -449,7 +449,7 @@ Part 2 cards test how bytes travel: block, file and object protocols, RDMA fabri
 <details>
 <summary><strong>Q38.</strong> What two layers does every block protocol have?</summary>
 
-A command set (SCSI, then NVMe) and a transport (parallel cable, Fibre Channel, TCP/IP or RDMA). NVMe-oF carries NVMe over FC, RDMA or TCP. ([Ch 7](../02-protocols-and-networking/07-block-protocols.md))
+A command set (SCSI, then NVMe) and a transport (parallel cable, Fibre Channel, TCP/IP or RDMA), plus fabric services such as discovery. NVMe-oF carries NVMe over FC, RDMA or TCP. ([Ch 7](../02-protocols-and-networking/07-block-protocols.md))
 
 </details>
 
@@ -631,7 +631,7 @@ Storage logic is moving into the NIC. NVIDIA's BlueField-4 STX reference archite
 <details>
 <summary><strong>Q64.</strong> (L2) Why does storage earn its keep through GPU utilisation?</summary>
 
-At US$2–6 per H100-hour, each second a 1,024-GPU cluster waits on I/O costs US$0.57–1.75. One per cent idle on 1,024 H100s at US$3.99 is ~US$358k a year. ([Ch 11](../02-protocols-and-networking/11-gpu-data-path.md))
+At about US$2.00–6.16 per H100-hour, each second a 1,024-GPU cluster waits on I/O costs US$0.57–1.75. One per cent idle on 1,024 H100s at US$3.99 is ~US$358k a year. ([Ch 11](../02-protocols-and-networking/11-gpu-data-path.md))
 
 </details>
 
@@ -1504,7 +1504,7 @@ To whoever owns the metadata and the query: catalogs and governance are sticky, 
 <details>
 <summary><strong>Q181.</strong> Name the three NVIDIA-Certified Storage levels.</summary>
 
-Foundation (up to 128 simulated GPUs), Enterprise (about 1,000) and NCP (up to 10,000). ([Ch 34](../05-ai-storage/34-nvidia-ecosystem.md))
+Foundation (up to 128 simulated GPUs), Enterprise (about 1,000, a figure not yet confirmed) and NCP (up to 10,000). ([Ch 34](../05-ai-storage/34-nvidia-ecosystem.md))
 
 </details>
 
@@ -1553,7 +1553,7 @@ As a product to resell: it must be multi-tenant, API-provisioned, metered in $/G
 <details>
 <summary><strong>Q188.</strong> (L2) Why do neoclouds weight reliability above price?</summary>
 
-Storage is roughly 1% of a neocloud's capex and ~4% of a GPU row's power, yet it can idle 100% of the GPUs. Reliability, time-to-deploy and NVIDIA alignment dominate. ([Ch 35](../05-ai-storage/35-ai-factories-and-neoclouds.md))
+The largest disclosed storage contract is about 1% a year of its customer's capex, and storage is ~4% of a GPU row's power, yet it can idle 100% of the GPUs. Reliability, time-to-deploy and NVIDIA alignment dominate. ([Ch 35](../05-ai-storage/35-ai-factories-and-neoclouds.md))
 
 </details>
 
@@ -1623,7 +1623,7 @@ The share of time a simulated accelerator computes rather than waits for data. (
 <details>
 <summary><strong>Q198.</strong> (L2) Why is absence data in MLPerf Storage v3.0?</summary>
 
-VAST, WEKA and DDN skipped the September 2026 round (19 organisations, down from 26). Everpure's first-place results are real but came in a field without its strongest rivals. ([Ch 37](../05-ai-storage/37-reading-benchmarks.md))
+VAST, WEKA and DDN skipped the September 2026 round (19 organisations, down from 26), although DDN and WEKA entered earlier rounds. Everpure's first-place results are real but came in a field without its strongest rivals. ([Ch 37](../05-ai-storage/37-reading-benchmarks.md))
 
 </details>
 
@@ -1644,7 +1644,7 @@ At the drive, about 2× per watt (~8.2 vs ~4.4 TB/W). At system level it depends
 <details>
 <summary><strong>Q201.</strong> (L2) Do power savings pay for the flash premium?</summary>
 
-Not at grid prices. 100 PB on QLC for five years saves ~1.23 GWh (~$170K) against an $8–37M media premium; flash wins when freed watts become GPUs or bandwidth per TB is required. ([Ch 38](../05-ai-storage/38-power-and-density.md))
+Not at grid prices. 100 PB on QLC for five years saves ~1.23 GWh (~$170K) against an $8–37M media premium on Chapter 4's inputs, and more at index prices. Flash wins when bandwidth per TB is required or NAND is bought at hyperscaler cost; turning freed watts into GPUs helps but rarely closes the gap on its own. ([Ch 38](../05-ai-storage/38-power-and-density.md))
 
 </details>
 
@@ -1881,7 +1881,7 @@ EXA runs metadata on a Purity core and sends bulk data to data nodes over pNFS; 
 <details>
 <summary><strong>Q232.</strong> (L2) Which deal profile does each of the four AI-scale vendors lead?</summary>
 
-VAST: multi-tenant, multiprotocol platforms with 10,000+ GPU references. DDN: Lustre heritage, NVIDIA's own designs, sovereign procurement. WEKA: storage that follows GPUs into clouds or GPU servers. EXA: audited throughput, standard clients, existing Everpure relationships. ([Ch 45](../06-industry-and-competition/45-head-to-head.md))
+VAST: multi-tenant, multiprotocol platforms with 10,000+ GPU references. DDN: Lustre heritage, NVIDIA's own designs, sovereign procurement. WEKA: storage that follows GPUs into clouds or GPU servers. EXA: published, peer-reviewed benchmark throughput, standard clients, existing Everpure relationships. ([Ch 45](../06-industry-and-competition/45-head-to-head.md))
 
 </details>
 
@@ -1979,7 +1979,7 @@ No. VAST leads on AI depth but is thin on enterprise data services, Dell and Net
 <details>
 <summary><strong>Q246.</strong> (L2) What do the atlas matrices identify as Everpure's distinctive position and weakest cells?</summary>
 
-Media economics: vertical integration plus DirectFlash, as the only array vendor selling that IP into hyperscalers. The weakest cells are cloud availability, sovereign presence and data intelligence. ([Ch 49](../06-industry-and-competition/49-competitive-matrices.md))
+Media economics: vertical integration plus DirectFlash, as the only array vendor publicly known to sell that IP into hyperscalers. The weakest cells are cloud availability, sovereign presence and data intelligence. ([Ch 49](../06-industry-and-competition/49-competitive-matrices.md))
 
 </details>
 
@@ -2221,7 +2221,7 @@ Neoclouds resell storage at a margin and storage can idle every GPU, so multi-te
 <details>
 <summary><strong>Q274.</strong> (L2) What is the honest answer to "is flash cheaper than disk?"</summary>
 
-Not on purchase price in 2026 (~18.6× per TB, enterprise SSD versus nearline HDD). Flash wins on performance, density, operations and power when freed watts become GPUs. ([Ch 4](../01-storage-fundamentals/04-performance-and-economics-metrics.md), [Ch 38](../05-ai-storage/38-power-and-density.md))
+Not on purchase price in 2026 (~18.6× per TB, enterprise SSD versus nearline HDD). Flash wins on performance, density and operations; its power saving pays for the premium only rarely, mainly where bandwidth per TB is required or NAND is bought at hyperscaler cost. ([Ch 4](../01-storage-fundamentals/04-performance-and-economics-metrics.md), [Ch 38](../05-ai-storage/38-power-and-density.md))
 
 </details>
 
@@ -2306,19 +2306,19 @@ A practical rule: after each Everpure earnings release, each IDC quarterly track
 | Part 6 — Industry and competition cards | 42 | 16 L1 / 26 L2, Q208–Q249 | This chapter, 2026-11-01 |
 | Part 7 — History and future cards | 16 | 5 L1 / 11 L2, Q250–Q265 | This chapter, 2026-11-01 |
 | Strategy mix cards | 14 | 1 L1 / 13 L2, Q266–Q279 | This chapter, 2026-11-01 |
-| Chapters with at least one card | 53 | Every chapter in Parts 1–7 written by 2026-11-01 (Ch 54 pending) | This chapter, 2026-11-01 |
+| Chapters with at least one card | 53 | Every chapter in Parts 1–7 except Ch 54 (strategic option map), which was completed after the deck and has no cards yet | This chapter, 2026-11-01 |
 
 ## Conversation playbook
 
 **Three questions for a PM, using the deck**
 
 1. *"Which Evergreen tier is growing fastest, and how does that show up in ARR versus reported product revenue?"* A strong answer separates //Forever, //Flex and //One, explains that a ratable STaaS mix depresses reported growth while lifting ARR, RPO and TCV, and names the latest figures without prompting (Q147, Q122, Q154).
-2. *"Where does FlashBlade//EXA win today, and what would close the reference gap?"* A strong answer cites audited throughput, the stock client and existing relationships, then admits the missing 10,000-GPU reference, NCP certification and public-cloud EXA (Q142, Q144, Q232, Q233).
+2. *"Where does FlashBlade//EXA win today, and what would close the reference gap?"* A strong answer cites peer-reviewed benchmark throughput, the stock client and existing relationships, then admits the missing 10,000-GPU reference, NCP certification and public-cloud EXA (Q142, Q144, Q232, Q233).
 3. *"How is Fusion adoption tracking, and does it raise switching costs?"* A strong answer gives the >1,200-customer figure, notes it is under a tenth of the base, and explains why presets and automation outlast a hardware refresh (Q146).
 
 **Three questions for an engineer, using the deck**
 
-1. *"Walk me through what happens to a 4 KB write from host to NAND on FlashArray."* A strong answer passes through NVRAM acknowledgement, the log-structured write, inline reduction and the global FTL, with no per-drive garbage collection (Q79, Q133, Q134).
+1. *"Walk me through what happens to a 4 KB write from host to NAND on FlashArray."* A strong answer passes through acknowledgement in shared chassis NVRAM, the log-structured write, inline reduction and the global FTL, with no per-drive garbage collection (Q79, Q133, Q134).
 2. *"How long does a 300 TB DFM rebuild take, and what keeps the second-failure window acceptable?"* A strong answer computes capacity over rebuild bandwidth, contrasts single-spare with declustered rebuild, and raises the 1 PB module question (Q33, Q32, Q265).
 3. *"Where does KV cache sit in the hierarchy, and when does fetching beat recomputing?"* A strong answer names G1–G4 and G3.5, uses the ~2–5 GB/s-per-GPU break-even, and explains why only non-decoding KV can leave HBM (Q170, Q171, Q172).
 

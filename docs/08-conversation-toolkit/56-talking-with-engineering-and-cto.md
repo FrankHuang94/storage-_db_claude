@@ -39,7 +39,7 @@ flowchart TD
 
 *Figure 56.1 — Anchor the review in one workload and walk the stack in order; a missing number at any step is the follow-up list.*
 
-**1. Data path.** Ask the engineer to trace one write and one read: how many network hops, how many copies before acknowledgement, and where the acknowledgement happens. In a dual-controller array, a write is acknowledged once it sits in mirrored NVRAM ([Chapter 14](../03-system-architecture/14-scale-up-dual-controller.md)). In FlashBlade//EXA, clients get a layout from the metadata core and then talk to data nodes directly[^2]. In a DASE design, every I/O crosses a back-end fabric, and NVMe over RDMA adds roughly 5–15 µs per access[^3]. Hops set the latency floor; copies set the bandwidth tax.
+**1. Data path.** Ask the engineer to trace one write and one read: how many network hops, how many copies before acknowledgement, and where the acknowledgement happens. In a dual-controller array, a write is acknowledged once it sits in mirrored or shared NVRAM; FlashArray uses chassis NVRAM that both controllers reach ([Chapter 14](../03-system-architecture/14-scale-up-dual-controller.md)). In FlashBlade//EXA, clients get a layout from the metadata core and then talk to data nodes directly[^2]. In a DASE design, every I/O crosses a back-end fabric, and NVMe over RDMA adds roughly 5–15 µs per access[^3]. Hops set the latency floor; copies set the bandwidth tax.
 
 **2. Metadata.** Where does it live (DRAM, NVRAM, SCM, flash)? How is it partitioned, and what happens with a single hot directory? AI checkpointing makes this concrete. If 16,384 ranks each write one shard file into one directory, that is 16,384 creates in a burst. A design that serialises them on one directory lock turns a bandwidth problem into a metadata stall ([Chapter 21](../03-system-architecture/21-metadata.md)).
 
@@ -49,9 +49,9 @@ flowchart TD
 
 **5. Scale limits.** Separate the architectural maximum from the tested and supported one. NetApp's AFX is a clean example: a design maximum of 128 controllers[^5], with 32 supported in an early ONTAP release, per WWT[^6]. Neither number is wrong, but only the second belongs in a deal model.
 
-**6. Performance claims.** Ask for configuration, units and baseline. EXA's MLPerf Storage v3.0 checkpoint write of 877.52 GiB/s on 30 data nodes[^7] is about 942 GB/s, or roughly 31 GB/s per node. That is an audited result. The ">10 TB/s" figure at launch came from preliminary testing, not a published configuration[^8]. Both came from the same vendor, but they carry very different weight ([Chapter 37](../05-ai-storage/37-reading-benchmarks.md)).
+**6. Performance claims.** Ask for configuration, units and baseline. EXA's MLPerf Storage v3.0 checkpoint write of 877.52 GiB/s on 30 data nodes[^7] is about 942 GB/s, or roughly 31 GB/s per node. That is a vendor-submitted, peer-reviewed result with a published configuration. The ">10 TB/s" figure at launch came from preliminary testing, not a published configuration[^8]. Both came from the same vendor, but they carry very different weight ([Chapter 37](../05-ai-storage/37-reading-benchmarks.md)).
 
-**7. Roadmap dependencies.** Which outside roadmaps does the plan assume? NAND density sets module capacity: DFMs reached 300 TB in 2025[^9], while the steps to 600 TB and 1 PB are undated. PCIe 6.0 doubles drive-link bandwidth to about 29.5 GB/s per x4 direction (64 GT/s × 4 lanes ÷ 8, less flit overhead), but front-end networking usually binds first ([Chapter 12](../02-protocols-and-networking/12-interfaces-and-emerging-tech.md)). CXL matters for controller memory, not for flash. NVIDIA's BlueField-4 STX, launched in March 2026, could move storage services onto a DPU[^10]. The sharp question is which dependency is single-sourced, and what happens if it slips a year.
+**7. Roadmap dependencies.** Which outside roadmaps does the plan assume? NAND density sets module capacity: DFMs reached 300 TB, released in 2025 according to the FY26 10-K as read via search summary[^9], while the steps to 600 TB and 1 PB are undated. PCIe 6.0 doubles drive-link bandwidth to about 29.5 GB/s per x4 direction (64 GT/s × 4 lanes ÷ 8, less flit overhead), but front-end networking usually binds first ([Chapter 12](../02-protocols-and-networking/12-interfaces-and-emerging-tech.md)). CXL matters for controller memory, not for flash. NVIDIA's BlueField-4 STX, launched in March 2026, could move storage services onto a DPU[^10]. The sharp question is which dependency is single-sourced, and what happens if it slips a year.
 
 **Semiconductor bridge.** This is a chip design review: dataflow, tag and directory structures, redundancy, field-upgradable firmware, characterised versus simulated corners, datasheet versus silicon, and process and IP dependencies.
 
@@ -95,7 +95,7 @@ L2 behaviour has a recognisable script. Draw your understanding, put a number on
 
 | # | Prompt | Expected sketch | What it tests |
 |---|---|---|---|
-| 1 | Trace a 4 KB write on a dual-controller array | Host → active controller → mirrored NVRAM → ack → later flush and reduction to flash | Ack point, mirroring |
+| 1 | Trace a 4 KB write on a dual-controller array | Host → primary controller → mirrored or shared NVRAM → ack → later flush and reduction to flash | Ack point, mirroring |
 | 2 | Trace a read on FlashBlade//EXA | Client gets layout from metadata core, then RDMA reads directly from data nodes | Metadata/data split |
 | 3 | Compare DASE, shared-nothing and EXA | Three boxes-and-arrows: shared media, owner nodes, direct-to-data-node | Who owns data, hop counts |
 | 4 | Show where the FTL lives: SSD vs DFM | Per-drive FTL and DRAM vs one global FTL in Purity over raw NAND | DirectFlash thesis |
@@ -117,15 +117,15 @@ Good bets to bring, all grounded in public signals:
 - **HDD displacement.** In 2023 a Pure executive predicted no new hard drives would be sold after 2028[^12]. Analysts disputed it[^13]. Ask what share of hyperscaler nearline capacity DirectFlash can realistically displace, and at what HDD capacity point the argument fails ([Chapter 53](../07-history-and-future/53-future-trends.md)).
 - **DPU-resident storage.** If BlueField-4 STX makes the controller a commodity, which Purity services move to the DPU, and which stay on x86?
 - **Memory tiers.** Does CXL-attached memory belong inside controllers for dedup and metadata, or as a KV-cache tier?
-- **Benchmarks as strategy.** VAST, WEKA and DDN did not submit to MLPerf Storage v3.0[^14]. Does audited benchmarking stay a differentiator, or do POCs decide?
+- **Benchmarks as strategy.** VAST, WEKA and DDN did not submit to MLPerf Storage v3.0[^14], although DDN and WEKA entered earlier rounds and VAST never has ([Chapter 37](../05-ai-storage/37-reading-benchmarks.md)). Does public, peer-reviewed benchmarking stay a differentiator, or do POCs decide?
 
 ## How Everpure approaches it vs. competitors
 
 What an engineering organisation publishes determines what you can verify before a meeting.
 
-| Vendor | How engineering speaks publicly | Evidence you can check | What to probe in person |
+| Vendor | How engineering speaks publicly | Evidence you can check | What to test (from public evidence or in formal diligence) |
 |---|---|---|---|
-| **Everpure** | Peer-reviewed design paper (Purity, SIGMOD 2015)[^15]; audited MLPerf v3.0 submissions[^7] | Paper, MLPerf configurations, technical briefs | Data-node protection on EXA; FDP response |
+| **Everpure** | Peer-reviewed design paper (Purity, SIGMOD 2015)[^15]; peer-reviewed MLPerf v3.0 submissions[^7] | Paper, MLPerf configurations, technical briefs | Data-node protection on EXA; FDP response |
 | **VAST Data** | Architecture white papers; independent HPC benchmarking (PDSW'21)[^16] | White papers, third-party lab studies | Fabric and enclosure blast radius |
 | **WEKA** | Microservices re-architecture as NeuralMesh (2025)[^17] | Cloud marketplace deployments | Operational burden on customer-owned hardware |
 | **DDN** | Lustre stewardship since acquiring it from Intel in 2018[^18] | Open-source Lustre code, HPC site reports | Code sharing between EXAScaler and Infinia |
@@ -146,7 +146,7 @@ Review questions have shifted with each media era: RAID rebuild windows and seek
 | EXA MLPerf v3.0 checkpoint write | 877.52 GiB/s (≈942 GB/s) | 30 data nodes, ≈31 GB/s per node | Everpure, 2026-09[^7] |
 | Non-disruptive controller upgrades | >7,000 for >2,700 customers | 2015 to mid-2021, company-stated | Pure Storage, 2021[^4] |
 | NetApp AFX controllers | 128 design max; 32 supported early | Architectural vs supported limit | NetApp; WWT[^5][^6] |
-| Largest DFM | 300 TB | Released 2025 | Everpure, 2026-08[^9] |
+| Largest DFM | 300 TB | Released 2025 per FY26 10-K (search summary) | B&F 2026-08-11; Everpure 10-K[^9] |
 | SuperPOD B200 enhanced tier | ≈0.5 GB/s read per GPU | Certification floor | NVIDIA RA[^11] |
 | Rebuild, 240 TB at 2 vs 10 GB/s | ≈33 h vs ≈6.7 h | 300 TB DFM at 80% full | Worked example |
 | PCIe 6.0 x4 per direction | ≈29.5 GB/s | After flit overhead | Worked arithmetic |

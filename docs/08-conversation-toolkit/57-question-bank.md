@@ -7,7 +7,7 @@
 
 - **150 questions in 14 topics, each tagged by audience,** distilled from every chapter's playbook and the staged ASK lines.
 - **Bring five to seven to a meeting:** one audience, one goal (Figure 57.4).
-- **Strong answers carry a number, its conditions and its baseline.** Forty "Listen for" notes show what to expect.
+- **Strong answers carry a number, its conditions and its baseline.** Forty-one "Listen for" notes show what to expect.
 - **Differentiating questions** sit on DirectFlash versus FDP, EXA versus shared media, and NVIDIA's context tier.
 - **These are for colleagues.** Many ask for internal telemetry; never use them to fish for competitors' non-public data.
 
@@ -132,7 +132,7 @@ flowchart TD
 #### 4. Architecture
 
 34. [Eng] Walk a 4 KB write: persistence point and per-layer p99?
-    ↳ *Listen for:* NVRAM mirror point, per-layer microseconds ([Ch 13](../03-system-architecture/13-storage-stack.md)).
+    ↳ *Listen for:* NVRAM persistence point (mirrored or shared), per-layer microseconds ([Ch 13](../03-system-architecture/13-storage-stack.md)).
 35. [PM] What does a customer lose during an Evergreen controller swap?
 36. [Eng] Under Purity Turbo, how does the secondary's read cache stay coherent?
 37. [PM] When a block customer outgrows one //XL, what do we sell?
@@ -247,8 +247,8 @@ flowchart TD
 
 #### 11. NVIDIA and ecosystem
 
-107. [PM] When, and at which level, will EXA be NVIDIA-certified?
-     ↳ *Listen for:* level, GPU generation, quarter, waiting deals ([Ch 34](../05-ai-storage/34-nvidia-ecosystem.md)).
+107. [PM] Beyond NVCS validation, what gates EXA's NCP and SuperPOD certification?
+     ↳ *Listen for:* level, GPU generation, gating tests, waiting deals ([Ch 34](../05-ai-storage/34-nvidia-ecosystem.md)).
 108. [SE] What headroom over SuperPOD storage sizing, and what limits it?
 109. [Eng] What did certification skip that production hits?
 110. [CTO] Which Purity services fit on a BlueField-4 DPU?

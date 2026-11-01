@@ -35,7 +35,7 @@ timeline
 
 ### Invention, and why Toshiba did not own the economics (1984–2000)
 
-Fujio Masuoka's team at Toshiba presented a flash EEPROM, the NOR type, at IEDM in December 1984[^3]. Kioxia, Toshiba's former memory unit, dates the invention of NAND to 1987[^4]. The Semiconductor History Museum of Japan places the NAND announcement in 1988[^3], so "1987" is the company's date, not an undisputed one. NAND traded NOR's fast random reads for density: cells in series share contacts. That trade pays only when a controller handles errors and mapping, the origin of the [FTL](../01-storage-fundamentals/03-inside-an-ssd.md).
+Fujio Masuoka's team at Toshiba presented a flash EEPROM, the NOR type, at IEDM in December 1984[^3]. The NAND cell followed in a paper by Masuoka, Momodomi, Iwata and Shirota at IEDM in December 1987, and Kioxia, Toshiba's former memory unit, uses 1987 as the invention date[^4]. The Semiconductor History Museum of Japan's exhibit gives 1988 for Toshiba's NAND announcement[^3], which appears to refer to a later device announcement. The peer-reviewed 1987 conference paper is the defensible date. NAND traded NOR's fast random reads for density: cells in series share contacts. That trade pays only when a controller handles errors and mapping, the origin of the [FTL](../01-storage-fundamentals/03-inside-an-ssd.md).
 
 Masuoka later sued Toshiba over compensation for the invention, and the case settled in 2006[^5]. Kioxia's own retrospective puts 1990s NAND at about $10,000 per gigabyte (company-stated)[^6]. Another industry recollection suggests nearer $1,250/GB in the mid-1990s[^7]. Either way, flash was then a niche product.
 
@@ -62,7 +62,7 @@ Cost per bit = wafer cost ÷ (good dies per wafer × bits per die). Every era of
 
 | Transition | Landmark product | Bits per cell | Cost-per-bit cut (worked, ideal) | What it cost |
 |---|---|---|---|---|
-| SLC → MLC | Mainstream by the 2000s [VERIFY: first MLC NAND product and date] | 1 → 2 | 50% | 4 voltage states; slower program, lower endurance |
+| SLC → MLC | Toshiba/SanDisk 1 Gb MLC NAND, announced November 2001 (first MLC NAND chip)[^20] | 1 → 2 | 50% | 4 voltage states; slower program, lower endurance |
 | MLC → TLC | Samsung SSD 840, 2012 (first TLC consumer SSD)[^20] | 2 → 3 | 33% | 8 states; Samsung put TLC ~50% slower than its MLC |
 | TLC → QLC | Micron 5210 ION, May 2018 (first QLC SSD)[^21] | 3 → 4 | 25% | 16 states; launched as an HDD replacement for read-heavy work |
 | QLC → PLC | Research only (SK hynix split-cell, IEDM 2025)[^22] | 4 → 5 | 20% | 32 states; needs new cell tricks to be usable |
@@ -90,7 +90,7 @@ flowchart LR
 
 *Figure 52.3 — The NAND cycle is a capacity-lag loop: margins fund wafers, wafers arrive late, and each bust ends with output cuts and ownership changes.*
 
-**Semiconductor bridge: NAND versus DRAM.** Both run the same loop, but DRAM consolidated through exits. Qimonda filed for insolvency in January 2009[^28], and Elpida filed for bankruptcy in February 2012 with 15.4% share[^29]; Micron then took over Elpida[^30]. In 2Q26, Samsung, SK hynix and Micron held 39.4%, 24.9% and 23.3% of DRAM revenue, about 88% together[^31]. NAND kept five large suppliers. In 2008, TrendForce put Samsung at 40.4%, Toshiba 28.1%, Hynix 15.1%, Micron 7.9% and Intel 5.8%[^32]. In 2Q26 the top five were Samsung, SK hynix Group, Micron, Kioxia and Sandisk, with $68.87B of revenue between them[^33]. On a top-five basis the Herfindahl index is about 2,750 for 2008 and about 2,260 for 2Q26 (worked: 33.5² + 20.7² + 17.2² + 15.6² + 13.0²). DRAM's top three alone score about 2,715. NAND has become *less* concentrated, and its pricing less disciplined, although Kioxia and Sandisk share fabs, so there are fewer capacity decisions than brands.
+**Semiconductor bridge: NAND versus DRAM.** Both run the same loop, but DRAM consolidated through exits. Qimonda filed for insolvency in January 2009[^28], and Elpida filed for bankruptcy in February 2012 with 15.4% share[^29]; Micron completed its takeover of Elpida on 31 July 2013[^30]. In 2Q26, Samsung, SK hynix and Micron held 39.4%, 24.9% and 23.3% of DRAM revenue, about 88% together[^31]. NAND kept five large suppliers. In 2008, TrendForce put Samsung at 40.4%, Toshiba 28.1%, Hynix 15.1%, Micron 7.9% and Intel 5.8%[^32]. In 2Q26 the top five were Samsung (29.3%), SK hynix Group including Solidigm (18.2%), Micron (15.1%), Kioxia (13.6%) and Sandisk (11.4%), with $68.87B of revenue and 87.6% of the market between them[^33]. Summing the squared market shares of the top five gives a Herfindahl index of about 2,750 for 2008 and about 1,730 for 2Q26 (worked: 29.3² + 18.2² + 15.1² + 13.6² + 11.4²). DRAM's top three alone score about 2,715. The 2008 shares are search-summary figures, so treat the gap as directional. NAND has become *less* concentrated, and its pricing less disciplined, although Kioxia and Sandisk share fabs, so there are fewer capacity decisions than brands.
 
 ### Boom and bust, 2008–2026
 
@@ -98,7 +98,7 @@ flowchart LR
 - **2012:** Toshiba cut Yokkaichi NAND output by ~30% in July after card and USB prices fell more than 20%[^36]. In DRAM, the same year's bust killed Elpida.
 - **2018–19:** Prices that had held near 25¢/GB in 2016–17 collapsed to about 5¢ spot[^14]. A 13-minute power cut at Yokkaichi in June 2019 cost about 6 EB of wafer supply but did not reverse the slide[^37].
 - **2022–23:** SK hynix posted its first loss in a decade in Q4 2022[^38]. In April 2023 Samsung joined SK hynix, Micron and Kioxia in cutting output[^39]. The 512Gb TLC wafer spot price bottomed at about $1.40 (≈2.2¢/GB) in mid-2023[^16].
-- **2025–26:** AI servers absorbed enterprise SSD bits. TrendForce reported top-five NAND revenue up 77% QoQ to $68.87B in 2Q26[^33]. It forecast 4Q26 contract prices up another 15–20%, with most new supply already committed[^40]. Suppliers reportedly added almost no wafer capacity in 2026 [VERIFY: secondary source][^41].
+- **2025–26:** AI servers absorbed enterprise SSD bits. TrendForce reported top-five NAND revenue up 77% QoQ to $68.87B in 2Q26[^33]. It forecast 4Q26 contract prices up another 15–20%, with most new supply already committed[^40]. Suppliers reportedly added almost no wafer capacity in 2026[^41], and TrendForce expects them to put DRAM and HBM capex ahead of new NAND capacity[^33].
 
 For a deal team, the pattern is that most busts were followed by transactions.
 
@@ -146,7 +146,7 @@ An illustrative worked example: delivering 100,000 random IOPS from 15K drives a
 - **Operational simplicity.** No short-stroking, tiering policies or hot-spot tuning.
 - **Reduction economics.** Inline dedupe and compression became safe to run.
 
-The 15K drive died first; ServeTheHome called Seagate's 15K.6 the likely final 15K series [VERIFY: article date][^62]. By 1Q26 all-flash arrays were 52.6% of IDC's external enterprise storage revenue, the first time above half[^63].
+The 15K drive died first; around 2017 ServeTheHome called Seagate's last Enterprise Performance 15K drives the likely final 15K series[^62]. By 1Q26 all-flash arrays were 52.6% of IDC's external enterprise storage revenue, the first time above half[^63].
 
 Nearline disk survived because it competes on raw $/TB at exabyte scale, not latency. Backup, archive and hyperscale bulk data reduce less or are already deduplicated upstream. At a 10–20× raw premium, power and density savings rarely close the gap. Coughlin estimates over 85% of data-centre data still sits on HDD [VERIFY: sponsored source][^64]. [Chapter 2](../01-storage-fundamentals/02-media-physics.md) has the media-level curves.
 
@@ -176,9 +176,9 @@ NAND cost declines have resumed after every spike, but not on a fixed schedule. 
 | Average annual decline 2005–23 | ~35% | Worked from the two rows above | Worked example |
 | 2026 spot level | ~29–33¢/GB | $18.8–21.2 per 512Gb wafer unit | TrendForce, 2026[^19] |
 | First 3D NAND mass production | 24 layers, Aug 2013 | Samsung V-NAND | Samsung, 2013[^24] |
-| Intel NAND to SK hynix | $7B + ~$1.9B | Two closings, 2021 and 2025 | Intel, 2021; Digitimes, 2025[^50][^51] |
+| Intel NAND to SK hynix | $7B + ~$1.9B net | Two closings, 2021 and 2025 | Intel, 2021; Intel 8-K, 2025[^50][^51] |
 | Toshiba Memory sale | ~¥2tn | Bain-led consortium, 2018 | Wikipedia (Kioxia)[^45] |
-| DRAM top-3 share vs NAND top-5 revenue | ~88% vs $68.87B | 2Q26 | TrendForce, 2026[^31][^33] |
+| DRAM top-3 share vs NAND top-5 share | ~88% vs 87.6% ($68.87B) | 2Q26; NAND top-five HHI ~1,730 vs DRAM top-three ~2,715 | TrendForce, 2026[^31][^33] |
 | All-flash share of external storage | 52.6% | 1Q26, first time above half | IDC, 2026[^63] |
 | Enterprise SSD ÷ nearline HDD $/TB | 9.7× (2020) → 18.6× (Q3 2026) | Raw media premium | Blocks & Files; Hardware Busters[^59][^60] |
 
@@ -192,7 +192,7 @@ NAND cost declines have resumed after every spike, but not on a fixed schedule. 
 
 **Questions for an engineer**
 
-1. *"What does each bits-per-cell step cost you in write path design, and is PLC worth it at a 20% bit gain?"* Strong: weighs endurance and program-time penalties against the 20% and explains how the system FTL hides them.
+1. *"What does each bits-per-cell step cost you in write path design, and is PLC worth it for 25% more bits per cell (20% lower ideal cost per bit)?"* Strong: weighs endurance and program-time penalties against that gain and explains how the system FTL hides them.
 2. *"How do you compare suppliers' generations: layers, Gb/mm² or $/GB at module level?"* Strong: density, yield and module-level cost, with layer count dismissed as a proxy.
 3. *"How much raw NAND per effective TB do you save versus a commodity-SSD array, and where does it come from?"* Strong: splits the gain into over-provisioning, write amplification and reduction, per workload.
 
@@ -202,7 +202,7 @@ NAND cost declines have resumed after every spike, but not on a fixed schedule. 
 - "NAND is like DRAM, a three-player market." DRAM has three; NAND has five large suppliers plus China's YMTC, and the structure has become less concentrated since 2008.
 - "More layers means cheaper bits." Each layer step adds fewer bits per wafer and more capex per wafer; density and yield decide.
 - "The 2026 shortage is a technology problem." It is supply discipline plus AI demand meeting a wafer-capacity freeze.
-- "Toshiba invented NAND in 1987, full stop." Sources differ (1987 vs 1988), and Masuoka's NOR work dates from 1984.
+- "Toshiba invented flash in 1987." NOR flash came first, at IEDM 1984; the NAND cell followed at IEDM 1987 (one museum source says 1988).
 
 ## Going deeper (optional, L3 pointers)
 
@@ -227,7 +227,7 @@ NAND cost declines have resumed after every spike, but not on a fixed schedule. 
 [^1]: Pure Storage, "Form S-1 Registration Statement," 2015-08-27. https://www.sec.gov/Archives/edgar/data/0001474432/000119312515287576/d895532ds1.htm (retrieved 2026-11-01).
 [^2]: MacTech, "Will $1 per gigabyte NAND resuscitate solid state drives?," 2010-08-20, citing iSuppli. https://www.mactech.com/2010/08/20/will-1-per-gigabyte-nand-resuscitate-solid-state-drives (retrieved 2026-11-01). [VERIFY: search-summary only]
 [^3]: Semiconductor History Museum of Japan, "Flash memory," n.d. https://shmj.or.jp/english/pdf/ic/exhibi741E.pdf (retrieved 2026-11-01).
-[^4]: Kioxia / Business Wire, "KIOXIA Celebrates 35th Anniversary of Invention of NAND Flash Memory," 2022-02-10. https://www.businesswire.com/news/home/20220210005043/en/KIOXIA-Celebrates-35th-Anniversary-of-Invention-of-NAND-Flash-Memory (retrieved 2026-11-01).
+[^4]: F. Masuoka, M. Momodomi, Y. Iwata, R. Shirota, "New ultra high density EPROM and flash EEPROM with NAND structure cell," IEDM Technical Digest, December 1987, pp. 552–555; record at https://scholars.nthu.edu.tw/esploro/outputs/conferencePaper/NEW-ULTRA-HIGH-DENSITY-EPROM-AND/9957769607206774 (retrieved 2026-11-01; via search summary); Kioxia / Business Wire, "KIOXIA Celebrates 35th Anniversary of Invention of NAND Flash Memory," 2022-02-10. https://www.businesswire.com/news/home/20220210005043/en/KIOXIA-Celebrates-35th-Anniversary-of-Invention-of-NAND-Flash-Memory (retrieved 2026-11-01).
 [^5]: Wikipedia, "Fujio Masuoka," accessed 2026-11-01. https://en.wikipedia.org/wiki/Fujio_Masuoka (retrieved 2026-11-01).
 [^6]: Kioxia America, "35 Years of NAND Flash Memory" (infographic), 2022. https://americas.kioxia.com/content/dam/kioxia/en-us/about/asset/KIOXIA_35th_Anniv_Applications_Infographic.pdf (retrieved 2026-11-01).
 [^7]: Design News, "NAND Flash Memory: After 35 Years, Technology Remains a Game Changer," 2022. https://www.designnews.com/electronics/nand-flash-memory-after-35-years-technology-remains-game-changer (retrieved 2026-11-01). [VERIFY: search-summary only]
@@ -243,7 +243,7 @@ NAND cost declines have resumed after every spike, but not on a fixed schedule. 
 [^17]: TrendForce, "Insights: Memory Spot Price Update: NAND Price Declines Linked to Potential Supplier Wafer Provision Expansion," 2024-11-06. https://www.trendforce.com/news/2024/11/06/insights-memory-spot-price-update-nand-price-declines-linked-to-potential-supplier-wafer-provision-expansion/ (retrieved 2026-11-01).
 [^18]: TrendForce, "Insights: Memory Spot Price Update: DRAM Chip Prices Surpass Module Prices, Signaling Imminent Surge," 2025-11-12. https://www.trendforce.com/news/2025/11/12/insights-memory-spot-price-update-dram-chip-prices-surpass-module-prices-signaling-imminent-surge/ (retrieved 2026-11-01).
 [^19]: TrendForce, 512Gb TLC wafer spot-price updates (tag index; March, August and October 2026 readings), 2026. https://trendforce.com/news/tag/512gb-tlc-wafer (retrieved 2026-11-01). [VERIFY: search-summary only]
-[^20]: AnandTech, "Samsung Releases TLC NAND Based 840 SSD," 2012-09. https://www.anandtech.com/show/6329 (retrieved 2026-11-01).
+[^20]: MLC row: Electronic Design, "NAND flash device houses 1 Gb memory" (Toshiba/SanDisk MLC NAND, Comdex, November 2001), n.d. https://www.electronicdesign.com/memory/nand-flash-device-houses-1-gb-memory (retrieved 2026-11-01; via search summary; EE Times and EDN coverage also describe it as the first MLC NAND device, MLC having already shipped in NOR). TLC row: AnandTech, "Samsung Releases TLC NAND Based 840 SSD," 2012-09. https://www.anandtech.com/show/6329 (retrieved 2026-11-01).
 [^21]: Micron / GlobeNewswire, "Micron Ships Industry's First Quad-Level Cell NAND SSD," 2018-05-21. https://www.globenewswire.com/news-release/2018/05/21/1509612/14450/en/Micron-Ships-Industry-s-First-Quad-Level-Cell-NAND-SSD.html (retrieved 2026-11-01).
 [^22]: Blocks & Files, "SK hynix developing split-cell 5-bit flash," 2026-01-15. https://www.blocksandfiles.com/flash/2026/01/15/sk-hynix-developing-split-cell-5-bit-flash/4090388 (retrieved 2026-11-01).
 [^23]: Tom's Hardware, "Toshiba Unveils 48-Layer BiCS 3D NAND," 2015. https://www.tomshardware.com/news/toshiba-bics-nand-3d,28830.html (retrieved 2026-11-01).
@@ -253,10 +253,10 @@ NAND cost declines have resumed after every spike, but not on a fixed schedule. 
 [^27]: Applied Materials, "WFE Intensity Step-Up: 3D NAND Case Study," n.d. https://www.appliedmaterials.com/us/en/blog/blog-posts/wfe-intensity-step-up-3d-nand-case-study.html (retrieved 2026-11-01). [VERIFY: search-summary only; ~30% long-run bit growth also cited by SemiAnalysis]
 [^28]: APH Networks, "DRAM Giant Qimonda Declares Insolvency," 2009-01. https://aphnetworks.com/node/1595 (retrieved 2026-11-01).
 [^29]: Computerworld, "DRAM maker Elpida files for bankruptcy," 2012-02-27. https://www.computerworld.com/article/1549504/dram-maker-elpida-files-for-bankruptcy.html (retrieved 2026-11-01).
-[^30]: Micron Technology, "Form 10-K for fiscal year 2012" (Elpida sponsor agreement, July 2012), 2012-10. https://www.sec.gov/Archives/edgar/data/0000723125/000072312512000156/a2012q4.htm (retrieved 2026-11-01). [VERIFY: 2013 completion date not retrieved]
+[^30]: Micron Technology, "Form 10-K for fiscal year 2012" (Elpida sponsor agreement, July 2012), 2012-10. https://www.sec.gov/Archives/edgar/data/0000723125/000072312512000156/a2012q4.htm (retrieved 2026-11-01); completion on 2013-07-31 for US$615M of equity per Micron Technology, "Form 10-K for fiscal year 2013," 2013-10. https://www.sec.gov/Archives/edgar/data/0000723125/000072312513000228/a2013q4.htm (retrieved 2026-11-01; via search summary).
 [^31]: TrendForce, "DRAM Revenue Rises 59.5% QoQ in 2Q26 as Supply Trails Demand," 2026-09-07. https://www.trendforce.com/presscenter/news/20260907-13219.html (retrieved 2026-11-01).
 [^32]: TrendForce, 2008 branded NAND flash sales ranking, 2009-02-06. https://trendforce.com/presscenter/news/20090206-7004.html (retrieved 2026-11-01). [VERIFY: full-year 2008 shares, search-summary only]
-[^33]: TrendForce, "Combined Revenue of Top Five NAND Flash Brands Rises 77% QoQ in 2Q26; Micron Moves Up to Third Place," 2026-08-18. https://www.trendforce.com/presscenter/news/20260818-13186.html (retrieved 2026-11-01).
+[^33]: TrendForce, "Combined Revenue of Top Five NAND Flash Brands Rises 77% QoQ in 2Q26; Micron Moves Up to Third Place," 2026-08-18. https://www.trendforce.com/presscenter/news/20260818-13186.html (retrieved 2026-11-01); market shares (29.3/18.2/15.1/13.6/11.4%, top five 87.6%) corroborated by Evertiq, "Top five NAND flash brands post 77% revenue surge in Q2," 2026-08-18. https://evertiq.com/news/2026-08-18-top-five-nand-flash-brands-post-77-revenue-surge-in-q2 (retrieved 2026-11-01; via search summary).
 [^34]: eWeek, "Toshiba Ups Flash Production for $1B, Then Cuts It Back," 2008-12. https://www.eweek.com/blogs/storage-station/toshiba-ups-flash-production-for-1b-then-cuts-it-back/ (retrieved 2026-11-01).
 [^35]: Engadget, "Toshiba and SanDisk temporarily slash NAND Flash production by 30% in Yokkaichi," 2008-12-16. https://www.engadget.com/2008-12-16-toshiba-and-sandisk-temporarily-hack-nand-flash-production-by-30.html (retrieved 2026-11-01).
 [^36]: Toshiba (Kioxia archive), NAND production adjustment at Yokkaichi, 2012-07-24. https://www.kioxia.com/en-jp/about/news/2012/20120724-1.html (retrieved 2026-11-01); eWeek, "Toshiba Cuts NAND Flash Production by 30 Percent," 2012-07. https://www.eweek.com/storage/toshiba-cuts-nand-flash-production-by-30-percent/ (retrieved 2026-11-01).
@@ -274,7 +274,7 @@ NAND cost declines have resumed after every spike, but not on a fixed schedule. 
 [^48]: Wikipedia, "IM Flash Technologies," accessed 2026-11-01. https://en.wikipedia.org/wiki/IM_Flash_Technologies (retrieved 2026-11-01).
 [^49]: AnandTech, "Micron Sells Lehi 3D XPoint Fab to Texas Instruments for $900M," 2021-06-30. https://www.anandtech.com/show/16800 (retrieved 2026-11-01).
 [^50]: Intel, "Intel Sells SSD Business and Dalian Facility to SK hynix," 2021-12-29. https://www.intc.com/news-events/press-releases/detail/1513/intel-sells-ssd-business-and-dalian-facility-to-sk-hynix (retrieved 2026-11-01).
-[^51]: Digitimes, "SK hynix completes acquisition of Intel's NAND business," 2025-03-28. https://www.digitimes.com/news/a20250328PD225.html (retrieved 2026-11-01). [VERIFY: ~$1.9B net final payment from secondary filing summaries]
+[^51]: Digitimes, "SK hynix completes acquisition of Intel's NAND business," 2025-03-28. https://www.digitimes.com/news/a20250328PD225.html (retrieved 2026-11-01); Intel Corporation, "Form 8-K" (second closing; about $1.9B received, net of adjustments), 2025-03-27. https://www.sec.gov/Archives/edgar/data/50863/000005086325000060/intc-20250327.htm (retrieved 2026-11-01; via search summary).
 [^52]: Nippon.com (Jiji), "Kioxia Sets IPO Price at 1,455 Yen," 2024-12-09. https://nippon.com/en/news/yjj2024120900937 (retrieved 2026-11-01).
 [^53]: Sandisk, "Sandisk Celebrates Nasdaq Listing After Completing Separation from Western Digital," 2025-02-24. https://investor.sandisk.com/news-releases/news-release-details/sandisk-celebrates-nasdaq-listing-after-completing-separation (retrieved 2026-11-01).
 [^54]: Sandisk, "Kioxia and Sandisk Extend Yokkaichi Joint Venture Agreement Through 2034," 2026-01-29. https://www.sandisk.com/ja-jp/company/newsroom/press-releases/2026/2026-01-29-kioxia-and-sandisk-extend-yokkaichi-joint-venture-agreement-through-2034 (retrieved 2026-11-01).
@@ -285,7 +285,7 @@ NAND cost declines have resumed after every spike, but not on a fixed schedule. 
 [^59]: Blocks & Files, "Enterprise SSDs cost ten times more than nearline disk drives," 2020-08-24. https://blocksandfiles.com/2020/08/24/10x-enterprise-ssd-price-premium-over-nearline-disk-drives/ (retrieved 2026-11-01).
 [^60]: Hardware Busters, "Enterprise SSD Prices Now Run 18.6x Hard Drives, and the Cheap Alternative Is Sold Out Until 2027," 2026. https://hwbusters.com/news/enterprise-ssd-prices-now-run-18-6x-hard-drives-and-the-cheap-alternative-is-sold-out-until-2027/ (retrieved 2026-11-01).
 [^61]: Micron, "Industry-Leading 245TB Micron 6600 ION Data Center SSD Now Shipping," 2026-05-05. https://investors.micron.com/news/press-release/2026/Industry-Leading-245TB-Micron-6600-ION-Data-Center-SSD-Now-Shipping/default.aspx (retrieved 2026-11-01); StorageReview, "Micron 6600 ION 245TB SSD Review," 2026. https://www.storagereview.com/review/micron-6600-ion-245tb-ssd-review-a-quarter-petabyte-per-drive-bay (retrieved 2026-11-01).
-[^62]: ServeTheHome, "Seagate Launches the Final 15K rpm Hard Drive: RIP 15K HDDs," n.d. https://www.servethehome.com/seagate-launches-final-15k-rpm-hard-drive-rip-15k-hdds/ (retrieved 2026-11-01).
+[^62]: ServeTheHome, "Seagate Launches the Final 15K rpm Hard Drive: RIP 15K HDDs," n.d. (c. 2017, per search summary). https://www.servethehome.com/seagate-launches-final-15k-rpm-hard-drive-rip-15k-hdds/ (retrieved 2026-11-01).
 [^63]: IDC, "Worldwide External Enterprise Storage Systems Market Accelerates to 22.7% Growth in the First Quarter of 2026," 2026-06-15. https://www.idc.com/resource-center/press-releases/worldwide-external-enterprise-storage-systems-market-accelerates-to-22-7-growth-in-the-first-quarter-of-2026-driven-by-ai-infrastructure-demand-and-deferred-refresh-spending-according-to-idc/ (retrieved 2026-11-01).
 [^64]: Washington Post Creative Group (Solidigm-sponsored), "Is 2026 finally the year for data center storage to crossover to SSDs?," 2026, citing Coughlin Associates. https://www.washingtonpost.com/creativegroup/solidigm/is-2026-finally-the-year-for-data-center-storage-to-crossover-to-ssds (retrieved 2026-11-01).
 [^65]: Blocks & Files, "Pure qualifies Micron's 276-layer flash," 2025-01-08. https://blocksandfiles.com/2025/01/08/pure-qualifies-microns-276-layer-flash/ (retrieved 2026-11-01); Blocks & Files, "Kioxia 2 terabit NAND," 2024-07-03. https://blocksandfiles.com/2024/07/03/kioxia-2-terabit-nand/ (retrieved 2026-11-01).
