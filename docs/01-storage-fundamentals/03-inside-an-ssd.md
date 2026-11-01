@@ -13,7 +13,7 @@
 
 ## Why this matters for Everpure strategy
 
-Everpure's central technical claim is that a storage array should not buy commodity SSDs at all. It should buy raw NAND and run one flash translation layer across the whole system. Whether that is a durable moat depends on what an SSD's internal FTL actually costs (DRAM, hidden spare flash, write amplification, latency spikes) and how much of that cost standards such as Flexible Data Placement (FDP) claw back for everyone else. This chapter is the mechanism behind every DirectFlash argument in [Chapter 26](../04-everpure/26-purity-and-directflash.md) and every hyperscaler-licensing conversation in [Chapter 29](../04-everpure/29-hyperscaler-ecosystem-financials.md).
+Everpure's central technical claim is that an array should buy raw NAND, not commodity SSDs, and run one flash translation layer across the system. Whether that is a durable moat depends on what an SSD's internal FTL actually costs (DRAM, hidden spare flash, write amplification, latency spikes) and how much of that cost standards such as Flexible Data Placement (FDP) claw back for everyone else. This chapter is the mechanism behind DirectFlash ([Chapter 26](../04-everpure/26-purity-and-directflash.md)) and the hyperscaler licences ([Chapter 29](../04-everpure/29-hyperscaler-ecosystem-financials.md)).
 
 It also gives you a test for vendor claims. When a competitor says its 245 TB QLC SSD "just works" for primary storage, or Everpure says DirectFlash "eliminates" overhead, ask about indirection-unit size, over-provisioning, GC isolation and who owns the firmware.
 
@@ -21,7 +21,7 @@ It also gives you a test for vendor claims. When a competitor says its 245 TB QL
 
 ### A small computer wrapped around NAND
 
-Strip the casing off an enterprise NVMe SSD and you find four things: a controller ASIC, a few DRAM chips, a bank of capacitors and many NAND packages. Each package stacks several dies, and each die is split into planes, blocks and pages ([Chapter 2](02-media-physics.md)).
+Open an enterprise NVMe SSD and you find a controller ASIC, a few DRAM chips, capacitors and many NAND packages, each stacking dies split into planes, blocks and pages ([Chapter 2](02-media-physics.md)).
 
 ![Block diagram of an enterprise NVMe SSD: a host connects over PCIe x4 to a controller SoC containing several Arm cores, hardware engines for LDPC error correction, encryption and DMA, on-chip SRAM, a DRAM controller, an NVMe front end and flash channel controllers; external DRAM holds the logical-to-physical map at about 1 GB per TB; power-loss capacitors sit beside it; 8 or 16 channels fan out to NAND dies; a zoom into one die shows four planes, each with a hatched strip of over-provisioned spare blocks hidden from the host.](../assets/diagrams/ch03-inside-ssd.svg)
 

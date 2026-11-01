@@ -4,7 +4,7 @@ Reads data/ch48_nand_price.csv (one row per quarter x segment x forecast vintage
 `source`, `as_of`, `verified`). Bars show the midpoint of the latest TrendForce range for blended NAND
 and for enterprise SSD, with whiskers for the published range. Where TrendForce revised a quarter
 (4Q25, 1Q26) the superseded original forecast is drawn as a hollow diamond. A line on the right axis
-compounds the blended midpoints into an index (2Q22-like base = 100 at end-4Q22). These are forecasts,
+compounds the blended midpoints into an index (end-4Q22 = 100; 2Q25, with no blended figure, is held flat). These are forecasts,
 not realised prices. Writes docs/assets/charts/ch48-nand-price.svg.
 """
 from __future__ import annotations
@@ -82,7 +82,7 @@ def build(out_dir: Path) -> Path:
     ax2.plot(range(len(QUARTERS)), index, color="#D55E00", linewidth=2, marker="o", ms=3.5)
     ax2.set_ylabel("Compounded blended index (end-4Q22 = 100)", color="#D55E00")
     ax2.tick_params(axis="y", colors="#D55E00")
-    ax2.set_ylim(0, 440)
+    ax2.set_ylim(0, 560)
     ax2.grid(False)
     ax2.spines["right"].set_visible(True)
     ax2.text(len(QUARTERS) - 1, index[-1] + 12, f"{index[-1]:.0f}", color="#D55E00", ha="center", fontsize=9,
