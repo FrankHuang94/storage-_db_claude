@@ -15,7 +15,7 @@
 
 Everpure's "Data Primacy" pitch and its 1touch purchase rest on one bet: in an agentic enterprise, the scarce asset is *trusted context about data*, not capacity. If agents become the main consumers of data, control moves to whoever answers three questions per request: what is this, may this agent see it, and what did it do with it. A vendor that answers them stays sticky as hardware commoditises; one that does not becomes the S3 endpoint under someone else's catalog ([Chapter 33](33-rag-vector-lakehouse.md)).
 
-Salesforce paid US$8 billion for Informatica's catalog and governance business (closed November 2025)[^3]. The data-security posture management (DSPM) specialist Cyera raised US$600 million at a US$12 billion valuation in June 2026 (*reported*)[^4]. Those prices show where the value sits, and how costly it is to buy in.
+The rivals are not only storage vendors. Salesforce paid US$8 billion for Informatica's catalog and governance business (closed November 2025)[^3]. The data-security posture management (DSPM) specialist Cyera raised US$600 million at a US$12 billion valuation in June 2026 (*reported*)[^4]. Those prices show where the value sits, and how costly it is to buy in.
 
 ## Core concepts
 
@@ -113,7 +113,7 @@ Gartner predicted in June 2025 that over 40% of agentic AI projects would be can
 |---|---|---|---|---|---|
 | Everpure | Data Intelligence, ex-1touch (GA June 2026)[^16]; Data Stream | Discovery, entity-level classification, knowledge graph, lineage, residency and access policy | Analysts say yes (databases, SaaS, third-party storage)[^6] | Native MCP, Oct 2026[^17] | GA; MCP new |
 | VAST | InsightEngine (2024–25), AgentEngine (May 2025), PolicyEngine (Feb 2026)[^18][^19] | Embedding and RAG in-platform; serverless agent runtime; inline policy checks and tamper-resistant traces (*company-stated*) | Mainly data on VAST | MCP-compatible tools in AgentEngine[^18] | PolicyEngine due by end-2026 |
-| NetApp | AI Data Engine (Oct 2025)[^20] | Metadata engine, curation and embeddings, guardrails in ONTAP | Expanded to any NFS, SMB, S3 (Sept 2026)[^14] | MCP server in NetApp Console[^14] | Lighthouse 2026; PEAK:AIO deal pending |
+| NetApp | AI Data Engine (Oct 2025)[^20] | Metadata engine, curation and embeddings, guardrails in ONTAP | Expanded to any NFS, SMB, S3 (Sept 2026)[^14] | MCP server in NetApp Console[^14] | Lighthouse 2026 [VERIFY: AIDE GA date]; PEAK:AIO deal pending |
 | Dell | AI Data Platform, Data Orchestration Engine (Mar 2026)[^15] | Low-code discovery, prep and governance into AI-ready datasets; from Dataloop (~US$120M, *reported*)[^21] | Yes, per analysts[^15] | Workflows, NIM, marketplace | Available Q1 CY26 per Dell |
 | Hammerspace | AI Data Platform (Oct 2025)[^22] | Assimilates metadata from existing storage into a global namespace; Milvus vectors | Yes, by design | MCP services[^22] | Shipping, NVIDIA design-aligned |
 | Cohesity | Gaia (GA Mar 2024)[^23]; Maestro (June 2026)[^24] | RAG search over backup copies, on-prem option with NVIDIA | Any data it protects | Gaia MCP now; Maestro MCP later 2026 | Partly GA |
@@ -145,7 +145,7 @@ quadrantChart
 
 *Figure 39.3 — Atlas judgment, not vendor data: storage vendors are climbing while data vendors are not descending, and VAST sits furthest up.*
 
-**Trade-offs.** VAST is the steelman for "storage becomes the AI data platform": database, runtime and policy in one system, but scoped to data on VAST. NetApp has the deepest metadata heritage and now indexes rival storage. Dell, like Everpure, bought a ~US$120–125M startup to get here. Cohesity and Rubrik hold a full copy of most enterprise data and can *undo* agent actions. Everpure's asset is entity-level classification plus a Pure1-managed fleet ([Chapter 28](../04-everpure/28-platform-and-software.md)); its gap is proof on non-Everpure data.
+**Trade-offs.** VAST is the steelman for "storage becomes the AI data platform": database, runtime and policy in one system, but scoped to data on VAST. NetApp has the deepest metadata heritage and now indexes rival storage. Dell (Dataloop) and Everpure (1touch) each bought a ~US$120–125M startup to get here. Cohesity and Rubrik hold a full copy of most enterprise data and can *undo* agent actions. Everpure's asset is entity-level classification plus a Pure1-managed fleet ([Chapter 28](../04-everpure/28-platform-and-software.md)); its gap is proof on non-Everpure data.
 
 **Options a strategy team might evaluate, based on public information:**
 
