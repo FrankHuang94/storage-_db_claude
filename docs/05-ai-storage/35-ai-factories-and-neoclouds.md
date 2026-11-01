@@ -128,10 +128,10 @@ Data: `data/ch35_neocloud_capex.csv`
 | VAST Data | Primary platform at CoreWeave (US$1.17B); Lambda, Crusoe, Nebius, many tier-2s[^3][^31] | Native multi-tenancy, software on partner hardware, NVIDIA closeness | Concentration in one customer; neoclouds building their own object tier |
 | WEKA | Nebius premium tier; CoreWeave option; OCI launch partner[^21][^33] | Software-defined, runs on neocloud servers, strong KV-cache story | Smaller scale and balance sheet; client software on GPU nodes |
 | DDN | CoreWeave option, Nebius, OCI; xAI heritage[^28][^34] | Raw throughput, HPC credibility, NVIDIA reference designs | Appliance-centric; Lustre operations burden for multi-tenant service |
-| Everpure (FlashBlade//EXA) | CoreWeave equity stake and dedicated option; STN, beyond.pl wins[^26][^38] | Standard pNFS client, DirectFlash power density, Evergreen//One for EXA[^38], NCP reference architecture[^39] | Multi-tenancy only arrived in 2026[^23]; no mega-neocloud anchor |
+| Everpure (FlashBlade//EXA) | CoreWeave equity stake and dedicated option; STN, beyond.pl wins[^26][^38] | Standard pNFS client, DirectFlash density in the metadata tier, Evergreen//One for EXA[^38], NCP reference architecture[^39] | Multi-tenancy only arrived in 2026[^23]; EXA data nodes are still third-party NVMe servers, so DFM power density does not yet reach the data tier ([Chapter 37](37-reading-benchmarks.md)); no mega-neocloud anchor |
 | In-house / open | CoreWeave AI Object Storage, Nebius filesystem, Lightbits at Crusoe[^25][^32] | Lowest cost, full control, same hardware | Engineering burden; harder for hottest file tier |
 
-*Table 35.2 — VAST holds the neocloud anchor accounts, WEKA and DDN hold multi-vendor seats, and Everpure enters as a challenger with power density and financing as its levers.*
+*Table 35.2 — VAST holds the neocloud anchor accounts, WEKA and DDN hold multi-vendor seats, and Everpure enters as a challenger whose levers are financing and, once DFM data nodes ship, power density.*
 
 **Steelman VAST.** VAST got there first with a design that matches neocloud economics. Its stateless compute and shared QLC let a neocloud scale performance and capacity separately. It had multi-tenancy early, sells software on commodity servers, and its CoreWeave reference makes it the safe choice for smaller neoclouds, none of whom wants to experiment during a GPU ramp.
 
