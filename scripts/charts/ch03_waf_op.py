@@ -59,8 +59,8 @@ def build(out_dir: Path) -> Path:
         ax.plot([p[0] for p in pts], [p[1] for p in pts], color=color, marker=marker, linestyle=ls,
                 markersize=6, linewidth=2.2 if marker is None else 1.6, label=label)
     ax.axhline(1.0, color="#888888", linestyle=":", linewidth=1.2)
-    ax.text(101, 1.07, "WAF = 1: host writes whole blocks sequentially (log-structured host, ZNS, FDP done well)",
-            fontsize=9, color="#555555", ha="right", va="bottom")
+    ax.text(101, 0.88, "WAF = 1: host writes whole blocks sequentially (log-structured host, ZNS, FDP done well)",
+            fontsize=9, color="#555555", ha="right", va="top")
     for x, label in ((7, "client\n~7%"), (14.5, "read-intensive\nenterprise ~14.5%"), (37, "mixed-use\nenterprise ~37%")):
         ax.axvline(x, color="#BBBBBB", linestyle="--", linewidth=1)
         ax.text(x + 1, 10.4, label, fontsize=9, color="#555555", va="top")
