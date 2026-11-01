@@ -13,7 +13,7 @@
 
 ## Why this matters for Everpure strategy
 
-Everpure (NYSE: P, formerly PSTG) earns most of its revenue from appliances built on its own DirectFlash modules. Yet it already runs every other model here: Portworx (Kubernetes SDS), Purity on cloud instances, and a Meta DirectFlash technology licence with no Everpure hardware[^1].
+Everpure (NYSE: P, formerly PSTG) mostly sells appliances built on its own DirectFlash modules. Yet it already runs every other model here: Portworx (Kubernetes SDS), Purity on cloud instances, and a Meta DirectFlash technology licence with no Everpure hardware[^1].
 
 Broadcom forces the choice: every VMware renewal must stay on vSAN, switch HCI stacks, or split compute from storage. Everpure's May 2025 Nutanix partnership, with FlashArray as external storage for the AHV hypervisor, is a bet on the third[^2].
 
@@ -124,7 +124,7 @@ Block Express internals are public only at a high level, so the read diagram lea
 
 *Table 19.3 — Software-only maximizes margin percentage and iteration speed; appliances maximize gross profit per deal and media control.*
 
-**Worked example (illustrative split).** On a US$1M system, an appliance vendor books US$1M at 66%: **US$660k gross profit**. A software-only vendor might book US$400k at 88%: **US$352k**, with the OEM taking US$600k of hardware. In exchange it carries no inventory or NAND risk and ships on new CPUs as soon as OEMs do. Open source caps pricing from below; a free tier that is good enough must be fenced, as MinIO did with AGPLv3 in 2021[^16], a stripped community console in 2025[^17] and maintenance mode in December 2025[^18].
+**Worked example (illustrative split).** On a US$1M system, an appliance vendor books US$1M at 66%: **US$660k gross profit**. A software-only vendor might book US$400k at 88%: **US$352k**, with the OEM taking US$600k of hardware. In exchange it carries no inventory or NAND risk and ships on new CPUs immediately. Open source caps pricing from below; a free tier that is good enough must be fenced, as MinIO did with AGPLv3 in 2021[^16], a stripped community console in 2025[^17] and maintenance mode in December 2025[^18].
 
 ## How Everpure approaches it vs. competitors
 
@@ -150,9 +150,9 @@ timeline
 
 *Figure 19.5 — SDS and HCI matured quietly; Broadcom's 2023 licensing reset made platform choice a board-level cost decision.*
 
-EBS dates from 2008[^27]. Broadcom closed VMware on 22 November 2023, then ended perpetual licences and folded thousands of SKUs into two bundles, VCF and vSphere Foundation[^21]. AT&T's 2024 lawsuit cited a proposed 1,050% increase; it later settled[^22]. Much of the base paid: Broadcom reported ~US$27B of FY2025 infrastructure-software revenue and 87% VCF adoption among its top 10,000 customers[^23] [VERIFY: search-summary only].
+Broadcom closed VMware on 22 November 2023, then ended perpetual licences and folded thousands of SKUs into two bundles, VCF and vSphere Foundation[^21]. AT&T's 2024 lawsuit cited a proposed 1,050% increase; it later settled[^22]. Much of the base paid: Broadcom reported ~US$27B of FY2025 infrastructure-software revenue and 87% VCF adoption among its top 10,000 customers[^23] [VERIFY: search-summary only].
 
-Storage felt it. Gartner expects over a third of VMware workloads to move by 2028[^24]. Nutanix's FlashArray integration, its first major certified external storage, reached GA around the turn of 2026[^2][^25]. VCF 9 deprecated vVols, the main external-array hook[^26]. The trajectory is un-convergence: split node types, arrays behind HCI, Kubernetes-native SDS for VMs.
+Storage felt it. Gartner expects over a third of VMware workloads to move by 2028[^24]. Nutanix's FlashArray integration, its first major certified external storage, reached GA around the turn of 2026[^2][^25]. VCF 9 deprecated vVols, the main external-array hook[^26]. The trajectory is un-convergence: split node types, arrays behind HCI, Kubernetes-native SDS for VMs. Cloud block storage has been SDS since EBS was built in 2008[^27].
 
 ## Numbers that matter
 
