@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 758" width="1000" role="img" aria-labelledby="t d" font-family="Inter, Helvetica, Arial, sans-serif">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 773" width="1000" role="img" aria-labelledby="t d" font-family="Inter, Helvetica, Arial, sans-serif">
   <title id="t">Protocol comparison poster: block, file and object access</title>
   <desc id="d">A table-style poster comparing eleven storage access protocols in three bands. Block: FC, iSCSI, FC-NVMe, NVMe over RoCE and NVMe over TCP. File: NFSv3, NFSv4.1 and pNFS, SMB3 and proprietary parallel file system clients. Object: S3 and S3 over RDMA. For each it gives the transport, the typical latency adder, who uses it, and Everpure support. The same content appears as Table 60.2 in the chapter.</desc>
-  <rect x="0" y="0" width="1000" height="758" fill="#FFFFFF"/>
+  <rect x="0" y="0" width="1000" height="773" fill="#FFFFFF"/>
   <text x="20" y="34" font-size="20" font-weight="700" fill="#222222">Protocol poster: how hosts reach storage, and what each path costs</text>
   <text x="20" y="56" font-size="13" fill="#555555">Eleven protocols in three families. Shaded column: Everpure support as of November 2026 (Chapters 7–9, 27).</text>
   <rect x="20" y="70" width="960" height="30" fill="#222222"/>
@@ -17,7 +17,7 @@
   <rect x="760" y="128" width="220" height="44" fill="#E8F1F8"/>
   <rect x="20" y="128" width="4" height="44" fill="#56B4E9"/>
   <line x1="20" y1="172" x2="980" y2="172" stroke="#DDDDDD"/>
-  <text x="30" y="148" font-size="14" font-weight="700" fill="#222222">FC</text>
+  <text x="30" y="148" font-size="14" font-weight="700" fill="#222222">FC (SCSI)</text>
   <text x="165" y="148" font-size="12" fill="#222222">Dedicated lossless fabric;</text>
   <text x="165" y="163" font-size="12" fill="#222222">HBAs + FC switches, 32–128G</text>
   <text x="365" y="148" font-size="12" fill="#222222">Low; HBA-offloaded,</text>
@@ -151,20 +151,21 @@
   <text x="565" y="630" font-size="12" fill="#222222">pipelines, cloud-native apps</text>
   <text x="770" y="615" font-size="12" fill="#0B4F7C">FlashBlade S3; FlashArray</text>
   <text x="770" y="630" font-size="12" fill="#0B4F7C">S3 (added June 2025)</text>
-  <rect x="20" y="654" width="960" height="44" fill="#FFFFFF"/>
-  <rect x="760" y="654" width="220" height="44" fill="#E8F1F8"/>
-  <rect x="20" y="654" width="4" height="44" fill="#E69F00"/>
-  <line x1="20" y1="698" x2="980" y2="698" stroke="#DDDDDD"/>
+  <rect x="20" y="654" width="960" height="59" fill="#FFFFFF"/>
+  <rect x="760" y="654" width="220" height="59" fill="#E8F1F8"/>
+  <rect x="20" y="654" width="4" height="59" fill="#E69F00"/>
+  <line x1="20" y1="713" x2="980" y2="713" stroke="#DDDDDD"/>
   <text x="30" y="674" font-size="14" font-weight="700" fill="#222222">S3 over</text>
   <text x="30" y="689" font-size="14" font-weight="700" fill="#222222">RDMA</text>
   <text x="165" y="674" font-size="12" fill="#222222">HTTP control path; RDMA moves</text>
   <text x="165" y="689" font-size="12" fill="#222222">bytes into GPU or host memory</text>
-  <text x="365" y="674" font-size="12" fill="#222222">Removes TCP copies. MinIO:</text>
-  <text x="365" y="689" font-size="12" fill="#222222">16 GiB in 0.65 s vs 12.16 s</text>
+  <text x="365" y="674" font-size="12" fill="#222222">Removes TCP copies. MinIO</text>
+  <text x="365" y="689" font-size="12" fill="#222222">(vendor): 16 GiB in 0.65 s</text>
+  <text x="365" y="704" font-size="12" fill="#222222">vs 12.16 s over HTTP</text>
   <text x="565" y="674" font-size="12" fill="#222222">GPU data loading, checkpoints,</text>
   <text x="565" y="689" font-size="12" fill="#222222">KV-cache tiers</text>
   <text x="770" y="674" font-size="12" fill="#0B4F7C">FlashBlade//S: announced</text>
   <text x="770" y="689" font-size="12" fill="#0B4F7C">Mar 2025 (GA to verify)</text>
-  <text x="20" y="716" font-size="12" fill="#555555">Latency adders for block are per I/O versus local NVMe, from SNIA tests and vendor claims cited in Chapter 7. File and object rows say</text>
-  <text x="20" y="732" font-size="12" fill="#555555">where the time goes; the S3 figure is AWS's guidance for its cloud service, not an on-premises flash system. Original drawing, Chapter 60.</text>
+  <text x="20" y="731" font-size="12" fill="#555555">Latency adders for block are per I/O versus local NVMe, from SNIA tests and vendor claims cited in Chapter 7. File and object rows say</text>
+  <text x="20" y="747" font-size="12" fill="#555555">where the time goes; the S3 figure is AWS's guidance for its cloud service, not an on-premises flash system. Original drawing, Chapter 60.</text>
 </svg>

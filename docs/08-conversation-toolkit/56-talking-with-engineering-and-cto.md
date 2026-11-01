@@ -13,7 +13,7 @@
 
 ## Why this matters for Everpure strategy
 
-Every build, partner or buy decision in corporate development ends with an engineering judgment. Is the target's architecture sound? Could its code meet Purity's quality bar? Would it survive a hyperscaler's failure-injection test? Engineering leaders give that verdict, and they give it to people they respect. A corp-dev lead who can trace a write through a dual-controller array, estimate a rebuild window and spot a cherry-picked benchmark gets a candid view. One who cannot gets the polite version.
+Every build, partner or buy decision ends with an engineering judgment: is the target's architecture sound, and could its code meet Purity's quality bar? Engineering leaders give that verdict candidly only to people they respect. If you can trace a write, estimate a rebuild window and spot a cherry-picked benchmark, you get the candid view; otherwise you get the polite one.
 
 The Office of the CTO matters for a different reason: it frames the long bets. Everpure's CTO, Rob Lee, has an official bio that gives a combined technology-and-growth title[^1] [VERIFY: current title and remit], which suggests technical and commercial strategy sit close together. That is where questions such as "does DirectFlash licensing survive FDP on commodity SSDs?" get argued. [Chapter 55](55-talking-with-pms.md) covers PMs; [Chapter 50](../06-industry-and-competition/50-diligence-framework.md) turns these conversations into a diligence scorecard.
 
@@ -21,7 +21,7 @@ The Office of the CTO matters for a different reason: it frames the long bets. E
 
 ### The architecture review in seven questions
 
-The order matters. Each question builds on the previous answer, and skipping ahead to performance before you understand the data path is how reviews get steered by slides.
+The order matters: jump to performance before you understand the data path and the slides steer the review.
 
 ```mermaid
 flowchart TD
@@ -39,7 +39,7 @@ flowchart TD
 
 *Figure 56.1 — Anchor the review in one workload and walk the stack in order; a missing number at any step is the follow-up list.*
 
-**1. Data path.** Ask the engineer to trace one write and one read: how many network hops, how many copies before acknowledgement, and where the acknowledgement happens. In a dual-controller array, a write is acknowledged once it sits in mirrored NVRAM ([Chapter 14](../03-system-architecture/14-scale-up-dual-controller.md)). In FlashBlade//EXA, clients get a layout from the metadata core and then talk to data nodes directly[^2]. In a DASE design, every I/O crosses a back-end fabric, and NVMe over RDMA adds roughly 5–15 µs per access[^3]. Hop counts set the latency floor, and copy counts set the bandwidth tax.
+**1. Data path.** Ask the engineer to trace one write and one read: how many network hops, how many copies before acknowledgement, and where the acknowledgement happens. In a dual-controller array, a write is acknowledged once it sits in mirrored NVRAM ([Chapter 14](../03-system-architecture/14-scale-up-dual-controller.md)). In FlashBlade//EXA, clients get a layout from the metadata core and then talk to data nodes directly[^2]. In a DASE design, every I/O crosses a back-end fabric, and NVMe over RDMA adds roughly 5–15 µs per access[^3]. Hops set the latency floor; copies set the bandwidth tax.
 
 **2. Metadata.** Where does it live (DRAM, NVRAM, SCM, flash)? How is it partitioned, and what happens with a single hot directory? AI checkpointing makes this concrete. If 16,384 ranks each write one shard file into one directory, that is 16,384 creates in a burst. A design that serialises them on one directory lock turns a bandwidth problem into a metadata stall ([Chapter 21](../03-system-architecture/21-metadata.md)).
 
@@ -53,7 +53,7 @@ flowchart TD
 
 **7. Roadmap dependencies.** Which outside roadmaps does the plan assume? NAND density sets module capacity: DFMs reached 300 TB in 2025[^9], while the steps to 600 TB and 1 PB are undated. PCIe 6.0 doubles drive-link bandwidth to about 29.5 GB/s per x4 direction (64 GT/s × 4 lanes ÷ 8, less flit overhead), but front-end networking usually binds first ([Chapter 12](../02-protocols-and-networking/12-interfaces-and-emerging-tech.md)). CXL matters for controller memory, not for flash. NVIDIA's BlueField-4 STX, launched in March 2026, could move storage services onto a DPU[^10]. The sharp question is which dependency is single-sourced, and what happens if it slips a year.
 
-**Semiconductor bridge.** This is a design review for a chip: dataflow (data path), the tag and directory structures (metadata), yield and redundancy (failure domains), field-upgradable firmware (NDU), characterised versus simulated corners (scale limits), datasheet versus silicon (performance), and process and IP dependencies (roadmap).
+**Semiconductor bridge.** This is a chip design review: dataflow, tag and directory structures, redundancy, field-upgradable firmware, characterised versus simulated corners, datasheet versus silicon, and process and IP dependencies.
 
 ### Good answers and red flags
 
@@ -70,7 +70,7 @@ flowchart TD
 
 *Table 56.1 — Good answers carry a number and a limit; the last column is the mistake you make, not the target.*
 
-The last column matters most in diligence. The most common self-inflicted errors are arithmetic, not judgment. GiB is about 7% larger than GB. NVIDIA certification sets a throughput floor, roughly 0.5 GB/s of read per GPU at the SuperPOD B200 enhanced tier, not a ranking[^11]. And an elegant architecture can still lose to a messier one that ships faster.
+The last column matters most in diligence, where self-inflicted errors are usually arithmetic. GiB is about 7% larger than GB. NVIDIA certification sets a throughput floor, roughly 0.5 GB/s of read per GPU at the SuperPOD B200 enhanced tier, not a ranking[^11].
 
 ### The credibility ladder
 
@@ -89,7 +89,7 @@ flowchart LR
 
 *Figure 56.2 — Operate at L2 and treat L3 as territory you ask about; credibility collapses the moment you assert an implementation detail you cannot defend.*
 
-L2 behaviour has a recognisable script. Draw your understanding, put a number on it, and hand over the marker: "My mental model is a log-structured layout with a global FTL, so write amplification should stay near 1.1. Where is that wrong for your system?" That invites a correction and signals that you did the homework. At L3, the move is a precise question: "Is the dedup index in controller DRAM or paged from flash?" Never offer an opinion on code paths. The tells of a bluff are well known to engineers: vague adjectives, borrowed benchmark numbers, and "basically" used instead of a mechanism.
+L2 behaviour has a recognisable script. Draw your understanding, put a number on it, and hand over the marker: "My mental model is a log-structured layout with a global FTL, so write amplification should stay near 1.1. Where is that wrong for your system?" At L3, the move is a precise question: "Is the dedup index in controller DRAM or paged from flash?" Never offer an opinion on code paths. Engineers spot bluffs by vague adjectives and borrowed numbers.
 
 ### Ten whiteboard prompts
 
@@ -119,11 +119,9 @@ Good bets to bring, all grounded in public signals:
 - **Memory tiers.** Does CXL-attached memory belong inside controllers for dedup and metadata, or as a KV-cache tier?
 - **Benchmarks as strategy.** VAST, WEKA and DDN did not submit to MLPerf Storage v3.0[^14]. Does audited benchmarking stay a differentiator, or do POCs decide?
 
-The semiconductor parallel is a foundry roadmap review. Nobody asks TSMC "what's next?"; they ask when N2 yield reaches a threshold and what the backside-power dependency is.
-
 ## How Everpure approaches it vs. competitors
 
-Engineering organisations reveal their culture through what they publish. That shapes what you can verify before a meeting.
+What an engineering organisation publishes determines what you can verify before a meeting.
 
 | Vendor | How engineering speaks publicly | Evidence you can check | What to probe in person |
 |---|---|---|---|
@@ -134,11 +132,11 @@ Engineering organisations reveal their culture through what they publish. That s
 
 *Table 56.3 — Public engineering evidence varies by vendor; in diligence, weight what you can verify above what you are told.*
 
-Steelman the alternatives. VAST's engineers can argue that shared media makes global data reduction and wide erasure codes natural, which EXA's split design must work harder to match. DDN's can point to decades of Lustre operations at the largest HPC sites. Everpure's strongest engineering argument is maturity: one OS hardened across a large installed base, with a published design rationale.
+Steelman the alternatives. VAST's engineers can argue that shared media makes global data reduction and wide erasure codes natural, which EXA's split design must work harder to match. Everpure's strongest engineering argument is maturity: one OS hardened across a large installed base, with a published design rationale.
 
 ## History and trajectory
 
-The questions engineering leaders care about have shifted with each media era. In the disk era, reviews centred on RAID rebuild windows and seek-bound IOPS. The flash era moved attention to write amplification, endurance and garbage collection, which Purity's log-structured design addressed[^15]. NVMe and NVMe-oF moved the bottleneck into software and the network. The AI era adds GPU-direct paths, metadata storms and incast at the storage ports. The next shift is already under way: storage services moving onto DPUs, as with BlueField-4 STX in March 2026[^10], and memory tiers spanning HBM to shared flash for KV cache ([Chapter 32](../05-ai-storage/32-inference-and-kv-cache.md)). Each shift changes which of the seven questions is hardest to answer well.
+Review questions have shifted with each media era: RAID rebuild windows and seek-bound IOPS for disk; write amplification and endurance for flash, which Purity's log-structured design addressed[^15]; software and network latency for NVMe-oF; GPU-direct paths, metadata storms and incast for AI. The next shift is already under way: storage services moving onto DPUs, as with BlueField-4 STX in March 2026[^10], and memory tiers spanning HBM to shared flash for KV cache ([Chapter 32](../05-ai-storage/32-inference-and-kv-cache.md)).
 
 ## Numbers that matter
 
@@ -169,7 +167,7 @@ The questions engineering leaders care about have shifted with each media era. I
 
 **Don't say this:**
 
-- "It scales linearly." Ask for the tested ceiling and efficiency; EXA's 10-to-30-node scaling was about 89%, not 100%.
+- "It scales linearly." Ask for the tested ceiling and efficiency; EXA's 10-to-30-node scaling worked out to about 89%, not 100% ([Chapter 27](../04-everpure/27-flasharray-and-flashblade.md)).
 - "No single point of failure, so it's safe." Ask about correlated failures: firmware batches, enclosures, power domains.
 - "877 GB/s." It is 877 GiB/s, about 942 GB/s.
 - "CXL will replace flash for this." CXL is memory at DRAM economics.
@@ -179,7 +177,6 @@ The questions engineering leaders care about have shifted with each media era. I
 
 - Colgrove et al., SIGMOD 2015, on Purity's log-structured, highly available design[^15].
 - MLPerf Storage v3.0 submission configurations, to practise reading performance claims[^14].
-- Lockwood et al., PDSW'21, as a model of independent storage benchmarking[^16].
 - [Chapter 20](../03-system-architecture/20-distributed-systems-fundamentals.md) on consensus and failure models; [Chapter 57](57-question-bank.md) for the full question bank.
 
 ## Key terms
@@ -189,8 +186,6 @@ The questions engineering leaders care about have shifted with each media era. I
 - **Blast radius** — the data or service affected when one component fails.
 - **Tested limit** — the largest configuration a vendor has validated and supports, as opposed to the architectural maximum.
 - **Credibility ladder** — the progression from vocabulary (L1) through mechanism (L2) to implementation (L3).
-- **Signpost** — an observable event that confirms or refutes a long-range technology thesis.
-- **Correlated failure** — several components failing together from one cause, such as a firmware bug.
 - See the [glossary](../glossary.md) for the rest.
 
 ## Sources
