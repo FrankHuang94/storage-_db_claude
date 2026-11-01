@@ -7,9 +7,9 @@
 
 - **NVIDIA runs the approved-vendor list for AI storage.** Each of its reference designs (BasePOD, SuperPOD, NVIDIA Cloud Partner, Enterprise) names storage that passed NVIDIA's tests. A vendor missing from the list is usually not in the deal.
 - **The program is a set of tiers ordered by scale.** NVIDIA-Certified Storage has Foundation (up to 128 simulated GPUs), Enterprise (about 1,000) and NCP (up to 10,000) levels. SuperPOD certification adds per-GPU-generation throughput tiers. NCP certification adds cloud-grade uptime, durability and delivery-time rules.
-- **Certification sets a floor. It does not rank vendors.** The SuperPOD B200 "enhanced" tier works out to under 0.5 GB/s of read per GPU. Around a dozen vendors pass it. Certification proves interoperability and minimum throughput. It says nothing about price, data reduction, operations or failure behaviour.
+- **Certification sets a floor. It does not rank vendors.** The SuperPOD B200 "enhanced" tier works out to under 0.5 GB/s of read per GPU. About a dozen vendors hold NVIDIA storage certifications. Certification proves interoperability and minimum throughput. It says nothing about price, data reduction, operations or failure behaviour.
 - **NVIDIA keeps moving into the storage box.** The AI Data Platform (2025) put GPUs and NVIDIA retrieval software inside storage. BlueField-4 STX and CMX (2026) standardize the KV-cache tier on NVIDIA silicon, with 12 storage vendors as co-design partners.
-- **NVIDIA invests in some of the vendors it certifies.** It holds equity in VAST and WEKA, and DDN runs NVIDIA's own clusters. Everpure has every major certification for FlashBlade//S. It has none NVIDIA-granted yet for FlashBlade//EXA, and it has no NVIDIA equity tie.
+- **NVIDIA invests in some of the vendors it certifies.** It holds equity in VAST and WEKA, and NVIDIA's own clusters run on DDN. Everpure has every major certification for FlashBlade//S. It has none NVIDIA-granted yet for FlashBlade//EXA, and it has no reported NVIDIA equity tie.
 
 ## Why this matters for Everpure strategy
 
@@ -48,7 +48,7 @@ Most test details sit on partner portals. Three public anchors show the bar:
 - **SuperPOD throughput.** The DGX B200 reference architecture asks, per 256-GPU SU, 40/20 GB/s read/write at "standard" and 125/62 GB/s at "enhanced", scaling linearly to four SUs[^3]. The B300 version asks 640 and 2,000 GB/s read for eight SUs[^7].
 - **NCP operations.** High-speed file storage at roughly 99.5% uptime and 99.999% annual durability per PB, NFSv4 home directories, and storage live with API integration eight weeks *before* the GPUs arrive[^4] [VERIFY: thresholds quoted from v2.2; current is v2.4]. The detailed GB300 NVL72 storage design is on NVIDIA's non-public partner portal[^8].
 
-**Worked example: how high is the floor?** Enhanced B200 read is 125 GB/s ÷ 256 GPUs ≈ **0.49 GB/s per GPU**; standard is 40 ÷ 256 ≈ 0.16 GB/s. NVIDIA's own guidance says read-dominant work (image or video training) wants about 4 GB/s per GPU[^3], eight times the enhanced tier, or ~1 TB/s per SU. WEKA claimed 720 GB/s of read from one eight-node WEKApod at its 2024 SuperPOD certification[^9], beating the four-SU enhanced target with a single small appliance. Certification tells a buyer the system won't starve a text-LLM training job; it does not separate the top vendors, who compete on everything else.
+**Worked example: how high is the floor?** Enhanced B200 read is 125 GB/s ÷ 256 GPUs ≈ **0.49 GB/s per GPU**; standard is 40 ÷ 256 ≈ 0.16 GB/s. NVIDIA's own guidance says read-dominant work (image or video training) wants about 4 GB/s per GPU[^3], eight times the enhanced tier, or ~1 TB/s per SU. WEKA claimed 720 GB/s of read from one eight-node WEKApod at its 2024 SuperPOD certification[^9], beating the four-SU enhanced target with a single small appliance. Certification says the system won't starve a text-LLM training job; it does not separate the top vendors.
 
 **What certification does and doesn't prove**
 

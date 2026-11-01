@@ -79,7 +79,7 @@ flowchart TD
 *Figure 37.2 — The same EXA design gives 327.6 or 877.5 GiB/s depending on how many data nodes were submitted. The ranking is mostly a ranking of configuration size.*
 Data: `data/ch37_mlperf_v3_checkpoint.csv`
 
-Divide by the obvious denominators and the order changes. EXA delivers 877.52 ÷ 30 ≈ 29.3 GiB/s per data node, or ≈14.6 if its 30 metadata blades also count as nodes[^8]. NVIDIA's AIStore delivers 133.27 ÷ 12 ≈ 11.1 GiB/s per node, at about 95% of its nominal NIC bandwidth[^11]. That is a network-bound, well-tuned result on cloud bare metal. Azure publishes no node count and warns against normalising by clients[^10]. For a cloud service, the honest denominator is provisioned capacity and price. Neither metric is wrong. The choice of denominator *is* the argument.
+Divide by the obvious denominators and the order changes. EXA delivers 877.52 ÷ 30 ≈ 29.3 GiB/s per data node, or ≈14.6 if its 30 metadata blades also count as nodes[^8]. NVIDIA's AIStore delivers 133.27 ÷ 12 ≈ 11.1 GiB/s per node, at about 95% of its nominal NIC bandwidth[^11]. That is a network-bound, well-tuned result on cloud bare metal. Alluxio's 147 GiB/s ran the smaller 405B model through a cache in front of Amazon S3[^12], so it answers a different question. Azure publishes no node count and warns against normalising by clients[^10]. For a cloud service, the honest denominator is provisioned capacity and price. Neither metric is wrong. The choice of denominator *is* the argument.
 
 ### How vendors game benchmarks
 

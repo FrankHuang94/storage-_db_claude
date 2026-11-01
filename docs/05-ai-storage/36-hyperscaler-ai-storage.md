@@ -13,7 +13,7 @@
 
 ## Why this matters for Everpure strategy
 
-The top hyperscalers are the largest buyers of storage media on earth, yet almost closed to storage-system vendors. For Everpure (NYSE: P, formerly PSTG) that matters three ways. Its hyperscaler revenue exists only because Pure Storage found a seam: a licence for flash-management software and module design, with the customer buying its own NAND[^1][^2]. Hyperscaler designs set the reference architecture that neoclouds and enterprises copy. And whether hyperscalers keep cold data on HDD or move it to QLC is the largest swing factor in flash-versus-disk demand ([Chapter 48](../06-industry-and-competition/48-media-and-nand-cycle.md)).
+The top hyperscalers are the largest buyers of storage media on earth, yet almost closed to storage-system vendors. For Everpure (NYSE: P, formerly PSTG) that matters three ways. Its hyperscaler revenue exists only because Pure Storage found a seam: a licence for flash-management software and module design, with the customer buying its own NAND[^1][^2]. Hyperscaler designs set the reference architecture that neoclouds and enterprises copy. And whether hyperscalers keep cold data on HDD or move it to QLC is the largest swing factor in flash-versus-disk demand ([Chapter 48](../06-industry-and-competition/48-media-suppliers-and-nand-cycle.md)).
 
 Which layers hyperscalers build, which they buy, and why the boundary moves defines the addressable surface for licensing deals. [Chapter 29](../04-everpure/29-hyperscaler-ecosystem-financials.md) covers the deal financials; this chapter covers the engineering behind the boundary.
 
@@ -130,7 +130,7 @@ DeepSeek open-sourced its **Fire-Flyer File System (3FS)** in February 2025[^24]
 |---|---|---|---|
 | Top hyperscalers (Google, Meta, AWS, Microsoft) | File system, metadata, erasure coding, caching, client libraries; servers to OCP-style specs | HDDs, NAND/SSDs, NICs; selective IP licences (DirectFlash); partner software inside some cloud services | Exabyte scale amortizes large teams; control of the whole stack; media is a commodity where suppliers have scale |
 | AI labs with own clusters (DeepSeek, Meta FAIR-type) | Lean parallel FS (3FS) or a tuned hyperscaler FS | Servers, SSDs, InfiniBand | Workload is narrow and known; talent concentrated |
-| Neoclouds (CoreWeave, Nebius, Lambda) | Object layer and GPU-side caches (e.g., CoreWeave LOTA) | Dedicated file systems from VAST, WEKA, DDN, Everpure | Time to market; customer demand for certified, known systems; small storage teams ([Chapter 35](35-ai-factories-and-neoclouds.md)) |
+| Neoclouds (CoreWeave, Nebius, Lambda) | Object layer and GPU-side caches (e.g., CoreWeave LOTA)[^30] | Dedicated file systems from VAST, WEKA, DDN, Everpure[^30] | Time to market; customer demand for certified, known systems; small storage teams ([Chapter 35](35-ai-factories-and-neoclouds.md)) |
 | Large enterprises | Almost nothing below the data platform | Arrays and SDS (Everpure, NetApp, Dell, VAST) or cloud services | No scale to amortize a storage team; need support, SLAs, features |
 
 *Table 36.1 — The build boundary falls as scale rises: hyperscalers build everything except media, neoclouds build only the GPU-side glue, and enterprises buy systems.*
@@ -168,7 +168,7 @@ timeline
 
 *Figure 36.4 — The disk-era file systems of 2003–2021 were rebuilt around flash and GPU locality in 2023–2026.*
 
-Two signals point forward. **Storage is moving next to the GPUs**: zonal buckets, regional BLOB stacks and host-memory caches trade durability domain for latency and bandwidth. **Flash is advancing into capacity tiers**: in August 2025 Pure Storage expected to ship 1–2 exabytes of DirectFlash to Meta by the end of FY26[^29]. HDDs still dominate hyperscale exabytes, and bears argue disk keeps a large TCO edge ([Chapter 48](../06-industry-and-competition/48-media-and-nand-cycle.md)); the debate is how fast flash takes share.
+Two signals point forward. **Storage is moving next to the GPUs**: zonal buckets, regional BLOB stacks and host-memory caches trade durability domain for latency and bandwidth. **Flash is advancing into capacity tiers**: in August 2025 Pure Storage expected to ship 1–2 exabytes of DirectFlash to Meta by the end of FY26[^29]. HDDs still dominate hyperscale exabytes, and bears argue disk keeps a large TCO edge ([Chapter 48](../06-industry-and-competition/48-media-suppliers-and-nand-cycle.md)); the debate is how fast flash takes share.
 
 ## Numbers that matter
 
@@ -252,3 +252,4 @@ Two signals point forward. **Storage is moving next to the GPUs**: zonal buckets
 [^27]: Amazon Science, "How silicon innovation became the 'secret sauce' behind AWS's success," n.d. https://amazon.science/how-silicon-innovation-became-the-secret-sauce-behind-awss-success (retrieved via search 2026-11-01).
 [^28]: Blocks & Files, "VAST supports Google Cloud TPUs in managed service with Red Stapler's SW," 2025-11-11. https://blocksandfiles.com/2025/11/11/vast-supports-google-cloud-tpus-in-managed-service-with-red-staplers-sw/ (retrieved 2026-11-01).
 [^29]: Blocks & Files, "Pure knocking it out of the park," 2025-08-29. https://blocksandfiles.com/2025/08/29/pure-knocking-it-out-of-the-park/ (retrieved 2026-11-01).
+[^30]: CoreWeave, "Storage" product page, n.d. https://coreweave.com/products/storage (retrieved 2026-11-01).
