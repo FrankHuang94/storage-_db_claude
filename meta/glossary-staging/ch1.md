@@ -1,0 +1,15 @@
+- **Block storage** — Storage presented as a volume of numbered fixed-size blocks whose meaning is managed by the host's file system or database. | 1
+- **File storage** — Storage presented as a shared tree of named directories and files, with the file system run by the storage system. | 1
+- **Object storage** — Storage presented as flat buckets of objects, each with a key, data and metadata, accessed whole over HTTP APIs such as S3. | 1
+- **LUN (logical unit)** — A block volume that a storage array presents to a host as if it were a disk. | 1
+- **LBA (logical block address)** — The number that identifies one fixed-size block within a block volume. | 1
+- **Bucket** — The top-level container in object storage that holds objects under unique keys. | 1
+- **Object key** — The unique name of an object within a bucket; slashes in it imply no real directory. | 1
+- **Unified storage** — A single storage system that serves more than one abstraction (block, file and/or object). | 1
+- **Primary storage** — The tier that serves live applications and is optimised for latency, performance and availability. | 1
+- **Secondary storage** — The tier that holds backup, disaster-recovery and other copies of primary data, optimised for ingest, restore speed and cost. | 1
+- **Archive storage** — The tier that retains rarely accessed data for years at the lowest cost per terabyte, often on tape or cloud archive classes. | 1
+- **Data lifecycle** — The progression of data from creation through active use, protection, cooling and archiving to deletion. | 1
+- **Hot / warm / cold data** — Labels for data by access frequency, from constantly accessed (hot) to rarely accessed (cold). | 1
+- **Tiering (lifecycle management)** — Policy-driven movement of data between storage tiers as its access pattern or value changes. | 1
+- **Durability** — The property that acknowledged data survives failures and power loss without being lost or corrupted. | 1

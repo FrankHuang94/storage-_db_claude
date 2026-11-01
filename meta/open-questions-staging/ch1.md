@@ -1,0 +1,9 @@
+- VERIFY | 1 | VAST block (NVMe/TCP) support and its GA date | Table 1.3 lists VAST block as offered but not the focus; no source retrieved this session.
+- VERIFY | 1 | Exact publication date of the AWS News Blog "Twenty years of Amazon S3 and building what's next" and its figures (>500T objects, >200M req/s, 15→2 cents/GB) | Cited from search-result summaries corroborated only by Wikipedia; aws.amazon.com not fetchable here.
+- VERIFY | 1 | AWS S3 Standard ($0.023) and Glacier Deep Archive ($0.00099) per GB-month list prices as of 2026-11 | Seen via third-party summaries; official pricing page not fetchable. Drives the hot-vs-cold worked example.
+- VERIFY | 1 | IDC Q2 2026 all-flash figures ($5.4B, 52.1%, +42.9%) against the IDC release itself | Only secondary reporting (StorageReview, Cloudnews) seen; idc.com not fetchable.
+- ASK | 1 | PM | What share of FlashArray and FlashBlade capacity shipped is deployed as secondary/backup versus primary, and how is that trending since //E launched?
+- ASK | 1 | PM | In AI deals, which buyer signs: the AI platform team, central IT or the neocloud operator, and how does Everpure's win rate differ by buyer?
+- ASK | 1 | CTO | When the same dataset must be served over S3 and NFS, does Everpure keep one copy with dual semantics or two views, and which semantic conflicts (rename, partial overwrite, ACLs) remain?
+- ASK | 1 | Eng | What limits object-listing and small-file metadata rates on FlashBlade today, and how does //EXA change that?
+- ASK | 1 | CTO | Where does Everpure see the archive tier going: does DirectFlash at hyperscalers displace HDD only in warm tiers, or also in archive-adjacent tiers that tape serves?
