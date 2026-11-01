@@ -423,3 +423,445 @@ RPO 是你能承受丢失多少数据；RTO 是你能承受停机多长时间。
 
 </details>
 
+<details>
+<summary><strong>Q36.</strong> 3-2-1-1-0 是什么意思？</summary>
+
+三份副本，存放在两种介质上，一份异地，一份不可变，恢复测试零错误。（[第 6 章](../01-storage-fundamentals/06-data-protection-and-resilience.md)）
+
+</details>
+
+<details>
+<summary><strong>Q37.</strong> (L2) 勒索软件如何把存储变成了一种安全产品？</summary>
+
+如今的恢复依赖于连管理员都无法提前删除的快照，例如 Everpure SafeMode（默认 24 小时的销毁延迟，在 FlashArray 上最长可达 30 天），再加上 Everpure、NetApp 和 Dell 提供的合同化恢复 SLA。（[第 6 章](../01-storage-fundamentals/06-data-protection-and-resilience.md)）
+
+</details>
+
+### 第 2 部分 — 协议与网络
+
+第 2 部分的卡片测试字节如何传输：块、文件和对象协议，RDMA 网络，GPU 数据路径，以及其下的各种接口。
+
+| 章节 | 卡数（L1 / L2） | 卡片编号 |
+|---|---|---|
+| [第 7 章](../02-protocols-and-networking/07-block-protocols.md) | 7 (3 / 4) | Q38–Q44 |
+| [第 8 章](../02-protocols-and-networking/08-file-protocols.md) | 7 (3 / 4) | Q45–Q51 |
+| [第 9 章](../02-protocols-and-networking/09-object-storage-and-s3.md) | 6 (3 / 3) | Q52–Q57 |
+| [第 10 章](../02-protocols-and-networking/10-datacenter-networking.md) | 6 (3 / 3) | Q58–Q63 |
+| [第 11 章](../02-protocols-and-networking/11-gpu-data-path.md) | 5 (2 / 3) | Q64–Q68 |
+| [第 12 章](../02-protocols-and-networking/12-interfaces-and-emerging-tech.md) | 6 (3 / 3) | Q69–Q74 |
+
+*图 59.10 — 第 2 部分 — 协议与网络：6 章共 37 张卡（17 张 L1，20 张 L2），编号 Q38–Q74；用卡片编号按章节记录错题。*
+
+<details>
+<summary><strong>Q38.</strong> 每种块协议都包含哪两层？</summary>
+
+一套命令集（先是 SCSI，后来是 NVMe）和一种传输方式（并行线缆、Fibre Channel、TCP/IP 或 RDMA），外加发现等网络服务。NVMe-oF 通过 FC、RDMA 或 TCP 承载 NVMe。（[第 7 章](../02-protocols-and-networking/07-block-protocols.md)）
+
+</details>
+
+<details>
+<summary><strong>Q39.</strong> NVMe 的 SQ、CQ 和门铃（doorbell）是什么？</summary>
+
+提交队列（SQ）存放命令，完成队列（CQ）存放结果，门铃是主机通过写入来通知有新队列条目的设备寄存器。（[第 7 章](../02-protocols-and-networking/07-block-protocols.md)）
+
+</details>
+
+<details>
+<summary><strong>Q40.</strong> (L2) NVMe 相对 SCSI 和 AHCI 的真正优势是什么？</summary>
+
+它的队列模型：最多 65,535 个 I/O 队列，每个最多 64K 个条目，每个核心一个或多个队列，没有共享锁。SATA AHCI 在 100 µs 时上限约为 320K IOPS；在算例中，NVMe 的并发能力可达约 20M。（[第 7 章](../02-protocols-and-networking/07-block-protocols.md)）
+
+</details>
+
+<details>
+<summary><strong>Q41.</strong> (L2) 为什么 NVMe/TCP 是企业级的默认演进方向？</summary>
+
+它可以运行在任何以太网网卡以及所有主流操作系统和阵列上，额外延迟只有约 20–35 µs，与一次闪存读取相比很小。（[第 7 章](../02-protocols-and-networking/07-block-protocols.md)）
+
+</details>
+
+<details>
+<summary><strong>Q42.</strong> (L2) 为什么 NVMe over RoCE 在 AI 后端胜出？</summary>
+
+GPU 服务器本来就配有 400G RDMA 网卡，而零拷贝的数据搬运（RDMA 带来的额外延迟约 5–15 µs）能让 GPU 持续得到数据供给。（[第 7 章](../02-protocols-and-networking/07-block-protocols.md)）
+
+</details>
+
+<details>
+<summary><strong>Q43.</strong> (L2) Fibre Channel 正在消亡吗？</summary>
+
+没有。FC 销售额在 2025 年增长 6%，128G（Gen 8）于 2025 年 11 月推出；大多数 FC 环境将在同一硬件上迁移到 NVMe/FC。（[第 7 章](../02-protocols-and-networking/07-block-protocols.md)）
+
+</details>
+
+<details>
+<summary><strong>Q44.</strong> 什么是 ANA？</summary>
+
+非对称命名空间访问（Asymmetric Namespace Access），NVMe 的多路径机制，用于告知主机通往某个命名空间的每条路径的状态。（[第 7 章](../02-protocols-and-networking/07-block-protocols.md)）
+
+</details>
+
+<details>
+<summary><strong>Q45.</strong> 文件协议与块协议有何不同？</summary>
+
+文件协议承载的是对名称的操作，而不是对块的操作；服务器掌握命名空间、锁和字节的放置位置。NFS 主导 Linux 和 AI 集群，SMB 主导 Windows。（[第 8 章](../02-protocols-and-networking/08-file-protocols.md)）
+
+</details>
+
+<details>
+<summary><strong>Q46.</strong> 对比 NFSv3 与 NFSv4.x。</summary>
+
+NFSv3 是无状态的。NFSv4.x 是有状态的，具备租约、委托和集成锁；v4.1 增加了会话和 pNFS，v4.2 增加了服务器端复制和稀疏文件。（[第 8 章](../02-protocols-and-networking/08-file-protocols.md)）
+
+</details>
+
+<details>
+<summary><strong>Q47.</strong> 什么是关闭–打开一致性（close-to-open consistency）？</summary>
+
+NFS 的一条规则：一个客户端的写入，只有在它关闭文件、其他客户端重新打开文件之后，才对其他客户端可见。（[第 8 章](../02-protocols-and-networking/08-file-protocols.md)）
+
+</details>
+
+<details>
+<summary><strong>Q48.</strong> (L2) 传统 NAS 的"单机头"问题是什么？</summary>
+
+每个挂载点都连到一台服务器，所以每个字节都要经过同一个控制器。100 GbE 上单个 NFS/TCP 挂载点只能提供约 2–2.5 GB/s，因此要喂饱一台 100 GB/s 的 GPU 服务器需要约 44 条数据流。（[第 8 章](../02-protocols-and-networking/08-file-protocols.md)）
+
+</details>
+
+<details>
+<summary><strong>Q49.</strong> (L2) pNFS 如何把控制路径与数据路径分离？</summary>
+
+客户端从元数据服务器获取一个 layout，然后直接、并行地向各数据服务器执行 I/O。Flex Files layout（2018）让这些数据服务器可以是普通的 NFSv3 服务器。（[第 8 章](../02-protocols-and-networking/08-file-protocols.md)）
+
+</details>
+
+<details>
+<summary><strong>Q50.</strong> (L2) 将解决单机头 NAS 问题的方案按改动程度从小到大排序。</summary>
+
+nconnect（每个挂载点最多 16 条 TCP 连接）、RDMA、客户端多路径、pNFS，然后是专有并行客户端。（[第 8 章](../02-protocols-and-networking/08-file-protocols.md)）
+
+</details>
+
+<details>
+<summary><strong>Q51.</strong> (L2) 哪些厂商押注哪种并行文件方案？</summary>
+
+Hammerspace、Everpure FlashBlade//EXA、Dell 和 NetApp 押注 pNFS 加 Linux 原生客户端。VAST 押注自己的多路径 NFS 客户端；Lustre、GPFS 和 WEKA 押注专有客户端。（[第 8 章](../02-protocols-and-networking/08-file-protocols.md)）
+
+</details>
+
+<details>
+<summary><strong>Q52.</strong> 从机制上看，S3 是什么？</summary>
+
+一个基于 HTTP 的 REST API。整个对象以某个键 PUT 进存储桶，再用 GET 取回；每个请求都要签名（SigV4）并计费，没有目录、没有原地修改，也没有锁。（[第 9 章](../02-protocols-and-networking/09-object-storage-and-s3.md)）
+
+</details>
+
+<details>
+<summary><strong>Q53.</strong> (L2) 为什么 LIST 和小对象是 S3 的弱点？</summary>
+
+文件夹只是键的前缀，LIST 每次只能翻阅索引中的 1,000 个键。按请求计费的费用可能超过存储费用本身：把 1 PB 存成 4 KB 的对象，仅 PUT 费用就约 $1.25M。（[第 9 章](../02-protocols-and-networking/09-object-storage-and-s3.md)）
+
+</details>
+
+<details>
+<summary><strong>Q54.</strong> AWS S3 从何时开始实现强一致性？</summary>
+
+自 2020 年 12 月起，适用于 GET、PUT、LIST 和 DELETE。其他兼容 S3 的系统情况各异，跨站点时尤其如此。（[第 9 章](../02-protocols-and-networking/09-object-storage-and-s3.md)）
+
+</details>
+
+<details>
+<summary><strong>Q55.</strong> S3 分段上传有哪些限制？</summary>
+
+最多 10,000 个分段，每段 5 MiB 到 5 GiB；自 2025 年 12 月起，对象大小上限为 50 TB。（[第 9 章](../02-protocols-and-networking/09-object-storage-and-s3.md)）
+
+</details>
+
+<details>
+<summary><strong>Q56.</strong> (L2) S3 over RDMA 改变了什么？</summary>
+
+HTTP 保留控制路径，而 RDMA 把字节直接搬进 GPU 内存（NVIDIA cuObject）。这消除了以性能为由反对把对象存储用于热 AI 数据的理由。（[第 9 章](../02-protocols-and-networking/09-object-storage-and-s3.md)）
+
+</details>
+
+<details>
+<summary><strong>Q57.</strong> (L2) 哪些信号表明 S3 正在成为 AI 数据的默认接口？</summary>
+
+湖仓、数据加载器、检查点库和 KV 缓存层都以它为目标；AWS 不断推出 Express One Zone、S3 Tables 和 S3 Vectors；MLPerf Storage v3.0 中约六分之一的提交使用了 S3。（[第 9 章](../02-protocols-and-networking/09-object-storage-and-s3.md)）
+
+</details>
+
+<details>
+<summary><strong>Q58.</strong> 什么是 RDMA？</summary>
+
+延伸到网络上的 DMA：网卡在已注册的内存区域之间搬运数据，没有内核拷贝，也不需要远端 CPU 参与。（[第 10 章](../02-protocols-and-networking/10-datacenter-networking.md)）
+
+</details>
+
+<details>
+<summary><strong>Q59.</strong> 定义 PFC、ECN 和 DCQCN。</summary>
+
+PFC 发送暂停帧让发送方停下，ECN 在队列积压时给数据包打标记，DCQCN 是 RoCE 根据这些标记做出反应的速率控制方案。（[第 10 章](../02-protocols-and-networking/10-datacenter-networking.md)）
+
+</details>
+
+<details>
+<summary><strong>Q60.</strong> (L2) 在 AI 后端网络中，以太网和 InfiniBand 谁在胜出？</summary>
+
+2025 年以太网拿下了 AI 后端交换机销售额的三分之二以上（Dell'Oro），两年前约为 20%。InfiniBand 仍是许多最大规模训练集群的支柱。（[第 10 章](../02-protocols-and-networking/10-datacenter-networking.md)）
+
+</details>
+
+<details>
+<summary><strong>Q61.</strong> (L2) RoCE 的弱点是什么？</summary>
+
+拥塞。传统 RoCEv2 假设网络是由 PFC 和 ECN 驱动的 DCQCN 构建的无损网络；Spectrum-X、Ultra Ethernet（UEC 1.0，2025 年 6 月）和 Meta 的 MetaRoCE 都在试图摆脱这种脆弱性。（[第 10 章](../02-protocols-and-networking/10-datacenter-networking.md)）
+
+</details>
+
+<details>
+<summary><strong>Q62.</strong> 什么是 incast？</summary>
+
+许多发送方同时汇聚到一个接收端口，这是并行存储读取的典型拥塞模式。（[第 10 章](../02-protocols-and-networking/10-datacenter-networking.md)）
+
+</details>
+
+<details>
+<summary><strong>Q63.</strong> (L2) 为什么 DPU 对存储厂商很重要？</summary>
+
+存储逻辑正在向网卡迁移。NVIDIA 的 BlueField-4 STX 参考架构（2026 年 3 月）在 800G DPU 上运行存储服务，而 Everpure 与几乎所有竞争对手一样，都是其列名的联合设计合作伙伴。（[第 10 章](../02-protocols-and-networking/10-datacenter-networking.md)）
+
+</details>
+
+<details>
+<summary><strong>Q64.</strong> (L2) 为什么说存储的价值体现在 GPU 利用率上？</summary>
+
+按每 H100-小时约 US$2.00–6.16 计算，一个 1,024-GPU 集群每等待 I/O 一秒，成本为 US$0.57–1.75。1,024 张 H100 按 US$3.99 计，闲置 1% 每年约损失 US$358k。（[第 11 章](../02-protocols-and-networking/11-gpu-data-path.md)）
+
+</details>
+
+<details>
+<summary><strong>Q65.</strong> GPUDirect Storage 去掉了什么？</summary>
+
+CPU 中转缓冲区（bounce buffer）：网卡或 SSD 通过 PCIe 直接写入 GPU 内存。它提高了单节点的性能上限，但并不会让存储系统本身变快。（[第 11 章](../02-protocols-and-networking/11-gpu-data-path.md)）
+
+</details>
+
+<details>
+<summary><strong>Q66.</strong> (L2) LLM 训练受存储瓶颈限制吗？</summary>
+
+大多不受。一个在 1,024 张 GPU 上训练的 70B 模型，读取文本 token 的速率只有约 4 MB/s；存储的作用体现在突发场景，例如检查点、恢复、多模态数据加载和 KV 缓存加载。（[第 11 章](../02-protocols-and-networking/11-gpu-data-path.md)）
+
+</details>
+
+<details>
+<summary><strong>Q67.</strong> 说明 Magnum IO、GPUDirect RDMA、cuFile、NIXL 和 Dynamo 各自的位置。</summary>
+
+Magnum IO 是总括框架，GPUDirect RDMA 是底层原语，cuFile 是 GDS 的 API，NIXL 是推理数据传输库，Dynamo 是调用 NIXL 的推理编排器。（[第 11 章](../02-protocols-and-networking/11-gpu-data-path.md)）
+
+</details>
+
+<details>
+<summary><strong>Q68.</strong> (L2) 为什么说支持 GDS 只是"入场券"？</summary>
+
+几乎每家 AI 存储厂商（包括 Everpure 的 FlashBlade//S）都宣称支持它。交易的成败取决于聚合吞吐量、检查点表现和 KV 缓存集成。（[第 11 章](../02-protocols-and-networking/11-gpu-data-path.md)）
+
+</details>
+
+<details>
+<summary><strong>Q69.</strong> (L2) 在共享存储中，硬盘链路是瓶颈吗？</summary>
+
+很少是。一条 PCIe 6.0 x4 链路单向可承载约 29.5 GB/s，因此决定吞吐量的是网络和软件。（[第 12 章](../02-protocols-and-networking/12-interfaces-and-emerging-tech.md)）
+
+</details>
+
+<details>
+<summary><strong>Q70.</strong> CXL 的作用是什么？</summary>
+
+它把 PCIe 线路变成一条 load/store 内存总线。内存扩展器已经出货，内存池化刚刚起步，多主机共享仍处于实验室阶段。（[第 12 章](../02-protocols-and-networking/12-interfaces-and-emerging-tech.md)）
+
+</details>
+
+<details>
+<summary><strong>Q71.</strong> PAM4 和 FLIT 是什么？</summary>
+
+PAM4 是四电平信号调制，每个符号承载两个 bit；FLIT 是 PCIe 6.0 起采用的固定 256 字节传输单元，带 FEC 和 CRC。（[第 12 章](../02-protocols-and-networking/12-interfaces-and-emerging-tech.md)）
+
+</details>
+
+<details>
+<summary><strong>Q72.</strong> (L2) Optane 对任何新的内存层级有什么启示？</summary>
+
+物理特性好并不够：价格差距太小、生态被单一 CPU 锁定、只有一座晶圆厂，这些因素让它失败，清退费用达 US$559M。CXL 内存和 KV 缓存层面临同样的考验。（[第 12 章](../02-protocols-and-networking/12-interfaces-and-emerging-tech.md)）
+
+</details>
+
+<details>
+<summary><strong>Q73.</strong> 什么是 EDSFF？</summary>
+
+数据中心 SSD 外形规格系列（E1.S、E1.L、E3.S、E3.L），它在超大规模和 AI 服务器中取代了 2.5 英寸硬盘，确定了每个盘位的功率和 NAND 容量；E3.L 2T 允许 70 W。（[第 12 章](../02-protocols-and-networking/12-interfaces-and-emerging-tech.md)）
+
+</details>
+
+<details>
+<summary><strong>Q74.</strong> (L2) FDP 与 DirectFlash 有何关系？</summary>
+
+FDP 是通用闪存在向主机管理型闪存看齐：数据放置提示能在不破坏现有软件的前提下降低写放大。而自 DirectFlash 推出以来，Purity 就一直直接管理裸 NAND。（[第 12 章](../02-protocols-and-networking/12-interfaces-and-emerging-tech.md)）
+
+</details>
+
+### 第 3 部分 — 系统架构
+
+第 3 部分是最大的卡组，因为与产品经理和工程师的对话在架构上钻得最深。预计会被问到：状态存放在哪里、什么会发生故障、每种设计的瓶颈墙在哪里。
+
+| 章节 | 卡数（L1 / L2） | 卡片编号 |
+|---|---|---|
+| [第 13 章](../03-system-architecture/13-storage-stack.md) | 3 (1 / 2) | Q75–Q77 |
+| [第 14 章](../03-system-architecture/14-scale-up-dual-controller.md) | 5 (2 / 3) | Q78–Q82 |
+| [第 15 章](../03-system-architecture/15-scale-out-shared-nothing.md) | 5 (2 / 3) | Q83–Q87 |
+| [第 16 章](../03-system-architecture/16-disaggregated-shared-everything.md) | 6 (2 / 4) | Q88–Q93 |
+| [第 17 章](../03-system-architecture/17-parallel-file-systems.md) | 5 (2 / 3) | Q94–Q98 |
+| [第 18 章](../03-system-architecture/18-object-storage-architecture.md) | 4 (2 / 2) | Q99–Q102 |
+| [第 19 章](../03-system-architecture/19-software-defined-and-hci.md) | 5 (2 / 3) | Q103–Q107 |
+| [第 20 章](../03-system-architecture/20-distributed-systems-fundamentals.md) | 5 (3 / 2) | Q108–Q112 |
+| [第 21 章](../03-system-architecture/21-metadata.md) | 4 (2 / 2) | Q113–Q116 |
+| [第 22 章](../03-system-architecture/22-control-planes.md) | 3 (1 / 2) | Q117–Q119 |
+| [第 23 章](../03-system-architecture/23-consumption-models.md) | 4 (2 / 2) | Q120–Q123 |
+| [第 24 章](../03-system-architecture/24-architecture-decision-matrix.md) | 3 (1 / 2) | Q124–Q126 |
+
+*图 59.11 — 第 3 部分 — 系统架构：12 章共 52 张卡（22 张 L1，30 张 L2），编号 Q75–Q126；用卡片编号按章节记录错题。*
+
+<details>
+<summary><strong>Q75.</strong> 说出存储栈的八个层次。</summary>
+
+应用、文件系统或对象 API、卷管理器、协议、网络、阵列软件、SSD 控制器/FTL，以及介质。（[第 13 章](../03-system-architecture/13-storage-stack.md)）
+
+</details>
+
+<details>
+<summary><strong>Q76.</strong> (L2) 网络化阵列多出来的那些微秒换来了什么？</summary>
+
+一次 4 KB 写入在本地 SSD 上约需 20–40 µs，在网络化阵列上约需 100–250 µs。多出的时间换来的是共享的、受保护的、经过缩减的数据。（[第 13 章](../03-system-architecture/13-storage-stack.md)）
+
+</details>
+
+<details>
+<summary><strong>Q77.</strong> (L2) Everpure 掌握哪些层次？它押注的是什么？</summary>
+
+三个相邻的层次：Purity 阵列软件还在 DirectFlash 模块内部直接承担了裸 NAND 上 FTL 的工作。这换来了密度、效率和一个可对外授权的层次，代价是更多的研发投入和更大的 NAND 供应风险敞口。（[第 13 章](../03-system-architecture/13-storage-stack.md)）
+
+</details>
+
+<details>
+<summary><strong>Q78.</strong> 什么是双控制器阵列？</summary>
+
+两台服务器共享一组双端口硬盘，任何一台宕机时另一台都能接管。FlashArray、PowerStore、NetApp AFF、IBM FlashSystem 和 HPE Alletra 都是这种工作方式。（[第 14 章](../03-system-architecture/14-scale-up-dual-controller.md)）
+
+</details>
+
+<details>
+<summary><strong>Q79.</strong> (L2) 双控制器阵列在什么时候确认一次写入？</summary>
+
+当写入数据已存放在两个持久化位置（镜像或共享的 NVRAM）中时，而不是写到闪存时。闪存会在稍后批量写入。（[第 14 章](../03-system-architecture/14-scale-up-dual-controller.md)）
+
+</details>
+
+<details>
+<summary><strong>Q80.</strong> (L2) 为什么每个控制器的负载不应超过约 50%？</summary>
+
+发生故障后，幸存的控制器必须接住对方的负载。"双活（active/active）"背后的真正问题是：少了一个控制器后还剩多少性能。（[第 14 章](../03-system-architecture/14-scale-up-dual-controller.md)）
+
+</details>
+
+<details>
+<summary><strong>Q81.</strong> (L2) 无状态控制器是如何变成一种商业模式的？</summary>
+
+一次不停机升级其实就是两次计划内的故障切换。Everpure 把它产品化为 Evergreen，在 Evergreen//Forever 下每三年更新一次控制器。（[第 14 章](../03-system-architecture/14-scale-up-dual-controller.md)）
+
+</details>
+
+<details>
+<summary><strong>Q82.</strong> 什么是 ALUA？</summary>
+
+非对称逻辑单元访问（Asymmetric Logical Unit Access），一种告知主机哪些控制器路径是优化路径的 SCSI 机制；ANA 是其 NVMe 对应物。（[第 14 章](../03-system-architecture/14-scale-up-dual-controller.md)）
+
+</details>
+
+<details>
+<summary><strong>Q83.</strong> 什么是无共享集群？</summary>
+
+一组相同的服务器，各自拥有自己的 CPU、内存和硬盘，只通过网络协作。扩展单位是一整个节点：PowerScale、WEKA、Ceph、Qumulo、Nutanix。（[第 15 章](../03-system-architecture/15-scale-out-shared-nothing.md)）
+
+</details>
+
+<details>
+<summary><strong>Q84.</strong> (L2) 为什么在增加节点时，计算式数据放置很重要？</summary>
+
+一致性哈希环或 CRUSH 式函数在新增一个节点时只需移动约 1/(N+1) 的数据，而朴素的"哈希取模 N"方法要移动约 N/(N+1)。（[第 15 章](../03-system-architecture/15-scale-out-shared-nothing.md)）
+
+</details>
+
+<details>
+<summary><strong>Q85.</strong> (L2) 为什么在无共享架构中"真正干活的是网络"？</summary>
+
+副本、纠删码分片、转发的读请求和重建流量全都在东西向流动。在 16 个节点、使用普通客户端的情况下，约 94% 的读取字节来自对等节点。（[第 15 章](../03-system-architecture/15-scale-out-shared-nothing.md)）
+
+</details>
+
+<details>
+<summary><strong>Q86.</strong> (L2) 无共享横向扩展的瓶颈墙有哪些？</summary>
+
+捆绑式扩展、重建风暴、热点和节点数上限。在算例中，一个 590 TB 的节点在 10 节点集群中重建约需 82 小时，在 64 节点时约需 12 小时。（[第 15 章](../03-system-architecture/15-scale-out-shared-nothing.md)）
+
+</details>
+
+<details>
+<summary><strong>Q87.</strong> 什么是 Ceph 归置组（PG）？</summary>
+
+Ceph 中数据放置和再平衡的单位，由 CRUSH 函数映射到硬盘。（[第 15 章](../03-system-architecture/15-scale-out-shared-nothing.md)）
+
+</details>
+
+<details>
+<summary><strong>Q88.</strong> 什么是 DASE？</summary>
+
+分解式全共享架构：无状态计算节点通过 NVMe-oF 网络共享多个闪存机箱，因此没有任何节点拥有数据。VAST 开创了这一品类并创造了这个缩略语。（[第 16 章](../03-system-architecture/16-disaggregated-shared-everything.md)）
+
+</details>
+
+<details>
+<summary><strong>Q89.</strong> (L2) 在 DASE 系统中，状态存放在哪里？</summary>
+
+存放在共享的持久化介质上：一个小型 SCM 层用于写缓冲和元数据（在 VAST DBox 中约占原始容量的 0.9%），其余全部放在 QLC 上。计算节点可以发生故障或新增，而无需搬移数据。（[第 16 章](../03-system-architecture/16-disaggregated-shared-everything.md)）
+
+</details>
+
+<details>
+<summary><strong>Q90.</strong> (L2) 性能与容量独立扩展在什么情况下才划算？</summary>
+
+当工作负载的吞吐量与容量之比远离固定服务器所捆绑的配比时。如果接近该配比，优势就很小。（[第 16 章](../03-system-architecture/16-disaggregated-shared-everything.md)）
+
+</details>
+
+<details>
+<summary><strong>Q91.</strong> (L2) DASE 的瓶颈墙有哪些？</summary>
+
+网络，因为每次 I/O 都要穿过后端；机箱，它是一个完整的故障域；以及最小规模，因为最宽的 146+4 条带至少需要 75 个 DBox。（[第 16 章](../03-system-architecture/16-disaggregated-shared-everything.md)）
+
+</details>
+
+<details>
+<summary><strong>Q92.</strong> (L2) 为什么 FlashBlade//EXA 更接近并行文件系统，而不是纯粹的 DASE？</summary>
+
+它把元数据与数据分离，但通过 pNFS 让客户端直接访问数据节点，而不是让无状态计算节点共享全部介质。（[第 16 章](../03-system-architecture/16-disaggregated-shared-everything.md)）
+
+</details>
+
+<details>
+<summary><strong>Q93.</strong> 什么是局部可解码纠删码（locally decodable erasure code）？</summary>
+
+一种宽纠删码，重建丢失的分条时只需读取条带的一个子集，而不是整个条带。（[第 16 章](../03-system-architecture/16-disaggregated-shared-everything.md)）
+
+</details>
+
