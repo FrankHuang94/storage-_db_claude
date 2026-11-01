@@ -33,7 +33,7 @@ def build(out_dir: Path) -> Path:
     ax.bar(xs, arr, color=BLUE, width=0.6, label="Subscription ARR (left axis)")
     for x, v in zip(xs, arr):
         lab = f"\\${v:.2f}B"
-        ax.text(x, v - 0.06, lab, ha="center", va="top", fontsize=9, color="white", fontweight="bold")
+        ax.text(x, v / 2, lab, ha="center", va="center", fontsize=9, color="white", fontweight="bold")
     ax.set_ylabel("Subscription ARR (US$ billions)")
     ax.set_ylim(0, 3.0)
     ax.set_xticks(xs)
