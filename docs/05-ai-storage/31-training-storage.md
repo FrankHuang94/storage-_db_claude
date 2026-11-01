@@ -13,9 +13,9 @@
 
 ## Why this matters for Everpure strategy
 
-In training-cluster deals, the checkpoint is the requirement that turns "a few MB/s of tokens" into "hundreds of GB/s of writes", and it decides which architectures get shortlisted. Everpure entered MLPerf Storage for the first time in v3.0 (September 2026). There, FlashBlade//EXA posted the top checkpoint-write result among the submitters[^1][^2]. That is a credible public data point in exactly this argument ([Chapter 27](../04-everpure/27-flasharray-and-flashblade.md)).
+In training-cluster deals, the checkpoint is the requirement that turns "a few MB/s of tokens" into "hundreds of GB/s of writes", and it decides which architectures get shortlisted. In its first MLPerf Storage entry (v3.0, September 2026), Everpure's FlashBlade//EXA posted the top checkpoint-write result among submitters[^1][^2], a credible public data point in exactly this argument ([Chapter 27](../04-everpure/27-flasharray-and-flashblade.md)).
 
-The tension: asynchronous saves, node-local tiers and in-memory replicas keep shrinking the peak storage must absorb, so a pitch built on burst write bandwidth sells into an eroding requirement. Durable value moves to sustained drain bandwidth, restore speed at thousands of clients, capacity-efficient retention of many checkpoints, and simple operations. These are options a strategy team might evaluate, based on public information.
+The tension: asynchronous saves, node-local tiers and in-memory replicas keep shrinking the peak storage must absorb, so a pitch built on burst write bandwidth sells into an eroding requirement. Durable value moves to sustained drain bandwidth, restore speed and efficient checkpoint retention. These are options a strategy team might evaluate, based on public information.
 
 ## Core concepts
 
@@ -62,9 +62,9 @@ The core formula is **required bandwidth = checkpoint bytes ÷ the time you allo
 
 *Table 31.2 — Worked example: sharding makes each client's job trivial; the hard part is the aggregate burst landing on shared storage, which asynchronous drain cuts by 30×.*
 
-Two lessons follow. First, **sharding spreads the bytes but does not shrink them**. With optimizer state sharded across data-parallel ranks, every GPU writes its own slice, so no single NIC is the bottleneck. Meta reports per-GPU checkpoint state of 1 MB to 4 GB for Llama 3[^4], which brackets the 395 MB average above. If only one model replica wrote (16 nodes in Llama 3 405B's tensor-by-pipeline layout[^4]), each node would push 405 GB, 6.75 GB/s for a minute. Either way, storage sees the full aggregate plus thousands of simultaneous file creates, a metadata event ([Chapter 21](../03-system-architecture/21-metadata.md)).
+Two lessons follow. First, **sharding spreads the bytes but does not shrink them**. Every GPU writes its own slice, so no single NIC is the bottleneck; Meta reports per-GPU checkpoint state of 1 MB to 4 GB for Llama 3[^4], which brackets the 395 MB average above. If only one model replica wrote (16 nodes in Llama 3 405B's tensor-by-pipeline layout[^4]), each node would push 405 GB, 6.75 GB/s for a minute. Either way, storage sees the full aggregate plus thousands of simultaneous file creates, a metadata event ([Chapter 21](../03-system-architecture/21-metadata.md)).
 
-Second, **the asynchronous column is the one that matters for sizing**, because modern frameworks default toward it.
+Second, **the asynchronous column matters most for sizing**, because modern frameworks lean toward it.
 
 ### Synchronous vs asynchronous checkpointing
 
@@ -89,11 +89,11 @@ sequenceDiagram
 
 *Figure 31.2 — Asynchronous checkpointing cuts the GPU stall to a PCIe copy and moves the storage write off the critical path, at the cost of a window in which the newest checkpoint is not yet durable.*
 
-In an asynchronous save, each GPU copies its shard into pinned host memory (about a second for a few hundred MB over PCIe) and resumes while CPU threads write it out. PyTorch's distributed checkpointing added this mode in 2024. IBM measured a 7B model's checkpoint downtime falling from 148.8 seconds to 6.3 seconds[^5]. Tiered variants add a fast intermediate stop. NVIDIA's NeMo local checkpointing writes each node's part to local SSD or RAM disk and replicates it to peer nodes[^6]. AWS's Gemini research system kept checkpoints in CPU memory with peer copies and reported recovery more than 13× faster than prior approaches[^7].
+In an asynchronous save, each GPU copies its shard into pinned host memory (about a second for a few hundred MB over PCIe) and resumes while CPU threads write it out. With PyTorch's 2024 asynchronous mode, IBM measured a 7B model's checkpoint downtime falling from 148.8 to 6.3 seconds[^5]. Tiered variants add an intermediate stop. NVIDIA's NeMo local checkpointing writes each node's part to local SSD or RAM disk and replicates it to peer nodes[^6]. AWS's Gemini research system keeps checkpoints in peer CPU memory and reported over 13× faster recovery[^7].
 
 The costs: a node lost mid-drain falls back to the previous checkpoint; host DRAM must hold the shard; the drain must finish before the next save; and background writes compete with training traffic unless they use a separate storage fabric.
 
-**Semiconductor bridge.** A checkpoint is a power-gating state save. Context goes to retention flops before a domain is gated, and designers trade save/restore cost against leakage saved, a break-even calculation. Synchronous checkpointing behaves like an all-bank DRAM refresh: every bank is blocked for tRFC, and the cost scales with how often you refresh. Asynchronous checkpointing is per-bank refresh, hiding the maintenance burst behind useful work.
+**Semiconductor bridge.** A checkpoint is a power-gating state save. Context goes to retention flops before a domain is gated, and designers trade save/restore cost against leakage saved, a break-even calculation. Synchronous checkpointing is an all-bank DRAM refresh, blocking every bank for tRFC; asynchronous checkpointing is per-bank refresh, hiding the burst behind useful work.
 
 ### Frequency vs failure rate
 
@@ -111,7 +111,7 @@ During a 54-day snapshot of Llama 3 405B pre-training on 16,384 H100s, Meta logg
 
 *Table 31.3 — Worked example using Young's formula: at 100K GPUs synchronous checkpointing wastes a quarter of the cluster, while asynchronous saves keep overhead under 5% but demand steady drain bandwidth. \*Assumes failures scale linearly with GPU count from the Llama 3 rate.*
 
-At 16K GPUs, 10.4% overhead is about 1,700 GPUs' worth of idle silicon, worth tens of millions of dollars a year at the rental rates in [Chapter 11](../02-protocols-and-networking/11-gpu-data-path.md). The trap: restart time is paid per failure however checkpoints are written. A 5-minute restart costs 2.7% at 16K GPUs and 16% at 100K.
+At 16K GPUs, 10.4% overhead idles ~1,700 GPUs, tens of millions of dollars a year at the rental rates in [Chapter 11](../02-protocols-and-networking/11-gpu-data-path.md). The trap: restart time is paid per failure however checkpoints are written. A 5-minute restart costs 2.7% at 16K GPUs and 16% at 100K.
 
 ### Restore storms
 
@@ -161,7 +161,7 @@ flowchart LR
 
 *Figure 31.3 — For text LLMs, the performance spec comes from checkpoint save and restore; for multimodal training, data loading can dominate.*
 
-Capacity example: the last 10 checkpoints of a 405B run plus 20 evaluation milestones is 30 × 5.67 TB ≈ 170 TB, modest next to a multimodal corpus but hot data readable at restore speed. NVIDIA's DGX SuperPOD (H100) reference architecture expresses the same logic as tiers. Its "best" tier asks for 40 GB/s read and 20 GB/s write per node, and 125/62 GB/s read/write per 32-node scalable unit[^12] [VERIFY: search-summary only]. Scaled linearly to 64 units (16,384 GPUs), that is about 4 TB/s of write, the same order as Meta's 7 TB/s peak.
+Capacity example: the last 10 checkpoints of a 405B run plus 20 evaluation milestones is 30 × 5.67 TB ≈ 170 TB, modest next to a multimodal corpus but hot data readable at restore speed. NVIDIA's DGX SuperPOD (H100) reference architecture's "best" storage tier asks for 40 GB/s read and 20 GB/s write per node, and 125/62 GB/s read/write per 32-node scalable unit[^12] [VERIFY: search-summary only]. Scaled linearly to 64 units (16,384 GPUs), that is about 4 TB/s of write, the same order as Meta's 7 TB/s peak.
 
 ## How Everpure approaches it vs. competitors
 
@@ -176,9 +176,9 @@ Capacity example: the last 10 checkpoints of a 405B run plus 20 evaluation miles
 
 *Table 31.5 — Every architecture can absorb checkpoints; they differ in whether the burst lands on shared flash, a fast buffer tier, or the GPU servers themselves.*
 
-**Everpure's position.** FlashBlade//EXA pitches aggregate write through a direct client-to-data-node path plus a metadata core for mass file creates. The v3.0 submission wrote a 1.25T-parameter checkpoint emulation from 1,024 simulated accelerators in 17.74 seconds[^1]. That implies roughly 15–18 TB per checkpoint (atlas arithmetic), consistent with Figure 31.1. Everpure also markets FlashBlade with PyTorch asynchronous checkpointing and claims at least 10× lower checkpoint overhead (company-stated)[^18]. Most of that gain is the software pattern, which works on any storage.
+**Everpure's position.** FlashBlade//EXA pitches aggregate write through a direct client-to-data-node path plus a metadata core for mass file creates. The v3.0 submission wrote a 1.25T-parameter checkpoint emulation from 1,024 simulated accelerators in 17.74 seconds[^1]. That implies roughly 16–17 TB per checkpoint (atlas arithmetic), consistent with Figure 31.1. Everpure also markets FlashBlade with PyTorch asynchronous checkpointing and claims at least 10× lower checkpoint overhead (company-stated)[^18]. Most of that gain is the software pattern, which works on any storage.
 
-**Steelman the alternatives.** DDN's Lustre lineage has absorbed file-per-process checkpoint storms in national labs for two decades. VAST's write buffer absorbs bursts without sizing QLC for them. Node-local tiers attack the root: if checkpoints rarely leave GPU servers, shared storage holds only slower, durable copies. The honest weakness of the MLPerf evidence is that VAST, WEKA and DDN did not submit to v3.0[^2], so Everpure's lead covers the submitters, not the market.
+**Steelman the alternatives.** DDN's Lustre lineage has absorbed file-per-process checkpoint storms in national labs for two decades. VAST's write buffer absorbs bursts without sizing QLC for them. Node-local tiers attack the root: if checkpoints rarely leave GPU servers, shared storage holds only slower, durable copies. And VAST, WEKA and DDN did not submit to v3.0[^2], so Everpure's lead covers the submitters, not the market.
 
 ## History and trajectory
 
@@ -237,11 +237,11 @@ Three trends point forward: **checkpoints move closer to the GPU** (host DRAM, l
 
 ## Going deeper (optional, L3 pointers)
 
-- Meta, "The Llama 3 Herd of Models," §3.3 (infrastructure, storage, reliability), for real interruption taxonomy and storage design.
+- Meta, "The Llama 3 Herd of Models," §3.3 (storage and reliability).
 - Young (1974) and Daly (2006) on optimal checkpoint intervals.
-- PyTorch Distributed Checkpoint (DCP) documentation: async save, resharding on load, and process-group separation for background I/O.
+- PyTorch Distributed Checkpoint (DCP) docs: async save and resharding on load.
 - NVIDIA NeMo / Megatron "local checkpointing" and the Gemini (SOSP 2023) paper on in-memory checkpoint placement.
-- The MLPerf Storage checkpointing rules: subset vs default mode, and how client counts map to simulated accelerators.
+- MLPerf Storage checkpointing rules (subset vs default mode).
 
 ## Key terms
 
