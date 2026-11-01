@@ -38,7 +38,8 @@ def check(ch: dict) -> dict:
     if vis["non_table"] < 2:
         issues.append(f"non-table visuals {vis['non_table']} < 2")
     # footnotes: every ref has a definition and vice versa
-    refs = set(re.findall(r"\[\^([^\]]+)\](?!:)", md))
+    refs = {m.group(1) for m in re.finditer(r"\[\^([^\]]+)\]", md)
+            if not (m.start() == 0 or md[m.start() - 1] == "\n") or md[m.end():m.end() + 1] != ":"}
     defs = set(re.findall(r"^\[\^([^\]]+)\]:", md, flags=re.M))
     undefined = refs - defs
     unused = defs - refs
