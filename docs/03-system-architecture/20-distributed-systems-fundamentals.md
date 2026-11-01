@@ -5,11 +5,11 @@
 
 ## TL;DR
 
-- **Once data has more than one copy, every system must define "the latest write".** That is its consistency model. Primary storage almost always chooses strong consistency and pays in latency.
+- **With more than one copy, a system must define "the latest write": its consistency model.** Primary storage chooses strong consistency and pays in latency.
 - **Consensus (Paxos, Raft) needs a majority: 2f+1 voters to survive f failures.** A two-site cluster therefore needs a third vote, a witness or mediator, to avoid split brain.
-- **CAP in practice is PACELC.** Partitions are rare; the everyday trade is latency versus consistency, chosen per feature (sync metro = consistency, async DR = latency).
+- **CAP in practice is PACELC.** The everyday trade is latency versus consistency, chosen per feature: sync metro picks consistency, async DR picks latency.
 - **"Eleven nines" of durability is a model output, not a measurement.** Parity count, rebuild time and the independence assumption drive it; correlated failures are what actually lose data.
-- **Availability nines can be measured from fleet telemetry; durability nines cannot.** Always ask which kind is quoted.
+- **Availability nines are measured; durability nines are modelled.** Ask which is quoted.
 
 ## Why this matters for Everpure strategy
 
@@ -35,7 +35,7 @@ With several copies, a read can hit one that has not yet seen the latest write. 
 
 ### Consensus at L2: Raft on a whiteboard
 
-Paxos (published 1998)[^3] and Raft (2014)[^4] solve the same problem: replicas agree on one ordered log, so all apply the same commands in the same order. Raft was designed to be teachable and dominates new systems. Ceph's monitors run Paxos and need a strict majority[^5]; DynamoDB replicates each partition with Multi-Paxos[^1].
+Paxos (published 1998)[^3] and Raft (2014)[^4] solve the same problem: replicas agree on one ordered log, so all apply the same commands in the same order. Raft was designed to be teachable. Ceph's monitors run Paxos and need a strict majority[^5]; DynamoDB replicates each partition with Multi-Paxos[^1].
 
 ```mermaid
 sequenceDiagram
@@ -65,7 +65,7 @@ sequenceDiagram
 
 *Figure 20.1 — Raft in two phases: a randomised timeout elects one leader per term by majority vote, then a write commits once a majority has logged it, so the slowest replica never sets latency.*
 
-A strong whiteboard answer makes four points. **Terms** are a logical clock: a node seeing a higher term steps down, so a stale leader cannot commit. **Randomised timeouts** make split votes rare. **Voters reject candidates with staler logs**, so a new leader holds every committed entry. **Commit needs a majority, not all**, so three nodes tolerate one failure.
+A strong whiteboard answer makes four points. **Terms** are a logical clock: a node seeing a higher term steps down, so a stale leader cannot commit. **Voters reject candidates with staler logs**, so a new leader holds every committed entry. **Commit needs a majority, not all**, so three nodes tolerate one failure.
 
 ### Quorum math: N, W, R
 
@@ -83,7 +83,7 @@ Storage chooses per feature. Synchronous metro clusters are **PC/EC**: each writ
 
 **Availability** is the fraction of time data can be served; six nines is ~31.5 seconds of downtime a year, measurable from telemetry. Pure Storage (now Everpure) claimed 99.9999% across the FlashArray//m installed base in 2016, including upgrades, and repeats six nines for later FlashArrays[^9] (company-stated).
 
-**Durability** is the probability of not losing data in a year. S3 is designed for eleven nines[^10]; Azure states 11, 12 and 16 nines for locally, zone- and geo-redundant storage[^11]. Nobody can observe a 10⁻¹¹ event on one system, so these are model outputs. (At 100 trillion objects, eleven nines still implies ~1,000 lost objects a year: checkable only at hyperscale.)
+**Durability** is the probability of not losing data in a year. S3 is designed for eleven nines[^10]; Azure states 11, 12 and 16 nines for locally, zone- and geo-redundant storage[^11]. Nobody can observe a 10⁻¹¹ event on one system, so these are model outputs. (At 100 trillion objects it still implies ~1,000 losses a year.)
 
 The standard model is **mean time to data loss (MTTDL)**. A group of n drives surviving m failures loses data when m+1 failures overlap within rebuild windows. With λ = AFR ÷ 8,766 h and μ = 1 ÷ rebuild time, MTTDL ≈ μᵐ ÷ [n(n−1)…(n−m) λᵐ⁺¹].
 
@@ -92,11 +92,11 @@ The standard model is **mean time to data loss (MTTDL)**. A group of n drives su
 *Figure 20.2 — Illustrative model: extra parity moves durability by many nines, AFR and rebuild time by fewer, and correlated failures can erase the gain.*
 Data: `data/ch20_durability.csv`
 
-**Worked example** (10 PB usable, 30 TB drives, Backblaze's 2025 HDD AFR of 1.36%[^12]). RAID 6 (8+2) with a 42-hour single-spare rebuild models at **5.8 nines**. The same code rebuilt declustered in 4 hours reaches **7.8**: RAID 6 and 8+2 EC are identical maths, differing only in rebuild speed. Three-way replication reaches **9.0**; EC 16+4 reaches **15.1**. Device reliability helps less: Backblaze's SSDs ran at 0.9%[^13], and Everpure states 0.15% for DirectFlash Modules[^14], which NetApp disputes[^15]. Cutting AFR from 1.36% to 0.15% adds 2.9 nines to RAID 6; going from two to four parity strips adds 7.3. Rule of thumb: each tenfold cut in AFR is worth m+1 nines, each tenfold cut in rebuild time m.
+**Worked example** (10 PB usable, 30 TB drives, Backblaze's 2025 HDD AFR of 1.36%[^12]). RAID 6 (8+2) with a 42-hour single-spare rebuild models at **5.8 nines**. The same code rebuilt declustered in 4 hours reaches **7.8**: RAID 6 and 8+2 EC are identical maths, differing only in rebuild speed. Three-way replication reaches **9.0**; EC 16+4 reaches **15.1**. Device reliability helps less. Backblaze's SSDs ran at 0.9%[^13]; Everpure states 0.15% for DirectFlash Modules[^14] (NetApp disputes it[^15]). Cutting AFR from 1.36% to 0.15% adds 2.9 nines to RAID 6; doubling parity from two strips to four adds 7.3. Rule of thumb: each tenfold cut in AFR is worth m+1 nines, each tenfold cut in rebuild time m.
 
 ### Correlated failures and failure domains
 
-The model assumes independence. If each further failure during a rebuild is ten times likelier, because drives share a batch, firmware or power feed, MTTDL falls by 10ᵐ: the dashed line in Figure 20.2 shows 16+4 losing four nines. In 2019 HPE warned that certain SAS SSDs would die at exactly 32,768 power-on hours without a firmware fix[^16]; drives installed together would have failed together, defeating any parity. Google's 2010 fleet study found correlated failures essential to realistic models, citing planned kernel upgrades as a major cause[^17]. Random replica placement compounds it; copyset placement cut modelled data-loss probability in a 5,000-node power outage from 99.99% to 0.15%[^18].
+The model assumes independence. If each further failure during a rebuild is ten times likelier, because drives share a batch, firmware or power feed, MTTDL falls by 10ᵐ: the dashed line in Figure 20.2 shows 16+4 losing four nines. In 2019 HPE warned that certain SAS SSDs would die at exactly 32,768 power-on hours without a firmware fix[^16]; drives installed together would have failed together, defeating any parity. Google's 2010 fleet study named planned kernel upgrades a major source of correlated failure[^17]. Random replica placement compounds it; copyset placement cut modelled data-loss probability in a 5,000-node power outage from 99.99% to 0.15%[^18].
 
 ```mermaid
 flowchart LR
@@ -144,7 +144,7 @@ Read caches add a coherence cost: every client or node cache needs invalidation,
 
 *Table 20.3 — Nearly everyone converges on strong consistency inside a site and a witness for two-site clusters; claims differ in whether they are measured (availability) or modelled (durability).*
 
-Everpure's distinctive choice was a cloud-hosted witness, so customers need no third site[^19]. Steelman for rivals: NetApp now ships a cloud mediator too, and Dell's SRDF family has three decades of deployments. A lower-AFR module lifts modelled durability less than parity does, but fewer failures mean fewer degraded windows and service visits. An option a strategy team might evaluate, based on public information: publish durability assumptions (rebuild times, correlation handling) beside availability telemetry, turning a modelled number into a defensible one.
+Everpure's distinctive choice was a cloud-hosted witness, so customers need no third site[^19]. Steelman for rivals: NetApp now ships a cloud mediator too, and Dell's SRDF family has three decades of deployments. A lower-AFR module still means fewer degraded windows and service visits. An option a strategy team might evaluate, based on public information: publish durability assumptions (rebuild times, correlation handling) beside availability telemetry, turning a modelled number into a defensible one.
 
 ## History and trajectory
 
@@ -184,15 +184,15 @@ The direction: strong consistency wherever a metro allows, wider codes with fast
 
 **Questions for a PM**
 
-1. *"When we quote six nines, what is in the denominator?"* Strong: installed-base telemetry, what counts as an outage, whether planned upgrades count, and the measurement window.
-2. *"What do we tell a customer who asks for our durability number?"* Strong: a modelled figure with stated parity and rebuild times, plus the caveat that bugs and operator error dominate real loss, hence snapshots and SafeMode.
-3. *"Where does the mediator run for a customer with no internet egress?"* Strong: an on-premises mediator VM in a third failure domain, and what pre-election does if it is lost.
+1. *"What is in the denominator of our six nines?"* Strong: installed-base telemetry, the outage definition, whether upgrades count, the window.
+2. *"What do we tell a customer who asks for our durability number?"* Strong: a model with stated parity and rebuild times, plus the caveat that bugs and humans dominate real loss, hence SafeMode snapshots.
+3. *"Where does the mediator run for a customer with no internet egress?"* Strong: an on-premises mediator VM in a third failure domain; pre-election if it is lost.
 
 **Questions for an engineer**
 
 1. *"Which FlashBlade or EXA components run consensus, with how many voters?"* Strong: names the service, quorum size and what stalls without a majority.
-2. *"How long does rebuilding our largest DirectFlash Module take at 80% full under load?"* Strong: hours, throttle policy, and whether rebuild is declustered.
-3. *"How do we prevent correlated failures?"* Strong: staged firmware rollout driven by fleet telemetry, batch mixing and anti-affinity.
+2. *"How long does rebuilding our largest DirectFlash Module take at 80% full under load?"* Strong: hours, throttle policy, declustered or not.
+3. *"How do we prevent correlated failures?"* Strong: telemetry-staged firmware rollout, batch mixing, anti-affinity.
 
 **Don't say this:**
 
@@ -210,16 +210,15 @@ The direction: strong consistency wherever a metro allows, wider codes with fast
 
 ## Key terms
 
-- **Consensus (Raft, Paxos)** — protocols that let a majority of nodes agree on one ordered log despite crashes.
-- **Term** — Raft's logical clock; each term has at most one leader.
-- **Quorum (N/W/R)** — replica count and the write and read acknowledgements needed; W + R > N gives overlap.
-- **Linearizability** — the strongest model: the system behaves as if there were one copy.
-- **PACELC** — under Partition choose Availability or Consistency, Else choose Latency or Consistency.
-- **Witness / mediator** — a data-less third vote that prevents split brain in two-site clusters.
-- **MTTDL** — mean time to data loss, a model output from failure and repair rates.
-- **FIT** — failures per 10⁹ device-hours; 1% AFR ≈ 1,140 FIT.
-- **Copyset** — a fixed group of nodes holding all replicas of some chunks; fewer copysets mean rarer loss.
-- See the [glossary](../glossary.md) for the rest.
+- **Raft / Paxos** — majority-based consensus on one ordered log.
+- **Quorum (N/W/R)** — W + R > N makes reads see the latest write.
+- **Linearizability** — behaves as if there were one copy.
+- **PACELC** — partition: availability or consistency; else: latency or consistency.
+- **Witness / mediator** — data-less third vote against split brain.
+- **MTTDL** — modelled mean time to data loss.
+- **FIT** — failures per 10⁹ device-hours.
+- **Copyset** — node group holding all replicas of some chunks.
+- See the [glossary](../glossary.md).
 
 ## Sources
 

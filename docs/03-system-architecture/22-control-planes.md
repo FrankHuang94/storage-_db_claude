@@ -6,7 +6,7 @@
 ## TL;DR
 
 - **The data plane moves bytes in microseconds. The control plane decides what should exist (volumes, policies, placement) and runs in seconds.** Good designs keep the control plane out of the I/O path, so a cloud outage never stops storage.
-- **Fleet management moved to the cloud around 2017.** Arrays phone home telemetry; the vendor's analytics predict failures, open tickets and size upgrades before the customer notices.
+- **Fleet management moved to the cloud in the mid-2010s.** Arrays phone home telemetry; the vendor's analytics predict failures, open tickets and size upgrades before the customer notices.
 - **Telemetry compounds with fleet size.** Rare faults are only learnable when you watch many systems, so the biggest installed bases learn fastest. That is a support-cost moat and a sales-signal moat.
 - **"Storage as code" changes the buyer.** Platform engineers declare storage in Terraform, Ansible or Kubernetes manifests; API quality now wins deals that GUIs used to.
 - **Everpure's bet is Pure1 (cloud analytics) plus Fusion (policy control plane built into Purity).** Dell, NetApp and HPE all ship equivalents, and all four now add AI copilots.
@@ -82,7 +82,7 @@ sequenceDiagram
 
 *Figure 22.3 — Declarative automation means the engineer names an outcome and the control plane chooses the array, so placement logic becomes the vendor's product.*
 
-Pure Fusion's presets bundle QoS, protection and tags into a fleet-wide template[^8]. Since September 2025 Fusion can provision capacity across arrays through storage classes[^9]. Automation hooks include a Terraform provider for Fusion[^10], certified Ansible collections[^11] and Portworx CSI for Kubernetes[^12]. The buyer changes: platform engineering teams judge API coverage, idempotency and provider maturity; a slick GUI matters less. CSI is double-edged. It makes arrays substitutable behind one Kubernetes interface, so differentiation must live above it, in fleet policy.
+Pure Fusion's presets bundle QoS, protection and tags into a fleet-wide template[^8]. In September 2025 Everpure announced cross-array provisioning through storage classes[^9]. Automation hooks include a Terraform provider for Fusion[^10], certified Ansible collections[^11] and Portworx CSI for Kubernetes[^12]. The buyer changes: platform engineering teams judge API coverage, idempotency and provider maturity; a slick GUI matters less. CSI is double-edged. It makes arrays substitutable behind one Kubernetes interface, so differentiation must live above it, in fleet policy.
 
 ## How Everpure approaches it vs. competitors
 
@@ -99,7 +99,7 @@ Everpure's distinctive choice is putting Fusion inside the array OS, so there is
 
 ## History and trajectory
 
-Element managers per array (2000s) gave way to cloud AIOps (InfoSight, Pure1 META, 2017), then cloud consoles (HPE 2021), then policy control planes (Fusion embedded 2024; Enterprise Data Cloud 2025). The 2025–26 signal is agentic: Pure1's copilot and HPE's GreenLake Intelligence both expose MCP so AI agents can query and act on fleets[^9][^22]. The open question is how much write access customers will grant an agent.
+Per-array element managers gave way to cloud analytics (Nimble InfoSight, Pure1) and ML prediction (Pure1 META, 2017), then cloud consoles (HPE 2021), then policy control planes (Fusion embedded 2024; Enterprise Data Cloud 2025). The 2025–26 signal is agentic: Pure1's copilot and HPE's GreenLake Intelligence both expose MCP so AI agents can query and act on fleets[^9][^22]. The open question is how much write access customers will grant an agent.
 
 ## Numbers that matter
 
