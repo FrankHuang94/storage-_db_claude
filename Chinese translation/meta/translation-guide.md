@@ -143,3 +143,6 @@ cat >> "/home/user/storage-_db_claude/Chinese translation/docs/03-system-archite
 ……译文……
 ZHEOF
 ```
+
+## 10. 粗体/斜体与中文标点 / Bold next to CJK punctuation
+GitHub（CommonMark）规则：若 `**…**` 的结束符前是标点、后面紧跟中文字符，粗体不会渲染（开始符同理）。写法：把全角标点移到粗体外面，例如写 `**对象存储**：……`，不要写 `**对象存储：**……`；或在结束 `**` 之后加一个空格。
