@@ -1095,3 +1095,4 @@ TCV 是已签署的合同总价值，RPO（剩余履约义务）是已签约但�
 数据加载、检查点保存、KV 缓存服务和 RAG 落在矩阵的不同单元格中。Gartner 2025 年的魔力象限把块、文件和对象合并在一起，但底层架构并没有趋同。（[第 24 章](../03-system-architecture/24-architecture-decision-matrix.md)）
 
 </details>
+
