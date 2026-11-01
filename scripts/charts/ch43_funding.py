@@ -34,8 +34,9 @@ def build(out_dir: Path) -> Path:
     prim = [float(r["primary_usd_m"]) for r in rounds]
     sec = [float(r["secondary_usd_m"]) for r in rounds]
     ax.bar(xs, prim, color=WEKA, width=0.6, label="Primary capital (to the company)")
-    ax.bar(xs, sec, bottom=prim, color="#F0E442", edgecolor="#222222", linewidth=0.6, width=0.6,
-           hatch="//", label="Secondary (employee share sales)")
+    sx = [(x, s_, p_) for x, s_, p_ in zip(xs, sec, prim) if s_ > 0]
+    ax.bar([t[0] for t in sx], [t[1] for t in sx], bottom=[t[2] for t in sx], color="#F0E442",
+           edgecolor="#222222", linewidth=0.6, width=0.6, hatch="//", label="Secondary (employee share sales)")
     cum, run = [], 0.0
     for r in rounds:
         run += float(r["amount_usd_m"])
@@ -47,6 +48,8 @@ def build(out_dir: Path) -> Path:
         if r["post_money_usd_b"]:
             tag += f"\n@ \\${float(r['post_money_usd_b']):.2f}B".replace(".60B", ".6B").replace(".75B", ".75B")
         ax.text(x, amt + 6, tag, ha="center", va="bottom", fontsize=9)
+        if x == 0:
+            continue
         ax.annotate(f"\\${c:.0f}M", (x, c), textcoords="offset points", xytext=(14, -4), fontsize=8.5,
                     color="#D55E00")
     labels = []
@@ -60,7 +63,7 @@ def build(out_dir: Path) -> Path:
     ax.set_ylim(0, 480)
     ax.grid(axis="x", visible=False)
     ax.legend(loc="upper left", fontsize=8.5)
-    ax.set_title("WEKA capital raised by round", loc="left", fontsize=12)
+    ax.set_title("WEKA capital raised by round (company-stated and press-reported)", loc="left", fontsize=12)
 
     names = [r["round"].replace(" latest priced round", "\n(May 2024)").replace(" (Blackstone minority investment)",
              "\n(Jan 2025)").replace(" Series F", "\n(Apr 2026)") for r in comps]
