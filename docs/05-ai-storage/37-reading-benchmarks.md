@@ -25,7 +25,7 @@ A CPU benchmark runs on one part. A storage benchmark runs on a *system* (server
 
 ### How MLPerf Storage works
 
-MLPerf Storage, from MLCommons, uses no accelerators. A tool called DLIO runs on ordinary client hosts, reads data with real data-loader behaviour, then *sleeps* for the time a real GPU would take to compute each batch[^1]. Sleep times are calibrated per accelerator model. The v2.0 rules list A100, H100, B200 and AMD MI355[^2], and v3.0 submissions simulate B200 or MI355[^3].
+MLPerf Storage, from MLCommons, uses no accelerators. A tool called DLIO runs on ordinary client hosts, reads data with real data-loader behaviour, then *sleeps* for the time a real GPU would take to compute each batch[^1]. The v2.0 rules list A100, H100, B200 and AMD MI355[^2], and v3.0 submissions simulate B200 or MI355[^3].
 
 The key metric is **accelerator utilisation (AU)**: the share of time a simulated accelerator spends "computing" rather than waiting for data. The submitter adds accelerators until AU falls below threshold and reports the largest passing count and its throughput. Under the v2.0 rules the thresholds were 90% for 3D U-Net and ResNet-50 and 70% for CosmoFlow[^2]. In v3.0 the closed training workloads are 3D U-Net (90%) and RetinaNet (85%)[^4][^3]. CosmoFlow, ResNet-50, DLRM and Flux moved to an unranked "whatif" category[^5].
 
@@ -52,7 +52,7 @@ flowchart TD
 
 **Closed versus open.** The *closed* division fixes the code and allows a few tunables such as reader threads; storage-side optimisation is unrestricted. The *open* division allows disclosed custom loaders, formats and framework changes[^2]. Quoting an open result beside closed ones mixes categories.
 
-**What v3.0 added.** The September 2026 round drew 143 results from 19 organisations, 11 of them first-time submitters (including Everpure, Azure, NVIDIA and Nebius)[^8][^7]. It added a **KV-cache** test (a working-group emulation scoring how fast storage feeds inference context), a **vector-database** test (DiskANN in every submission) and an **S3 object path** beside POSIX[^8][^4]. Reports differ on the vector dataset size: 10 million vectors in the closed configuration versus 1 million at 1,536 dimensions [VERIFY: vector DB dataset size in v3.0 rules][^4]. Power and rack-space efficiency began to be tracked as reported metrics[^7] [VERIFY: search-summary only].
+**What v3.0 added.** The September 2026 round drew 143 results from 19 organisations, 11 of them first-time submitters such as Everpure and Azure[^8][^7]. It added a **KV-cache** test (a working-group emulation scoring how fast storage feeds inference context), a **vector-database** test (DiskANN in every submission) and an **S3 object path** beside POSIX[^8][^4]. Reports differ on the vector dataset size: 10 million vectors in the closed configuration versus 1 million at 1,536 dimensions [VERIFY: vector DB dataset size in v3.0 rules][^4]. Power and rack-space efficiency began to be tracked as reported metrics[^7] [VERIFY: search-summary only].
 
 ### The other benchmarks
 
