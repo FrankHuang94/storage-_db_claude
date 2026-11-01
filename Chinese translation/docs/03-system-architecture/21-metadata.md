@@ -21,7 +21,7 @@ Everpure 的顶级 AI 系统 FlashBlade//EXA，其核心论点就是元数据。
 
 ### 名称、inode 与映射
 
-POSIX 文件系统维护三层元数据。**命名空间**是目录树，其中的 **dentry**（目录项）把名称映射到 inode 编号。**inode** 保存属主、权限、大小和时间戳。**extent 映射（extent map）**把文件偏移量转换为物理位置；一个 extent 可以替代数千个按 4 KB 粒度的指针。
+POSIX 文件系统维护三层元数据。**命名空间**是目录树，其中的 **dentry**（目录项）把名称映射到 inode 编号。**inode** 保存属主、权限、大小和时间戳。**extent 映射（extent map**）把文件偏移量转换为物理位置；一个 extent 可以替代数千个按 4 KB 粒度的指针。
 
 ```mermaid
 flowchart LR

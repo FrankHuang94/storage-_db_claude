@@ -6,6 +6,8 @@ It is written for a corporate-development / strategy professional with a semicon
 
 > **Read it as a website:** the same content is published as an MkDocs site via GitHub Pages (see [Building the site](#building-the-site)). On github.com, every chapter renders natively, including Mermaid diagrams.
 >
+> **简体中文参考译本 / Simplified Chinese reference edition:** the whole atlas (all 62 chapters, glossary, README/PROGRESS/CLAUDE and the `meta/` documents) is mirrored in Simplified Chinese under [`Chinese translation/`](Chinese%20translation/README.md). It is for reference; the English text is authoritative.
+>
 > **Public information only.** Nothing here is confidential or speculates about non-public Everpure plans. Strategy content is framed as *options a strategy team might evaluate, based on public information*. Every time-sensitive number is footnoted with its source and date. Unverified items are marked `[VERIFY: …]` and collected in [`meta/open-questions.md`](meta/open-questions.md).
 
 ## Start here

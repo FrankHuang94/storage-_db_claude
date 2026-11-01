@@ -25,7 +25,7 @@ FlashArray 是块存储阵列，因此其收入取决于客户服务器采用哪
 
 块协议让服务器（**发起端**，initiator，或称**主机**）读写远端设备（**目标端**，target）上编号的、固定大小的块。它请求的是"第 1,000,000 块，长度 256 块"，对文件一无所知——文件是上层文件系统的职责（参见[第 1 章](../01-storage-fundamentals/01-what-storage-does.md)）。每种块协议都分为三层：
 
-1. **命令集。** READ、WRITE、FLUSH 以及错误报告。SCSI 使用寻址到 **LUN** 的命令描述块（Command Descriptor Block，CDB）；NVMe 使用寻址到**命名空间（namespace）**的 64 字节提交队列条目（Submission Queue Entry，SQE）。
+1. **命令集。** READ、WRITE、FLUSH 以及错误报告。SCSI 使用寻址到 **LUN** 的命令描述块（Command Descriptor Block，CDB）；NVMe 使用寻址到**命名空间（namespace**）的 64 字节提交队列条目（Submission Queue Entry，SQE）。
 2. **传输层。** 命令、数据和状态如何在线路上传输：并行 SCSI、FC、TCP/IP、PCIe 或 RDMA。
 3. **Fabric 服务。** 发现、命名、访问控制与多路径：FC zoning（分区）、iSCSI 限定名（IQN）、NVMe 限定名（NQN）以及发现控制器（discovery controller）。
 
@@ -64,7 +64,7 @@ sequenceDiagram
 
 NVMe 1.0（2011 年 3 月[^5]）是为 PCIe 上的闪存而编写的，其接口围绕主机内存中成对的环形队列组织：
 
-- **提交队列（SQ）**存放 64 字节的命令；**完成队列（CQ）**存放 16 字节的完成条目。
+- **提交队列（SQ**）存放 64 字节的命令；**完成队列（CQ**）存放 16 字节的完成条目。
 - 主机最多可创建 65,535 个 I/O 队列对，每个最多 64K 个条目深[^6]。驱动程序通常为每个 CPU 核心分配专属的队列对，因此没有核心需要等待其他核心的锁。
 - 命令集小且格式固定，控制器可以在硬件中直接解析命令，无需遍历变长的 CDB。
 
@@ -111,7 +111,7 @@ sequenceDiagram
 
 ### NVMe-oF：把环形队列延伸到网络上
 
-远端 SSD 无法通过 DMA 从主机 DRAM 中读取描述符，因此 NVMe-oF（1.0 版于 2016 年 6 月发布，含 RDMA 和 FC 绑定[^7]）改为把描述符发送过去。64 字节的 SQE 封装在**命令胶囊（command capsule）**中传输，小写入的数据可选择性地放在胶囊内部；完成条目则通过**响应胶囊（response capsule）**返回。每个 NVMe 队列对映射到一条传输连接（一个 RDMA 队列对、一条 TCP 连接，或某个 association 内的一条 FC-NVMe 连接），从而端到端保留每核心的并行性。多路径使用 **ANA**（Asymmetric Namespace Access，非对称命名空间访问），即 NVMe 版的 SCSI ALUA（参见[第 14 章](../03-system-architecture/14-scale-up-dual-controller.md)）。
+远端 SSD 无法通过 DMA 从主机 DRAM 中读取描述符，因此 NVMe-oF（1.0 版于 2016 年 6 月发布，含 RDMA 和 FC 绑定[^7]）改为把描述符发送过去。64 字节的 SQE 封装在**命令胶囊（command capsule**）中传输，小写入的数据可选择性地放在胶囊内部；完成条目则通过**响应胶囊（response capsule**）返回。每个 NVMe 队列对映射到一条传输连接（一个 RDMA 队列对、一条 TCP 连接，或某个 association 内的一条 FC-NVMe 连接），从而端到端保留每核心的并行性。多路径使用 **ANA**（Asymmetric Namespace Access，非对称命名空间访问），即 NVMe 版的 SCSI ALUA（参见[第 14 章](../03-system-architecture/14-scale-up-dual-controller.md)）。
 
 各传输层的差异主要在于批量数据如何搬运：
 

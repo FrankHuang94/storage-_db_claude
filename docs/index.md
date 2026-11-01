@@ -7,6 +7,8 @@ It is written for a corporate-development / strategy professional with a semicon
 
 > **Read it as a website:** the same content is published as an MkDocs site via GitHub Pages (see [Building the site](#building-the-site)). On github.com, every chapter renders natively, including Mermaid diagrams.
 >
+> **简体中文参考译本 / Simplified Chinese reference edition:** the whole atlas (all 62 chapters, glossary, README/PROGRESS/CLAUDE and the `meta/` documents) is mirrored in Simplified Chinese under [`Chinese translation/`](https://github.com/FrankHuang94/storage-_db_claude/blob/claude/affectionate-gates-srw7gi/Chinese%20translation/README.md). It is for reference; the English text is authoritative.
+>
 > **Public information only.** Nothing here is confidential or speculates about non-public Everpure plans. Strategy content is framed as *options a strategy team might evaluate, based on public information*. Every time-sensitive number is footnoted with its source and date. Unverified items are marked `[VERIFY: …]` and collected in [`meta/open-questions.md`](https://github.com/FrankHuang94/storage-_db_claude/blob/claude/affectionate-gates-srw7gi/meta/open-questions.md).
 
 ## Start here
@@ -60,16 +62,16 @@ flowchart LR
 <!-- README-TABLE -->
 | Part | Chapters drafted | Prose words / budget | Visuals |
 |---|---|---|---|
-| Part 0 — Start Here | 0/2 | 0 / 3,000 | 0 |
-| Part 1 — Storage Fundamentals | 6/6 | 16,706 / 14,000 | 54 |
-| Part 2 — Protocols and Networking | 6/6 | 14,049 / 12,000 | 50 |
+| Part 0 — Start Here | 2/2 | 3,764 / 3,000 | 21 |
+| Part 1 — Storage Fundamentals | 6/6 | 17,018 / 14,000 | 54 |
+| Part 2 — Protocols and Networking | 6/6 | 14,054 / 12,000 | 50 |
 | Part 3 — Storage System Architecture | 12/12 | 20,742 / 17,500 | 97 |
-| Part 4 — Everpure | 5/5 | 10,934 / 10,000 | 36 |
-| Part 5 — AI Storage | 10/10 | 23,028 / 20,000 | 75 |
-| Part 6 — Industry and Competition | 11/11 | 32,405 / 28,500 | 89 |
-| Part 7 — History and Future | 3/4 | 8,685 / 10,000 | 20 |
-| Part 8 — Conversation Toolkit | 4/6 | 10,269 / 9,000 | 24 |
-| **Total** | **57/62** | **136,818 / 124,000** | **445** |
+| Part 4 — Everpure | 5/5 | 10,999 / 10,000 | 36 |
+| Part 5 — AI Storage | 10/10 | 23,648 / 20,000 | 75 |
+| Part 6 — Industry and Competition | 11/11 | 33,140 / 28,500 | 89 |
+| Part 7 — History and Future | 4/4 | 11,515 / 10,000 | 27 |
+| Part 8 — Conversation Toolkit | 6/6 | 21,795 / 9,000 | 52 |
+| **Total** | **62/62** | **156,675 / 124,000** | **501** |
 <!-- /README-TABLE -->
 
 Detailed per-chapter status, visual counts and VERIFY counts are in [`PROGRESS.md`](https://github.com/FrankHuang94/storage-_db_claude/blob/claude/affectionate-gates-srw7gi/PROGRESS.md). QA results are in [`meta/qa-report.md`](https://github.com/FrankHuang94/storage-_db_claude/blob/claude/affectionate-gates-srw7gi/meta/qa-report.md), and independent reviewer reports in [`meta/reviews/`](https://github.com/FrankHuang94/storage-_db_claude/blob/claude/affectionate-gates-srw7gi/meta/reviews/).

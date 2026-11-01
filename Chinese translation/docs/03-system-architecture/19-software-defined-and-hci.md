@@ -7,7 +7,7 @@
 
 ## 要点速览（TL;DR）
 
-- **软件定义存储（SDS）卖的是不带硬件盒子的存储操作系统**（Ceph、MinIO、VAST、WEKA）。**超融合基础设施（HCI）**则把它与虚拟机运行在同一批节点上（Nutanix、vSAN）。
+- **软件定义存储（SDS）卖的是不带硬件盒子的存储操作系统**（Ceph、MinIO、VAST、WEKA）。**超融合基础设施（HCI**）则把它与虚拟机运行在同一批节点上（Nutanix、vSAN）。
 - **HCI 的瓶颈在于耦合扩展。** 每增加一个节点，计算与容量都按固定比例增加，环境用不上的那部分资源就被闲置（stranded）。
 - **云块存储就是超大规模的 SDS。** EBS 在单个可用区（Availability Zone）内复制卷，配有独立的配置服务，并依靠 Nitro 卡卸载。
 - **Broadcom 对 VMware 授权的重置（自 2023 年 12 月起）重新开启了"HCI 还是阵列"之争**，并把客户推向 Nutanix、公有云和外置阵列。
@@ -27,7 +27,7 @@ Broadcom 迫使客户做出选择：每一次 VMware 续约都必须在继续使
 
 *图 19.1 — 三种模式中的软件大同小异；变化的是由谁提供硬件，以及哪些资源必须一起扩展。*
 
-在**一体机**模式下（[第 14 章](14-scale-up-dual-controller.md)），由一家厂商负责整台设备的设计、认证、交付和支持。**SDS** 运行在**硬件兼容性列表（HCL）**所列的通用服务器上，通常以[无共享集群](15-scale-out-shared-nothing.md)形式部署。**HCI** 把存储并入虚拟化集群：每个节点把一部分 CPU 和内存分给存储服务（Nutanix 的控制器虚拟机，或 ESXi 内核中的 vSAN），由它把每台虚拟机的写入复制到其他节点的硬盘上。
+在**一体机**模式下（[第 14 章](14-scale-up-dual-controller.md)），由一家厂商负责整台设备的设计、认证、交付和支持。**SDS** 运行在**硬件兼容性列表（HCL**）所列的通用服务器上，通常以[无共享集群](15-scale-out-shared-nothing.md)形式部署。**HCI** 把存储并入虚拟化集群：每个节点把一部分 CPU 和内存分给存储服务（Nutanix 的控制器虚拟机，或 ESXi 内核中的 vSAN），由它把每台虚拟机的写入复制到其他节点的硬盘上。
 
 **半导体类比。** 一体机厂商相当于 IDM：掌握设计与集成，承担库存，赚取集成利润。纯软件厂商相当于 Arm 这样的 IP 授权商，在他人制造的硬件上收取高毛利的授权费。VAST 的 "Gemini" 模式则类似 fabless：VAST 规定硬件规格，由制造合作伙伴以成本价把硬件卖给客户，VAST 只确认软件收入[^3]。
 
@@ -50,7 +50,7 @@ Broadcom 迫使客户做出选择：每一次 VMware 续约都必须在继续使
 
 ### EBS 类云块存储服务的内部结构
 
-根据 AWS 公开的论文和文档：一个 EBS 卷位于单个可用区内，并在该可用区的多台服务器之间复制[^7]。在 Nitro 实例上，客户机看到的是一个普通 NVMe 设备[^8]，由 Nitro 卡模拟，Nitro 卡把块命令转换成网络请求。经典 EBS 把每个卷放在一条**复制链（replication chain）**上（客户端 → 主副本 → 副本）。另有一个独立的**配置主控（configuration master）**——Physalia——以每卷一个七节点 Paxos "单元（cell）"的方式记录链成员关系，因此单一故障不会导致大量卷的配置同时失联[^6]。io2 Block Express 后端通过**可扩展可靠数据报（Scalable Reliable Datagram，SRD）**与 Nitro 通信[^9]，这是 Nitro 卡中的一种多路径传输协议，会把数据包分散到大量网络路径上[^10]。
+根据 AWS 公开的论文和文档：一个 EBS 卷位于单个可用区内，并在该可用区的多台服务器之间复制[^7]。在 Nitro 实例上，客户机看到的是一个普通 NVMe 设备[^8]，由 Nitro 卡模拟，Nitro 卡把块命令转换成网络请求。经典 EBS 把每个卷放在一条**复制链（replication chain**）上（客户端 → 主副本 → 副本）。另有一个独立的**配置主控（configuration master）**——Physalia——以每卷一个七节点 Paxos "单元（cell）"的方式记录链成员关系，因此单一故障不会导致大量卷的配置同时失联[^6]。io2 Block Express 后端通过**可扩展可靠数据报（Scalable Reliable Datagram，SRD**）与 Nitro 通信[^9]，这是 Nitro 卡中的一种多路径传输协议，会把数据包分散到大量网络路径上[^10]。
 
 ```mermaid
 flowchart LR

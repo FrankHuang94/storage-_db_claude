@@ -23,7 +23,7 @@
 
 ### 新兴 GPU 云、AI 工厂与晶圆代工类比
 
-**AI 工厂**是 NVIDIA 提出的术语，指以 token 为产出的数据中心：GPU、网络、存储和软件作为一条生产线统一设计。**新兴 GPU 云（neocloud）**则对外出租这类工厂。它按小时或通过多年期照付不议（take-or-pay）合同出售裸金属或 Kubernetes/Slurm GPU 集群，客户包括实验室、初创公司、企业以及算力紧缺的超大规模云厂商。Microsoft 与 Nebius 的合同价值约 US$17.4 billion[^4]。
+**AI 工厂**是 NVIDIA 提出的术语，指以 token 为产出的数据中心：GPU、网络、存储和软件作为一条生产线统一设计。**新兴 GPU 云（neocloud**）则对外出租这类工厂。它按小时或通过多年期照付不议（take-or-pay）合同出售裸金属或 Kubernetes/Slurm GPU 集群，客户包括实验室、初创公司、企业以及算力紧缺的超大规模云厂商。Microsoft 与 Nebius 的合同价值约 US$17.4 billion[^4]。
 
 半导体类比是晶圆代工模式。超大规模云厂商类似 IDM：它们自行设计存储栈（[第 36 章](36-hyperscaler-ai-storage.md)），正如 IDM 运营自己的工艺。新兴 GPU 云则类似一家年轻的纯晶圆代工厂：它们采购设备，在产能、量产速度和良率（此处即利用率）上竞争。它们采用参考流程认证过的任何设备，而 NVIDIA 云合作伙伴（NVIDIA Cloud Partner，NCP）参考设计扮演的正是 PDK 的角色。不在认证流程内的存储厂商很少能进入评估。
 

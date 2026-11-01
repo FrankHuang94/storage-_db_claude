@@ -133,7 +133,7 @@ sequenceDiagram
 
 *表 16.2 — 该架构以牺牲本地性和更高的入门成本为代价，换取均匀性、规模化效率以及低代价的计算故障。*
 
-**最佳适用：**由大量 GPU 节点读取的大型共享命名空间（训练数据、检查点、模型仓库），全局缩减能带来回报的文件与对象混合环境，以及需求在吞吐与容量之间不断变化的多租户新兴 GPU 云存储。**最不适用：**约 1 PB 以下的小规模部署，双控制器阵列能以更低成本下限服务的延迟敏感型块存储数据库（[第 14 章](14-scale-up-dual-controller.md)），以及没有专用网络的边缘站点。
+**最佳适用**：由大量 GPU 节点读取的大型共享命名空间（训练数据、检查点、模型仓库），全局缩减能带来回报的文件与对象混合环境，以及需求在吞吐与容量之间不断变化的多租户新兴 GPU 云存储。**最不适用**：约 1 PB 以下的小规模部署，双控制器阵列能以更低成本下限服务的延迟敏感型块存储数据库（[第 14 章](14-scale-up-dual-controller.md)），以及没有专用网络的边缘站点。
 
 ### 成本与运维影响
 
@@ -145,7 +145,7 @@ sequenceDiagram
 |---|---|---|---|---|
 | VAST（CBox + DBox） | 无状态 CNode | DBox：DPU 后面的 SCM + QLC | 是，参考设计 | 元数据位于共享 SCM；任一 CNode 可访问任一 SSD[^8] |
 | VAST EBox | CNode 和 DNode 软件运行在同一台服务器上 | 同一服务器上的 SSD，池化 | 逻辑上是；物理上为融合式 | 放弃独立扩展，以适配超大规模云厂商/云环境[^16] |
-| Everpure FlashBlade//EXA | 运行 Purity//FB 的 FlashBlade 作为元数据核心 | 由 Purity//DN 工具管理的现成 Linux/NVMe 数据节点；计划推出 DirectFlash 节点 | **否。**元数据/数据分离；客户端直接读取数据节点 | pNFS：元数据走 TCP，数据走 NFSv3/RDMA[^3][^17] |
+| Everpure FlashBlade//EXA | 运行 Purity//FB 的 FlashBlade 作为元数据核心 | 由 Purity//DN 工具管理的现成 Linux/NVMe 数据节点；计划推出 DirectFlash 节点 | **否**。元数据/数据分离；客户端直接读取数据节点 | pNFS：元数据走 TCP，数据走 NFSv3/RDMA[^3][^17] |
 | NetApp AFX | 运行 ONTAP 的 AFX 1K 控制器 | 单一共享池中的 NX224 NVMe-oF 柜 | 是（共享池） | 设计上限 128 个控制器、52 个机柜[^18][^13]；据 WWT，ONTAP 9.19.1 支持 32 个控制器[^19] |
 | HPE Alletra MP X10000 | 容器化计算节点 | JBOF 节点 | 是（HPE 称"shared-everything"） | 日志结构 KV 存储；自 Release 4 起支持对象及原生 NFS[^20][^21] |
 | HPE GreenLake for File | 在 Alletra MP 计算节点上运行 VAST 软件 | Alletra MP JBOF | 是（基于 VAST） | 2023 年推出[^22] |
